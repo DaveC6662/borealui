@@ -1,0 +1,80 @@
+@use "@styles/theme" as theme;
+
+.dropdownWrapper {
+  position: relative;
+  display: inline-block;
+  outline: none;
+}
+
+.trigger {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  overflow: hidden;
+  margin-top: theme.$spacing-xs;
+  background-color: var(--background-color-lighter);
+  border-radius: theme.$border-radius-md;
+  box-shadow: theme.$box-shadow-medium;
+  z-index: theme.$z-index-drawer;
+  padding: theme.$spacing-xs 0;
+  min-width: 200px;
+  animation: fade-in 0.2s ease-in-out;
+
+  &.right {
+    right: 0;
+  }
+
+  &.left {
+    left: 0;
+  }
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: theme.$spacing-sm theme.$spacing-md;
+  font-weight: theme.$font-weight-bold;
+  color: var(--text-color-primary);
+  font-size: theme.$font-size-md;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover,
+  &:focus {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-primary);
+    outline: none;
+  }
+
+  .icon {
+    margin-right: theme.$spacing-xs;
+    display: flex;
+    align-items: center;
+  }
+}
+
+a.dropdownItem {
+  text-decoration: none;
+}
+
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

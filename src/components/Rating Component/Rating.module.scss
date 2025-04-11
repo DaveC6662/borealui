@@ -1,0 +1,55 @@
+@use "@styles/theme.scss" as theme;
+@use "sass:map";
+
+$themes: (
+  "primary": var(--primary-color),
+  "secondary": var(--secondary-color),
+  "success": theme.$success-color,
+  "error": theme.$error-color,
+  "warning": theme.$warning-color,
+  "clear": var(--text-color-primary)
+);
+$sizes: (
+  "xs": theme.$font-size-xxs,
+  "small": theme.$font-size-xs,
+  "medium": theme.$font-size-sm,
+  "large": theme.$font-size-lg,
+  "xl": theme.$font-size-xl
+);
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: theme.$spacing-xs;
+
+  @each $size, $font-size in $sizes {
+    &.#{$size} {
+      font-size: $font-size;
+    }
+  }
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+.star {
+  transition: color 0.3s ease-in-out, transform 0.2s ease;
+  color: var(--background-color-dark);
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &.active {
+    color: var(--primary-color);
+  }
+}
+
+@each $theme, $color in $themes {
+  .#{$theme} {
+    .star.active {
+      color: $color;
+    }
+  }
+}

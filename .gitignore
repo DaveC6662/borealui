@@ -1,0 +1,54 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+
+# TypeScript
+*.tsbuildinfo
+
+# Vite cache
+.vite/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Env files
+.env
+.env.*.local
+
+# Testing
+coverage/
+jest-test-results.json
+
+# Lint/formatter
+.eslintcache
+.stylelintcache
+
+# Optional: Docs output
+docs/
+
+# Optional: Storybook
+.storybook-out/
+.storybook-static/
+
+# Optional: Local tooling
+yalc.lock
+.yalc/
+
+# Optional: Pkg manager files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

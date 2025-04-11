@@ -1,0 +1,100 @@
+@use "@styles/theme" as theme;
+@use "sass:color";
+@use "sass:map";
+
+$select-themes: (
+  "primary": (bg: var(--primary-color), color: var(--text-color-primary), hover: var(--primary-color-hover)),
+  "secondary": (bg: var(--secondary-color), color: var(--text-color-secondary), hover: var(--secondary-color-hover)),
+  "success": (bg: theme.$success-color, color: var(--text-color-primary), hover: color.adjust(theme.$success-color, $lightness: -10%)),
+  "error": (bg: theme.$error-color, color: var(--text-color-primary), hover: color.adjust(theme.$error-color, $lightness: -10%)),
+  "warning": (bg: theme.$warning-color, color: var(--text-color-primary), hover: color.adjust(theme.$warning-color, $lightness: -10%)),
+  "clear": (bg: transparent, color: var(--text-color-primary), hover: transparent)
+);
+
+.selectMain {
+  position: relative;
+  display: inline-flex;
+  width: 300px;
+  margin: theme.$spacing-xs 0;
+  border-radius: theme.$border-radius-lg;
+  box-shadow: theme.$box-shadow-medium;
+  transition: theme.$transition-default;
+
+  &:hover {
+    box-shadow: theme.$box-shadow-large;
+  }
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.selectIcon {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  pointer-events: none;
+  font-size: 12px;
+  color: var(--text-color);
+  transform-origin: center;
+  background-color: transparent !important;
+}
+
+@each $name, $values in $select-themes {
+  .#{$name} .selectIcon {
+    color: map.get($values, color);
+  }
+}
+
+.select {
+  width: 100%;
+  padding: 5px 30px;
+  font-size: theme.$font-size-sm;
+  appearance: none;
+  font-weight: 800;
+  border-radius: theme.$border-radius-lg;
+  border: none;
+  background-color: var(--background-light-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  &:focus {
+    border-color: var(--primary-color);
+    outline: none;
+  }
+}
+
+@each $name, $values in $select-themes {
+  .#{$name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, color);
+
+    &:hover {
+      background-color: map.get($values, hover);
+    }
+
+    .select {
+      background-color: map.get($values, bg);
+      color: map.get($values, color);
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+    }
+  }
+}
+
+.clear {
+  box-shadow: none;
+
+  .select {
+    background-color: transparent;
+  }
+
+  option {
+    background-color: var(--background-color-dark);
+  }
+}

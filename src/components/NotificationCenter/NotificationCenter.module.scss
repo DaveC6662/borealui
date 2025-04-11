@@ -1,0 +1,102 @@
+@use "@styles/theme" as theme;
+@use "sass:color";
+@use "sass:map";
+
+$notification-colors: (
+  primary: var(--primary-color),
+  success: theme.$success-color,
+  error: theme.$error-color,
+  warning: theme.$warning-color,
+  info: var(--link-color),
+);
+
+.notificationCenter {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  padding: theme.$spacing-sm;
+  background: var(--background-color-dark);
+  border-radius: theme.$border-radius-xs;
+  box-shadow: theme.$box-shadow-medium;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: theme.$font-weight-bold;
+  margin-bottom: theme.$spacing-sm;
+
+  .clearAll {
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: theme.$spacing-xs;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  padding: theme.$spacing-xs;
+  border-radius: theme.$border-radius-xs;
+  background-color: var(--background-color);
+  box-shadow: theme.$box-shadow-light;
+  border-left: 4px solid transparent;
+  animation: fade-in 0.3s ease;
+
+  .icon {
+    margin-right: theme.$spacing-sm;
+    font-size: 1.2rem;
+  }
+
+  .content {
+    flex-grow: 1;
+
+    .message {
+      display: block;
+      font-size: theme.$font-size-base;
+    }
+
+    .timestamp {
+      font-size: theme.$font-size-sm;
+      color: #888;
+    }
+  }
+
+  .close {
+    margin-left: theme.$spacing-sm;
+    border: none;
+    box-shadow: none;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  @each $type, $color in $notification-colors {
+    &.#{$type} {
+      border-color: $color;
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

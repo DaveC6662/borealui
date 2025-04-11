@@ -1,0 +1,179 @@
+@use "@styles/theme" as theme;
+@use "sass:color";
+@use "sass:map";
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: theme.$spacing-xs;
+  padding: 10px 20px;
+  border-radius: theme.$border-radius-xl;
+  border: none;
+  cursor: pointer;
+  transition: transform theme.$transition-default, box-shadow theme.$transition-default;
+  font-weight: theme.$font-weight-bold;
+  box-shadow: theme.$box-shadow-medium;
+  color: inherit;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: theme.$box-shadow-large;
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+  max-width: none;
+  display: flex;
+}
+
+.loader {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid transparent;
+  border-top-color: var(--text-color-primary);
+  border-radius: 50%;
+  animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.buttonIcon {
+  margin-right: theme.$spacing-sm;
+  display: flex;
+  align-items: center;
+  margin-top: -0.1em;
+}
+
+.buttonLabel {
+  font-size: theme.$font-size-base;
+}
+
+.clear {
+  background-color: transparent;
+  box-shadow: none;
+  color: var(--text-color-primary);
+}
+
+.outline {
+  background-color: transparent;
+  border: 2px solid currentcolor;
+  box-shadow: none;
+}
+
+.disabled {
+  background-color: theme.$disabled-color;
+  color: var(--text-color-primary);
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+  box-shadow: none;
+
+  &.outline {
+    border-color: theme.$disabled-color;
+    color: theme.$disabled-color;
+  }
+}
+
+$themes: (
+  "primary": (
+    bg: var(--primary-color),
+    hover: var(--primary-color-hover),
+    text: var(--text-color-primary),
+    border: var(--primary-color),
+    text-hover: var(--text-color-primary)
+  ),
+  "secondary": (
+    bg: var(--secondary-color),
+    hover: var(--secondary-color-hover),
+    text: var(--text-color-secondary),
+    border: var(--secondary-color),
+    text-hover: var(--text-color-secondary)
+  ),
+  "success": (
+    bg: theme.$success-color,
+    hover: color.adjust(theme.$success-color, $lightness: -10%),
+    text: var(--text-color-primary),
+    border: theme.$success-color,
+    text-hover: var(--text-color-primary)
+  ),
+  "error": (
+    bg: theme.$error-color,
+    hover: color.adjust(theme.$error-color, $lightness: -10%),
+    text: var(--text-color-primary),
+    border: theme.$error-color,
+    text-hover: var(--text-color-primary)
+  ),
+  "warning": (
+    bg: theme.$warning-color,
+    hover: color.adjust(theme.$warning-color, $lightness: -10%),
+    text: var(--text-color-primary),
+    border: theme.$warning-color,
+    text-hover: var(--text-color-primary)
+  )
+);
+
+@each $name, $values in $themes {
+  .#{$name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, text);
+
+    &:hover {
+      background-color: map.get($values, hover);
+    }
+
+    .loader {
+      border-top-color: map.get($values, text);
+    }
+
+    &.outline {
+      background-color: transparent;
+      color: map.get($values, border);
+      border-color: map.get($values, border);
+
+      &:hover {
+        border-color: map.get($values, hover);
+        color: map.get($values, text);
+        background-color: map.get($values, bg);
+      }
+    }
+  }
+}
+
+$sizes: (
+  "xs": (padding: 4px 8px, label: theme.$font-size-xs, icon: 1rem),
+  "small": (padding: 6px 10px, label: theme.$font-size-sm, icon: 1rem),
+  "medium": (padding: 6px 12px, label: theme.$font-size-md, icon: 1.2rem),
+  "large": (padding: 8px 16px, label: theme.$font-size-lg, icon: 1.3rem),
+  "xl": (padding: 10px 18px, label: theme.$font-size-xl, icon: 1.5rem)
+);
+
+@each $size, $values in $sizes {
+  .#{$size} {
+    padding: map.get($values, padding);
+
+    .buttonLabel {
+      font-size: map.get($values, label);
+    }
+
+    .icon {
+      width: map.get($values, icon);
+      height: map.get($values, icon);
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,184 @@
+@use "./theme" as theme;
+@use "sass:color";
+
+/* === Root Variables (Light Mode Theme) === */
+:root {
+  // Primary Colors
+  --primary-color: #{theme.$primary-color};
+  --primary-color-light: #{color.adjust(theme.$primary-color, $lightness: 40%)};
+  --primary-color-hover: #{color.adjust(theme.$primary-color, $lightness: -10%)};
+  --primary-text-color: #{theme.$text-color-primary};
+  --primary-text-color-contrast: #{theme.$text-color-secondary};
+  --success-color: #{theme.$success-color};
+  --warning-color: #{theme.$warning-color};
+  --error-color:   #{theme.$error-color};
+
+  // Secondary Colors
+  --secondary-color: #{theme.$secondary-color};
+  --secondary-color-light: #{color.adjust(theme.$secondary-color, $lightness: 40%)};
+  --secondary-color-hover: #{color.adjust(theme.$secondary-color, $lightness: -10%)};
+  --secondary-text-color: #{theme.$text-color-secondary};
+
+  // Background Colors
+  --background-color: #{theme.$background-color};
+  --background-color-light: #{color.adjust(theme.$background-color, $lightness: 10%)};
+  --background-color-lighter: #{color.adjust(theme.$background-color, $lightness: 20%)};
+  --background-color-dark: #{color.adjust(theme.$background-color, $lightness: -10%)};
+  --background-color-darker: #{color.adjust(theme.$background-color, $lightness: -20%)};
+
+  // Text Colors
+  --text-color: #{theme.$text-color};
+  --text-color-light: #{theme.$text-color-light};
+  --text-color-lighter: #{theme.$text-color-lighter};
+
+  // Link Colors
+  --link-color: #{theme.$link-color};
+  --link-hover-color: #{theme.$link-hover-color};
+  --link-hover-color-primary: #{theme.$link-hover-color-primary};
+  --link-hover-color-secondary: #{theme.$link-hover-color-secondary};
+
+  /* === ACCESSIBILITY IMPROVEMENTS === */
+  --focus-outline-color: theme.$primary-color;
+}
+
+/* === General Styles === */
+body {
+  font-family: theme.$font-family-primary;
+  font-size: theme.$font-size-base;
+  color: var(--text-color-primary);
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  overflow-x: hidden;
+  transition: background-color theme.$transition-default, color theme.$transition-default;
+}
+
+/* === Typography === */
+h1, h2, h3, h4, h5, h6 {
+  font-family: theme.$font-family-primary;
+  margin: 0;
+  font-weight: theme.$font-weight-bold;
+  transition: color theme.$transition-default;
+}
+
+h1 {
+  font-size: theme.$font-size-xl;
+  font-weight: theme.$font-weight-bolder;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: theme.$font-size-lg;
+  font-weight: theme.$font-weight-bolder;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: theme.$font-size-md;
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: theme.$font-size-base;
+  line-height: 1.5;
+}
+
+h5, h6 {
+  font-size: theme.$font-size-sm;
+  line-height: 1.6;
+  font-weight: theme.$font-weight-normal;
+}
+
+h6 {
+  text-transform: uppercase;
+}
+
+p {
+  font-size: theme.$font-size-base;
+  line-height: 1.6;
+  font-weight: 500;
+  margin-bottom: theme.$spacing-md;
+}
+
+/* === Links === */
+a {
+  color: var(--link-color);
+  font-weight: theme.$link-font-weight;
+  text-decoration: theme.$link-text-decoration;
+  transition: color theme.$transition-default, text-decoration theme.$transition-default;
+
+  &:hover {
+    color: var(--link-color-hover);
+    text-decoration: theme.$link-hover-decoration;
+  }
+}
+
+/* === Utility Classes === */
+.noScroll {
+  overflow: hidden;
+}
+
+.errorMessage {
+  color: theme.$error-color;
+  font-size: theme.$font-size-sm;
+}
+
+.loadingContainer {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+/* === ACCESSIBILITY IMPROVEMENTS === */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--background-color-light);
+}
+
+*:focus {
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 6px;
+  border: 3px solid var(--background-color-light);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-color-hover);
+}
+
+.hideScrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hideScrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

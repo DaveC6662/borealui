@@ -1,0 +1,69 @@
+@use "@styles/theme" as theme;
+
+.markdown {
+  font-family: Inter, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color-primary);
+  border: 1px solid var(--text-color-primary);
+  padding: theme.$spacing-md;
+  border-radius: theme.$border-radius-xs;
+  box-shadow: theme.$box-shadow-large;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin-top: theme.$spacing-lg;
+    margin-bottom: theme.$spacing-sm;
+    color: var(--text-color-primary);
+  }
+
+  p {
+    margin: theme.$spacing-xs 0;
+  }
+
+  em,
+  strong {
+    font-weight: bold;
+  }
+
+  ul,
+  ol {
+    margin: theme.$spacing-md 0;
+    padding-left: theme.$spacing-lg;
+  }
+
+  code {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-primary);
+    padding: 0.2rem 0.4rem;
+    border-radius: theme.$border-radius-xs;
+    font-family: monospace;
+  }
+
+  pre {
+    background: #1e1e1e;
+    color: #f4f4f4;
+    padding: theme.$spacing-md;
+    overflow-x: auto;
+    border-radius: theme.$border-radius-sm;
+    margin: theme.$spacing-md 0;
+  }
+
+  blockquote {
+    margin: theme.$spacing-md 0;
+    padding-left: theme.$spacing-md;
+    border-left: 4px solid var(--primary-color);
+    color: var(--text-color-primary-light);
+    font-style: italic;
+  }
+
+  a {
+    color: var(--link-color);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--link-hover-color-primary);
+    }
+  }
+}
