@@ -1,0 +1,46 @@
+import { FaCheckCircle, FaExclamationCircle, FaInfoCircle } from "react-icons/fa";
+import { IconType } from "react-icons";
+import { NotificationType } from "@/types/types";
+
+/**
+ * Represents an individual notification to be displayed in the NotificationCenter.
+ */
+export interface Notification {
+  /** Unique identifier for the notification. */
+  id: string;
+  /** The message text of the notification. */
+  message: string;
+  /** The type of notification, used for styling and icon selection. */
+  type?: NotificationType;
+  /** Optional timestamp indicating when the notification was created. */
+  timestamp?: Date;
+  /** Optional duration (in milliseconds) after which the notification is automatically removed. */
+  duration?: number;
+}
+
+/**
+ * Props for the NotificationCenter component.
+ */
+export interface NotificationCenterProps {
+  /** Array of notifications to display. */
+  notifications: Notification[];
+  /** Callback function to remove a notification by its ID. */
+  onRemove: (id: string) => void;
+  /** Optional callback function to clear all notifications. */
+  onClearAll?: () => void;
+  /** Whether to show a "Clear All" button if notifications are present. */
+  showClearAll?: boolean;
+  /** Optional test ID for testing frameworks. */
+  "data-testid"?: string;
+}
+
+/**
+ * A mapping from notification types to their associated icon components.
+ */
+export const themeIcons: Record<NotificationType, IconType> = {
+  general: FaInfoCircle,
+  success: FaCheckCircle,
+  error: FaExclamationCircle,
+  warning: FaExclamationCircle,
+  info: FaInfoCircle,
+};

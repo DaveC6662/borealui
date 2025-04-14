@@ -1,27 +1,10 @@
 "use client";
 
-import React, { ReactNode, forwardRef, useId, HTMLAttributes } from "react";
+import React, { forwardRef, useId } from "react";
 import styles from "./Tooltip.module.scss";
-import { ThemeType } from "@/types/types";
-import { combineClassNames } from "@/utils/classNames";
 
-/**
- * Props for the Tooltip component.
- *
- * @property {string} content - The text content to display inside the tooltip.
- * @property {"top" | "bottom" | "left" | "right"} [position="top"] - The position of the tooltip relative to the trigger element.
- * @property {ThemeType} [theme="primary"] - The theme/style variant for the tooltip.
- * @property {ReactNode} children - The trigger element(s) which will display the tooltip on hover/focus.
- * @property {string} [data-testid="tooltip"] - Optional test identifier.
- * @extends HTMLAttributes<HTMLDivElement>
- */
-interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
-  content: string;
-  position?: "top" | "bottom" | "left" | "right";
-  theme?: ThemeType;
-  children: ReactNode;
-  "data-testid"?: string;
-}
+import { combineClassNames } from "@/utils/classNames";
+import { TooltipProps } from "./Tooltip.types";
 
 /**
  * Tooltip component displays additional information when hovering over or focusing on an element.
