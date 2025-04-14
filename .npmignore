@@ -1,0 +1,4 @@
+# .npmignore
+playground/
+__tests__/
+tsconfig.build.tsbuildinfo

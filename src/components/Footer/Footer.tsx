@@ -111,8 +111,8 @@ const Footer: React.FC<FooterProps> = ({
               <IconButton
                 key={index}
                 icon={social.icon}
-                href={social}
-                external
+                href={social.href}
+                isExternal
                 ariaLabel={social.title}
                 title={social.title}
                 theme={theme}

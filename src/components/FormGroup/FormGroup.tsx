@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { JSX } from "react";
 import styles from "./FormGroup.module.scss";
 import { combineClassNames } from "@/utils/classNames";
 import { SizeType } from "@/types/types";
@@ -52,10 +52,10 @@ const FormGroup: React.FC<FormGroupProps> = ({
   className = "",
   layout = "vertical",
   hideLabel = false,
-  spacing = "md",
+  spacing = "medium",
   controller,
   "data-testid": testId = "form-group",
-}) => {
+}: FormGroupProps): JSX.Element => {
   const descriptionId = description ? `${id}-description` : undefined;
   const errorId = error ? `${id}-error` : undefined;
 
@@ -86,12 +86,12 @@ const FormGroup: React.FC<FormGroupProps> = ({
       <div className={styles.inputWrapper} data-testid={`${testId}-wrapper`}>
         <div className={styles.inputField} data-testid={`${testId}-input-field`}>
           {React.isValidElement(children)
-            ? React.cloneElement(children as React.ReactElement, {
-                id,
-                "aria-describedby": error ? errorId : description ? descriptionId : undefined,
-                "aria-invalid": !!error,
-                "data-testid": `${testId}-input`,
-              })
+            ? React.cloneElement(children as React.ReactElement<any>, {
+              id,
+              "aria-describedby": error ? errorId : description ? descriptionId : undefined,
+              "aria-invalid": !!error,
+              "data-testid": `${testId}-input`,
+            })
             : children}
         </div>
 

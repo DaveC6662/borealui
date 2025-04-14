@@ -1,10 +1,36 @@
 {
   "name": "boreal-ui",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "A modern, customizable React/Next.js component library",
+  "author": "Davin Chiupka",
+  "license": "ISC",
+  "main": "index.ts",
+  "module": "dist/index.esm.js",
+  "types": "types/types.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint ./src --ext .ts,.tsx",
+    "test": "vitest",
+    "prepare": "tsc -p tsconfig.build.json && vite build",
+    "playground": "vite --config playground/vite.config.ts",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
+  "keywords": [
+    "react",
+    "component-library",
+    "nextjs",
+    "scss",
+    "ui",
+    "boreal",
+    "design-system"
+  ],
   "peerDependencies": {
     "@tiptap/extension-heading": "^2.0.0",
     "@tiptap/extension-paragraph": "^2.0.0",
@@ -19,21 +45,31 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.6",
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/addon-onboarding": "^8.6.12",
+    "@storybook/blocks": "^8.6.12",
+    "@storybook/nextjs": "^8.6.12",
+    "@storybook/react": "^8.6.12",
+    "@storybook/test": "^8.6.12",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^29.5.14",
     "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.2",
     "@types/uuid": "^10.0.0",
-    "@vitejs/plugin-react": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jest-environment-jsdom": "^29.7.0",
     "next": "^13.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "sass": "^1.86.3",
+    "sass-embedded": "^1.86.3",
+    "storybook": "^8.6.12",
     "typescript": "^5.8.3",
-    "vite": "^5.0.0"
+    "vite": "^5.4.18"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "description": "",
   "dependencies": {
     "boreal-ui": "file:",
     "stylo-ui": "file:"
