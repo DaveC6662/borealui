@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { DataTable } from "@/index";
+import { DataTable } from "@/index.next";
 import { Column } from "@/components/DataTable/DataTable";
 
 interface TestData {

@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import { TextArea } from "@/index";
+import { TextArea } from "@/index.next";
 import { FaCommentDots } from "react-icons/fa";
 
 describe("TextArea", () => {

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Footer } from "@/index";
+import { Footer } from "@/index.next";
 import ThemeProvider from "@/context/ThemeContext";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 

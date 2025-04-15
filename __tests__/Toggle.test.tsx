@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Toggle } from "@/index";
+import { Toggle } from "@/index.next";
 
 describe("Toggle", () => {
   const setup = (props = {}) => {

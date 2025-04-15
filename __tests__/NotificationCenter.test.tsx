@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, act } from "@testing-library/react";
-import { NotificationCenter } from "@/index";
+import { NotificationCenter } from "@/index.next";
 import { Notification } from "@/components/NotificationCenter/NotificationCenter";
 import "@testing-library/jest-dom";
 

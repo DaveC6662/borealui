@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { CircularProgress } from "@/index";
+import { CircularProgress } from "@/index.next";
 
 describe("CircularProgress", () => {
   it("renders the component with correct rating text", () => {

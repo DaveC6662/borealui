@@ -7,7 +7,7 @@ import {
   cleanup,
 } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { CommandPalette } from "@/index";
+import { CommandPalette } from "@/index.next";
 import { CommandItem } from "@/components/CommandPalette/CommandPalette";
 
 function setupPortal() {

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { IconButton } from "@/index";
+import { IconButton } from "@/index.next";
 import { FaCheck} from "react-icons/fa";
 
 describe("IconButton Component", () => {

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { RadioButton } from "@/index";
+import { RadioButton } from "@/index.next";
 import "@testing-library/jest-dom";
 import { ThemeType } from "@/types/types";
 

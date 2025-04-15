@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Stepper } from "@/index";
+import { Stepper } from "@/index.next";
 import { FaCheck } from "react-icons/fa";
 
 describe("Stepper", () => {

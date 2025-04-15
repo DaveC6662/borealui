@@ -1,0 +1,85 @@
+@use "@styles/theme.scss" as theme;
+@use "sass:map";
+@use "sass:list";
+
+$themes: (
+  "primary": var(--primary-color),
+  "secondary": var(--secondary-color),
+  "success": theme.$success-color,
+  "error": theme.$error-color,
+  "warning": theme.$warning-color,
+  "clear": var(--background-color-darker)
+);
+$sizes: (
+  "xs": (toggle: (30px, 12px), slider: (8px, 8px), translate: 15px),
+  "small": (toggle: (40px, 20px), slider: (16px, 16px), translate: 18px),
+  "medium": (toggle: (50px, 28px), slider: (20px, 20px), translate: 22px),
+  "large": (toggle: (60px, 34px), slider: (25px, 25px), translate: 28px),
+  "xl": (toggle: (70px, 44px), slider: (30px, 30px), translate: 32px)
+);
+
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  gap: theme.$spacing-xs;
+}
+
+.label {
+  font-size: theme.$font-size-md;
+  color: var(--text-color-primary);
+}
+
+.toggle {
+  background-color: theme.$disabled-color;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  transition: background 0.3s ease-in-out;
+  outline: none;
+
+  .slider {
+    background-color: var(--text-color-primary);
+    border-radius: 50%;
+    position: absolute;
+    left: 4px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &.active {
+    background-color: var(--primary-color);
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+@each $name, $vals in $sizes {
+  .#{$name} {
+    .toggle {
+      width: list.nth(map.get($vals, toggle), 1);
+      height: list.nth(map.get($vals, toggle), 2);
+
+      .slider {
+        width: list.nth(map.get($vals, slider), 1);
+        height: list.nth(map.get($vals, slider), 2);
+      }
+
+      &.active .slider {
+        transform: translateX(map.get($vals, translate));
+      }
+    }
+  }
+}
+
+@each $theme, $color in $themes {
+  .#{$theme} .toggle.active {
+    background-color: $color;
+  }
+}

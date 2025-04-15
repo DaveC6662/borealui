@@ -1,0 +1,51 @@
+@use "@styles/theme" as theme;
+
+
+.circularProgress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+$progress-sizes: (
+  "xs": 40px,
+  "small": 60px,
+  "medium": 100px,
+  "large": 140px,
+  "xl": 180px,
+);
+
+
+@each $size, $dimension in $progress-sizes {
+  .#{$size} {
+    width: $dimension;
+    height: $dimension;
+  }
+}
+
+.circleBorder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.5s ease-in-out;
+}
+
+.innerCircle {
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  background: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ratingText {
+  font-size: theme.$font-size-md;
+  font-weight: theme.$font-weight-bold;
+  color: var(--text-color-primary);
+}

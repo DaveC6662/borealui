@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { ColorPicker } from "@/index";
+import { ColorPicker } from "@/index.next";
 import { ColorOption } from "@/components/ColorPicker/ColorPicker";
 
 const colorOptions: ColorOption[] = [

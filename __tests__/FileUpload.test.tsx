@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { FileUpload } from "@/index";
+import { FileUpload } from "@/index.next";
 
 describe("FileUpload", () => {
   const mockSubmit = jest.fn();

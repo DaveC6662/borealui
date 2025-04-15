@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import { Timeline } from "@/index";
+import { Timeline } from "@/index.next";
 import { FaRocket } from "react-icons/fa";
 
 describe("Timeline", () => {

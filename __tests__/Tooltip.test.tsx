@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Tooltip } from "@/index";
+import { Tooltip } from "@/index.next";
 
 describe("Tooltip", () => {
   it("renders tooltip content with default position and theme", () => {

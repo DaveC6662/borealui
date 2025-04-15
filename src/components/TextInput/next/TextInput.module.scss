@@ -1,0 +1,166 @@
+@use "@styles/theme" as theme;
+@use "sass:color";
+@use "sass:map";
+
+$themes: (
+  "primary": (
+    bg: var(--primary-color),
+    hover: var(--primary-color-hover),
+    text: var(--text-color-primary)
+  ),
+  "secondary": (
+    bg: var(--secondary-color),
+    hover: var(--secondary-color-hover),
+    text: var(--text-color-secondary)
+  ),
+  "success": (
+    bg: theme.$success-color,
+    hover: color.adjust(theme.$success-color, $lightness: -10%),
+    text: var(--text-color-primary)
+  ),
+  "error": (
+    bg: theme.$error-color,
+    hover: color.adjust(theme.$error-color, $lightness: -10%),
+    text: var(--text-color-primary)
+  ),
+  "warning": (
+    bg: theme.$warning-color,
+    hover: color.adjust(theme.$warning-color, $lightness: -10%),
+    text: var(--text-color-primary)
+  ),
+  "clear": (
+    bg: transparent,
+    hover: transparent,
+    text: var(--text-color-primary),
+    shadow: none
+  )
+);
+
+.iconTextBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: theme.$border-radius-xl;
+  margin: theme.$spacing-sm;
+  box-shadow: theme.$box-shadow-medium;
+  transition: theme.$transition-default;
+
+  @media (width <= 480px) {
+    padding: 0.3rem 0.5rem;
+    height: 35px;
+    width: 95%;
+  }
+}
+
+.textInput {
+  outline: none;
+  flex: 1;
+  margin: theme.$spacing-sm;
+  margin-left: 1em;
+  font-size: theme.$font-size-base;
+  border: none;
+  border-radius: theme.$border-radius-lg;
+  background-color: transparent;
+
+  &::placeholder {
+    color: var(--text-color-primary);
+    opacity: 0.8;
+  }
+
+  @media (width <= 480px) {
+    width: 100%;
+    font-size: calc(theme.$font-size-base * 0.9);
+  }
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: theme.$spacing-xs;
+  margin: -0.1em -0.9em 0 0.5em;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    color: var(--text-color-primary);
+
+    @media (width <= 480px) {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}
+
+.togglePassword {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: theme.$spacing-xs;
+  margin: 2px 0.5em 0 0;
+  border-radius: 50%;
+  color: inherit;
+
+  &:focus {
+    outline: 2px solid var(--text-color-primary);
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    color: rgb(0 0 0);
+  }
+
+  svg {
+    width: 1.5em;
+    height: 1.5em;
+
+    @media (width <= 480px) {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  @media (width <= 480px) {
+    margin-top: theme.$spacing-xs;
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+  background-color: theme.$disabled-color;
+
+  .textInput {
+    background-color: transparent;
+  }
+}
+
+@each $theme, $vals in $themes {
+  .#{$theme} {
+    background-color: map.get($vals, bg);
+    color: map.get($vals, text);
+    box-shadow: map.get($vals, shadow, theme.$box-shadow-medium);
+
+    &:hover {
+      background-color: map.get($vals, hover);
+    }
+
+    .textInput::placeholder {
+      color: map.get($vals, text);
+    }
+
+    .iconContainer svg {
+      color: map.get($vals, text);
+    }
+  }
+}
+
+.clear {
+  box-shadow: none;
+  border: 1px solid var(--text-color-primary);
+
+  .textInput {
+    border: none;
+  }
+}

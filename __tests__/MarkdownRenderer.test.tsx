@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { MarkdownRenderer } from "@/index";
+import { MarkdownRenderer } from "@/index.next";
 
 describe("MarkdownRenderer", () => {
   const markdown = `# Hello **world**`;

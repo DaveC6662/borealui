@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { FaUser, FaLock } from "react-icons/fa";
-import { TextInput } from "@/index";
+import { TextInput } from "@/index.next";
 
 describe("TextInput", () => {
   it("renders with placeholder", () => {

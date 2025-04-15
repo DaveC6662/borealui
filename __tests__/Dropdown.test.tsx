@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from "@testing-library/react";
-import { Dropdown } from "@/index";
+import { Dropdown } from "@/index.next";
 import "@testing-library/jest-dom";
 import { FaEllipsisV, FaUser } from "react-icons/fa";
 

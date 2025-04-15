@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Rating } from "@/index";
+import { Rating } from "@/index.next";
 import "@testing-library/jest-dom";
 
 describe("Rating Component", () => {

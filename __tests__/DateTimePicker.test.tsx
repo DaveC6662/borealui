@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { DateTimePicker } from "@/index";
+import { DateTimePicker } from "@/index.next";
 
 describe("DateTimePicker", () => {
   const testId = "datetime-picker";

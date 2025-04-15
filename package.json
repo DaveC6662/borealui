@@ -31,6 +31,20 @@
     "boreal",
     "design-system"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/core/index.js",
+      "require": "./dist/core/index.cjs"
+    },
+    "./core": {
+      "import": "./dist/core/index.js",
+      "require": "./dist/core/index.cjs"
+    },
+    "./next": {
+      "import": "./dist/next/index.js",
+      "require": "./dist/next/index.cjs"
+    }
+  },
   "peerDependencies": {
     "@tiptap/extension-heading": "^2.0.0",
     "@tiptap/extension-paragraph": "^2.0.0",
@@ -72,7 +86,6 @@
     "vite": "^5.4.18"
   },
   "dependencies": {
-    "boreal-ui": "file:",
-    "stylo-ui": "file:"
+    "boreal-ui": "file:"
   }
 }

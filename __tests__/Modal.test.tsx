@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, act } from "@testing-library/react";
-import { Modal } from "@/index";
+import { Modal } from "@/index.next";
 import "@testing-library/jest-dom";
 
 describe("Modal", () => {

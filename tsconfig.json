@@ -34,7 +34,7 @@
     "jest.setup.ts",
     "jest.config.ts",
     "test/**/*"
-  ],
+, "src/components/EmptyState/core/EmptyState.tsx"  ],
   "exclude": [
     "node_modules",
     "cypress"

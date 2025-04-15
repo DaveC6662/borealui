@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Avatar from "@/components/Avatar/Avatar.core";
+import Avatar from "../components/Avatar/core/Avatar"
 
 const meta: Meta<typeof Avatar> = {
   title: "Components/Avatar/Core",
@@ -16,7 +16,7 @@ const meta: Meta<typeof Avatar> = {
     },
     size: {
       control: "select",
-      options: ["small", "medium", "large"],
+      options: ["xs", "small", "medium", "large", "xl"],
     },
     theme: {
       control: "select",
@@ -69,7 +69,7 @@ export const SquareOffline: Story = {
     name: "Taylor Smith",
     status: "offline",
     size: "large",
-    theme: "error",
+    theme: "primary",
     shape: "square",
   },
 };
@@ -80,7 +80,7 @@ export const Accessible: Story = {
     alt: "Profile picture of Morgan Lee",
     label: "Morgan Lee’s avatar",
     size: "medium",
-    theme: "success",
+    theme: "secondary",
     status: "idle",
   },
 };

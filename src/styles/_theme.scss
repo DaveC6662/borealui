@@ -1,9 +1,9 @@
 @use "sass:color";
 
-$primary-color: #FFF;
-$secondary-color: #FFF;
-$background-color: #FFF;
-$background-color-surface: #FFF;
+$primary-color: #1c4d3a;
+$secondary-color: #6e502e;
+$background-color: #222e2e;
+$background-color-surface: #384b4b;
 $error-color: #f83838;
 $success-color: #51c703;
 $warning-color: #fca505;
@@ -12,12 +12,12 @@ $link-color: #8bb0c7;
 $link-hover-color: #627e8f;
 $link-hover-color-primary: color.mix(rgb(0 0 0), $primary-color, 20%);
 $link-hover-color-secondary: color.mix(rgb(0 0 0), $secondary-color, 20%);
-$text-color: rgb(0 0 0);
+$text-color: rgb(255, 255, 255);
 $text-color-light: color.adjust($text-color, $lightness: 20%);
 $text-color-lighter: color.adjust($text-color, $lightness: 40%);
 $text-color-primary: rgb(255 255 255);
 $text-color-secondary: rgb(0 0 0);
-$font-family-primary: 'Roboto', arial, sans-serif;
+$font-family-primary: 'Lora', arial, sans-serif;
 $font-family-secondary: 'Lora', serif;
 $font-size-xxs: 10px;
 $font-size-xs: 12px;

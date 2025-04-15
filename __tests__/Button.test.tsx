@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, fireEvent, screen } from "@testing-library/react";
-import { Button } from "@/index";
+import { Button } from "@/index.next";
 import { FaCheck } from "react-icons/fa";
 
 describe("Button Component", () => {

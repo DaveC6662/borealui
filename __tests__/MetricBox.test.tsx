@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { MetricBox } from "@/index";
+import { MetricBox } from "@/index.next";
 import { FaUsers } from "react-icons/fa";
 import "@testing-library/jest-dom";
 

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Breadcrumbs } from "@/index";
+import { Breadcrumbs } from "@/index.next";
 import "@testing-library/jest-dom";
 import { FaArrowRight } from "react-icons/fa";
 import { BreadcrumbsProps } from "@/components/Breadcrumbs/Breadcrumbs";

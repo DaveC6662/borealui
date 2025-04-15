@@ -1,6 +1,6 @@
 import { render, fireEvent, act, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { ChipGroup } from "@/index";
+import { ChipGroup } from "@/index.next";
 import { ChipItem } from "@/components/Chip/ChipGroup/ChipGroup";
 
 

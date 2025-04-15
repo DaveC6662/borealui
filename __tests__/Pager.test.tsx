@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Pager } from "@/index";
+import { Pager } from "@/index.next";
 import "@testing-library/jest-dom";
 import { SizeType, ThemeType } from "@/types/types";
 

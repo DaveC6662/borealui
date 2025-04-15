@@ -1,6 +1,6 @@
 import { render, fireEvent, screen, act, cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { Chip } from "@/index";
+import { Chip } from "@/index.next";
 import { FaInfoCircle } from "react-icons/fa";
 
 function setupPortal() {

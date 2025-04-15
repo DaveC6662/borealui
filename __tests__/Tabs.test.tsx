@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Tabs } from "@/index";
+import { Tabs } from "@/index.next";
 import { FaHome, FaUser } from "react-icons/fa";
 
 describe("Tabs Component", () => {

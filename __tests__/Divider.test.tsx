@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { Divider } from "@/index";
+import { Divider } from "@/index.next";
 
 describe("Divider", () => {
   it("renders horizontal divider by default", () => {

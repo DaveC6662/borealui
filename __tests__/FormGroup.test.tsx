@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { TextInput, FormGroup } from "@/index";
+import { TextInput, FormGroup } from "@/index.next";
 import "@testing-library/jest-dom";
 
 describe("FormGroup", () => {

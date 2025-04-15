@@ -1,0 +1,87 @@
+@use "@styles/theme" as theme;
+@use "sass:map";
+
+$table-themes: (
+  "primary": var(--primary-color),
+  "secondary": var(--secondary-color),
+  "success": theme.$success-color,
+  "error": theme.$error-color,
+  "warning": theme.$warning-color
+);
+
+
+
+.dataTableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: theme.$border-radius-xs;
+  box-shadow: theme.$box-shadow-light;
+  margin: theme.$spacing-md;
+
+  tbody tr:hover {
+    background-color: var(--background-color-lighter);
+  }
+
+  &.striped {
+    tbody tr:nth-child(odd) {
+      background-color: var(--background-color-dark);
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: var(--background-color-darker);
+    }
+  }
+}
+
+@each $theme, $color in $table-themes {
+  .#{$theme} th {
+    background-color: $color;
+  }
+}
+
+.clear {
+  box-shadow: none;
+
+  th {
+    background-color: transparent;
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: theme.$font-size-base;
+
+  th {
+    text-align: left;
+    padding: theme.$spacing-sm;
+    font-weight: theme.$font-weight-bold;
+  }
+
+  td {
+    padding: theme.$spacing-sm;
+    border-bottom: 1px solid var(--text-color-primary);
+    text-align: left;
+  }
+
+  th:hover {
+    cursor: pointer;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.striped {
+  background-color: var(--background-secondary-light-color);
+}
+
+.clickable {
+  cursor: pointer;
+  transition: background-color theme.$transition-default;
+
+  &:hover {
+    background-color: var(--primary-color-hover);
+  }
+}

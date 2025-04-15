@@ -1,0 +1,110 @@
+import React, { useEffect, useRef } from "react";
+import { FaTimes } from "react-icons/fa";
+import { Button, IconButton } from "@/index.next";
+import styles from "./NotificationCenter.module.scss";
+import { NotificationCenterProps, themeIcons } from "../NotificationCenter.types";
+
+/**
+ * NotificationCenter displays a list of notifications with support for auto-dismissal,
+ * manual dismissal, and a "clear all" action. It uses ARIA roles and live regions
+ * to improve accessibility, ensuring users are notified of updates.
+ *
+ * @param {NotificationCenterProps} props - Props for configuring the NotificationCenter.
+ * @returns {JSX.Element} A region displaying notifications.
+ */
+const NotificationCenter: React.FC<NotificationCenterProps> = ({
+  notifications,
+  onRemove,
+  onClearAll,
+  showClearAll = true,
+  "data-testid": testId = "notification-center",
+}) => {
+  const timeouts = useRef<Record<string, NodeJS.Timeout>>({});
+
+  useEffect(() => {
+    const currentTimeouts = timeouts.current;
+
+    notifications.forEach((note) => {
+      if (note.duration && !currentTimeouts[note.id]) {
+        currentTimeouts[note.id] = setTimeout(() => {
+          onRemove(note.id);
+          delete currentTimeouts[note.id];
+        }, note.duration);
+      }
+    });
+
+    return () => {
+      Object.values(currentTimeouts).forEach(clearTimeout);
+    };
+  }, [notifications, onRemove]);
+
+  return (
+    <div
+      className={styles.notificationCenter}
+      role="region"
+      aria-label="Notifications"
+      data-testid={testId}
+    >
+      <div className={styles.header} data-testid={`${testId}-header`}>
+        <h3 id={`${testId}-title`}>Notifications</h3>
+        {showClearAll && notifications.length > 0 && (
+          <Button
+            theme="error"
+            size="small"
+            className={styles.clearAll}
+            onClick={onClearAll}
+            aria-label="Clear all notifications"
+            data-testid={`${testId}-clear-all`}
+          >
+            Clear All
+          </Button>
+        )}
+      </div>
+
+      <div role="status" aria-live="polite">
+        <ul className={styles.list} aria-labelledby={`${testId}-title`}>
+          {notifications.map((note, index) => {
+            const Icon = themeIcons[note.type || "info"];
+            const noteTestId = `${testId}-item-${note.id}`;
+
+            return (
+              <li
+                key={note.id}
+                className={`${styles.notification} ${styles[note.type || "info"]}`}
+                data-testid={noteTestId}
+              >
+                <Icon className={styles.icon} aria-hidden="true" />
+                <div className={styles.content}>
+                  <span className={styles.message} data-testid={`${noteTestId}-message`}>
+                    {note.message}
+                  </span>
+                  {note.timestamp && (
+                    <span className={styles.timestamp} data-testid={`${noteTestId}-timestamp`}>
+                      {note.timestamp.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                  )}
+                </div>
+                <IconButton
+                  className={styles.close}
+                  theme="error"
+                  size="small"
+                  outline
+                  icon={FaTimes}
+                  onClick={() => onRemove(note.id)}
+                  aria-label={`Dismiss notification ${index + 1}`}
+                  title="Dismiss"
+                  data-testid={`${noteTestId}-dismiss`}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default NotificationCenter;

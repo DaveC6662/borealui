@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { Toolbar, Button } from "@/index";
+import { Toolbar, Button } from "@/index.next";
 
 describe("Toolbar - Custom Center", () => {
   it("renders title, subtitle (custom center), and right button", () => {

@@ -1,0 +1,90 @@
+@use "@styles/theme.scss" as theme;
+@use "sass:map";
+
+$swatch-sizes: (
+  xs: 20px,
+  small: 24px,
+  medium: 32px,
+  large: 36px,
+  xl: 40px,
+);
+
+.colorPicker {
+  border: none;
+  padding: theme.$spacing-sm;
+  display: flex;
+  flex-direction: column;
+  gap: theme.$spacing-xs;
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.legend {
+  font-size: theme.$font-size-sm;
+  font-weight: theme.$font-weight-bold;
+  margin-bottom: theme.$spacing-xs;
+}
+
+.colorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
+  gap: theme.$spacing-xs;
+}
+
+.colorSwatch {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: theme.$border-radius-sm;
+  outline: 2px solid transparent;
+  transition: outline-color 0.2s ease-in-out;
+  box-sizing: border-box;
+  width: map.get($swatch-sizes, medium);
+  height: map.get($swatch-sizes, medium);
+
+  &.selected,
+  &:focus-visible {
+    outline-color: var(--text-color-primary);
+  }
+
+  @each $size, $val in $swatch-sizes {
+    &.#{$size} {
+      width: $val;
+      height: $val;
+    }
+  }
+}
+
+.radioInput {
+  display: none;
+}
+
+.colorPreview {
+  width: 80%;
+  height: 80%;
+  display: block;
+  box-shadow: theme.$box-shadow-light;
+  box-sizing: border-box;
+}
+
+.square .colorPreview {
+  border-radius: 6px;
+}
+
+.round .colorPreview {
+  border-radius: 50%;
+}
+
+.pill .colorPreview {
+  border-radius: 9999px;
+  height: 50%;
+}
+
+.customColorInput {
+  margin-top: theme.$spacing-xs;
+  width: 100%;
+}

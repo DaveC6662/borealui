@@ -1,0 +1,201 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
+@use "sass:color";
+@use "sass:map";
+
+.accordion {
+  border-radius: theme.$border-radius-lg;
+  overflow: hidden;
+  margin-bottom: theme.$spacing-sm;
+  transition: box-shadow theme.$transition-default;
+}
+
+.accordionHeader {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  min-width: 250px;
+  width: 100%;
+  color: var(--text-color-primary);
+  padding: theme.$spacing-sm;
+  font-size: theme.$font-size-base;
+  font-weight: theme.$font-weight-bold;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  transition: background-color theme.$transition-default;
+}
+
+.accordionTitle {
+  flex-grow: 1;
+}
+
+.accordionIcon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+  transition: transform theme.$transition-default;
+
+  &.expanded {
+    transform: rotate(180deg);
+  }
+}
+
+.accordionHeader:focus-visible {
+  outline: 2px solid var(--text-color-primary);
+  outline-offset: 2px;
+}
+
+.accordionContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding theme.$transition-default;
+  padding: 0;
+  display: none;
+  background-color: var(--background-color-lighter);
+  color: var(--text-color-primary);
+
+  &.expanded,
+  &[data-state="open"] {
+    display: block;
+    max-height: 500px;
+    padding: theme.$spacing-sm theme.$spacing-md;
+  }
+}
+
+.clear {
+  background-color: transparent;
+  color: var(--text-color-primary);
+}
+
+.outline {
+  border: 2px solid currentcolor;
+  background-color: transparent;
+
+  .accordionHeader {
+    background-color: transparent;
+  }
+}
+
+$themes: (
+  "primary": (
+    color: var(--primary-color),
+    hover: var(--primary-color-hover),
+    text-hover: var(--text-color-primary)
+  ),
+  "secondary": (
+    color: var(--secondary-color),
+    hover: var(--secondary-color-hover),
+    text-hover: var(--text-color-secondary)
+  ),
+  "success": (
+    color: theme.$success-color,
+    hover: color.adjust(theme.$success-color, $lightness: -10%),
+    text-hover: var(--text-color-primary)
+  ),
+  "error": (
+    color: theme.$error-color,
+    hover: color.adjust(theme.$error-color, $lightness: -10%),
+    text-hover: var(--text-color-primary)
+  ),
+  "warning": (
+    color: theme.$warning-color,
+    hover: color.adjust(theme.$warning-color, $lightness: -10%),
+    text-hover: var(--text-color-primary)
+  )
+);
+
+@each $name, $values in $themes {
+  .#{$name} {
+    background-color: map.get($values, color);
+    color: var(--text-color-primary);
+
+    &:hover {
+      background-color: map.get($values, hover);
+    }
+  }
+
+  .#{$name}.outline {
+    background-color: transparent;
+    border: 2px solid map.get($values, color);
+
+    .accordionHeader {
+      color: map.get($values, color);
+    }
+
+    &:hover {
+      background-color: map.get($values, hover);
+
+      .accordionHeader {
+        color: map.get($values, text-hover);
+      }
+    }
+  }
+}
+
+.disabled {
+  background-color: theme.$disabled-color;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+
+  &.outline {
+    color: theme.$disabled-color;
+    border-color: theme.$disabled-color;
+  }
+}
+
+.xs {
+  .accordionHeader {
+    padding: theme.$spacing-xs;
+    font-size: theme.$font-size-xs;
+  }
+
+  .accordionIcon {
+    font-size: 1rem;
+  }
+}
+
+.small {
+  .accordionHeader {
+    padding: theme.$spacing-sm;
+    font-size: theme.$font-size-sm;
+  }
+
+  .accordionIcon {
+    font-size: 1.2rem;
+  }
+}
+
+.medium {
+  .accordionHeader {
+    padding: theme.$spacing-xs;
+    font-size: theme.$font-size-md;
+  }
+
+  .accordionIcon {
+    font-size: 1.5rem;
+  }
+}
+
+.large {
+  .accordionHeader {
+    padding: theme.$spacing-sm;
+    font-size: theme.$font-size-md;
+  }
+
+  .accordionIcon {
+    font-size: 1.8rem;
+  }
+}
+
+.xl {
+  .accordionHeader {
+    padding: theme.$spacing-md;
+    font-size: theme.$font-size-lg;
+  }
+
+  .accordionIcon {
+    font-size: 2rem;
+  }
+}

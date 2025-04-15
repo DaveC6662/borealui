@@ -1,7 +1,7 @@
 
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { Card } from "@/index";
+import { Card } from "@/index.next";
 import { FaBook} from "react-icons/fa";
 import { ThemeType } from "@/types/types";
 

@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Avatar } from "@/index";
+import { Avatar } from "@/index.next";
 import { FaCrown } from "react-icons/fa";
 
 describe("Avatar Component", () => {

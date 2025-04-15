@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { RichTextEditor } from "@/index";
+import { RichTextEditor } from "@/index.next";
 import "@testing-library/jest-dom";
 
 describe("RichTextEditor", () => {

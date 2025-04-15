@@ -7,7 +7,7 @@
   --primary-color: #{theme.$primary-color};
   --primary-color-light: #{color.adjust(theme.$primary-color, $lightness: 40%)};
   --primary-color-hover: #{color.adjust(theme.$primary-color, $lightness: -10%)};
-  --primary-text-color: #{theme.$text-color-primary};
+  --text-color-primary: #{theme.$text-color-primary};
   --primary-text-color-contrast: #{theme.$text-color-secondary};
   --success-color: #{theme.$success-color};
   --warning-color: #{theme.$warning-color};

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Slider } from "@/index";
+import { Slider } from "@/index.next";
 import { SizeType, ThemeType } from "@/types/types";
 
 describe("Slider Component", () => {

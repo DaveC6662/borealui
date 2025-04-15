@@ -1,0 +1,57 @@
+@use "@styles/theme" as theme;
+
+.fileUploadBox {
+  display: flex;
+  flex-direction: column;
+  border-radius: theme.$border-radius-lg;
+  padding: theme.$spacing-md;
+  background-color: var(--background-color-light);
+  border: 2px dashed var(--background-color-darker);
+  transition: theme.$transition-default;
+
+  &:hover {
+    border-color: theme.$secondary-color;
+    background-color: var(--background-color-lighter);
+  }
+
+  @media (width <= 768px) {
+    padding: theme.$spacing-md;
+  }
+
+  @media (width <= 480px) {
+    padding: theme.$spacing-sm;
+  }
+}
+
+.uploadActions {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.uploadControls {
+  display: flex;
+  flex-direction: column;
+  gap: theme.$spacing-sm;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.uploadProgress {
+  width: 100%;
+  margin-top: theme.$spacing-sm;
+}
+
+.uploadButton {
+  align-self: center;
+}
+
+.removeButton {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.hiddenInput {
+  display: none;
+}

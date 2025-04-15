@@ -1,0 +1,118 @@
+@use "@styles/theme" as theme;
+@use "sass:color";
+@use "sass:map";
+
+
+$theme-variations: (
+  "primary": (bg: var(--primary-color), color: var(--text-color-primary), border: var(--primary-color)),
+  "secondary": (bg: var(--secondary-color), color: var(--text-color-secondary), border: var(--secondary-color)),
+  "success": (bg: theme.$success-color, color: var(--text-color-primary), border: theme.$success-color),
+  "error": (bg: theme.$error-color, color: var(--text-color-primary), border: theme.$error-color),
+  "warning": (bg: theme.$warning-color, color: var(--text-color-primary), border: theme.$warning-color),
+  "clear": (bg: transparent, color: var(--text-color-primary), border: var(--text-color-primary))
+);
+
+.metricBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-primary-light-color);
+  border-radius: theme.$border-radius-lg;
+  box-shadow: theme.$box-shadow-medium;
+  min-width: 120px;
+  width: 160px;
+  text-align: center;
+  margin: theme.$spacing-sm;
+  transition: theme.$transition-default;
+  gap: theme.$spacing-sm;
+
+  @media(width >= 480px) {
+    padding: theme.$spacing-sm;
+  }
+
+  @each $theme, $properties in $theme-variations {
+    &.#{$theme} {
+      background-color: map.get($properties, bg);
+      color: map.get($properties, color);
+      border: 2px solid map.get($properties, border);
+
+      .title {
+        color: map.get($properties, color);
+      }
+
+      .subtext {
+        color: map.get($properties, color);
+      }
+    }
+  }
+}
+
+.icon {
+  font-size: 2rem;
+  color: inherit;
+  padding: theme.$spacing-sm
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  padding: theme.$spacing-sm
+}
+
+.title {
+  font-size: theme.$font-size-sm;
+  color: var(--text-color-primary);
+}
+
+.value {
+  font-size: theme.$font-size-lg;
+  font-weight: theme.$font-weight-bold;
+}
+
+.subtext {
+  font-size: theme.$font-size-sm;
+  color: var(--text-color-primary);
+  opacity: 0.7;
+}
+
+.left {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.right {
+  align-items: flex-end;
+  text-align: right;
+}
+
+$size-variations: (
+  "xs": (width: 80px, icon-size: 1.5rem, title-size: theme.$font-size-xs, value-size: theme.$font-size-sm, subtext-size: theme.$font-size-xs),
+  "small": (width: 140px, icon-size: 2rem, title-size: theme.$font-size-sm, value-size: theme.$font-size-md, subtext-size: theme.$font-size-sm),
+  "medium": (width: 160px, icon-size: 2rem, title-size: theme.$font-size-base, value-size: theme.$font-size-lg, subtext-size: theme.$font-size-base),
+  "large": (width: 200px, icon-size: 2.5rem, title-size: theme.$font-size-lg, value-size: theme.$font-size-xl, subtext-size: theme.$font-size-lg),
+  "xl": (width: 220px, icon-size: 2.5rem, title-size: theme.$font-size-xl, value-size: theme.$font-size-xl, subtext-size: theme.$font-size-lg)
+);
+
+@each $size, $properties in $size-variations {
+  .#{$size} {
+    width: map.get($properties, width);
+
+    .icon {
+      font-size: map.get($properties, icon-size);
+    }
+
+    .title {
+      font-size: map.get($properties, title-size);
+    }
+
+    .value {
+      font-size: map.get($properties, value-size);
+    }
+
+    .subtext {
+      font-size: map.get($properties, subtext-size);
+    }
+  }
+}

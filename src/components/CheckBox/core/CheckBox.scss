@@ -1,0 +1,76 @@
+@use "@styles/theme" as theme;
+@use "sass:color";
+@use "sass:map";
+
+.checkboxWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: theme.$spacing-sm;
+  font-size: theme.$font-size-base;
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+  transition: all theme.$transition-default;
+}
+
+.checkboxInput {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+  left: 0;
+}
+
+.checkboxBox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid var(--text-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all theme.$transition-default;
+
+  &::after {
+    content: "";
+    width: 10px;
+    height: 5px;
+    border-left: 2px solid currentcolor;
+    border-bottom: 2px solid currentcolor;
+    transform: rotate(-45deg);
+    opacity: 0;
+    transition: all theme.$transition-default;
+  }
+}
+
+.checkboxInput:checked + .checkboxBox::after {
+  opacity: 1;
+}
+
+.checkboxLabel {
+  color: var(--text-color-primary);
+  font-size: theme.$font-size-sm;
+}
+
+$states: (
+  "primary": (border: var(--primary-color), color: var(--primary-color)),
+  "secondary": (border: var(--secondary-color), color: var(--secondary-color)),
+  "success": (border: theme.$success-color, color: theme.$success-color),
+  "error": (border: theme.$error-color, color: theme.$error-color),
+  "warning": (border: theme.$warning-color, color: theme.$warning-color),
+  "clear": (border: var(--text-color-primary), color: var(--text-color-primary))
+);
+
+@each $state, $colors in $states {
+  .#{$state} .checkboxBox {
+    border-color: map.get($colors, border);
+    color: map.get($colors, color);
+  }
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

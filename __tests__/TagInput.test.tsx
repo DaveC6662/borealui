@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, fireEvent, screen } from "@testing-library/react";
-import { TagInput } from "@/index";
+import { TagInput } from "@/index.next";
 
 describe("TagInput", () => {
   it("renders initial tags", () => {

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { EmptyState } from "@/index";
+import { EmptyState } from "@/index.next";
 import { FaBoxOpen } from "react-icons/fa";
 
 describe("EmptyState Component", () => {

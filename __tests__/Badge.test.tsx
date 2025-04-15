@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { FaCheck } from "react-icons/fa";
-import { Badge } from "@/index";
+import { Badge } from "@/index.next";
 
 describe("Badge Component", () => {
   it("renders text correctly", () => {

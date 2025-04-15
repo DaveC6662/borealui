@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import {Accordion} from "@/index";
+import {Accordion} from "@/index.next";
 
 describe("Accordion Component", () => {
   it("renders with default props", () => {
