@@ -6,7 +6,7 @@ import {
 } from "react";
 import styles from "./TextArea.module.scss";
 import { combineClassNames } from "@/utils/classNames";
-import { TextAreaProps } from "./TextArea.types";
+import { TextAreaProps } from "../TextArea.types";
 
 
 

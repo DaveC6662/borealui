@@ -3,7 +3,7 @@
 import React, { JSX, useEffect, useState } from "react";
 import styles from "./CircularProgress.module.scss";
 import { combineClassNames } from "@/utils/classNames";
-import { CircularProgressProps } from "./CircularProgress.types";
+import { CircularProgressProps } from "../CircularProgress.types";
 
 /**
  * Returns the CSS color value based on the normalized percentage.

@@ -10,7 +10,7 @@ import styles from "./TextInput.module.scss";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { combineClassNames } from "@/utils/classNames";
-import { TextInputProps } from "./TextInput.types";
+import { TextInputProps } from "../TextInput.types";
 
 /**
  * TextInput is a customizable input component that supports optional icons, password mode,

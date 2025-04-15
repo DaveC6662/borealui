@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { FaTimes } from "react-icons/fa";
 import { Button, IconButton } from "@/index.next";
 import styles from "./NotificationCenter.module.scss";
-import { NotificationCenterProps, themeIcons } from "./NotificationCenter.types";
+import { NotificationCenterProps, themeIcons } from "../NotificationCenter.types";
 
 /**
  * NotificationCenter displays a list of notifications with support for auto-dismissal,

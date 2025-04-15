@@ -5,7 +5,7 @@ import { FaTimes } from "react-icons/fa";
 import { IconButton, TextInput } from "@/index.next";
 import styles from "./Taginput.module.scss";
 import { combineClassNames } from "@/utils/classNames";
-import { TagInputProps } from "./Taginput.types";
+import { TagInputProps } from "../Taginput.types";
 
 /**
  * TagInput component allows users to input and manage a dynamic list of tags.
@@ -103,7 +103,7 @@ const TagInput: React.FC<TagInputProps> = ({
             className={styles.input}
             value={inputValue}
             placeholder={tagList.length === 0 ? placeholder : ""}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setInputValue(e.target.value)}
             onKeyDown={handleAddTag}
             aria-label="Add new tag"
             data-testid={`${testId}-input`}

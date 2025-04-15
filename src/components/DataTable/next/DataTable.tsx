@@ -3,7 +3,7 @@
 import { useState, useMemo, JSX } from "react";
 import styles from "./DataTable.module.scss";
 import { combineClassNames } from "@/utils/classNames";
-import { DataTableProps } from "./DataTable.types";
+import { DataTableProps } from "../DataTable.types";
 
 /**
  * A reusable, generic, sortable data table with optional row click handling and custom rendering.

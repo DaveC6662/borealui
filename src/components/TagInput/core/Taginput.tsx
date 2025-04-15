@@ -99,7 +99,7 @@ const TagInput: React.FC<TagInputProps> = ({
             className={styles.input}
             value={inputValue}
             placeholder={tagList.length === 0 ? placeholder : ""}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setInputValue(e.target.value)}
             onKeyDown={handleAddTag}
             aria-label="Add new tag"
             data-testid={`${testId}-input`}

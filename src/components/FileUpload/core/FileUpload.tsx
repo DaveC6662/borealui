@@ -1,5 +1,5 @@
 import React, { JSX, useRef, useState } from "react";
-import FormGroup from "../../FormGroup/FormGroup";
+import FormGroup from "../../FormGroup/core/FormGroup";
 import styles from "./FileUpload.module.scss";
 import { Button, IconButton, Progressbar } from "@/index.next";
 import { FaFile, FaTrash } from "react-icons/fa";

@@ -116,7 +116,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
           ref={inputRef}
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           theme={theme}

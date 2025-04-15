@@ -2,7 +2,7 @@
 
 import React, { JSX } from "react";
 import styles from "./Toolbar.module.scss";
-import Avatar from "../Avatar/Avatar";
+import Avatar from "../../Avatar/next/Avatar";
 import { combineClassNames } from "@/utils/classNames";
 import { ToolbarProps } from "../Toolbar.types";
 

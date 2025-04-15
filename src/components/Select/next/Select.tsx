@@ -3,7 +3,7 @@
 import { ChangeEvent, forwardRef } from "react";
 import styles from "./Select.module.scss";
 import { FaChevronDown } from "react-icons/fa";
-import { SelectProps } from "./Select.types";
+import { SelectProps } from "../Select.types";
 
 
 /**

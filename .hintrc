@@ -18,7 +18,8 @@
           "background-color: map.get($values, color)",
           "border: 2px solid map.get($values, color)",
           "color: map.get($values, color)",
-          "background-color: map.get($props, color)"
+          "background-color: map.get($props, color)",
+          "color: map.get($colors, color)"
         ]
       }
     ]
