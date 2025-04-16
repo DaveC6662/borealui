@@ -1,8 +1,9 @@
 import React, { JSX, useEffect, useId, useRef, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import ReactDOM from "react-dom";
-import styles from "./MessagePopup.module.scss";
-import { Button, IconButton } from "@/index.next";
+import "./MessagePopup.scss";
+import Button from "../../Buttons/Button/core/Button";
+import IconButton from "../../Buttons/IconButton/core/IconButton";
 import { MessagePopupProps } from "../MessagePopup.types";
 
 /**
@@ -61,13 +62,13 @@ const MessagePopup: React.FC<MessagePopupProps> = ({
 
   return ReactDOM.createPortal(
     <div
-      className={`${styles.messagePopup} ${className}`}
+      className={`${"messagePopup"} ${className}`}
       onClick={onClose}
       role="presentation"
       data-testid={testId}
     >
       <div
-        className={styles.popupContent}
+        className={"popupContent"}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -77,7 +78,7 @@ const MessagePopup: React.FC<MessagePopupProps> = ({
         data-testid={`${testId}-dialog`}
       >
         <IconButton
-          className={styles.closeButton}
+          className={"closeButton"}
           onClick={onClose}
           aria-label="Close popup"
           icon={FaTimes}
@@ -87,15 +88,15 @@ const MessagePopup: React.FC<MessagePopupProps> = ({
         />
         <p
           id={messageId}
-          className={styles.popupMessage}
+          className={"popupMessage"}
           data-testid={`${testId}-message`}
         >
           {message}
         </p>
-        <div className={styles.popupActions} data-testid={`${testId}-actions`}>
+        <div className={"popupActions"} data-testid={`${testId}-actions`}>
           {onConfirm && (
             <Button
-              className={styles.confirmBtn}
+              className={"confirmBtn"}
               theme="error"
               onClick={onConfirm}
               data-testid={`${testId}-confirm`}
@@ -105,7 +106,7 @@ const MessagePopup: React.FC<MessagePopupProps> = ({
           )}
           {onCancel && (
             <Button
-              className={styles.cancelBtn}
+              className={"cancelBtn"}
               theme="warning"
               onClick={onCancel}
               data-testid={`${testId}-cancel`}

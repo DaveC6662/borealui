@@ -9,3 +9,11 @@ export interface NavItem {
     /** URL path where the nav item links. */
     path: string;
   }
+
+  /**
+ * Props for the reusable NavBar component.
+ */
+export interface NavBarProps {
+  /** Array of navigation items to render in the NavBar. */
+  items: NavItem[];
+}

@@ -1,8 +1,9 @@
 import React, { useState, useId } from "react";
 import { FaTimes } from "react-icons/fa";
-import { IconButton, TextInput } from "@/index.next";
-import styles from "./Taginput.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import IconButton from "../../Buttons/IconButton/core/IconButton";
+import TextInput from "../../TextInput/core/TextInput";
+import "./Taginput.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { TagInputProps } from "../Taginput.types";
 
 /**
@@ -59,7 +60,7 @@ const TagInput: React.FC<TagInputProps> = ({
 
   return (
     <div
-      className={combineClassNames(styles.tagInput, styles[theme], styles[size])}
+      className={combineClassNames(`tagInput`, size)}
       role="group"
       aria-labelledby={`${inputId}-label`}
       data-testid={testId}
@@ -68,19 +69,19 @@ const TagInput: React.FC<TagInputProps> = ({
         Tag Input
       </label>
 
-      <ul className={styles.tagContainer} aria-live="polite" data-testid={`${testId}-list`}>
+      <ul className={`tagContainer`} aria-live="polite" data-testid={`${testId}-list`}>
         {tagList.map((tag, index) => (
           <li
             key={tag}
-            className={styles.tag}
+            className={`tag ${theme}`}
             role="listitem"
             data-testid={`${testId}-tag-${index}`}
           >
-            <span className={styles.tagLabel}>{tag}</span>
+            <span className={`tagLabel`}>{tag}</span>
             <IconButton
               type="button"
               aria-label={`Remove tag ${tag}`}
-              className={styles.removeButton}
+              className={`removeButton`}
               onClick={() => handleRemoveTag(tag)}
               data-testid={`${testId}-remove-${index}`}
               title="remove"
@@ -91,12 +92,12 @@ const TagInput: React.FC<TagInputProps> = ({
           </li>
         ))}
 
-        <li className={styles.inputWrapper}>
+        <li className={`inputWrapper`}>
           <TextInput
             id={inputId}
             type="text"
             theme={theme}
-            className={styles.input}
+            className={`input`}
             value={inputValue}
             placeholder={tagList.length === 0 ? placeholder : ""}
             onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setInputValue(e.target.value)}

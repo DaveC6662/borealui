@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import styles from "./RadioButton.module.scss";
+import "./RadioButton.scss";
 import { RadioButtonProps } from "../RadioButton.types";
 
 /**
@@ -39,9 +39,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
 
     return (
       <label
-        className={`${styles.radioWrapper} ${styles[theme]} ${
-          disabled ? styles.disabled : ""
-        } ${className}`}
+        className={`${`radioWrapper`} ${className}`}
         data-testid={`${testId}-wrapper`}
       >
         <input
@@ -50,7 +48,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
           role="radio"
           aria-checked={checked}
           aria-disabled={disabled}
-          className={styles.radioInput}
+          className={`radioInput`}
           value={value}
           checked={checked}
           onChange={handleChange}
@@ -58,8 +56,12 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
           data-testid={testId}
           {...props}
         />
-        <span className={styles.radioCircle} data-testid={`${testId}-circle`} />
-        <span className={styles.radioLabel} data-testid={`${testId}-label`}>
+        <span className={`radioCircle  ${theme} ${
+          disabled ? `disabled` : ""
+        }`} data-testid={`${testId}-circle`} />
+        <span className={`radioLabel ${
+          disabled ? `disabled` : ""
+        }`} data-testid={`${testId}-label`}>
           {label}
         </span>
       </label>

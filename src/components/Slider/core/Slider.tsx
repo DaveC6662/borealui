@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./Slider.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import "./Slider.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { SliderProps } from "../Slider.types";
 
 /**
@@ -30,24 +30,24 @@ const Slider: React.FC<SliderProps> = ({
   return (
     <div
       className={combineClassNames(
-        styles.sliderContainer,
-        styles[size],
-        styles[theme],
+        `sliderContainer`,
+        size,
+        theme,
         className
       )}
       data-testid={`${testId}-container`}
     >
       {label && (
-        <label htmlFor={inputId} className={styles.sliderLabel}>
+        <label htmlFor={inputId} className={`sliderLabel`}>
           {label}
         </label>
       )}
 
-      <div className={styles.sliderWrapper}>
+      <div className={`sliderWrapper`}>
         <input
           id={inputId}
           type="range"
-          className={styles.slider}
+          className={`slider`}
           value={value}
           onChange={onChange}
           min={min}
@@ -57,7 +57,7 @@ const Slider: React.FC<SliderProps> = ({
           data-testid={testId}
         />
         {showValue && (
-          <span className={styles.sliderValue} data-testid={`${testId}-value`}>
+          <span className={`sliderValue`} data-testid={`${testId}-value`}>
             {value}
           </span>
         )}

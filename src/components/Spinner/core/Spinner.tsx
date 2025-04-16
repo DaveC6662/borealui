@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Spinner.module.scss";
+import "./Spinner.scss";
 import { SpinnerProps } from "../Spinner.types";
 
 /**
@@ -21,7 +21,7 @@ const Spinner: React.FC<SpinnerProps> = ({
 
   return (
     <div
-      className={`${styles.spinner} ${styles[theme]} ${className}`}
+      className={`${`spinner`} ${theme} ${className}`}
       style={{
         width: `${size}px`,
         height: `${size}px`,

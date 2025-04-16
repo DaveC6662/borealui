@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:color";
 @use "sass:map";
 
@@ -19,7 +20,7 @@ $notification-colors: (
   border-radius: theme.$border-radius-xs;
   box-shadow: theme.$box-shadow-medium;
   overflow: hidden;
-}
+
 
 .header {
   display: flex;
@@ -99,4 +100,6 @@ $notification-colors: (
     opacity: 1;
     transform: translateY(0);
   }
+}
+
 }

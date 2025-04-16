@@ -1,7 +1,7 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:map";
 
-// ===== Theme Map =====
 $themes: (
   "primary": var(--primary-color),
   "secondary": var(--secondary-color),
@@ -11,7 +11,6 @@ $themes: (
   "clear": transparent
 );
 
-// ===== Size Map =====
 $sizes: (
   "xs": (font-size: theme.$font-size-xs, padding: theme.$spacing-xxs theme.$spacing-xs),
   "small": (font-size: theme.$font-size-sm, padding: theme.$spacing-xxs theme.$spacing-xs),
@@ -20,7 +19,6 @@ $sizes: (
   "xl": (font-size: theme.$font-size-lg, padding: theme.$spacing-sm)
 );
 
-// ===== Base Styles =====
 .tagInput {
   display: flex;
   align-items: center;
@@ -34,58 +32,59 @@ $sizes: (
   &:focus-within {
     border-color: var(--primary-color);
   }
-}
 
-.inputWrapper {
-  list-style: none;
 
-  li {
+  .inputWrapper {
     list-style: none;
+
+    li {
+      list-style: none;
+    }
   }
-}
 
-.tagContainer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: theme.$spacing-xs;
-  width: 100%;
-}
-
-.tag {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: theme.$spacing-md;
-  background-color: var(--primary-color);
-  color: var(--text-color-primary);
-  border-radius: theme.$border-radius-md;
-  font-weight: theme.$font-weight-bold;
-  font-size: theme.$font-size-sm;
-  padding: theme.$spacing-xs theme.$spacing-sm;
-
-  .tagLabel {
-    padding: theme.$spacing-xs;
+  .tagContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: theme.$spacing-xs;
+    width: 100%;
   }
-}
 
-@each $theme, $color in $themes {
-  .#{$theme} {
-    .tag {
-      background-color: $color;
+  .tag {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: theme.$spacing-md;
+    background-color: var(--primary-color);
+    color: var(--text-color-primary);
+    border-radius: theme.$border-radius-md;
+    font-weight: theme.$font-weight-bold;
+    font-size: theme.$font-size-sm;
+    padding: theme.$spacing-xs theme.$spacing-sm;
 
-      @if $theme == "clear" {
-        border: 1px solid var(--text-color-primary);
+    .tagLabel {
+      padding: theme.$spacing-xs;
+    }
+  }
+
+  @each $theme, $color in $themes {
+    .#{$theme} {
+      .tag {
+        background-color: $color;
+
+        @if $theme =="clear" {
+          border: 1px solid var(--text-color-primary);
+        }
       }
     }
   }
-}
 
-@each $size, $props in $sizes {
-  .#{$size} {
-    .tag {
-      font-size: map.get($props, font-size);
-      padding: map.get($props, padding);
+  @each $size, $props in $sizes {
+    .#{$size} {
+      .tag {
+        font-size: map.get($props, font-size);
+        padding: map.get($props, padding);
+      }
     }
   }
 }

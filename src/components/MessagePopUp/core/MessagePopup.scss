@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 
 .messagePopup {
   position: fixed;
@@ -12,7 +13,7 @@
   align-items: center;
   z-index: 1000;
   transition: opacity 0.3s ease-in-out;
-}
+
 
 .popupContent {
   background: var(--background-color-light);
@@ -44,4 +45,6 @@
   justify-content: center;
   gap: theme.$spacing-sm;  
   margin-top: theme.$spacing-sm; 
+}
+
 }

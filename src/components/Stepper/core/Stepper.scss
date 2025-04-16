@@ -1,4 +1,5 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:map";
 
 $stepper-themes: (
@@ -28,66 +29,68 @@ $stepper-sizes: (
     align-items: flex-start;
     gap: theme.$spacing-xs;
   }
-}
 
-@each $size, $font in $stepper-sizes {
-  .#{$size} {
-    .stepper {
-      font-size: $font;
+
+  @each $size, $font in $stepper-sizes {
+    &.#{$size} {
+      .stepper {
+        font-size: $font;
+      }
     }
   }
-}
 
-.step {
-  display: flex;
-  align-items: center;
-  position: relative;
-  cursor: default;
-  transition: color theme.$transition-default;
+  .step {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: default;
+    transition: color theme.$transition-default;
 
-  &.clickable {
-    cursor: pointer;
+    &.clickable {
+      cursor: pointer;
 
-    &:hover {
-      transform: scale(1.1);
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
-}
 
-.stepIcon {
-  width: 10px;
-  height: 10px;
-  border-radius: theme.$border-radius-round;
-  background-color: var(--background-light-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
-}
+  .stepIcon {
+    width: 10px;
+    height: 10px;
+    border-radius: theme.$border-radius-round;
+    background-color: var(--background-light-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+  }
 
-.stepLabel {
-  margin-left: theme.$spacing-xs;
-  font-weight: theme.$font-weight-bold;
-}
+  .stepLabel {
+    margin-left: theme.$spacing-xs;
+    font-weight: theme.$font-weight-bold;
+  }
 
-.connector {
-  flex-grow: 1;
-  height: 2px;
-  background-color: var(--text-color-secondary);
-  margin: 0 theme.$spacing-xs;
-}
+  .connector {
+    flex-grow: 1;
+    height: 2px;
+    background-color: var(--text-color-secondary);
+    margin: 0 theme.$spacing-xs;
+  }
 
-.active .stepIcon {
-  background-color: var(--primary-color);
-  color: var(--text-color-primary);
-  transform: scale(1.1);
-}
+  .active .stepIcon {
+    background-color: var(--primary-color);
+    color: var(--text-color-primary);
+    transform: scale(1.1);
+  }
 
-@each $theme, $color in $stepper-themes {
-  .#{$theme} {
-    .active .stepIcon {
-      background-color: $color;
+  @each $theme, $color in $stepper-themes {
+    &.#{$theme} {
+      .active .stepIcon {
+        background-color: $color;
+      }
     }
   }
+
 }

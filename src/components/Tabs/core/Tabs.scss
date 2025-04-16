@@ -1,6 +1,8 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:map";
 
+// Theme and size maps
 $themes: (
   "primary": var(--primary-color),
   "secondary": var(--secondary-color),
@@ -9,6 +11,7 @@ $themes: (
   "warning": theme.$warning-color,
   "clear": var(--background-color-darker)
 );
+
 $sizes: (
   "xs": (font: theme.$font-size-xs, padding: theme.$spacing-xs),
   "small": (font: theme.$font-size-sm, padding: theme.$spacing-sm),
@@ -17,121 +20,124 @@ $sizes: (
   "xl": (font: theme.$font-size-lg, padding: theme.$spacing-lg)
 );
 
+// Container styling
 .tabsContainer {
   width: 100%;
   margin: theme.$spacing-sm;
-}
+  background-color: transparent;
 
-.tabs {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: stretch;
-  border-bottom: 2px solid var(--text-color-primary);
-  padding-bottom: theme.$spacing-sm;
-  gap: theme.$spacing-xxs;
+  .tabs {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+    border-bottom: 2px solid var(--text-color-primary);
+    padding-bottom: theme.$spacing-sm;
+    gap: theme.$spacing-xxs;
+    background-color: transparent;
 
-  @media (width <= 480px) {
-    flex-direction: column;
-    .tab {
-     border-right: none;
-     border-bottom: 0.5px solid var(--text-color-primary);
-    }
-
-
-    .tab:first-child {
-      border-radius: 0;
-      border-top-left-radius: theme.$border-radius-md;
-      border-top-right-radius: theme.$border-radius-md;
-    }
-  
-    .tab:last-child {
-      border-radius: 0;
-      border-bottom-left-radius: theme.$border-radius-md;
-      border-bottom-right-radius: theme.$border-radius-md;
-      border-bottom: none;
+    @media (width <= 480px) {
+      flex-direction: column;
     }
   }
-}
 
-.tab {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  background: none;
-  box-shadow: theme.$box-shadow-medium;
-  border: none;
-  color: var(--text-color-primary);
-  font-weight: theme.$font-weight-bold;
-  cursor: pointer;
-  gap: theme.$spacing-xxs;
-  transition: color theme.$transition-default, transform 0.2s ease-in-out;
-  line-height: 1;
-  border-right: 0.5px solid var(--text-color-primary);
+  .tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    background: none;
+    box-shadow: theme.$box-shadow-medium;
+    border: none;
+    color: var(--text-color-primary);
+    font-weight: theme.$font-weight-bold;
+    cursor: pointer;
+    gap: theme.$spacing-xxs;
+    transition: color theme.$transition-default, transform 0.2s ease-in-out;
+    line-height: 1;
+    border-right: 0.5px solid var(--text-color-primary);
 
-  &:hover {
-    transform: translateY(-2px);
-  }
-
-  &:focus {
-    outline: 2px solid var(--focus-outline-color);
-    outline-offset: 2px;
-  }
-
-  &:first-child {
-    border-top-left-radius: theme.$border-radius-md;
-    border-bottom-left-radius: theme.$border-radius-md;
-  }
-
-  &:last-child {
-    border-top-right-radius: theme.$border-radius-md;
-    border-bottom-right-radius: theme.$border-radius-md;
-    border-right: none;
-  }
-}
-
-@each $size, $props in $sizes {
-  .tabsContainer.#{$size} .tab {
-    font-size: map.get($props, font);
-    padding: map.get($props, padding);
-  }
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  padding: theme.$spacing-md;
-  background-color: var(--background-color-dark);
-  margin: auto;
-  gap: theme.$spacing-xs;
-  align-items: center;
-  justify-content: center;
-
-  @media (width <= 768px) {
-    padding: theme.$spacing-sm;
-  }
-
-  @media (width <= 480px) {
-    padding: 0;
-  }
-}
-
-@each $theme, $color in $themes {
-  .#{$theme} {
-    .tab.active {
-      background-color: $color;
-      border-bottom-color: $color;
+    &:hover {
+      transform: translateY(-2px);
     }
 
-    .tab:focus {
-      outline: 2px solid $color;
+    &:focus {
+      outline: 2px solid var(--focus-outline-color);
       outline-offset: 2px;
     }
-  }
-}
 
-.secondary .tab.active {
-  color: var(--text-color-secondary);
+    &:first-child {
+      border-top-left-radius: theme.$border-radius-md;
+      border-bottom-left-radius: theme.$border-radius-md;
+    }
+
+    &:last-child {
+      border-top-right-radius: theme.$border-radius-md;
+      border-bottom-right-radius: theme.$border-radius-md;
+      border-right: none;
+    }
+
+    @media (width <= 480px) {
+      border-right: none;
+      border-bottom: 0.5px solid var(--text-color-primary);
+
+      &:first-child {
+        border-radius: 0;
+        border-top-left-radius: theme.$border-radius-md;
+        border-top-right-radius: theme.$border-radius-md;
+      }
+
+      &:last-child {
+        border-radius: 0;
+        border-bottom-left-radius: theme.$border-radius-md;
+        border-bottom-right-radius: theme.$border-radius-md;
+        border-bottom: none;
+      }
+    }
+  }
+
+  @each $size, $props in $sizes {
+    &.#{$size} .tab {
+      font-size: map.get($props, font);
+      padding: map.get($props, padding);
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    padding: theme.$spacing-md;
+    background-color: var(--background-color-dark);
+    margin: auto;
+    gap: theme.$spacing-xs;
+    align-items: center;
+    justify-content: center;
+
+    @media (width <= 768px) {
+      padding: theme.$spacing-sm;
+    }
+
+    @media (width <= 480px) {
+      padding: 0;
+    }
+  }
+
+  @each $theme, $color in $themes {
+    &.#{$theme} {
+      .tab.active {
+        background-color: $color;
+        border-bottom-color: $color;
+      }
+
+      .tab:focus {
+        outline: 2px solid $color;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  &.secondary .tab.active {
+    color: var(--text-color-secondary);
+  }
 }

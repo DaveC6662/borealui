@@ -2,8 +2,8 @@ import {
     forwardRef,
     useId,
 } from "react";
-import styles from "./TextArea.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import "./TextArea.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { TextAreaProps } from "../TextArea.types";
 
 /**
@@ -38,16 +38,16 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         return (
             <div
                 className={combineClassNames(
-                    styles.textArea,
-                    styles[theme],
-                    disabled && styles.disabled,
+                    `textArea`,
+                    theme,
+                    disabled && `disabled`,
                     className
                 )}
                 data-testid={testId}
             >
                 {Icon && (
                     <div
-                        className={styles.iconContainer}
+                        className={`iconContainer`}
                         aria-hidden="true"
                         aria-label="textarea icon"
                     >
@@ -57,7 +57,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 
                 <textarea
                     ref={ref}
-                    className={combineClassNames(styles.textInput, styles[theme])}
+                    className={combineClassNames(`textInput`, theme)}
                     id={id}
                     placeholder={placeholder}
                     aria-label={ariaLabel || placeholder}
@@ -70,12 +70,12 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
                     {...props}
                 />
 
-                <div className={styles.customResizeHandle} aria-hidden="true" />
+                <div className={`customResizeHandle`} aria-hidden="true" />
 
                 {ariaDescription && (
                     <span
                         id={`${id}-description`}
-                        className={styles.srOnly}
+                        className={`srOnly`}
                         data-testid={`${testId}-description`}
                     >
                         {ariaDescription}

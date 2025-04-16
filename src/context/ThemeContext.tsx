@@ -6,7 +6,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { colorSchemes } from "@/styles/Themes";
+import { colorSchemes } from "../styles/Themes";
 
 interface ThemeContextType {
   selectedScheme: number;

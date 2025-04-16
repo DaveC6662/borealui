@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { colorSchemes } from "@styles/Themes";
-import { Select } from "@/index.next";
-import { ThemeContext } from "@context/ThemeContext";
+import { colorSchemes } from "../../../../styles/Themes";
+import Select from "../../core/Select";
+import { ThemeContext } from "../../../../context/ThemeContext";
 
 /**
  * UserThemeSettings component allows users to select a color scheme/theme

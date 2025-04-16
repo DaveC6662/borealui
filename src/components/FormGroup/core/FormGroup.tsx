@@ -33,7 +33,6 @@ const FormGroup: React.FC<FormGroupProps> = ({
         "formGroup",
         layout,
         spacing,
-        error && "error",
         className
       )}
       role="group"
@@ -52,7 +51,7 @@ const FormGroup: React.FC<FormGroupProps> = ({
       )}
 
       <div className={"inputWrapper"} data-testid={`${testId}-wrapper`}>
-        <div className={"inputField"} data-testid={`${testId}-input-field`}>
+        <div className={combineClassNames("inputField")} data-testid={`${testId}-input-field`}>
           {React.isValidElement(children)
             ? React.cloneElement(children as React.ReactElement<any>, {
               id,

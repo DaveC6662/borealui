@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:map";
 
 $spinner-colors: (
@@ -24,34 +25,36 @@ $spinner-colors: (
   &:hover {
     animation: pulse-spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
-}
 
-@each $name, $color in $spinner-colors {
-  .#{$name} {
+
+  @each $name, $color in $spinner-colors {
+    &.#{$name} {
       border-top-color: $color;
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+    }
   }
 
-  100% {
-    transform: rotate(360deg);
-  }
-}
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
 
-@keyframes pulse-spin {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.1);
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
-  100% {
-    transform: scale(1);
+  @keyframes pulse-spin {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.1);
+    }
+
+    100% {
+      transform: scale(1);
+    }
   }
+
 }

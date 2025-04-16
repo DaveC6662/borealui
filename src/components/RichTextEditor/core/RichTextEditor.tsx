@@ -3,8 +3,9 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Paragraph from "@tiptap/extension-paragraph";
 import Heading from "@tiptap/extension-heading";
-import styles from "./RichTextEditor.module.scss";
-import { Button, Select } from "@/index.next"; // Adjust this import path if needed
+import "./RichTextEditor.scss";
+import Button from "../../Buttons/Button/core/Button";
+import Select from "../../Select/core/Select";
 import DOMPurify from "dompurify";
 import {
   FaBold,
@@ -146,13 +147,13 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   ];
 
   return (
-    <div className={styles.editorContainer} data-testid={testId}>
-      <div className={styles.toolbar}>
+    <div className={`editorContainer`} data-testid={testId}>
+      <div className={`toolbar`}>
         <Select
           ariaLabel="Text style"
           options={headingOptions}
           value={currentHeading}
-          className={styles.headingSelect}
+          className={`headingSelect`}
           onChange={handleHeadingChange}
           theme="clear"
         />
@@ -169,7 +170,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           </Button>
         ))}
       </div>
-      <EditorContent editor={editor} className={styles.editor} />
+      <EditorContent editor={editor} className={`editor`} />
     </div>
   );
 };

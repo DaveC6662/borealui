@@ -1,5 +1,5 @@
 import { ChangeEvent, forwardRef } from "react";
-import styles from "./Select.module.scss";
+import "./Select.scss";
 import { FaChevronDown } from "react-icons/fa";
 import { SelectProps } from "../Select.types";
 
@@ -37,8 +37,8 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
 
     return (
       <div
-        className={`${styles.selectMain} ${styles[theme]} ${className} ${
-          disabled ? styles.disabled : ""
+        className={`${"selectMain"} ${theme} ${className} ${
+          disabled ? "disabled" : ""
         }`}
         aria-live="polite"
         data-testid={testId}
@@ -49,7 +49,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           onChange={handleChange}
           aria-label={ariaLabel || placeholder}
           disabled={disabled}
-          className={`${styles.select} ${styles[theme]}`}
+          className={`${"select"} ${theme}`}
           aria-disabled={disabled}
           data-testid={`${testId}-input`}
         >
@@ -67,8 +67,8 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           ))}
         </select>
         <div
-          className={`${styles.selectIcon} ${styles[theme]} ${
-            disabled ? styles.disabled : ""
+          className={`${"selectIcon"} ${theme} ${
+            disabled ? "disabled" : ""
           }`}
           aria-hidden="true"
           data-testid={`${testId}-icon`}

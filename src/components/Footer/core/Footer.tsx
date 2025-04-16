@@ -1,5 +1,6 @@
 import React, { JSX } from "react";
-import { IconButton, ThemeSelect } from "@/index.next";
+import IconButton from "../../Buttons/IconButton/core/IconButton";
+import ThemeSelect from "../../Select/ThemeSelect/core/ThemeSelect"
 import "./Footer.scss";
 import { combineClassNames } from "@/utils/classNames";
 import { FooterProps } from "../Footer.types";
@@ -55,7 +56,7 @@ const Footer: React.FC<FooterProps> = ({
 
         {showThemeSelect && (
           <div className={"themeToggleContainer"} data-testid={`${testId}-theme-select`}>
-            <ThemeSelect />
+            <ThemeSelect/>
           </div>
         )}
 
@@ -73,7 +74,7 @@ const Footer: React.FC<FooterProps> = ({
                 isExternal
                 ariaLabel={social.title}
                 title={social.title}
-                theme={theme}
+                theme={"clear"}
                 data-testid={`${testId}-social-${social.title.toLowerCase().replace(/\s+/g, "-")}`}
               />
             ))}

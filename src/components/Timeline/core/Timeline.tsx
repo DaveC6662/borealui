@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import styles from "./Timeline.module.scss";
+import "./Timeline.scss";
 import { TimelineProps } from "../Timeline.types";
 
 /**
@@ -28,7 +28,7 @@ const Timeline: React.FC<TimelineProps> = ({
 }: TimelineProps): JSX.Element => {
   return (
     <ul
-      className={`${styles.timeline} ${styles[orientation]} ${styles[theme]}`}
+      className={`${`timeline`} ${orientation} ${theme}`}
       data-testid={testId}
       role="list"
       aria-label="Timeline of events"
@@ -40,23 +40,23 @@ const Timeline: React.FC<TimelineProps> = ({
         return (
           <li
             key={index}
-            className={`${styles.timelineItem} ${styles[orientation]}`}
+            className={`${`timelineItem`} ${orientation}`}
             data-testid={itemTestId}
             role="listitem"
             aria-labelledby={`${itemTestId}-title`}
           >
             <div
-              className={`${styles.marker} ${styles[orientation]}`}
+              className={`${`marker`} ${orientation}`}
               aria-hidden={!IconComponent}
               data-testid={`${itemTestId}-marker`}
             >
               {IconComponent ? (
-                <div className={styles.icon} data-testid={`${itemTestId}-icon`}>
+                <div className={`icon`} data-testid={`${itemTestId}-icon`}>
                   <IconComponent />
                 </div>
               ) : (
                 <div
-                  className={styles.dot}
+                  className={`dot`}
                   role="presentation"
                   data-testid={`${itemTestId}-dot`}
                 />
@@ -64,16 +64,16 @@ const Timeline: React.FC<TimelineProps> = ({
             </div>
 
             <div
-              className={`${styles.content} ${styles[orientation]}`}
+              className={`${`content`} ${orientation}`}
               aria-label="Timeline event"
               data-testid={`${itemTestId}-content`}
             >
-              <h3 id={`${itemTestId}-title`} className={styles.title}>
+              <h3 id={`${itemTestId}-title`} className={`title`}>
                 {item.title}
               </h3>
               {item.date && (
                 <p
-                  className={styles.date}
+                  className={`date`}
                   data-testid={`${itemTestId}-date`}
                 >
                   {item.date}
@@ -81,7 +81,7 @@ const Timeline: React.FC<TimelineProps> = ({
               )}
               {item.description && (
                 <p
-                  className={styles.description}
+                  className={`description`}
                   data-testid={`${itemTestId}-description`}
                 >
                   {item.description}

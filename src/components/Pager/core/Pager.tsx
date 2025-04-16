@@ -1,7 +1,8 @@
 import React, { JSX } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { Button, IconButton } from "@/index.next";
-import styles from "./Pager.module.scss";
+import Button from "../../Buttons/Button/core/Button";
+import IconButton from "../../Buttons/IconButton/core/IconButton";
+import "./Pager.scss";
 import { PaginationProps } from "../Pager.types";
 
 /**
@@ -28,16 +29,16 @@ const Pager: React.FC<PaginationProps> = ({
 
   return (
     <nav
-      className={`${styles.pagination} ${className}`}
+      className={`${`pagination`} ${className}`}
       aria-label="Pagination"
       data-testid={testId}
     >
-      <div className={styles.paginationControls}>
+      <div className={`paginationControls`}>
         <IconButton
           icon={FaArrowLeft}
           theme={theme}
           size={size}
-          className={styles.paginationControlButton}
+          className={`paginationControlButton`}
           disabled={currentPage === 1}
           ariaLabel="Previous Page"
           title="Previous Page"
@@ -46,11 +47,11 @@ const Pager: React.FC<PaginationProps> = ({
         />
       </div>
 
-      <div className={styles.paginationButtons}>
+      <div className={"paginationButtons"}>
         {pages.map((page) => (
           <div
             key={page}
-            className={styles.paginationButtonWrapper}
+            className={"paginationButtonWrapper"}
             data-testid={`${testId}-page-${page}`}
           >
             <Button
@@ -58,8 +59,8 @@ const Pager: React.FC<PaginationProps> = ({
               size={size}
               onClick={() => onPageChange(page)}
               aria-current={page === currentPage ? "page" : undefined}
-              className={`${styles.paginationButton} ${
-                page === currentPage ? styles.active : ""
+              className={`${"paginationButton"} ${
+                page === currentPage ? "active" : ""
               }`}
               disabled={page === currentPage}
               data-testid={`${testId}-button-${page}`}
@@ -70,12 +71,12 @@ const Pager: React.FC<PaginationProps> = ({
         ))}
       </div>
 
-      <div className={styles.paginationControls}>
+      <div className={"paginationControls"}>
         <IconButton
           icon={FaArrowRight}
           theme={theme}
           size={size}
-          className={styles.paginationControlButton}
+          className={"paginationControlButton"}
           disabled={currentPage === totalPages}
           ariaLabel="Next Page"
           title="Next Page"

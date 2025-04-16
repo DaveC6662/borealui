@@ -1,4 +1,4 @@
-import React, {
+  import React, {
     useEffect,
     useId,
     useRef,
@@ -8,9 +8,10 @@ import React, {
   } from "react";
   import { FaTimes } from "react-icons/fa";
   import ReactDOM from "react-dom";
-  import styles from "./Modal.module.scss";
-  import { IconButton } from "@/index.next";
-import { ModalProps } from "../Modal.types";
+  import "./Modal.scss";
+  import IconButton from "../../Buttons/IconButton/core/IconButton";
+  import { ModalProps } from "../Modal.types";
+  import { combineClassNames } from "../../../utils/classNames";
   
   /**
    * Modal is a generic and accessible modal dialog rendered via a React portal.
@@ -95,7 +96,7 @@ import { ModalProps } from "../Modal.types";
   
     return ReactDOM.createPortal(
       <div
-        className={`${styles.modalOverlay} ${isVisible ? styles.visible : styles.hidden}`}
+        className={combineClassNames("modalOverlay", isVisible ? "visible" : "hidden")}
         onClick={handleClose}
         onKeyDown={handleKeyDown}
         role="dialog"
@@ -107,7 +108,7 @@ import { ModalProps } from "../Modal.types";
         data-testid={testId}
       >
         <div
-          className={`${styles.modalContent} ${className}`}
+          className={`${"modalContent"} ${className}`}
           onClick={(e) => e.stopPropagation()}
           id={descId}
           data-testid={`${testId}-content`}
@@ -117,7 +118,7 @@ import { ModalProps } from "../Modal.types";
           </div>
           <IconButton
             ref={firstFocusable}
-            className={styles.closeButton}
+            className={"closeButton"}
             theme="error"
             size="small"
             icon={FaTimes}

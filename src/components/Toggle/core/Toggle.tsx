@@ -1,6 +1,6 @@
 import { forwardRef, KeyboardEvent } from "react";
-import styles from "./Toggle.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import "./Toggle.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { ToggleProps } from "../Toggle.types";
 
 /**
@@ -30,23 +30,23 @@ const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(({
   };
 
   const containerClass = combineClassNames(
-    styles.toggleContainer,
-    styles[theme],
-    size && styles[size],
-    disabled && styles.disabled,
+    `toggleContainer`,
+    theme,
+    size && size,
+    disabled && `disabled`,
     className
   );
 
   const toggleClass = combineClassNames(
-    styles.toggle,
-    checked && styles.active
+    `toggle`,
+    checked && `active`
   );
 
   return (
     <div className={containerClass} data-testid={`${testId}-wrapper`}>
       {label && (
         <span
-          className={styles.label}
+          className={`label`}
           id={`${testId}-label`}
           data-testid={`${testId}-label`}
         >
@@ -66,7 +66,7 @@ const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(({
         onKeyDown={handleKeyDown}
         data-testid={testId}
       >
-        <span className={styles.slider} data-testid={`${testId}-slider`} />
+        <span className={`slider`} data-testid={`${testId}-slider`} />
       </button>
     </div>
   );

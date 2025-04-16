@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:map";
 @use "sass:color";
 
@@ -22,63 +23,65 @@ $slider-sizes: (
   display: flex;
   flex-direction: column;
   gap: theme.$spacing-xs;
-}
 
-.sliderLabel {
-  font-size: theme.$font-size-sm;
-  color: var(--text-color-primary);
-}
 
-.sliderWrapper {
-  display: flex;
-  align-items: center;
-  gap: theme.$spacing-sm;
-  width: 100%;
-}
+  .sliderLabel {
+    font-size: theme.$font-size-sm;
+    color: var(--text-color-primary);
+  }
 
-.slider {
-  width: 100%;
-  appearance: none;
-  outline: none;
-  border-radius: 6px;
-  background-color: var(--background-color-light);
-  transition: background 0.3s ease;
+  .sliderWrapper {
+    display: flex;
+    align-items: center;
+    gap: theme.$spacing-sm;
+    width: 100%;
+  }
 
-  &::-webkit-slider-thumb,
-  &::-moz-range-thumb {
+  .slider {
+    width: 100%;
     appearance: none;
-    border-radius: 50%;
-    background: currentcolor;
-    cursor: pointer;
-    box-shadow: 0 0 2px rgb(0 0 0 / 20%);
-  }
-}
-
-.sliderValue {
-  font-size: theme.$font-size-sm;
-  color: var(--text-color-primary);
-  min-width: 2ch;
-}
-
-@each $name, $color in $slider-themes {
-  .#{$name} .slider {
-    background-color: $color;
-    
-    &::-webkit-slider-thumb,
-    &::-moz-range-thumb {
-      color: $color;
-    }
-  }
-}
-
-@each $size, $props in $slider-sizes {
-  .#{$size} .slider {
-    height: map.get($props, track);
+    outline: none;
+    border-radius: 6px;
+    background-color: var(--background-color-light);
+    transition: background 0.3s ease;
 
     &::-webkit-slider-thumb,
     &::-moz-range-thumb {
-      width: map.get($props, thumb);
-      height: map.get($props, thumb);
+      appearance: none;
+      border-radius: 50%;
+      background: currentcolor;
+      cursor: pointer;
+      box-shadow: 0 0 2px rgb(0 0 0 / 20%);
     }
   }
+
+  .sliderValue {
+    font-size: theme.$font-size-sm;
+    color: var(--text-color-primary);
+    min-width: 2ch;
+  }
+
+  @each $name, $color in $slider-themes {
+    &.#{$name} .slider {
+      background-color: $color;
+
+      &::-webkit-slider-thumb,
+      &::-moz-range-thumb {
+        color: $color;
+      }
+    }
+  }
+
+  @each $size, $props in $slider-sizes {
+    &.#{$size} .slider {
+      height: map.get($props, track);
+
+      &::-webkit-slider-thumb,
+      &::-moz-range-thumb {
+        width: map.get($props, thumb);
+        height: map.get($props, thumb);
+      }
+    }
+  }
+
 }

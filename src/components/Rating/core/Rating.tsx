@@ -1,6 +1,6 @@
 import React, { useState, KeyboardEvent } from "react";
 import { FaStar } from "react-icons/fa";
-import styles from "./Rating.module.scss";
+import "./Rating.scss";
 import { RatingProps } from "../Rating.types";
 
 /**
@@ -50,8 +50,8 @@ const Rating: React.FC<RatingProps> = ({
 
   return (
     <div
-      className={`${styles.rating} ${styles[theme]} ${styles[size]} ${
-        interactive ? styles.interactive : ""
+      className={`${`rating`} ${theme} ${size} ${
+        interactive ? `interactive` : ""
       } ${className}`}
       role="radiogroup"
       aria-label="Rating"
@@ -64,7 +64,7 @@ const Rating: React.FC<RatingProps> = ({
         return (
           <span
             key={index}
-            className={`${styles.star} ${active ? styles.active : ""}`}
+            className={`${`star`} ${active ? `active` : ""}`}
             onClick={() => handleClick(index)}
             onMouseEnter={() => interactive && setHover(index)}
             onMouseLeave={() => interactive && setHover(null)}

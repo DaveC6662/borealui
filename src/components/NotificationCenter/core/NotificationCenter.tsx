@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { FaTimes } from "react-icons/fa";
-import { Button, IconButton } from "@/index.next";
-import styles from "./NotificationCenter.module.scss";
+import Button from "../../Buttons/Button/core/Button";
+import IconButton from "../../Buttons/IconButton/core/IconButton";
+import "./NotificationCenter.scss";
 import { NotificationCenterProps, themeIcons } from "../NotificationCenter.types";
 
 /**
@@ -40,18 +41,18 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
 
   return (
     <div
-      className={styles.notificationCenter}
+      className={"notificationCenter"}
       role="region"
       aria-label="Notifications"
       data-testid={testId}
     >
-      <div className={styles.header} data-testid={`${testId}-header`}>
+      <div className={"header"} data-testid={`${testId}-header`}>
         <h3 id={`${testId}-title`}>Notifications</h3>
         {showClearAll && notifications.length > 0 && (
           <Button
             theme="error"
             size="small"
-            className={styles.clearAll}
+            className={"clearAll"}
             onClick={onClearAll}
             aria-label="Clear all notifications"
             data-testid={`${testId}-clear-all`}
@@ -62,7 +63,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
       </div>
 
       <div role="status" aria-live="polite">
-        <ul className={styles.list} aria-labelledby={`${testId}-title`}>
+        <ul className={"list"} aria-labelledby={`${testId}-title`}>
           {notifications.map((note, index) => {
             const Icon = themeIcons[note.type || "info"];
             const noteTestId = `${testId}-item-${note.id}`;
@@ -70,16 +71,16 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
             return (
               <li
                 key={note.id}
-                className={`${styles.notification} ${styles[note.type || "info"]}`}
+                className={`${"notification"} ${note.type || "info"}`}
                 data-testid={noteTestId}
               >
-                <Icon className={styles.icon} aria-hidden="true" />
-                <div className={styles.content}>
-                  <span className={styles.message} data-testid={`${noteTestId}-message`}>
+                <Icon className={"icon"} aria-hidden="true" />
+                <div className={"content"}>
+                  <span className={"message"} data-testid={`${noteTestId}-message`}>
                     {note.message}
                   </span>
                   {note.timestamp && (
-                    <span className={styles.timestamp} data-testid={`${noteTestId}-timestamp`}>
+                    <span className={"timestamp"} data-testid={`${noteTestId}-timestamp`}>
                       {note.timestamp.toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
@@ -88,7 +89,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                   )}
                 </div>
                 <IconButton
-                  className={styles.close}
+                  className={"close"}
                   theme="error"
                   size="small"
                   outline

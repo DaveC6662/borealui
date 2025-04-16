@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import styles from "./Toolbar.module.scss";
+import "./Toolbar.scss";
 import Avatar from "../../Avatar/core/Avatar";
 import { combineClassNames } from "@/utils/classNames";
 import { ToolbarProps } from "../Toolbar.types";
@@ -33,28 +33,28 @@ const Toolbar: React.FC<ToolbarProps> = ({
 }: ToolbarProps): JSX.Element => {
   return (
     <header
-      className={combineClassNames(styles.toolbar, styles[theme], className)}
+      className={combineClassNames(`toolbar`, theme, className)}
       role="banner"
       aria-label="Toolbar"
       data-testid={testId}
     >
-      <div className={styles.section} data-testid={`${testId}-left`}>
+      <div className={`section`} data-testid={`${testId}-left`}>
         {left}
       </div>
 
-      <div className={styles.section} data-testid={`${testId}-center`}>
+      <div className={`section`} data-testid={`${testId}-center`}>
         {title && (
-          <h1 className={styles.title} data-testid={`${testId}-title`}>
+          <h1 className={`title`} data-testid={`${testId}-title`}>
             {title}
           </h1>
         )}
         {center}
       </div>
 
-      <div className={styles.section} data-testid={`${testId}-right`}>
+      <div className={`section`} data-testid={`${testId}-right`}>
         {right}
         {avatar && (
-          <div className={styles.avatarWrapper} data-testid={`${testId}-avatar`}>
+          <div className={`avatarWrapper`} data-testid={`${testId}-avatar`}>
             <Avatar
               name={avatar.name}
               src={avatar.src}

@@ -1,4 +1,5 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:map";
 @use "sass:list";
 
@@ -22,64 +23,66 @@ $sizes: (
   display: flex;
   align-items: center;
   gap: theme.$spacing-xs;
-}
 
-.label {
-  font-size: theme.$font-size-md;
-  color: var(--text-color-primary);
-}
 
-.toggle {
-  background-color: theme.$disabled-color;
-  border-radius: 50px;
-  position: relative;
-  cursor: pointer;
-  border: none;
-  display: flex;
-  align-items: center;
-  transition: background 0.3s ease-in-out;
-  outline: none;
-
-  .slider {
-    background-color: var(--text-color-primary);
-    border-radius: 50%;
-    position: absolute;
-    left: 4px;
-    transition: transform 0.3s ease-in-out;
+  .label {
+    font-size: theme.$font-size-md;
+    color: var(--text-color-primary);
   }
 
-  &.active {
-    background-color: var(--primary-color);
+  .toggle {
+    background-color: theme.$disabled-color;
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s ease-in-out;
+    outline: none;
+
+    .slider {
+      background-color: var(--text-color-primary);
+      border-radius: 50%;
+      position: absolute;
+      left: 4px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    &.active {
+      background-color: var(--primary-color);
+    }
   }
-}
 
-.disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-  box-shadow: none;
-}
+  &.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+    box-shadow: none;
+  }
 
-@each $name, $vals in $sizes {
-  .#{$name} {
-    .toggle {
-      width: list.nth(map.get($vals, toggle), 1);
-      height: list.nth(map.get($vals, toggle), 2);
+  @each $name, $vals in $sizes {
+    &.#{$name} {
+      .toggle {
+        width: list.nth(map.get($vals, toggle), 1);
+        height: list.nth(map.get($vals, toggle), 2);
 
-      .slider {
-        width: list.nth(map.get($vals, slider), 1);
-        height: list.nth(map.get($vals, slider), 2);
-      }
+        .slider {
+          width: list.nth(map.get($vals, slider), 1);
+          height: list.nth(map.get($vals, slider), 2);
+        }
 
-      &.active .slider {
-        transform: translateX(map.get($vals, translate));
+        &.active .slider {
+          transform: translateX(map.get($vals, translate));
+        }
       }
     }
   }
-}
 
-@each $theme, $color in $themes {
-  .#{$theme} .toggle.active {
-    background-color: $color;
+  @each $theme, $color in $themes {
+    &.#{$theme} .toggle.active {
+      background-color: $color;
+    }
   }
+
 }

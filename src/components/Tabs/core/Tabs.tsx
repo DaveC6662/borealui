@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import styles from "./Tabs.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import "./Tabs.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { TabsProps } from "../Tabs.types";
 
 /**
@@ -33,16 +33,16 @@ const Tabs: React.FC<TabsProps> = ({
   };
 
   const containerClass = combineClassNames(
-    styles.tabsContainer,
-    styles[theme],
-    styles[size],
+    `tabsContainer`,
+    theme, 
+    size,
     className
   );
 
   return (
     <div className={containerClass} data-testid={testId}>
       <div
-        className={styles.tabs}
+        className={`tabs`}
         role="tablist"
         aria-label="Tabs"
         data-testid={`${testId}-tablist`}
@@ -54,7 +54,7 @@ const Tabs: React.FC<TabsProps> = ({
           return (
             <button
               key={index}
-              className={combineClassNames(styles.tab, isActive && styles.active)}
+              className={combineClassNames(`tab`, isActive && `active`)}
               onClick={() => handleTabClick(index)}
               role="tab"
               type="button"
@@ -65,7 +65,7 @@ const Tabs: React.FC<TabsProps> = ({
               data-testid={`${testId}-tab-${index}`}
             >
               {IconComponent && (
-                <div className={styles.icon} data-testid={`${testId}-icon-${index}`}>
+                <div className={`icon`} data-testid={`${testId}-icon-${index}`}>
                   <IconComponent />
                 </div>
               )}
@@ -76,7 +76,7 @@ const Tabs: React.FC<TabsProps> = ({
       </div>
 
       <div
-        className={styles.content}
+        className={`content`}
         role="tabpanel"
         id={`${testId}-panel-${activeIndex}`}
         aria-labelledby={`${testId}-tab-${activeIndex}`}

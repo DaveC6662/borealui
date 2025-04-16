@@ -1,6 +1,6 @@
 import React, { JSX } from "react";
-import { IconButton } from "@/index.next";
-import styles from "./Stepper.module.scss";
+import IconButton from "../../Buttons/IconButton/core/IconButton"
+import "./Stepper.scss";
 import { StepperProps } from "../Stepper.types";
 
 /**
@@ -22,7 +22,7 @@ const Stepper: React.FC<StepperProps> = ({
 }: StepperProps): JSX.Element => {
   return (
     <div
-      className={`${styles.stepper} ${styles[orientation]} ${styles[theme]} ${styles[size]}`}
+      className={`${`stepper`} ${orientation} ${size}`}
       role="list"
       data-testid={testId}
     >
@@ -34,8 +34,8 @@ const Stepper: React.FC<StepperProps> = ({
         return (
           <div
             key={index}
-            className={`${styles.step} ${isActive ? styles.active : ""} ${
-              onStepClick ? styles.clickable : ""
+            className={`${`step`} ${isActive ? `active` : ""} ${
+              onStepClick ? `clickable` : ""
             }`}
             role="listitem"
             tabIndex={onStepClick ? 0 : -1}
@@ -58,13 +58,13 @@ const Stepper: React.FC<StepperProps> = ({
               aria-current={isActive ? "step" : undefined}
               data-testid={`${stepId}-icon`}
             />
-            <span className={styles.stepLabel} data-testid={`${stepId}-label`}>
+            <span className={`stepLabel`} data-testid={`${stepId}-label`}>
               {step.label}
             </span>
 
             {index < steps.length - 1 && (
               <div
-                className={styles.connector}
+                className={`connector`}
                 aria-hidden="true"
                 data-testid={`${stepId}-connector`}
               />

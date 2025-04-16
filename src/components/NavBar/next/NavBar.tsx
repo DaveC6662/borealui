@@ -1,18 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { JSX } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  FaHome,
-  FaCompactDisc,
-  FaImage,
-  FaCode,
-  FaCommentAlt,
-  FaPaintBrush,
-} from "react-icons/fa";
 import styles from "./NavBar.module.scss";
-import { NavItem } from "../NavBar.types";
+import { NavBarProps } from "../NavBar.types";
 
 /**
  * NavBar renders the main navigation of the site as a horizontal navigation bar.
@@ -24,19 +16,9 @@ import { NavItem } from "../NavBar.types";
  *
  * @returns {JSX.Element} The rendered navigation bar.
  */
-const NavBar: React.FC = () => {
+const NavBar: React.FC<NavBarProps> = ({ items }: NavBarProps): JSX.Element => {
   // Retrieve the current pathname from Next.js router using usePathname hook.
   const pathname = usePathname();
-
-  // Define a list of navigation items with associated icons, labels, and paths.
-  const navItems: NavItem[] = [
-    { icon: <FaHome />, label: "Home", path: "/" },
-    { icon: <FaCompactDisc />, label: "Music", path: "/Music" },
-    { icon: <FaImage />, label: "Images", path: "/Photography" },
-    { icon: <FaCode />, label: "Code", path: "/Code" },
-    { icon: <FaCommentAlt />, label: "Blog", path: "/Blog" },
-    { icon: <FaPaintBrush />, label: "Design", path: "/Design" },
-  ];
 
   return (
     <nav
@@ -45,7 +27,7 @@ const NavBar: React.FC = () => {
       className={styles.navContainer}
       data-testid="nav-bar"
     >
-      {navItems.map((item, index) => {
+      {items?.map((item, index) => {
         // Determine if the item is the currently active route.
         const isActive = pathname === item.path;
         return (

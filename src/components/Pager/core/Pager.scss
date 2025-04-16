@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 
 $small-gap: 4px;
 $medium-gap: 10px;
@@ -13,44 +14,46 @@ $large-gap: 20px;
   justify-content: center;
   align-items: center;
 
-  @media (width <= 480px) {
+  @media (width <=480px) {
     flex-direction: row;
     gap: $medium-gap;
   }
-}
 
-.paginationControls {
-  display: flex;
-  align-items: center;
 
-  @media (width <= 480px) {
-    gap: 5px;
+  .paginationControls {
+    display: flex;
+    align-items: center;
+
+    @media (width <=480px) {
+      gap: 5px;
+    }
+
+    @media (width <=400px) {
+      order: -1;
+      gap: $large-gap;
+    }
   }
 
-  @media (width <= 400px) {
-    order: -1;
-    gap: $large-gap;
+  .paginationButtons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    @media (width <=480px) {
+      flex-grow: 1;
+      flex-direction: row;
+      gap: $small-gap;
+      margin-top: $small-gap;
+    }
   }
-}
 
-.paginationButtons {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  .paginationButton {
+    margin: 2px;
 
-  @media (width <= 480px) {
-    flex-grow: 1;
-    flex-direction: row;
-    gap: $small-gap;
-    margin-top: $small-gap;
+    @media (width <=480px) {
+      font-size: 12px;
+    }
   }
-}
 
-.paginationButton {
-  margin: 2px;
-
-  @media (width <= 480px) {
-    font-size: 12px;
-  }
 }

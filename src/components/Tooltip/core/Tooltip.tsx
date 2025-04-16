@@ -4,8 +4,8 @@ import {
   forwardRef,
   useId,
 } from "react";
-import styles from "./Tooltip.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import "./Tooltip.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { TooltipProps } from "../Tooltip.types";
 
 /**
@@ -43,7 +43,7 @@ const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     return (
       <div
-        className={combineClassNames(styles.tooltipContainer, className)}
+        className={combineClassNames('tooltipContainer', className)}
         data-testid={`${testId}-container`}
       >
         {/* Trigger wrapper (can be focused by keyboard if needed) */}
@@ -51,7 +51,7 @@ const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           tabIndex={0}
           aria-describedby={tooltipId}
           data-testid={`${testId}-trigger`}
-          className={styles.triggerWrapper}
+          className={'triggerWrapper'}
         >
           {children}
         </span>
@@ -61,9 +61,9 @@ const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           ref={ref}
           id={tooltipId}
           className={combineClassNames(
-            styles.tooltip,
-            styles[position],
-            styles[theme]
+            'tooltip',
+            position,
+            theme
           )}
           role="tooltip"
           data-testid={testId}

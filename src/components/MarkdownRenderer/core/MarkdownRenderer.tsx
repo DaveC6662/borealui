@@ -1,7 +1,7 @@
 import React, { JSX, useEffect, useState } from "react";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
-import styles from "./MarkdownRenderer.module.scss";
+import "./MarkdownRenderer.scss";
 import { MarkdownRendererProps } from "../MarkdownRenderer.types";
 
 /**
@@ -47,13 +47,13 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           data-testid="markdown-loading"
           role="status"
           aria-live="polite"
-          className={styles.loading}
+          className={"loading"}
         >
           Loading markdown...
         </div>
       ) : (
         <div
-          className={`${styles.markdown} ${className}`}
+          className={`${"markdown"} ${className}`}
           data-testid={testId}
           role="region"
           aria-label="Markdown content"

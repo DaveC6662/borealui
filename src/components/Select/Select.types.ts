@@ -5,7 +5,7 @@ import { ThemeType } from "@/types/types";
  */
 interface Option {
   /** The value to be used for the option. */
-  value: string | number;
+  value: string;
   /** The display label for the option. */
   label: string;
 }
@@ -19,12 +19,12 @@ export interface SelectProps {
   /** An array of options that will be rendered as dropdown choices. */
   options: Option[];
   /** The current selected value. */
-  value: string | number;
+  value: string;
   /**
    * Callback fired when the selected option changes.
    * Receives the new value as an argument.
    */
-  onChange: (value: string | number) => void;
+  onChange: (value: string) => void;
   /** Placeholder text to display when no option is selected. */
   placeholder?: string;
   /** Accessible label for the select element. */

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from "./Popover.module.scss";
+import "./Popover.scss";
 import { PopoverProps } from "../PopOver.types";
+import { combineClassNames } from "../../../utils/classNames";
 
 /**
  * Popover is a lightweight UI component that displays additional
@@ -56,12 +57,12 @@ const Popover: React.FC<PopoverProps> = ({
 
   return (
     <div
-      className={`${styles.popoverContainer} ${className}`}
+      className={`${`popoverContainer`} ${className}`}
       ref={popoverRef}
       data-testid={testId}
     >
       <div
-        className={styles.trigger}
+        className={`trigger`}
         onClick={toggleOpen}
         onKeyDown={(e) => e.key === "Enter" && toggleOpen()}
         tabIndex={0}
@@ -80,11 +81,11 @@ const Popover: React.FC<PopoverProps> = ({
           id={`${testId}-content`}
           role="dialog"
           aria-modal="false"
-          className={[
-            styles.popover,
-            styles[placement],
-            styles[theme],
-          ].join(" ")}
+          className={combineClassNames(
+           `popover`,
+            placement,
+            theme,
+          )}
           data-testid={`${testId}-content`}
         >
           {content}
