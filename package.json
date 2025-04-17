@@ -14,12 +14,15 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build:core": "vite build --config vite.config.core.ts",
+    "build:next": "vite build --config vite.config.next.ts",
+    "build": "npm run build:core && npm run build:next",
     "lint": "eslint ./src --ext .ts,.tsx",
     "test": "vitest",
-    "prepare": "tsc -p tsconfig.build.json && vite build",
+    "prepare": "tsc -p tsconfig.build.json && npm run build",
     "playground": "vite --config playground/vite.config.ts",
-    "storybook": "storybook dev -p 6006",
+    "storybook:core": "storybook dev -p 6006 -c .storybook-core",
+    "storybook:next": "storybook dev -p 6006 -c .storybook-next",
     "build-storybook": "storybook build"
   },
   "keywords": [

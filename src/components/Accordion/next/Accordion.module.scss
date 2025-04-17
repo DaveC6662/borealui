@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:color";
 @use "sass:map";
 
@@ -80,28 +80,28 @@ $themes: (
   "primary": (
     color: var(--primary-color),
     hover: var(--primary-color-hover),
-    text-hover: var(--text-color-primary)
+    text-hover: var(--text-color-primary),
   ),
   "secondary": (
     color: var(--secondary-color),
     hover: var(--secondary-color-hover),
-    text-hover: var(--text-color-secondary)
+    text-hover: var(--text-color-secondary),
   ),
   "success": (
     color: theme.$success-color,
     hover: color.adjust(theme.$success-color, $lightness: -10%),
-    text-hover: var(--text-color-primary)
+    text-hover: var(--text-color-primary),
   ),
   "error": (
     color: theme.$error-color,
     hover: color.adjust(theme.$error-color, $lightness: -10%),
-    text-hover: var(--text-color-primary)
+    text-hover: var(--text-color-primary),
   ),
   "warning": (
     color: theme.$warning-color,
     hover: color.adjust(theme.$warning-color, $lightness: -10%),
-    text-hover: var(--text-color-primary)
-  )
+    text-hover: var(--text-color-primary),
+  ),
 );
 
 @each $name, $values in $themes {

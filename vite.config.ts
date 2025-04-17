@@ -1,42 +1,7 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import path from "path";
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [react()],
-  build: {
-    lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
-      name: "BorealUI",
-      fileName: (format) => `boreal-ui.${format}.js`,
-      formats: ["es", "cjs"]
-    },
-    rollupOptions: {
-      external: [
-        "react",
-        "react-dom",
-        "next",
-        "react-icons",
-        "@tiptap/react",
-        "@tiptap/starter-kit",
-        "@tiptap/extension-heading",
-        "@tiptap/extension-paragraph",
-        "dompurify",
-        "marked",
-        "uuid"
-      ],
-      output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM"
-        }
-      }
-    },
-    outDir: "dist",
-    emptyOutDir: true,
-    sourcemap: true,
-    minify: false
-  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -44,7 +9,7 @@ export default defineConfig({
       "@styles": path.resolve(__dirname, "./src/styles"),
       "@utils": path.resolve(__dirname, "./src/utils"),
       "@types": path.resolve(__dirname, "./src/types"),
-      "@context": path.resolve(__dirname, "./src/context")
-    }
-  }
+      "@context": path.resolve(__dirname, "./src/context"),
+    },
+  },
 });

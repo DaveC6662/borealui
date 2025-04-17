@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./Avatar.module.scss";
 import { AvatarProps } from "../Avatar.types";
-import { combineClassNames } from "@/utils/classNames";
-import { getInitials } from "@/utils/getInitials";
+import { combineClassNames } from "../../../utils/classNames";
+import { getInitials } from "../../../utils/getInitials";
 
 /**
  * Avatar component for displaying user profile photos or initials.
@@ -59,28 +59,29 @@ const Avatar: React.FC<AvatarProps> = ({
   /**
    * Render the default avatar content (image or initials).
    */
-  const avatarContent = !imgError && src ? (
-    <Image
-      src={src}
-      alt={computedLabel}
-      fill
-      className={styles.image}
-      onError={() => setImgError(true)}
-      loading="lazy"
-      priority={priority}
-    />
-  ) : (
-    <span
-      className={styles.initials}
-      data-testid="avatar-initials"
-      role="img"
-      aria-label={computedLabel}
-      title={computedLabel}
-      suppressHydrationWarning
-    >
-      {fallbackContent}
-    </span>
-  );
+  const avatarContent =
+    !imgError && src ? (
+      <Image
+        src={src}
+        alt={computedLabel}
+        fill
+        className={styles.image}
+        onError={() => setImgError(true)}
+        loading="lazy"
+        priority={priority}
+      />
+    ) : (
+      <span
+        className={styles.initials}
+        data-testid="avatar-initials"
+        role="img"
+        aria-label={computedLabel}
+        title={computedLabel}
+        suppressHydrationWarning
+      >
+        {fallbackContent}
+      </span>
+    );
 
   /**
    * Render a status icon or colored dot in the appropriate position.
@@ -118,7 +119,12 @@ const Avatar: React.FC<AvatarProps> = ({
   // Render as internal Next.js link
   if (href?.startsWith("/")) {
     return (
-      <Link href={href} aria-label={computedLabel} className={combinedClassName} onClick={handleClick}>
+      <Link
+        href={href}
+        aria-label={computedLabel}
+        className={combinedClassName}
+        onClick={handleClick}
+      >
         {content}
       </Link>
     );

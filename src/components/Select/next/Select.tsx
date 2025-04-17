@@ -5,7 +5,6 @@ import styles from "./Select.module.scss";
 import { FaChevronDown } from "react-icons/fa";
 import { SelectProps } from "../Select.types";
 
-
 /**
  * Select is a customizable dropdown component that allows users to choose from a list of options.
  * It supports theming, custom class names, disabling, and accessibility attributes.
@@ -36,9 +35,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
      * @param {ChangeEvent<HTMLSelectElement>} event - The change event triggered by the select input.
      */
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-      const selectedValue = event.target.value;
-      // Convert to number if possible, otherwise keep string.
-      onChange(isNaN(Number(selectedValue)) ? selectedValue : Number(selectedValue));
+      onChange(event.target.value);
     };
 
     return (

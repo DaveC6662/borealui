@@ -1,4 +1,4 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:color";
 @use "sass:map";
 
@@ -107,32 +107,32 @@ $themes: (
     color: var(--primary-color),
     hover: var(--primary-color-hover),
     text-hover: var(--text-color-primary),
-    border: var(--primary-color)
+    border: var(--primary-color),
   ),
   "secondary": (
     color: var(--secondary-color),
     hover: var(--secondary-color-hover),
     text-hover: var(--text-color-secondary),
-    border: var(--secondary-color)
+    border: var(--secondary-color),
   ),
   "success": (
     color: theme.$success-color,
     hover: color.adjust(theme.$success-color, $lightness: -10%),
     text-hover: var(--text-color-primary),
-    border: theme.$success-color
+    border: theme.$success-color,
   ),
   "error": (
     color: theme.$error-color,
     hover: color.adjust(theme.$error-color, $lightness: -10%),
     text-hover: var(--text-color-primary),
-    border: theme.$error-color
+    border: theme.$error-color,
   ),
   "warning": (
     color: theme.$warning-color,
     hover: color.adjust(theme.$warning-color, $lightness: -10%),
     text-hover: var(--text-color-primary),
-    border: theme.$warning-color
-  )
+    border: theme.$warning-color,
+  ),
 );
 
 @each $name, $props in $themes {
@@ -188,17 +188,17 @@ $themes: (
     top: 5px;
     left: 6px;
   }
-  
+
   &.topRight {
     top: 5px;
     right: 6px;
   }
-  
+
   &.bottomLeft {
     bottom: 5px;
     left: 6px;
   }
-  
+
   &.bottomRight {
     bottom: 5px;
     right: 6px;
@@ -214,12 +214,12 @@ $themes: (
     background-color: theme.$success-color;
     border: 1px solid color.adjust(theme.$success-color, $lightness: 20%);
   }
-  
+
   &-idle {
     background-color: theme.$warning-color;
     border: 1px solid color.adjust(theme.$warning-color, $lightness: 20%);
   }
-  
+
   &-offline {
     background-color: theme.$error-color;
     border: 1px solid color.adjust(theme.$error-color, $lightness: 20%);

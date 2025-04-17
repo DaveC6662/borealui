@@ -31,8 +31,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
      * Converts the value to a number if it is numeric.
      */
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-      const selectedValue = event.target.value;
-      onChange(isNaN(Number(selectedValue)) ? selectedValue : Number(selectedValue));
+      onChange(event.target.value);
     };
 
     return (
@@ -67,9 +66,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           ))}
         </select>
         <div
-          className={`${"selectIcon"} ${theme} ${
-            disabled ? "disabled" : ""
-          }`}
+          className={`${"selectIcon"} ${theme} ${disabled ? "disabled" : ""}`}
           aria-hidden="true"
           data-testid={`${testId}-icon`}
         >

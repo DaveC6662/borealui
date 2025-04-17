@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Accordion from "@/components/Accordion/core/Accordion";
 
 const meta: Meta<typeof Accordion> = {
-  title: "Components/Accordion/Core",
+  title: "Components/Accordion",
   component: Accordion,
   tags: ["autodocs"],
   argTypes: {
@@ -52,7 +52,9 @@ export const Controlled: Story = {
       <Accordion
         {...args}
         expanded={open}
-        onToggle={(val: boolean | ((prevState: boolean) => boolean)) => setOpen(val)}
+        onToggle={(val: boolean | ((prevState: boolean) => boolean)) =>
+          setOpen(val)
+        }
         customCollapsedIcon="⏵"
         customExpandedIcon="⏷"
       />

@@ -1,14 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Avatar from "../components/Avatar/core/Avatar"
+import Avatar from "@/components/Avatar/core/Avatar";
 
 const meta: Meta<typeof Avatar> = {
-  title: "Components/Avatar/Core",
+  title: "Components/Avatar",
   component: Avatar,
   tags: ["autodocs"],
   argTypes: {
     name: {
       control: "text",
-      description: "Full name used to generate initials when no image is available",
+      description:
+        "Full name used to generate initials when no image is available",
     },
     src: {
       control: "text",
