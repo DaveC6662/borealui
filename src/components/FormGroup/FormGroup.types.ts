@@ -1,4 +1,5 @@
 import { SizeType } from "@/types/types";
+import { ReactElement } from "react";
 
 /**
  * Props for the FormGroup component.
@@ -11,7 +12,7 @@ export interface FormGroupProps {
     /** Optional error message shown in red below the input. */
     error?: string;
     /** The form element or component (input, textarea, etc.). */
-    children: React.ReactNode;
+    children: ReactElement | ReactElement[];
     /** Unique ID for the input and label association. */
     id?: string;
     /** Whether the field is required (adds asterisk). */

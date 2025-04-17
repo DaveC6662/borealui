@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:color";
 @use "sass:map";
 
@@ -14,6 +15,8 @@
   box-shadow: theme.$box-shadow-light;
   gap: theme.$spacing-xs;
   transition: theme.$transition-default;
+  width: 400px;
+  max-width: 100%;
 
   &.outline {
     background-color: transparent;
@@ -30,7 +33,8 @@
     font-size: 3em;
   }
 
-  .title, .message {
+  .title,
+  .message {
     margin: theme.$spacing-sm;
   }
 
@@ -43,6 +47,37 @@
     font-size: theme.$font-size-base;
     opacity: 0.8;
     width: 90%;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: theme.$spacing-md;
+
+    .title {
+      font-size: theme.$font-size-base;
+    }
+
+    .message {
+      font-size: theme.$font-size-sm;
+    }
+
+    .icon {
+      font-size: 2.5em;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .title {
+      font-size: theme.$font-size-sm;
+    }
+
+    .message {
+      font-size: theme.$font-size-xs;
+    }
+
+    .icon {
+      font-size: 2em;
+    }
   }
 }
 
@@ -117,5 +152,3 @@ $icon-sizes: (
     }
   }
 }
-
-

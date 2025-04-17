@@ -27,100 +27,89 @@
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
   }
-}
 
-.fullWidth {
-  width: 100%;
-  max-width: none;
-  display: flex;
-}
+  &.fullWidth {
+    width: 100%;
+    max-width: none;
+    display: flex;
+  }
 
-.loader {
-  width: 1.2rem;
-  height: 1.2rem;
-  border: 2px solid transparent;
-  border-top-color: var(--text-color-primary);
-  border-radius: 50%;
-  animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
+  .loader {
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid transparent;
+    border-top-color: var(--text-color-primary);
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
 
-.buttonIcon {
-  margin-right: theme.$spacing-sm;
-  display: flex;
-  align-items: center;
-  margin-top: -0.1em;
-}
+  .buttonIcon {
+    margin-right: theme.$spacing-sm;
+    display: flex;
+    align-items: center;
+    margin-top: -0.1em;
+  }
 
-.buttonLabel {
-  font-size: theme.$font-size-base;
-}
+  .buttonLabel {
+    font-size: theme.$font-size-base;
+  }
 
-.clear {
-  background-color: transparent;
-  box-shadow: none;
-  color: var(--text-color-primary);
-}
-
-.outline {
-  background-color: transparent;
-  border: 2px solid currentcolor;
-  box-shadow: none;
-}
-
-.disabled {
-  background-color: theme.$disabled-color;
-  color: var(--text-color-primary);
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-  box-shadow: none;
+  &.clear {
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--text-color-primary);
+  }
 
   &.outline {
-    border-color: theme.$disabled-color;
-    color: theme.$disabled-color;
+    background-color: transparent;
+    border: 2px solid currentcolor;
+    box-shadow: none;
   }
-}
 
-$themes: (
-  "primary": (
-    bg: var(--primary-color),
-    hover: var(--primary-color-hover),
-    text: var(--text-color-primary),
-    border: var(--primary-color),
-    text-hover: var(--text-color-primary)
-  ),
-  "secondary": (
-    bg: var(--secondary-color),
-    hover: var(--secondary-color-hover),
-    text: var(--text-color-secondary),
-    border: var(--secondary-color),
-    text-hover: var(--text-color-secondary)
-  ),
-  "success": (
-    bg: theme.$success-color,
-    hover: color.adjust(theme.$success-color, $lightness: -10%),
-    text: var(--text-color-primary),
-    border: theme.$success-color,
-    text-hover: var(--text-color-primary)
-  ),
-  "error": (
-    bg: theme.$error-color,
-    hover: color.adjust(theme.$error-color, $lightness: -10%),
-    text: var(--text-color-primary),
-    border: theme.$error-color,
-    text-hover: var(--text-color-primary)
-  ),
-  "warning": (
-    bg: theme.$warning-color,
-    hover: color.adjust(theme.$warning-color, $lightness: -10%),
-    text: var(--text-color-primary),
-    border: theme.$warning-color,
-    text-hover: var(--text-color-primary)
-  )
-);
+  &.disabled {
+    background-color: theme.$disabled-color;
+    color: var(--text-color-primary);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+    box-shadow: none;
+
+    &.outline {
+      border-color: theme.$disabled-color;
+      color: theme.$disabled-color;
+    }
+  }
+
+  $themes: (
+    "primary": (bg: var(--primary-color),
+      hover: var(--primary-color-hover),
+      text: var(--text-color-primary),
+      border: var(--primary-color),
+      text-hover: var(--text-color-primary)),
+    "secondary": (bg: var(--secondary-color),
+      hover: var(--secondary-color-hover),
+      text: var(--text-color-secondary),
+      border: var(--secondary-color),
+      text-hover: var(--text-color-secondary)),
+    "success": (bg: theme.$success-color,
+      hover: color.adjust(theme.$success-color, $lightness: -10%),
+      text: var(--text-color-primary),
+      border: theme.$success-color,
+      text-hover: var(--text-color-primary)),
+    "error": (bg: theme.$error-color,
+      hover: color.adjust(theme.$error-color, $lightness: -10%),
+      text: var(--text-color-primary),
+      border: theme.$error-color,
+      text-hover: var(--text-color-primary)),
+    "warning": (bg: theme.$warning-color,
+      hover: color.adjust(theme.$warning-color, $lightness: -10%),
+      text: var(--text-color-primary),
+      border: theme.$warning-color,
+      text-hover: var(--text-color-primary))
+  );
 
 @each $name, $values in $themes {
-  .#{$name} {
+  &.#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
@@ -155,7 +144,7 @@ $sizes: (
 );
 
 @each $size, $values in $sizes {
-  .#{$size} {
+  &.#{$size} {
     padding: map.get($values, padding);
 
     .buttonLabel {
@@ -177,4 +166,6 @@ $sizes: (
   100% {
     transform: rotate(360deg);
   }
+}
+
 }

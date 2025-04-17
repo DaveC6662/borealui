@@ -3,7 +3,7 @@ import { FaChevronRight } from "react-icons/fa";
 import "./Breadcrumbs.scss";
 import { BreadcrumbsProps, ELLIPSIS_LABEL } from "../Breadcrumbs.types";
 import  Button  from "../../Buttons/Button/core/Button";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../../utils/classNames";
 
 /**
  * Breadcrumbs component renders a navigation trail with optional truncation and expandability.

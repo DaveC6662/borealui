@@ -8,6 +8,7 @@
   background-color: var(--background-color-light);
   border: 2px dashed var(--background-color-darker);
   transition: theme.$transition-default;
+  max-width: 250px;
 
   &:hover {
     border-color: theme.$secondary-color;

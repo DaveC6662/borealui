@@ -4,7 +4,7 @@ import React, {
   } from "react";
   import "./Button.scss";
   import { ButtonProps } from "../Button.types";
-  import { combineClassNames } from "@/utils/classNames";
+  import { combineClassNames } from "../../../../utils/classNames";
   
   /**
    * A flexible and accessible button component that supports:

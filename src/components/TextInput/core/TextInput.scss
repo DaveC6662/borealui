@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:color";
 @use "sass:map";
 
@@ -36,7 +37,7 @@ $themes: (
   )
 );
 
-.iconTextBox {
+.textBoxContainer {
   display: flex;
   justify-content: center;
   align-items: center;

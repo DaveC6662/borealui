@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
-import styles from "./Divider.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import "./Divider.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { DividerProps } from "../Divider.types";
 
 /**
@@ -41,10 +41,10 @@ const Divider = forwardRef<HTMLElement, DividerProps>(
       <ComponentTag
         ref={ref as never}
         className={combineClassNames(
-          styles.divider,
-          styles[orientation],
-          styles[theme],
-          dashed && styles.dashed,
+          "divider",
+          orientation,
+          theme,
+          dashed && "dashed",
           className
         )}
         role="separator"

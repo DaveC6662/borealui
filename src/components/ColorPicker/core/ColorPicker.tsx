@@ -1,6 +1,6 @@
 import React, { JSX } from "react";
-import styles from "./ColorPicker.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import "./ColorPicker.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { ColorPickerProps } from "../ColorPicker.types";
 
 
@@ -26,21 +26,21 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
 }: ColorPickerProps): JSX.Element => {
   return (
     <fieldset
-      className={combineClassNames(styles.colorPicker, className)}
+      className={combineClassNames("colorPicker", className)}
       disabled={disabled}
       data-testid={testId}
     >
-      <legend className={styles.legend}>{label}</legend>
+      <legend className={"legend"}>{label}</legend>
 
-      <div className={styles.colorGrid}>
+      <div className={"colorGrid"}>
         {colors.map((color, i) => (
           <label
             key={color.value}
             className={combineClassNames(
-              styles.colorSwatch,
-              styles[size],
-              styles[shape],
-              selected === color.value && styles.selected
+              "colorSwatch",
+              size,
+              shape,
+              selected === color.value && "selected"
             )}
             htmlFor={`${testId}-color-${i}`}
             title={color.label}
@@ -53,11 +53,11 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
               value={color.value}
               checked={selected === color.value}
               onChange={() => onChange(color.value)}
-              className={styles.radioInput}
+              className={"radioInput"}
               aria-label={color.label}
             />
             <span
-              className={combineClassNames(styles.colorPreview, styles[shape])}
+              className={combineClassNames("colorPreview", shape)}
               style={{ backgroundColor: color.value }}
               aria-hidden="true"
             />
@@ -68,7 +68,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
       {allowCustom && (
         <input
           type="color"
-          className={styles.customColorInput}
+          className={"customColorInput"}
           value={selected}
           onChange={(e) => onChange(e.target.value)}
           aria-label="Custom color picker"

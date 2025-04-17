@@ -5,10 +5,10 @@ import React, {
     KeyboardEvent,
     JSX,
   } from "react";
-  import styles from "./Dropdown.module.scss";
-  import { IconButton } from "@/index.next";
-  import { combineClassNames } from "@/utils/classNames";
-import { DropdownProps } from "../Dropdown.types";
+  import "./Dropdown.scss";
+  import IconButton from "../../Buttons/IconButton/core/IconButton";
+  import { combineClassNames } from "../../../utils/classNames";
+  import { DropdownProps } from "../Dropdown.types";
   
   /**
    * A dropdown component with accessible keyboard support,
@@ -58,7 +58,7 @@ import { DropdownProps } from "../Dropdown.types";
     return (
       <div
         ref={dropdownRef}
-        className={combineClassNames(styles.dropdownWrapper, className)}
+        className={combineClassNames("dropdownWrapper", className)}
         onKeyDown={handleKeyDown}
         data-testid={testId}
       >
@@ -78,8 +78,8 @@ import { DropdownProps } from "../Dropdown.types";
             id={menuId}
             role="menu"
             className={combineClassNames(
-              styles.dropdownMenu,
-              styles[align],
+              "dropdownMenu",
+              align,
               menuClassName
             )}
             data-testid={testId ? `${testId}-menu` : undefined}
@@ -89,12 +89,12 @@ import { DropdownProps } from "../Dropdown.types";
                 <a
                   key={index}
                   href={item.href}
-                  className={styles.dropdownItem}
+                  className={"dropdownItem"}
                   role="menuitem"
                   data-testid={item["data-testid"]}
                 >
                   {item.icon && (
-                    <span className={styles.icon}>{item.icon}</span>
+                    <span className={"icon"}>{item.icon}</span>
                   )}
                   {item.label}
                 </a>
@@ -103,7 +103,7 @@ import { DropdownProps } from "../Dropdown.types";
                   key={index}
                   type="button"
                   role="menuitem"
-                  className={styles.dropdownItem}
+                  className={"dropdownItem"}
                   onClick={() => {
                     item.onClick?.();
                     closeDropdown();
@@ -111,7 +111,7 @@ import { DropdownProps } from "../Dropdown.types";
                   data-testid={item["data-testid"]}
                 >
                   {item.icon && (
-                    <span className={styles.icon}>{item.icon}</span>
+                    <span className={"icon"}>{item.icon}</span>
                   )}
                   {item.label}
                 </button>

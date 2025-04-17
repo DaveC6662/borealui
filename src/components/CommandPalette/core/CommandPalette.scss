@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:map";
 
 $theme-states: (
@@ -19,7 +20,7 @@ $theme-states: (
   justify-content: center;
   align-items: flex-start;
   padding-top: 10vh;
-}
+
 
 .palette {
   background: var(--background-color-light);
@@ -52,6 +53,7 @@ $theme-states: (
   cursor: pointer;
   border-radius: theme.$border-radius-sm;
   display: flex;
+  margin: theme.$spacing-xs;
   align-items: center;
   gap: theme.$spacing-xs;
   line-height: 0.8em;
@@ -78,4 +80,6 @@ $theme-states: (
       }
     }
   }
+}
+
 }

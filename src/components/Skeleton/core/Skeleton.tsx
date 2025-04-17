@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import styles from "./Skeleton.module.scss";
+import "./Skeleton.scss";
 import { SkeletonLoaderProps } from "../Skeleton.types";
 
 /**
@@ -19,7 +19,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
 }: SkeletonLoaderProps): JSX.Element => {
   return (
     <div
-      className={`${styles.skeletonLoader} ${className}`}
+      className={`${"skeletonLoader"} ${className}`}
       style={{ width, height }}
       role="status"
       aria-live="polite"

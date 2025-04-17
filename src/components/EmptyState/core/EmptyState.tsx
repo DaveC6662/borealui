@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./EmptyState.module.scss";
-import { Button } from "@/index.next";
-import { combineClassNames } from "@/utils/classNames";
+import "./EmptyState.scss";
+import Button from "../../Buttons/Button/core/Button";
+import { combineClassNames } from "../../../utils/classNames";
 import { EmptyStateProps } from "../EmptyState.types";
 
 /**
@@ -26,10 +26,10 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   return (
     <section
       className={combineClassNames(
-        styles.emptyState,
-        styles[theme],
-        styles[size],
-        outline && styles.outline,
+        "emptyState",
+        theme,
+        size,
+        outline && "outline",
         className
       )}
       role="region"
@@ -38,7 +38,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
     >
       {Icon && (
         <div
-          className={styles.icon}
+          className={"icon"}
           data-testid={testId ? `${testId}-icon` : undefined}
         >
           <Icon aria-hidden="true" />
@@ -46,14 +46,14 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       )}
 
       <h2
-        className={styles.title}
+        className={"title"}
         data-testid={testId ? `${testId}-title` : undefined}
       >
         {title}
       </h2>
 
       <p
-        className={styles.message}
+        className={"message"}
         data-testid={testId ? `${testId}-message` : undefined}
       >
         {message}

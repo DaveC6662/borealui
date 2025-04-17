@@ -1,134 +1,88 @@
-import React, {
-    forwardRef,
-    KeyboardEvent,
-    useMemo,
-  } from "react";
-  import styles from "./IconButton.module.scss";
-  import { combineClassNames } from "@/utils/classNames";
-import { IconButtonProps } from "../../Buttons/IconButton/IconButton.types";
-  
-  /**
-   * IconButton renders an accessible button or link with an icon and optional loading state.
-   * Supports theme, size, outline, disabled, link behavior, and keyboard interactions.
-   *
-   * @param {IconButtonProps} props - Component props.
-   * @param {React.Ref<HTMLButtonElement>} ref - Ref forwarded to the underlying button.
-   * @returns {JSX.Element} Rendered icon button or link.
-   */
-  const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonProps>(
-    (
-      {
-        icon: Icon,
-        theme = "primary",
-        href,
-        isExternal = false,
-        onClick,
-        className = "",
-        disabled = false,
-        ariaLabel,
-        title,
-        outline = false,
-        size = "medium",
-        loading = false,
-        type = "button",
-        "data-testid": testId,
-        ...rest
-      },
-      ref
-    ) => {
-      /** Fallback label for accessibility. */
-      const label = ariaLabel || title || "Icon button";
-  
-      /** Props shared across anchor/button variants. */
-      const sharedProps = {
-        "aria-label": label,
-        "aria-disabled": disabled || undefined,
-        "aria-busy": loading || undefined,
-        disabled,
-        tabIndex: disabled ? -1 : 0,
-        title,
-        "data-testid": testId,
-        onClick: disabled ? undefined : onClick,
-      };
-  
-      /** Dynamic styling based on props. */
-      const classNames = useMemo(
-        () =>
-          combineClassNames(
-            styles.iconButton,
-            styles[theme],
-            outline && styles.outline,
-            size && styles[size],
-            disabled && styles.disabled,
-            className
-          ),
-        [theme, outline, size, disabled, className]
-      );
-  
-      /** Inner icon or loader content. */
-      const iconContent = (
-        <span className={styles.buttonLabel}>
-          {loading ? <div className={styles.loader} /> : <Icon data-testid="icon-button-icon" />}
-        </span>
-      );
-  
-      // External anchor
-      if (href && !disabled && isExternal) {
-        return (
-          <a
-            {...sharedProps}
-            {...rest}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            role="button"
-            className={classNames}
-            ref={ref as React.Ref<HTMLAnchorElement>}
-          >
-            {iconContent}
-          </a>
-        );
-      }
-  
-      // Internal anchor
-      if (href && !disabled && !isExternal) {
-        return (
-          <a
-            {...sharedProps}
-            {...rest}
-            href={href}
-            role="button"
-            className={classNames}
-            ref={ref as React.Ref<HTMLAnchorElement>}
-          >
-            {iconContent}
-          </a>
-        );
-      }
-  
-      // Native button
-      return (
-        <button
-          ref={ref as React.Ref<HTMLButtonElement>}
-          type={type}
-          className={classNames}
-          onKeyDown={(e: KeyboardEvent<HTMLButtonElement>) => {
-            if (!disabled && (e.key === "Enter" || e.key === " ")) {
-              e.preventDefault();
-              const event = new MouseEvent("click", { bubbles: true });
-              e.currentTarget.dispatchEvent(event);
-            }
-          }}
-          {...sharedProps}
-          {...rest}
+import React, { JSX } from "react";
+import "./FormGroup.scss";
+import { combineClassNames } from "../../../utils/classNames";
+import { FormGroupProps } from "../FormGroup.types";
+
+/**
+ * FormGroup is a flexible wrapper for inputs, handling accessibility,
+ * layout, labels, descriptions, and validation messaging.
+ *
+ * @param {FormGroupProps} props - The props used to configure the form group.
+ * @returns {JSX.Element} A styled and accessible form group.
+ */
+const FormGroup: React.FC<FormGroupProps> = ({
+  label,
+  description,
+  error,
+  children,
+  id,
+  required = false,
+  className = "",
+  layout = "vertical",
+  hideLabel = false,
+  spacing = "medium",
+  controller,
+  "data-testid": testId = "form-group",
+}: FormGroupProps): JSX.Element => {
+  const descriptionId = description ? `${id}-description` : undefined;
+  const errorId = error ? `${id}-error` : undefined;
+
+  return (
+    <div
+      className={combineClassNames(
+        "formGroup",
+        layout,
+        spacing,
+        error && "error",
+        className
+      )}
+      role="group"
+      aria-labelledby={id ? `${id}-label` : undefined}
+      data-testid={testId}
+    >
+      {label && (
+        <label
+          id={`${id}-label`}
+          htmlFor={id}
+          className={combineClassNames("label", hideLabel && "srOnly")}
+          data-testid={`${testId}-label`}
         >
-          {iconContent}
-        </button>
-      );
-    }
+          {label} {required && <span className={"required"}>*</span>}
+        </label>
+      )}
+
+      <div className={"inputWrapper"} data-testid={`${testId}-wrapper`}>
+        <div className={"inputField"} data-testid={`${testId}-input-field`}>
+          {React.isValidElement(children)
+            ? React.cloneElement(children as React.ReactElement<any>, {
+              id,
+              "aria-describedby": error ? errorId : description ? descriptionId : undefined,
+              "aria-invalid": !!error,
+              "data-testid": `${testId}-input`,
+            })
+            : children}
+        </div>
+
+        {controller && (
+          <div className={"controller"} data-testid={`${testId}-controller`}>
+            {controller}
+          </div>
+        )}
+      </div>
+
+      {description && !error && (
+        <p id={descriptionId} className={"description"} data-testid={`${testId}-description`}>
+          {description}
+        </p>
+      )}
+
+      {error && (
+        <p id={errorId} className={"errorMessage"} role="alert" data-testid={`${testId}-error`}>
+          {error}
+        </p>
+      )}
+    </div>
   );
-  
-  IconButton.displayName = "IconButton";
-  
-  export default IconButton;
-  
+};
+
+export default FormGroup;

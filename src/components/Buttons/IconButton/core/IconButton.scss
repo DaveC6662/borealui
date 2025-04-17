@@ -32,7 +32,6 @@
     height: 20px;
     width: 20px;
   }
-}
 
 $themes: (
   "primary": (
@@ -73,12 +72,12 @@ $themes: (
   )
 );
 
-.clear {
+&.clear {
   box-shadow: none;
 }
 
 @each $name, $values in $themes {
-  .#{$name} {
+  &.#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
     
@@ -108,7 +107,7 @@ $sizes: (
 );
 
 @each $size, $values in $sizes {
-  .#{$size} {
+  &.#{$size} {
     width: map.get($values, size);
     height: map.get($values, size);
 
@@ -119,7 +118,7 @@ $sizes: (
   }
 }
 
-.disabled {
+&.disabled {
   background-color: theme.$disabled-color;
   color: var(--text-color-primary);
   cursor: not-allowed;
@@ -144,4 +143,6 @@ $sizes: (
   100% {
     transform: rotate(360deg);
   }
+}
+
 }

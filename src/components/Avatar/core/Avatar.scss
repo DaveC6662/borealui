@@ -75,9 +75,9 @@
     z-index: 1;
     position: relative;
   }
-}
 
-.clear {
+
+&.clear {
   background-color: transparent;
 
   &:hover {
@@ -137,7 +137,7 @@ $themes: (
 );
 
 @each $name, $props in $themes {
-  .#{$name} {
+  &.#{$name} {
     background-color: map.get($props, color);
     color: var(--text-color-primary);
 
@@ -169,7 +169,7 @@ $themes: (
   }
 }
 
-.disabled.outline {
+&.disabled.outline {
   color: theme.$disabled-color;
   border-color: theme.$disabled-color;
 }
@@ -225,4 +225,6 @@ $themes: (
     background-color: theme.$error-color;
     border: 1px solid color.adjust(theme.$error-color, $lightness: 20%);
   }
+}
+
 }

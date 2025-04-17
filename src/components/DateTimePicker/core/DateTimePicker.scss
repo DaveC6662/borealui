@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:color";
 @use "sass:map";
 
@@ -16,7 +17,7 @@ $input-themes: (
   flex-direction: column;
   gap: theme.$spacing-xs;
   width: 100%;
-}
+
 
 .label {
   font-size: theme.$font-size-sm;
@@ -46,27 +47,31 @@ $input-themes: (
     border-color: var(--text-color-primary);
   }
 
-  &:disabled {
-    background-color: theme.$disabled-color;
-    color: theme.$disabled-color;
-    cursor: not-allowed;
-  }
-
   &::-webkit-calendar-picker-indicator {
     opacity: 1;
     z-index: 2;
     cursor: pointer;
   }
+
+  @each $theme, $values in $input-themes {
+    &.#{$theme} {
+      background-color: map.get($values, bg);
+      color: map.get($values, color);
+  
+      &:focus {
+        border-color: map.get($values, focus);
+      }
+    }
+  }
 }
 
-@each $theme, $values in $input-themes {
-  .#{$theme} .input {
-    background-color: map.get($values, bg);
-    color: map.get($values, color);
 
-    &:focus {
-      border-color: map.get($values, focus);
-    }
+
+.input {
+  &:disabled {
+    background-color: theme.$disabled-color;
+    color: theme.$disabled-color;
+    cursor: not-allowed;
   }
 }
 
@@ -76,7 +81,7 @@ $input-themes: (
 }
 
 @each $theme, $values in $input-themes {
-  .#{$theme}.outline .input {
+  &.#{$theme}.outline .input {
     color: map.get($values, bg);
     border: 2px solid map.get($values, bg);
 
@@ -90,7 +95,7 @@ $input-themes: (
   }
 }
 
-.clear.outline .input {
+&.clear.outline .input {
   color: var(--text-color-primary);
   border: 2px solid var(--text-color-primary);
 }
@@ -105,8 +110,10 @@ $input-sizes: (
 );
 
 @each $size, $props in $input-sizes {
-  .#{$size} .input {
+  &.#{$size} .input {
     padding: map.get($props, padding);
     font-size: map.get($props, font-size);
   }
+}
+
 }

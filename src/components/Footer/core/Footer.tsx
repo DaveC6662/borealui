@@ -1,6 +1,6 @@
 import React, { JSX } from "react";
 import { IconButton, ThemeSelect } from "@/index.next";
-import styles from "./Footer.module.scss";
+import "./Footer.scss";
 import { combineClassNames } from "@/utils/classNames";
 import { FooterProps } from "../Footer.types";
 
@@ -22,21 +22,21 @@ const Footer: React.FC<FooterProps> = ({
 }: FooterProps): JSX.Element => {
   return (
     <footer
-      className={combineClassNames(styles.footerContainer, styles[theme], className)}
+      className={combineClassNames("footerContainer", theme, className)}
       role="contentinfo"
       aria-label="Footer"
       data-testid={testId}
     >
-      <div className={styles.footerContent}>
+      <div className={"footerContent"}>
         {copyright && (
-          <div className={styles.footerLeft} data-testid={`${testId}-copyright`}>
+          <div className={"footerLeft"} data-testid={`${testId}-copyright`}>
             <p>{copyright}</p>
           </div>
         )}
 
         {links.length > 0 && (
           <nav
-            className={styles.footerLinks}
+            className={"footerLinks"}
             aria-label="Footer Navigation"
             data-testid={`${testId}-nav`}
           >
@@ -44,7 +44,7 @@ const Footer: React.FC<FooterProps> = ({
               <a
                 key={i}
                 href={link.href}
-                className={styles.footerLink}
+                className={"footerLink"}
                 data-testid={`${testId}-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
               >
                 {link.label}
@@ -54,14 +54,14 @@ const Footer: React.FC<FooterProps> = ({
         )}
 
         {showThemeSelect && (
-          <div className={styles.themeToggleContainer} data-testid={`${testId}-theme-select`}>
+          <div className={"themeToggleContainer"} data-testid={`${testId}-theme-select`}>
             <ThemeSelect />
           </div>
         )}
 
         {socialLinks.length > 0 && (
           <div
-            className={styles.footerSocial}
+            className={"footerSocial"}
             aria-label="Social media links"
             data-testid={`${testId}-social`}
           >

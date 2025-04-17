@@ -1,6 +1,6 @@
 import { JSX, useMemo, useState } from "react";
-import styles from "./DataTable.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import "./DataTable.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { DataTableProps } from "../DataTable.types";
 
 /**
@@ -68,14 +68,14 @@ function DataTable<T extends object>({
   return (
     <div
       className={combineClassNames(
-        styles.dataTableWrapper,
-        styles[theme],
-        striped && styles.striped,
+        "dataTableWrapper",
+        theme,
+        striped && "striped",
         className
       )}
       data-testid={testId}
     >
-      <table className={styles.table} role="table">
+      <table className={"table"} role="table">
         <thead>
           <tr role="row">
             {columns.map((col) => (
@@ -84,8 +84,8 @@ function DataTable<T extends object>({
                 role="columnheader"
                 scope="col"
                 className={combineClassNames(
-                  col.sortable && styles.sortable,
-                  styles[theme]
+                  col.sortable && "sortable",
+                  theme
                 )}
                 onClick={() => col.sortable && handleSort(col.key)}
                 aria-sort={
@@ -98,7 +98,7 @@ function DataTable<T extends object>({
               >
                 {col.label}
                 {col.sortable && (
-                  <span className={styles.sortIcon} aria-hidden>
+                  <span className={"sortIcon"} aria-hidden>
                     {sortKey === col.key ? (sortOrder === "asc" ? "▲" : "▼") : "⇅"}
                   </span>
                 )}
@@ -114,13 +114,13 @@ function DataTable<T extends object>({
                 key={key}
                 role="row"
                 className={combineClassNames(
-                  onRowClick && styles.clickable,
-                  striped && idx % 2 === 1 && styles.striped
+                  onRowClick && "clickable",
+                  striped && idx % 2 === 1 && "striped"
                 )}
                 onClick={() => onRowClick?.(row)}
               >
                 {columns.map((col) => (
-                  <td key={String(col.key)} role="cell">
+                  <td key={String(col.key)} role="cell" data-label={col.label}>
                     {col.render
                       ? col.render(row[col.key], row)
                       : typeof row[col.key] === "object"

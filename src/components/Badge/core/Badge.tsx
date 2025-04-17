@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import "./Badge.scss";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../../utils/classNames";
 import { BadgeProps } from "../Badge.types";
 
 /**

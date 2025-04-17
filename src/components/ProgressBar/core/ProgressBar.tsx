@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import styles from "./Progressbar.module.scss";
+import "./Progressbar.scss";
 import { ProgressBarProps } from "../ProgressBar.types";
 
 /**
@@ -23,7 +23,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
   return (
     <div
-      className={`${styles.progressContainer} ${styles[size]} ${className}`}
+      className={`${"progressContainer"} ${size} ${className}`}
       role="progressbar"
       aria-valuemin={0}
       aria-valuemax={100}
@@ -32,8 +32,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       data-testid={testId}
     >
       <div
-        className={`${styles.progressBar} ${styles[theme]} ${animated ? styles.animated : ""} ${
-          indeterminate ? styles.indeterminate : ""
+        className={`${"progressBar"} ${theme} ${animated ? "animated" : ""} ${
+          indeterminate ? "indeterminate" : ""
         }`}
         style={{ width: indeterminate ? "100%" : `${progress}%` }}
         data-testid={`${testId}-bar`}

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import "./Accordion.scss";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../../utils/classNames";
 import { AccordionProps } from "../Accordion.types";
 
 /**

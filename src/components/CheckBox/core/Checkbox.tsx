@@ -5,7 +5,7 @@ import React, {
     useEffect,
     useImperativeHandle,
 } from "react";
-import styles from "./CheckBox.module.scss";
+import "./Checkbox.scss";
 import { combineClassNames } from "@/utils/classNames";
 import { CheckboxProps } from "../Checkbox.types";
 
@@ -64,10 +64,10 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
         /** Compute class names based on props and state. */
         const combinedClassName = combineClassNames(
-            styles.checkboxWrapper,
-            styles[theme],
-            disabled && styles.disabled,
-            styles[labelPosition],
+            "checkboxWrapper",
+            theme,
+            disabled && "disabled",
+            labelPosition,
             className
         );
 
@@ -80,7 +80,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                 role="checkbox"
             >
                 {label && labelPosition === "left" && (
-                    <span className={styles.checkboxLabel} id={`${checkboxId}-label`}>
+                    <span className={"checkboxLabel"} id={`${checkboxId}-label`}>
                         {label}
                     </span>
                 )}
@@ -89,7 +89,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                     id={checkboxId}
                     ref={inputRef}
                     type="checkbox"
-                    className={styles.checkboxInput}
+                    className={"checkboxInput"}
                     checked={checked}
                     onChange={handleChange}
                     disabled={disabled}
@@ -98,10 +98,10 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                     {...props}
                 />
 
-                <span className={styles.checkboxBox} aria-hidden="true" />
+                <span className={"checkboxBox"} aria-hidden="true" />
 
                 {label && labelPosition === "right" && (
-                    <span className={styles.checkboxLabel} id={`${checkboxId}-label`}>
+                    <span className={"checkboxLabel"} id={`${checkboxId}-label`}>
                         {label}
                     </span>
                 )}

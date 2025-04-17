@@ -4,9 +4,9 @@ import {
     InputHTMLAttributes,
     forwardRef,
   } from "react";
-  import styles from "./TextInput.module.scss";
+  import "./TextInput.scss";
   import { FaEye, FaEyeSlash } from "react-icons/fa";
-  import { combineClassNames } from "@/utils/classNames";
+  import { combineClassNames } from "../../../utils/classNames";
 import { TextInputProps } from "../TextInput.types";
   
   
@@ -42,9 +42,9 @@ import { TextInputProps } from "../TextInput.types";
       return (
         <div
           className={combineClassNames(
-            styles.iconTextBox,
-            styles[theme],
-            disabled && styles.disabled,
+            "textBoxContainer",
+            theme,
+            disabled && "disabled",
             className
           )}
           data-testid={`${testId}-wrapper`}
@@ -52,7 +52,7 @@ import { TextInputProps } from "../TextInput.types";
         >
           {Icon && (
             <div
-              className={styles.iconContainer}
+              className={"iconContainer"}
               aria-hidden="true"
               data-testid={`${testId}-icon`}
             >
@@ -64,7 +64,7 @@ import { TextInputProps } from "../TextInput.types";
             ref={ref}
             id={inputId}
             type={password && !showPassword ? "password" : "text"}
-            className={combineClassNames(styles.textInput, styles[theme])}
+            className={combineClassNames("textInput", theme)}
             placeholder={placeholder}
             aria-label={ariaLabel || placeholder}
             aria-describedby={ariaDescription ? descId : undefined}
@@ -78,7 +78,7 @@ import { TextInputProps } from "../TextInput.types";
           {password && (
             <button
               type="button"
-              className={styles.togglePassword}
+              className={"togglePassword"}
               onClick={togglePasswordVisibility}
               aria-label={showPassword ? "Hide password" : "Show password"}
               data-testid={`${testId}-password-toggle`}
@@ -90,7 +90,7 @@ import { TextInputProps } from "../TextInput.types";
           {ariaDescription && (
             <span
               id={descId}
-              className={styles.srOnly}
+              className={"srOnly"}
               data-testid={`${testId}-input-description`}
             >
               {ariaDescription}

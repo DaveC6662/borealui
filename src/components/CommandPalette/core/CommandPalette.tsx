@@ -5,10 +5,10 @@ import React, {
     KeyboardEvent,
   } from "react";
   import ReactDOM from "react-dom";
-  import styles from "./CommandPalette.module.scss";
-  import { TextInput } from "@/index.next";
-  import { combineClassNames } from "@/utils/classNames";
-import { CommandPaletteProps } from "../CommandPalette.types";
+  import "./CommandPalette.scss";
+  import TextInput from "../../TextInput/core/TextInput";
+  import { combineClassNames } from "../../../utils/classNames";
+  import { CommandPaletteProps } from "../CommandPalette.types";
   
   /**
    * CommandPalette provides a floating command dialog with keyboard navigation,
@@ -89,12 +89,12 @@ import { CommandPaletteProps } from "../CommandPalette.types";
   
     return ReactDOM.createPortal(
       <div
-        className={styles.overlay}
+        className={"overlay"}
         onClick={onClose}
         data-testid={`${testId}-overlay`}
       >
         <div
-          className={combineClassNames(styles.palette, styles[theme])}
+          className={combineClassNames("palette", theme)}
           onClick={(e) => e.stopPropagation()}
           role="dialog"
           aria-modal="true"
@@ -108,8 +108,8 @@ import { CommandPaletteProps } from "../CommandPalette.types";
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            theme={theme}
-            className={styles.input}
+            theme={"clear"}
+            className={"input"}
             data-testid={`${testId}-input`}
             aria-activedescendant={
               filtered.length > 0 ? `cmd-${activeIndex}` : undefined
@@ -120,7 +120,7 @@ import { CommandPaletteProps } from "../CommandPalette.types";
           />
   
           <ul
-            className={styles.list}
+            className={"list"}
             id="command-list"
             role="listbox"
             aria-label="Command suggestions"
@@ -133,15 +133,15 @@ import { CommandPaletteProps } from "../CommandPalette.types";
                   role="option"
                   aria-selected={index === activeIndex}
                   className={combineClassNames(
-                    styles.item,
-                    index === activeIndex && styles.active
+                   "item",
+                    index === activeIndex && "active"
                   )}
                   onClick={() => {
                     cmd.action();
                     onClose();
                   }}
                 >
-                  {cmd.icon && <span className={styles.icon}>{cmd.icon}</span>}
+                  {cmd.icon && <span className={"icon"}>{cmd.icon}</span>}
                   {cmd.label}
                 </li>
               ))
@@ -150,7 +150,7 @@ import { CommandPaletteProps } from "../CommandPalette.types";
                 role="option"
                 aria-selected="false"
                 aria-disabled="true"
-                className={combineClassNames(styles.item, styles.empty)}
+                className={combineClassNames("item", "empty")}
               >
                 No matching results
               </li>

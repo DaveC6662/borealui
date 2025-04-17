@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:color";
 @use "sass:map";
 
@@ -14,6 +15,8 @@
   box-shadow: theme.$box-shadow-light;
   gap: theme.$spacing-xs;
   transition: theme.$transition-default;
+  width: 400px;
+  max-width: 100%;
 
   &.outline {
     background-color: transparent;
@@ -21,16 +24,12 @@
     box-shadow: none;
   }
 
-  &.disabled {
-    opacity: 0.6;
-    pointer-events: none;
-  }
-
   .icon {
     font-size: 3em;
   }
 
-  .title, .message {
+  .title,
+  .message {
     margin: theme.$spacing-sm;
   }
 
@@ -44,78 +43,110 @@
     opacity: 0.8;
     width: 90%;
   }
-}
 
-@each $theme, $values in (
-  "primary": (bg: var(--primary-color), color: var(--text-color-primary)),
-  "secondary": (bg: var(--secondary-color), color: var(--text-color-secondary)),
-  "success": (bg: theme.$success-color, color: var(--text-color-primary)),
-  "error": (bg: theme.$error-color, color: var(--text-color-primary)),
-  "warning": (bg: theme.$warning-color, color: var(--text-color-primary)),
-  "clear": (bg: transparent, color: var(--text-color-primary))
-) {
-  .#{$theme} {
-    background-color: map.get($values, bg);
-    color: map.get($values, color);
+  @each $theme, $values in (
+    "primary": (bg: var(--primary-color), color: var(--text-color-primary)),
+    "secondary": (bg: var(--secondary-color), color: var(--text-color-secondary)),
+    "success": (bg: theme.$success-color, color: var(--text-color-primary)),
+    "error": (bg: theme.$error-color, color: var(--text-color-primary)),
+    "warning": (bg: theme.$warning-color, color: var(--text-color-primary)),
+    "clear": (bg: transparent, color: var(--text-color-primary))
+  ) {
+    &.#{$theme} {
+      background-color: map.get($values, bg);
+      color: map.get($values, color);
 
-    &.outline {
-      border-color: map.get($values, bg);
-      color: map.get($values, bg);
+      &.outline {
+        background-color: transparent;
+        border-color: map.get($values, bg);
+        color: map.get($values, bg);
+      }
     }
   }
-}
 
-.clear {
-  box-shadow: none;
-}
+  &.clear {
+    box-shadow: none;
+  }
 
-.clear.outline {
-  color: var(--text-color-primary);
-  border-color: var(--text-color-primary);
-}
+  &.clear.outline {
+    color: var(--text-color-primary);
+    border-color: var(--text-color-primary);
+  }
 
-.disabled {
-  opacity: 0.6;
-  pointer-events: none;
-}
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
 
-$input-sizes: ( 
-  "xs": theme.$spacing-xs,
-  "small": theme.$spacing-sm,
-  "medium": theme.$spacing-md,
-  "large": theme.$spacing-lg,
-  "xl": theme.$spacing-xl
-);
-$font-sizes: (
-  "xs": theme.$font-size-xs,
-  "small": theme.$font-size-sm,
-  "medium": theme.$font-size-md,
-  "large": theme.$font-size-base,
-  "xl": theme.$font-size-lg
-);
-$icon-sizes: (
-  "xs": 2em,
-  "small": 3em,
-  "medium": 3.5em,
-  "large": 4em,
-  "xl": 4.5em
-);
+  $input-sizes: (
+    "xs": theme.$spacing-xs,
+    "small": theme.$spacing-sm,
+    "medium": theme.$spacing-md,
+    "large": theme.$spacing-lg,
+    "xl": theme.$spacing-xl
+  );
 
-@each $size, $spacing in $input-sizes {
-  .#{$size} {
+  $font-sizes: (
+    "xs": theme.$font-size-xs,
+    "small": theme.$font-size-sm,
+    "medium": theme.$font-size-md,
+    "large": theme.$font-size-base,
+    "xl": theme.$font-size-lg
+  );
+
+  $icon-sizes: (
+    "xs": 2em,
+    "small": 3em,
+    "medium": 3.5em,
+    "large": 4em,
+    "xl": 4.5em
+  );
+
+  @each $size, $spacing in $input-sizes {
+    &.#{$size} {
+      .title {
+        padding: $spacing;
+        font-size: map.get($font-sizes, $size);
+      }
+
+      .message {
+        font-size: map.get($font-sizes, $size);
+      }
+
+      .icon {
+        font-size: map.get($icon-sizes, $size);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: theme.$spacing-md;
+
     .title {
-      padding: $spacing;
-      font-size: map.get($font-sizes, $size);
+      font-size: theme.$font-size-base;
     }
 
     .message {
-      font-size: map.get($font-sizes, $size);
+      font-size: theme.$font-size-sm;
     }
 
     .icon {
-      font-size: map.get($icon-sizes, $size);
+      font-size: 2.5em;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .title {
+      font-size: theme.$font-size-sm;
+    }
+
+    .message {
+      font-size: theme.$font-size-xs;
+    }
+
+    .icon {
+      font-size: 2em;
     }
   }
 }
-
-

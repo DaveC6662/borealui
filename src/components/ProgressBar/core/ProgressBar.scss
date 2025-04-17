@@ -1,4 +1,5 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:map";
 
 
@@ -32,50 +33,52 @@ $progress-themes: (
       height: $height;
     }
   }
-}
 
-.progressBar {
-  height: 100%;
-  width: 0;
-  border-radius: theme.$border-radius-lg;
-  transition: width 0.4s ease-in-out;
 
-  &.animated {
-    animation: progress-grow 0.8s ease-out;
-  }
+  .progressBar {
+    height: 100%;
+    width: 0;
+    border-radius: theme.$border-radius-lg;
+    transition: width 0.4s ease-in-out;
 
-  &.indeterminate {
-    width: 100%;
-    animation: indeterminate-move 1.5s infinite ease-in-out;
-  }
+    &.animated {
+      animation: progress-grow 0.8s ease-out;
+    }
 
-  @each $theme, $color in $progress-themes {
-    &.#{$theme} {
-      background-color: $color;
+    &.indeterminate {
+      width: 100%;
+      animation: indeterminate-move 1.5s infinite ease-in-out;
+    }
+
+    @each $theme, $color in $progress-themes {
+      &.#{$theme} {
+        background-color: $color;
+      }
     }
   }
-}
 
-@keyframes progress-grow {
-  from {
-    width: 0;
+  @keyframes progress-grow {
+    from {
+      width: 0;
+    }
+
+    to {
+      width: 100%;
+    }
   }
 
-  to {
-    width: 100%;
-  }
-}
+  @keyframes indeterminate-move {
+    0% {
+      transform: translateX(-100%);
+    }
 
-@keyframes indeterminate-move {
-  0% {
-    transform: translateX(-100%);
+    50% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
   }
 
-  50% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
 }

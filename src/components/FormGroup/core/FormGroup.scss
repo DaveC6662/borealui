@@ -1,10 +1,11 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 
 .formGroup {
   display: flex;
   flex-direction: column;
   margin-bottom: theme.$spacing-md;
-}
+
 
 .label {
   font-weight: theme.$font-weight-bold;
@@ -116,7 +117,9 @@ $size-margins: (
 );
 
 @each $size, $spacing in $size-margins {
-  .#{$size} {
+  &.#{$size} {
     margin-bottom: $spacing;
   }
+}
+
 }

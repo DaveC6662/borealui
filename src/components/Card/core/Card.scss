@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:color";
 @use "sass:map";
 
@@ -15,9 +16,9 @@
   width: 100%;
   color: var(--text-color-primary);
   transition: transform 0.3s ease;
-}
 
-.cardLoading {
+
+&.cardLoading {
   background: none !important;
   box-shadow: none !important;
   padding: 0;
@@ -93,11 +94,11 @@
   gap: theme.$spacing-sm;
 }
 
-.fadeIn {
+&.fadeIn {
   animation: fade-in 0.8s ease-in-out;
 }
 
-.vertical {
+&.vertical {
   flex-direction: column;
 
   .cardContent {
@@ -109,7 +110,7 @@
   }
 }
 
-.horizontal {
+&.horizontal {
   flex-direction: row;
   max-width: none;
   justify-content: center;
@@ -148,7 +149,7 @@ $theme-variants: (
 );
 
 @each $name, $props in $theme-variants {
-  .#{$name} {
+  &.#{$name} {
     background: linear-gradient(to bottom, map.get($props, bg) 0%, map.get($props, light) 100%);
     color: var(--text-color-primary);
 
@@ -170,7 +171,7 @@ $theme-variants: (
   }
 }
 
-.solid {
+&.solid {
   background: var(--primary-color);
 
   .cardTitle, .cardDescription {
@@ -185,7 +186,7 @@ $theme-variants: (
   &.clear { background: transparent; }
 }
 
-.disabled {
+&.disabled {
   background-color: theme.$disabled-color;
   color: var(--text-color-primary);
   cursor: not-allowed;
@@ -194,7 +195,7 @@ $theme-variants: (
   box-shadow: none;
 }
 
-.secondary {
+&.secondary {
   color: var(--text-color-secondary);
 
   .cardTitle {
@@ -211,12 +212,12 @@ $theme-variants: (
 }
 
 
-.clear {
+&.clear {
   background: transparent;
   box-shadow: none;
 }
 
-.outline {
+&.outline {
   background: transparent;
   border: 2px solid currentcolor;
   box-shadow: none;
@@ -232,4 +233,6 @@ $theme-variants: (
     opacity: 1;
     transform: translateY(0);
   }
+}
+
 }

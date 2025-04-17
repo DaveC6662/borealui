@@ -1,6 +1,6 @@
 import React, { useId } from "react";
-import styles from "./DateTimePicker.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import "./DateTimePicker.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { DateTimePickerProps } from "../DateTimePicker.types";
 
 /**
@@ -30,25 +30,24 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
   return (
     <div
       className={combineClassNames(
-        styles.wrapper,
-        styles[theme],
-        styles[size],
-        outline && styles.outline,
-        disabled && styles.disabled,
+        "wrapper",
+        size,
+        outline && "outline",
+        disabled && "disabled",
         className
       )}
       data-testid={testId}
     >
       {label && (
-        <label htmlFor={inputId} className={styles.label}>
+        <label htmlFor={inputId} className={"label"}>
           {label}
         </label>
       )}
-      <div className={styles.inputWrapper}>
+      <div className={"inputWrapper"}>
         <input
           id={inputId}
           type="datetime-local"
-          className={styles.input}
+          className={combineClassNames("input", theme)}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
           min={min}

@@ -10,7 +10,7 @@
   font-weight: theme.$font-weight-bold;
   padding: theme.$spacing-sm;
   border-radius: theme.$border-radius-lg;
-}
+
 
 .list {
   display: flex;
@@ -59,7 +59,7 @@
   }
 }
 
-.current {
+&.current {
   font-weight: theme.$font-weight-bolder;
 }
 
@@ -73,7 +73,7 @@
   line-height: 0.9em;
 }
 
-.clear {
+&.clear {
   background-color: transparent;
   color: var(--text-color-primary);
 
@@ -82,13 +82,13 @@
   }
 }
 
-.outline {
+&.outline {
   background-color: transparent;
   border: 2px solid currentcolor;
   box-shadow: none;
 }
 
-.disabled.outline {
+&.disabled.outline {
   color: theme.$disabled-color;
   border-color: theme.$disabled-color;
 }
@@ -132,7 +132,7 @@ $themes: (
 );
 
 @each $name, $props in $themes {
-  .#{$name} {
+  &.#{$name} {
     background-color: map.get($props, bg);
     color: map.get($props, text);
 
@@ -165,7 +165,7 @@ $themes: (
   }
 }
 
-.xs {
+&.xs {
   padding: theme.$spacing-xs 6px;
 
   .linkLabel,
@@ -174,7 +174,7 @@ $themes: (
   }
 }
 
-.small {
+&.small {
   padding: theme.$spacing-sm 10px;
 
   .linkLabel,
@@ -183,7 +183,7 @@ $themes: (
   }
 }
 
-.medium {
+&.medium {
   padding: theme.$spacing-md 12px;
   border-radius: theme.$border-radius-xl;
 
@@ -193,7 +193,7 @@ $themes: (
   }
 }
 
-.large {
+&.large {
   padding: theme.$spacing-lg 16px;
   border-radius: theme.$border-radius-xl;
 
@@ -203,7 +203,7 @@ $themes: (
   }
 }
 
-.xl {
+&.xl {
   padding: theme.$spacing-xl 18px;
   border-radius: theme.$border-radius-xl;
 
@@ -213,7 +213,7 @@ $themes: (
   }
 }
 
-.itemAnimate {
+&.itemAnimate {
   animation: fade-in-slide 0.3s ease-out;
 }
 
@@ -227,4 +227,6 @@ $themes: (
     opacity: 1;
     transform: translateX(0);
   }
+}
+
 }

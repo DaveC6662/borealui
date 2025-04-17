@@ -4,7 +4,7 @@ import React, {
     useMemo,
   } from "react";
   import "./IconButton.scss";
-  import { combineClassNames } from "@/utils/classNames";
+  import { combineClassNames } from "../../../../utils/classNames";
 import { IconButtonProps } from "../IconButton.types";
   
   /**

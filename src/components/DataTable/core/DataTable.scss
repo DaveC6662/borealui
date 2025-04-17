@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:map";
 
 $table-themes: (
@@ -9,10 +10,9 @@ $table-themes: (
   "warning": theme.$warning-color
 );
 
-
-
 .dataTableWrapper {
   width: 100%;
+  max-width: 90vw;
   overflow-x: auto;
   border-radius: theme.$border-radius-xs;
   box-shadow: theme.$box-shadow-light;
@@ -20,6 +20,10 @@ $table-themes: (
 
   tbody tr:hover {
     background-color: var(--background-color-lighter);
+  }
+
+  tbody tr {
+    background-color: var(--background-color-dark);
   }
 
   &.striped {
@@ -31,57 +35,100 @@ $table-themes: (
       background-color: var(--background-color-darker);
     }
   }
-}
 
-@each $theme, $color in $table-themes {
-  .#{$theme} th {
-    background-color: $color;
-  }
-}
-
-.clear {
-  box-shadow: none;
-
-  th {
-    background-color: transparent;
-  }
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: theme.$font-size-base;
-
-  th {
-    text-align: left;
-    padding: theme.$spacing-sm;
-    font-weight: theme.$font-weight-bold;
+  @each $theme, $color in $table-themes {
+    &.#{$theme} th {
+      background-color: $color;
+    }
   }
 
-  td {
-    padding: theme.$spacing-sm;
-    border-bottom: 1px solid var(--text-color-primary);
-    text-align: left;
+  &.clear {
+    box-shadow: none;
+
+    th {
+      background-color: transparent;
+    }
   }
 
-  th:hover {
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: theme.$font-size-base;
+    min-width: 600px;
+
+    th {
+      text-align: left;
+      padding: theme.$spacing-sm;
+      font-weight: theme.$font-weight-bold;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: theme.$spacing-sm;
+      border-bottom: 1px solid var(--text-color-primary);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th:hover {
+      cursor: pointer;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  &.clickable {
     cursor: pointer;
+    transition: background-color theme.$transition-default;
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
   }
 
-  tbody tr:last-child td {
-    border-bottom: none;
+  @media (max-width: 768px) {
+    .table {
+      font-size: theme.$font-size-sm;
+
+      th,
+      td {
+        padding: theme.$spacing-xs;
+      }
+    }
   }
-}
 
-.striped {
-  background-color: var(--background-secondary-light-color);
-}
+  @media (max-width: 480px) {
+    .table {
+      font-size: theme.$font-size-xs;
 
-.clickable {
-  cursor: pointer;
-  transition: background-color theme.$transition-default;
+      th,
+      td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
+        padding: theme.$spacing-xs;
+        border-bottom: 1px solid var(--text-color-primary);
+      }
 
-  &:hover {
-    background-color: var(--primary-color-hover);
+      tbody tr {
+        display: block;
+        margin-bottom: theme.$spacing-sm;
+      }
+
+      thead {
+        display: none;
+      }
+
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: theme.$font-weight-bold;
+        margin-bottom: 2px;
+        color: var(--text-color-secondary);
+      }
+    }
   }
 }

@@ -1,7 +1,9 @@
 import React, { JSX, useRef, useState } from "react";
 import FormGroup from "../../FormGroup/core/FormGroup";
-import styles from "./FileUpload.module.scss";
-import { Button, IconButton, Progressbar } from "@/index.next";
+import "./FileUpload.scss";
+import Button from "../../Buttons/Button/core/Button";
+import IconButton from "../../Buttons/IconButton/core/IconButton"
+import ProgressBar from "../../ProgressBar/core/ProgressBar";
 import { FaFile, FaTrash } from "react-icons/fa";
 import { FileUploadProps } from "../FileUpload.types";
 
@@ -92,7 +94,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       data-testid={testId}
     >
       <div
-        className={styles.fileUploadBox}
+        className={"fileUploadBox"}
         data-testid={testId ? `${testId}-wrapper` : undefined}
       >
         <input
@@ -101,18 +103,18 @@ const FileUpload: React.FC<FileUploadProps> = ({
           type="file"
           multiple={multiple}
           onChange={handleFileChange}
-          className={styles.hiddenInput}
+          className={"hiddenInput"}
           aria-required={required}
           aria-label={label}
           data-testid={testId ? `${testId}-input` : undefined}
         />
 
-        <div className={styles.uploadActions}>
+        <div className={"uploadActions"}>
           <Button
             icon={FaFile}
             size="small"
             theme={theme}
-            className={styles.fileInput}
+            className={"fileInput"}
             onClick={() => fileInput.current?.click()}
             aria-label={fileNames.length > 0 ? fileNames.join(", ") : "Choose File"}
             data-testid={testId ? `${testId}-file-button` : undefined}
@@ -127,7 +129,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
               onClick={handleRemoveFile}
               outline
               size="small"
-              className={styles.removeButton}
+              className={"removeButton"}
               aria-label="Remove file"
               data-testid={testId ? `${testId}-remove-button` : undefined}
             />
@@ -136,12 +138,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
         {fileNames.length > 0 && (
           <div
-            className={styles.uploadControls}
+            className={"uploadControls"}
             data-testid={testId ? `${testId}-controls` : undefined}
           >
-            <Progressbar
+            <ProgressBar
               theme={theme}
-              className={styles.uploadProgress}
+              className={"uploadProgress"}
               progress={uploadProgress ?? internalProgress}
               indeterminate={uploadProgress === undefined}
               data-testid={testId ? `${testId}-progress` : undefined}
@@ -152,7 +154,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
               onClick={handleUpload}
               loading={uploading}
               size="small"
-              className={styles.uploadButton}
+              className={"uploadButton"}
               data-testid={testId ? `${testId}-upload-button` : undefined}
             >
               Upload

@@ -8,7 +8,7 @@
   overflow: hidden;
   margin-bottom: theme.$spacing-sm;
   transition: box-shadow theme.$transition-default;
-}
+
 
 .accordionHeader {
   display: flex;
@@ -63,12 +63,12 @@
   }
 }
 
-.clear {
+&.clear {
   background-color: transparent;
   color: var(--text-color-primary);
 }
 
-.outline {
+&.outline {
   border: 2px solid currentcolor;
   background-color: transparent;
 
@@ -106,7 +106,7 @@ $themes: (
 );
 
 @each $name, $values in $themes {
-  .#{$name} {
+  &.#{$name} {
     background-color: map.get($values, color);
     color: var(--text-color-primary);
 
@@ -115,7 +115,7 @@ $themes: (
     }
   }
 
-  .#{$name}.outline {
+  &.#{$name}.outline {
     background-color: transparent;
     border: 2px solid map.get($values, color);
 
@@ -133,7 +133,7 @@ $themes: (
   }
 }
 
-.disabled {
+&.disabled {
   background-color: theme.$disabled-color;
   cursor: not-allowed;
   pointer-events: none;
@@ -145,7 +145,7 @@ $themes: (
   }
 }
 
-.xs {
+&.xs {
   .accordionHeader {
     padding: theme.$spacing-xs;
     font-size: theme.$font-size-xs;
@@ -156,7 +156,7 @@ $themes: (
   }
 }
 
-.small {
+&.small {
   .accordionHeader {
     padding: theme.$spacing-sm;
     font-size: theme.$font-size-sm;
@@ -167,7 +167,7 @@ $themes: (
   }
 }
 
-.medium {
+&.medium {
   .accordionHeader {
     padding: theme.$spacing-xs;
     font-size: theme.$font-size-md;
@@ -178,7 +178,7 @@ $themes: (
   }
 }
 
-.large {
+&.large {
   .accordionHeader {
     padding: theme.$spacing-sm;
     font-size: theme.$font-size-md;
@@ -189,7 +189,7 @@ $themes: (
   }
 }
 
-.xl {
+&.xl {
   .accordionHeader {
     padding: theme.$spacing-md;
     font-size: theme.$font-size-lg;
@@ -198,4 +198,6 @@ $themes: (
   .accordionIcon {
     font-size: 2rem;
   }
+}
+
 }

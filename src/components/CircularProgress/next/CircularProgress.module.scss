@@ -1,4 +1,6 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
+@use "sass:map";
 
 
 .circularProgress {
@@ -7,27 +9,34 @@
   align-items: center;
 }
 
-
 $progress-sizes: (
-  "xs": 40px,
-  "small": 60px,
-  "medium": 100px,
-  "large": 140px,
-  "xl": 180px,
+  "xs": (dimensions: 40px, font-size: theme.$font-size-xs),
+  "small": (dimensions: 60px, font-size: theme.$font-size-sm),
+  "medium": (dimensions: 100px, font-size: theme.$font-size-md),
+  "large": (dimensions: 140px, font-size: theme.$font-size-base),
+  "xl": (dimensions: 200px, font-size: theme.$font-size-lg),
 );
 
 
-@each $size, $dimension in $progress-sizes {
+@each $size, $props in $progress-sizes {
   .#{$size} {
-    width: $dimension;
-    height: $dimension;
+    min-width: map.get($props, dimensions);
+    min-height: map.get($props, dimensions);
+
+      
+  .ratingText {
+    font-size: map.get($props, font-size);
+    font-weight: theme.$font-weight-bold;
+    color: var(--text-color-primary);
+  }
   }
 }
+
 
 .circleBorder {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  border-radius: theme.$border-radius-round;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,15 +46,10 @@ $progress-sizes: (
 .innerCircle {
   width: 80%;
   height: 80%;
-  border-radius: 50%;
+  border-radius: theme.$border-radius-round;
   background: var(--background-color);
+  padding: theme.$spacing-xxs;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.ratingText {
-  font-size: theme.$font-size-md;
-  font-weight: theme.$font-weight-bold;
-  color: var(--text-color-primary);
 }

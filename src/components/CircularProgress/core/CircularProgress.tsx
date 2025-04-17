@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import styles from "./CircularProgress.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import "./CircularProgress.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { CircularProgressProps } from "../CircularProgress.types";
 
 /**
@@ -51,7 +51,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
 
   return (
     <div
-      className={combineClassNames(styles.circularProgress, styles[size], className)}
+      className={combineClassNames("circularProgress", size, className)}
       role="progressbar"
       aria-valuemin={min}
       aria-valuemax={max}
@@ -61,7 +61,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
       data-testid={testId}
     >
       <div
-        className={styles.circleBorder}
+        className={"circleBorder"}
         style={{
           background: `conic-gradient(
             ${progressColor} 0deg,
@@ -70,8 +70,8 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
           )`,
         }}
       >
-        <div className={styles.innerCircle}>
-          <span className={styles.ratingText}>
+        <div className={"innerCircle"}>
+          <span className={"ratingText"}>
             {showRaw ? `${clamped}/${max}` : `${displayPercent}%`}
           </span>
         </div>

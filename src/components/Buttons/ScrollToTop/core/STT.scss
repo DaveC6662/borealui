@@ -1,5 +1,5 @@
-@use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../../styles/theme" as theme;
+@use "../../../../styles/globals.scss";
 
 .scrollToTop {
   position: fixed;
@@ -16,7 +16,7 @@
     transform: scale(1.05);
     box-shadow: theme.$box-shadow-large;
   }
-}
+
 
 .scrollButton {
   display: flex;
@@ -39,4 +39,6 @@
   .scrollIcon {
     font-size: 1.2em;
   }
+}
+
 }

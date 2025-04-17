@@ -9,8 +9,6 @@ $table-themes: (
   "warning": theme.$warning-color
 );
 
-
-
 .dataTableWrapper {
   width: 100%;
   overflow-x: auto;
@@ -29,6 +27,51 @@ $table-themes: (
 
     tbody tr:nth-child(even) {
       background-color: var(--background-color-darker);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .table {
+      font-size: theme.$font-size-sm;
+
+      th,
+      td {
+        padding: theme.$spacing-xs;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .table {
+      font-size: theme.$font-size-xs;
+
+      thead {
+        display: none;
+      }
+
+      tbody tr {
+        display: block;
+        margin-bottom: theme.$spacing-sm;
+      }
+
+      td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: theme.$spacing-xs;
+        text-align: left;
+        border-bottom: 1px solid var(--text-color-primary);
+        white-space: normal;
+        position: relative;
+      }
+
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: theme.$font-weight-bold;
+        margin-bottom: 2px;
+        color: var(--text-color-secondary);
+      }
     }
   }
 }
@@ -51,17 +94,20 @@ $table-themes: (
   width: 100%;
   border-collapse: collapse;
   font-size: theme.$font-size-base;
+  min-width: 600px;
 
   th {
     text-align: left;
     padding: theme.$spacing-sm;
     font-weight: theme.$font-weight-bold;
+    white-space: nowrap;
   }
 
   td {
     padding: theme.$spacing-sm;
     border-bottom: 1px solid var(--text-color-primary);
     text-align: left;
+    white-space: nowrap;
   }
 
   th:hover {

@@ -1,8 +1,8 @@
 import React, { MouseEvent, useMemo, useState } from "react";
 import "./Avatar.scss";
 import { AvatarProps } from "../Avatar.types";
-import { combineClassNames } from "@/utils/classNames";
-import { getInitials } from "@/utils/getInitials";
+import { combineClassNames } from "../../../utils/classNames";
+import { getInitials } from "../../../utils/getInitials";
 
 
 /**

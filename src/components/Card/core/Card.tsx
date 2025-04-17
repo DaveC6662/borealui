@@ -1,7 +1,9 @@
 import React, { useId } from "react";
-import { Button, IconButton, Skeleton } from "@/index.next";
-import styles from "./Card.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import Button from "../../Buttons/Button/core/Button";
+import IconButton from "../../Buttons/IconButton/core/IconButton";
+import Skeleton from "../../Skeleton/core/Skeleton";
+import "./Card.scss";
+import { combineClassNames } from "../../../utils/classNames";
 import { CardProps } from "../Card.types";
 
 
@@ -46,10 +48,10 @@ const Card: React.FC<CardProps> = ({
     <div
       data-testid={testId}
       className={combineClassNames(
-        styles.card,
-        solid && styles.solid,
-        styles[theme],
-        loading && styles.cardLoading,
+        "card",
+        solid && "solid",
+        theme,
+        loading && "cardLoading",
         className
       )}
       role="region"
@@ -60,32 +62,32 @@ const Card: React.FC<CardProps> = ({
       ) : (
         <div
           className={combineClassNames(
-            styles.cardContent,
-            styles.fadeIn,
-            styles[layout]
+            "cardContent",
+            "fadeIn",
+            layout
           )}
         >
           {hasImage && (
             <img
-              src={imageUrl}
+              src={typeof imageUrl === "string" ? imageUrl : imageUrl?.src}
               alt={imageAlt || "Card image"}
-              className={combineClassNames(styles.cardImage, imageClassName)}
+              className={combineClassNames("cardImage", imageClassName)}
               loading="lazy"
             />
           )}
 
           <div>
             <div
-              className={combineClassNames(styles.cardHeader, headerClassName)}
+              className={combineClassNames("cardHeader", headerClassName)}
               id={headerId}
             >
               {renderHeader ? (
                 renderHeader()
               ) : title ? (
-                <h2 className={styles.cardTitle}>
+                <h2 className={"cardTitle"}>
                   {cardIcon && (
                     <span
-                      className={styles.cardIcon}
+                      className={"cardIcon"}
                       aria-hidden="true"
                       data-testid="card-icon"
                     >
@@ -97,16 +99,16 @@ const Card: React.FC<CardProps> = ({
               ) : null}
             </div>
 
-            <div className={combineClassNames(styles.cardBody, bodyClassName)}>
+            <div className={combineClassNames("cardBody", bodyClassName)}>
               {renderContent ? (
                 renderContent()
               ) : (
                 <>
                   {description && (
-                    <p className={styles.cardDescription}>{description}</p>
+                    <p className={"cardDescription"}>{description}</p>
                   )}
                   {children && (
-                    <div className={styles.cardChildren}>{children}</div>
+                    <div className={"cardChildren"}>{children}</div>
                   )}
                 </>
               )}
@@ -115,19 +117,19 @@ const Card: React.FC<CardProps> = ({
             {(actionButtons.length > 0 || renderFooter) && (
               <div
                 className={combineClassNames(
-                  styles.cardFooter,
+                  "cardFooter",
                   footerClassName
                 )}
               >
                 {actionButtons.length > 0 && (
-                  <div className={styles.cardActions}>
+                  <div className={"cardActions"}>
                     {actionButtons.map((button, index) =>
                       useIconButtons && button.icon ? (
                         <IconButton
                           key={index}
                           icon={button.icon}
                           onClick={button.onClick}
-                          className={styles.actionButton}
+                          className={"actionButton"}
                           theme={button.theme || "clear"}
                           ariaLabel={button.label}
                           href={button.href}
@@ -137,7 +139,7 @@ const Card: React.FC<CardProps> = ({
                         <Button
                           key={index}
                           onClick={button.onClick}
-                          className={styles.actionButton}
+                          className={"actionButton"}
                           theme={button.theme || "secondary"}
                           href={button.href}
                           loading={button.loading}
