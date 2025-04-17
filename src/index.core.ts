@@ -1,3 +1,5 @@
+import "./styles/globals.scss";
+
 // Buttons
 export { default as Button } from "./components/Buttons/Button/core/Button";
 export { default as IconButton } from "./components/Buttons/IconButton/core/IconButton";
@@ -11,9 +13,9 @@ export { default as ThemeSelect } from "./components/Select/ThemeSelect/core/The
 export { default as FileUpload } from "./components/FileUpload/core/FileUpload";
 export { default as TagInput } from "./components/TagInput/core/Taginput";
 export { default as RadioButton } from "./components/RadioButton/core/RadioButton";
-export {default as Slider } from "./components/Slider/core/Slider";
+export { default as Slider } from "./components/Slider/core/Slider";
 export { default as CheckBox } from "./components/CheckBox/core/Checkbox";
-export {default as ColorPicker} from "./components/ColorPicker/core/ColorPicker";
+export { default as ColorPicker } from "./components/ColorPicker/core/ColorPicker";
 export { default as FormGroup } from "./components/FormGroup/core/FormGroup";
 export { default as DataTable } from "./components/DataTable/core/DataTable";
 export { default as DateTimePicker } from "./components/DateTimePicker/core/DateTimePicker";
@@ -21,7 +23,7 @@ export { default as MarkdownRenderer } from "./components/MarkdownRenderer/core/
 
 // Feedback & Indicators
 export { default as Chip } from "./components/Chip/core/Chip";
-export {default as ChipGroup } from "./components/Chip/ChipGroup/core/ChipGroup";
+export { default as ChipGroup } from "./components/Chip/ChipGroup/core/ChipGroup";
 export { default as Badge } from "./components/Badge/core/Badge";
 export { default as Progressbar } from "./components/ProgressBar/core/ProgressBar";
 export { default as CircularProgress } from "./components/CircularProgress/core/CircularProgress";
@@ -46,13 +48,12 @@ export { default as Toggle } from "./components/Toggle/core/Toggle";
 export { default as Toolbar } from "./components/Toolbar/core/Toolbar";
 export { default as Dropdown } from "./components/Dropdown/core/Dropdown";
 export { default as Divider } from "./components/Divider/core/Divider";
-export { default as MetricBox } from "./components/MetricBox/core/MetricBox"; 
+export { default as MetricBox } from "./components/MetricBox/core/MetricBox";
 export { default as EmptyState } from "./components/EmptyState/core/EmptyState";
 export { default as CommandPalette } from "./components/CommandPalette/core/CommandPalette";
-export {default as RichTextEditor} from "./components/RichTextEditor/core/RichTextEditor";
+export { default as RichTextEditor } from "./components/RichTextEditor/core/RichTextEditor";
 export { default as NotificationCenter } from "./components/NotificationCenter/core/NotificationCenter";
 
 //  Cards & Display Components
 export { default as Card } from "./components/Card/core/Card";
 export { default as Avatar } from "./components/Avatar/core/Avatar";
-

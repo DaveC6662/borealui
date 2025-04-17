@@ -1,4 +1,5 @@
 @use "./theme" as theme;
+@import "modern-css-reset";
 @use "sass:color";
 
 /* === Root Variables (Light Mode Theme) === */
@@ -11,20 +12,38 @@
   --primary-text-color-contrast: #{theme.$text-color-secondary};
   --success-color: #{theme.$success-color};
   --warning-color: #{theme.$warning-color};
-  --error-color:   #{theme.$error-color};
+  --error-color: #{theme.$error-color};
 
   // Secondary Colors
   --secondary-color: #{theme.$secondary-color};
-  --secondary-color-light: #{color.adjust(theme.$secondary-color, $lightness: 40%)};
-  --secondary-color-hover: #{color.adjust(theme.$secondary-color, $lightness: -10%)};
+  --secondary-color-light: #{color.adjust(
+      theme.$secondary-color,
+      $lightness: 40%
+    )};
+  --secondary-color-hover: #{color.adjust(
+      theme.$secondary-color,
+      $lightness: -10%
+    )};
   --secondary-text-color: #{theme.$text-color-secondary};
 
   // Background Colors
   --background-color: #{theme.$background-color};
-  --background-color-light: #{color.adjust(theme.$background-color, $lightness: 10%)};
-  --background-color-lighter: #{color.adjust(theme.$background-color, $lightness: 20%)};
-  --background-color-dark: #{color.adjust(theme.$background-color, $lightness: -10%)};
-  --background-color-darker: #{color.adjust(theme.$background-color, $lightness: -20%)};
+  --background-color-light: #{color.adjust(
+      theme.$background-color,
+      $lightness: 10%
+    )};
+  --background-color-lighter: #{color.adjust(
+      theme.$background-color,
+      $lightness: 20%
+    )};
+  --background-color-dark: #{color.adjust(
+      theme.$background-color,
+      $lightness: -10%
+    )};
+  --background-color-darker: #{color.adjust(
+      theme.$background-color,
+      $lightness: -20%
+    )};
 
   // Text Colors
   --text-color: #{theme.$text-color};
@@ -51,11 +70,17 @@ body {
   padding: 0;
   line-height: 1.5;
   overflow-x: hidden;
-  transition: background-color theme.$transition-default, color theme.$transition-default;
+  transition: background-color theme.$transition-default,
+    color theme.$transition-default;
 }
 
 /* === Typography === */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: theme.$font-family-primary;
   margin: 0;
   font-weight: theme.$font-weight-bold;
@@ -84,7 +109,8 @@ h4 {
   line-height: 1.5;
 }
 
-h5, h6 {
+h5,
+h6 {
   font-size: theme.$font-size-sm;
   line-height: 1.6;
   font-weight: theme.$font-weight-normal;
@@ -106,7 +132,8 @@ a {
   color: var(--link-color);
   font-weight: theme.$link-font-weight;
   text-decoration: theme.$link-text-decoration;
-  transition: color theme.$transition-default, text-decoration theme.$transition-default;
+  transition: color theme.$transition-default,
+    text-decoration theme.$transition-default;
 
   &:hover {
     color: var(--link-color-hover);

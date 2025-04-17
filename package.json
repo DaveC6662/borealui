@@ -18,6 +18,8 @@
     "build:next": "vite build --config vite.config.next.ts",
     "build": "npm run build:core && npm run build:next",
     "lint": "eslint ./src --ext .ts,.tsx",
+    "check:sync": "node scripts/checkSync.js",
+    "generate:component": "node scripts/generate-component.js",
     "test": "vitest",
     "prepare": "tsc -p tsconfig.build.json && npm run build",
     "playground": "vite --config playground/vite.config.ts",
@@ -85,10 +87,12 @@
     "sass": "^1.86.3",
     "sass-embedded": "^1.86.3",
     "storybook": "^8.6.12",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "vite": "^5.4.18"
   },
   "dependencies": {
-    "boreal-ui": "file:"
+    "boreal-ui": "file:",
+    "modern-css-reset": "^1.4.0"
   }
 }

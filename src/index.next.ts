@@ -11,9 +11,9 @@ export { default as ThemeSelect } from "./components/Select/ThemeSelect/next/The
 export { default as FileUpload } from "./components/FileUpload/next/FileUpload";
 export { default as TagInput } from "./components/TagInput/next/Taginput";
 export { default as RadioButton } from "./components/RadioButton/next/RadioButton";
-export {default as Slider } from "./components/Slider/next/Slider";
+export { default as Slider } from "./components/Slider/next/Slider";
 export { default as CheckBox } from "./components/CheckBox/next/Checkbox";
-export {default as ColorPicker} from "./components/ColorPicker/next/ColorPicker";
+export { default as ColorPicker } from "./components/ColorPicker/next/ColorPicker";
 export { default as FormGroup } from "./components/FormGroup/next/FormGroup";
 export { default as DataTable } from "./components/DataTable/next/DataTable";
 export { default as DateTimePicker } from "./components/DateTimePicker/next/DateTimePicker";
@@ -21,7 +21,7 @@ export { default as MarkdownRenderer } from "./components/MarkdownRenderer/next/
 
 // Feedback & Indicators
 export { default as Chip } from "./components/Chip/next/Chip";
-export {default as ChipGroup } from "./components/Chip/ChipGroup/next/ChipGroup";
+export { default as ChipGroup } from "./components/Chip/ChipGroup/next/ChipGroup";
 export { default as Badge } from "./components/Badge/next/Badge";
 export { default as Progressbar } from "./components/ProgressBar/next/ProgressBar";
 export { default as CircularProgress } from "./components/CircularProgress/next/CircularProgress";
@@ -46,13 +46,12 @@ export { default as Toggle } from "./components/Toggle/next/Toggle";
 export { default as Toolbar } from "./components/Toolbar/next/Toolbar";
 export { default as Dropdown } from "./components/Dropdown/next/Dropdown";
 export { default as Divider } from "./components/Divider/next/Divider";
-export { default as MetricBox } from "./components/MetricBox/next/MetricBox"; 
+export { default as MetricBox } from "./components/MetricBox/next/MetricBox";
 export { default as EmptyState } from "./components/EmptyState/next/EmptyState";
 export { default as CommandPalette } from "./components/CommandPalette/next/CommandPalette";
-export {default as RichTextEditor} from "./components/RichTextEditor/next/RichTextEditor";
+export { default as RichTextEditor } from "./components/RichTextEditor/next/RichTextEditor";
 export { default as NotificationCenter } from "./components/NotificationCenter/next/NotificationCenter";
 
 //  Cards & Display Components
 export { default as Card } from "./components/Card/next/Card";
 export { default as Avatar } from "./components/Avatar/next/Avatar";
-
