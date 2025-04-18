@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import Checkbox from "@/components/CheckBox/core/Checkbox";
-import type { CheckboxProps } from "@/components/CheckBox/Checkbox.types";
+import type { CheckboxProps } from "@/components/CheckBox/CheckBox.types";
 
 const meta: Meta<CheckboxProps> = {
   title: "Components/Checkbox",
@@ -73,11 +73,36 @@ export const ThemeVariants: Story = {
     const [checked, setChecked] = useState(true);
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        <Checkbox theme="primary" checked={checked} onChange={setChecked} label="Primary" />
-        <Checkbox theme="secondary" checked={checked} onChange={setChecked} label="Secondary" />
-        <Checkbox theme="success" checked={checked} onChange={setChecked} label="Success" />
-        <Checkbox theme="warning" checked={checked} onChange={setChecked} label="Warning" />
-        <Checkbox theme="error" checked={checked} onChange={setChecked} label="Error" />
+        <Checkbox
+          theme="primary"
+          checked={checked}
+          onChange={setChecked}
+          label="Primary"
+        />
+        <Checkbox
+          theme="secondary"
+          checked={checked}
+          onChange={setChecked}
+          label="Secondary"
+        />
+        <Checkbox
+          theme="success"
+          checked={checked}
+          onChange={setChecked}
+          label="Success"
+        />
+        <Checkbox
+          theme="warning"
+          checked={checked}
+          onChange={setChecked}
+          label="Warning"
+        />
+        <Checkbox
+          theme="error"
+          checked={checked}
+          onChange={setChecked}
+          label="Error"
+        />
       </div>
     );
   },

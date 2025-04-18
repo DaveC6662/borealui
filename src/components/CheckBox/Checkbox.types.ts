@@ -4,7 +4,7 @@ import { InputHTMLAttributes } from "react";
 /**
  * Props for the Checkbox component.
  */
-export interface CheckboxProps
+export interface CheckBoxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   /** Label text displayed beside the checkbox. */
   label?: string;

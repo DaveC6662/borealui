@@ -3,7 +3,7 @@ import "./styles/globals.scss";
 // Buttons
 export { default as Button } from "./components/Buttons/Button/core/Button";
 export { default as IconButton } from "./components/Buttons/IconButton/core/IconButton";
-export { default as ScrollToTop } from "./components/Buttons/ScrollToTop/core/STT";
+export { default as ScrollToTop } from "./components/ScrollToTop/core/STT";
 
 // Inputs & Forms
 export { default as TextInput } from "./components/TextInput/core/TextInput";

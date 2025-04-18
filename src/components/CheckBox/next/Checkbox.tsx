@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import styles from "./CheckBox.module.scss";
 import { combineClassNames } from "@/utils/classNames";
-import { CheckboxProps } from "../Checkbox.types";
+import { CheckBoxProps } from "../Checkbox.types";
 
 /**
  * A controlled and accessible checkbox component supporting indeterminate state,
@@ -19,7 +19,7 @@ import { CheckboxProps } from "../Checkbox.types";
  * @param {React.Ref<HTMLInputElement>} ref - Forwarded ref to the input element.
  * @returns {JSX.Element} Rendered checkbox component.
  */
-const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>(
   (
     {
       checked,

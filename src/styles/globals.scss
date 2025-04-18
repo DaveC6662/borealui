@@ -1,6 +1,6 @@
-@use "./theme" as theme;
-@import "modern-css-reset";
 @use "sass:color";
+@use "./theme" as theme;
+@use "modern-css-reset";
 
 /* === Root Variables (Light Mode Theme) === */
 :root {
