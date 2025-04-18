@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 
 $radio-themes: (
@@ -7,7 +7,7 @@ $radio-themes: (
   success: theme.$success-color,
   error: theme.$error-color,
   warning: theme.$warning-color,
-  clear: var(--text-color-primary)
+  clear: var(--text-color-primary),
 );
 
 .radioWrapper {

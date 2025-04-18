@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 @use "sass:color";
 
@@ -8,14 +8,29 @@ $slider-themes: (
   "success": theme.$success-color,
   "error": theme.$error-color,
   "warning": theme.$warning-color,
-  "clear": var(--text-color-primary)
+  "clear": var(--text-color-primary),
 );
 $slider-sizes: (
-  "xs": (track: 2px, thumb: 10px),
-  "small": (track: 4px, thumb: 12px),
-  "medium": (track: 6px, thumb: 14px),
-  "large": (track: 8px, thumb: 16px),
-  "xl": (track: 10px, thumb: 18px)
+  "xs": (
+    track: 2px,
+    thumb: 10px,
+  ),
+  "small": (
+    track: 4px,
+    thumb: 12px,
+  ),
+  "medium": (
+    track: 6px,
+    thumb: 14px,
+  ),
+  "large": (
+    track: 8px,
+    thumb: 16px,
+  ),
+  "xl": (
+    track: 10px,
+    thumb: 18px,
+  ),
 );
 
 .sliderContainer {
@@ -63,7 +78,7 @@ $slider-sizes: (
 @each $name, $color in $slider-themes {
   .#{$name} .slider {
     background-color: $color;
-    
+
     &::-webkit-slider-thumb,
     &::-moz-range-thumb {
       color: $color;

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect, JSX } from "react";
-import styles from "./Popover.module.scss";
+import styles from "./PopOver.module.scss";
 import { PopoverProps } from "../PopOver.types";
 
 /**
@@ -47,8 +47,7 @@ const Popover: React.FC<PopoverProps> = ({
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Add Escape key handling when the popover is open.
@@ -89,7 +88,9 @@ const Popover: React.FC<PopoverProps> = ({
           id={`${testId}-content`}
           role="dialog"
           aria-modal="false"
-          className={[styles.popover, styles[placement], styles[theme]].join(" ")}
+          className={[styles.popover, styles[placement], styles[theme]].join(
+            " "
+          )}
           data-testid={`${testId}-content`}
         >
           {content}

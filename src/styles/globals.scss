@@ -1,5 +1,5 @@
 @use "./theme" as theme;
-@import "modern-css-reset";
+@use "modern-css-reset";
 @use "sass:color";
 
 /* === Root Variables (Light Mode Theme) === */
@@ -70,7 +70,8 @@ body {
   padding: 0;
   line-height: 1.5;
   overflow-x: hidden;
-  transition: background-color theme.$transition-default,
+  transition:
+    background-color theme.$transition-default,
     color theme.$transition-default;
 }
 
@@ -132,7 +133,8 @@ a {
   color: var(--link-color);
   font-weight: theme.$link-font-weight;
   text-decoration: theme.$link-text-decoration;
-  transition: color theme.$transition-default,
+  transition:
+    color theme.$transition-default,
     text-decoration theme.$transition-default;
 
   &:hover {

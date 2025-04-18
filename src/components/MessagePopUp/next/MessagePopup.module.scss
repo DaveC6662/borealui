@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 
 .messagePopup {
   position: fixed;
@@ -6,7 +6,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgb(0 0 0 / 50%); 
+  background: rgb(0 0 0 / 50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,21 +27,21 @@
 
 .closeButton {
   position: absolute;
-  top: theme.$spacing-xs; 
+  top: theme.$spacing-xs;
   right: theme.$spacing-xs;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .popupMessage {
   font-size: theme.$font-size-md;
   font-weight: theme.$font-weight-bold;
   color: var(--text-color-primary);
-  margin-bottom: theme.$spacing-sm; 
+  margin-bottom: theme.$spacing-sm;
 }
 
 .popupActions {
   display: flex;
   justify-content: center;
-  gap: theme.$spacing-sm;  
-  margin-top: theme.$spacing-sm; 
+  gap: theme.$spacing-sm;
+  margin-top: theme.$spacing-sm;
 }

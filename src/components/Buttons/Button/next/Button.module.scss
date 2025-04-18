@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../../styles/theme" as theme;
 @use "sass:color";
 @use "sass:map";
 
@@ -11,7 +11,9 @@
   border-radius: theme.$border-radius-xl;
   border: none;
   cursor: pointer;
-  transition: transform theme.$transition-default, box-shadow theme.$transition-default;
+  transition:
+    transform theme.$transition-default,
+    box-shadow theme.$transition-default;
   font-weight: theme.$font-weight-bold;
   box-shadow: theme.$box-shadow-medium;
   color: inherit;
@@ -86,36 +88,36 @@ $themes: (
     hover: var(--primary-color-hover),
     text: var(--text-color-primary),
     border: var(--primary-color),
-    text-hover: var(--text-color-primary)
+    text-hover: var(--text-color-primary),
   ),
   "secondary": (
     bg: var(--secondary-color),
     hover: var(--secondary-color-hover),
     text: var(--text-color-secondary),
     border: var(--secondary-color),
-    text-hover: var(--text-color-secondary)
+    text-hover: var(--text-color-secondary),
   ),
   "success": (
     bg: theme.$success-color,
     hover: color.adjust(theme.$success-color, $lightness: -10%),
     text: var(--text-color-primary),
     border: theme.$success-color,
-    text-hover: var(--text-color-primary)
+    text-hover: var(--text-color-primary),
   ),
   "error": (
     bg: theme.$error-color,
     hover: color.adjust(theme.$error-color, $lightness: -10%),
     text: var(--text-color-primary),
     border: theme.$error-color,
-    text-hover: var(--text-color-primary)
+    text-hover: var(--text-color-primary),
   ),
   "warning": (
     bg: theme.$warning-color,
     hover: color.adjust(theme.$warning-color, $lightness: -10%),
     text: var(--text-color-primary),
     border: theme.$warning-color,
-    text-hover: var(--text-color-primary)
-  )
+    text-hover: var(--text-color-primary),
+  ),
 );
 
 @each $name, $values in $themes {
@@ -146,11 +148,31 @@ $themes: (
 }
 
 $sizes: (
-  "xs": (padding: 4px 8px, label: theme.$font-size-xs, icon: 1rem),
-  "small": (padding: 6px 10px, label: theme.$font-size-sm, icon: 1rem),
-  "medium": (padding: 6px 12px, label: theme.$font-size-md, icon: 1.2rem),
-  "large": (padding: 8px 16px, label: theme.$font-size-lg, icon: 1.3rem),
-  "xl": (padding: 10px 18px, label: theme.$font-size-xl, icon: 1.5rem)
+  "xs": (
+    padding: 4px 8px,
+    label: theme.$font-size-xs,
+    icon: 1rem,
+  ),
+  "small": (
+    padding: 6px 10px,
+    label: theme.$font-size-sm,
+    icon: 1rem,
+  ),
+  "medium": (
+    padding: 6px 12px,
+    label: theme.$font-size-md,
+    icon: 1.2rem,
+  ),
+  "large": (
+    padding: 8px 16px,
+    label: theme.$font-size-lg,
+    icon: 1.3rem,
+  ),
+  "xl": (
+    padding: 10px 18px,
+    label: theme.$font-size-xl,
+    icon: 1.5rem,
+  ),
 );
 
 @each $size, $values in $sizes {

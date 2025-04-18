@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 
 $spinner-colors: (
@@ -7,7 +7,7 @@ $spinner-colors: (
   "success": theme.$success-color,
   "error": theme.$error-color,
   "warning": theme.$warning-color,
-  "clear": var(--text-color-primary)
+  "clear": var(--text-color-primary),
 );
 
 .spinner {
@@ -28,7 +28,7 @@ $spinner-colors: (
 
 @each $name, $color in $spinner-colors {
   .#{$name} {
-      border-top-color: $color;
+    border-top-color: $color;
   }
 }
 

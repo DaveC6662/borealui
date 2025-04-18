@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 
 .footerContent {
   display: flex;
@@ -6,7 +7,7 @@
   align-items: center;
   gap: theme.$spacing-lg;
   padding: theme.$spacing-md;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 
   @media (width <= 1170px) {
     flex-direction: column;
@@ -14,61 +15,59 @@
     gap: theme.$spacing-md;
   }
 
+  .footerLeft {
+    display: flex;
+    align-items: center;
 
-.footerLeft {
-  display: flex;
-  align-items: center;
-
-  p {
-    font-size: theme.$font-size-sm;
-    color: var(--text-color-primary);
-    margin: 0;
-  }
-}
-
-.footerLinks {
-  display: flex;
-  gap: theme.$spacing-md;
-
-  a {
-    text-decoration: none;
-    font-size: theme.$font-size-sm;
-    color: var(--text-color-primary);
-
-    &:hover {
-      text-decoration: underline;
+    p {
+      font-size: theme.$font-size-sm;
+      color: var(--text-color-primary);
+      margin: 0;
     }
   }
 
-  @media (width <= 1170px) {
-    flex-direction: column;
+  .footerLinks {
+    display: flex;
+    gap: theme.$spacing-md;
+
+    a {
+      text-decoration: none;
+      font-size: theme.$font-size-sm;
+      color: var(--text-color-primary);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    @media (width <= 1170px) {
+      flex-direction: column;
+      gap: theme.$spacing-xs;
+    }
+  }
+
+  .footerSocial {
+    display: flex;
     gap: theme.$spacing-xs;
+    margin-left: auto;
+
+    @media (width <= 1170px) {
+      margin-left: 0;
+      justify-content: center;
+    }
+
+    @media (width <= 500px) {
+      flex-wrap: wrap;
+    }
   }
-}
 
-.footerSocial {
-  display: flex;
-  gap: theme.$spacing-xs;
-  margin-left: auto;
+  .themeToggleContainer {
+    position: absolute;
 
-  @media (width <= 1170px) {
-    margin-left: 0;
-    justify-content: center;
+    @media (width <= 1170px) {
+      position: relative;
+      margin-left: 0;
+      justify-content: center;
+    }
   }
-
-  @media (width <= 500px) {
-    flex-wrap: wrap;
-  }
-}
-
-.themeToggleContainer {
-  position: absolute;
-
-  @media (width <= 1170px) {
-    position: relative;
-    margin-left: 0;
-    justify-content: center;
-  }
-}
-
 }

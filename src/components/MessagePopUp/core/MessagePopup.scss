@@ -7,44 +7,42 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgb(0 0 0 / 50%); 
+  background: rgb(0 0 0 / 50%);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
   transition: opacity 0.3s ease-in-out;
 
+  .popupContent {
+    background: var(--background-color-light);
+    padding: theme.$spacing-lg theme.$spacing-md;
+    padding-top: theme.$spacing-xl;
+    border-radius: theme.$border-radius-xs;
+    box-shadow: theme.$box-shadow-medium;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+  }
 
-.popupContent {
-  background: var(--background-color-light);
-  padding: theme.$spacing-lg theme.$spacing-md;
-  padding-top: theme.$spacing-lg;
-  border-radius: theme.$border-radius-xs;
-  box-shadow: theme.$box-shadow-medium;
-  max-width: 400px;
-  text-align: center;
-  position: relative;
-}
+  .closeButton {
+    position: absolute;
+    top: theme.$spacing-xs;
+    right: theme.$spacing-xs;
+    cursor: pointer;
+  }
 
-.closeButton {
-  position: absolute;
-  top: theme.$spacing-xs; 
-  right: theme.$spacing-xs;
-  cursor: pointer; 
-}
+  .popupMessage {
+    font-size: theme.$font-size-md;
+    font-weight: theme.$font-weight-bold;
+    color: var(--text-color-primary);
+    margin-bottom: theme.$spacing-sm;
+  }
 
-.popupMessage {
-  font-size: theme.$font-size-md;
-  font-weight: theme.$font-weight-bold;
-  color: var(--text-color-primary);
-  margin-bottom: theme.$spacing-sm; 
-}
-
-.popupActions {
-  display: flex;
-  justify-content: center;
-  gap: theme.$spacing-sm;  
-  margin-top: theme.$spacing-sm; 
-}
-
+  .popupActions {
+    display: flex;
+    justify-content: center;
+    gap: theme.$spacing-sm;
+    margin-top: theme.$spacing-sm;
+  }
 }

@@ -1,14 +1,38 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:color";
 @use "sass:map";
 
 $input-themes: (
-  "primary": (bg: var(--primary-color), color: var(--text-color-primary), focus: var(--primary-color)),
-  "secondary": (bg: var(--secondary-color), color: var(--text-color-secondary), focus: var(--secondary-color)),
-  "success": (bg: theme.$success-color, color: var(--text-color-primary), focus: theme.$success-color),
-  "error": (bg: theme.$error-color, color: var(--text-color-primary), focus: theme.$error-color),
-  "warning": (bg: theme.$warning-color, color: var(--text-color-primary), focus: theme.$warning-color),
-  "clear": (bg: transparent, color: var(--text-color-primary), focus: var(--background-color-light))
+  "primary": (
+    bg: var(--primary-color),
+    color: var(--text-color-primary),
+    focus: var(--primary-color),
+  ),
+  "secondary": (
+    bg: var(--secondary-color),
+    color: var(--text-color-secondary),
+    focus: var(--secondary-color),
+  ),
+  "success": (
+    bg: theme.$success-color,
+    color: var(--text-color-primary),
+    focus: theme.$success-color,
+  ),
+  "error": (
+    bg: theme.$error-color,
+    color: var(--text-color-primary),
+    focus: theme.$error-color,
+  ),
+  "warning": (
+    bg: theme.$warning-color,
+    color: var(--text-color-primary),
+    focus: theme.$warning-color,
+  ),
+  "clear": (
+    bg: transparent,
+    color: var(--text-color-primary),
+    focus: var(--background-color-light),
+  ),
 );
 
 .wrapper {
@@ -81,7 +105,7 @@ $input-themes: (
     border: 2px solid map.get($values, bg);
 
     &:focus {
-      border-color: map.get($values, focus); 
+      border-color: map.get($values, focus);
     }
 
     &:hover {
@@ -95,13 +119,27 @@ $input-themes: (
   border: 2px solid var(--text-color-primary);
 }
 
-
 $input-sizes: (
-  "xs": (padding: 4px 3px, font-size: theme.$font-size-xs),
-  "small": (padding: 6px 10px, font-size: theme.$font-size-sm),
-  "medium": (padding: 6px 10px, font-size: theme.$font-size-md),
-  "large": (padding: 8px 16px, font-size: theme.$font-size-base),
-  "xl": (padding: 10px 20px, font-size: theme.$font-size-lg)
+  "xs": (
+    padding: 4px 3px,
+    font-size: theme.$font-size-xs,
+  ),
+  "small": (
+    padding: 6px 10px,
+    font-size: theme.$font-size-sm,
+  ),
+  "medium": (
+    padding: 6px 10px,
+    font-size: theme.$font-size-md,
+  ),
+  "large": (
+    padding: 8px 16px,
+    font-size: theme.$font-size-base,
+  ),
+  "xl": (
+    padding: 10px 20px,
+    font-size: theme.$font-size-lg,
+  ),
 );
 
 @each $size, $props in $input-sizes {

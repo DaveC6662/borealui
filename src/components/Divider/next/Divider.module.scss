@@ -1,14 +1,38 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:color";
 @use "sass:map";
 
 $divider-themes: (
-  "primary": (bg: var(--primary-color), color: var(--text-color-primary), hover: var(--primary-color-hover)),
-  "secondary": (bg: var(--secondary-color), color: var(--text-color-secondary), hover: var(--secondary-color-hover)),
-  "success": (bg: theme.$success-color, color: var(--text-color-primary), hover: color.adjust(theme.$success-color, $lightness: -10%)),
-  "error": (bg: theme.$error-color, color: var(--text-color-primary), hover: color.adjust(theme.$error-color, $lightness: -10%)),
-  "warning": (bg: theme.$warning-color, color: var(--text-color-primary), hover: color.adjust(theme.$warning-color, $lightness: -10%)),
-  "clear": (bg: transparent, color: var(--text-color-primary), hover: var(--text-color-primary))
+  "primary": (
+    bg: var(--primary-color),
+    color: var(--text-color-primary),
+    hover: var(--primary-color-hover),
+  ),
+  "secondary": (
+    bg: var(--secondary-color),
+    color: var(--text-color-secondary),
+    hover: var(--secondary-color-hover),
+  ),
+  "success": (
+    bg: theme.$success-color,
+    color: var(--text-color-primary),
+    hover: color.adjust(theme.$success-color, $lightness: -10%),
+  ),
+  "error": (
+    bg: theme.$error-color,
+    color: var(--text-color-primary),
+    hover: color.adjust(theme.$error-color, $lightness: -10%),
+  ),
+  "warning": (
+    bg: theme.$warning-color,
+    color: var(--text-color-primary),
+    hover: color.adjust(theme.$warning-color, $lightness: -10%),
+  ),
+  "clear": (
+    bg: transparent,
+    color: var(--text-color-primary),
+    hover: var(--text-color-primary),
+  ),
 );
 
 .divider {
@@ -32,8 +56,8 @@ $divider-themes: (
 
 @each $theme, $values in $divider-themes {
   .#{$theme} {
-      background-color: map.get($values, bg);
-      border-color: map.get($values, bg);
+    background-color: map.get($values, bg);
+    border-color: map.get($values, bg);
   }
 }
 
@@ -53,7 +77,7 @@ $divider-themes: (
 }
 
 @each $theme, $values in $divider-themes {
-  .#{$theme}.dashed  {
+  .#{$theme}.dashed {
     color: map.get($values, bg);
   }
 }

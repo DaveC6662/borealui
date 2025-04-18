@@ -1,4 +1,4 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 
 $themes: (
@@ -7,7 +7,7 @@ $themes: (
   "success": theme.$success-color,
   "error": theme.$error-color,
   "warning": theme.$warning-color,
-  "clear": var(--background-color-lighter)
+  "clear": var(--background-color-lighter),
 );
 
 .tooltip {
@@ -22,7 +22,9 @@ $themes: (
   opacity: 0;
   visibility: hidden;
   z-index: 100;
-  transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out;
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.2s ease-in-out;
 
   &::after {
     content: "";
@@ -44,21 +46,57 @@ $themes: (
 
 $positions: (
   "top": (
-    tooltip: (bottom: 100%, left: 50%, transform: translateX(-50%), margin-bottom: 8px),
-    arrow: (top: 100%, left: 50%, transform: translateX(-50%))
+    tooltip: (
+      bottom: 100%,
+      left: 50%,
+      transform: translateX(-50%),
+      margin-bottom: 8px,
+    ),
+    arrow: (
+      top: 100%,
+      left: 50%,
+      transform: translateX(-50%),
+    ),
   ),
   "bottom": (
-    tooltip: (top: 100%, left: 50%, transform: translateX(-50%), margin-top: 8px),
-    arrow: (bottom: 100%, left: 50%, transform: translateX(-50%))
+    tooltip: (
+      top: 100%,
+      left: 50%,
+      transform: translateX(-50%),
+      margin-top: 8px,
+    ),
+    arrow: (
+      bottom: 100%,
+      left: 50%,
+      transform: translateX(-50%),
+    ),
   ),
   "left": (
-    tooltip: (right: 100%, top: 50%, transform: translateY(-50%), margin-right: 8px),
-    arrow: (left: 99%, top: 50%, transform: translateY(-50%) rotate(-180deg))
+    tooltip: (
+      right: 100%,
+      top: 50%,
+      transform: translateY(-50%),
+      margin-right: 8px,
+    ),
+    arrow: (
+      left: 99%,
+      top: 50%,
+      transform: translateY(-50%) rotate(-180deg),
+    ),
   ),
   "right": (
-    tooltip: (left: 100%, top: 50%, transform: translateY(-50%), margin-left: 8px),
-    arrow: (right: 99%, top: 50%, transform: translateY(-50%) rotate(180deg))
-  )
+    tooltip: (
+      left: 100%,
+      top: 50%,
+      transform: translateY(-50%),
+      margin-left: 8px,
+    ),
+    arrow: (
+      right: 99%,
+      top: 50%,
+      transform: translateY(-50%) rotate(180deg),
+    ),
+  ),
 );
 
 @each $dir, $config in $positions {

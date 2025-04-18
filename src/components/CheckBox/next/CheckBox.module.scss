@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:color";
 @use "sass:map";
 
@@ -55,12 +55,30 @@
 }
 
 $states: (
-  "primary": (border: var(--primary-color), color: var(--primary-color)),
-  "secondary": (border: var(--secondary-color), color: var(--secondary-color)),
-  "success": (border: theme.$success-color, color: theme.$success-color),
-  "error": (border: theme.$error-color, color: theme.$error-color),
-  "warning": (border: theme.$warning-color, color: theme.$warning-color),
-  "clear": (border: var(--text-color-primary), color: var(--text-color-primary))
+  "primary": (
+    border: var(--primary-color),
+    color: var(--primary-color),
+  ),
+  "secondary": (
+    border: var(--secondary-color),
+    color: var(--secondary-color),
+  ),
+  "success": (
+    border: theme.$success-color,
+    color: theme.$success-color,
+  ),
+  "error": (
+    border: theme.$error-color,
+    color: theme.$error-color,
+  ),
+  "warning": (
+    border: theme.$warning-color,
+    color: theme.$warning-color,
+  ),
+  "clear": (
+    border: var(--text-color-primary),
+    color: var(--text-color-primary),
+  ),
 );
 
 @each $state, $colors in $states {

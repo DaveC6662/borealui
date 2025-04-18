@@ -1,4 +1,4 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 
 // ===== Theme Map =====
@@ -8,16 +8,31 @@ $themes: (
   "success": theme.$success-color,
   "error": theme.$error-color,
   "warning": theme.$warning-color,
-  "clear": transparent
+  "clear": transparent,
 );
 
 // ===== Size Map =====
 $sizes: (
-  "xs": (font-size: theme.$font-size-xs, padding: theme.$spacing-xxs theme.$spacing-xs),
-  "small": (font-size: theme.$font-size-sm, padding: theme.$spacing-xxs theme.$spacing-xs),
-  "medium": (font-size: theme.$font-size-md, padding: theme.$spacing-xs theme.$spacing-sm),
-  "large": (font-size: theme.$font-size-base, padding: theme.$spacing-sm),
-  "xl": (font-size: theme.$font-size-lg, padding: theme.$spacing-sm)
+  "xs": (
+    font-size: theme.$font-size-xs,
+    padding: theme.$spacing-xxs theme.$spacing-xs,
+  ),
+  "small": (
+    font-size: theme.$font-size-sm,
+    padding: theme.$spacing-xxs theme.$spacing-xs,
+  ),
+  "medium": (
+    font-size: theme.$font-size-md,
+    padding: theme.$spacing-xs theme.$spacing-sm,
+  ),
+  "large": (
+    font-size: theme.$font-size-base,
+    padding: theme.$spacing-sm,
+  ),
+  "xl": (
+    font-size: theme.$font-size-lg,
+    padding: theme.$spacing-sm,
+  ),
 );
 
 // ===== Base Styles =====

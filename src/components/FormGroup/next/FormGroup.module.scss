@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 
 .formGroup {
   display: flex;
@@ -112,7 +112,7 @@ $size-margins: (
   "small": theme.$spacing-sm,
   "medium": theme.$spacing-md,
   "large": theme.$spacing-lg,
-  "xl": theme.$spacing-xl
+  "xl": theme.$spacing-xl,
 );
 
 @each $size, $spacing in $size-margins {

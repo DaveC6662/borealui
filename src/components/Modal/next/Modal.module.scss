@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 
 .modalOverlay {
   position: fixed;
@@ -20,7 +20,9 @@
   box-shadow: theme.$box-shadow-large;
   transform: scale(0.95);
   opacity: 0;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .visible {

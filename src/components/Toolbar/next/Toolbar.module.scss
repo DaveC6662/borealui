@@ -1,4 +1,4 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
 
 $themes: (
   "primary": var(--primary-color),
@@ -6,7 +6,7 @@ $themes: (
   "success": theme.$success-color,
   "error": theme.$error-color,
   "warning": theme.$warning-color,
-  "clear": transparent
+  "clear": transparent,
 );
 
 .toolbar {

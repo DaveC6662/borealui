@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 
 $theme-states: (
@@ -7,7 +7,7 @@ $theme-states: (
   "success": theme.$success-color,
   "error": theme.$error-color,
   "warning": theme.$warning-color,
-  "clear": var(--text-color-primary)
+  "clear": var(--text-color-primary),
 );
 
 .overlay {
@@ -74,7 +74,11 @@ $theme-states: (
       &:hover,
       &.active {
         background-color: $color;
-        color: if($state == "primary", var(--text-color-primary), var(--text-color-secondary));
+        color: if(
+          $state == "primary",
+          var(--text-color-primary),
+          var(--text-color-secondary)
+        );
       }
     }
   }

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Breadcrumbs from "../components/Breadcrumbs/core/Breadcrumbs";
+import Breadcrumbs from "@components/Breadcrumbs/core/Breadcrumbs";
 import { FaDotCircle } from "react-icons/fa";
 
 const meta: Meta<typeof Breadcrumbs> = {

@@ -1,5 +1,4 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
 @use "sass:color";
 @use "sass:map";
 
@@ -24,7 +23,6 @@
     outline: 2px solid var(--focus-outline-color);
     outline-offset: 2px;
   }
-
 
   .icon {
     font-size: 1.2em;
@@ -62,90 +60,99 @@
   }
 
   $themes: (
-    "primary": (bg: var(--primary-color),
+    "primary": (
+      bg: var(--primary-color),
       hover: var(--primary-color-hover),
       text: var(--text-color-primary),
       border: var(--primary-color),
-      text-hover: var(--text-color-primary)),
-    "secondary": (bg: var(--secondary-color),
+      text-hover: var(--text-color-primary),
+    ),
+    "secondary": (
+      bg: var(--secondary-color),
       hover: var(--secondary-color-hover),
       text: var(--text-color-secondary),
       border: var(--secondary-color),
-      text-hover: var(--text-color-secondary)),
-    "success": (bg: theme.$success-color,
+      text-hover: var(--text-color-secondary),
+    ),
+    "success": (
+      bg: theme.$success-color,
       hover: color.adjust(theme.$success-color, $lightness: -10%),
       text: var(--text-color-primary),
       border: theme.$success-color,
-      text-hover: var(--text-color-primary)),
-    "error": (bg: theme.$error-color,
+      text-hover: var(--text-color-primary),
+    ),
+    "error": (
+      bg: theme.$error-color,
       hover: color.adjust(theme.$error-color, $lightness: -10%),
       text: var(--text-color-primary),
       border: theme.$error-color,
-      text-hover: var(--text-color-primary)),
-    "warning": (bg: theme.$warning-color,
+      text-hover: var(--text-color-primary),
+    ),
+    "warning": (
+      bg: theme.$warning-color,
       hover: color.adjust(theme.$warning-color, $lightness: -10%),
       text: var(--text-color-primary),
       border: theme.$warning-color,
-      text-hover: var(--text-color-primary))
+      text-hover: var(--text-color-primary),
+    ),
   );
 
-@each $name, $values in $themes {
-  &.#{$name} {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
-
-    &:hover {
-      background-color: map.get($values, hover);
-      transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
-    }
-
-    &:focus {
-      outline: 2px solid map.get($values, border);
-      outline-offset: 2px;
-    }
-
-    .loader {
-      border-top-color: map.get($values, text);
-    }
-
-    &.outline {
-      background-color: transparent;
-      color: map.get($values, border);
-      border: 2px solid map.get($values, border);
-      box-shadow: none;
+  @each $name, $values in $themes {
+    &.#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
 
       &:hover {
-        border-color: map.get($values, hover);
-        color: map.get($values, text-hover);
+        background-color: map.get($values, hover);
+        transform: translateY(-2px);
+        box-shadow: theme.$box-shadow-large;
+      }
+
+      &:focus {
+        outline: 2px solid map.get($values, border);
+        outline-offset: 2px;
+      }
+
+      .loader {
+        border-top-color: map.get($values, text);
+      }
+
+      &.outline {
+        background-color: transparent;
+        color: map.get($values, border);
+        border: 2px solid map.get($values, border);
+        box-shadow: none;
+
+        &:hover {
+          border-color: map.get($values, hover);
+          color: map.get($values, text-hover);
+        }
       }
     }
   }
-}
 
-&.xs {
-  font-size: theme.$font-size-xxs;
-  padding: 2px 8px;
-}
+  &.xs {
+    font-size: theme.$font-size-xxs;
+    padding: 2px 8px;
+  }
 
-&.small {
-  font-size: theme.$font-size-xs;
-  padding: 4px 8px;
-}
+  &.small {
+    font-size: theme.$font-size-xs;
+    padding: 4px 8px;
+  }
 
-&.medium {
-  font-size: theme.$font-size-sm;
-  padding: 4px 10px;
-}
+  &.medium {
+    font-size: theme.$font-size-sm;
+    padding: 4px 10px;
+  }
 
-&.large {
-  font-size: theme.$font-size-md;
-  padding: 4px 12px;
-}
+  &.large {
+    font-size: theme.$font-size-md;
+    padding: 4px 12px;
+  }
 
-&.xl {
-  font-size: theme.$font-size-lg;
-  padding: 4px 14px;
-}
-
+  &.xl {
+    font-size: theme.$font-size-lg;
+    padding: 4px 14px;
+  }
 }

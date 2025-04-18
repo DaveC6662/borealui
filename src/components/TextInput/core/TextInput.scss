@@ -4,25 +4,37 @@
 @use "sass:map";
 
 $themes: (
-  "primary": (bg: var(--primary-color),
+  "primary": (
+    bg: var(--primary-color),
     hover: var(--primary-color-hover),
-    text: var(--text-color-primary)),
-  "secondary": (bg: var(--secondary-color),
+    text: var(--text-color-primary),
+  ),
+  "secondary": (
+    bg: var(--secondary-color),
     hover: var(--secondary-color-hover),
-    text: var(--text-color-secondary)),
-  "success": (bg: theme.$success-color,
+    text: var(--text-color-secondary),
+  ),
+  "success": (
+    bg: theme.$success-color,
     hover: color.adjust(theme.$success-color, $lightness: -10%),
-    text: var(--text-color-primary)),
-  "error": (bg: theme.$error-color,
+    text: var(--text-color-primary),
+  ),
+  "error": (
+    bg: theme.$error-color,
     hover: color.adjust(theme.$error-color, $lightness: -10%),
-    text: var(--text-color-primary)),
-  "warning": (bg: theme.$warning-color,
+    text: var(--text-color-primary),
+  ),
+  "warning": (
+    bg: theme.$warning-color,
     hover: color.adjust(theme.$warning-color, $lightness: -10%),
-    text: var(--text-color-primary)),
-  "clear": (bg: transparent,
+    text: var(--text-color-primary),
+  ),
+  "clear": (
+    bg: transparent,
     hover: transparent,
     text: var(--text-color-primary),
-    shadow: none)
+    shadow: none,
+  ),
 );
 
 .textBoxContainer {
@@ -33,13 +45,13 @@ $themes: (
   margin: theme.$spacing-sm;
   box-shadow: theme.$box-shadow-medium;
   transition: theme.$transition-default;
+  max-width: 400px;
 
   @media (width <=480px) {
     padding: 0.3rem 0.5rem;
     height: 35px;
     width: 95%;
   }
-
 
   .textInput {
     outline: none;
@@ -50,6 +62,7 @@ $themes: (
     border: none;
     border-radius: theme.$border-radius-lg;
     background-color: transparent;
+    color: var(--text-color-primary);
 
     &::placeholder {
       color: var(--text-color-primary);
@@ -153,5 +166,4 @@ $themes: (
       border: none;
     }
   }
-
 }

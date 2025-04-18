@@ -1,7 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
 @use "sass:map";
-
 
 .circularProgress {
   display: flex;
@@ -10,28 +8,40 @@
 }
 
 $progress-sizes: (
-  "xs": (dimensions: 40px, font-size: theme.$font-size-xs),
-  "small": (dimensions: 60px, font-size: theme.$font-size-sm),
-  "medium": (dimensions: 100px, font-size: theme.$font-size-md),
-  "large": (dimensions: 140px, font-size: theme.$font-size-base),
-  "xl": (dimensions: 200px, font-size: theme.$font-size-lg),
+  "xs": (
+    dimensions: 40px,
+    font-size: theme.$font-size-xs,
+  ),
+  "small": (
+    dimensions: 60px,
+    font-size: theme.$font-size-sm,
+  ),
+  "medium": (
+    dimensions: 100px,
+    font-size: theme.$font-size-md,
+  ),
+  "large": (
+    dimensions: 140px,
+    font-size: theme.$font-size-base,
+  ),
+  "xl": (
+    dimensions: 200px,
+    font-size: theme.$font-size-lg,
+  ),
 );
-
 
 @each $size, $props in $progress-sizes {
   .#{$size} {
     min-width: map.get($props, dimensions);
     min-height: map.get($props, dimensions);
 
-      
-  .ratingText {
-    font-size: map.get($props, font-size);
-    font-weight: theme.$font-weight-bold;
-    color: var(--text-color-primary);
-  }
+    .ratingText {
+      font-size: map.get($props, font-size);
+      font-weight: theme.$font-weight-bold;
+      color: var(--text-color-primary);
+    }
   }
 }
-
 
 .circleBorder {
   width: 100%;

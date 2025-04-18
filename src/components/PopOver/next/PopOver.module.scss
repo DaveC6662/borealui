@@ -1,22 +1,58 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 
 // Theme Map
 $popover-themes: (
-  "primary": (bg: var(--primary-color), text: var(--text-color-primary)),
-  "secondary": (bg: var(--secondary-color), text: var(--text-color-secondary)),
-  "success": (bg: theme.$success-color, text: var(--text-color-primary)),
-  "error": (bg: theme.$error-color, text: var(--text-color-primary)),
-  "warning": (bg: theme.$warning-color, text: var(--text-color-primary)),
-  "clear": (bg: transparent, text: var(--text-color-primary), shadow: none, border: none)
+  "primary": (
+    bg: var(--primary-color),
+    text: var(--text-color-primary),
+  ),
+  "secondary": (
+    bg: var(--secondary-color),
+    text: var(--text-color-secondary),
+  ),
+  "success": (
+    bg: theme.$success-color,
+    text: var(--text-color-primary),
+  ),
+  "error": (
+    bg: theme.$error-color,
+    text: var(--text-color-primary),
+  ),
+  "warning": (
+    bg: theme.$warning-color,
+    text: var(--text-color-primary),
+  ),
+  "clear": (
+    bg: transparent,
+    text: var(--text-color-primary),
+    shadow: none,
+    border: none,
+  ),
 );
 
 // Position Map (Split out popover and arrow styles)
 $position-popover: (
-  "top": (bottom: 100%, left: 50%, transform: translateX(-50%) translateY(-8px)),
-  "bottom": (top: 100%, left: 50%, transform: translateX(-50%) translateY(8px)),
-  "left": (right: 100%, top: 50%, transform: translateX(-8px) translateY(-50%)),
-  "right": (left: 100%, top: 50%, transform: translateX(8px) translateY(-50%))
+  "top": (
+    bottom: 100%,
+    left: 50%,
+    transform: translateX(-50%) translateY(-8px),
+  ),
+  "bottom": (
+    top: 100%,
+    left: 50%,
+    transform: translateX(-50%) translateY(8px),
+  ),
+  "left": (
+    right: 100%,
+    top: 50%,
+    transform: translateX(-8px) translateY(-50%),
+  ),
+  "right": (
+    left: 100%,
+    top: 50%,
+    transform: translateX(8px) translateY(-50%),
+  ),
 );
 
 // ========== Base ==========
@@ -48,13 +84,20 @@ $position-popover: (
   box-shadow: theme.$box-shadow-medium;
   animation: fade 0.25s ease-in-out forwards;
 
-
   @each $name, $values in $popover-themes {
     &.#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
-      box-shadow: if(map.has-key($values, shadow), map.get($values, shadow), theme.$box-shadow-medium);
-      border: if(map.has-key($values, border), map.get($values, border), 1px solid var(--text-color-secondary));
+      box-shadow: if(
+        map.has-key($values, shadow),
+        map.get($values, shadow),
+        theme.$box-shadow-medium
+      );
+      border: if(
+        map.has-key($values, border),
+        map.get($values, border),
+        1px solid var(--text-color-secondary)
+      );
     }
   }
 
@@ -81,7 +124,6 @@ $position-popover: (
   content: none !important;
   display: none !important;
 }
-
 
 @keyframes fade {
   from {

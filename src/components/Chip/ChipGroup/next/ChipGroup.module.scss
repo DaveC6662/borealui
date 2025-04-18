@@ -1,13 +1,39 @@
-@use "@styles/theme" as theme;
+@use "../../../../styles/theme" as theme;
 @use "sass:map";
 
 $chip-positions: (
-  "topLeft": (top: 20px, left: 20px, align-items: flex-start),
-  "topCenter": (top: 20px, left: 50%, transform: translateX(-50%), align-items: center),
-  "topRight": (top: 20px, right: 20px, align-items: flex-end),
-  "bottomLeft": (bottom: 20px, left: 20px, align-items: flex-start),
-  "bottomCenter": (bottom: 20px, left: 50%, transform: translateX(-50%), align-items: center),
-  "bottomRight": (bottom: 20px, right: 20px, align-items: flex-end)
+  "topLeft": (
+    top: 20px,
+    left: 20px,
+    align-items: flex-start,
+  ),
+  "topCenter": (
+    top: 20px,
+    left: 50%,
+    transform: translateX(-50%),
+    align-items: center,
+  ),
+  "topRight": (
+    top: 20px,
+    right: 20px,
+    align-items: flex-end,
+  ),
+  "bottomLeft": (
+    bottom: 20px,
+    left: 20px,
+    align-items: flex-start,
+  ),
+  "bottomCenter": (
+    bottom: 20px,
+    left: 50%,
+    transform: translateX(-50%),
+    align-items: center,
+  ),
+  "bottomRight": (
+    bottom: 20px,
+    right: 20px,
+    align-items: flex-end,
+  ),
 );
 
 .chipGroup {
@@ -19,7 +45,10 @@ $chip-positions: (
 
   @each $position, $values in $chip-positions {
     &.#{$position} {
-      inset: map.get($values, top) map.get($values, right) map.get($values, bottom) map.get($values, left);
+      inset: map.get($values, top)
+        map.get($values, right)
+        map.get($values, bottom)
+        map.get($values, left);
       transform: map.get($values, transform, null);
       align-items: map.get($values, align-items);
     }
@@ -29,7 +58,9 @@ $chip-positions: (
 @for $i from 0 through 10 {
   .chipStack#{$i} {
     margin-top: calc($i * 50px);
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
   }
 
   .bottom-left.chipStack#{$i},

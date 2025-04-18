@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:color";
 @use "sass:map";
 
@@ -42,7 +42,8 @@
   border-bottom: 1px solid rgb(0 0 0 / 5%);
 }
 
-.cardHeader, .cardBody {
+.cardHeader,
+.cardBody {
   padding: theme.$spacing-md;
 }
 
@@ -140,16 +141,40 @@
 }
 
 $theme-variants: (
-  "primary": (bg: var(--primary-color), light: var(--primary-color-light), hover: var(--primary-color-hover)),
-  "secondary": (bg: var(--secondary-color), light: var(--secondary-color-light), hover: var(--secondary-color-hover)),
-  "success": (bg: theme.$success-color, light: color.adjust(theme.$success-color, $lightness: 20%), hover: color.adjust(theme.$success-color, $lightness: -10%)),
-  "error": (bg: theme.$error-color, light: color.adjust(theme.$error-color, $lightness: 20%), hover: color.adjust(theme.$error-color, $lightness: -10%)),
-  "warning": (bg: theme.$warning-color, light: color.adjust(theme.$warning-color, $lightness: 20%), hover: color.adjust(theme.$warning-color, $lightness: -10%))
+  "primary": (
+    bg: var(--primary-color),
+    light: var(--primary-color-light),
+    hover: var(--primary-color-hover),
+  ),
+  "secondary": (
+    bg: var(--secondary-color),
+    light: var(--secondary-color-light),
+    hover: var(--secondary-color-hover),
+  ),
+  "success": (
+    bg: theme.$success-color,
+    light: color.adjust(theme.$success-color, $lightness: 20%),
+    hover: color.adjust(theme.$success-color, $lightness: -10%),
+  ),
+  "error": (
+    bg: theme.$error-color,
+    light: color.adjust(theme.$error-color, $lightness: 20%),
+    hover: color.adjust(theme.$error-color, $lightness: -10%),
+  ),
+  "warning": (
+    bg: theme.$warning-color,
+    light: color.adjust(theme.$warning-color, $lightness: 20%),
+    hover: color.adjust(theme.$warning-color, $lightness: -10%),
+  ),
 );
 
 @each $name, $props in $theme-variants {
   .#{$name} {
-    background: linear-gradient(to bottom, map.get($props, bg) 0%, map.get($props, light) 100%);
+    background: linear-gradient(
+      to bottom,
+      map.get($props, bg) 0%,
+      map.get($props, light) 100%
+    );
     color: var(--text-color-primary);
 
     &:hover {
@@ -166,23 +191,36 @@ $theme-variants: (
 
     .loading {
       background-color: transparent;
-     }
+    }
   }
 }
 
 .solid {
   background: var(--primary-color);
 
-  .cardTitle, .cardDescription {
-    color: var(--text-color-primary); 
+  .cardTitle,
+  .cardDescription {
+    color: var(--text-color-primary);
   }
 
-  &.primary { background: var(--primary-color); }
-  &.secondary { background: var(--secondary-color); }
-  &.success { background: theme.$success-color; }
-  &.error { background: theme.$error-color; }
-  &.warning { background: theme.$warning-color; }
-  &.clear { background: transparent; }
+  &.primary {
+    background: var(--primary-color);
+  }
+  &.secondary {
+    background: var(--secondary-color);
+  }
+  &.success {
+    background: theme.$success-color;
+  }
+  &.error {
+    background: theme.$error-color;
+  }
+  &.warning {
+    background: theme.$warning-color;
+  }
+  &.clear {
+    background: transparent;
+  }
 }
 
 .disabled {
@@ -204,12 +242,11 @@ $theme-variants: (
   .cardIcon {
     color: var(--text-color-secondary);
   }
-  
+
   .cardDescription {
     color: var(--text-color-secondary);
   }
 }
-
 
 .clear {
   background: transparent;

@@ -1,4 +1,4 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 
 $themes: (
@@ -7,14 +7,14 @@ $themes: (
   "success": theme.$success-color,
   "error": theme.$error-color,
   "warning": theme.$warning-color,
-  "clear": var(--text-color-primary)
+  "clear": var(--text-color-primary),
 );
 $sizes: (
   "xs": theme.$font-size-xxs,
   "small": theme.$font-size-xs,
   "medium": theme.$font-size-sm,
   "large": theme.$font-size-lg,
-  "xl": theme.$font-size-xl
+  "xl": theme.$font-size-xl,
 );
 
 .rating {
@@ -34,7 +34,9 @@ $sizes: (
 }
 
 .star {
-  transition: color 0.3s ease-in-out, transform 0.2s ease;
+  transition:
+    color 0.3s ease-in-out,
+    transform 0.2s ease;
   color: var(--background-color-dark);
 
   &:hover {

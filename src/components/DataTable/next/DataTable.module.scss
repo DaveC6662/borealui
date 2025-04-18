@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 
 $table-themes: (
@@ -6,7 +6,7 @@ $table-themes: (
   "secondary": var(--secondary-color),
   "success": theme.$success-color,
   "error": theme.$error-color,
-  "warning": theme.$warning-color
+  "warning": theme.$warning-color,
 );
 
 .dataTableWrapper {

@@ -35,12 +35,6 @@ export const WithAvatar: Story = {
   },
 };
 
-export const CustomCenter: Story = {
-  args: {
-    center: <span style={{ fontSize: "1.25rem", fontStyle: "italic" }}>Welcome back!</span>,
-  },
-};
-
 export const Themed: Story = {
   render: (args) => (
     <div style={{ display: "grid", gap: "1rem" }}>

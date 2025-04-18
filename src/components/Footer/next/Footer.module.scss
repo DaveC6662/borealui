@@ -1,4 +1,4 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 
 .footerContent {
   display: flex;
@@ -6,7 +6,7 @@
   align-items: center;
   gap: theme.$spacing-lg;
   padding: theme.$spacing-md;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 
   @media (width <= 1170px) {
     flex-direction: column;

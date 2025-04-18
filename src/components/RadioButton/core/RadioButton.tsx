@@ -56,12 +56,14 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
           data-testid={testId}
           {...props}
         />
-        <span className={`radioCircle  ${theme} ${
-          disabled ? `disabled` : ""
-        }`} data-testid={`${testId}-circle`} />
-        <span className={`radioLabel ${
-          disabled ? `disabled` : ""
-        }`} data-testid={`${testId}-label`}>
+        <span
+          className={`radioCircle  ${theme} ${disabled ? `disabled` : ""}`}
+          data-testid={`${testId}-circle`}
+        />
+        <span
+          className={`radioLabel  ${theme} ${disabled ? `disabled` : ""}`}
+          data-testid={`${testId}-label`}
+        >
           {label}
         </span>
       </label>

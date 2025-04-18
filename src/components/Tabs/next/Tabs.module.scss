@@ -1,4 +1,4 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 
 $themes: (
@@ -7,14 +7,29 @@ $themes: (
   "success": theme.$success-color,
   "error": theme.$error-color,
   "warning": theme.$warning-color,
-  "clear": var(--background-color-darker)
+  "clear": var(--background-color-darker),
 );
 $sizes: (
-  "xs": (font: theme.$font-size-xs, padding: theme.$spacing-xs),
-  "small": (font: theme.$font-size-sm, padding: theme.$spacing-sm),
-  "medium": (font: theme.$font-size-md, padding: theme.$spacing-md),
-  "large": (font: theme.$font-size-base, padding: theme.$spacing-lg),
-  "xl": (font: theme.$font-size-lg, padding: theme.$spacing-lg)
+  "xs": (
+    font: theme.$font-size-xs,
+    padding: theme.$spacing-xs,
+  ),
+  "small": (
+    font: theme.$font-size-sm,
+    padding: theme.$spacing-sm,
+  ),
+  "medium": (
+    font: theme.$font-size-md,
+    padding: theme.$spacing-md,
+  ),
+  "large": (
+    font: theme.$font-size-base,
+    padding: theme.$spacing-lg,
+  ),
+  "xl": (
+    font: theme.$font-size-lg,
+    padding: theme.$spacing-lg,
+  ),
 );
 
 .tabsContainer {
@@ -33,17 +48,16 @@ $sizes: (
   @media (width <= 480px) {
     flex-direction: column;
     .tab {
-     border-right: none;
-     border-bottom: 0.5px solid var(--text-color-primary);
+      border-right: none;
+      border-bottom: 0.5px solid var(--text-color-primary);
     }
-
 
     .tab:first-child {
       border-radius: 0;
       border-top-left-radius: theme.$border-radius-md;
       border-top-right-radius: theme.$border-radius-md;
     }
-  
+
     .tab:last-child {
       border-radius: 0;
       border-bottom-left-radius: theme.$border-radius-md;
@@ -67,7 +81,9 @@ $sizes: (
   font-weight: theme.$font-weight-bold;
   cursor: pointer;
   gap: theme.$spacing-xxs;
-  transition: color theme.$transition-default, transform 0.2s ease-in-out;
+  transition:
+    color theme.$transition-default,
+    transform 0.2s ease-in-out;
   line-height: 1;
   border-right: 0.5px solid var(--text-color-primary);
 

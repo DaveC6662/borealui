@@ -20,12 +20,11 @@ export const Default: Story = {
       style={{
         height: "200vh",
         padding: "2rem",
-        background: "linear-gradient(to bottom, #f0f0f0, #ccc)",
       }}
     >
       <p style={{ maxWidth: 600 }}>
-        Scroll down the page to make the ScrollToTopButton appear. This demo uses a tall container
-        to simulate a real scroll environment.
+        Scroll down the page to make the ScrollToTopButton appear. This demo
+        uses a tall container to simulate a real scroll environment.
       </p>
       <ScrollToTopButton />
     </div>

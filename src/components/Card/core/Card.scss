@@ -17,222 +17,257 @@
   color: var(--text-color-primary);
   transition: transform 0.3s ease;
 
-
-&.cardLoading {
-  background: none !important;
-  box-shadow: none !important;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 250px;
-}
-
-.cardContent {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.cardImage {
-  width: 100%;
-  height: auto;
-  position: relative;
-  object-fit: cover;
-  border-bottom: 1px solid rgb(0 0 0 / 5%);
-}
-
-.cardHeader, .cardBody {
-  padding: theme.$spacing-md;
-}
-
-.cardBody {
-  display: flex;
-  flex-direction: column;
-  gap: theme.$spacing-sm;
-}
-
-.cardTitle {
-  font-size: 1.2em;
-  font-weight: theme.$font-weight-bold;
-  margin: 0;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  gap: theme.$spacing-sm;
-}
-
-.cardIcon {
-  font-size: 1.2em;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-color-primary);
-}
-
-.cardDescription {
-  font-size: theme.$font-size-base;
-  color: var(--text-color-primary);
-  width: 95%;
-  margin: theme.$spacing-xxs auto;
-  text-align: center;
-}
-
-.cardFooter {
-  padding: theme.$spacing-sm;
-  border-top: 2px solid rgb(0 0 0 / 10%);
-}
-
-.cardActions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: theme.$spacing-sm;
-}
-
-&.fadeIn {
-  animation: fade-in 0.8s ease-in-out;
-}
-
-&.vertical {
-  flex-direction: column;
+  &.cardLoading {
+    background: none !important;
+    box-shadow: none !important;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+  }
 
   .cardContent {
+    display: flex;
     flex-direction: column;
+    width: 100%;
   }
 
   .cardImage {
     width: 100%;
-  }
-}
-
-&.horizontal {
-  flex-direction: row;
-  max-width: none;
-  justify-content: center;
-  align-items: center;
-
-  .cardContent {
-    flex-direction: row;
-    width: 100%;
-    align-items: flex-start;
-  }
-
-  .cardImage {
-    width: 50%;
-    height: 100%;
-    padding: theme.$spacing-xs;
+    height: auto;
+    position: relative;
     object-fit: cover;
-    border-radius: theme.$border-radius-sm;
+    border-bottom: 1px solid rgb(0 0 0 / 5%);
+  }
+
+  .cardHeader,
+  .cardBody {
+    padding: theme.$spacing-md;
   }
 
   .cardBody {
+    display: flex;
+    flex-direction: column;
+    gap: theme.$spacing-sm;
+  }
+
+  .cardTitle {
+    font-size: 1.2em;
+    font-weight: theme.$font-weight-bold;
+    margin: 0;
     flex: 1;
-    padding: theme.$spacing-md;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: theme.$spacing-sm;
+  }
+
+  .cardIcon {
+    font-size: 1.2em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color-primary);
+  }
+
+  .cardDescription {
+    font-size: theme.$font-size-base;
+    color: var(--text-color-primary);
+    width: 95%;
+    margin: theme.$spacing-xxs auto;
+    text-align: center;
   }
 
   .cardFooter {
-    padding: theme.$spacing-md;
+    padding: theme.$spacing-sm;
+    border-top: 2px solid rgb(0 0 0 / 10%);
   }
-}
 
-$theme-variants: (
-  "primary": (bg: var(--primary-color), light: var(--primary-color-light), hover: var(--primary-color-hover)),
-  "secondary": (bg: var(--secondary-color), light: var(--secondary-color-light), hover: var(--secondary-color-hover)),
-  "success": (bg: theme.$success-color, light: color.adjust(theme.$success-color, $lightness: 20%), hover: color.adjust(theme.$success-color, $lightness: -10%)),
-  "error": (bg: theme.$error-color, light: color.adjust(theme.$error-color, $lightness: 20%), hover: color.adjust(theme.$error-color, $lightness: -10%)),
-  "warning": (bg: theme.$warning-color, light: color.adjust(theme.$warning-color, $lightness: 20%), hover: color.adjust(theme.$warning-color, $lightness: -10%))
-);
+  .cardActions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: theme.$spacing-sm;
+  }
 
-@each $name, $props in $theme-variants {
-  &.#{$name} {
-    background: linear-gradient(to bottom, map.get($props, bg) 0%, map.get($props, light) 100%);
-    color: var(--text-color-primary);
+  &.fadeIn {
+    animation: fade-in 0.8s ease-in-out;
+  }
 
-    &:hover {
-      background-color: map.get($props, hover);
+  &.vertical {
+    flex-direction: column;
+
+    .cardContent {
+      flex-direction: column;
     }
 
-    .cardIcon {
+    .cardImage {
+      width: 100%;
+    }
+  }
+
+  &.horizontal {
+    flex-direction: row;
+    max-width: none;
+    justify-content: center;
+    align-items: center;
+
+    .cardContent {
+      flex-direction: row;
+      width: 100%;
+      align-items: flex-start;
+    }
+
+    .cardImage {
+      width: 50%;
+      height: 100%;
+      padding: theme.$spacing-xs;
+      object-fit: cover;
+      border-radius: theme.$border-radius-sm;
+    }
+
+    .cardBody {
+      flex: 1;
+      padding: theme.$spacing-md;
+    }
+
+    .cardFooter {
+      padding: theme.$spacing-md;
+    }
+  }
+
+  $theme-variants: (
+    "primary": (
+      bg: var(--primary-color),
+      light: var(--primary-color-light),
+      hover: var(--primary-color-hover),
+    ),
+    "secondary": (
+      bg: var(--secondary-color),
+      light: var(--secondary-color-light),
+      hover: var(--secondary-color-hover),
+    ),
+    "success": (
+      bg: theme.$success-color,
+      light: color.adjust(theme.$success-color, $lightness: 20%),
+      hover: color.adjust(theme.$success-color, $lightness: -10%),
+    ),
+    "error": (
+      bg: theme.$error-color,
+      light: color.adjust(theme.$error-color, $lightness: 20%),
+      hover: color.adjust(theme.$error-color, $lightness: -10%),
+    ),
+    "warning": (
+      bg: theme.$warning-color,
+      light: color.adjust(theme.$warning-color, $lightness: 20%),
+      hover: color.adjust(theme.$warning-color, $lightness: -10%),
+    ),
+  );
+
+  @each $name, $props in $theme-variants {
+    &.#{$name} {
+      background: linear-gradient(
+        to bottom,
+        map.get($props, bg) 0%,
+        map.get($props, light) 100%
+      );
       color: var(--text-color-primary);
-    }
 
+      &:hover {
+        background-color: map.get($props, hover);
+      }
+
+      .cardIcon {
+        color: var(--text-color-primary);
+      }
+
+      .cardDescription {
+        color: var(--text-color-primary);
+      }
+
+      .loading {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &.solid {
+    background: var(--primary-color);
+
+    .cardTitle,
     .cardDescription {
       color: var(--text-color-primary);
     }
 
-    .loading {
-      background-color: transparent;
-     }
+    &.primary {
+      background: var(--primary-color);
+    }
+    &.secondary {
+      background: var(--secondary-color);
+    }
+    &.success {
+      background: theme.$success-color;
+    }
+    &.error {
+      background: theme.$error-color;
+    }
+    &.warning {
+      background: theme.$warning-color;
+    }
+    &.clear {
+      background: transparent;
+    }
   }
-}
 
-&.solid {
-  background: var(--primary-color);
-
-  .cardTitle, .cardDescription {
-    color: var(--text-color-primary); 
+  &.disabled {
+    background-color: theme.$disabled-color;
+    color: var(--text-color-primary);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+    box-shadow: none;
   }
 
-  &.primary { background: var(--primary-color); }
-  &.secondary { background: var(--secondary-color); }
-  &.success { background: theme.$success-color; }
-  &.error { background: theme.$error-color; }
-  &.warning { background: theme.$warning-color; }
-  &.clear { background: transparent; }
-}
-
-&.disabled {
-  background-color: theme.$disabled-color;
-  color: var(--text-color-primary);
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-  box-shadow: none;
-}
-
-&.secondary {
-  color: var(--text-color-secondary);
-
-  .cardTitle {
+  &.secondary {
     color: var(--text-color-secondary);
+
+    .cardTitle {
+      color: var(--text-color-secondary);
+    }
+
+    .cardIcon {
+      color: var(--text-color-secondary);
+    }
+
+    .cardDescription {
+      color: var(--text-color-secondary);
+    }
   }
 
-  .cardIcon {
-    color: var(--text-color-secondary);
-  }
-  
-  .cardDescription {
-    color: var(--text-color-secondary);
-  }
-}
-
-
-&.clear {
-  background: transparent;
-  box-shadow: none;
-}
-
-&.outline {
-  background: transparent;
-  border: 2px solid currentcolor;
-  box-shadow: none;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  &.clear {
+    background: transparent;
+    box-shadow: none;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  &.outline {
+    background: transparent;
+    border: 2px solid currentcolor;
+    box-shadow: none;
   }
-}
 
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }

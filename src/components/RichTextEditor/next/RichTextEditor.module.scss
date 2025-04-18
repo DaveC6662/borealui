@@ -1,4 +1,4 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
 
 .editorContainer {
   display: flex;
@@ -41,7 +41,10 @@
     margin: 0 0 theme.$spacing-sm 0;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     margin: theme.$spacing-sm 0;
     font-weight: theme.$font-weight-bold;
     color: var(--text-color-primary);

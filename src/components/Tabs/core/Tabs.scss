@@ -9,15 +9,30 @@ $themes: (
   "success": theme.$success-color,
   "error": theme.$error-color,
   "warning": theme.$warning-color,
-  "clear": var(--background-color-darker)
+  "clear": var(--background-color-darker),
 );
 
 $sizes: (
-  "xs": (font: theme.$font-size-xs, padding: theme.$spacing-xs),
-  "small": (font: theme.$font-size-sm, padding: theme.$spacing-sm),
-  "medium": (font: theme.$font-size-md, padding: theme.$spacing-md),
-  "large": (font: theme.$font-size-base, padding: theme.$spacing-lg),
-  "xl": (font: theme.$font-size-lg, padding: theme.$spacing-lg)
+  "xs": (
+    font: theme.$font-size-xs,
+    padding: theme.$spacing-xs,
+  ),
+  "small": (
+    font: theme.$font-size-sm,
+    padding: theme.$spacing-sm,
+  ),
+  "medium": (
+    font: theme.$font-size-md,
+    padding: theme.$spacing-md,
+  ),
+  "large": (
+    font: theme.$font-size-base,
+    padding: theme.$spacing-lg,
+  ),
+  "xl": (
+    font: theme.$font-size-lg,
+    padding: theme.$spacing-lg,
+  ),
 );
 
 // Container styling
@@ -42,6 +57,7 @@ $sizes: (
 
   .tab {
     flex: 1;
+    background-color: var(--background-color-lighter);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,7 +70,9 @@ $sizes: (
     font-weight: theme.$font-weight-bold;
     cursor: pointer;
     gap: theme.$spacing-xxs;
-    transition: color theme.$transition-default, transform 0.2s ease-in-out;
+    transition:
+      color theme.$transition-default,
+      transform 0.2s ease-in-out;
     line-height: 1;
     border-right: 0.5px solid var(--text-color-primary);
 

@@ -2,13 +2,12 @@
 @use "../../../styles/globals.scss";
 @use "sass:map";
 
-
 $progress-sizes: (
   xs: 2px,
   small: 5px,
   medium: 10px,
   large: 15px,
-  xl: 20px
+  xl: 20px,
 );
 $progress-themes: (
   primary: var(--primary-color),
@@ -16,14 +15,14 @@ $progress-themes: (
   success: theme.$success-color,
   error: theme.$error-color,
   warning: theme.$warning-color,
-  clear: var(--text-color-primary)
+  clear: var(--text-color-primary),
 );
 
 .progressContainer {
   width: 100%;
   min-width: 100px;
   height: 10px;
-  background-color: var(--background-color-light);
+  background-color: var(--background-color-lighter);
   border-radius: theme.$border-radius-lg;
   overflow: hidden;
   position: relative;
@@ -33,7 +32,6 @@ $progress-themes: (
       height: $height;
     }
   }
-
 
   .progressBar {
     height: 100%;
@@ -80,5 +78,4 @@ $progress-themes: (
       transform: translateX(100%);
     }
   }
-
 }

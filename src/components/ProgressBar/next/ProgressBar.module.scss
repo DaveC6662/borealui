@@ -1,13 +1,12 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
-
 
 $progress-sizes: (
   xs: 2px,
   small: 5px,
   medium: 10px,
   large: 15px,
-  xl: 20px
+  xl: 20px,
 );
 $progress-themes: (
   primary: var(--primary-color),
@@ -15,7 +14,7 @@ $progress-themes: (
   success: theme.$success-color,
   error: theme.$error-color,
   warning: theme.$warning-color,
-  clear: var(--text-color-primary)
+  clear: var(--text-color-primary),
 );
 
 .progressContainer {

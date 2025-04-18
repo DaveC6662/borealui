@@ -1,5 +1,4 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
 @use "sass:color";
 @use "sass:map";
 
@@ -81,14 +80,35 @@
   }
 }
 
-@each $theme, $values in (
-  "primary": (bg: var(--primary-color), color: var(--text-color-primary)),
-  "secondary": (bg: var(--secondary-color), color: var(--text-color-secondary)),
-  "success": (bg: theme.$success-color, color: var(--text-color-primary)),
-  "error": (bg: theme.$error-color, color: var(--text-color-primary)),
-  "warning": (bg: theme.$warning-color, color: var(--text-color-primary)),
-  "clear": (bg: transparent, color: var(--text-color-primary))
-) {
+@each $theme,
+  $values
+    in (
+      "primary": (
+          bg: var(--primary-color),
+          color: var(--text-color-primary),
+        ),
+      "secondary": (
+          bg: var(--secondary-color),
+          color: var(--text-color-secondary),
+        ),
+      "success": (
+          bg: theme.$success-color,
+          color: var(--text-color-primary),
+        ),
+      "error": (
+          bg: theme.$error-color,
+          color: var(--text-color-primary),
+        ),
+      "warning": (
+          bg: theme.$warning-color,
+          color: var(--text-color-primary),
+        ),
+      "clear": (
+          bg: transparent,
+          color: var(--text-color-primary),
+        )
+    )
+{
   .#{$theme} {
     background-color: map.get($values, bg);
     color: map.get($values, color);
@@ -114,26 +134,26 @@
   pointer-events: none;
 }
 
-$input-sizes: ( 
+$input-sizes: (
   "xs": theme.$spacing-xs,
   "small": theme.$spacing-sm,
   "medium": theme.$spacing-md,
   "large": theme.$spacing-lg,
-  "xl": theme.$spacing-xl
+  "xl": theme.$spacing-xl,
 );
 $font-sizes: (
   "xs": theme.$font-size-xs,
   "small": theme.$font-size-sm,
   "medium": theme.$font-size-md,
   "large": theme.$font-size-base,
-  "xl": theme.$font-size-lg
+  "xl": theme.$font-size-lg,
 );
 $icon-sizes: (
   "xs": 2em,
   "small": 3em,
   "medium": 3.5em,
   "large": 4em,
-  "xl": 4.5em
+  "xl": 4.5em,
 );
 
 @each $size, $spacing in $input-sizes {

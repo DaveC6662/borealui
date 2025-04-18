@@ -1,5 +1,4 @@
 @use "../../../../styles/theme" as theme;
-@use "../../../../styles/globals.scss";
 
 .scrollToTop {
   position: fixed;
@@ -17,28 +16,26 @@
     box-shadow: theme.$box-shadow-large;
   }
 
-
-.scrollButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background-color: transparent;
-}
-
-.scrollIcon {
-  font-size: 1.5em;
-  color: var(--primary-color);
-  background-color: var(--background-color-lighter);
-  padding: theme.$spacing-sm;
-  border-radius: theme.$border-radius-round;
-  box-shadow: theme.$box-shadow-medium;
-}
-
-@media (width <= 480px) {
-  .scrollIcon {
-    font-size: 1.2em;
+  .scrollButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: transparent;
   }
-}
 
+  .scrollIcon {
+    font-size: 2em;
+    color: var(--primary-color);
+    background-color: var(--background-color-lighter);
+    padding: theme.$spacing-sm;
+    border-radius: theme.$border-radius-round;
+    box-shadow: theme.$box-shadow-medium;
+  }
+
+  @media (width <= 480px) {
+    .scrollIcon {
+      font-size: 1.2em;
+    }
+  }
 }

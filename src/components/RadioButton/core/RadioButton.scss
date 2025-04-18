@@ -8,28 +8,26 @@ $radio-themes: (
   success: theme.$success-color,
   error: theme.$error-color,
   warning: theme.$warning-color,
-  clear: var(--text-color-primary)
+  clear: var(--text-color-primary),
 );
 
 .radioWrapper {
   display: inline-flex;
   align-items: center;
-  cursor: pointer;
   gap: theme.$spacing-sm;
   font-size: theme.$font-size-base;
-  position: relative;
-  -webkit-user-select: none;
+  cursor: pointer;
   user-select: none;
   transition: all theme.$transition-default;
+  position: relative;
 
-
-  .radioInput {
+  input.radioInput {
     opacity: 0;
     position: absolute;
     pointer-events: none;
   }
 
-  .radioCircle {
+  span.radioCircle {
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -45,35 +43,37 @@ $radio-themes: (
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background-color: currentcolor;
+      background-color: currentColor;
       opacity: 0;
       transform: scale(0.6);
       transition: all theme.$transition-default;
     }
 
     &.disabled {
-      cursor: not-allowed;
       opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @each $name, $color in $radio-themes {
+      &.#{$name} {
+        border-color: $color;
+        color: $color;
+      }
     }
   }
 
-  .radioInput:checked+.radioCircle::after {
+  input.radioInput:checked + span.radioCircle::after {
     opacity: 1;
     transform: scale(1);
   }
 
-  @each $name, $color in $radio-themes {
-    &.#{$name} .radioCircle {
-      border-color: $color;
-      color: $color;
-    }
-  }
-
-  .radioLabel {
+  span.radioLabel {
     color: var(--text-color-primary);
+    transition: all theme.$transition-default;
 
     &.disabled {
       cursor: not-allowed;
+      opacity: 0.6;
     }
   }
 }

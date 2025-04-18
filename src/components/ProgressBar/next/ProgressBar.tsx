@@ -1,7 +1,7 @@
 "use client";
 
 import React, { JSX } from "react";
-import styles from "./Progressbar.module.scss";
+import styles from "./ProgressBar.module.scss";
 import { ProgressBarProps } from "../ProgressBar.types";
 
 /**
