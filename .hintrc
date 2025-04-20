@@ -22,6 +22,12 @@
           "color: map.get($colors, color)"
         ]
       }
+    ],
+    "axe/language": [
+      "default",
+      {
+        "html-has-lang": "off"
+      }
     ]
   }
 }

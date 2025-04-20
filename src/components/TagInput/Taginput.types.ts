@@ -11,10 +11,11 @@ import { SizeType, ThemeType } from "@/types/types";
  * @property {string} [data-testid] - Optional test ID for testing utilities.
  */
 export interface TagInputProps {
-    tags?: string[];
-    onChange?: (tags: string[]) => void;
-    placeholder?: string;
-    theme?: ThemeType;
-    size?: SizeType;
-    "data-testid"?: string;
-  }
+  tags?: string[];
+  onChange?: (tags: string[]) => void;
+  placeholder?: string;
+  theme?: ThemeType;
+  size?: SizeType;
+  ariaDescription?: string;
+  "data-testid"?: string;
+}

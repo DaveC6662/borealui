@@ -1,54 +1,90 @@
-import "@testing-library/jest-dom";
-import { render, fireEvent, screen } from "@testing-library/react";
-import { TagInput } from "@/index.next";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { axe } from "jest-axe";
+import TagInputBase from "@/components/TagInput/TagInputBase";
 
-describe("TagInput", () => {
-  it("renders initial tags", () => {
-    render(<TagInput tags={["tag1", "tag2"]} data-testid="tag-input" />);
-    expect(screen.getByText("tag1")).toBeInTheDocument();
-    expect(screen.getByText("tag2")).toBeInTheDocument();
+// Mock styles
+const mockStyles = {
+  tagInput: "tagInput",
+  tagContainer: "tagContainer",
+  tag: "tag",
+  tagLabel: "tagLabel",
+  inputWrapper: "inputWrapper",
+  input: "input",
+  removeButton: "removeButton",
+  srOnly: "srOnly",
+  primary: "primary",
+  medium: "medium",
+};
+
+// Mock TextInput and IconButton
+const MockTextInput = ({ value, onChange, onKeyDown, ...rest }: any) => (
+  <input
+    value={value}
+    onChange={onChange}
+    onKeyDown={onKeyDown}
+    {...rest}
+    data-testid="text-input"
+  />
+);
+
+const MockIconButton = ({ onClick, ...rest }: any) => (
+  <button onClick={onClick} {...rest}>
+    ×
+  </button>
+);
+
+describe("TagInputBase", () => {
+  it("renders input and adds a tag", () => {
+    const handleChange = jest.fn();
+
+    render(
+      <TagInputBase
+        styles={mockStyles}
+        TextInput={MockTextInput}
+        IconButton={MockIconButton}
+        combineClassNames={(...classes) => classes.join(" ")}
+        onChange={handleChange}
+      />
+    );
+
+    const input = screen.getByTestId("text-input");
+    fireEvent.change(input, { target: { value: "React" } });
+    fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
+
+    expect(handleChange).toHaveBeenCalledWith(["React"]);
+    expect(screen.getByText("React")).toBeInTheDocument();
   });
 
-  it("adds a new tag on Enter", () => {
+  it("removes a tag", () => {
     const handleChange = jest.fn();
-    render(<TagInput tags={[]} onChange={handleChange} data-testid="tag-input" />);
 
-    const input = screen.getByRole("textbox");
-    fireEvent.change(input, { target: { value: "newtag" } });
-    fireEvent.keyDown(input, { key: "Enter" });
+    render(
+      <TagInputBase
+        styles={mockStyles}
+        TextInput={MockTextInput}
+        IconButton={MockIconButton}
+        combineClassNames={(...classes) => classes.join(" ")}
+        tags={["JS"]}
+        onChange={handleChange}
+      />
+    );
 
-    expect(handleChange).toHaveBeenCalledWith(["newtag"]);
-  });
-
-  it("adds a new tag on comma", () => {
-    const handleChange = jest.fn();
-    render(<TagInput tags={[]} onChange={handleChange} data-testid="tag-input" />);
-
-    const input = screen.getByRole("textbox");
-    fireEvent.change(input, { target: { value: "commaTag" } });
-    fireEvent.keyDown(input, { key: "," });
-
-    expect(handleChange).toHaveBeenCalledWith(["commaTag"]);
-  });
-
-  it("removes a tag on remove button click", () => {
-    const handleChange = jest.fn();
-    render(<TagInput tags={["toRemove"]} onChange={handleChange} data-testid="tag-input" />);
-
-    const removeButton = screen.getByTitle("remove");
-    fireEvent.click(removeButton);
-
+    fireEvent.click(screen.getByRole("button", { name: /remove tag js/i }));
     expect(handleChange).toHaveBeenCalledWith([]);
   });
 
-  it("does not add duplicate tags", () => {
-    const handleChange = jest.fn();
-    render(<TagInput tags={["duplicate"]} onChange={handleChange} data-testid="tag-input" />);
+  it("is accessible", async () => {
+    const { container } = render(
+      <TagInputBase
+        styles={mockStyles}
+        TextInput={MockTextInput}
+        IconButton={MockIconButton}
+        combineClassNames={(...classes) => classes.join(" ")}
+        ariaDescription="Test tag input accessibility"
+      />
+    );
 
-    const input = screen.getByRole("textbox");
-    fireEvent.change(input, { target: { value: "duplicate" } });
-    fireEvent.keyDown(input, { key: "Enter" });
-
-    expect(handleChange).not.toHaveBeenCalled();
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

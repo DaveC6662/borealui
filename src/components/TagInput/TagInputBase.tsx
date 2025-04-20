@@ -1,9 +1,6 @@
 import React, { useId, useState, KeyboardEvent } from "react";
 import { TagInputProps } from "./Taginput.types";
 
-/**
- * Base TagInput component with shared logic and structure.
- */
 const TagInputBase: React.FC<
   TagInputProps & {
     styles: Record<string, string>;
@@ -18,14 +15,19 @@ const TagInputBase: React.FC<
   theme = "primary",
   size = "medium",
   "data-testid": testId = "tag-input",
+  ariaDescription = "Type a tag and press Enter or comma to add. Existing tags can be removed using the remove button next to each tag.",
   styles,
   IconButton,
   TextInput,
   combineClassNames,
 }) => {
   const inputId = useId();
+  const descId = `${inputId}-desc`;
+  const labelId = `${inputId}-label`;
+
   const [inputValue, setInputValue] = useState("");
   const [tagList, setTagList] = useState<string[]>(tags);
+  const [lastAction, setLastAction] = useState<string>("");
 
   const handleAddTag = (event: KeyboardEvent<HTMLInputElement>) => {
     if (
@@ -38,6 +40,7 @@ const TagInputBase: React.FC<
         const updated = [...tagList, newTag];
         setTagList(updated);
         onChange?.(updated);
+        setLastAction(`Added tag ${newTag}`);
       }
       setInputValue("");
     }
@@ -47,6 +50,7 @@ const TagInputBase: React.FC<
     const updated = tagList.filter((t) => t !== tag);
     setTagList(updated);
     onChange?.(updated);
+    setLastAction(`Removed tag ${tag}`);
   };
 
   return (
@@ -57,16 +61,25 @@ const TagInputBase: React.FC<
         styles[size]
       )}
       role="group"
-      aria-labelledby={`${inputId}-label`}
+      aria-labelledby={labelId}
+      aria-describedby={descId}
       data-testid={testId}
     >
-      <label id={`${inputId}-label`} className="sr-only">
+      <label id={labelId} className="sr-only">
         Tag Input
       </label>
+      <div
+        id={descId}
+        className="sr-only"
+        data-testid={`${testId}-description`}
+      >
+        {ariaDescription}
+      </div>
 
       <ul
         className={styles.tagContainer}
         aria-live="polite"
+        aria-relevant="additions removals"
         data-testid={`${testId}-list`}
       >
         {tagList.map((tag, index) => (
@@ -83,7 +96,6 @@ const TagInputBase: React.FC<
               className={styles.removeButton}
               onClick={() => handleRemoveTag(tag)}
               data-testid={`${testId}-remove-${index}`}
-              title="remove"
               icon="FaTimes"
               size="small"
               theme="clear"
@@ -99,15 +111,21 @@ const TagInputBase: React.FC<
             className={styles.input}
             value={inputValue}
             placeholder={tagList.length === 0 ? placeholder : ""}
-            onChange={(e: {
-              target: { value: React.SetStateAction<string> };
-            }) => setInputValue(e.target.value)}
+            onChange={(e: { target: { value: string } }) =>
+              setInputValue(e.target.value)
+            }
             onKeyDown={handleAddTag}
             aria-label="Add new tag"
+            aria-describedby={descId}
             data-testid={`${testId}-input`}
           />
         </li>
       </ul>
+
+      {/* Screen reader-only feedback for recent changes */}
+      <div aria-live="polite" className="sr-only">
+        {lastAction}
+      </div>
     </div>
   );
 };

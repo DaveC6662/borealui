@@ -1,57 +1,86 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { FaUser, FaLock } from "react-icons/fa";
-import { TextInput } from "@/index.next";
+import { axe } from "jest-axe";
+import { FaUser } from "react-icons/fa";
+import TextInputBase from "@/components/TextInput/TextInputBase";
 
-describe("TextInput", () => {
-  it("renders with placeholder", () => {
-    render(<TextInput placeholder="Enter your name" data-testid="textinput" />);
-    expect(screen.getByTestId("textinput")).toHaveAttribute("placeholder", "Enter your name");
-  });
+const mockStyles = {
+  textBoxContainer: "textBoxContainer",
+  textInput: "textInput",
+  iconContainer: "iconContainer",
+  togglePassword: "togglePassword",
+  srOnly: "srOnly",
+  primary: "primary",
+  disabled: "disabled",
+};
 
-  it("renders with an icon", () => {
-    render(<TextInput icon={FaUser} placeholder="With Icon" data-testid="textinput-icon" />);
-    expect(screen.getByTestId("textinput-icon")).toBeInTheDocument();
-    expect(screen.getByTestId("textinput-icon")).toHaveAttribute("placeholder", "With Icon");
-  });
-
-  it("updates value on change", () => {
-    render(<TextInput placeholder="Type..." data-testid="textinput" />);
-    const input = screen.getByTestId("textinput");
-    fireEvent.change(input, { target: { value: "Hello" } });
-    expect(input).toHaveValue("Hello");
-  });
-
-  it("toggles password visibility", () => {
-    render(<TextInput password icon={FaLock} placeholder="Password" data-testid="password-input" />);
-    const input = screen.getByTestId("password-input");
-    expect(input).toHaveAttribute("type", "password");
-    const toggleBtn = screen.getByTestId("password-input-password-toggle");
-    fireEvent.click(toggleBtn);
-    expect(input).toHaveAttribute("type", "text");
-  });
-
-  it("applies readOnly and disabled states", () => {
-    render(
-      <>
-        <TextInput value="ReadOnly" readOnly data-testid="readonly-input" />
-        <TextInput value="Disabled" disabled data-testid="disabled-input" />
-      </>
-    );
-    expect(screen.getByTestId("readonly-input")).toHaveAttribute("readOnly");
-    expect(screen.getByTestId("disabled-input")).toBeDisabled();
-  });
-
-  it("applies aria-label and description", () => {
-    render(
-      <TextInput
-        ariaLabel="Test Input"
-        ariaDescription="Helper text"
-        data-testid="aria-input"
+describe("TextInputBase", () => {
+  it("renders a standard text input with icon and label", async () => {
+    const { container } = render(
+      <TextInputBase
+        styles={mockStyles}
+        placeholder="Username"
+        icon={FaUser}
+        ariaLabel="Username field"
       />
     );
-    const input = screen.getByTestId("aria-input");
-    expect(input).toHaveAttribute("aria-label", "Test Input");
-    expect(screen.getByTestId("aria-input-input-description")).toBeInTheDocument();
+
+    expect(screen.getByPlaceholderText("Username")).toBeInTheDocument();
+    expect(screen.getByTestId("text-input-icon")).toBeInTheDocument();
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it("renders a password input and toggles visibility", () => {
+    render(
+      <TextInputBase
+        styles={mockStyles}
+        password
+        placeholder="Password"
+        ariaLabel="Enter your password"
+      />
+    );
+
+    const input = screen.getByPlaceholderText("Password") as HTMLInputElement;
+    const toggle = screen.getByTestId("text-input-password-toggle");
+
+    expect(input.type).toBe("password");
+
+    fireEvent.click(toggle);
+    expect(input.type).toBe("text");
+
+    fireEvent.click(toggle);
+    expect(input.type).toBe("password");
+  });
+
+  it("respects disabled and readonly props", () => {
+    render(
+      <TextInputBase
+        styles={mockStyles}
+        placeholder="Disabled field"
+        disabled
+        readOnly
+      />
+    );
+
+    const input = screen.getByPlaceholderText("Disabled field");
+    expect(input).toBeDisabled();
+    expect(input).toHaveAttribute("readonly");
+  });
+
+  it("displays an accessible description", () => {
+    render(
+      <TextInputBase
+        styles={mockStyles}
+        placeholder="With description"
+        ariaDescription="This input is used to test aria-describedby"
+      />
+    );
+
+    const input = screen.getByPlaceholderText("With description");
+    const description = screen.getByTestId("text-input-input-description");
+
+    expect(description).toBeInTheDocument();
+    expect(input).toHaveAttribute("aria-describedby", description.id);
   });
 });

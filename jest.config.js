@@ -1,6 +1,6 @@
 // jest.config.js
 export const testEnvironment = "jsdom";
-export const setupFilesAfterEnv = ["@testing-library/jest-dom"];
+export const setupFilesAfterEnv = ["<rootDir>/jest.setup.ts"];
 export const moduleNameMapper = {
   "^@/(.*)$": "<rootDir>/src/$1",
   "^@components/(.*)$": "<rootDir>/src/components/$1",

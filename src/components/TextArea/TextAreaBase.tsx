@@ -6,9 +6,6 @@ import {
 } from "react";
 import { combineClassNames } from "../../utils/classNames";
 
-/**
- * Props for the base TextArea component.
- */
 export interface TextAreaBaseProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   icon?: ComponentType;
@@ -19,10 +16,6 @@ export interface TextAreaBaseProps
   "data-testid"?: string;
 }
 
-/**
- * TextAreaBase is a reusable core component that renders a customizable and accessible textarea.
- * It expects a `styles` object containing all relevant class mappings.
- */
 const TextAreaBase = forwardRef<HTMLTextAreaElement, TextAreaBaseProps>(
   (
     {
@@ -42,6 +35,7 @@ const TextAreaBase = forwardRef<HTMLTextAreaElement, TextAreaBaseProps>(
     ref
   ) => {
     const id = useId();
+    const descriptionId = ariaDescription ? `${id}-description` : undefined;
 
     return (
       <div
@@ -56,7 +50,7 @@ const TextAreaBase = forwardRef<HTMLTextAreaElement, TextAreaBaseProps>(
           <div
             className={styles.iconContainer}
             aria-hidden="true"
-            aria-label="textarea icon"
+            data-testid={`${testId}-icon`}
           >
             <Icon />
           </div>
@@ -67,7 +61,7 @@ const TextAreaBase = forwardRef<HTMLTextAreaElement, TextAreaBaseProps>(
           id={id}
           placeholder={placeholder}
           aria-label={ariaLabel || placeholder}
-          aria-describedby={ariaDescription ? `${id}-description` : undefined}
+          aria-describedby={descriptionId}
           autoComplete={autoComplete}
           readOnly={readOnly}
           disabled={disabled}
@@ -77,11 +71,15 @@ const TextAreaBase = forwardRef<HTMLTextAreaElement, TextAreaBaseProps>(
           {...props}
         />
 
-        <div className={styles.customResizeHandle} aria-hidden="true" />
+        <div
+          className={styles.customResizeHandle}
+          aria-hidden="true"
+          data-testid={`${testId}-resize-handle`}
+        />
 
         {ariaDescription && (
           <span
-            id={`${id}-description`}
+            id={descriptionId}
             className={styles.srOnly}
             data-testid={`${testId}-description`}
           >

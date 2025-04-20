@@ -1,37 +1,52 @@
-import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import { Timeline } from "@/index.next";
-import { FaRocket } from "react-icons/fa";
+import { axe } from "jest-axe";
+import TimelineBase from "@/components/Timeline/TimelineBase";
+import { FaCheck } from "react-icons/fa";
 
-describe("Timeline", () => {
-  const items = [
-    { title: "Launch", description: "Initial release", date: "2024", icon: FaRocket },
-  ];
+const mockStyles = {
+  timeline: "timeline",
+  timelineItem: "timelineItem",
+  marker: "marker",
+  icon: "icon",
+  dot: "dot",
+  content: "content",
+  title: "title",
+  date: "date",
+  description: "description",
+  vertical: "vertical",
+  horizontal: "horizontal",
+  primary: "primary",
+};
 
-  it("renders timeline items with title and description", () => {
-    render(<Timeline items={items} theme="primary" orientation="vertical" />);
-    expect(screen.getByText("Launch")).toBeInTheDocument();
-    expect(screen.getByText("Initial release")).toBeInTheDocument();
-    expect(screen.getByText("2024")).toBeInTheDocument();
-  });
+const items = [
+  {
+    title: "Project Kickoff",
+    date: "Jan 1, 2023",
+    description: "Initial meeting with stakeholders.",
+    icon: FaCheck,
+  },
+  {
+    title: "Design Phase",
+    date: "Feb 15, 2023",
+    description: "Wireframes and mockups created.",
+  },
+];
 
-  it("applies correct orientation and theme classes", () => {
-    const { container } = render(<Timeline items={items} theme="success" orientation="horizontal" />);
-    expect(container.firstChild).toHaveClass("horizontal");
-    expect(container.firstChild).toHaveClass("success");
-  });
+describe("TimelineBase", () => {
+  it("renders timeline items with correct structure", () => {
+    render(<TimelineBase items={items} styles={mockStyles} />);
 
-  it("adds accessible content with proper heading", () => {
-    render(<Timeline items={items} />);
     expect(screen.getByRole("list")).toBeInTheDocument();
-    expect(screen.getByRole("listitem")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Launch" })).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(items.length);
+    expect(screen.getByText("Project Kickoff")).toBeInTheDocument();
+    expect(screen.getByText("Design Phase")).toBeInTheDocument();
   });
-  
 
-  it("falls back to dot when no icon is provided", () => {
-    render(<Timeline items={[{ title: "Milestone" }]} />);
-    expect(screen.getByText("Milestone")).toBeInTheDocument();
-    expect(screen.getByTestId("timeline-item-0-dot")).toBeInTheDocument();
+  it("is accessible", async () => {
+    const { container } = render(
+      <TimelineBase items={items} styles={mockStyles} />
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

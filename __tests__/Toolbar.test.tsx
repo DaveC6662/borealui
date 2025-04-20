@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ToolbarBase } from "@/components/Toolbar/ToolbarBase";
+import { axe } from "jest-axe";
 import { jest } from "@jest/globals";
 
 // Simple mock Avatar component
@@ -103,5 +104,22 @@ describe("ToolbarBase", () => {
     expect(
       screen.getByRole("banner", { name: "Main toolbar" })
     ).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <ToolbarBase
+        title="Toolbar Title"
+        left={<div>Left Section</div>}
+        center={<div>Center Content</div>}
+        right={<div>Right Section</div>}
+        avatar={{ name: "JD" }}
+        AvatarComponent={AvatarMock}
+        styles={mockStyles}
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

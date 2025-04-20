@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { axe } from "jest-axe";
 import { TooltipBase } from "@/components/Tooltip/TooltipBase";
 
 const mockStyles = {
@@ -86,5 +87,18 @@ describe("TooltipBase", () => {
     const tooltip = screen.getByTestId("tooltip");
     expect(tooltip.className).toContain("bottom");
     expect(tooltip.className).toContain("error");
+  });
+
+  describe("TooltipBase accessibility", () => {
+    it("has no accessibility violations when visible", async () => {
+      const { container } = render(
+        <TooltipBase content="Accessible tooltip" styles={mockStyles}>
+          <button>Hover me</button>
+        </TooltipBase>
+      );
+
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
   });
 });
