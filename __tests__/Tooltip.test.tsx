@@ -1,48 +1,90 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Tooltip } from "@/index.next";
+import { TooltipBase } from "@/components/Tooltip/TooltipBase";
 
-describe("Tooltip", () => {
-  it("renders tooltip content with default position and theme", () => {
+const mockStyles = {
+  tooltipContainer: "tooltipContainer",
+  triggerWrapper: "triggerWrapper",
+  tooltip: "tooltip",
+  top: "top",
+  bottom: "bottom",
+  left: "left",
+  right: "right",
+  primary: "primary",
+  secondary: "secondary",
+  success: "success",
+  error: "error",
+  warning: "warning",
+  clear: "clear",
+};
+
+describe("TooltipBase", () => {
+  it("renders the trigger and tooltip content", () => {
     render(
-      <Tooltip content="Hello Tooltip">
+      <TooltipBase content="Tooltip content" styles={mockStyles}>
         <button>Hover me</button>
-      </Tooltip>
+      </TooltipBase>
     );
 
-    const tooltip = screen.getByRole("tooltip");
-    expect(tooltip).toBeInTheDocument();
-    expect(tooltip).toHaveTextContent("Hello Tooltip");
-    expect(tooltip.className).toContain("top");
-    expect(tooltip.className).toContain("primary");
+    expect(screen.getByTestId("tooltip-trigger")).toBeInTheDocument();
+    expect(screen.getByTestId("tooltip")).toBeInTheDocument();
+    expect(screen.getByTestId("tooltip")).toHaveAttribute("role", "tooltip");
   });
 
-  it("applies the specified position and theme", () => {
+  it("shows tooltip on hover", () => {
     render(
-      <Tooltip content="Custom Tooltip" position="right" theme="success">
-        <span>Hover target</span>
-      </Tooltip>
+      <TooltipBase content="Hover tooltip" styles={mockStyles}>
+        <button>Hover me</button>
+      </TooltipBase>
     );
 
-    const tooltip = screen.getByRole("tooltip");
-    expect(tooltip.className).toContain("right");
-    expect(tooltip.className).toContain("success");
+    const container = screen.getByTestId("tooltip-container");
+    const tooltip = screen.getByTestId("tooltip");
+
+    // Initially hidden
+    expect(tooltip).toHaveStyle({ visibility: "hidden", opacity: "0" });
+
+    // Hover shows tooltip
+    fireEvent.mouseEnter(container);
+    expect(tooltip).toHaveStyle({ visibility: "visible", opacity: "1" });
+
+    // Mouse leave hides it again
+    fireEvent.mouseLeave(container);
+    expect(tooltip).toHaveStyle({ visibility: "hidden", opacity: "0" });
   });
 
-  it("renders tooltip alongside the child and responds to hover event", () => {
+  it("shows tooltip on focus and hides on blur", () => {
     render(
-      <Tooltip content="Hover me!">
-        <button data-testid="hover-button">Hover</button>
-      </Tooltip>
+      <TooltipBase content="Focus tooltip" styles={mockStyles}>
+        <button>Focus me</button>
+      </TooltipBase>
     );
 
-    const tooltip = screen.getByRole("tooltip");
-    const trigger = screen.getByTestId("hover-button");
+    const trigger = screen.getByTestId("tooltip-trigger");
+    const tooltip = screen.getByTestId("tooltip");
 
-    expect(tooltip).toBeInTheDocument();
-    expect(trigger).toBeInTheDocument();
+    expect(tooltip).toHaveStyle({ visibility: "hidden", opacity: "0" });
 
-    fireEvent.mouseOver(trigger);
+    fireEvent.focus(trigger);
+    expect(tooltip).toHaveStyle({ visibility: "visible", opacity: "1" });
 
-    expect(screen.getByText("Hover me!")).toBeInTheDocument();
+    fireEvent.blur(trigger);
+    expect(tooltip).toHaveStyle({ visibility: "hidden", opacity: "0" });
+  });
+
+  it("applies position and theme classes", () => {
+    render(
+      <TooltipBase
+        content="Positioned tooltip"
+        position="bottom"
+        theme="error"
+        styles={mockStyles}
+      >
+        <button>Check styles</button>
+      </TooltipBase>
+    );
+
+    const tooltip = screen.getByTestId("tooltip");
+    expect(tooltip.className).toContain("bottom");
+    expect(tooltip.className).toContain("error");
   });
 });

@@ -1,67 +1,32 @@
 "use client";
 
-import React, { forwardRef, useId } from "react";
+import { forwardRef } from "react";
 import styles from "./Tooltip.module.scss";
-
-import { combineClassNames } from "@/utils/classNames";
+import { TooltipBase } from "../TooltipBase";
 import { TooltipProps } from "../Tooltip.types";
 
 /**
- * Tooltip component displays additional information when hovering over or focusing on an element.
- * It wraps the trigger element and renders an accessible tooltip with customizable content,
- * position, and theme.
+ * Tooltip component for Next.js using scoped CSS Modules.
+ *
+ * This is a framework-specific wrapper around the shared `TooltipBase` logic,
+ * passing in module-based styling for scoped visual presentation.
  *
  * @component
  * @example
- * <Tooltip content="This is a tooltip message" position="bottom" theme="primary">
- *   <button>Hover over me</button>
+ * ```tsx
+ * <Tooltip content="Helpful info" position="bottom" theme="secondary">
+ *   <button>Hover me</button>
  * </Tooltip>
+ * ```
  *
- * @param {TooltipProps} props - Props to configure the Tooltip component.
- * @param {React.Ref<HTMLDivElement>} ref - A ref to the tooltip element.
- * @returns {JSX.Element} The rendered Tooltip component.
+ * @param {TooltipProps} props - Props to configure the tooltip behavior and appearance.
+ * @param {React.Ref<HTMLDivElement>} ref - Forwarded ref to the tooltip element.
+ * @returns {JSX.Element} A styled and accessible tooltip component.
  */
-const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
-  (
-    {
-      content,
-      position = "top",
-      theme = "primary",
-      children,
-      "data-testid": testId = "tooltip",
-      ...rest
-    },
-    ref
-  ) => {
-    // Create a unique ID for tooltip accessibility linking.
-    const tooltipId = useId();
-
-    return (
-      <div className={styles.tooltipContainer} data-testid={`${testId}-container`}>
-        <div
-          aria-describedby={tooltipId}
-          data-testid={`${testId}-trigger`}
-        >
-          {children}
-        </div>
-        <div
-          ref={ref}
-          id={tooltipId}
-          className={combineClassNames(
-            styles.tooltip,
-            styles[position],
-            styles[theme]
-          )}
-          role="tooltip"
-          data-testid={testId}
-          {...rest}
-        >
-          {content}
-        </div>
-      </div>
-    );
-  }
-);
+const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props, ref) => (
+  <TooltipBase {...props} ref={ref} styles={styles} />
+));
 
 Tooltip.displayName = "Tooltip";
+
 export default Tooltip;

@@ -1,74 +1,29 @@
-import React, { JSX } from "react";
+import React from "react";
 import "./Toolbar.scss";
 import Avatar from "../../Avatar/core/Avatar";
-import { combineClassNames } from "@/utils/classNames";
+import { ToolbarBase } from "../ToolbarBase";
 import { ToolbarProps } from "../Toolbar.types";
 
 /**
- * `Toolbar` is a flexible horizontal layout component commonly used at the top of pages or sections.
- * It supports left, center, and right-aligned sections, an optional title, and a customizable avatar.
- *
- * @example
- * ```tsx
- * <Toolbar
- *   title="Dashboard"
- *   left={<BackButton />}
- *   right={<NotificationIcon />}
- *   avatar={{ name: "JD", onClick: () => console.log("Profile clicked") }}
- * />
- * ```
- *
- * @param {ToolbarProps} props - Props to configure the toolbar layout.
- * @returns {JSX.Element} The rendered Toolbar component.
+ * Core React version of Toolbar component with global SCSS.
  */
-const Toolbar: React.FC<ToolbarProps> = ({
-  title,
-  left,
-  center,
-  right,
-  avatar,
-  theme = "primary",
-  className = "",
-  "data-testid": testId = "toolbar",
-}: ToolbarProps): JSX.Element => {
-  return (
-    <header
-      className={combineClassNames(`toolbar`, theme, className)}
-      role="banner"
-      aria-label="Toolbar"
-      data-testid={testId}
-    >
-      <div className={`section`} data-testid={`${testId}-left`}>
-        {left}
-      </div>
-
-      <div className={`section`} data-testid={`${testId}-center`}>
-        {title && (
-          <h1 className={`title`} data-testid={`${testId}-title`}>
-            {title}
-          </h1>
-        )}
-        {center}
-      </div>
-
-      <div className={`section`} data-testid={`${testId}-right`}>
-        {right}
-        {avatar && (
-          <div className={`avatarWrapper`} data-testid={`${testId}-avatar`}>
-            <Avatar
-              name={avatar.name}
-              src={avatar.src}
-              size={avatar.size || "medium"}
-              shape={avatar.shape || "circle"}
-              theme={avatar.theme}
-              outline={avatar.outline}
-              {...(avatar.onClick ? { onClick: avatar.onClick } : {})}
-            />
-          </div>
-        )}
-      </div>
-    </header>
-  );
-};
+const Toolbar: React.FC<ToolbarProps> = (props) => (
+  <ToolbarBase
+    {...props}
+    AvatarComponent={Avatar}
+    styles={{
+      toolbar: "toolbar",
+      section: "section",
+      title: "title",
+      avatarWrapper: "avatarWrapper",
+      primary: "primary",
+      secondary: "secondary",
+      success: "success",
+      error: "error",
+      warning: "warning",
+      clear: "clear",
+    }}
+  />
+);
 
 export default Toolbar;

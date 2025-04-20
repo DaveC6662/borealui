@@ -7,7 +7,7 @@ $themes: (
   "success": theme.$success-color,
   "error": theme.$error-color,
   "warning": theme.$warning-color,
-  "clear": transparent
+  "clear": transparent,
 );
 
 .toolbar {
@@ -21,20 +21,17 @@ $themes: (
   box-shadow: theme.$box-shadow-medium;
   gap: theme.$spacing-sm;
 
-
   @each $theme, $color in $themes {
-    .toolbar.#{$theme} {
+    &.#{$theme} {
       background-color: $color;
 
-      @if $theme =="clear" {
+      @if $theme == "clear" {
         box-shadow: none;
       }
 
-      @if $theme =="secondary" {
+      @if $theme == "secondary" {
         color: var(--text-color-secondary);
-      }
-
-      @else {
+      } @else {
         color: var(--text-color-primary);
       }
     }
@@ -84,5 +81,4 @@ $themes: (
       margin-top: theme.$spacing-xs;
     }
   }
-
 }

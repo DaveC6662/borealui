@@ -1,26 +1,107 @@
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { Toolbar, Button } from "@/index.next";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { ToolbarBase } from "@/components/Toolbar/ToolbarBase";
+import { jest } from "@jest/globals";
 
-describe("Toolbar - Custom Center", () => {
-  it("renders title, subtitle (custom center), and right button", () => {
+// Simple mock Avatar component
+const AvatarMock = ({ name }: { name: string }) => <div>{name}</div>;
+
+const mockStyles = {
+  toolbar: "toolbar",
+  section: "section",
+  title: "title",
+  avatarWrapper: "avatarWrapper",
+  avatarButton: "avatarButton",
+  primary: "primary",
+  secondary: "secondary",
+  success: "success",
+  error: "error",
+  warning: "warning",
+  clear: "clear",
+};
+
+describe("ToolbarBase", () => {
+  it("renders the left, center, and right sections", () => {
     render(
-      <Toolbar
-        title="Activity Feed"
-        center={<p data-testid="toolbar-subtitle">Showing recent updates</p>}
-        right={<Button theme="error">Clear</Button>}
-        data-testid="toolbar-center"
+      <ToolbarBase
+        title="Toolbar Title"
+        left={<div>Left Section</div>}
+        center={<div>Center Content</div>}
+        right={<div>Right Section</div>}
+        AvatarComponent={AvatarMock}
+        styles={mockStyles}
       />
     );
 
-    const toolbar = screen.getByTestId("toolbar-center");
-    const title = screen.getByText("Activity Feed");
-    const subtitle = screen.getByTestId("toolbar-subtitle");
-    const button = screen.getByRole("button", { name: /clear/i });
+    expect(screen.getByRole("banner")).toBeInTheDocument();
+    expect(screen.getByText("Toolbar Title")).toBeInTheDocument();
+    expect(screen.getByTestId("toolbar-left")).toHaveTextContent(
+      "Left Section"
+    );
+    expect(screen.getByTestId("toolbar-center")).toHaveTextContent(
+      "Center Content"
+    );
+    expect(screen.getByTestId("toolbar-right")).toHaveTextContent(
+      "Right Section"
+    );
+  });
 
-    expect(toolbar).toBeInTheDocument();
-    expect(title).toBeInTheDocument();
-    expect(subtitle).toHaveTextContent("Showing recent updates");
-    expect(button).toBeInTheDocument();
+  it("renders avatar when provided", () => {
+    render(
+      <ToolbarBase
+        avatar={{ name: "JD" }}
+        AvatarComponent={AvatarMock}
+        styles={mockStyles}
+      />
+    );
+
+    expect(screen.getByTestId("toolbar-avatar")).toBeInTheDocument();
+    expect(screen.getByText("JD")).toBeInTheDocument();
+  });
+
+  it("renders avatar and calls onClick", () => {
+    const handleClick = jest.fn();
+
+    render(
+      <ToolbarBase
+        avatar={{ name: "JD", onClick: handleClick }}
+        AvatarComponent={({ name, onClick }) => (
+          <button onClick={onClick}>{name}</button>
+        )}
+        styles={mockStyles}
+      />
+    );
+
+    const avatarButton = screen.getByRole("button", { name: /jd/i });
+    fireEvent.click(avatarButton);
+    expect(handleClick).toHaveBeenCalled();
+  });
+
+  it("respects headingLevel prop for title", () => {
+    render(
+      <ToolbarBase
+        title="Custom Heading"
+        headingLevel={2}
+        AvatarComponent={AvatarMock}
+        styles={mockStyles}
+      />
+    );
+
+    const heading = screen.getByRole("heading", { name: "Custom Heading" });
+    expect(heading.tagName).toBe("H2");
+  });
+
+  it("sets correct aria-label for banner", () => {
+    render(
+      <ToolbarBase
+        title="Toolbar"
+        ariaLabel="Main toolbar"
+        AvatarComponent={AvatarMock}
+        styles={mockStyles}
+      />
+    );
+
+    expect(
+      screen.getByRole("banner", { name: "Main toolbar" })
+    ).toBeInTheDocument();
   });
 });
