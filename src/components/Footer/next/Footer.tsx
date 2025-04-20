@@ -1,86 +1,37 @@
 "use client";
 
-import React, { JSX } from "react";
-import Link from "next/link";
-import { IconButton, ThemeSelect } from "@/index.next";
-import styles from "./Footer.module.scss";
-import { combineClassNames } from "@/utils/classNames";
+import React from "react";
+import BaseFooter from "../FooterBase";
 import { FooterProps } from "../Footer.types";
+import { IconButton, ThemeSelect } from "@/index.next";
+import Link from "next/link";
+import styles from "./Footer.module.scss";
 
-/**
- * Footer component displays site-wide footer content including
- * navigation links, copyright, social icons, and theme selector.
- *
- * @param {FooterProps} props - Props to customize footer content and layout.
- * @returns {JSX.Element} A semantic footer element.
- */
-const Footer: React.FC<FooterProps> = ({
-  theme = "primary",
-  className = "",
-  "data-testid": testId = "footer",
-  copyright,
-  links = [],
-  socialLinks = [],
-  showThemeSelect = true,
-}: FooterProps): JSX.Element => {
+const Footer: React.FC<FooterProps> = (props) => {
   return (
-    <footer
-      className={combineClassNames(styles.footerContainer, styles[theme], className)}
-      role="contentinfo"
-      aria-label="Footer"
-      data-testid={testId}
-    >
-      <div className={styles.footerContent}>
-        {copyright && (
-          <div className={styles.footerLeft} data-testid={`${testId}-copyright`}>
-            <p>{copyright}</p>
-          </div>
-        )}
-
-        {links.length > 0 && (
-          <nav
-            className={styles.footerLinks}
-            aria-label="Footer Navigation"
-            data-testid={`${testId}-nav`}
-          >
-            {links.map((link, i) => (
-              <Link key={i} href={link.href} passHref legacyBehavior>
-                <a data-testid={`${testId}-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}>
-                  {link.label}
-                </a>
-              </Link>
-            ))}
-          </nav>
-        )}
-
-        {showThemeSelect && (
-          <div className={styles.themeToggleContainer} data-testid={`${testId}-theme-select`}>
-            <ThemeSelect />
-          </div>
-        )}
-
-        {socialLinks.length > 0 && (
-          <div
-            className={styles.footerSocial}
-            aria-label="Social media links"
-            data-testid={`${testId}-social`}
-          >
-            {socialLinks.map((social, index) => (
-              <IconButton
-                key={index}
-                icon={social.icon}
-                href={social.href}
-                isExternal
-                ariaLabel={social.title}
-                title={social.title}
-                theme={theme}
-                data-testid={`${testId}-social-${social.title.toLowerCase().replace(/\s+/g, "-")}`}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    </footer>
+    <BaseFooter
+      {...props}
+      IconButton={IconButton}
+      ThemeSelect={ThemeSelect}
+      LinkWrapper={({ href, children }) => (
+        <Link href={href} passHref legacyBehavior>
+          <a>{children}</a>
+        </Link>
+      )}
+      classNames={{
+        wrapper: styles.footerContainer,
+        theme: {
+          primary: styles.primary,
+          secondary: styles.secondary,
+        },
+        content: styles.footerContent,
+        left: styles.footerLeft,
+        links: styles.footerLinks,
+        link: styles.footerLink,
+        social: styles.footerSocial,
+        themeToggle: styles.themeToggleContainer,
+      }}
+    />
   );
 };
 

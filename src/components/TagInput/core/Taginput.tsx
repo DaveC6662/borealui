@@ -1,113 +1,28 @@
-import React, { useState, useId } from "react";
-import { FaTimes } from "react-icons/fa";
+import React from "react";
+import "./Taginput.scss";
 import IconButton from "../../Buttons/IconButton/core/IconButton";
 import TextInput from "../../TextInput/core/TextInput";
-import "./Taginput.scss";
 import { combineClassNames } from "../../../utils/classNames";
+import TagInputBase from "../TagInputBase";
 import { TagInputProps } from "../Taginput.types";
 
-/**
- * TagInput component allows users to input and manage a dynamic list of tags.
- *
- * @component
- * @example
- * ```tsx
- * <TagInput
- *   tags={["react", "typescript"]}
- *   onChange={(updatedTags) => console.log(updatedTags)}
- *   placeholder="Add tags..."
- *   theme="primary"
- *   size="medium"
- * />
- * ```
- */
-const TagInput: React.FC<TagInputProps> = ({
-  tags = [],
-  onChange,
-  placeholder = "Add a tag...",
-  theme = "primary",
-  size = "medium",
-  "data-testid": testId = "tag-input",
-}) => {
-  const inputId = useId();
-  const [inputValue, setInputValue] = useState("");
-  const [tagList, setTagList] = useState<string[]>(tags);
-
-  /**
-   * Handles adding a tag when the user presses Enter or comma.
-   */
-  const handleAddTag = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if ((event.key === "Enter" || event.key === ",") && inputValue.trim() !== "") {
-      event.preventDefault();
-      const newTag = inputValue.trim();
-      if (!tagList.includes(newTag)) {
-        const updated = [...tagList, newTag];
-        setTagList(updated);
-        onChange?.(updated);
-      }
-      setInputValue("");
-    }
-  };
-
-  /**
-   * Handles removing a tag from the list.
-   */
-  const handleRemoveTag = (tag: string) => {
-    const updated = tagList.filter((t) => t !== tag);
-    setTagList(updated);
-    onChange?.(updated);
-  };
-
+const TagInput: React.FC<TagInputProps> = (props) => {
   return (
-    <div
-      className={combineClassNames(`tagInput`, size)}
-      role="group"
-      aria-labelledby={`${inputId}-label`}
-      data-testid={testId}
-    >
-      <label id={`${inputId}-label`} className="sr-only">
-        Tag Input
-      </label>
-
-      <ul className={`tagContainer`} aria-live="polite" data-testid={`${testId}-list`}>
-        {tagList.map((tag, index) => (
-          <li
-            key={tag}
-            className={`tag ${theme}`}
-            role="listitem"
-            data-testid={`${testId}-tag-${index}`}
-          >
-            <span className={`tagLabel`}>{tag}</span>
-            <IconButton
-              type="button"
-              aria-label={`Remove tag ${tag}`}
-              className={`removeButton`}
-              onClick={() => handleRemoveTag(tag)}
-              data-testid={`${testId}-remove-${index}`}
-              title="remove"
-              icon={FaTimes}
-              size="small"
-              theme="clear"
-            />
-          </li>
-        ))}
-
-        <li className={`inputWrapper`}>
-          <TextInput
-            id={inputId}
-            type="text"
-            theme={theme}
-            className={`input`}
-            value={inputValue}
-            placeholder={tagList.length === 0 ? placeholder : ""}
-            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setInputValue(e.target.value)}
-            onKeyDown={handleAddTag}
-            aria-label="Add new tag"
-            data-testid={`${testId}-input`}
-          />
-        </li>
-      </ul>
-    </div>
+    <TagInputBase
+      {...props}
+      styles={{
+        tagInput: "tagInput",
+        tagContainer: "tagContainer",
+        tag: "tag",
+        tagLabel: "tagLabel",
+        removeButton: "removeButton",
+        inputWrapper: "inputWrapper",
+        input: "input",
+      }}
+      IconButton={IconButton}
+      TextInput={TextInput}
+      combineClassNames={combineClassNames}
+    />
   );
 };
 

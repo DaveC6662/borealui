@@ -1,4 +1,5 @@
 import { ThemeType } from "@/types/types";
+import { ComponentType } from "react";
 
 /**
  * Defines a single item in the dropdown menu.
@@ -21,7 +22,7 @@ interface DropdownItem {
  */
 export interface DropdownProps {
   /** Icon component used for the trigger button. */
-  triggerIcon: React.ComponentType;
+  triggerIcon: ComponentType<{ className?: string }>;
   /** Array of items to render in the dropdown menu. */
   items: DropdownItem[];
   /** Menu alignment relative to the trigger ("left" or "right"). */

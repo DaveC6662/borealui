@@ -1,44 +1,32 @@
-import React, { JSX } from "react";
+import React from "react";
+import BaseProgressBar from "../ProgressBarBase";
 import "./Progressbar.scss";
 import { ProgressBarProps } from "../ProgressBar.types";
 
-/**
- * ProgressBar is a visual component used to indicate progress for a given task.
- * It supports both determinate and indeterminate modes and includes ARIA attributes
- * for improved accessibility.
- *
- * @param {ProgressBarProps} props - Props for configuring the progress bar.
- * @returns {JSX.Element} A styled progress bar component.
- */
-const ProgressBar: React.FC<ProgressBarProps> = ({
-  progress = 0,
-  theme = "primary",
-  size = "medium",
-  animated = true,
-  indeterminate = false,
-  className = "",
-  "data-testid": testId = "progressbar",
-}: ProgressBarProps): JSX.Element => {
-  const ariaValue = indeterminate ? undefined : Math.round(progress);
-
+const ProgressBar: React.FC<ProgressBarProps> = (props) => {
   return (
-    <div
-      className={`${"progressContainer"} ${size} ${className}`}
-      role="progressbar"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={ariaValue}
-      aria-label="Progress"
-      data-testid={testId}
-    >
-      <div
-        className={`${"progressBar"} ${theme} ${animated ? "animated" : ""} ${
-          indeterminate ? "indeterminate" : ""
-        }`}
-        style={{ width: indeterminate ? "100%" : `${progress}%` }}
-        data-testid={`${testId}-bar`}
-      />
-    </div>
+    <BaseProgressBar
+      {...props}
+      classNames={{
+        container: "progressContainer",
+        bar: "progressBar",
+        themeMap: {
+          primary: "primary",
+          secondary: "secondary",
+          success: "success",
+          error: "error",
+          warning: "warning",
+          info: "info",
+        },
+        sizeMap: {
+          small: "small",
+          medium: "medium",
+          large: "large",
+        },
+        animated: "animated",
+        indeterminate: "indeterminate",
+      }}
+    />
   );
 };
 

@@ -1,0 +1,85 @@
+import { forwardRef, ChangeEvent } from "react";
+import { SelectProps } from "./Select.types";
+import { FaChevronDown } from "react-icons/fa";
+
+interface BaseSelectProps extends SelectProps {
+  classNames: {
+    main: string;
+    select: string;
+    icon: string;
+    themeClass: (theme: string) => string;
+    disabled?: string;
+  };
+}
+
+/**
+ * BaseSelect is the unstyled core logic of the Select component.
+ * It receives classNames and testIds from the consuming core/next wrapper.
+ */
+const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
+  (
+    {
+      theme = "primary",
+      options,
+      value,
+      onChange,
+      placeholder = "Select an option",
+      ariaLabel,
+      disabled = false,
+      className = "",
+      classNames,
+      "data-testid": testId = "select",
+    },
+    ref
+  ) => {
+    const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+      onChange(event.target.value);
+    };
+
+    return (
+      <div
+        className={`${classNames.main} ${classNames.themeClass(theme)} ${className} ${
+          disabled && classNames.disabled ? classNames.disabled : ""
+        }`}
+        aria-live="polite"
+        data-testid={testId}
+      >
+        <select
+          ref={ref}
+          value={value}
+          onChange={handleChange}
+          aria-label={ariaLabel || placeholder}
+          disabled={disabled}
+          className={`${classNames.select} ${classNames.themeClass(theme)}`}
+          aria-disabled={disabled}
+          data-testid={`${testId}-input`}
+        >
+          <option value="" disabled hidden>
+            {placeholder}
+          </option>
+          {options.map((option) => (
+            <option
+              key={option.value}
+              value={option.value}
+              data-testid={`${testId}-option-${option.value}`}
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <div
+          className={`${classNames.icon} ${classNames.themeClass(theme)} ${
+            disabled && classNames.disabled ? classNames.disabled : ""
+          }`}
+          aria-hidden="true"
+          data-testid={`${testId}-icon`}
+        >
+          <FaChevronDown />
+        </div>
+      </div>
+    );
+  }
+);
+
+BaseSelect.displayName = "BaseSelect";
+export default BaseSelect;

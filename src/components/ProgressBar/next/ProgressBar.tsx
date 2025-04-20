@@ -1,47 +1,34 @@
 "use client";
 
-import React, { JSX } from "react";
+import React from "react";
+import BaseProgressBar from "../ProgressBarBase";
 import styles from "./ProgressBar.module.scss";
 import { ProgressBarProps } from "../ProgressBar.types";
 
-/**
- * ProgressBar is a visual component used to indicate progress for a given task.
- * It supports both determinate and indeterminate modes and includes ARIA attributes
- * for improved accessibility.
- *
- * @param {ProgressBarProps} props - Props for configuring the progress bar.
- * @returns {JSX.Element} A styled progress bar component.
- */
-const ProgressBar: React.FC<ProgressBarProps> = ({
-  progress = 0,
-  theme = "primary",
-  size = "medium",
-  animated = true,
-  indeterminate = false,
-  className = "",
-  "data-testid": testId = "progressbar",
-}: ProgressBarProps): JSX.Element => {
-  // If the progress is determinate, calculate the aria value.
-  const ariaValue = indeterminate ? undefined : Math.round(progress);
-
+const ProgressBar: React.FC<ProgressBarProps> = (props) => {
   return (
-    <div
-      className={`${styles.progressContainer} ${styles[size]} ${className}`}
-      role="progressbar"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={ariaValue}
-      aria-label="Progress"
-      data-testid={testId}
-    >
-      <div
-        className={`${styles.progressBar} ${styles[theme]} ${animated ? styles.animated : ""} ${
-          indeterminate ? styles.indeterminate : ""
-        }`}
-        style={{ width: indeterminate ? "100%" : `${progress}%` }}
-        data-testid={`${testId}-bar`}
-      />
-    </div>
+    <BaseProgressBar
+      {...props}
+      classNames={{
+        container: styles.progressContainer,
+        bar: styles.progressBar,
+        themeMap: {
+          primary: styles.primary,
+          secondary: styles.secondary,
+          success: styles.success,
+          error: styles.error,
+          warning: styles.warning,
+          info: styles.info,
+        },
+        sizeMap: {
+          small: styles.small,
+          medium: styles.medium,
+          large: styles.large,
+        },
+        animated: styles.animated,
+        indeterminate: styles.indeterminate,
+      }}
+    />
   );
 };
 

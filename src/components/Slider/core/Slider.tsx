@@ -1,68 +1,32 @@
 import React from "react";
-import "./Slider.scss";
-import { combineClassNames } from "../../../utils/classNames";
+import "./Slider.scss"; // Non-module SCSS
 import { SliderProps } from "../Slider.types";
+import SliderBase from "../SliderBase";
+import { combineClassNames } from "../../../utils/classNames";
 
-/**
- * Slider is a customizable range input component that displays a label,
- * a slider control, and optionally the current value. It supports size,
- * theming, and is fully accessible via ARIA attributes.
- *
- * @param {SliderProps} props - Props to configure the Slider component.
- * @returns {JSX.Element} A styled slider with an optional label and value display.
- */
-const Slider: React.FC<SliderProps> = ({
-  value,
-  onChange,
-  min = 0,
-  max = 100,
-  step = 1,
-  label,
-  size = "medium",
-  theme = "primary",
-  showValue = true,
-  className = "",
-  "aria-label": ariaLabel,
-  "data-testid": testId = "slider",
-}) => {
-  const inputId = `${testId}-input`;
+const coreStyles = {
+  sliderContainer: "sliderContainer",
+  sliderLabel: "sliderLabel",
+  sliderWrapper: "sliderWrapper",
+  slider: "slider",
+  sliderValue: "sliderValue",
+  small: "small",
+  medium: "medium",
+  large: "large",
+  primary: "primary",
+  secondary: "secondary",
+  success: "success",
+  error: "error",
+  warning: "warning",
+};
 
+const Slider: React.FC<SliderProps> = (props) => {
   return (
-    <div
-      className={combineClassNames(
-        `sliderContainer`,
-        size,
-        theme,
-        className
-      )}
-      data-testid={`${testId}-container`}
-    >
-      {label && (
-        <label htmlFor={inputId} className={`sliderLabel`}>
-          {label}
-        </label>
-      )}
-
-      <div className={`sliderWrapper`}>
-        <input
-          id={inputId}
-          type="range"
-          className={`slider`}
-          value={value}
-          onChange={onChange}
-          min={min}
-          max={max}
-          step={step}
-          aria-label={ariaLabel || label || "Slider input"}
-          data-testid={testId}
-        />
-        {showValue && (
-          <span className={`sliderValue`} data-testid={`${testId}-value`}>
-            {value}
-          </span>
-        )}
-      </div>
-    </div>
+    <SliderBase
+      {...props}
+      className={combineClassNames(props.className)}
+      styles={coreStyles}
+    />
   );
 };
 

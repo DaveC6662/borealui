@@ -1,86 +1,34 @@
-import React, { JSX } from "react";
+import React from "react";
+import BaseFormGroup from "../FormGroupBase";
 import "./FormGroup.scss";
-import { combineClassNames } from "../../../utils/classNames";
 import { FormGroupProps } from "../FormGroup.types";
 
-/**
- * FormGroup is a flexible wrapper for inputs, handling accessibility,
- * layout, labels, descriptions, and validation messaging.
- *
- * @param {FormGroupProps} props - The props used to configure the form group.
- * @returns {JSX.Element} A styled and accessible form group.
- */
-const FormGroup: React.FC<FormGroupProps> = ({
-  label,
-  description,
-  error,
-  children,
-  id,
-  required = false,
-  className = "",
-  layout = "vertical",
-  hideLabel = false,
-  spacing = "medium",
-  controller,
-  "data-testid": testId = "form-group",
-}: FormGroupProps): JSX.Element => {
-  const descriptionId = description ? `${id}-description` : undefined;
-  const errorId = error ? `${id}-error` : undefined;
-
+const FormGroup: React.FC<FormGroupProps> = (props) => {
   return (
-    <div
-      className={combineClassNames(
-        "formGroup",
-        layout,
-        spacing,
-        className
-      )}
-      role="group"
-      aria-labelledby={id ? `${id}-label` : undefined}
-      data-testid={testId}
-    >
-      {label && (
-        <label
-          id={`${id}-label`}
-          htmlFor={id}
-          className={combineClassNames("label", hideLabel && "srOnly")}
-          data-testid={`${testId}-label`}
-        >
-          {label} {required && <span className={"required"}>*</span>}
-        </label>
-      )}
-
-      <div className={"inputWrapper"} data-testid={`${testId}-wrapper`}>
-        <div className={combineClassNames("inputField")} data-testid={`${testId}-input-field`}>
-          {React.isValidElement(children)
-            ? React.cloneElement(children as React.ReactElement<any>, {
-              id,
-              "aria-describedby": error ? errorId : description ? descriptionId : undefined,
-              "aria-invalid": !!error,
-              "data-testid": `${testId}-input`,
-            })
-            : children}
-        </div>
-
-        {controller && (
-          <div className={"controller"} data-testid={`${testId}-controller`}>
-            {controller}
-          </div>
-        )}
-      </div>
-
-      {description && !error && (
-        <p id={descriptionId} className={"description"} data-testid={`${testId}-description`}>
-          {description}
-        </p>
-      )}
-
-      {error && (
-        <p id={errorId} className={"errorMessage"} role="alert" data-testid={`${testId}-error`}>
-          {error}
-        </p>
-      )}
-    </div>
+    <BaseFormGroup
+      {...props}
+      classNames={{
+        wrapper: "formGroup",
+        label: "label",
+        srOnly: "srOnly",
+        required: "required",
+        inputWrapper: "inputWrapper",
+        inputField: "inputField",
+        controller: "controller",
+        description: "description",
+        errorMessage: "errorMessage",
+        error: "error",
+        layoutMap: {
+          vertical: "vertical",
+          horizontal: "horizontal",
+        },
+        spacingMap: {
+          sm: "sm",
+          medium: "medium",
+          lg: "lg",
+        },
+      }}
+    />
   );
 };
 

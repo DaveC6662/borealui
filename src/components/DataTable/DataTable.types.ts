@@ -40,3 +40,7 @@ export interface DataTableProps<T> {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface DataTableBaseProps<T> extends DataTableProps<T> {
+  classMap: Record<string, string>;
+}
