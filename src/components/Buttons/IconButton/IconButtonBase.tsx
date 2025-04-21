@@ -1,6 +1,6 @@
-import React, { forwardRef, useMemo, KeyboardEvent } from "react";
+import React, { forwardRef, useMemo } from "react";
 import { IconButtonProps } from "./IconButton.types";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../../utils/classNames";
 
 export interface IconButtonBaseProps extends IconButtonProps {
   classMap: Record<string, string>;
@@ -18,6 +18,7 @@ const IconButtonBase = forwardRef<
       href,
       isExternal = false,
       onClick,
+      onKeyDown,
       className = "",
       disabled = false,
       ariaLabel,
@@ -29,6 +30,7 @@ const IconButtonBase = forwardRef<
       classMap,
       LinkComponent = "a",
       "data-testid": testId,
+      tabIndex,
       ...rest
     },
     ref
@@ -48,26 +50,26 @@ const IconButtonBase = forwardRef<
       [theme, size, outline, disabled, className]
     );
 
-    const sharedProps = {
+    const sharedAria = {
       "aria-label": label,
       "aria-disabled": disabled || undefined,
       "aria-busy": loading || undefined,
-      disabled,
-      tabIndex: disabled ? -1 : 0,
-      title,
       "data-testid": testId,
+      tabIndex: typeof tabIndex === "number" ? tabIndex : disabled ? -1 : 0,
+      title,
     };
 
     const iconContent = (
       <span className={classMap.buttonLabel}>
         {loading ? (
-          <div className={classMap.loader} />
+          <div className={classMap.loader} aria-hidden="true" />
         ) : (
           <Icon data-testid="icon-button-icon" />
         )}
       </span>
     );
 
+    // External link
     if (href && !disabled && isExternal) {
       return (
         <a
@@ -77,7 +79,7 @@ const IconButtonBase = forwardRef<
           role="button"
           className={classNames}
           ref={ref as React.Ref<HTMLAnchorElement>}
-          {...sharedProps}
+          {...sharedAria}
           {...rest}
         >
           {iconContent}
@@ -85,6 +87,7 @@ const IconButtonBase = forwardRef<
       );
     }
 
+    // Internal link (e.g., Next.js Link)
     if (href && !disabled && !isExternal) {
       return (
         <LinkComponent
@@ -92,7 +95,7 @@ const IconButtonBase = forwardRef<
           role="button"
           className={classNames}
           ref={ref as React.Ref<HTMLAnchorElement>}
-          {...sharedProps}
+          {...sharedAria}
           {...rest}
         >
           {iconContent}
@@ -100,22 +103,29 @@ const IconButtonBase = forwardRef<
       );
     }
 
+    // Native button
     return (
       <button
         ref={ref as React.Ref<HTMLButtonElement>}
         type={type}
         className={classNames}
+        disabled={disabled}
         onClick={(e) => {
           if (!disabled) onClick?.(e);
         }}
-        onKeyDown={(e: KeyboardEvent<HTMLButtonElement>) => {
+        onKeyDown={(e) => {
           if (!disabled && (e.key === "Enter" || e.key === " ")) {
             e.preventDefault();
-            const event = new MouseEvent("click", { bubbles: true });
-            e.currentTarget.dispatchEvent(event);
+            onClick?.(
+              new MouseEvent("click", {
+                bubbles: true,
+              }) as unknown as React.MouseEvent<HTMLElement>
+            );
           }
+
+          onKeyDown?.(e);
         }}
-        {...sharedProps}
+        {...sharedAria}
         {...rest}
       >
         {iconContent}

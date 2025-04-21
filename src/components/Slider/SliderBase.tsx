@@ -3,6 +3,7 @@ import { SliderProps } from "./Slider.types";
 
 /**
  * SliderBase is a shared functional component used by both core and next versions.
+ * This version includes improved accessibility features.
  */
 const SliderBase: React.FC<
   SliderProps & { styles: Record<string, string> }
@@ -22,6 +23,8 @@ const SliderBase: React.FC<
   styles,
 }) => {
   const inputId = `${testId}-input`;
+  const labelId = `${testId}-label`;
+  const valueText = `${value}`;
 
   return (
     <div
@@ -29,7 +32,7 @@ const SliderBase: React.FC<
       data-testid={`${testId}-container`}
     >
       {label && (
-        <label htmlFor={inputId} className={styles.sliderLabel}>
+        <label id={labelId} htmlFor={inputId} className={styles.sliderLabel}>
           {label}
         </label>
       )}
@@ -44,11 +47,21 @@ const SliderBase: React.FC<
           min={min}
           max={max}
           step={step}
-          aria-label={ariaLabel || label || "Slider input"}
+          aria-valuemin={min}
+          aria-valuemax={max}
+          aria-valuenow={value}
+          aria-valuetext={valueText}
+          aria-labelledby={label ? labelId : undefined}
+          aria-label={label ? undefined : ariaLabel || "Slider"}
           data-testid={testId}
         />
         {showValue && (
-          <span className={styles.sliderValue} data-testid={`${testId}-value`}>
+          <span
+            className={styles.sliderValue}
+            id={`${testId}-value`}
+            aria-live="polite"
+            data-testid={`${testId}-value`}
+          >
             {value}
           </span>
         )}

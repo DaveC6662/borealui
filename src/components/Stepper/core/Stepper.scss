@@ -7,14 +7,14 @@ $stepper-themes: (
   "secondary": var(--secondary-color),
   "success": theme.$success-color,
   "error": theme.$error-color,
-  "warning": theme.$warning-color
+  "warning": theme.$warning-color,
 );
 $stepper-sizes: (
   "xs": theme.$font-size-xs,
   "small": theme.$font-size-sm,
   "medium": theme.$font-size-md,
   "large": theme.$font-size-base,
-  "xl": theme.$font-size-lg
+  "xl": theme.$font-size-lg,
 );
 
 .stepper {
@@ -29,7 +29,6 @@ $stepper-sizes: (
     align-items: flex-start;
     gap: theme.$spacing-xs;
   }
-
 
   @each $size, $font in $stepper-sizes {
     &.#{$size} {
@@ -64,7 +63,9 @@ $stepper-sizes: (
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+    transition:
+      background-color 0.3s ease-in-out,
+      transform 0.2s ease;
   }
 
   .stepLabel {
@@ -92,5 +93,4 @@ $stepper-sizes: (
       }
     }
   }
-
 }

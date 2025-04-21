@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import styles from "./SkeletonLoader.module.scss";
+import styles from "./Skeleton.module.scss";
 import SkeletonLoaderBase from "../SkeletonBase";
 import { SkeletonLoaderProps } from "../Skeleton.types";
 import { combineClassNames } from "@/utils/classNames";

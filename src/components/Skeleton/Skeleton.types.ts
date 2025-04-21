@@ -10,4 +10,6 @@ export interface SkeletonLoaderProps {
   className?: string;
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
+  /** accessibility label for screen readers */
+  label?: string;
 }

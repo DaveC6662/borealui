@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { TabsProps } from "./Tabs.types";
 
 /**
- * TabsBase contains shared logic and structure for all variants.
+ * Accessible and keyboard-navigable tab component base.
  */
 const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
   tabs,
@@ -15,10 +15,38 @@ const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
   styles,
 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    tabRefs.current[activeIndex]?.focus();
+  }, [activeIndex]);
 
   const handleTabClick = (index: number) => {
     setActiveIndex(index);
     onChange?.(index);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { key } = event;
+
+    const lastIndex = tabs.length - 1;
+    let newIndex = activeIndex;
+
+    if (key === "ArrowRight") {
+      newIndex = activeIndex === lastIndex ? 0 : activeIndex + 1;
+    } else if (key === "ArrowLeft") {
+      newIndex = activeIndex === 0 ? lastIndex : activeIndex - 1;
+    } else if (key === "Home") {
+      newIndex = 0;
+    } else if (key === "End") {
+      newIndex = lastIndex;
+    }
+
+    if (newIndex !== activeIndex) {
+      event.preventDefault();
+      setActiveIndex(newIndex);
+      onChange?.(newIndex);
+    }
   };
 
   return (
@@ -30,6 +58,7 @@ const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
         className={styles.tabs}
         role="tablist"
         aria-label="Tabs"
+        onKeyDown={handleKeyDown}
         data-testid={`${testId}-tablist`}
       >
         {tabs.map((tab, index) => {
@@ -39,6 +68,9 @@ const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
           return (
             <button
               key={index}
+              ref={(el): void => {
+                tabRefs.current[index] = el;
+              }}
               className={`${styles.tab} ${isActive ? styles.active : ""}`}
               onClick={() => handleTabClick(index)}
               role="tab"
@@ -52,6 +84,7 @@ const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
               {Icon && (
                 <div
                   className={styles.icon}
+                  aria-hidden="true"
                   data-testid={`${testId}-icon-${index}`}
                 >
                   <Icon />
@@ -68,6 +101,7 @@ const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
         role="tabpanel"
         id={`${testId}-panel-${activeIndex}`}
         aria-labelledby={`${testId}-tab-${activeIndex}`}
+        tabIndex={0}
         data-testid={`${testId}-panel`}
       >
         {tabs[activeIndex].content}

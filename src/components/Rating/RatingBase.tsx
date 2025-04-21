@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent } from "react";
+import React, { useState, KeyboardEvent, JSX } from "react";
 import { FaStar } from "react-icons/fa";
 import { RatingProps } from "./Rating.types";
 

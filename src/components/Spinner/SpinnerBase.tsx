@@ -16,21 +16,28 @@ const SpinnerBase: React.FC<
   styles,
 }) => {
   const strokeWidth = `${Math.max(2, Math.floor(size / 12))}px`;
+  const spinnerSize = `${size}px`;
 
   return (
     <div
-      className={`${styles.spinner} ${styles[theme]} ${className}`}
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        borderWidth: strokeWidth,
-      }}
+      className={`${styles.spinnerWrapper} ${className}`}
       role="status"
-      aria-busy="true"
       aria-live="polite"
-      aria-label={label}
-      data-testid={testId}
-    />
+      aria-busy="true"
+      aria-label={label || "Loading"}
+    >
+      <div
+        className={`${styles.spinner} ${styles[theme]}`}
+        style={{
+          width: spinnerSize,
+          height: spinnerSize,
+          borderWidth: strokeWidth,
+        }}
+        data-testid={testId}
+        aria-hidden="true"
+      />
+      <span className={styles.srOnly}>{label}</span>
+    </div>
   );
 };
 

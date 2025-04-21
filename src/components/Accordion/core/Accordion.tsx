@@ -3,10 +3,9 @@ import React from "react";
 import "./Accordion.scss";
 import { AccordionBase } from "../AccordionBase";
 import type { AccordionProps } from "../Accordion.types";
-import type { AccordionClassMap } from "../Accordion.types";
 
 // Global styles mapped manually
-const styles: AccordionClassMap = {
+const styles = {
   accordion: "accordion",
   accordionHeader: "accordionHeader",
   accordionContent: "accordionContent",
