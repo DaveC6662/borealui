@@ -8,23 +8,25 @@ export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
     wrapper: string;
     loading: string;
   };
+  language?: string;
 }
 
 const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   content,
   className = "",
+  language = "en",
   "data-testid": testId = "markdown-renderer",
   classNames,
 }) => {
   const [html, setHtml] = useState<string>("");
-  const [, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const renderMarkdown = async () => {
       setLoading(true);
 
       if (!content.trim()) {
-        setHtml("<p>No content available.</p>");
+        setHtml("");
         setLoading(false);
         return;
       }
@@ -38,27 +40,42 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
     renderMarkdown();
   }, [content]);
 
+  if (loading) {
+    return (
+      <div
+        data-testid="markdown-loading"
+        role="status"
+        aria-live="polite"
+        className={classNames.loading}
+        aria-busy="true"
+      >
+        Loading markdown...
+      </div>
+    );
+  }
+
+  if (!html) {
+    return (
+      <div
+        className={classNames.wrapper}
+        data-testid={testId}
+        role="region"
+        aria-label="Markdown content"
+      >
+        <p>No content available.</p>
+      </div>
+    );
+  }
+
   return (
-    <>
-      {!html ? (
-        <div
-          data-testid="markdown-loading"
-          role="status"
-          aria-live="polite"
-          className={classNames.loading}
-        >
-          Loading markdown...
-        </div>
-      ) : (
-        <div
-          className={`${classNames.wrapper} ${className}`}
-          data-testid={testId}
-          role="region"
-          aria-label="Markdown content"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      )}
-    </>
+    <div
+      className={`${classNames.wrapper} ${className}`}
+      data-testid={testId}
+      role="region"
+      aria-label="Markdown content"
+      lang={language}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   );
 };
 

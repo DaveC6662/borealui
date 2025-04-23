@@ -25,8 +25,12 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   const triggerRef = useRef<HTMLDivElement>(null);
 
   const toggleOpen = () => setOpen((prev) => !prev);
-  const close = () => setOpen(false);
+  const close = () => {
+    setOpen(false);
+    triggerRef.current?.focus(); // Return focus to trigger
+  };
 
+  // Handle outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -41,15 +45,18 @@ const BasePopover: React.FC<BasePopoverProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Handle Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        close();
+      }
     };
 
     if (open) {
       document.addEventListener("keydown", handleKeyDown);
     }
-
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open]);
 
@@ -62,12 +69,18 @@ const BasePopover: React.FC<BasePopoverProps> = ({
       <div
         className={classNames.trigger}
         onClick={toggleOpen}
-        onKeyDown={(e) => e.key === "Enter" && toggleOpen()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggleOpen();
+          }
+        }}
         tabIndex={0}
         role="button"
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls={`${testId}-content`}
+        aria-label="Toggle popover"
         ref={triggerRef}
         data-testid={`${testId}-trigger`}
       >
@@ -79,6 +92,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
           id={`${testId}-content`}
           role="dialog"
           aria-modal="false"
+          aria-labelledby={`${testId}-trigger`}
           className={[
             classNames.popover,
             classNames.placementMap[placement],

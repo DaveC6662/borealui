@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, KeyboardEvent } from "react";
 import ReactDOM from "react-dom";
 import { ChipProps } from "./Chip.types";
 import { combineClassNames } from "@/utils/classNames";
@@ -30,7 +30,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
 
   const handleClose = useCallback(() => {
     setClosing(true);
-    setTimeout(() => onClose?.(), 300); // CSS fade duration
+    setTimeout(() => onClose?.(), 300);
   }, [onClose]);
 
   useEffect(() => {
@@ -64,6 +64,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
       className={classNames}
       role="status"
       aria-live="polite"
+      aria-atomic="true"
       data-testid={testId}
     >
       {Icon && (
@@ -75,14 +76,26 @@ const ChipBase: React.FC<ChipBaseProps> = ({
           <Icon className={classMap.icon} />
         </span>
       )}
-      <span className={classMap.chipMessage}>{message}</span>
+      <span className={classMap.chipMessage} id={`${testId}-message`}>
+        {message}
+      </span>
+
       <IconButtonComponent
         icon={CloseIcon}
         size="small"
         theme="clear"
-        ariaLabel="Close chip"
+        ariaLabel="Close notification"
+        aria-controls={`${testId}-message`}
         className={classMap.chipClose}
         onClick={handleClose}
+        onKeyDown={(e: KeyboardEvent) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleClose();
+          }
+        }}
+        role="button"
+        tabIndex={0}
         data-testid="chip-close"
       />
     </div>,

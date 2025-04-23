@@ -1,4 +1,3 @@
-// AccordionBase.tsx
 import React, { useMemo, useState, KeyboardEvent } from "react";
 import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "@/utils/classNames";
@@ -31,6 +30,9 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   const [internalExpanded, setInternalExpanded] = useState(initiallyExpanded);
   const isExpanded = isControlled ? expanded : internalExpanded;
 
+  const contentId = `${id || internalId}-content`;
+  const buttonId = `${id || internalId}-button`;
+
   const toggleAccordion = () => {
     if (disabled) return;
     isControlled ? onToggle?.(!expanded) : setInternalExpanded((prev) => !prev);
@@ -44,9 +46,8 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     }
   };
 
-  const accordionId = useMemo(() => id || internalId, [id, internalId]);
   const renderedIcon = isExpanded
-    ? (customExpandedIcon ?? "-")
+    ? (customExpandedIcon ?? "−")
     : (customCollapsedIcon ?? "+");
 
   const wrapperClassName = combineClassNames(
@@ -61,15 +62,16 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   return (
     <div {...rest} className={wrapperClassName}>
       <button
+        id={buttonId}
         className={combineClassNames(styles.accordionHeader, styles[theme])}
         onClick={toggleAccordion}
         onKeyDown={handleKeyDown}
         type="button"
         aria-expanded={isExpanded}
-        aria-controls={accordionId}
-        disabled={disabled}
+        aria-controls={contentId}
         aria-disabled={disabled}
         tabIndex={disabled ? -1 : 0}
+        disabled={disabled}
         data-testid="accordion-toggle"
       >
         <span className={styles.accordionTitle}>{title}</span>
@@ -83,13 +85,15 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
           {renderedIcon}
         </span>
       </button>
+
       <div
-        id={accordionId}
+        id={contentId}
+        role="region"
+        aria-labelledby={buttonId}
         className={combineClassNames(
           styles.accordionContent,
           isExpanded && styles.expanded
         )}
-        role="region"
         data-state={isExpanded ? "open" : "collapsed"}
         data-testid="accordion-content"
       >

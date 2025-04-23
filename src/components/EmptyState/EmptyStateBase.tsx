@@ -25,10 +25,13 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   actionLabel,
   onActionClick,
   className = "",
-  "data-testid": testId,
+  "data-testid": testId = "empty-state",
   Button,
   classNames,
 }) => {
+  const titleId = `${testId}-title`;
+  const descId = `${testId}-message`;
+
   return (
     <section
       className={combineClassNames(
@@ -39,28 +42,28 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
         className
       )}
       role="region"
-      aria-label="Empty state"
+      aria-labelledby={titleId}
+      aria-describedby={descId}
       data-testid={testId}
     >
       {Icon && (
-        <div
-          className={classNames.icon}
-          data-testid={testId ? `${testId}-icon` : undefined}
-        >
+        <div className={classNames.icon} data-testid={`${testId}-icon`}>
           <Icon aria-hidden="true" />
         </div>
       )}
 
       <h2
+        id={titleId}
         className={classNames.title}
-        data-testid={testId ? `${testId}-title` : undefined}
+        data-testid={`${testId}-title`}
       >
         {title}
       </h2>
 
       <p
+        id={descId}
         className={classNames.message}
-        data-testid={testId ? `${testId}-message` : undefined}
+        data-testid={`${testId}-message`}
       >
         {message}
       </p>
@@ -70,7 +73,10 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
           theme="clear"
           outline={outline}
           onClick={onActionClick}
-          data-testid={testId ? `${testId}-action` : undefined}
+          aria-label={
+            typeof actionLabel === "string" ? actionLabel : "Perform action"
+          }
+          data-testid={`${testId}-action`}
         >
           {actionLabel}
         </Button>

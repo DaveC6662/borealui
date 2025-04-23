@@ -55,19 +55,26 @@ const BaseFooter: React.FC<BaseFooterProps> = ({
         {links.length > 0 && (
           <nav
             className={classNames.links}
-            aria-label="Footer Navigation"
+            aria-label="Footer site links"
             data-testid={`${testId}-nav`}
           >
-            {links.map((link, i) => (
-              <LinkWrapper key={i} href={link.href}>
-                <span
-                  className={classNames.link}
-                  data-testid={`${testId}-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
-                >
-                  {link.label}
-                </span>
-              </LinkWrapper>
-            ))}
+            <ul>
+              {links.map((link, i) => (
+                <li key={i}>
+                  <LinkWrapper
+                    href={link.href}
+                    children={
+                      <span
+                        className={classNames.link}
+                        data-testid={`${testId}-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
+                      >
+                        {link.label}
+                      </span>
+                    }
+                  />
+                </li>
+              ))}
+            </ul>
           </nav>
         )}
 
@@ -75,6 +82,7 @@ const BaseFooter: React.FC<BaseFooterProps> = ({
           <div
             className={classNames.themeToggle}
             data-testid={`${testId}-theme-select`}
+            aria-label="Theme selector container"
           >
             <ThemeSelect />
           </div>
@@ -83,7 +91,8 @@ const BaseFooter: React.FC<BaseFooterProps> = ({
         {socialLinks.length > 0 && (
           <div
             className={classNames.social}
-            aria-label="Social media links"
+            aria-label="Social media"
+            role="navigation"
             data-testid={`${testId}-social`}
           >
             {socialLinks.map((social, index) => (
@@ -92,10 +101,14 @@ const BaseFooter: React.FC<BaseFooterProps> = ({
                 icon={social.icon}
                 href={social.href}
                 isExternal
+                target="_blank"
+                rel="noopener noreferrer"
                 ariaLabel={social.title}
                 title={social.title}
                 theme="clear"
-                data-testid={`${testId}-social-${social.title.toLowerCase().replace(/\s+/g, "-")}`}
+                data-testid={`${testId}-social-${social.title
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
               />
             ))}
           </div>

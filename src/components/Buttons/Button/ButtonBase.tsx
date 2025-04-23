@@ -34,6 +34,9 @@ const ButtonBase = forwardRef<
     },
     ref
   ) => {
+    const computedAriaLabel =
+      ariaLabel || (typeof children === "string" ? children : "Button");
+
     const combinedClassName = useMemo(
       () =>
         combineClassNames(
@@ -49,7 +52,7 @@ const ButtonBase = forwardRef<
     );
 
     const sharedProps = {
-      "aria-label": ariaLabel,
+      "aria-label": computedAriaLabel,
       "aria-busy": loading || undefined,
       "aria-disabled": disabled || undefined,
       "data-testid": testId,
@@ -69,7 +72,11 @@ const ButtonBase = forwardRef<
           </span>
         )}
         <span className={classMap.buttonLabel}>
-          {loading ? <div className={classMap.loader} /> : children}
+          {loading ? (
+            <div className={classMap.loader} aria-hidden="true" />
+          ) : (
+            children
+          )}
         </span>
       </>
     );
@@ -77,14 +84,14 @@ const ButtonBase = forwardRef<
     if (href && isExternal) {
       return (
         <a
-          {...sharedProps}
-          {...rest}
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className={combineClassNames(combinedClassName, classMap.link)}
           role="button"
+          className={combineClassNames(combinedClassName, classMap.link)}
           ref={ref as React.Ref<HTMLAnchorElement>}
+          {...sharedProps}
+          {...rest}
         >
           {content}
         </a>
@@ -94,12 +101,12 @@ const ButtonBase = forwardRef<
     if (href && !isExternal) {
       return (
         <LinkComponent
+          href={href}
+          role="button"
+          className={combineClassNames(combinedClassName, classMap.link)}
+          ref={ref as React.Ref<HTMLAnchorElement>}
           {...sharedProps}
           {...rest}
-          href={href}
-          className={combineClassNames(combinedClassName, classMap.link)}
-          role="button"
-          ref={ref as React.Ref<HTMLAnchorElement>}
         >
           {content}
         </LinkComponent>

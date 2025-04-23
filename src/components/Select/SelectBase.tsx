@@ -1,4 +1,4 @@
-import { forwardRef, ChangeEvent } from "react";
+import { forwardRef, ChangeEvent, useId } from "react";
 import { SelectProps } from "./Select.types";
 import { FaChevronDown } from "react-icons/fa";
 
@@ -25,6 +25,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       onChange,
       placeholder = "Select an option",
       ariaLabel,
+      ariaDescription,
       disabled = false,
       className = "",
       classNames,
@@ -32,6 +33,10 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     },
     ref
   ) => {
+    const id = useId();
+    const selectId = `${id}-select`;
+    const descId = ariaDescription ? `${id}-desc` : undefined;
+
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
       onChange(event.target.value);
     };
@@ -41,17 +46,18 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         className={`${classNames.main} ${classNames.themeClass(theme)} ${className} ${
           disabled && classNames.disabled ? classNames.disabled : ""
         }`}
-        aria-live="polite"
         data-testid={testId}
       >
         <select
           ref={ref}
+          id={selectId}
           value={value}
           onChange={handleChange}
-          aria-label={ariaLabel || placeholder}
-          disabled={disabled}
           className={`${classNames.select} ${classNames.themeClass(theme)}`}
+          aria-label={ariaLabel || placeholder}
+          aria-describedby={descId}
           aria-disabled={disabled}
+          disabled={disabled}
           data-testid={`${testId}-input`}
         >
           <option value="" disabled hidden>
@@ -67,6 +73,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
             </option>
           ))}
         </select>
+
         <div
           className={`${classNames.icon} ${classNames.themeClass(theme)} ${
             disabled && classNames.disabled ? classNames.disabled : ""
@@ -76,6 +83,16 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         >
           <FaChevronDown />
         </div>
+
+        {ariaDescription && (
+          <span
+            id={descId}
+            className="sr-only"
+            data-testid={`${testId}-description`}
+          >
+            {ariaDescription}
+          </span>
+        )}
       </div>
     );
   }

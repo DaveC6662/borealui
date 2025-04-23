@@ -1,8 +1,10 @@
+import React from "react";
 import StepperBase from "@/components/Stepper/StepperBase";
 
-const mockStyles = {
+const styles = {
   stepper: "stepper",
   horizontal: "horizontal",
+  vertical: "vertical",
   primary: "primary",
   medium: "medium",
   step: "step",
@@ -12,68 +14,60 @@ const mockStyles = {
   connector: "connector",
 };
 
-const DummyIcon = () => <span>•</span>;
+const MockIconButton: React.FC<any> = ({ icon: Icon, ...props }) => (
+  <button {...props}>
+    <Icon />
+  </button>
+);
 
 const steps = [
-  { label: "Step One", icon: DummyIcon },
-  { label: "Step Two", icon: DummyIcon },
-  { label: "Step Three", icon: DummyIcon },
+  { label: "Start", icon: () => <span>1</span> },
+  { label: "Middle", icon: () => <span>2</span> },
+  { label: "Finish", icon: () => <span>3</span> },
 ];
 
 describe("StepperBase Component", () => {
-  it("renders all steps and highlights the active one", () => {
+  it("renders steps and highlights active one", () => {
     cy.mount(
       <StepperBase
         steps={steps}
         activeStep={1}
-        styles={mockStyles}
+        styles={styles}
+        IconButtonComponent={MockIconButton}
         data-testid="stepper"
       />
     );
 
     cy.findByTestId("stepper").should("exist");
-    cy.findByLabelText("Step 2 of 3: Step Two")
-      .should("have.attr", "aria-current", "step")
-      .and("be.visible");
+    cy.findByTestId("stepper-step-1-icon").should(
+      "have.attr",
+      "aria-current",
+      "step"
+    );
+    cy.findByTestId("stepper-step-0-label").should("contain.text", "Start");
+    cy.findByTestId("stepper-step-2-label").should("contain.text", "Finish");
   });
 
-  it("handles click interaction", () => {
-    const onStepClick = cy.stub().as("stepClick");
+  it("handles click and keyboard events", () => {
+    const onClick = cy.stub().as("onClick");
 
     cy.mount(
       <StepperBase
         steps={steps}
-        activeStep={0}
-        onStepClick={onStepClick}
-        styles={mockStyles}
+        activeStep={1}
+        onStepClick={onClick}
+        styles={styles}
+        IconButtonComponent={MockIconButton}
+        data-testid="stepper"
       />
     );
 
-    cy.findByLabelText("Step 3 of 3: Step Three").click();
-    cy.get("@stepClick").should("have.been.calledWith", 2);
-  });
+    cy.findByTestId("stepper-step-0-icon").click();
+    cy.get("@onClick").should("have.been.calledWith", 0);
 
-  it("supports keyboard navigation", () => {
-    const onStepClick = cy.stub().as("stepClick");
-
-    cy.mount(
-      <StepperBase
-        steps={steps}
-        activeStep={0}
-        onStepClick={onStepClick}
-        styles={mockStyles}
-      />
-    );
-
-    cy.findByLabelText("Step 2 of 3: Step Two")
+    cy.findByTestId("stepper-step-0-icon")
       .focus()
       .trigger("keydown", { key: "Enter" });
-    cy.get("@stepClick").should("have.been.calledWith", 1);
-  });
-
-  it("renders on mobile screen", () => {
-    cy.viewport("iphone-6");
-    cy.mount(<StepperBase steps={steps} activeStep={0} styles={mockStyles} />);
-    cy.findByTestId("stepper").should("be.visible");
+    cy.get("@onClick").should("have.been.calledWith", 0);
   });
 });

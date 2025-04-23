@@ -1,15 +1,15 @@
 import React from "react";
 import "./Skeleton.scss";
-import SkeletonLoaderBase from "../SkeletonBase";
-import { SkeletonLoaderProps } from "../Skeleton.types";
+import SkeletonBase from "../SkeletonBase";
+import { SkeletonProps } from "../Skeleton.types";
 import { combineClassNames } from "../../../utils/classNames";
 
 /**
  * Core SkeletonLoader for React apps with plain SCSS (non-module).
  */
-const SkeletonLoader: React.FC<SkeletonLoaderProps> = (props) => {
+const SkeletonLoader: React.FC<SkeletonProps> = (props) => {
   return (
-    <SkeletonLoaderBase
+    <SkeletonBase
       {...props}
       className={combineClassNames("skeletonLoader", props.className)}
     />

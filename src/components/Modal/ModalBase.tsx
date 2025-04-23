@@ -60,7 +60,13 @@ const BaseModal: React.FC<BaseModalProps> = ({
 
   useEffect(() => {
     if (isMounted) {
-      requestAnimationFrame(() => setIsVisible(true));
+      requestAnimationFrame(() => {
+        setIsVisible(true);
+        // Ensure focus enters modal after open
+        setTimeout(() => {
+          modalRef.current?.focus();
+        }, 10);
+      });
     }
   }, [isMounted]);
 
@@ -117,25 +123,28 @@ const BaseModal: React.FC<BaseModalProps> = ({
       <div
         className={combineClassNames(classNames.content, className)}
         onClick={(e) => e.stopPropagation()}
-        id={descId}
         data-testid={`${testId}-content`}
+        id={descId}
       >
-        <div id={labelId} className="sr-only">
+        <h2 id={labelId} className="sr-only">
           Modal Dialog
-        </div>
+        </h2>
+
         <IconButton
           ref={firstFocusable}
           className={classNames.closeButton}
           theme="error"
           size="small"
           icon={FaTimes}
-          ariaLabel="Close modal"
+          aria-label="Close modal"
           onClick={(e: React.MouseEvent) => {
             e.stopPropagation();
             handleClose();
           }}
+          title="Close"
           data-testid={`${testId}-close`}
         />
+
         {children}
       </div>
     </div>,

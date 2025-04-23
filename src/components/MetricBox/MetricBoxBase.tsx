@@ -30,6 +30,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
 }) => {
   const titleId = `${testId}-title`;
   const valueId = `${testId}-value`;
+  const subtextId = subtext ? `${testId}-subtext` : undefined;
 
   return (
     <div
@@ -42,6 +43,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
       )}
       role="region"
       aria-labelledby={titleId}
+      aria-describedby={subtextId}
       data-testid={testId}
     >
       {Icon && (
@@ -49,23 +51,31 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
           <Icon aria-hidden="true" focusable="false" />
         </div>
       )}
+
       <div className={classNames.content}>
-        <div
+        <h3
           id={titleId}
           className={classNames.title}
           data-testid={`${testId}-title`}
         >
           {title}
-        </div>
+        </h3>
+
         <div
           id={valueId}
           className={classNames.value}
           data-testid={`${testId}-value`}
+          aria-label={`${value} ${title}`}
         >
           {value}
         </div>
+
         {subtext && (
-          <div className={classNames.subtext} data-testid={`${testId}-subtext`}>
+          <div
+            id={subtextId}
+            className={classNames.subtext}
+            data-testid={`${testId}-subtext`}
+          >
             {subtext}
           </div>
         )}

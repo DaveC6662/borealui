@@ -19,7 +19,7 @@ export interface BaseNotificationCenterProps extends NotificationCenterProps {
     timestamp: string;
     close: string;
     clearAll: string;
-    typeMap: Record<string, string>; // e.g., { success: styles.success, error: styles.error }
+    typeMap: Record<string, string>;
   };
 }
 
@@ -54,7 +54,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
     <div
       className={classNames.wrapper}
       role="region"
-      aria-label="Notifications"
+      aria-label="Notification center"
       data-testid={testId}
     >
       <div className={classNames.header} data-testid={`${testId}-header`}>
@@ -72,17 +72,24 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
           </Button>
         )}
       </div>
-      <div role="status" aria-live="polite">
+
+      {/* Live region for screen readers */}
+      <div role="status" aria-live="polite" aria-relevant="additions text">
         <ul className={classNames.list} aria-labelledby={`${testId}-title`}>
           {notifications.map((note, index) => {
             const Icon = themeIcons[note.type || "info"];
             const noteTestId = `${testId}-item-${note.id}`;
+            const timestampStr = note.timestamp?.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
 
             return (
               <li
                 key={note.id}
                 className={`${classNames.notification} ${classNames.typeMap[note.type || "info"]}`}
                 data-testid={noteTestId}
+                aria-label={`Notification ${index + 1}: ${note.message}${timestampStr ? ` at ${timestampStr}` : ""}`}
               >
                 <Icon className={classNames.icon} aria-hidden="true" />
                 <div className={classNames.content}>
@@ -97,10 +104,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                       className={classNames.timestamp}
                       data-testid={`${noteTestId}-timestamp`}
                     >
-                      {note.timestamp.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      {timestampStr}
                     </span>
                   )}
                 </div>

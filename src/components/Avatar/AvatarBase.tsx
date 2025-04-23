@@ -11,7 +11,7 @@ export interface AvatarBaseProps extends AvatarProps {
 
 export const AvatarBase: React.FC<AvatarBaseProps> = ({
   src,
-  alt = "User Avatar",
+  alt,
   name = "",
   label,
   onClick,
@@ -32,7 +32,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
   classMap,
 }) => {
   const [imgError, setImgError] = useState(false);
-  const computedLabel = label || alt || name || "Avatar";
+  const computedLabel = label || alt || name || "User avatar";
   const fallbackContent = fallback ?? getInitials(name);
 
   const combinedClassName = useMemo(
@@ -56,10 +56,9 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
         className={classMap.image}
         onError={() => setImgError(true)}
         loading={priority ? "eager" : "lazy"}
-        priority={priority}
-        aria-hidden={false}
+        aria-hidden="false"
         role="img"
-        fill
+        data-testid="avatar-image"
       />
     ) : (
       <span
@@ -80,9 +79,8 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
         status && classMap[`status-${status}`],
         classMap[statusPosition]
       )}
-      aria-label={status}
+      aria-hidden="true"
       data-testid="avatar-status"
-      title={status}
     >
       {statusIcon || <span className={classMap.dot} />}
     </span>
@@ -100,6 +98,11 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
     if (!href) e.preventDefault();
   };
 
+  const ariaAttrs = {
+    "aria-label": computedLabel,
+    "aria-disabled": false,
+  };
+
   if (href) {
     if (LinkComponent === "a") {
       return (
@@ -107,10 +110,10 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
           href={href}
           className={combinedClassName}
           onClick={handleClick}
-          aria-label={computedLabel}
           data-testid="avatar"
           target={href.startsWith("http") ? "_blank" : undefined}
           rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+          {...ariaAttrs}
         >
           {content}
         </a>
@@ -120,9 +123,10 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
     return (
       <LinkComponent
         href={href}
-        aria-label={computedLabel}
         className={combinedClassName}
         onClick={handleClick}
+        data-testid="avatar"
+        {...ariaAttrs}
       >
         {content}
       </LinkComponent>
@@ -134,8 +138,8 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
       type="button"
       className={combinedClassName}
       onClick={handleClick}
-      aria-label={computedLabel}
       data-testid="avatar"
+      {...ariaAttrs}
     >
       {content}
     </button>

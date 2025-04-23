@@ -28,22 +28,25 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
 
   return (
     <div className={classMap.container}>
+      <div
+        aria-live="polite"
+        className="sr-only"
+        role="status"
+        data-testid="scroll-announcement"
+      >
+        {isVisible ? "Scroll to top button is now visible" : ""}
+      </div>
+
       {isVisible && (
-        <div
+        <button
           onClick={scrollToTop}
-          role="button"
-          tabIndex={0}
-          aria-label="Scroll to top"
           className={classMap.button}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              scrollToTop();
-            }
-          }}
+          title="Scroll to top"
+          aria-label="Scroll to top"
+          data-testid="scroll-button"
         >
           <IconComponent className={classMap.icon} />
-        </div>
+        </button>
       )}
     </div>
   );

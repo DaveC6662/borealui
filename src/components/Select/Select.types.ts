@@ -29,6 +29,8 @@ export interface SelectProps {
   placeholder?: string;
   /** Accessible label for the select element. */
   ariaLabel?: string;
+  /** Optional description for the select element, used for accessibility. */
+  ariaDescription?: string;
   /** If true, the select element is disabled. */
   disabled?: boolean;
   /** Additional class name(s) for custom styling. */

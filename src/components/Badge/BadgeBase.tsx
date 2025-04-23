@@ -32,18 +32,22 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
 
   if (!text && !children) return null;
 
+  const content = children ?? text;
+  const label = typeof content === "string" ? content : text;
+
   return (
     <span
       className={combinedClassName}
-      aria-label={text}
-      title={title || text}
+      aria-label={label}
+      title={title || label}
       data-testid={testId}
-      role="note"
+      role="status"
+      aria-live="polite"
     >
       {Icon && (
         <Icon className={classMap.icon} aria-hidden="true" focusable="false" />
       )}
-      {children ?? text}
+      {content}
     </span>
   );
 };

@@ -39,6 +39,8 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   const [files, setFiles] = useState<FileList | null>(null);
   const [internalProgress, setInternalProgress] = useState<number>(0);
   const [uploading, setUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState<string | null>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,10 +57,29 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     }
   };
 
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const droppedFiles = e.dataTransfer.files;
+    if (droppedFiles.length > 0) {
+      handleFileChange({ target: { files: droppedFiles } } as any);
+    }
+  };
+
   const handleUpload = () => {
     if (!files || uploading) return;
     setUploading(true);
     setInternalProgress(0);
+    setUploadMessage(null);
 
     const interval = setInterval(() => {
       setInternalProgress((prev) => {
@@ -66,7 +87,12 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           clearInterval(interval);
           setTimeout(() => {
             setUploading(false);
-            onSubmit(files);
+            try {
+              onSubmit(files);
+              setUploadMessage("Upload successful.");
+            } catch {
+              setUploadMessage("Upload failed. Please try again.");
+            }
           }, 500);
           return 100;
         }
@@ -91,7 +117,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       data-testid={testId}
     >
       <div
-        className={classNames.wrapper}
+        className={`${classNames.wrapper} ${isDragging ? "dragging" : ""}`}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
         data-testid={testId ? `${testId}-wrapper` : undefined}
       >
         <input
@@ -103,6 +132,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           className={classNames.hiddenInput}
           aria-required={required}
           aria-label={label}
+          aria-describedby={`${testId}-description ${testId}-error`}
           data-testid={testId ? `${testId}-input` : undefined}
         />
 
@@ -160,6 +190,14 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             </Button>
           </div>
         )}
+        <div
+          className="sr-only"
+          aria-live="polite"
+          aria-atomic="true"
+          data-testid={`${testId}-upload-message`}
+        >
+          {uploadMessage}
+        </div>
       </div>
     </FormGroup>
   );

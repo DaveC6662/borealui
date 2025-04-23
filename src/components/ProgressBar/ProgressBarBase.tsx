@@ -19,10 +19,11 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   animated = true,
   indeterminate = false,
   className = "",
+  ariaLabel = "Progress",
   "data-testid": testId = "progressbar",
   classNames,
 }: BaseProgressBarProps): JSX.Element => {
-  const ariaValue = indeterminate ? undefined : Math.round(progress);
+  const value = Math.round(progress);
 
   return (
     <div
@@ -32,10 +33,12 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
         className,
       ].join(" ")}
       role="progressbar"
+      aria-label={ariaLabel}
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-valuenow={ariaValue}
-      aria-label="Progress"
+      aria-valuenow={!indeterminate ? value : undefined}
+      aria-valuetext={!indeterminate ? `${value}% complete` : "Loading"}
+      aria-busy={indeterminate || undefined}
       data-testid={testId}
     >
       <div
@@ -45,7 +48,7 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
           animated ? classNames.animated : "",
           indeterminate ? classNames.indeterminate : "",
         ].join(" ")}
-        style={{ width: indeterminate ? "100%" : `${progress}%` }}
+        style={{ width: indeterminate ? "100%" : `${value}%` }}
         data-testid={`${testId}-bar`}
       />
     </div>

@@ -10,6 +10,7 @@ export interface BaseNavBarProps extends NavBarProps {
     className: string;
     isActive: boolean;
     testId: string;
+    "aria-current"?: "page";
   }) => JSX.Element;
   classNames: {
     container: string;
@@ -35,6 +36,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
     >
       {items.map((item, index) => {
         const isActive = currentPath === item.path;
+
         return (
           <LinkWrapper
             key={`${item.label}-${index}`}
@@ -45,8 +47,13 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
               isActive && classNames.active
             )}
             testId={`nav-item-${item.label.toLowerCase()}`}
+            aria-current={isActive ? "page" : undefined}
           >
-            <div className={classNames.icon} aria-hidden="true">
+            <div
+              className={classNames.icon}
+              aria-hidden="true"
+              data-testid={`nav-icon-${item.label.toLowerCase()}`}
+            >
               {item.icon}
             </div>
             <span className={classNames.label}>{item.label}</span>

@@ -34,8 +34,12 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   "data-testid": testId = "form-group",
   classNames,
 }) => {
+  const labelId = id ? `${id}-label` : undefined;
   const descriptionId = description ? `${id}-description` : undefined;
   const errorId = error ? `${id}-error` : undefined;
+
+  const describedBy =
+    [errorId, descriptionId].filter(Boolean).join(" ") || undefined;
 
   return (
     <div
@@ -47,20 +51,29 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
         className
       )}
       role="group"
-      aria-labelledby={id ? `${id}-label` : undefined}
+      aria-labelledby={labelId}
+      aria-describedby={describedBy}
       data-testid={testId}
     >
       {label && (
         <label
-          id={`${id}-label`}
-          htmlFor={id}
+          id={labelId}
           className={combineClassNames(
             classNames.label,
             hideLabel && classNames.srOnly
           )}
           data-testid={`${testId}-label`}
         >
-          {label} {required && <span className={classNames.required}>*</span>}
+          {label}
+          {required && (
+            <span
+              className={classNames.required}
+              aria-hidden="true"
+              data-testid={`${testId}-required`}
+            >
+              *
+            </span>
+          )}
         </label>
       )}
 
@@ -72,18 +85,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
           className={classNames.inputField}
           data-testid={`${testId}-input-field`}
         >
-          {React.isValidElement(children)
-            ? React.cloneElement(children, {
-                id,
-                "aria-describedby": error
-                  ? errorId
-                  : description
-                    ? descriptionId
-                    : undefined,
-                "aria-invalid": !!error,
-                "data-testid": `${testId}-input`,
-              })
-            : children}
+          {children}
         </div>
 
         {controller && (

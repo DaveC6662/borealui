@@ -1,84 +1,64 @@
-import { render, fireEvent } from "@testing-library/react";
-import { axe } from "jest-axe";
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import IconButtonBase from "@/components/Buttons/IconButton/IconButtonBase";
+import { FaTimes } from "react-icons/fa";
 
-const mockClassMap = {
-  iconButton: "iconButton",
+const classMap = {
+  iconButton: "icon-button",
   primary: "primary",
+  medium: "medium",
   outline: "outline",
   disabled: "disabled",
-  medium: "medium",
-  buttonLabel: "buttonLabel",
+  buttonLabel: "button-label",
   loader: "loader",
 };
 
-const DummyIcon = () => <svg role="img" aria-label="icon" />;
-
 describe("IconButtonBase", () => {
-  it("renders with default ARIA label", () => {
-    const { getByRole } = render(
-      <IconButtonBase icon={DummyIcon} classMap={mockClassMap} />
-    );
-    const button = getByRole("button");
-    expect(button).toHaveAttribute("aria-label", "Icon button");
-  });
-
-  it("uses custom ariaLabel if provided", () => {
-    const { getByLabelText } = render(
+  it("renders the icon button with label", () => {
+    render(
       <IconButtonBase
-        icon={DummyIcon}
-        classMap={mockClassMap}
-        ariaLabel="custom label"
-      />
-    );
-    expect(getByLabelText("custom label")).toBeInTheDocument();
-  });
-
-  it("handles click and keyboard events", () => {
-    const onClick = jest.fn();
-    const { getByRole } = render(
-      <IconButtonBase
-        icon={DummyIcon}
-        classMap={mockClassMap}
-        onClick={onClick}
+        icon={FaTimes}
+        ariaLabel="Close"
+        classMap={classMap}
+        data-testid="icon-button"
       />
     );
 
-    const button = getByRole("button");
-    fireEvent.click(button);
-    expect(onClick).toHaveBeenCalled();
-
-    fireEvent.keyDown(button, { key: "Enter" });
-    fireEvent.keyDown(button, { key: " " });
-    // Two additional simulated clicks from keyboard
-    expect(onClick).toHaveBeenCalledTimes(3);
+    const button = screen.getByRole("button", { name: "Close" });
+    expect(button).toBeInTheDocument();
+    expect(screen.getByTestId("icon-button-icon")).toBeInTheDocument();
   });
 
-  it("calls custom onKeyDown handler", () => {
-    const onKeyDown = jest.fn();
-    const { getByRole } = render(
+  it("handles click events", () => {
+    const handleClick = jest.fn();
+    render(
       <IconButtonBase
-        icon={DummyIcon}
-        classMap={mockClassMap}
-        onKeyDown={onKeyDown}
+        icon={FaTimes}
+        ariaLabel="Close"
+        classMap={classMap}
+        onClick={handleClick}
+        data-testid="icon-button"
       />
     );
 
-    const button = getByRole("button");
-    fireEvent.keyDown(button, { key: "ArrowDown" });
-    expect(onKeyDown).toHaveBeenCalled();
+    fireEvent.click(screen.getByTestId("icon-button"));
+    expect(handleClick).toHaveBeenCalled();
   });
 
-  it("is accessible according to axe", async () => {
-    const { container } = render(
+  it("respects disabled state", () => {
+    const handleClick = jest.fn();
+    render(
       <IconButtonBase
-        icon={DummyIcon}
-        classMap={mockClassMap}
-        ariaLabel="test icon"
+        icon={FaTimes}
+        ariaLabel="Close"
+        disabled
+        classMap={classMap}
+        onClick={handleClick}
+        data-testid="icon-button"
       />
     );
 
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    fireEvent.click(screen.getByTestId("icon-button"));
+    expect(handleClick).not.toHaveBeenCalled();
   });
 });

@@ -54,9 +54,9 @@ const IconButtonBase = forwardRef<
       "aria-label": label,
       "aria-disabled": disabled || undefined,
       "aria-busy": loading || undefined,
-      "data-testid": testId,
-      tabIndex: typeof tabIndex === "number" ? tabIndex : disabled ? -1 : 0,
       title,
+      tabIndex: typeof tabIndex === "number" ? tabIndex : disabled ? -1 : 0,
+      "data-testid": testId,
     };
 
     const iconContent = (
@@ -64,19 +64,18 @@ const IconButtonBase = forwardRef<
         {loading ? (
           <div className={classMap.loader} aria-hidden="true" />
         ) : (
-          <Icon data-testid="icon-button-icon" />
+          <Icon data-testid="icon-button-icon" aria-hidden="true" />
         )}
       </span>
     );
 
-    // External link
     if (href && !disabled && isExternal) {
       return (
         <a
           href={href}
+          role="button"
           target="_blank"
           rel="noopener noreferrer"
-          role="button"
           className={classNames}
           ref={ref as React.Ref<HTMLAnchorElement>}
           {...sharedAria}
@@ -87,7 +86,6 @@ const IconButtonBase = forwardRef<
       );
     }
 
-    // Internal link (e.g., Next.js Link)
     if (href && !disabled && !isExternal) {
       return (
         <LinkComponent
@@ -103,13 +101,11 @@ const IconButtonBase = forwardRef<
       );
     }
 
-    // Native button
     return (
       <button
-        ref={ref as React.Ref<HTMLButtonElement>}
         type={type}
-        className={classNames}
         disabled={disabled}
+        className={classNames}
         onClick={(e) => {
           if (!disabled) onClick?.(e);
         }}
@@ -122,9 +118,9 @@ const IconButtonBase = forwardRef<
               }) as unknown as React.MouseEvent<HTMLElement>
             );
           }
-
           onKeyDown?.(e);
         }}
+        ref={ref as React.Ref<HTMLButtonElement>}
         {...sharedAria}
         {...rest}
       >

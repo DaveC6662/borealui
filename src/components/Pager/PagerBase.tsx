@@ -34,7 +34,8 @@ const BasePager: React.FC<BasePagerProps> = ({
   return (
     <nav
       className={`${classNames.wrapper} ${className}`}
-      aria-label="Pagination"
+      aria-label="Pagination Navigation"
+      role="navigation"
       data-testid={testId}
     >
       <div className={classNames.controls}>
@@ -44,24 +45,26 @@ const BasePager: React.FC<BasePagerProps> = ({
           size={size}
           className={classNames.controlButton}
           disabled={currentPage === 1}
-          ariaLabel="Previous Page"
+          aria-label="Go to previous page"
           title="Previous Page"
           onClick={() => onPageChange(currentPage - 1)}
           data-testid={`${testId}-prev`}
         />
       </div>
 
-      <div className={classNames.controls}>
+      <div className={classNames.controls} role="list">
         {pages.map((page) => (
           <div
             key={page}
             className={classNames.buttonWrapper}
             data-testid={`${testId}-page-${page}`}
+            role="listitem"
           >
             <Button
               theme={theme}
               size={size}
               onClick={() => onPageChange(page)}
+              aria-label={`Go to page ${page}`}
               aria-current={page === currentPage ? "page" : undefined}
               disabled={page === currentPage}
               className={`${classNames.button} ${
@@ -82,7 +85,7 @@ const BasePager: React.FC<BasePagerProps> = ({
           size={size}
           className={classNames.controlButton}
           disabled={currentPage === totalPages}
-          ariaLabel="Next Page"
+          aria-label="Go to next page"
           title="Next Page"
           onClick={() => onPageChange(currentPage + 1)}
           data-testid={`${testId}-next`}

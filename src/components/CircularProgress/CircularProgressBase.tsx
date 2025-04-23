@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import type { CircularProgressProps } from "./CircularProgress.types";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 
 export interface CircularProgressBaseProps extends CircularProgressProps {
   classMap: Record<string, string>;
 }
 
-/**
- * Computes the CSS variable color based on progress percent.
- */
 const getColor = (percent: number): string => {
   if (percent <= 0) return "var(--background-color)";
   if (percent <= 40) return "var(--error-color)";
@@ -16,9 +13,6 @@ const getColor = (percent: number): string => {
   return "var(--success-color)";
 };
 
-/**
- * A base circular progress indicator component for reuse across environments.
- */
 const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   rating,
   min = 0,
@@ -56,7 +50,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
       aria-valuemax={max}
       aria-valuenow={clamped}
       aria-label={label}
-      title={label}
+      aria-describedby={`${testId}-desc`}
       data-testid={testId}
     >
       <div
@@ -70,7 +64,12 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
         }}
       >
         <div className={classMap.innerCircle}>
-          <span className={classMap.ratingText}>
+          <span
+            id={`${testId}-desc`}
+            className={classMap.ratingText}
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {showRaw ? `${clamped}/${max}` : `${displayPercent}%`}
           </span>
         </div>

@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useId } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useId,
+  KeyboardEvent,
+} from "react";
 import ReactDOM from "react-dom";
 import { FaTimes } from "react-icons/fa";
 import { MessagePopupProps } from "./MessagePopup.types";
@@ -33,6 +39,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   const [isMounted, setIsMounted] = useState(false);
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const firstButtonRef = useRef<HTMLButtonElement>(null);
   const messageId = useId();
 
   useEffect(() => {
@@ -46,7 +53,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
     setPortalElement(portal);
     document.body.classList.add("no-scroll");
 
-    const handleEscape = (e: KeyboardEvent) => {
+    const handleEscape = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
 
@@ -58,8 +65,30 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   }, [onClose]);
 
   useEffect(() => {
-    dialogRef.current?.focus();
+    setTimeout(() => {
+      firstButtonRef.current?.focus();
+    }, 10);
   }, [isMounted]);
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== "Tab") return;
+
+    const focusableEls = dialogRef.current?.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusableEls || focusableEls.length === 0) return;
+
+    const first = focusableEls[0];
+    const last = focusableEls[focusableEls.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
 
   if (!isMounted || !portalElement) return null;
 
@@ -78,6 +107,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
         aria-labelledby={messageId}
         tabIndex={-1}
         ref={dialogRef}
+        onKeyDown={handleKeyDown}
         data-testid={`${testId}-dialog`}
       >
         <IconButton
@@ -89,19 +119,21 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           size="xs"
           data-testid={`${testId}-close`}
         />
-        <p
+        <h2
           id={messageId}
           className={classNames.message}
           data-testid={`${testId}-message`}
         >
           {message}
-        </p>
+        </h2>
         <div className={classNames.actions} data-testid={`${testId}-actions`}>
           {onConfirm && (
             <Button
               className={classNames.confirm}
               theme="error"
               onClick={onConfirm}
+              ref={firstButtonRef}
+              type="button"
               data-testid={`${testId}-confirm`}
             >
               {confirmText}
@@ -112,6 +144,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
               className={classNames.cancel}
               theme="warning"
               onClick={onCancel}
+              type="button"
               data-testid={`${testId}-cancel`}
             >
               {cancelText}

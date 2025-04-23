@@ -1,7 +1,7 @@
 /**
  * Props for the SkeletonLoader component.
  */
-export interface SkeletonLoaderProps {
+export interface SkeletonProps {
   /** Width of the skeleton loader (e.g., "100%", "200px", or a number representing pixels). */
   width?: string | number;
   /** Height of the skeleton loader (e.g., "100%", "50px", or a number representing pixels). */

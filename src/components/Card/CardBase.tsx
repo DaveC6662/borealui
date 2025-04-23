@@ -42,14 +42,18 @@ const CardBase: React.FC<CardBaseProps> = ({
   children,
   "data-testid": testId = "card",
   "aria-labelledby": ariaLabelledBy,
+  "aria-label": ariaLabel,
   classMap,
   SkeletonComponent,
   ImageComponent,
 }) => {
   const autoId = useId();
   const headerId = ariaLabelledBy || `${autoId}-header`;
+  const descriptionId = `${autoId}-description`;
   const hasImage = !!imageUrl;
   const showBlur = blur && typeof imageUrl !== "string";
+
+  const derivedAriaLabel = ariaLabel || title || description || "Content card";
 
   return (
     <div
@@ -62,7 +66,8 @@ const CardBase: React.FC<CardBaseProps> = ({
         className
       )}
       role="region"
-      aria-labelledby={headerId}
+      aria-labelledby={title ? headerId : undefined}
+      aria-label={!title ? derivedAriaLabel : undefined}
     >
       {loading ? (
         <SkeletonComponent width="100%" height="250px" data-testid="skeleton" />
@@ -77,11 +82,12 @@ const CardBase: React.FC<CardBaseProps> = ({
           {hasImage && ImageComponent && (
             <ImageComponent
               src={imageUrl}
-              alt={imageAlt || "Card image"}
+              alt={imageAlt || `${title || "Card"} image`}
               className={combineClassNames(classMap.cardImage, imageClassName)}
               placeholder={showBlur ? "blur" : undefined}
             />
           )}
+
           <div>
             <div
               className={combineClassNames(
@@ -110,13 +116,17 @@ const CardBase: React.FC<CardBaseProps> = ({
 
             <div
               className={combineClassNames(classMap.cardBody, bodyClassName)}
+              role="group"
+              aria-describedby={description ? descriptionId : undefined}
             >
               {renderContent ? (
                 renderContent()
               ) : (
                 <>
                   {description && (
-                    <p className={classMap.cardDescription}>{description}</p>
+                    <p id={descriptionId} className={classMap.cardDescription}>
+                      {description}
+                    </p>
                   )}
                   {children && (
                     <div className={classMap.cardChildren}>{children}</div>
@@ -142,7 +152,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                           onClick={button.onClick}
                           className={classMap.actionButton}
                           theme={button.theme || "clear"}
-                          ariaLabel={button.label}
+                          aria-label={button.label}
                           href={button.href}
                           loading={button.loading}
                         />
@@ -154,7 +164,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                           theme={button.theme || "secondary"}
                           href={button.href}
                           loading={button.loading}
-                          ariaLabel={button.label}
+                          aria-label={button.label}
                         >
                           {button.label}
                         </button.buttonComponent>

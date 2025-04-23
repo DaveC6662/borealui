@@ -40,16 +40,21 @@ const BaseRichTextEditor: React.FC<BaseRichTextEditorProps> = ({
   const initialContentMemo = useMemo(() => initialContent, [initialContent]);
 
   const editor = useEditor({
-    extensions: [
-      StarterKit.configure({ paragraph: false }),
-      Paragraph,
-      Heading.configure({ levels: [1, 2, 3] }),
-    ],
+    extensions: [StarterKit.configure({ paragraph: false }), Paragraph],
     content: initialContentMemo,
     onUpdate({ editor }) {
       const unsafeHTML = editor.getHTML();
       const safeHTML = DOMPurify.sanitize(unsafeHTML);
       onChange?.(safeHTML);
+    },
+    editorProps: {
+      attributes: {
+        id: `${testId}-content`,
+        role: "textbox",
+        "aria-label": "Rich text editor",
+        "aria-multiline": "true",
+        tabindex: "0",
+      },
     },
   });
 
@@ -144,7 +149,11 @@ const BaseRichTextEditor: React.FC<BaseRichTextEditorProps> = ({
 
   return (
     <div className={classNames.container} data-testid={testId}>
-      <div className={classNames.toolbar}>
+      <div
+        className={classNames.toolbar}
+        role="toolbar"
+        aria-label="Text formatting options"
+      >
         <Select
           ariaLabel="Text style"
           options={headingOptions}
@@ -153,20 +162,34 @@ const BaseRichTextEditor: React.FC<BaseRichTextEditorProps> = ({
           className={classNames.select}
           theme="clear"
         />
-        {buttons.map((btn, index) => (
-          <Button
-            key={index}
-            onClick={btn.cmd}
-            className={btn.isActive ? "disabled" : ""}
-            type="button"
-            theme="clear"
-            aria-label={btn.label}
-          >
-            {btn.icon}
-          </Button>
-        ))}
+        <div role="group" aria-label="Formatting actions">
+          {buttons.map((btn, index) => (
+            <Button
+              key={index}
+              onClick={btn.cmd}
+              className={btn.isActive ? "disabled" : ""}
+              type="button"
+              theme="clear"
+              aria-label={btn.label}
+            >
+              {btn.icon}
+            </Button>
+          ))}
+        </div>
       </div>
-      <EditorContent editor={editor} className={classNames.editor} />
+
+      <label id={`${testId}-editor-label`} className="sr-only">
+        Rich text editor content
+      </label>
+      <EditorContent
+        editor={editor}
+        className={classNames.editor}
+        aria-labelledby={`${testId}-editor-label`}
+        role="textbox"
+        title="Rich text editor"
+        aria-label="Rich text editor"
+        aria-multiline="true"
+      />
     </div>
   );
 };

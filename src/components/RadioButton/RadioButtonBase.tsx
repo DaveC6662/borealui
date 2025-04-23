@@ -43,24 +43,33 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       .filter(Boolean)
       .join(" ");
 
+    const labelId = `${testId}-label`;
+
     return (
       <label className={wrapperClasses} data-testid={`${testId}-wrapper`}>
         <input
           ref={ref}
           type="radio"
-          role="radio"
-          aria-checked={checked}
-          aria-disabled={disabled}
+          id={`${testId}-input`}
           className={classNames.input}
           value={value}
           checked={checked}
           onChange={handleChange}
           disabled={disabled}
+          aria-labelledby={labelId}
           data-testid={testId}
           {...props}
         />
-        <span className={classNames.circle} data-testid={`${testId}-circle`} />
-        <span className={classNames.label} data-testid={`${testId}-label`}>
+        <span
+          className={classNames.circle}
+          aria-hidden="true"
+          data-testid={`${testId}-circle`}
+        />
+        <span
+          id={labelId}
+          className={classNames.label}
+          data-testid={`${testId}-label`}
+        >
           {label}
         </span>
       </label>

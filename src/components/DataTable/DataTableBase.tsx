@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { combineClassNames } from "@/utils/classNames"; // adjust for core import if needed
+import { useMemo, useState, KeyboardEvent } from "react";
+import { combineClassNames } from "@/utils/classNames";
 import { DataTableBaseProps } from "./DataTable.types";
 
 function DataTableBase<T extends object>({
@@ -44,6 +44,13 @@ function DataTableBase<T extends object>({
     }
   };
 
+  const handleSortKeyDown = (e: KeyboardEvent, key: keyof T) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleSort(key);
+    }
+  };
+
   return (
     <div
       className={combineClassNames(
@@ -54,38 +61,44 @@ function DataTableBase<T extends object>({
       data-testid={testId}
     >
       <table className={classMap.table} role="table">
+        <caption className="sr-only">Sortable data table</caption>
         <thead>
           <tr role="row">
-            {columns.map((col) => (
-              <th
-                key={String(col.key)}
-                role="columnheader"
-                scope="col"
-                className={combineClassNames(
-                  col.sortable && classMap.sortable,
-                  classMap.headerCell
-                )}
-                onClick={() => col.sortable && handleSort(col.key)}
-                aria-sort={
-                  sortKey === col.key
-                    ? sortOrder === "asc"
-                      ? "ascending"
-                      : "descending"
-                    : "none"
-                }
-              >
-                {col.label}
-                {col.sortable && (
-                  <span className={classMap.sortIcon} aria-hidden>
-                    {sortKey === col.key
-                      ? sortOrder === "asc"
-                        ? "▲"
-                        : "▼"
-                      : "⇅"}
-                  </span>
-                )}
-              </th>
-            ))}
+            {columns.map((col) => {
+              const isActive = sortKey === col.key;
+              return (
+                <th
+                  key={String(col.key)}
+                  scope="col"
+                  role="columnheader"
+                  tabIndex={col.sortable ? 0 : undefined}
+                  aria-sort={
+                    col.sortable
+                      ? isActive
+                        ? sortOrder === "asc"
+                          ? "ascending"
+                          : "descending"
+                        : "none"
+                      : undefined
+                  }
+                  onClick={() => col.sortable && handleSort(col.key)}
+                  onKeyDown={(e) =>
+                    col.sortable && handleSortKeyDown(e, col.key)
+                  }
+                  className={combineClassNames(
+                    col.sortable && classMap.sortable,
+                    classMap.headerCell
+                  )}
+                >
+                  <span>{col.label}</span>
+                  {col.sortable && (
+                    <span className={classMap.sortIcon} aria-hidden="true">
+                      {isActive ? (sortOrder === "asc" ? "▲" : "▼") : "⇅"}
+                    </span>
+                  )}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
@@ -100,9 +113,16 @@ function DataTableBase<T extends object>({
                   striped && idx % 2 === 1 && classMap.striped
                 )}
                 onClick={() => onRowClick?.(row)}
+                tabIndex={onRowClick ? 0 : undefined}
+                aria-label={onRowClick ? "Selectable row" : undefined}
               >
                 {columns.map((col) => (
-                  <td key={String(col.key)} role="cell" data-label={col.label}>
+                  <td
+                    key={String(col.key)}
+                    role="cell"
+                    data-label={col.label}
+                    className={classMap.cell}
+                  >
                     {col.render
                       ? col.render(row[col.key], row)
                       : typeof row[col.key] === "object"

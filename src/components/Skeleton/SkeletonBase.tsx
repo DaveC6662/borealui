@@ -1,11 +1,11 @@
 import React from "react";
-import { SkeletonLoaderProps } from "./Skeleton.types";
+import { SkeletonProps } from "./Skeleton.types";
 
 /**
  * Base SkeletonLoader without styling dependencies.
  * Includes accessibility enhancements for screen readers.
  */
-const SkeletonLoaderBase: React.FC<SkeletonLoaderProps> = ({
+const SkeletonBase: React.FC<SkeletonProps> = ({
   width = "100%",
   height = "100%",
   className = "",
@@ -38,4 +38,4 @@ const SkeletonLoaderBase: React.FC<SkeletonLoaderProps> = ({
   );
 };
 
-export default SkeletonLoaderBase;
+export default SkeletonBase;

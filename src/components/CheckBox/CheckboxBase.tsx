@@ -32,9 +32,9 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
   ) => {
     const internalId = useId();
     const checkboxId = id || internalId;
+    const labelId = label ? `${checkboxId}-label` : undefined;
 
     const inputRef = useRef<HTMLInputElement>(null);
-
     useImperativeHandle(ref, () => inputRef.current!);
 
     useEffect(() => {
@@ -61,12 +61,14 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
       <label
         htmlFor={checkboxId}
         className={combinedClassName}
-        aria-checked={indeterminate ? "mixed" : checked}
-        aria-disabled={disabled}
-        role="checkbox"
+        data-testid={testId ? `${testId}-wrapper` : undefined}
       >
         {label && labelPosition === "left" && (
-          <span className={classMap.checkboxLabel} id={`${checkboxId}-label`}>
+          <span
+            className={classMap.checkboxLabel}
+            id={labelId}
+            data-testid={testId ? `${testId}-label` : undefined}
+          >
             {label}
           </span>
         )}
@@ -79,15 +81,23 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
           checked={checked}
           onChange={handleChange}
           disabled={disabled}
-          aria-labelledby={label ? `${checkboxId}-label` : undefined}
-          data-testid={testId}
+          aria-labelledby={labelId}
+          aria-checked={indeterminate ? "mixed" : undefined}
           {...props}
         />
 
-        <span className={classMap.checkboxBox} aria-hidden="true" />
+        <span
+          className={classMap.checkboxBox}
+          aria-hidden="true"
+          data-testid={testId ? `${testId}-box` : undefined}
+        />
 
         {label && labelPosition === "right" && (
-          <span className={classMap.checkboxLabel} id={`${checkboxId}-label`}>
+          <span
+            className={classMap.checkboxLabel}
+            id={labelId}
+            data-testid={testId ? `${testId}-label` : undefined}
+          >
             {label}
           </span>
         )}

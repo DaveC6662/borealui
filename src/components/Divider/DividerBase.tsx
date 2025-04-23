@@ -17,7 +17,8 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       theme = "",
       as = "div",
       styles,
-      "data-testid": testId,
+      "data-testid": testId = "divider",
+      "aria-hidden": ariaHidden,
       ...rest
     },
     ref
@@ -32,6 +33,8 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
 
     const ComponentTag = as;
 
+    const role = ComponentTag === "hr" ? undefined : "separator";
+
     return (
       <ComponentTag
         ref={ref as never}
@@ -42,8 +45,9 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
           dashed && styles.dashed,
           className
         )}
-        role="separator"
-        aria-orientation={orientation}
+        {...(role && { role })}
+        {...(role && isVertical && { "aria-orientation": "vertical" })}
+        {...(ariaHidden !== undefined && { "aria-hidden": ariaHidden })}
         style={style}
         data-testid={testId}
         {...rest}

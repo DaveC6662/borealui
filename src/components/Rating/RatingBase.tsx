@@ -41,12 +41,14 @@ const BaseRating: React.FC<BaseRatingProps> = ({
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       handleClick(index);
-    } else if (event.key === "ArrowRight" && index < max - 1) {
+    } else if (event.key === "ArrowRight") {
       event.preventDefault();
-      onChange?.(index + 2);
-    } else if (event.key === "ArrowLeft" && index > 0) {
+      const next = (index + 1) % max;
+      onChange?.(next + 1);
+    } else if (event.key === "ArrowLeft") {
       event.preventDefault();
-      onChange?.(index);
+      const prev = (index - 1 + max) % max;
+      onChange?.(prev + 1);
     }
   };
 
@@ -77,8 +79,8 @@ const BaseRating: React.FC<BaseRatingProps> = ({
             onKeyDown={(e) => handleKeyDown(e, index)}
             role="radio"
             aria-checked={isChecked}
-            tabIndex={interactive ? 0 : -1}
-            aria-label={`${index + 1} ${index + 1 === 1 ? "star" : "stars"}`}
+            tabIndex={interactive && (isChecked || index === 0) ? 0 : -1}
+            aria-label={`${index + 1} out of ${max} stars`}
             data-testid={`${testId}-star-${index + 1}`}
           >
             <FaStar aria-hidden="true" />

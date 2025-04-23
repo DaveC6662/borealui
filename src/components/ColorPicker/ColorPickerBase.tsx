@@ -20,13 +20,20 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   classMap,
   "data-testid": testId = "color-picker",
 }) => {
+  const legendId = `${testId}-legend`;
+
   return (
     <fieldset
       className={combineClassNames(classMap.colorPicker, className)}
       disabled={disabled}
+      aria-disabled={disabled}
+      aria-labelledby={legendId}
+      role="radiogroup"
       data-testid={testId}
     >
-      <legend className={classMap.legend}>{label}</legend>
+      <legend id={legendId} className={classMap.legend}>
+        {label}
+      </legend>
 
       <div className={classMap.colorGrid}>
         {colors.map((color, i) => (
@@ -43,6 +50,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
             data-testid={`${testId}-option-${color.value}`}
           >
             <input
+              title={color.label}
               type="radio"
               name={name}
               id={`${testId}-color-${i}`}
@@ -50,7 +58,6 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
               checked={selected === color.value}
               onChange={() => onChange(color.value)}
               className={classMap.radioInput}
-              aria-label={color.label}
             />
             <span
               className={combineClassNames(

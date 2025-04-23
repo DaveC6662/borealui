@@ -22,7 +22,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   outline = false,
   className = "",
   maxVisible,
-  LinkComponent = "a", // fallback to native <a> for core
+  LinkComponent = "a",
   ButtonComponent,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -39,13 +39,13 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
     classMap.breadcrumbs,
     classMap[theme],
     size && classMap[size],
-    outline ? classMap.outline : undefined,
+    outline && classMap.outline,
     className
   );
 
   return (
     <nav
-      aria-label="breadcrumb"
+      aria-label="Breadcrumb"
       className={combinedClassName}
       itemScope
       role="navigation"
@@ -58,7 +58,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
 
           const itemClassName = combineClassNames(
             classMap.item,
-            isExpanded && item.label !== ELLIPSIS_LABEL && classMap.itemAnimate,
+            isExpanded && !isEllipsis && classMap.itemAnimate,
             isLast && classMap.active
           );
 
@@ -69,14 +69,17 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
               itemProp="itemListElement"
               itemScope
               itemType="https://schema.org/ListItem"
+              aria-current={isLast ? "page" : undefined}
             >
               {isEllipsis ? (
                 <ButtonComponent
                   theme="clear"
                   size="small"
                   className={classMap.ellipsis}
-                  aria-label="Expand breadcrumbs"
+                  aria-label="Show more breadcrumbs"
+                  role="button"
                   onClick={handleExpand}
+                  tabIndex={0}
                 >
                   {item.label}
                 </ButtonComponent>
@@ -92,12 +95,17 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   </span>
                 </LinkComponent>
               ) : (
-                <span className={classMap.current} aria-current="page">
-                  <span itemProp="name">{item.label}</span>
+                <span
+                  className={classMap.current}
+                  itemProp="name"
+                  aria-current="page"
+                >
+                  {item.label}
                 </span>
               )}
+
               {!isLast && (
-                <span className={classMap.separator}>
+                <span className={classMap.separator} aria-hidden="true">
                   {separator ?? (
                     <FaChevronRight className={classMap.separatorIcon} />
                   )}

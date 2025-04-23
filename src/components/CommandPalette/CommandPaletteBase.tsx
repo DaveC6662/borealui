@@ -39,9 +39,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
     setMounted(true);
 
-    const existing = document.getElementById("widget-portal");
     const portal =
-      existing ||
+      document.getElementById("widget-portal") ||
       (() => {
         const el = document.createElement("div");
         el.id = "widget-portal";
@@ -110,17 +109,18 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           theme={theme}
           className={classMap.input}
           data-testid={`${testId}-input`}
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-expanded="true"
+          aria-controls="command-list"
           aria-activedescendant={
             filtered.length > 0 ? `cmd-${activeIndex}` : undefined
           }
-          aria-controls="command-list"
-          role="combobox"
-          aria-expanded="true"
         />
 
         <ul
-          className={classMap.list}
           id="command-list"
+          className={classMap.list}
           role="listbox"
           aria-label="Command suggestions"
         >
@@ -141,7 +141,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                 }}
               >
                 {cmd.icon && (
-                  <span className={classMap.icon} aria-hidden>
+                  <span className={classMap.icon} aria-hidden="true">
                     {cmd.icon}
                   </span>
                 )}
