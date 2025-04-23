@@ -19,31 +19,31 @@
   &.xs {
     width: 36px;
     height: 36px;
-    font-size: theme.$font-size-sm;
+    font-size: 0.5rem;
   }
 
   &.small {
     width: 42px;
     height: 42px;
-    font-size: theme.$font-size-sm;
+    font-size: 0.6rem;
   }
 
   &.medium {
     width: 56px;
     height: 56px;
-    font-size: theme.$font-size-md;
+    font-size: 0.7rem;
   }
 
   &.large {
     width: 72px;
     height: 72px;
-    font-size: theme.$font-size-lg;
+    font-size: 0.8rem;
   }
 
   &.xl {
     width: 84px;
     height: 84px;
-    font-size: theme.$font-size-lg;
+    font-size: 0.9rem;
   }
 
   &.circle {
@@ -51,7 +51,7 @@
   }
 
   &.rounded {
-    border-radius: theme.$border-radius-lg;
+    border-radius: theme.$border-radius-sm;
   }
 
   &.square {
@@ -209,6 +209,17 @@
       border-radius: 50%;
     }
 
+    &.icon-only {
+      background-color: transparent;
+      border: none;
+      font-size: 1em;
+
+      svg {
+        width: 1em;
+        height: 1em;
+      }
+    }
+
     &-online {
       background-color: theme.$success-color;
       border: 1px solid color.adjust(theme.$success-color, $lightness: 20%);
@@ -220,6 +231,11 @@
     }
 
     &-offline {
+      background-color: theme.$disabled-color;
+      border: 1px solid color.adjust(theme.$disabled-color, $lightness: 20%);
+    }
+
+    &-busy {
       background-color: theme.$error-color;
       border: 1px solid color.adjust(theme.$error-color, $lightness: 20%);
     }

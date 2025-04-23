@@ -3,7 +3,13 @@
     "target": "ES2017",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": true,
-    "types": ["node", "jest", "jest-axe", "@testing-library/jest-dom"],
+    "types": [
+      "node",
+      "jest",
+      "jest-axe",
+      "@testing-library/jest-dom",
+      "@testing-library/cypress"
+    ],
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -33,9 +39,10 @@
     "next.config.mjs",
     "jest.setup.ts",
     "jest.config.ts",
-    "test/**/*",
+    "global.d.ts",
+    "__tests__",
     "scripts",
-    "src/components/EmptyState/core/EmptyState.tsx",
+    "src",
     "webpack.config.cjs"
   ],
   "exclude": ["node_modules", "cypress"]
