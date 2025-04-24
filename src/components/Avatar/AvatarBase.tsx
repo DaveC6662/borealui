@@ -59,6 +59,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
         aria-hidden="false"
         role="img"
         data-testid="avatar-image"
+        fill={true}
       />
     ) : (
       <span

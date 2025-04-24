@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 
 .dropdownWrapper {
   position: relative;
@@ -33,12 +33,9 @@
       left: 0;
     }
 
-    @media (max-width: 480px) {
+    @media (width <= 480px) {
       position: fixed;
-      top: auto;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      inset: auto 0 0;
       margin: 0;
       border-radius: 0;
       min-width: 100%;
@@ -76,7 +73,7 @@
       align-items: center;
     }
 
-    @media (max-width: 480px) {
+    @media (width <= 480px) {
       font-size: theme.$font-size-base;
       padding: theme.$spacing-md;
     }
@@ -103,6 +100,7 @@
       transform: translateY(100%);
       opacity: 0;
     }
+
     to {
       transform: translateY(0);
       opacity: 1;

@@ -40,6 +40,8 @@ export interface AccordionProps {
    */
   outline?: boolean;
 
+  clear?: boolean;
+
   /**
    * If true, disables user interaction and styles the accordion as disabled.
    */
@@ -62,14 +64,33 @@ export interface AccordionProps {
   onToggle?: (expanded: boolean) => void;
 
   /**
+   * If true, the accordion can be toggled open or closed.
+   * If false, the accordion is always expanded.
+   */
+  isToggleable?: boolean;
+
+  /**
    * Custom icon to display when the accordion is expanded.
    * Can be a string or React node.
    */
   customExpandedIcon?: React.ReactNode;
+
+  /** Position of accordion toggle icon */
+  iconPosition?: "left" | "right";
 
   /**
    * Custom icon to display when the accordion is collapsed.
    * Can be a string or React node.
    */
   customCollapsedIcon?: React.ReactNode;
+
+  /**
+   * Accessible description.
+   */
+  description?: string;
+
+  /**
+   * If true, the accordion content will be loaded lazily.
+   */
+  lazyLoad?: boolean;
 }

@@ -18,7 +18,6 @@ import {
   StatusType,
   ThemeType,
 } from "@/types/types";
-import { IconType } from "react-icons";
 
 // Prop options
 const themeOptions = [

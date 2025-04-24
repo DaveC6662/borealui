@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:map";
 
 $themes: (
@@ -73,7 +73,6 @@ $positions: (
       @each $prop, $val in map.get($config, arrow) {
         #{$prop}: $val;
       }
-
       border-color: var(--primary-color) transparent transparent transparent;
     }
   }

@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 
@@ -10,7 +10,6 @@
   cursor: pointer;
   gap: theme.$spacing-sm;
   font-size: theme.$font-size-base;
-  -webkit-user-select: none;
   user-select: none;
   position: relative;
   transition: all theme.$transition-default;

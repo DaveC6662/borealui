@@ -109,7 +109,6 @@ $positions: (
       @each $prop, $val in map.get($config, arrow) {
         #{$prop}: $val;
       }
-
       border-color: var(--primary-color) transparent transparent transparent;
     }
   }

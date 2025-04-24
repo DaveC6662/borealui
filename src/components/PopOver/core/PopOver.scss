@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:map";
 
 $popover-themes: (
@@ -10,7 +10,6 @@ $popover-themes: (
   "warning": (bg: theme.$warning-color, text: var(--text-color-primary)),
   "clear": (bg: transparent, text: var(--text-color-primary), shadow: none, border: none)
 );
-
 $position-popover: (
   "top": (bottom: 100%, left: 50%, transform: translateX(-50%) translateY(-8px)),
   "bottom": (top: 100%, left: 50%, transform: translateX(-50%) translateY(8px)),
@@ -65,7 +64,6 @@ $position-popover: (
     }
 
     @media (width <=640px) {
-
       &.left,
       &.right {
         top: 100%;

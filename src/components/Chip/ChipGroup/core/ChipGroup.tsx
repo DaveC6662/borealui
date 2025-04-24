@@ -24,6 +24,7 @@ const ChipGroup = React.forwardRef<ChipGroupRef, ChipGroupProps>(
       ref={ref}
       ChipComponent={Chip}
       classMap={classMap}
+      positionMap={classMap.positionMap}
     />
   )
 );

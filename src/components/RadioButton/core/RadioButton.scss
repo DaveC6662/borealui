@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:map";
 
 $radio-themes: (
@@ -43,7 +43,7 @@ $radio-themes: (
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background-color: currentColor;
+      background-color: currentcolor;
       opacity: 0;
       transform: scale(0.6);
       transition: all theme.$transition-default;

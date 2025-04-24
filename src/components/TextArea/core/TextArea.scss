@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 
@@ -43,7 +43,6 @@ $themes: (
   align-items: center;
   border-radius: theme.$border-radius-xs;
   margin: theme.$spacing-md;
-
   transition: theme.$transition-default;
 
   .textInput {

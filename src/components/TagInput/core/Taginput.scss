@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:map";
 
 $themes: (
@@ -10,7 +10,6 @@ $themes: (
   "warning": theme.$warning-color,
   "clear": transparent
 );
-
 $sizes: (
   "xs": (font-size: theme.$font-size-xs, padding: theme.$spacing-xxs theme.$spacing-xs),
   "small": (font-size: theme.$font-size-sm, padding: theme.$spacing-xxs theme.$spacing-xs),

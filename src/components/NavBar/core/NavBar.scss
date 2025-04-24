@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 
 .navContainer {
   position: fixed;
@@ -21,7 +21,7 @@
     }
   }
 
-  @media (max-width: 1250px) {
+  @media (width <= 1250px) {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -46,7 +46,7 @@
   cursor: pointer;
   transition: theme.$transition-default;
 
-  @media (max-width: 800px) {
+  @media (width <= 800px) {
     width: 30px;
     height: 30px;
     padding: 5px;
@@ -85,7 +85,7 @@
   display: none;
   transition: opacity 0.5s ease-in-out;
 
-  @media (min-width: 800px) {
+  @media (width >= 800px) {
     display: block;
   }
 }

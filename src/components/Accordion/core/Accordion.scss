@@ -2,201 +2,207 @@
 @use "sass:color";
 @use "sass:map";
 
+// Theme variants
+$themes: (
+  "primary": (
+    color: var(--primary-color),
+    hover: var(--primary-color-hover),
+    text-hover: var(--text-color-primary),
+  ),
+  "secondary": (
+    color: var(--secondary-color),
+    hover: var(--secondary-color-hover),
+    text-hover: var(--text-color-secondary),
+  ),
+  "success": (
+    color: theme.$success-color,
+    hover: color.adjust(theme.$success-color, $lightness: -10%),
+    text-hover: var(--text-color-primary),
+  ),
+  "error": (
+    color: theme.$error-color,
+    hover: color.adjust(theme.$error-color, $lightness: -10%),
+    text-hover: var(--text-color-primary),
+  ),
+  "warning": (
+    color: theme.$warning-color,
+    hover: color.adjust(theme.$warning-color, $lightness: -10%),
+    text-hover: var(--text-color-primary),
+  ),
+  "clear": (
+    color: transparent,
+    hover: transparent,
+    text-hover: var(--text-color-primary),
+  ),
+);
+
+// Base container
 .accordion {
-  border-radius: theme.$border-radius-lg;
-  overflow: hidden;
+  border-radius: theme.$border-radius-md;
   margin-bottom: theme.$spacing-sm;
+  background-color: transparent !important;
   transition: box-shadow theme.$transition-default;
+}
 
-  .accordionHeader {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    min-width: 250px;
-    width: 100%;
-    color: var(--text-color-primary);
-    padding: theme.$spacing-sm;
-    font-size: theme.$font-size-base;
-    font-weight: theme.$font-weight-bold;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    transition: background-color theme.$transition-default;
-  }
+.accordion_expanded .accordionHeader {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
 
-  .accordionTitle {
-    flex-grow: 1;
-  }
+.accordion_expanded .accordionContent {
+  border-bottom-left-radius: theme.$border-radius-md;
+  border-bottom-right-radius: theme.$border-radius-md;
+}
 
-  .accordionIcon {
-    font-size: 1.5rem;
-    margin-right: 10px;
-    transition: transform theme.$transition-default;
+.accordion_disabled {
+  background-color: theme.$disabled-color;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+}
 
-    &.expanded {
-      transform: rotate(180deg);
-    }
-  }
+// Accordion header
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 250px;
+  width: 100%;
+  color: var(--text-color-primary);
+  padding: theme.$spacing-sm;
+  font-size: theme.$font-size-base;
+  font-weight: theme.$font-weight-bold;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-radius: theme.$border-radius-md;
+  outline: none;
+  transition:
+    background-color theme.$transition-default,
+    border-radius theme.$transition-default;
 
-  .accordionHeader:focus-visible {
+  &:focus-visible {
     outline: 2px solid var(--text-color-primary);
     outline-offset: 2px;
   }
+}
 
-  .accordionContent {
-    max-height: 0;
-    overflow: hidden;
-    transition:
-      max-height 0.3s ease,
-      padding theme.$transition-default;
-    padding: 0;
-    display: none;
-    background-color: var(--background-color-lighter);
+.accordionHeader_clear {
+  border: 1px solid var(--text-color-primary) !important;
+}
+
+.accordionHeader_expanded {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+@each $name, $values in $themes {
+  .accordionHeader_#{$name} {
+    background-color: map.get($values, color);
     color: var(--text-color-primary);
 
-    &.expanded,
-    &[data-state="open"] {
-      display: block;
-      max-height: 500px;
-      padding: theme.$spacing-sm theme.$spacing-md;
+    &:hover {
+      background-color: map.get($values, hover);
     }
   }
 
-  &.clear {
+  .accordionHeader_#{$name}_outline {
     background-color: transparent;
-    color: var(--text-color-primary);
-  }
+    border: 2px solid map.get($values, color);
+    color: map.get($values, text-color);
 
-  &.outline {
-    border: 2px solid currentcolor;
-    background-color: transparent;
-
-    .accordionHeader {
-      background-color: transparent;
+    &:hover {
+      background-color: map.get($values, hover);
+      color: map.get($values, text-hover);
     }
   }
 
-  $themes: (
-    "primary": (
-      color: var(--primary-color),
-      hover: var(--primary-color-hover),
-      text-hover: var(--text-color-primary),
-    ),
-    "secondary": (
-      color: var(--secondary-color),
-      hover: var(--secondary-color-hover),
-      text-hover: var(--text-color-secondary),
-    ),
-    "success": (
-      color: theme.$success-color,
-      hover: color.adjust(theme.$success-color, $lightness: -10%),
-      text-hover: var(--text-color-primary),
-    ),
-    "error": (
-      color: theme.$error-color,
-      hover: color.adjust(theme.$error-color, $lightness: -10%),
-      text-hover: var(--text-color-primary),
-    ),
-    "warning": (
-      color: theme.$warning-color,
-      hover: color.adjust(theme.$warning-color, $lightness: -10%),
-      text-hover: var(--text-color-primary),
-    ),
-  );
-
-  @each $name, $values in $themes {
-    &.#{$name} {
-      background-color: map.get($values, color);
-      color: var(--text-color-primary);
-
-      &:hover {
-        background-color: map.get($values, hover);
-      }
-    }
-
-    &.#{$name}.outline {
-      background-color: transparent;
-      border: 2px solid map.get($values, color);
-
-      .accordionHeader {
-        color: map.get($values, color);
-      }
-
-      &:hover {
-        background-color: map.get($values, hover);
-
-        .accordionHeader {
-          color: map.get($values, text-hover);
-        }
-      }
-    }
+  .accordionHeader_clear_outline {
+    border: 1px solid var(--text-color-primary) !important;
   }
+}
 
-  &.disabled {
-    background-color: theme.$disabled-color;
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
+.accordionContent {
+  box-sizing: border-box;
+  padding: 0 theme.$spacing-md;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  background-color: var(--background-color-lighter);
+  color: var(--text-color-primary);
+  transition:
+    max-height 0.3s ease,
+    padding theme.$transition-default,
+    border-radius theme.$transition-default,
+    opacity theme.$transition-default;
+}
 
-    &.outline {
-      color: theme.$disabled-color;
-      border-color: theme.$disabled-color;
-    }
-  }
+.accordionContent_expanded {
+  max-height: none;
+  opacity: 1;
+  padding: theme.$spacing-xl theme.$spacing-xl;
+}
 
-  &.xs {
-    .accordionHeader {
-      padding: theme.$spacing-xs;
-      font-size: theme.$font-size-xs;
-    }
+.accordionContent_clear {
+  background-color: transparent;
+  border: 1px solid var(--text-color-primary);
+}
 
-    .accordionIcon {
-      font-size: 1rem;
-    }
-  }
+.accordionTitle {
+  flex-grow: 1;
+}
 
-  &.small {
-    .accordionHeader {
-      padding: theme.$spacing-sm;
-      font-size: theme.$font-size-sm;
-    }
+.accordionIcon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+  transition: transform theme.$transition-default;
+}
 
-    .accordionIcon {
-      font-size: 1.2rem;
-    }
-  }
+.accordionIcon_expanded {
+  transform: rotate(180deg);
+}
 
-  &.medium {
-    .accordionHeader {
-      padding: theme.$spacing-xs;
-      font-size: theme.$font-size-md;
-    }
+.xs .accordionHeader {
+  padding: theme.$spacing-xs theme.$spacing-sm;
+  font-size: theme.$font-size-xs;
+}
 
-    .accordionIcon {
-      font-size: 1.5rem;
-    }
-  }
+.small .accordionHeader {
+  padding: theme.$spacing-xs theme.$spacing-md;
+  font-size: theme.$font-size-sm;
+}
 
-  &.large {
-    .accordionHeader {
-      padding: theme.$spacing-sm;
-      font-size: theme.$font-size-md;
-    }
+.medium .accordionHeader {
+  padding: theme.$spacing-sm theme.$spacing-lg;
+  font-size: theme.$font-size-md;
+}
 
-    .accordionIcon {
-      font-size: 1.8rem;
-    }
-  }
+.large .accordionHeader {
+  padding: theme.$spacing-sm theme.$spacing-xl;
+  font-size: theme.$font-size-md;
+}
 
-  &.xl {
-    .accordionHeader {
-      padding: theme.$spacing-md;
-      font-size: theme.$font-size-lg;
-    }
+.xl .accordionHeader {
+  padding: theme.$spacing-sm theme.$spacing-xl;
+  font-size: theme.$font-size-lg;
+}
 
-    .accordionIcon {
-      font-size: 2rem;
-    }
-  }
+.xs .accordionIcon {
+  font-size: 1rem;
+}
+
+.small .accordionIcon {
+  font-size: 1.2rem;
+}
+
+.medium .accordionIcon {
+  font-size: 1.5rem;
+}
+
+.large .accordionIcon {
+  font-size: 1.8rem;
+}
+
+.xl .accordionIcon {
+  font-size: 2rem;
 }

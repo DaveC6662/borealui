@@ -47,6 +47,7 @@ $sizes: (
 
   @media (width <= 480px) {
     flex-direction: column;
+
     .tab {
       border-right: none;
       border-bottom: 0.5px solid var(--text-color-primary);

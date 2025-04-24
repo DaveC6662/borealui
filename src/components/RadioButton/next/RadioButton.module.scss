@@ -17,7 +17,6 @@ $radio-themes: (
   gap: theme.$spacing-sm;
   font-size: theme.$font-size-base;
   position: relative;
-  -webkit-user-select: none;
   user-select: none;
   transition: all theme.$transition-default;
 }

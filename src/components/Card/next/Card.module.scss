@@ -206,18 +206,23 @@ $theme-variants: (
   &.primary {
     background: var(--primary-color);
   }
+
   &.secondary {
     background: var(--secondary-color);
   }
+
   &.success {
     background: theme.$success-color;
   }
+
   &.error {
     background: theme.$error-color;
   }
+
   &.warning {
     background: theme.$warning-color;
   }
+
   &.clear {
     background: transparent;
   }

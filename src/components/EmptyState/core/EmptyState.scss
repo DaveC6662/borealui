@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 
@@ -85,7 +85,6 @@
     "large": theme.$spacing-lg,
     "xl": theme.$spacing-xl
   );
-
   $font-sizes: (
     "xs": theme.$font-size-xs,
     "small": theme.$font-size-sm,
@@ -93,7 +92,6 @@
     "large": theme.$font-size-base,
     "xl": theme.$font-size-lg
   );
-
   $icon-sizes: (
     "xs": 2em,
     "small": 3em,
@@ -119,7 +117,7 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     width: 100%;
     padding: theme.$spacing-md;
 
@@ -136,7 +134,7 @@
     }
   }
 
-  @media (max-width: 480px) {
+  @media (width <= 480px) {
     .title {
       font-size: theme.$font-size-sm;
     }

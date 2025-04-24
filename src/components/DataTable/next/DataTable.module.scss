@@ -30,7 +30,7 @@ $table-themes: (
     }
   }
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     .table {
       font-size: theme.$font-size-sm;
 
@@ -41,7 +41,7 @@ $table-themes: (
     }
   }
 
-  @media (max-width: 480px) {
+  @media (width <= 480px) {
     .table {
       font-size: theme.$font-size-xs;
 

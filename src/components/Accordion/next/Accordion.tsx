@@ -1,4 +1,3 @@
-// components/Accordion/next/Accordion.tsx
 "use client";
 
 import React, { useId } from "react";
