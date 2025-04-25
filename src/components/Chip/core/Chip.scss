@@ -21,54 +21,55 @@
   text-align: center;
   cursor: pointer;
   animation: fade-in 0.3s ease-out;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+}
 
-  &.fadeOut {
-    opacity: 0;
-    transform: translate(-50%, -10px);
-  }
+// Fadeout modifier
+.chip_fadeout {
+  opacity: 0;
+  transform: translate(-50%, -10px);
+}
 
-  &.topCenter   { top: 20px; }
-  &.bottomCenter { bottom: 20px; }
+// Position modifiers
+.chip_topCenter {
+  top: 20px;
+}
 
-  &.topLeft {
-    top: 20px;
-    left: 20px;
-    transform: none;
-  }
+.chip_bottomCenter {
+  bottom: 20px;
+}
 
-  &.topRight {
-    top: 20px;
-    right: 20px;
-    left: auto;
-    transform: none;
-  }
+.chip_topLeft {
+  top: 20px;
+  left: 20px;
+  transform: none;
+}
 
-  &.bottomLeft {
-    bottom: 20px;
-    left: 20px;
-    transform: none;
-  }
+.chip_topRight {
+  top: 20px;
+  right: 20px;
+  left: auto;
+  transform: none;
+}
 
-  &.bottomRight {
-    bottom: 20px;
-    right: 20px;
-    left: auto;
-    transform: none;
-  }
+.chip_bottomLeft {
+  bottom: 20px;
+  left: 20px;
+  transform: none;
+}
 
+.chip_bottomRight {
+  bottom: 20px;
+  right: 20px;
+  left: auto;
+  transform: none;
+}
 
-$chip-themes: (
-  "primary": (bg: var(--primary-color), text: var(--text-color-primary)),
-  "secondary": (bg: var(--secondary-color), text: var(--text-color-secondary)),
-  "success": (bg: rgba(theme.$success-color, 0.9), text: var(--text-color-primary)),
-  "error": (bg: rgba(theme.$error-color, 0.9), text: var(--text-color-primary)),
-  "warning": (bg: rgba(theme.$warning-color, 0.9), text: var(--text-color-primary)),
-  "clear": (bg: rgb(1 1 1 / 20%), text: var(--text-color-primary), border: 1px solid var(--text-color-primary))
-);
-
-@each $name, $values in $chip-themes {
-  &.#{$name} {
+// Theme modifiers
+@each $name, $values in theme.$themes {
+  .chip_#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
@@ -78,26 +79,29 @@ $chip-themes: (
   }
 }
 
-.chipIcon {
+// Elements
+.chip_icon {
   margin-right: theme.$spacing-sm;
   display: flex;
   align-items: center;
   margin-top: -0.1em;
 }
 
-.chipMessage {
+.chip_message {
   flex-grow: 1;
   margin-right: 12px;
 }
 
-.chipClose {
+.chip_close {
   background: transparent;
   border: none;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
   color: inherit;
-  transition: transform 0.2s ease-in-out, opacity 0.2s;
+  transition:
+    transform 0.2s ease-in-out,
+    opacity 0.2s;
 
   &:hover {
     opacity: 0.7;
@@ -110,43 +114,69 @@ $chip-themes: (
   }
 }
 
+.chip_icon_inner {
+  height: 1em;
+  width: 1em;
+}
+
+// Size modifiers
 $chip-sizes: (
-  "xs": (padding: 4px 8px, font: theme.$font-size-xs, icon: 1rem, height: 20px),
-  "small": (padding: 6px 10px, font: theme.$font-size-sm, icon: 1rem, height: 20px),
-  "medium": (padding: 6px 12px, font: theme.$font-size-md, icon: 1.2rem),
-  "large": (padding: 6px 14px, font: theme.$font-size-lg, icon: 1.3rem),
-  "xl": (padding: 10px 18px, font: theme.$font-size-xl, icon: 2rem)
+  "xs": (
+    padding: 4px 8px,
+    font: theme.$font-size-xs,
+    icon: 1rem,
+    height: 20px,
+  ),
+  "small": (
+    padding: 6px 10px,
+    font: theme.$font-size-sm,
+    icon: 1rem,
+    height: 20px,
+  ),
+  "medium": (
+    padding: 6px 12px,
+    font: theme.$font-size-md,
+    icon: 1.2rem,
+  ),
+  "large": (
+    padding: 6px 14px,
+    font: theme.$font-size-lg,
+    icon: 1.3rem,
+  ),
+  "xl": (
+    padding: 10px 18px,
+    font: theme.$font-size-xl,
+    icon: 2rem,
+  ),
 );
 
 @each $size, $props in $chip-sizes {
-  &.#{$size} {
+  .chip_#{$size} {
     padding: map.get($props, padding);
 
     @if map.get($props, height) {
       height: map.get($props, height);
     }
 
-    .chipMessage {
+    .chip_message {
       font-size: map.get($props, font);
     }
 
-    .icon {
+    .chip_icon_inner {
       height: map.get($props, icon);
       width: map.get($props, icon);
     }
   }
 }
 
+// Fade-in keyframe
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translate(-50%, -10px);
+    transform: translateY(-10px);
   }
-
   to {
     opacity: 1;
-    transform: translate(-50%, 0);
+    transform: translateY(0);
   }
-}
-
 }

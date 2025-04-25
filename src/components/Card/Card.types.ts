@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import { OrientationType, ThemeType } from "@/types/types";
+import { OrientationType, SizeType, ThemeType } from "../../types/types";
 
 /**
  * Defines an action button rendered in the card footer.
@@ -15,6 +15,8 @@ export interface ActionButton {
   theme?: ThemeType;
   /** Optional URL to render the button as a link. */
   href?: string;
+  /** size for action buttons */
+  size?: SizeType;
   /** Optional loading state for the button. */
   loading?: boolean;
 }
@@ -39,8 +41,12 @@ export interface CardProps {
   headerClassName?: string;
   /** Custom class name for the image element. */
   imageClassName?: string;
-  /** Whether to use a solid background style. */
-  solid?: boolean;
+  /**Outlines card instead of solid fill */
+  outline?: boolean;
+  /** Card size ("xs", "small", "medium", "large", "xl"). */
+  size?: SizeType;
+  /**alignment of card content */
+  align?: "left" | "right" | "center";
   /** Custom class name for the body section. */
   bodyClassName?: string;
   /** Custom class name for the footer section. */

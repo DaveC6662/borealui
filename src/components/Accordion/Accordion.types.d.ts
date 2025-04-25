@@ -1,4 +1,4 @@
-import { SizeType, ThemeType } from "@/types/types";
+import { SizeType, ThemeType } from "../../types/types";
 
 /**
  * Props for the Accordion component.

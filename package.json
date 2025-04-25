@@ -19,6 +19,7 @@
     "build": "npm run build:core && npm run build:next",
     "lint": "eslint ./src --ext .ts,.tsx",
     "lint:styles": "stylelint '**/*.{css,scss}'",
+    "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
     "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
     "check:sync": "node scripts/checkSync.js",
     "generate:component": "node scripts/generate-component.js",

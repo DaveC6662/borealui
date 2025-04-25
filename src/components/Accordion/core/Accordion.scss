@@ -2,40 +2,6 @@
 @use "sass:color";
 @use "sass:map";
 
-// Theme variants
-$themes: (
-  "primary": (
-    color: var(--primary-color),
-    hover: var(--primary-color-hover),
-    text-hover: var(--text-color-primary),
-  ),
-  "secondary": (
-    color: var(--secondary-color),
-    hover: var(--secondary-color-hover),
-    text-hover: var(--text-color-secondary),
-  ),
-  "success": (
-    color: theme.$success-color,
-    hover: color.adjust(theme.$success-color, $lightness: -10%),
-    text-hover: var(--text-color-primary),
-  ),
-  "error": (
-    color: theme.$error-color,
-    hover: color.adjust(theme.$error-color, $lightness: -10%),
-    text-hover: var(--text-color-primary),
-  ),
-  "warning": (
-    color: theme.$warning-color,
-    hover: color.adjust(theme.$warning-color, $lightness: -10%),
-    text-hover: var(--text-color-primary),
-  ),
-  "clear": (
-    color: transparent,
-    hover: transparent,
-    text-hover: var(--text-color-primary),
-  ),
-);
-
 // Base container
 .accordion {
   border-radius: theme.$border-radius-md;
@@ -96,9 +62,9 @@ $themes: (
   border-bottom-right-radius: 0;
 }
 
-@each $name, $values in $themes {
+@each $name, $values in theme.$themes {
   .accordionHeader_#{$name} {
-    background-color: map.get($values, color);
+    background-color: map.get($values, bg);
     color: var(--text-color-primary);
 
     &:hover {
@@ -108,7 +74,7 @@ $themes: (
 
   .accordionHeader_#{$name}_outline {
     background-color: transparent;
-    border: 2px solid map.get($values, color);
+    border: 2px solid map.get($values, bg);
     color: map.get($values, text-color);
 
     &:hover {

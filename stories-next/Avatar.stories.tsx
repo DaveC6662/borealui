@@ -28,7 +28,7 @@ const shapeOptions = [...["circle", "rounded", "square"]] as string[];
 const statusOptions = [
   ...[
     "online",
-    "idle",
+    "away",
     "offline",
     "busy",
     "in-a-meeting",

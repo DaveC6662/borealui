@@ -1,8 +1,8 @@
 // src/stories/Chip.stories.tsx
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import Chip from "@/components/Chip/core/Chip";
+import { Chip } from "@/index.core";
 import { FaCheckCircle } from "react-icons/fa";
 import type { ChipProps } from "@/components/Chip/Chip.types";
 
@@ -26,7 +26,7 @@ type Story = StoryObj<ChipProps>;
 
 export const Default: Story = {
   render: () => {
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     return (
       <>
         <button onClick={() => setVisible(true)}>Show Chip</button>
@@ -35,6 +35,7 @@ export const Default: Story = {
           message="This is a chip message!"
           visible={visible}
           onClose={() => setVisible(false)}
+          autoClose={false}
         />
       </>
     );
@@ -43,10 +44,10 @@ export const Default: Story = {
 
 export const WithIcon: Story = {
   render: () => {
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     return (
       <>
-        <button onClick={() => setVisible(true)}>Show Chip</button>
+        <button onClick={() => setVisible(true)}>Show Chip with Icon</button>
         <Chip
           id="with-icon"
           message="Action completed successfully!"
@@ -54,6 +55,7 @@ export const WithIcon: Story = {
           visible={visible}
           onClose={() => setVisible(false)}
           theme="success"
+          autoClose={false}
         />
       </>
     );
@@ -62,7 +64,7 @@ export const WithIcon: Story = {
 
 export const AutoClose: Story = {
   render: () => {
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     return (
       <>
         <button onClick={() => setVisible(true)}>Show Auto-Close Chip</button>
@@ -72,7 +74,7 @@ export const AutoClose: Story = {
           visible={visible}
           onClose={() => setVisible(false)}
           duration={2000}
-          autoClose
+          autoClose={true}
         />
       </>
     );
@@ -81,7 +83,7 @@ export const AutoClose: Story = {
 
 export const CustomPositionAndTheme: Story = {
   render: () => {
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     return (
       <>
         <button onClick={() => setVisible(true)}>Show Top Right Warning</button>
@@ -92,6 +94,7 @@ export const CustomPositionAndTheme: Story = {
           onClose={() => setVisible(false)}
           theme="warning"
           position="topRight"
+          autoClose={false}
         />
       </>
     );

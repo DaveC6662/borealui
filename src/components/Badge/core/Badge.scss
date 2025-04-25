@@ -2,6 +2,7 @@
 @use "sass:color";
 @use "sass:map";
 
+// Base badge
 .badge {
   display: inline-flex;
   align-items: center;
@@ -23,15 +24,33 @@
     outline: 2px solid var(--focus-outline-color);
     outline-offset: 2px;
   }
+}
 
-  .icon {
-    font-size: 1.2em;
-    margin-top: -0.1em;
+// Icon inside badge
+.badge_icon {
+  font-size: 1.2em;
+  margin-top: -0.1em;
+}
+
+// Clear variant
+.badge_clear {
+  background-color: transparent;
+  color: var(--text-color-primary);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: theme.$box-shadow-large;
   }
 
-  &.clear {
+  &:focus {
+    outline: 2px solid var(--text-color-primary);
+    outline-offset: 2px;
+  }
+
+  &_outline {
     background-color: transparent;
     color: var(--text-color-primary);
+    border: 2px solid var(--text-color-primary);
 
     &:hover {
       transform: translateY(-2px);
@@ -42,117 +61,66 @@
       outline: 2px solid var(--text-color-primary);
       outline-offset: 2px;
     }
+  }
+}
 
-    &.outline {
-      background-color: transparent;
-      color: var(--text-color-primary);
+// Theme variants
+@each $name, $values in theme.$themes {
+  .badge_#{$name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, text);
 
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: theme.$box-shadow-large;
-      }
+    &:hover {
+      background-color: map.get($values, hover);
+      transform: translateY(-2px);
+      box-shadow: theme.$box-shadow-large;
+    }
 
-      &:focus {
-        outline: 2px solid var(--text-color-primary);
-        outline-offset: 2px;
-      }
+    &:focus {
+      outline: 2px solid map.get($values, border);
+      outline-offset: 2px;
+    }
+
+    .loader {
+      border-top-color: map.get($values, text);
     }
   }
 
-  $themes: (
-    "primary": (
-      bg: var(--primary-color),
-      hover: var(--primary-color-hover),
-      text: var(--text-color-primary),
-      border: var(--primary-color),
-      text-hover: var(--text-color-primary),
-    ),
-    "secondary": (
-      bg: var(--secondary-color),
-      hover: var(--secondary-color-hover),
-      text: var(--text-color-secondary),
-      border: var(--secondary-color),
-      text-hover: var(--text-color-secondary),
-    ),
-    "success": (
-      bg: theme.$success-color,
-      hover: color.adjust(theme.$success-color, $lightness: -10%),
-      text: var(--text-color-primary),
-      border: theme.$success-color,
-      text-hover: var(--text-color-primary),
-    ),
-    "error": (
-      bg: theme.$error-color,
-      hover: color.adjust(theme.$error-color, $lightness: -10%),
-      text: var(--text-color-primary),
-      border: theme.$error-color,
-      text-hover: var(--text-color-primary),
-    ),
-    "warning": (
-      bg: theme.$warning-color,
-      hover: color.adjust(theme.$warning-color, $lightness: -10%),
-      text: var(--text-color-primary),
-      border: theme.$warning-color,
-      text-hover: var(--text-color-primary),
-    ),
-  );
+  .badge_#{$name}_outline {
+    background-color: transparent;
+    color: map.get($values, text-color);
+    border: 2px solid map.get($values, border);
+    box-shadow: none;
 
-  @each $name, $values in $themes {
-    &.#{$name} {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-
-      &:hover {
-        background-color: map.get($values, hover);
-        transform: translateY(-2px);
-        box-shadow: theme.$box-shadow-large;
-      }
-
-      &:focus {
-        outline: 2px solid map.get($values, border);
-        outline-offset: 2px;
-      }
-
-      .loader {
-        border-top-color: map.get($values, text);
-      }
-
-      &.outline {
-        background-color: transparent;
-        color: map.get($values, border);
-        border: 2px solid map.get($values, border);
-        box-shadow: none;
-
-        &:hover {
-          border-color: map.get($values, hover);
-          color: map.get($values, text-hover);
-        }
-      }
+    &:hover {
+      border-color: map.get($values, hover);
+      color: map.get($values, text-hover);
     }
   }
+}
 
-  &.xs {
-    font-size: theme.$font-size-xxs;
-    padding: 2px 8px;
-  }
+// Size variants
+.badge_xs {
+  font-size: theme.$font-size-xxs;
+  padding: 2px 8px;
+}
 
-  &.small {
-    font-size: theme.$font-size-xs;
-    padding: 4px 8px;
-  }
+.badge_small {
+  font-size: theme.$font-size-xs;
+  padding: 4px 8px;
+}
 
-  &.medium {
-    font-size: theme.$font-size-sm;
-    padding: 4px 10px;
-  }
+.badge_medium {
+  font-size: theme.$font-size-sm;
+  padding: 4px 10px;
+}
 
-  &.large {
-    font-size: theme.$font-size-md;
-    padding: 4px 12px;
-  }
+.badge_large {
+  font-size: theme.$font-size-md;
+  padding: 4px 12px;
+}
 
-  &.xl {
-    font-size: theme.$font-size-lg;
-    padding: 4px 14px;
-  }
+.badge_xl {
+  font-size: theme.$font-size-lg;
+  padding: 4px 14px;
 }

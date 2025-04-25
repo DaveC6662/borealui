@@ -7,6 +7,12 @@ import styles from "./Card.module.scss";
 import CardBase from "../CardBase";
 import { CardProps } from "../Card.types";
 
+const NextImageWrapper: React.FC<React.ComponentProps<typeof Image>> = (
+  props
+) => {
+  return <Image {...props} />;
+};
+
 const Card: React.FC<CardProps> = (props) => {
   const wrappedButtons = (props.actionButtons ?? []).map((b) => ({
     ...b,
@@ -20,7 +26,7 @@ const Card: React.FC<CardProps> = (props) => {
       actionButtons={wrappedButtons}
       classMap={styles}
       SkeletonComponent={Skeleton}
-      ImageComponent={Image}
+      ImageComponent={NextImageWrapper}
     />
   );
 };

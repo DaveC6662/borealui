@@ -2,8 +2,12 @@
 
 import { useRef, useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import ChipGroup from "@/components/Chip/ChipGroup/core/ChipGroup";
-import type { ChipGroupProps, ChipGroupRef, ChipItem } from "@/components/Chip/ChipGroup/ChipGroup.types";
+import { ChipGroup } from "@/index.core";
+import type {
+  ChipGroupProps,
+  ChipGroupRef,
+  ChipItem,
+} from "@/components/Chip/ChipGroup/ChipGroup.types";
 import { FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 
 const meta: Meta<ChipGroupProps> = {
@@ -60,7 +64,10 @@ export const Default: Story = {
         >
           Add Chip
         </button>
-        <ChipGroup chips={chips} onRemove={(id) => setChips((prev) => prev.filter((c) => c.id !== id))} />
+        <ChipGroup
+          chips={chips}
+          onRemove={(id) => setChips((prev) => prev.filter((c) => c.id !== id))}
+        />
       </div>
     );
   },
@@ -86,10 +93,17 @@ export const WithRefCloseAll: Story = {
         >
           Add Chip
         </button>
-        <button onClick={() => ref.current?.closeAllChips()} style={{ marginLeft: "1rem" }}>
+        <button
+          onClick={() => ref.current?.closeAllChips()}
+          style={{ marginLeft: "1rem" }}
+        >
           Close All
         </button>
-        <ChipGroup ref={ref} chips={chips} onRemove={(id) => setChips((prev) => prev.filter((c) => c.id !== id))} />
+        <ChipGroup
+          ref={ref}
+          chips={chips}
+          onRemove={(id) => setChips((prev) => prev.filter((c) => c.id !== id))}
+        />
       </div>
     );
   },

@@ -1,8 +1,7 @@
 import React, { useMemo, useState, MouseEvent } from "react";
 import { AvatarProps } from "./Avatar.types";
-import { getInitials } from "@/utils/getInitials";
-import { combineClassNames } from "@/utils/classNames";
-
+import { getInitials } from "../../utils/getInitials";
+import { combineClassNames } from "../../utils/classNames";
 export interface AvatarBaseProps extends AvatarProps {
   ImageComponent?: React.ElementType;
   LinkComponent?: React.ElementType;
@@ -39,10 +38,10 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
     () =>
       combineClassNames(
         classMap.avatar,
-        classMap[theme],
-        classMap[shape],
-        classMap[size],
-        outline && classMap.outline,
+        classMap[`avatar_${theme}`],
+        classMap[`avatar_${shape}`],
+        classMap[`avatar_${size}`],
+        outline && classMap[`avatar_${theme}_outline`],
         className
       ),
     [theme, shape, size, outline, className]
@@ -53,7 +52,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
       <ImageComponent
         src={src}
         alt={computedLabel}
-        className={classMap.image}
+        className={classMap["avatar_image"]}
         onError={() => setImgError(true)}
         loading={priority ? "eager" : "lazy"}
         aria-hidden="false"
@@ -63,7 +62,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
       />
     ) : (
       <span
-        className={classMap.initials}
+        className={classMap["avatar_initials"]}
         data-testid="avatar-initials"
         role="img"
         aria-label={computedLabel}
@@ -76,15 +75,15 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
   const statusIndicator = (status || statusIcon) && (
     <span
       className={combineClassNames(
-        classMap.status,
-        status && classMap[`status-${status}`],
+        classMap["avatar_status"],
+        status && classMap[`avatar_status_${status}`],
         statusIcon ? "icon-only" : undefined,
-        classMap[statusPosition]
+        classMap[`avatar_status_${statusPosition}`]
       )}
       aria-hidden="true"
       data-testid="avatar-status"
     >
-      {statusIcon || <span className={classMap.dot} />}
+      {statusIcon || <span className={classMap["avatar_dot"]} />}
     </span>
   );
 
@@ -147,3 +146,5 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
     </button>
   );
 };
+
+AvatarBase.displayName = "AvatarBase";

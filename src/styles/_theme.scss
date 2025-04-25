@@ -17,8 +17,8 @@ $text-color-light: color.adjust($text-color, $lightness: 20%);
 $text-color-lighter: color.adjust($text-color, $lightness: 40%);
 $text-color-primary: rgb(255 255 255);
 $text-color-secondary: rgb(0 0 0);
-$font-family-primary: 'Lora', arial, sans-serif;
-$font-family-secondary: 'Lora', serif;
+$font-family-primary: "Lora", arial, sans-serif;
+$font-family-secondary: "Lora", serif;
 $font-size-xxs: 10px;
 $font-size-xs: 12px;
 $font-size-sm: 14px;
@@ -55,3 +55,46 @@ $link-hover-decoration: underline;
 $z-index-drawer: 90;
 $z-index-modal: 100;
 $z-index-tooltip: 110;
+$themes: (
+  "primary": (
+    bg: var(--primary-color),
+    hover: var(--primary-color-hover),
+    text: var(--text-color-primary),
+    border: var(--primary-color),
+    text-hover: var(--text-color-primary),
+  ),
+  "secondary": (
+    bg: var(--secondary-color),
+    hover: var(--secondary-color-hover),
+    text: var(--text-color-secondary),
+    border: var(--secondary-color),
+    text-hover: var(--text-color-secondary),
+  ),
+  "success": (
+    bg: $success-color,
+    hover: color.adjust($success-color, $lightness: -10%),
+    text: var(--text-color-primary),
+    border: $success-color,
+    text-hover: var(--text-color-primary),
+  ),
+  "error": (
+    bg: $error-color,
+    hover: color.adjust($error-color, $lightness: -10%),
+    text: var(--text-color-primary),
+    border: $error-color,
+    text-hover: var(--text-color-primary),
+  ),
+  "warning": (
+    bg: $warning-color,
+    hover: color.adjust($warning-color, $lightness: -10%),
+    text: var(--text-color-primary),
+    border: $warning-color,
+    text-hover: var(--text-color-primary),
+  ),
+  "clear": (
+    bg: transparent,
+    color: var(--text-color-primary),
+    hover: rgb(0 0 0 / 20%),
+    text-hover: $disabled-color,
+  ),
+) !default;

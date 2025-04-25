@@ -42,12 +42,12 @@ const ChipBase: React.FC<ChipBaseProps> = ({
 
   if (!visible && !closing) return null;
 
-  const classNames = combineClassNames(
+  const chipClassName = combineClassNames(
     classMap.chip,
-    classMap[theme],
-    classMap[size],
-    classMap[position],
-    closing && classMap.fadeOut,
+    classMap[`chip_${theme}`],
+    classMap[`chip_${size}`],
+    classMap[`chip_${position}`],
+    closing && classMap.chip_fadeout,
     className
   );
 
@@ -61,7 +61,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   return ReactDOM.createPortal(
     <div
       key={id}
-      className={classNames}
+      className={chipClassName}
       role="status"
       aria-live="polite"
       aria-atomic="true"
@@ -69,14 +69,14 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     >
       {Icon && (
         <span
-          className={classMap.chipIcon}
+          className={classMap.chip_icon}
           aria-hidden="true"
           data-testid="icon"
         >
           <Icon className={classMap.icon} />
         </span>
       )}
-      <span className={classMap.chipMessage} id={`${testId}-message`}>
+      <span className={classMap.chip_message} id={`${testId}-message`}>
         {message}
       </span>
 
@@ -86,7 +86,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
         theme="clear"
         ariaLabel="Close notification"
         aria-controls={`${testId}-message`}
-        className={classMap.chipClose}
+        className={classMap.chip_close}
         onClick={handleClose}
         onKeyDown={(e: KeyboardEvent) => {
           if (e.key === "Enter" || e.key === " ") {

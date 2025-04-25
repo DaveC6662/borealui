@@ -30,7 +30,9 @@ const CardBase: React.FC<CardBaseProps> = ({
   headerClassName = "",
   bodyClassName = "",
   footerClassName = "",
-  solid = false,
+  outline = false,
+  size = "medium",
+  align = "center",
   renderHeader,
   renderContent,
   renderFooter,
@@ -52,19 +54,31 @@ const CardBase: React.FC<CardBaseProps> = ({
   const descriptionId = `${autoId}-description`;
   const hasImage = !!imageUrl;
   const showBlur = blur && typeof imageUrl !== "string";
-
   const derivedAriaLabel = ariaLabel || title || description || "Content card";
+
+  const FallbackImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    <img {...props} />
+  );
+
+  const ImageRenderer = ImageComponent || FallbackImage;
+
+  const cardClassName = combineClassNames(
+    classMap.card,
+    classMap[`card_${theme}`],
+    classMap[`card_${size}`],
+    classMap[`card_${layout}`],
+    outline && classMap[`card_${theme}_outline`],
+    loading && classMap["card_loading"],
+    align && classMap[`card_${align}`],
+    className
+  );
+
+  const contentClassName = combineClassNames(classMap["card_content"]);
 
   return (
     <div
       data-testid={testId}
-      className={combineClassNames(
-        classMap.card,
-        solid && classMap.solid,
-        classMap[theme],
-        loading && classMap.cardLoading,
-        className
-      )}
+      className={cardClassName}
       role="region"
       aria-labelledby={title ? headerId : undefined}
       aria-label={!title ? derivedAriaLabel : undefined}
@@ -72,18 +86,15 @@ const CardBase: React.FC<CardBaseProps> = ({
       {loading ? (
         <SkeletonComponent width="100%" height="250px" data-testid="skeleton" />
       ) : (
-        <div
-          className={combineClassNames(
-            classMap.cardContent,
-            classMap.fadeIn,
-            classMap[layout]
-          )}
-        >
-          {hasImage && ImageComponent && (
-            <ImageComponent
+        <div className={contentClassName}>
+          {hasImage && (
+            <ImageRenderer
               src={imageUrl}
               alt={imageAlt || `${title || "Card"} image`}
-              className={combineClassNames(classMap.cardImage, imageClassName)}
+              className={combineClassNames(
+                classMap["card_image"],
+                imageClassName
+              )}
               placeholder={showBlur ? "blur" : undefined}
             />
           )}
@@ -91,7 +102,7 @@ const CardBase: React.FC<CardBaseProps> = ({
           <div>
             <div
               className={combineClassNames(
-                classMap.cardHeader,
+                classMap["card_header"],
                 headerClassName
               )}
               id={headerId}
@@ -99,10 +110,10 @@ const CardBase: React.FC<CardBaseProps> = ({
               {renderHeader ? (
                 renderHeader()
               ) : title ? (
-                <h2 className={classMap.cardTitle}>
+                <h2 className={classMap["card_title"]}>
                   {cardIcon && (
                     <span
-                      className={classMap.cardIcon}
+                      className={classMap["card_icon"]}
                       aria-hidden="true"
                       data-testid="card-icon"
                     >
@@ -115,7 +126,10 @@ const CardBase: React.FC<CardBaseProps> = ({
             </div>
 
             <div
-              className={combineClassNames(classMap.cardBody, bodyClassName)}
+              className={combineClassNames(
+                classMap["card_body"],
+                bodyClassName
+              )}
               role="group"
               aria-describedby={description ? descriptionId : undefined}
             >
@@ -124,12 +138,15 @@ const CardBase: React.FC<CardBaseProps> = ({
               ) : (
                 <>
                   {description && (
-                    <p id={descriptionId} className={classMap.cardDescription}>
+                    <p
+                      id={descriptionId}
+                      className={classMap["card_description"]}
+                    >
                       {description}
                     </p>
                   )}
                   {children && (
-                    <div className={classMap.cardChildren}>{children}</div>
+                    <div className={classMap["card_children"]}>{children}</div>
                   )}
                 </>
               )}
@@ -138,21 +155,22 @@ const CardBase: React.FC<CardBaseProps> = ({
             {(actionButtons.length > 0 || renderFooter) && (
               <div
                 className={combineClassNames(
-                  classMap.cardFooter,
+                  classMap["card_footer"],
                   footerClassName
                 )}
               >
                 {actionButtons.length > 0 && (
-                  <div className={classMap.cardActions}>
+                  <div className={classMap["card_actions"]}>
                     {actionButtons.map((button, index) =>
                       useIconButtons && button.icon ? (
                         <button.iconButtonComponent
                           key={index}
                           icon={button.icon}
                           onClick={button.onClick}
-                          className={classMap.actionButton}
+                          className={classMap["card_action_button"]}
                           theme={button.theme || "clear"}
                           aria-label={button.label}
+                          size={button.size || size}
                           href={button.href}
                           loading={button.loading}
                         />
@@ -160,10 +178,11 @@ const CardBase: React.FC<CardBaseProps> = ({
                         <button.buttonComponent
                           key={index}
                           onClick={button.onClick}
-                          className={classMap.actionButton}
+                          className={classMap["card_action_button"]}
                           theme={button.theme || "secondary"}
                           href={button.href}
                           loading={button.loading}
+                          size={button.size || size}
                           aria-label={button.label}
                         >
                           {button.label}

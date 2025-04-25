@@ -30,6 +30,7 @@ export const Themes: Story = {
       <Badge text="Success" theme="success" />
       <Badge text="Warning" theme="warning" />
       <Badge text="Error" theme="error" />
+      <Badge text="Clear" theme="clear" />
     </div>
   ),
 };
@@ -48,6 +49,7 @@ export const Sizes: Story = {
       <Badge text="Small" size="small" />
       <Badge text="Medium" size="medium" />
       <Badge text="Large" size="large" />
+      <Badge text="XL" size="xl" />
     </div>
   ),
 };
@@ -60,6 +62,7 @@ export const Outline: Story = {
       <Badge text="Success" theme="success" outline />
       <Badge text="Warning" theme="warning" outline />
       <Badge text="Error" theme="error" outline />
+      <Badge text="Clear" theme="clear" outline />
     </div>
   ),
 };

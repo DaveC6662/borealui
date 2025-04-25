@@ -1,0 +1,12 @@
+// This file contains all the animations used in the project
+
+// Fade in animation for elements
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

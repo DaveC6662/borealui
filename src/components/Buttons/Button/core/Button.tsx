@@ -18,6 +18,8 @@ const classMap = {
   success: "success",
   warning: "warning",
   error: "error",
+  xs: "xs",
+  xl: "xl",
   small: "small",
   medium: "medium",
   large: "large",

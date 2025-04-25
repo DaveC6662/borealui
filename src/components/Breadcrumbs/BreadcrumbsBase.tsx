@@ -35,31 +35,31 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
     return [first, { label: ELLIPSIS_LABEL }, ...lastItems];
   }, [items, isExpanded, maxVisible]);
 
-  const combinedClassName = combineClassNames(
+  const breadcrumbsClass = combineClassNames(
     classMap.breadcrumbs,
-    classMap[theme],
-    size && classMap[size],
-    outline && classMap.outline,
+    classMap[`breadcrumbs_${theme}`],
+    classMap[`breadcrumbs_${size}`],
+    outline && classMap[`breadcrumbs_${theme}_outline`],
     className
   );
 
   return (
     <nav
       aria-label="Breadcrumb"
-      className={combinedClassName}
+      className={breadcrumbsClass}
       itemScope
       role="navigation"
       itemType="https://schema.org/BreadcrumbList"
     >
-      <ol className={classMap.list}>
+      <ol className={classMap["breadcrumbs_list"]}>
         {visibleItems.map((item, index) => {
           const isLast = index === visibleItems.length - 1;
           const isEllipsis = item.label === ELLIPSIS_LABEL;
 
           const itemClassName = combineClassNames(
-            classMap.item,
-            isExpanded && !isEllipsis && classMap.itemAnimate,
-            isLast && classMap.active
+            classMap["breadcrumbs_item"],
+            isExpanded && !isEllipsis && classMap["breadcrumbs_item_animate"],
+            isLast && classMap["breadcrumbs_item_active"]
           );
 
           return (
@@ -75,9 +75,8 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                 <ButtonComponent
                   theme="clear"
                   size="small"
-                  className={classMap.ellipsis}
+                  className={classMap["breadcrumbs_ellipsis"]}
                   aria-label="Show more breadcrumbs"
-                  role="button"
                   onClick={handleExpand}
                   tabIndex={0}
                 >
@@ -87,16 +86,19 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                 <LinkComponent
                   href={item.href}
                   itemProp="item"
-                  className={classMap.link}
+                  className={classMap["breadcrumbs_link"]}
                   title={item.label}
                 >
-                  <span itemProp="name" className={classMap.linkLabel}>
+                  <span
+                    itemProp="name"
+                    className={classMap["breadcrumbs_link_label"]}
+                  >
                     {item.label}
                   </span>
                 </LinkComponent>
               ) : (
                 <span
-                  className={classMap.current}
+                  className={classMap["breadcrumbs_current"]}
                   itemProp="name"
                   aria-current="page"
                 >
@@ -105,9 +107,14 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
               )}
 
               {!isLast && (
-                <span className={classMap.separator} aria-hidden="true">
+                <span
+                  className={classMap["breadcrumbs_separator"]}
+                  aria-hidden="true"
+                >
                   {separator ?? (
-                    <FaChevronRight className={classMap.separatorIcon} />
+                    <FaChevronRight
+                      className={classMap["breadcrumbs_separator_icon"]}
+                    />
                   )}
                 </span>
               )}
@@ -119,3 +126,5 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
     </nav>
   );
 };
+
+BreadcrumbsBase.displayName = "BreadcrumbsBase";

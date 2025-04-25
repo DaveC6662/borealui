@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Breadcrumbs from "@components/Breadcrumbs/next/Breadcrumbs";
+import { Breadcrumbs } from "@/index.next";
 import { FaDotCircle } from "react-icons/fa";
 
 const meta: Meta<typeof Breadcrumbs> = {
@@ -32,16 +32,22 @@ export const Themed: Story = {
       <Breadcrumbs items={baseItems} theme="success" />
       <Breadcrumbs items={baseItems} theme="warning" />
       <Breadcrumbs items={baseItems} theme="error" />
+      <Breadcrumbs items={baseItems} theme="clear" />
     </div>
   ),
 };
 
 export const WithOutline: Story = {
-  args: {
-    items: baseItems,
-    outline: true,
-    theme: "primary",
-  },
+  render: () => (
+    <div style={{ display: "grid", gap: "1rem" }}>
+      <Breadcrumbs items={baseItems} theme="primary" outline />
+      <Breadcrumbs items={baseItems} theme="secondary" outline />
+      <Breadcrumbs items={baseItems} theme="success" outline />
+      <Breadcrumbs items={baseItems} theme="warning" outline />
+      <Breadcrumbs items={baseItems} theme="error" outline />
+      <Breadcrumbs items={baseItems} theme="clear" outline />
+    </div>
+  ),
 };
 
 export const Truncated: Story = {
@@ -62,4 +68,16 @@ export const CustomSeparator: Story = {
     items: baseItems,
     separator: <FaDotCircle />,
   },
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1rem" }}>
+      <Breadcrumbs items={baseItems} size="xs" />
+      <Breadcrumbs items={baseItems} size="small" />
+      <Breadcrumbs items={baseItems} size="medium" />
+      <Breadcrumbs items={baseItems} size="large" />
+      <Breadcrumbs items={baseItems} size="xl" />
+    </div>
+  ),
 };

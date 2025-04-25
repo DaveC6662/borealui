@@ -18,7 +18,6 @@ import {
   StatusType,
   ThemeType,
 } from "@/types/types";
-import { IconType } from "react-icons";
 
 // Prop options
 const themeOptions = [
@@ -29,7 +28,7 @@ const shapeOptions = [...["circle", "rounded", "square"]] as string[];
 const statusOptions = [
   ...[
     "online",
-    "idle",
+    "away",
     "offline",
     "busy",
     "in-a-meeting",
