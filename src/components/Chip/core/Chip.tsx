@@ -1,8 +1,8 @@
 import React from "react";
 import ChipBase from "../ChipBase";
+import { CloseIcon } from "../ChipBase";
 import "./Chip.scss";
 import IconButton from "../../Buttons/IconButton/core/IconButton";
-import { FaTimes } from "react-icons/fa";
 import { ChipProps } from "../Chip.types";
 
 const classMap = {
@@ -10,6 +10,8 @@ const classMap = {
   chip_icon: "chip_icon",
   chip_message: "chip_message",
   chip_close: "chip_close",
+  chip_relative: "chip_relative",
+  chip_fixed: "chip_fixed",
   chip_fadeout: "chip_fadeout",
   chip_topCenter: "chip_topCenter",
   chip_bottomCenter: "chip_bottomCenter",
@@ -18,6 +20,7 @@ const classMap = {
   chip_bottomLeft: "chip_bottomLeft",
   chip_bottomRight: "chip_bottomRight",
   chip_primary: "chip_primary",
+  chip_secondary: "chip_secondary",
   chip_success: "chip_success",
   chip_error: "chip_error",
   chip_warning: "chip_warning",
@@ -35,7 +38,7 @@ const Chip: React.FC<ChipProps> = (props) => (
     {...props}
     classMap={classMap}
     IconButtonComponent={IconButton}
-    closeIcon={FaTimes}
+    closeIcon={CloseIcon}
   />
 );
 

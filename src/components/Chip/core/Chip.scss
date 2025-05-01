@@ -4,9 +4,7 @@
 @use "sass:map";
 
 .chip {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -24,6 +22,13 @@
   transition:
     transform 0.3s ease-in-out,
     opacity 0.3s ease-in-out;
+}
+
+// Fixed position modifier
+.chip_fixed {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 // Fadeout modifier
@@ -92,28 +97,6 @@
   margin-right: 12px;
 }
 
-.chip_close {
-  background: transparent;
-  border: none;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  color: inherit;
-  transition:
-    transform 0.2s ease-in-out,
-    opacity 0.2s;
-
-  &:hover {
-    opacity: 0.7;
-    transform: scale(1.2);
-  }
-
-  &:focus {
-    outline: 2px solid var(--focus-outline-color);
-    outline-offset: 2px;
-  }
-}
-
 .chip_icon_inner {
   height: 1em;
   width: 1em;
@@ -122,15 +105,15 @@
 // Size modifiers
 $chip-sizes: (
   "xs": (
-    padding: 4px 8px,
+    padding: 5px 9px,
     font: theme.$font-size-xs,
-    icon: 1rem,
+    icon: 0.8rem,
     height: 20px,
   ),
   "small": (
     padding: 6px 10px,
     font: theme.$font-size-sm,
-    icon: 1rem,
+    icon: 0.9rem,
     height: 20px,
   ),
   "medium": (
@@ -166,17 +149,5 @@ $chip-sizes: (
       height: map.get($props, icon);
       width: map.get($props, icon);
     }
-  }
-}
-
-// Fade-in keyframe
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }

@@ -96,18 +96,6 @@
   color: theme.$disabled-color;
 }
 
-.breadcrumbs_ellipsis {
-  background: none;
-  border: none;
-  color: var(--text-color-primary);
-  cursor: pointer;
-  font-weight: theme.$font-weight-bold;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
 .breadcrumbs_link {
   text-decoration: none;
   color: inherit;

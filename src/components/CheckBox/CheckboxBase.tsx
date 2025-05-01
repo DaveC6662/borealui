@@ -1,4 +1,4 @@
-import React, {
+import {
   forwardRef,
   useId,
   useRef,
@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
 } from "react";
 import type { CheckboxProps } from "./Checkbox.types";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 
 export interface CheckboxBaseProps extends CheckboxProps {
   classMap: Record<string, string>;

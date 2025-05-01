@@ -5,16 +5,14 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import type { ChipGroupProps, ChipGroupRef, ChipItem } from "./ChipGroup.types";
+import type { ChipGroupProps, ChipGroupRef } from "./ChipGroup.types";
+import type { ChipProps } from "../Chip.types";
 import { v4 as uuidv4 } from "uuid";
+import { combineClassNames } from "@/utils/classNames";
 
 export interface ChipGroupBaseProps extends ChipGroupProps {
   ChipComponent: React.ElementType;
-  classMap: {
-    container: string;
-    stackClassPrefix?: string;
-    list?: string;
-  };
+  classMap: Record<string, string>;
   positionMap: Record<string, string>;
 }
 
@@ -32,7 +30,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
     },
     ref
   ) => {
-    const [visibleChips, setVisibleChips] = useState<ChipItem[]>([]);
+    const [visibleChips, setVisibleChips] = useState<ChipProps[]>([]);
 
     useEffect(() => {
       const initialized = chips.map((chip) => ({
@@ -73,33 +71,35 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
         data-testid="chip-group"
       >
         <ul role="list" className={classMap.list}>
-          {visibleChips.map((chip, index) => (
-            <li key={chip.id} role="listitem">
-              <ChipComponent
-                id={chip.id}
-                message={chip.message}
-                icon={chip.icon}
-                theme={chip.theme}
-                size={chip.size || size}
-                visible={true}
-                onClose={() => handleClose(chip.id!)}
-                autoClose={chip.autoClose}
-                duration={chip.duration}
-                position={chip.position || position}
-                stackIndex={index}
-                className={[
-                  chip.className,
-                  classMap.stackClassPrefix
-                    ? `${classMap.stackClassPrefix}${index}`
-                    : "",
-                  positionMap[chip.position || position] || "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                data-testid={chip["data-testid"]}
-              />
-            </li>
-          ))}
+          {visibleChips.map((chip, index) => {
+            const chipPosition = chip.position || position;
+            const chipPositionClass = positionMap[chipPosition];
+
+            return (
+              <li key={chip.id} role="listitem">
+                <ChipComponent
+                  id={chip.id}
+                  message={chip.message}
+                  icon={chip.icon}
+                  theme={chip.theme}
+                  size={chip.size || size}
+                  visible={true}
+                  onClose={() => handleClose(chip.id!)}
+                  autoClose={chip.autoClose}
+                  duration={chip.duration}
+                  position={chipPosition}
+                  usePortal={false}
+                  stackIndex={index}
+                  className={combineClassNames(
+                    "group_chip",
+                    chip.className,
+                    chipPositionClass
+                  )}
+                  data-testid={chip["data-testid"]}
+                />
+              </li>
+            );
+          })}
         </ul>
       </div>
     );
@@ -107,5 +107,4 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
 );
 
 ChipGroupBase.displayName = "ChipGroupBase";
-
 export default ChipGroupBase;

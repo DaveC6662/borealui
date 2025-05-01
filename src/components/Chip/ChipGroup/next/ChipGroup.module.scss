@@ -1,72 +1,87 @@
 @use "../../../../styles/theme" as theme;
+@use "../../../../styles/globals";
 @use "sass:map";
 
+// Position mappings for chips
 $chip-positions: (
-  "topLeft": (
+  "top_left": (
     top: 20px,
     left: 20px,
     align-items: flex-start,
   ),
-  "topCenter": (
+  "top_center": (
     top: 20px,
     left: 50%,
     transform: translateX(-50%),
     align-items: center,
   ),
-  "topRight": (
+  "top_right": (
     top: 20px,
     right: 20px,
     align-items: flex-end,
   ),
-  "bottomLeft": (
+  "bottom_left": (
     bottom: 20px,
     left: 20px,
     align-items: flex-start,
   ),
-  "bottomCenter": (
+  "bottom_center": (
     bottom: 20px,
     left: 50%,
     transform: translateX(-50%),
     align-items: center,
   ),
-  "bottomRight": (
+  "bottom_right": (
     bottom: 20px,
     right: 20px,
     align-items: flex-end,
   ),
 );
 
-.chipGroup {
-  position: fixed;
-  z-index: 9999;
+.chip_group_list {
   display: flex;
   flex-direction: column;
-  pointer-events: none;
+  list-style: none;
+  gap: theme.$spacing-xs;
+  margin: 0;
+  padding: 0;
 
-  @each $position, $values in $chip-positions {
-    &.#{$position} {
-      inset: map.get($values, top)
-        map.get($values, right)
-        map.get($values, bottom)
-        map.get($values, left);
-      transform: map.get($values, transform, null);
-      align-items: map.get($values, align-items);
-    }
+  :global(.Chip_chip__*) {
+    pointer-events: auto;
   }
 }
 
-@for $i from 0 through 10 {
-  .chipStack#{$i} {
-    margin-top: calc($i * 50px);
-    transition:
-      transform 0.2s ease,
-      opacity 0.2s ease;
+.chip_group {
+  position: fixed;
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 90vw;
+  pointer-events: none;
+
+  @each $position, $values in $chip-positions {
+    &.chip_group_#{$position} {
+      @if map.has-key($values, top) {
+        top: map.get($values, top);
+      }
+      @if map.has-key($values, bottom) {
+        bottom: map.get($values, bottom);
+      }
+      @if map.has-key($values, left) {
+        left: map.get($values, left);
+      }
+      @if map.has-key($values, right) {
+        right: map.get($values, right);
+      }
+      @if map.has-key($values, transform) {
+        transform: map.get($values, transform);
+      }
+      align-items: map.get($values, align-items);
+    }
   }
 
-  .bottom-left.chipStack#{$i},
-  .bottom-center.chipStack#{$i},
-  .bottom-right.chipStack#{$i} {
-    margin-bottom: calc($i * 50px);
-    margin-top: 0;
+  .group_chip {
+    pointer-events: auto;
   }
 }

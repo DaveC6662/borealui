@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { Button, IconButton, Skeleton } from "@/index.next";
+import { Button, IconButton, Skeleton } from "../../../index.next";
 import styles from "./Card.module.scss";
 import CardBase from "../CardBase";
 import { CardProps } from "../Card.types";

@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 import { ActionButton, CardProps } from "./Card.types";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 
 type ExtendedActionButton = ActionButton & {
   buttonComponent: React.ElementType;

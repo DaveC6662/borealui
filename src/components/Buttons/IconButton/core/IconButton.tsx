@@ -14,9 +14,12 @@ const classMap = {
   success: "success",
   warning: "warning",
   error: "error",
+  clear: "clear",
+  xs: "xs",
   small: "small",
   medium: "medium",
   large: "large",
+  xl: "xl",
 };
 
 const IconButton: React.FC<IconButtonProps> = (props) => (

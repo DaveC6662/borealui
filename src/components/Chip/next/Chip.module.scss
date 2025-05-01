@@ -1,9 +1,10 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 
 .chip {
-  position: fixed;
+  position: relative;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
@@ -23,77 +24,59 @@
   transition:
     transform 0.3s ease-in-out,
     opacity 0.3s ease-in-out;
-
-  &.fadeOut {
-    opacity: 0;
-    transform: translate(-50%, -10px);
-  }
-
-  &.topCenter {
-    top: 20px;
-  }
-
-  &.bottomCenter {
-    bottom: 20px;
-  }
-
-  &.topLeft {
-    top: 20px;
-    left: 20px;
-    transform: none;
-  }
-
-  &.topRight {
-    top: 20px;
-    right: 20px;
-    left: auto;
-    transform: none;
-  }
-
-  &.bottomLeft {
-    bottom: 20px;
-    left: 20px;
-    transform: none;
-  }
-
-  &.bottomRight {
-    bottom: 20px;
-    right: 20px;
-    left: auto;
-    transform: none;
-  }
 }
 
-$chip-themes: (
-  "primary": (
-    bg: var(--primary-color),
-    text: var(--text-color-primary),
-  ),
-  "secondary": (
-    bg: var(--secondary-color),
-    text: var(--text-color-secondary),
-  ),
-  "success": (
-    bg: rgba(theme.$success-color, 0.9),
-    text: var(--text-color-primary),
-  ),
-  "error": (
-    bg: rgba(theme.$error-color, 0.9),
-    text: var(--text-color-primary),
-  ),
-  "warning": (
-    bg: rgba(theme.$warning-color, 0.9),
-    text: var(--text-color-primary),
-  ),
-  "clear": (
-    bg: rgb(1 1 1 / 20%),
-    text: var(--text-color-primary),
-    border: 1px solid var(--text-color-primary),
-  ),
-);
+// Fixed position modifier
+.chip_fixed {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-@each $name, $values in $chip-themes {
-  .#{$name} {
+// Fadeout modifier
+.chip_fadeout {
+  opacity: 0;
+  transform: translate(-50%, -10px);
+}
+
+// Position modifiers
+.chip_topCenter {
+  top: 20px;
+}
+
+.chip_bottomCenter {
+  bottom: 20px;
+}
+
+.chip_topLeft {
+  top: 20px;
+  left: 20px;
+  transform: none;
+}
+
+.chip_topRight {
+  top: 20px;
+  right: 20px;
+  left: auto;
+  transform: none;
+}
+
+.chip_bottomLeft {
+  bottom: 20px;
+  left: 20px;
+  transform: none;
+}
+
+.chip_bottomRight {
+  bottom: 20px;
+  right: 20px;
+  left: auto;
+  transform: none;
+}
+
+// Theme modifiers
+@each $name, $values in theme.$themes {
+  .chip_#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
@@ -103,51 +86,40 @@ $chip-themes: (
   }
 }
 
-.chipIcon {
+.chip_clear {
+  box-shadow: none;
+}
+
+// Elements
+.chip_icon {
   margin-right: theme.$spacing-sm;
   display: flex;
   align-items: center;
   margin-top: -0.1em;
 }
 
-.chipMessage {
+.chip_message {
   flex-grow: 1;
   margin-right: 12px;
 }
 
-.chipClose {
-  background: transparent;
-  border: none;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  color: inherit;
-  transition:
-    transform 0.2s ease-in-out,
-    opacity 0.2s;
-
-  &:hover {
-    opacity: 0.7;
-    transform: scale(1.2);
-  }
-
-  &:focus {
-    outline: 2px solid var(--focus-outline-color);
-    outline-offset: 2px;
-  }
+.chip_icon_inner {
+  height: 1em;
+  width: 1em;
 }
 
+// Size modifiers
 $chip-sizes: (
   "xs": (
-    padding: 4px 8px,
+    padding: 5px 9px,
     font: theme.$font-size-xs,
-    icon: 1rem,
+    icon: 0.8rem,
     height: 20px,
   ),
   "small": (
     padding: 6px 10px,
     font: theme.$font-size-sm,
-    icon: 1rem,
+    icon: 0.9rem,
     height: 20px,
   ),
   "medium": (
@@ -168,32 +140,20 @@ $chip-sizes: (
 );
 
 @each $size, $props in $chip-sizes {
-  .#{$size} {
+  .chip_#{$size} {
     padding: map.get($props, padding);
 
     @if map.get($props, height) {
       height: map.get($props, height);
     }
 
-    .chipMessage {
+    .chip_message {
       font-size: map.get($props, font);
     }
 
-    .icon {
+    .chip_icon_inner {
       height: map.get($props, icon);
       width: map.get($props, icon);
     }
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
   }
 }

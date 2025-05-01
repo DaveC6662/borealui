@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState, KeyboardEvent } from "react";
-import ReactDOM from "react-dom";
+import { useCallback, useEffect, useState, KeyboardEvent } from "react";
+import { createPortal } from "react-dom";
 import { ChipProps } from "./Chip.types";
 import { combineClassNames } from "@/utils/classNames";
 
@@ -8,6 +8,17 @@ export interface ChipBaseProps extends ChipProps {
   IconButtonComponent: React.ElementType;
   closeIcon?: React.ElementType;
 }
+
+export const CloseIcon: React.FC = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24">
+    <path
+      d="M18 6L6 18M6 6l12 12"
+      stroke="currentColor"
+      strokeWidth="4"
+      strokeLinecap="round"
+    />
+  </svg>
+);
 
 const ChipBase: React.FC<ChipBaseProps> = ({
   id,
@@ -18,6 +29,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   size = "medium",
   theme = "primary",
   position = "topCenter",
+  usePortal = true,
   className = "",
   autoClose = true,
   duration = 3000,
@@ -48,6 +60,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     classMap[`chip_${size}`],
     classMap[`chip_${position}`],
     closing && classMap.chip_fadeout,
+    usePortal && classMap.chip_fixed,
     className
   );
 
@@ -56,9 +69,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
       ? document.getElementById("widget-portal")
       : null;
 
-  if (!portalEl) return null;
-
-  return ReactDOM.createPortal(
+  const chipElement = (
     <div
       key={id}
       className={chipClassName}
@@ -82,7 +93,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
 
       <IconButtonComponent
         icon={CloseIcon}
-        size="small"
+        size={size}
         theme="clear"
         ariaLabel="Close notification"
         aria-controls={`${testId}-message`}
@@ -98,9 +109,14 @@ const ChipBase: React.FC<ChipBaseProps> = ({
         tabIndex={0}
         data-testid="chip-close"
       />
-    </div>,
-    portalEl
+    </div>
   );
+
+  if (usePortal && portalEl) {
+    return createPortal(chipElement, portalEl);
+  }
+
+  return chipElement;
 };
 
 export default ChipBase;

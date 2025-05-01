@@ -1,9 +1,7 @@
 import React from "react";
 import CardBase from "../CardBase";
 import "./Card.scss";
-import Button from "../../Buttons/Button/core/Button";
-import IconButton from "../../Buttons/IconButton/core/IconButton";
-import Skeleton from "../../Skeleton/core/Skeleton";
+import { Button, IconButton, Skeleton } from "../../../index.core";
 import { CardProps } from "../Card.types";
 
 const classMap = {

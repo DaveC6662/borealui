@@ -5,16 +5,16 @@ import "./ChipGroup.scss";
 import { ChipGroupProps, ChipGroupRef } from "../ChipGroup.types";
 
 const classMap = {
-  container: "chipGroupContainer",
-  positionMap: {
-    topCenter: "topCenter",
-    topRight: "topRight",
-    topLeft: "topLeft",
-    bottomCenter: "bottomCenter",
-    bottomRight: "bottomRight",
-    bottomLeft: "bottomLeft",
-  },
-  stackClassPrefix: "chipStack",
+  container: "chip_group",
+};
+
+const positionMap = {
+  topCenter: "chip_group_top_center",
+  bottomCenter: "chip_group_bottom_center",
+  topLeft: "chip_group_top_left",
+  topRight: "chip_group_top_right",
+  bottomLeft: "chip_group_bottom_left",
+  bottomRight: "chip_group_bottom_right",
 };
 
 const ChipGroup = React.forwardRef<ChipGroupRef, ChipGroupProps>(
@@ -24,7 +24,7 @@ const ChipGroup = React.forwardRef<ChipGroupRef, ChipGroupProps>(
       ref={ref}
       ChipComponent={Chip}
       classMap={classMap}
-      positionMap={classMap.positionMap}
+      positionMap={positionMap}
     />
   )
 );

@@ -18,6 +18,7 @@ const classMap = {
   success: "success",
   warning: "warning",
   error: "error",
+  clear: "clear",
   xs: "xs",
   xl: "xl",
   small: "small",

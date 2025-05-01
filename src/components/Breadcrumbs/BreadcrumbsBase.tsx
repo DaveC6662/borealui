@@ -1,17 +1,32 @@
 import React, { useMemo, useState } from "react";
-import { FaChevronRight } from "react-icons/fa";
 import {
   Breadcrumb,
   BreadcrumbsProps,
   ELLIPSIS_LABEL,
 } from "./Breadcrumbs.types";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 
 export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
   classMap: Record<string, string>;
   LinkComponent?: React.ElementType;
   ButtonComponent: React.ElementType;
 }
+
+const DefaultSeparatorIcon = () => (
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="breadcrumbs_separator_icon"
+  >
+    <polyline points="9 18 15 12 9 6" />
+  </svg>
+);
 
 export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   items,
@@ -111,11 +126,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   className={classMap["breadcrumbs_separator"]}
                   aria-hidden="true"
                 >
-                  {separator ?? (
-                    <FaChevronRight
-                      className={classMap["breadcrumbs_separator_icon"]}
-                    />
-                  )}
+                  {separator ?? <DefaultSeparatorIcon />}
                 </span>
               )}
               <meta itemProp="position" content={`${index + 1}`} />
