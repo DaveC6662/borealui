@@ -1,5 +1,5 @@
 import { forwardRef, useState, useId, InputHTMLAttributes } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { EyeIcon, EyeSlashIcon } from "@/Icons";
 import { TextInputProps } from "./TextInput.types";
 
 /**
@@ -78,7 +78,7 @@ const TextInputBase = forwardRef<
             aria-label={showPassword ? "Hide password" : "Show password"}
             data-testid={`${testId}-password-toggle`}
           >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
+            {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
           </button>
         )}
 

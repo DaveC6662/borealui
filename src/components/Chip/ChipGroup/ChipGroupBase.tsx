@@ -91,7 +91,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
                   usePortal={false}
                   stackIndex={index}
                   className={combineClassNames(
-                    "group_chip",
+                    classMap.chip,
                     chip.className,
                     chipPositionClass
                   )}

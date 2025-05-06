@@ -85,26 +85,26 @@
     &.#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
+    }
 
-      &:hover {
-        background-color: map.get($values, hover);
-      }
+    &.#{$name}:hover {
+      background-color: map.get($values, hover);
+    }
 
-      .loader {
-        border-top-color: map.get($values, text);
-      }
+    &.#{$name} .loader {
+      border-top-color: map.get($values, text);
+    }
 
-      &.outline {
-        background-color: transparent;
-        color: map.get($values, border);
-        border-color: map.get($values, border);
+    &.#{$name}.outline {
+      background-color: transparent;
+      color: map.get($values, border);
+      border-color: map.get($values, border);
+    }
 
-        &:hover {
-          border-color: map.get($values, hover);
-          color: map.get($values, text);
-          background-color: map.get($values, bg);
-        }
-      }
+    &.#{$name}.outline:hover {
+      border-color: map.get($values, hover);
+      color: map.get($values, text);
+      background-color: map.get($values, bg);
     }
   }
 

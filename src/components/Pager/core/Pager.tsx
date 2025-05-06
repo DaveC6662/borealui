@@ -1,7 +1,6 @@
 import React from "react";
 import BasePager from "../PagerBase";
-import Button from "../../Buttons/Button/core/Button";
-import IconButton from "../../Buttons/IconButton/core/IconButton";
+import { Button, IconButton } from "@/index.core";
 import "./Pager.scss";
 import { PaginationProps } from "../Pager.types";
 

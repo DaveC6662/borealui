@@ -30,6 +30,7 @@ const classMap = {
 
   avatar_image: "avatar_image",
   avatar_initials: "avatar_initials",
+  avatar_fallback_icon: "avatar_fallback_icon",
   avatar_status: "avatar_status",
   avatar_status_online: "avatar_status_online",
   avatar_status_offline: "avatar_status_offline",

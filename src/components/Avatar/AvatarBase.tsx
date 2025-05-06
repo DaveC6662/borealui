@@ -2,6 +2,7 @@ import React, { useMemo, useState, MouseEvent } from "react";
 import { AvatarProps } from "./Avatar.types";
 import { getInitials } from "../../utils/getInitials";
 import { combineClassNames } from "../../utils/classNames";
+import { FallbackUserIcon } from "../../Icons/index";
 export interface AvatarBaseProps extends AvatarProps {
   ImageComponent?: React.ElementType;
   LinkComponent?: React.ElementType;
@@ -32,7 +33,13 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
 }) => {
   const [imgError, setImgError] = useState(false);
   const computedLabel = label || alt || name || "User avatar";
-  const fallbackContent = fallback ?? getInitials(name);
+  const fallbackContent =
+    fallback ??
+    (name ? (
+      getInitials(name)
+    ) : (
+      <FallbackUserIcon className={classMap["avatar_fallback_icon"]} />
+    ));
 
   const combinedClassName = useMemo(
     () =>

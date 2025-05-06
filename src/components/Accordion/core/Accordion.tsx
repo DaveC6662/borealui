@@ -10,7 +10,6 @@ const styles = {
   accordionIcon: "accordionIcon",
   accordionTitle: "accordionTitle",
 
-  // Modifiers
   accordionHeader_clear: "accordionHeader_clear",
   accordionHeader_expanded: "accordionHeader_expanded",
   accordionContent_expanded: "accordionContent_expanded",
@@ -19,7 +18,6 @@ const styles = {
   accordion_disabled: "accordion_disabled",
   accordion_expanded: "accordion_expanded",
 
-  // Theme variants
   accordionHeader_primary: "accordionHeader_primary",
   accordionHeader_primary_outline: "accordionHeader_primary_outline",
   accordionHeader_secondary: "accordionHeader_secondary",
@@ -32,7 +30,6 @@ const styles = {
   accordionHeader_warning_outline: "accordionHeader_warning_outline",
   accordionHeader_clear_outline: "accordionHeader_clear_outline",
 
-  // Size variants
   xs: "xs",
   small: "small",
   medium: "medium",
@@ -45,9 +42,6 @@ const generateUniqueId = (() => {
   return () => `accordion-core-${counter++}`;
 })();
 
-/**
- * Core Accordion wrapper. Passes all props to AccordionBase.
- */
 const Accordion: React.FC<AccordionProps> = (props) => (
   <AccordionBase {...props} getUniqueId={generateUniqueId} styles={styles} />
 );

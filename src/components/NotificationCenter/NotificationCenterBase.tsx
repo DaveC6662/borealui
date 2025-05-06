@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { FaTimes } from "react-icons/fa";
+import { CloseIcon } from "@/Icons";
 import {
   NotificationCenterProps,
   themeIcons,
@@ -113,7 +113,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                   theme="error"
                   size="small"
                   outline
-                  icon={FaTimes}
+                  icon={CloseIcon}
                   onClick={() => onRemove(note.id)}
                   aria-label={`Dismiss notification ${index + 1}`}
                   title="Dismiss"

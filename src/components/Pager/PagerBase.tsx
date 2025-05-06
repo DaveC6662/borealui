@@ -1,5 +1,5 @@
 import React from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { ArrowLeftIcon, ArrowRightIcon } from "@/Icons";
 import { PaginationProps } from "./Pager.types";
 
 export interface BasePagerProps extends PaginationProps {
@@ -40,7 +40,7 @@ const BasePager: React.FC<BasePagerProps> = ({
     >
       <div className={classNames.controls}>
         <IconButton
-          icon={FaArrowLeft}
+          icon={ArrowLeftIcon}
           theme={theme}
           size={size}
           className={classNames.controlButton}
@@ -80,7 +80,7 @@ const BasePager: React.FC<BasePagerProps> = ({
 
       <div className={classNames.controls}>
         <IconButton
-          icon={FaArrowRight}
+          icon={ArrowRightIcon}
           theme={theme}
           size={size}
           className={classNames.controlButton}

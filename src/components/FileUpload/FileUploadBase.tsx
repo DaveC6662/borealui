@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { FileUploadProps } from "./FileUpload.types";
-import { FaFile, FaTrash } from "react-icons/fa";
+import { FileIcon, TrashIcon } from "@/Icons";
 
 export interface BaseFileUploadProps extends FileUploadProps {
   FormGroup: React.ComponentType<any>;
@@ -138,7 +138,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
         <div className={classNames.uploadActions}>
           <Button
-            icon={FaFile}
+            icon={FileIcon}
             size="small"
             theme={theme}
             className={classNames.fileInput}
@@ -153,7 +153,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
           {fileNames.length > 0 && (
             <IconButton
-              icon={FaTrash}
+              icon={TrashIcon}
               theme="error"
               onClick={handleRemoveFile}
               outline

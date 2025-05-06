@@ -1,6 +1,6 @@
 import { forwardRef, ChangeEvent, useId } from "react";
 import { SelectProps } from "./Select.types";
-import { FaChevronDown } from "react-icons/fa";
+import { ChevronDownIcon } from "@/Icons";
 
 interface BaseSelectProps extends SelectProps {
   classNames: {
@@ -81,7 +81,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           aria-hidden="true"
           data-testid={`${testId}-icon`}
         >
-          <FaChevronDown />
+          <ChevronDownIcon />
         </div>
 
         {ariaDescription && (

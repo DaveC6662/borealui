@@ -2,20 +2,19 @@ import React, { JSX, useMemo } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Paragraph from "@tiptap/extension-paragraph";
-import Heading from "@tiptap/extension-heading";
 import DOMPurify from "dompurify";
 import {
-  FaBold,
-  FaItalic,
-  FaStrikethrough,
-  FaCode,
-  FaListUl,
-  FaListOl,
-  FaUndo,
-  FaRedo,
-  FaEraser,
-  FaTrash,
-} from "react-icons/fa";
+  BoldIcon,
+  CodeIcon,
+  EraserIcon,
+  ItalicIcon,
+  ListOlIcon,
+  ListUlIcon,
+  RedoIcon,
+  StrikethroughIcon,
+  TrashIcon,
+  UndoIcon,
+} from "@/Icons";
 import { RichTextEditorProps } from "./RichTextEditor.types";
 
 interface BaseRichTextEditorProps extends RichTextEditorProps {
@@ -90,58 +89,58 @@ const BaseRichTextEditor: React.FC<BaseRichTextEditorProps> = ({
 
   const buttons = [
     {
-      icon: <FaBold size={14} />,
+      icon: <BoldIcon />,
       label: "Bold",
       cmd: () => editor.chain().focus().toggleBold().run(),
       isActive: editor.isActive("bold"),
     },
     {
-      icon: <FaItalic size={14} />,
+      icon: <ItalicIcon />,
       label: "Italic",
       cmd: () => editor.chain().focus().toggleItalic().run(),
       isActive: editor.isActive("italic"),
     },
     {
-      icon: <FaStrikethrough size={14} />,
+      icon: <StrikethroughIcon />,
       label: "Strikethrough",
       cmd: () => editor.chain().focus().toggleStrike().run(),
       isActive: editor.isActive("strike"),
     },
     {
-      icon: <FaCode size={14} />,
+      icon: <CodeIcon />,
       label: "Code Block",
       cmd: () => editor.chain().focus().toggleCodeBlock().run(),
       isActive: editor.isActive("codeBlock"),
     },
     {
-      icon: <FaListUl size={14} />,
+      icon: <ListUlIcon />,
       label: "Bullet List",
       cmd: () => editor.chain().focus().toggleBulletList().run(),
       isActive: editor.isActive("bulletList"),
     },
     {
-      icon: <FaListOl size={14} />,
+      icon: <ListOlIcon />,
       label: "Numbered List",
       cmd: () => editor.chain().focus().toggleOrderedList().run(),
       isActive: editor.isActive("orderedList"),
     },
     {
-      icon: <FaEraser size={14} />,
+      icon: <EraserIcon />,
       label: "Clear Formatting",
       cmd: () => editor.chain().focus().unsetAllMarks().clearNodes().run(),
     },
     {
-      icon: <FaTrash size={14} />,
+      icon: <TrashIcon />,
       label: "Clear Content",
       cmd: () => editor.commands.setContent(""),
     },
     {
-      icon: <FaUndo size={14} />,
+      icon: <UndoIcon />,
       label: "Undo",
       cmd: () => editor.chain().focus().undo().run(),
     },
     {
-      icon: <FaRedo size={14} />,
+      icon: <RedoIcon />,
       label: "Redo",
       cmd: () => editor.chain().focus().redo().run(),
     },

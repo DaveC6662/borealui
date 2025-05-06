@@ -6,15 +6,16 @@ import { ChipGroupProps, ChipGroupRef } from "../ChipGroup.types";
 
 const classMap = {
   container: "chip_group",
+  list: "chip_group_list",
 };
 
 const positionMap = {
-  topCenter: "chip_group_top_center",
-  bottomCenter: "chip_group_bottom_center",
-  topLeft: "chip_group_top_left",
-  topRight: "chip_group_top_right",
-  bottomLeft: "chip_group_bottom_left",
-  bottomRight: "chip_group_bottom_right",
+  topCenter: "chip_group_topCenter",
+  bottomCenter: "chip_group_bottomCenter",
+  topLeft: "chip_group_topLeft",
+  topRight: "chip_group_topRight",
+  bottomLeft: "chip_group_bottomLeft",
+  bottomRight: "chip_group_bottomRight",
 };
 
 const ChipGroup = React.forwardRef<ChipGroupRef, ChipGroupProps>(

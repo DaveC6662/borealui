@@ -24,136 +24,136 @@
   transition:
     transform 0.3s ease-in-out,
     opacity 0.3s ease-in-out;
-}
 
-// Fixed position modifier
-.chip_fixed {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-}
+  // Fixed position modifier
+  &_fixed {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-// Fadeout modifier
-.chip_fadeout {
-  opacity: 0;
-  transform: translate(-50%, -10px);
-}
+  // Fadeout modifier
+  &_fadeout {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
 
-// Position modifiers
-.chip_topCenter {
-  top: 20px;
-}
+  // Position modifiers
+  &_top_center {
+    top: 20px;
+  }
 
-.chip_bottomCenter {
-  bottom: 20px;
-}
+  &_bottom_center {
+    bottom: 20px;
+  }
 
-.chip_topLeft {
-  top: 20px;
-  left: 20px;
-  transform: none;
-}
+  &_top_left {
+    top: 20px;
+    left: 20px;
+    transform: none;
+  }
 
-.chip_topRight {
-  top: 20px;
-  right: 20px;
-  left: auto;
-  transform: none;
-}
+  &_top_right {
+    top: 20px;
+    right: 20px;
+    left: auto;
+    transform: none;
+  }
 
-.chip_bottomLeft {
-  bottom: 20px;
-  left: 20px;
-  transform: none;
-}
+  &_bottom_left {
+    bottom: 20px;
+    left: 20px;
+    transform: none;
+  }
 
-.chip_bottomRight {
-  bottom: 20px;
-  right: 20px;
-  left: auto;
-  transform: none;
-}
+  &_bottom_right {
+    bottom: 20px;
+    right: 20px;
+    left: auto;
+    transform: none;
+  }
 
-// Theme modifiers
-@each $name, $values in theme.$themes {
-  .chip_#{$name} {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
+  // Theme modifiers
+  @each $name, $values in theme.$themes {
+    &_#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
 
-    @if map.get($values, border) {
-      border: map.get($values, border);
+      @if map.get($values, border) {
+        border: map.get($values, border);
+      }
     }
   }
-}
 
-.chip_clear {
-  box-shadow: none;
-}
+  &_clear {
+    box-shadow: none;
+  }
 
-// Elements
-.chip_icon {
-  margin-right: theme.$spacing-sm;
-  display: flex;
-  align-items: center;
-  margin-top: -0.1em;
-}
+  // Elements
+  &_icon {
+    margin-right: theme.$spacing-sm;
+    display: flex;
+    align-items: center;
+    margin-top: -0.1em;
+  }
 
-.chip_message {
-  flex-grow: 1;
-  margin-right: 12px;
-}
+  &_message {
+    flex-grow: 1;
+    margin-right: 12px;
+  }
 
-.chip_icon_inner {
-  height: 1em;
-  width: 1em;
-}
+  &_icon_inner {
+    height: 1em;
+    width: 1em;
+  }
 
-// Size modifiers
-$chip-sizes: (
-  "xs": (
-    padding: 5px 9px,
-    font: theme.$font-size-xs,
-    icon: 0.8rem,
-    height: 20px,
-  ),
-  "small": (
-    padding: 6px 10px,
-    font: theme.$font-size-sm,
-    icon: 0.9rem,
-    height: 20px,
-  ),
-  "medium": (
-    padding: 6px 12px,
-    font: theme.$font-size-md,
-    icon: 1.2rem,
-  ),
-  "large": (
-    padding: 6px 14px,
-    font: theme.$font-size-lg,
-    icon: 1.3rem,
-  ),
-  "xl": (
-    padding: 10px 18px,
-    font: theme.$font-size-xl,
-    icon: 2rem,
-  ),
-);
+  // Size modifiers
+  $chip-sizes: (
+    "xs": (
+      padding: 5px 9px,
+      font: theme.$font-size-xs,
+      icon: 0.8rem,
+      height: 20px,
+    ),
+    "small": (
+      padding: 6px 10px,
+      font: theme.$font-size-sm,
+      icon: 0.9rem,
+      height: 20px,
+    ),
+    "medium": (
+      padding: 6px 12px,
+      font: theme.$font-size-md,
+      icon: 1.2rem,
+    ),
+    "large": (
+      padding: 6px 14px,
+      font: theme.$font-size-lg,
+      icon: 1.3rem,
+    ),
+    "xl": (
+      padding: 10px 18px,
+      font: theme.$font-size-xl,
+      icon: 2rem,
+    ),
+  );
 
-@each $size, $props in $chip-sizes {
-  .chip_#{$size} {
-    padding: map.get($props, padding);
+  @each $size, $props in $chip-sizes {
+    &_#{$size} {
+      padding: map.get($props, padding);
 
-    @if map.get($props, height) {
-      height: map.get($props, height);
-    }
+      @if map.get($props, height) {
+        height: map.get($props, height);
+      }
 
-    .chip_message {
-      font-size: map.get($props, font);
-    }
+      &_message {
+        font-size: map.get($props, font);
+      }
 
-    .chip_icon_inner {
-      height: map.get($props, icon);
-      width: map.get($props, icon);
+      &_icon_inner {
+        height: map.get($props, icon);
+        width: map.get($props, icon);
+      }
     }
   }
 }

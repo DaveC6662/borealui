@@ -4,52 +4,39 @@
 
 // Position mappings for chips
 $chip-positions: (
-  "top_left": (
+  "topLeft": (
     top: 20px,
     left: 20px,
     align-items: flex-start,
   ),
-  "top_center": (
+  "topCenter": (
     top: 20px,
     left: 50%,
     transform: translateX(-50%),
     align-items: center,
   ),
-  "top_right": (
+  "topRight": (
     top: 20px,
     right: 20px,
     align-items: flex-end,
   ),
-  "bottom_left": (
+  "bottomLeft": (
     bottom: 20px,
     left: 20px,
     align-items: flex-start,
   ),
-  "bottom_center": (
+  "bottomCenter": (
     bottom: 20px,
     left: 50%,
     transform: translateX(-50%),
     align-items: center,
   ),
-  "bottom_right": (
+  "bottomRight": (
     bottom: 20px,
     right: 20px,
     align-items: flex-end,
   ),
 );
-
-.chip_group_list {
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  gap: theme.$spacing-xs;
-  margin: 0;
-  padding: 0;
-
-  :global(.Chip_chip__*) {
-    pointer-events: auto;
-  }
-}
 
 .chip_group {
   position: fixed;
@@ -61,27 +48,42 @@ $chip-positions: (
   pointer-events: none;
 
   @each $position, $values in $chip-positions {
-    &.chip_group_#{$position} {
+    &_#{$position} {
       @if map.has-key($values, top) {
         top: map.get($values, top);
       }
+
       @if map.has-key($values, bottom) {
         bottom: map.get($values, bottom);
       }
+
       @if map.has-key($values, left) {
         left: map.get($values, left);
       }
+
       @if map.has-key($values, right) {
         right: map.get($values, right);
       }
+
       @if map.has-key($values, transform) {
         transform: map.get($values, transform);
       }
+
       align-items: map.get($values, align-items);
     }
   }
+}
 
-  .group_chip {
-    pointer-events: auto;
-  }
+.chip_group_list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  gap: theme.$spacing-xs;
+  padding: 0;
+}
+
+.group_chip {
+  pointer-events: auto;
+  align-items: center;
 }

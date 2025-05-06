@@ -1,6 +1,19 @@
 import { Meta, StoryObj } from "@storybook/react";
-import CircularProgress from "@/components/CircularProgress/core/CircularProgress";
+import { CircularProgress } from "@/index.core";
 import type { CircularProgressProps } from "@/components/CircularProgress/CircularProgress.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
+import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
+
+const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "success",
+  "error",
+  "warning",
+  "clear",
+] as const;
 
 const meta: Meta<CircularProgressProps> = {
   title: "Components/CircularProgress",
@@ -13,19 +26,25 @@ const meta: Meta<CircularProgressProps> = {
 };
 
 export default meta;
-
 type Story = StoryObj<CircularProgressProps>;
+
+const baseArgs: CircularProgressProps = {
+  rating: 75,
+  label: "Progress Score",
+};
 
 export const Default: Story = {};
 
 export const ShowRawScore: Story = {
   args: {
+    ...baseArgs,
     showRaw: true,
   },
 };
 
 export const LowScore: Story = {
   args: {
+    ...baseArgs,
     rating: 32,
     label: "Low Score",
   },
@@ -33,6 +52,7 @@ export const LowScore: Story = {
 
 export const WarningZone: Story = {
   args: {
+    ...baseArgs,
     rating: 58,
     label: "Warning Score",
   },
@@ -40,6 +60,7 @@ export const WarningZone: Story = {
 
 export const HighScore: Story = {
   args: {
+    ...baseArgs,
     rating: 95,
     label: "Excellent Score",
   },
@@ -55,18 +76,47 @@ export const CustomRange: Story = {
   },
 };
 
-export const SmallSize: Story = {
-  args: {
-    size: "small",
-    rating: 72,
-    label: "Small Size",
-  },
-};
+// Variant grid
+export const SizeVariants = () =>
+  withVariants(CircularProgress, baseArgs, [
+    { propName: "size", values: [...sizeOptions] },
+  ]);
 
-export const LargeSize: Story = {
-  args: {
-    size: "large",
-    rating: 90,
-    label: "Large Size",
-  },
-};
+export const ThemeVariants = () => (
+  <StoryGrid title="Theme Variants">
+    {themeOptions.map((theme) => (
+      <CircularProgress
+        key={theme}
+        rating={76}
+        theme={theme}
+        label={`Theme: ${theme}`}
+      />
+    ))}
+  </StoryGrid>
+);
+
+export const ScoreRangeVariants = () => (
+  <StoryGrid title="Various Scores">
+    <CircularProgress rating={15} label="Very Low" />
+    <CircularProgress rating={45} label="Below Avg" />
+    <CircularProgress rating={70} label="Okay" />
+    <CircularProgress rating={85} label="Strong" />
+    <CircularProgress rating={100} label="Perfect!" />
+  </StoryGrid>
+);
+
+export const WithShowRaw = () => (
+  <StoryGrid title="With Raw Value">
+    <CircularProgress rating={18} showRaw label="Raw: 18" />
+    <CircularProgress rating={56} showRaw label="Raw: 56" />
+    <CircularProgress rating={99} showRaw label="Raw: 99" />
+  </StoryGrid>
+);
+
+export const CustomMinMaxExamples = () => (
+  <StoryGrid title="Custom Min/Max">
+    <CircularProgress rating={3} min={0} max={5} label="Out of 5" showRaw />
+    <CircularProgress rating={7.5} min={0} max={10} label="Out of 10" showRaw />
+    <CircularProgress rating={43} min={0} max={50} label="Out of 50" showRaw />
+  </StoryGrid>
+);

@@ -2,29 +2,40 @@
 @use "../../../styles/globals";
 @use "sass:map";
 
-
 $progress-sizes: (
-  "xs": (dimensions: 40px, font-size: theme.$font-size-xs),
-  "small": (dimensions: 60px, font-size: theme.$font-size-sm),
-  "medium": (dimensions: 100px, font-size: theme.$font-size-md),
-  "large": (dimensions: 140px, font-size: theme.$font-size-base),
-  "xl": (dimensions: 200px, font-size: theme.$font-size-lg),
+  "xs": (
+    dimensions: 40px,
+    font-size: theme.$font-size-xs,
+  ),
+  "small": (
+    dimensions: 60px,
+    font-size: theme.$font-size-sm,
+  ),
+  "medium": (
+    dimensions: 100px,
+    font-size: theme.$font-size-md,
+  ),
+  "large": (
+    dimensions: 140px,
+    font-size: theme.$font-size-base,
+  ),
+  "xl": (
+    dimensions: 200px,
+    font-size: theme.$font-size-lg,
+  ),
 );
 
-
-.circularProgress {
+.circular_progress {
   display: flex;
   justify-content: center;
   align-items: center;
 
-
   @each $size, $props in $progress-sizes {
-    &.#{$size} {
+    &.circular_progress_#{$size} {
       width: map.get($props, dimensions);
       height: map.get($props, dimensions);
 
-
-      .ratingText {
+      .circular_progress_rating_text {
         font-size: map.get($props, font-size);
         font-weight: theme.$font-weight-bold;
         color: var(--text-color-primary);
@@ -32,8 +43,7 @@ $progress-sizes: (
     }
   }
 
-
-  .circleBorder {
+  .circular_progress_circle_border {
     width: 100%;
     height: 100%;
     border-radius: theme.$border-radius-round;
@@ -43,7 +53,7 @@ $progress-sizes: (
     transition: background 0.5s ease-in-out;
   }
 
-  .innerCircle {
+  .circular_progress_inner_circle {
     width: 80%;
     height: 80%;
     border-radius: theme.$border-radius-round;
@@ -53,5 +63,12 @@ $progress-sizes: (
     justify-content: center;
     align-items: center;
   }
+}
 
+@each $name, $values in theme.$themes {
+  .circular_progress_#{$name} {
+    .circular_progress_inner_circle {
+      background-color: map.get($values, bg);
+    }
+  }
 }

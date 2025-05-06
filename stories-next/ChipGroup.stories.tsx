@@ -1,5 +1,3 @@
-// src/stories/ChipGroup.stories.tsx
-
 import { useRef, useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { ChipGroup } from "@/index.next";
@@ -7,8 +5,9 @@ import type {
   ChipGroupProps,
   ChipGroupRef,
 } from "@/components/Chip/ChipGroup/ChipGroup.types";
-import { FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 import { ChipProps } from "@/components/Chip/Chip.types";
+import { FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
 const meta: Meta<ChipGroupProps> = {
   title: "Components/ChipGroup",
@@ -39,7 +38,25 @@ const createChip = (
   ...overrides,
 });
 
-const initialChips: ChipProps[] = [
+const allThemes: ChipProps["theme"][] = [
+  "primary",
+  "secondary",
+  "success",
+  "error",
+  "warning",
+  "clear",
+];
+
+const positions: ChipGroupProps["position"][] = [
+  "topLeft",
+  "topCenter",
+  "topRight",
+  "bottomLeft",
+  "bottomCenter",
+  "bottomRight",
+];
+
+const defaultChips: ChipProps[] = [
   createChip("Success message!", {
     theme: "success",
     icon: FaCheckCircle,
@@ -54,7 +71,7 @@ const initialChips: ChipProps[] = [
 
 export const Default: Story = {
   render: () => {
-    const [chips, setChips] = useState<ChipProps[]>(initialChips);
+    const [chips, setChips] = useState<ChipProps[]>(defaultChips);
 
     return (
       <div style={{ padding: "2rem" }}>
@@ -82,7 +99,7 @@ export const Default: Story = {
 export const WithRefCloseAll: Story = {
   render: () => {
     const ref = useRef<ChipGroupRef>(null);
-    const [chips, setChips] = useState<ChipProps[]>(initialChips);
+    const [chips, setChips] = useState<ChipProps[]>(defaultChips);
 
     return (
       <div style={{ padding: "2rem" }}>
@@ -90,7 +107,7 @@ export const WithRefCloseAll: Story = {
           onClick={() =>
             setChips((prev) => [
               ...prev,
-              createChip("Ref-added chip " + new Date().toLocaleTimeString(), {
+              createChip("Ref chip at " + new Date().toLocaleTimeString(), {
                 theme: "secondary",
               }),
             ])
@@ -114,20 +131,19 @@ export const WithRefCloseAll: Story = {
   },
 };
 
-export const BottomLeftPosition: Story = {
-  render: () => {
-    const [chips, setChips] = useState<ChipProps[]>([
-      createChip("Positioned bottom-left!", { theme: "primary" }),
-    ]);
-
-    return (
-      <div style={{ padding: "2rem" }}>
-        <ChipGroup
-          position="bottomLeft"
-          chips={chips}
-          onRemove={(id) => setChips((prev) => prev.filter((c) => c.id !== id))}
-        />
-      </div>
-    );
-  },
-};
+export const PositionVariants = () => (
+  <StoryGrid title="Position Variants">
+    {positions.map((position) => (
+      <ChipGroup
+        key={position}
+        position={position}
+        chips={[
+          createChip(`Position: ${position}`, {
+            theme: "primary",
+            autoClose: false,
+          }),
+        ]}
+      />
+    ))}
+  </StoryGrid>
+);

@@ -6,7 +6,7 @@ import React, {
   KeyboardEvent,
 } from "react";
 import ReactDOM from "react-dom";
-import { FaTimes } from "react-icons/fa";
+import { CloseIcon } from "@/Icons";
 import { MessagePopupProps } from "./MessagePopup.types";
 
 export interface BaseMessagePopupProps extends MessagePopupProps {
@@ -114,7 +114,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           className={classNames.close}
           onClick={onClose}
           aria-label="Close popup"
-          icon={FaTimes}
+          icon={CloseIcon}
           theme="error"
           size="xs"
           data-testid={`${testId}-close`}

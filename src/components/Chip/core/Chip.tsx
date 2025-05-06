@@ -1,6 +1,6 @@
 import React from "react";
 import ChipBase from "../ChipBase";
-import { CloseIcon } from "../ChipBase";
+import { CloseIcon } from "@/Icons";
 import "./Chip.scss";
 import IconButton from "../../Buttons/IconButton/core/IconButton";
 import { ChipProps } from "../Chip.types";
@@ -13,18 +13,18 @@ const classMap = {
   chip_relative: "chip_relative",
   chip_fixed: "chip_fixed",
   chip_fadeout: "chip_fadeout",
-  chip_topCenter: "chip_topCenter",
-  chip_bottomCenter: "chip_bottomCenter",
-  chip_topLeft: "chip_topLeft",
-  chip_topRight: "chip_topRight",
-  chip_bottomLeft: "chip_bottomLeft",
-  chip_bottomRight: "chip_bottomRight",
+  chip_topCenter: "chip_top_center",
+  chip_bottomCenter: "chip_bottom_center",
+  chip_topLeft: "chip_top_left",
+  chip_topRight: "chip_top_right",
+  chip_bottomLeft: "chip_bottom_left",
+  chip_bottomRight: "chip_bottom_right",
   chip_primary: "chip_primary",
   chip_secondary: "chip_secondary",
   chip_success: "chip_success",
   chip_error: "chip_error",
   chip_warning: "chip_warning",
-  chip_info: "chip_info",
+  chip_clear: "chip_clear",
   chip_xs: "chip_xs",
   chip_small: "chip_small",
   chip_medium: "chip_medium",

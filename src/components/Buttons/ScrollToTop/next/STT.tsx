@@ -2,7 +2,7 @@
 
 import React from "react";
 import ScrollToTopBase from "../ScrollToTopBase";
-import { FaArrowCircleUp } from "react-icons/fa";
+import { ArrowUpIcon } from "@/Icons";
 import styles from "./STT.module.scss";
 
 const classMap = {
@@ -12,7 +12,7 @@ const classMap = {
 };
 
 const ScrollToTopButton: React.FC = () => (
-  <ScrollToTopBase classMap={classMap} IconComponent={FaArrowCircleUp} />
+  <ScrollToTopBase classMap={classMap} IconComponent={ArrowUpIcon} />
 );
 
 export default ScrollToTopButton;

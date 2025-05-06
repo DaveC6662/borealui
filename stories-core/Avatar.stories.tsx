@@ -19,7 +19,6 @@ import {
   ThemeType,
 } from "@/types/types";
 
-// Prop options
 const themeOptions = [
   ...["primary", "secondary", "success", "error", "warning", "clear"],
 ] as string[];
@@ -115,7 +114,7 @@ export const WithHref: Story = {
 export const WithFallback: Story = {
   args: {
     ...baseArgs,
-    fallback: "👤",
+    name: undefined,
     src: "broken-link.png",
   },
 };

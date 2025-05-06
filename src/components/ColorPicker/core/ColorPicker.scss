@@ -10,7 +10,7 @@ $swatch-sizes: (
   xl: 40px,
 );
 
-.colorPicker {
+.color_picker {
   border: none;
   padding: theme.$spacing-sm;
   display: flex;
@@ -22,20 +22,19 @@ $swatch-sizes: (
     pointer-events: none;
   }
 
-
-  .legend {
+  &_legend {
     font-size: theme.$font-size-sm;
     font-weight: theme.$font-weight-bold;
     margin-bottom: theme.$spacing-xs;
   }
 
-  .colorGrid {
+  &_grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
     gap: theme.$spacing-xs;
   }
 
-  .colorSwatch {
+  &_swatch {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -47,24 +46,24 @@ $swatch-sizes: (
     width: map.get($swatch-sizes, medium);
     height: map.get($swatch-sizes, medium);
 
-    &.selected,
+    &.color_picker_selected,
     &:focus-visible {
       outline-color: var(--text-color-primary);
     }
 
     @each $size, $val in $swatch-sizes {
-      &.#{$size} {
+      &.color_picker_#{$size} {
         width: $val;
         height: $val;
       }
     }
   }
 
-  .radioInput {
+  &_radio_input {
     display: none;
   }
 
-  .colorPreview {
+  &_preview {
     width: 80%;
     height: 80%;
     display: block;
@@ -72,22 +71,21 @@ $swatch-sizes: (
     box-sizing: border-box;
   }
 
-  .square .colorPreview {
+  &_square &_preview {
     border-radius: 6px;
   }
 
-  .round .colorPreview {
+  &_round &_preview {
     border-radius: 50%;
   }
 
-  .pill .colorPreview {
+  &_pill &_preview {
     border-radius: 9999px;
     height: 50%;
   }
 
-  .customColorInput {
+  &_custom_input {
     margin-top: theme.$spacing-xs;
     width: 100%;
   }
-
 }

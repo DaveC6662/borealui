@@ -6,7 +6,7 @@ import React, {
   KeyboardEvent,
 } from "react";
 import ReactDOM from "react-dom";
-import { FaTimes } from "react-icons/fa";
+import { CloseIcon } from "@/Icons";
 import { ModalProps } from "./Modal.types";
 import { combineClassNames } from "@/utils/classNames";
 
@@ -135,7 +135,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
           className={classNames.closeButton}
           theme="error"
           size="small"
-          icon={FaTimes}
+          icon={CloseIcon}
           aria-label="Close modal"
           onClick={(e: React.MouseEvent) => {
             e.stopPropagation();

@@ -115,7 +115,7 @@ export const WithHref: Story = {
 export const WithFallback: Story = {
   args: {
     ...baseArgs,
-    fallback: "👤",
+    name: undefined,
     src: "broken-link.png",
   },
 };

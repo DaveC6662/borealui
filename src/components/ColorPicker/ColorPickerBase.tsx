@@ -24,26 +24,26 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
 
   return (
     <fieldset
-      className={combineClassNames(classMap.colorPicker, className)}
+      className={combineClassNames(classMap.color_picker, className)}
       disabled={disabled}
       aria-disabled={disabled}
       aria-labelledby={legendId}
       role="radiogroup"
       data-testid={testId}
     >
-      <legend id={legendId} className={classMap.legend}>
+      <legend id={legendId} className={classMap.color_picker_legend}>
         {label}
       </legend>
 
-      <div className={classMap.colorGrid}>
+      <div className={classMap.color_picker_grid}>
         {colors.map((color, i) => (
           <label
             key={color.value}
             className={combineClassNames(
-              classMap.colorSwatch,
-              classMap[size],
-              classMap[shape],
-              selected === color.value && classMap.selected
+              classMap.color_picker_swatch,
+              classMap[`color_picker_${size}`],
+              classMap[`color_picker_${shape}`],
+              selected === color.value && classMap.color_picker_selected
             )}
             htmlFor={`${testId}-color-${i}`}
             title={color.label}
@@ -57,12 +57,12 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
               value={color.value}
               checked={selected === color.value}
               onChange={() => onChange(color.value)}
-              className={classMap.radioInput}
+              className={classMap.color_picker_radio_input}
             />
             <span
               className={combineClassNames(
-                classMap.colorPreview,
-                classMap[shape]
+                classMap.color_picker_preview,
+                classMap[`color_picker_${shape}`]
               )}
               style={{ backgroundColor: color.value }}
               aria-hidden="true"
@@ -74,7 +74,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
       {allowCustom && (
         <input
           type="color"
-          className={classMap.customColorInput}
+          className={classMap.color_picker_custom_input}
           value={selected}
           onChange={(e) => onChange(e.target.value)}
           aria-label="Custom color picker"

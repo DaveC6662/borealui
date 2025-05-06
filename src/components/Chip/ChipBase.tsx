@@ -5,20 +5,10 @@ import { combineClassNames } from "@/utils/classNames";
 
 export interface ChipBaseProps extends ChipProps {
   classMap: Record<string, string>;
+  positionMap?: Record<string, string>;
   IconButtonComponent: React.ElementType;
   closeIcon?: React.ElementType;
 }
-
-export const CloseIcon: React.FC = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24">
-    <path
-      d="M18 6L6 18M6 6l12 12"
-      stroke="currentColor"
-      strokeWidth="4"
-      strokeLinecap="round"
-    />
-  </svg>
-);
 
 const ChipBase: React.FC<ChipBaseProps> = ({
   id,
@@ -36,6 +26,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   closeIcon: CloseIcon,
   IconButtonComponent,
   classMap,
+  positionMap,
   "data-testid": testId = "chip",
 }) => {
   const [closing, setClosing] = useState(false);
@@ -58,7 +49,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     classMap.chip,
     classMap[`chip_${theme}`],
     classMap[`chip_${size}`],
-    classMap[`chip_${position}`],
+    positionMap?.[position] || classMap[`chip_${position}`],
     closing && classMap.chip_fadeout,
     usePortal && classMap.chip_fixed,
     className

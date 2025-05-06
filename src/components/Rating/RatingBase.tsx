@@ -1,5 +1,5 @@
 import React, { useState, KeyboardEvent, JSX } from "react";
-import { FaStar } from "react-icons/fa";
+import { StarIcon } from "@/Icons";
 import { RatingProps } from "./Rating.types";
 
 export interface BaseRatingProps extends RatingProps {
@@ -83,7 +83,7 @@ const BaseRating: React.FC<BaseRatingProps> = ({
             aria-label={`${index + 1} out of ${max} stars`}
             data-testid={`${testId}-star-${index + 1}`}
           >
-            <FaStar aria-hidden="true" />
+            <StarIcon aria-hidden="true" />
           </span>
         );
       })}

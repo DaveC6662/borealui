@@ -8,7 +8,17 @@ import { ChipGroupProps, ChipGroupRef } from "../ChipGroup.types";
 
 const classMap = {
   container: styles.chip_group,
+  chip: styles.group_chip,
   list: styles.chip_group_list,
+};
+
+const positionMap = {
+  topCenter: styles.chip_group_topCenter,
+  topLeft: styles.chip_group_topLeft,
+  topRight: styles.chip_group_topRight,
+  bottomCenter: styles.chip_group_bottomCenter,
+  bottomLeft: styles.chip_group_bottomLeft,
+  bottomRight: styles.chip_group_bottomRight,
 };
 
 const ChipGroup = React.forwardRef<ChipGroupRef, ChipGroupProps>(
@@ -18,7 +28,7 @@ const ChipGroup = React.forwardRef<ChipGroupRef, ChipGroupProps>(
       ref={ref}
       ChipComponent={Chip}
       classMap={classMap}
-      positionMap={styles}
+      positionMap={positionMap}
     />
   )
 );
