@@ -29,6 +29,8 @@ export interface DataTableProps<T> {
   className?: string;
   /** Theme used for styling the table. */
   theme?: ThemeType;
+  /** Whether to use outline styling. */
+  outline?: boolean;
   /** Whether to use striped row styling. */
   striped?: boolean;
   /** Default key to sort by on initial render. */

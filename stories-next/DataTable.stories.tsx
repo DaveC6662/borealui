@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
-import DataTable from "@/components/DataTable/next/DataTable"; // adjust path as needed
+import { DataTable } from "@/index.next";
 import type { DataTableProps } from "@/components/DataTable/DataTable.types";
+import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
 type SampleRow = {
   id: number;
@@ -83,3 +84,51 @@ export const NoStripedTheme: Story = {
     theme: "clear",
   },
 };
+
+const themes = [
+  "primary",
+  "secondary",
+  "success",
+  "error",
+  "warning",
+  "clear",
+] as const;
+
+export const ThemeVariants = () => {
+  return (
+    <StoryGrid title="Theme Variants">
+      {themes.map((theme) => (
+        <div key={theme}>
+          <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
+            {theme} Theme
+          </h4>
+          <DataTable
+            data={sampleData}
+            columns={sampleColumns}
+            theme={theme}
+            striped={true}
+          />
+        </div>
+      ))}
+    </StoryGrid>
+  );
+};
+
+export const OutlineVariants = () => (
+  <StoryGrid title="Outline Variants">
+    {themes.map((theme) => (
+      <div key={`outline-${theme}`}>
+        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
+          {theme} Outline
+        </h4>
+        <DataTable
+          data={sampleData}
+          columns={sampleColumns}
+          theme={theme}
+          outline
+          striped
+        />
+      </div>
+    ))}
+  </StoryGrid>
+);

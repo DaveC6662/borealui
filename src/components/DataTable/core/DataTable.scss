@@ -2,15 +2,7 @@
 @use "../../../styles/globals";
 @use "sass:map";
 
-$table-themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color
-);
-
-.dataTableWrapper {
+.data_table_wrapper {
   width: 100%;
   max-width: 90vw;
   overflow-x: auto;
@@ -18,39 +10,7 @@ $table-themes: (
   box-shadow: theme.$box-shadow-light;
   margin: theme.$spacing-md;
 
-  tbody tr:hover {
-    background-color: var(--background-color-lighter);
-  }
-
-  tbody tr {
-    background-color: var(--background-color-dark);
-  }
-
-  &.striped {
-    tbody tr:nth-child(odd) {
-      background-color: var(--background-color-dark);
-    }
-
-    tbody tr:nth-child(even) {
-      background-color: var(--background-color-darker);
-    }
-  }
-
-  @each $theme, $color in $table-themes {
-    &.#{$theme} th {
-      background-color: $color;
-    }
-  }
-
-  &.clear {
-    box-shadow: none;
-
-    th {
-      background-color: transparent;
-    }
-  }
-
-  .table {
+  .data_table {
     width: 100%;
     border-collapse: collapse;
     font-size: theme.$font-size-base;
@@ -79,7 +39,16 @@ $table-themes: (
     }
   }
 
-  &.clickable {
+  .data_table .data_table_header_sortable {
+    cursor: pointer;
+  }
+
+  .data_table_sort_icon {
+    margin-left: theme.$spacing-xxs;
+    font-size: 0.9em;
+  }
+
+  .data_table_row_clickable {
     cursor: pointer;
     transition: background-color theme.$transition-default;
 
@@ -88,8 +57,45 @@ $table-themes: (
     }
   }
 
+  .data_table_row_striped:nth-child(even) {
+    background-color: var(--background-color-darker);
+  }
+
+  tbody tr {
+    background-color: var(--background-color-dark);
+
+    &:hover {
+      background-color: var(--background-color-lighter);
+    }
+  }
+
+  @each $name, $values in theme.$themes {
+    .data_table_#{$name} {
+      th {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+      }
+    }
+
+    .data_table_#{$name}_outline {
+      th {
+        border: 2px solid map.get($values, bg);
+        background-color: transparent;
+        color: map.get($values, bg);
+      }
+    }
+  }
+
+  &.clear {
+    box-shadow: none;
+
+    th {
+      background-color: transparent;
+    }
+  }
+
   @media (width <= 768px) {
-    .table {
+    .data_table {
       font-size: theme.$font-size-sm;
 
       th,
@@ -100,7 +106,7 @@ $table-themes: (
   }
 
   @media (width <= 480px) {
-    .table {
+    .data_table {
       font-size: theme.$font-size-xs;
 
       th,

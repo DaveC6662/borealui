@@ -3,13 +3,25 @@ import DataTableBase from "../DataTableBase";
 import { DataTableProps } from "../DataTable.types";
 
 const classNames = {
-  wrapper: "dataTableWrapper",
-  striped: "striped",
-  table: "table",
-  headerCell: "headerCell",
-  sortable: "sortable",
-  clickable: "clickable",
-  sortIcon: "sortIcon",
+  wrapper: "data_table_wrapper",
+  table: "data_table",
+  headerCell: "data_table_header_cell",
+  sortable: "data_table_header_sortable",
+  sortIcon: "data_table_sort_icon",
+  clickable: "data_table_row_clickable",
+  striped: "data_table_row_striped",
+  cell: "data_table_cell",
+
+  data_table_primary: "data_table_primary",
+  data_table_primary_outline: "data_table_primary_outline",
+  data_table_secondary: "data_table_secondary",
+  data_table_secondary_outline: "data_table_secondary_outline",
+  data_table_success: "data_table_success",
+  data_table_success_outline: "data_table_success_outline",
+  data_table_error: "data_table_error",
+  data_table_error_outline: "data_table_error_outline",
+  data_table_warning: "data_table_warning",
+  data_table_warning_outline: "data_table_warning_outline",
 };
 
 function DataTable<T extends object>(props: DataTableProps<T>) {

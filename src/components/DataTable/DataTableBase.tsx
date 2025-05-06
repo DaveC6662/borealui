@@ -7,6 +7,8 @@ function DataTableBase<T extends object>({
   data,
   onRowClick,
   classMap,
+  theme = "primary",
+  outline = false,
   className = "",
   striped = true,
   defaultSortKey,
@@ -51,6 +53,10 @@ function DataTableBase<T extends object>({
     }
   };
 
+  const themeClass = outline
+    ? classMap[`data_table_${theme}_outline`]
+    : classMap[`data_table_${theme}`];
+
   return (
     <div
       className={combineClassNames(
@@ -60,8 +66,11 @@ function DataTableBase<T extends object>({
       )}
       data-testid={testId}
     >
-      <table className={classMap.table} role="table">
-        <caption className="sr-only">Sortable data table</caption>
+      <table
+        className={combineClassNames(classMap.table, themeClass)}
+        role="table"
+      >
+        <caption className="sr_only">Sortable data table</caption>
         <thead>
           <tr role="row">
             {columns.map((col) => {
