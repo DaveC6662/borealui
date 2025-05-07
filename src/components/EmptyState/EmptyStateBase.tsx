@@ -4,15 +4,7 @@ import { combineClassNames } from "@/utils/classNames";
 
 export interface BaseEmptyStateProps extends EmptyStateProps {
   Button: React.ComponentType<any>;
-  classNames: {
-    wrapper: string;
-    title: string;
-    message: string;
-    icon: string;
-    themeMap: Record<string, string>;
-    sizeMap: Record<string, string>;
-    outline: string;
-  };
+  classNames: Record<string, string>;
 }
 
 const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
@@ -35,9 +27,9 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   return (
     <section
       className={combineClassNames(
-        classNames.wrapper,
-        classNames.themeMap[theme],
-        classNames.sizeMap[size],
+        classNames.empty_state,
+        classNames[theme],
+        classNames[size],
         outline && classNames.outline,
         className
       )}

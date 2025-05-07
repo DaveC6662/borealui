@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import EmptyState from "@/components/EmptyState/next/EmptyState";
+import { EmptyState } from "@/index.next";
 import type { EmptyStateProps } from "@/components/EmptyState/EmptyState.types";
 import { FaInbox, FaBug, FaFolderOpen } from "react-icons/fa";
 
@@ -45,46 +45,49 @@ export const WithActionButton: Story = {
   },
 };
 
-export const OutlinedThemeVariants: Story = {
+const themes = [
+  "primary",
+  "secondary",
+  "success",
+  "warning",
+  "error",
+  "clear",
+] as const;
+
+export const ThemeVariants: Story = {
   render: () => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <EmptyState
-        title="Primary"
-        message="This is a primary outline."
-        outline
-        theme="primary"
-      />
-      <EmptyState
-        title="Secondary"
-        message="This is a secondary outline."
-        outline
-        theme="secondary"
-      />
-      <EmptyState
-        title="Success"
-        message="You're all set!"
-        outline
-        theme="success"
-      />
-      <EmptyState
-        title="Warning"
-        message="This needs your attention."
-        outline
-        theme="warning"
-      />
-      <EmptyState
-        title="Error"
-        message="Something broke."
-        outline
-        theme="error"
-      />
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {themes.map((theme) => (
+        <EmptyState
+          key={theme}
+          theme={theme}
+          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
+          message={`This is a standard ${theme} variant.`}
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const OutlineVariants: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {themes.map((theme) => (
+        <EmptyState
+          key={`outline-${theme}`}
+          theme={theme}
+          outline
+          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
+          message={`This is an outlined ${theme} variant.`}
+        />
+      ))}
     </div>
   ),
 };
 
 export const SizeVariants: Story = {
   render: () => (
-    <div style={{ display: "grid", gap: "1rem" }}>
+    <div style={{ display: "grid", gap: "1.5rem" }}>
       <EmptyState size="xs" title="Xs Empty" message="Mini mode" />
       <EmptyState size="small" title="Small Empty" message="Compact mode" />
       <EmptyState size="medium" title="Medium Empty" message="Default size" />
