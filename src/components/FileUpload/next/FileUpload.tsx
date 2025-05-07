@@ -14,16 +14,7 @@ const FileUpload: React.FC<FileUploadProps> = (props) => {
       Button={Button}
       IconButton={IconButton}
       ProgressBar={Progressbar}
-      classNames={{
-        wrapper: styles.fileUploadBox,
-        hiddenInput: styles.hiddenInput,
-        uploadActions: styles.uploadActions,
-        fileInput: styles.fileInput,
-        removeButton: styles.removeButton,
-        uploadControls: styles.uploadControls,
-        uploadProgress: styles.uploadProgress,
-        uploadButton: styles.uploadButton,
-      }}
+      classNames={styles}
     />
   );
 };

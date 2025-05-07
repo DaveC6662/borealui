@@ -7,6 +7,21 @@ import ProgressBar from "../../ProgressBar/core/ProgressBar";
 import FormGroup from "../../FormGroup/core/FormGroup";
 import "./FileUpload.scss";
 
+const styles = {
+  fileUpload: "file_upload",
+  hiddenInput: "file_upload_hidden_input",
+  uploadActions: "file_upload_upload_actions",
+  fileInput: "file_upload_file_input",
+  removeButton: "file_upload_remove_button",
+  uploadControls: "file_upload_upload_controls",
+  uploadProgress: "file_upload_upload_progress",
+  uploadButton: "file_upload_upload_button",
+  fileList: "file_upload_file_list",
+  fileListItem: "file_upload_file_list_item",
+  fileListFileName: "file_upload_file_list_file_name",
+  fileListRemoveButton: "file_upload_file_list_remove_button",
+};
+
 const FileUpload: React.FC<FileUploadProps> = (props) => {
   return (
     <BaseFileUpload
@@ -15,16 +30,7 @@ const FileUpload: React.FC<FileUploadProps> = (props) => {
       Button={Button}
       IconButton={IconButton}
       ProgressBar={ProgressBar}
-      classNames={{
-        wrapper: "fileUploadBox",
-        hiddenInput: "hiddenInput",
-        uploadActions: "uploadActions",
-        fileInput: "fileInput",
-        removeButton: "removeButton",
-        uploadControls: "uploadControls",
-        uploadProgress: "uploadProgress",
-        uploadButton: "uploadButton",
-      }}
+      classNames={styles}
     />
   );
 };

@@ -1,15 +1,19 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/globals";
 
-.fileUploadBox {
+.file_upload {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: theme.$spacing-sm;
   border-radius: theme.$border-radius-lg;
   padding: theme.$spacing-md;
+  text-align: center;
   background-color: var(--background-color-light);
   border: 2px dashed var(--background-color-darker);
   transition: theme.$transition-default;
-  max-width: 250px;
+  max-width: 300px;
 
   &:hover {
     border-color: theme.$secondary-color;
@@ -24,38 +28,74 @@
     padding: theme.$spacing-sm;
   }
 
-
-  .uploadActions {
+  &_upload_actions {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
   }
 
-  .uploadControls {
+  &_upload_controls {
     display: flex;
     flex-direction: column;
     gap: theme.$spacing-sm;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
   }
 
-  .uploadProgress {
+  &_upload_progress {
     width: 100%;
     margin-top: theme.$spacing-sm;
   }
 
-  .uploadButton {
+  &_upload_button {
     align-self: center;
   }
 
-  .removeButton {
+  &_remove_button {
     border: none !important;
     box-shadow: none !important;
   }
 
-  .hiddenInput {
+  &_hidden_input {
     display: none;
   }
 
+  &_file_list {
+    margin: theme.$spacing-sm 0;
+    padding: 0;
+    list-style: none;
+    font-size: theme.$font-size-sm;
+    color: var(--text-color-secondary);
+  }
+
+  &_file_list_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: theme.$spacing-sm;
+    padding: 2px 0;
+    font-size: theme.$font-size-sm;
+    text-overflow: ellipsis;
+  }
+
+  &_rejected_files {
+    margin-top: theme.$spacing-sm;
+    color: var(--error-color);
+    font-size: theme.$font-size-sm;
+  }
+
+  &_rejected_label {
+    font-weight: theme.$font-weight-bold;
+    margin-bottom: theme.$spacing-xs;
+  }
+
+  &_rejected_list {
+    list-style: disc;
+    padding-left: theme.$spacing-md;
+  }
+
+  &_rejected_item {
+    margin-bottom: 2px;
+  }
 }

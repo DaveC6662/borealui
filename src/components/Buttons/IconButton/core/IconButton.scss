@@ -32,50 +32,11 @@
     width: 20px;
   }
 
-  $themes: (
-    "primary": (
-      bg: var(--primary-color),
-      hover: var(--primary-color-hover),
-      text: var(--text-color-primary),
-      border: var(--primary-color),
-    ),
-    "secondary": (
-      bg: var(--secondary-color),
-      hover: var(--secondary-color-hover),
-      text: var(--text-color-secondary),
-      border: var(--secondary-color),
-    ),
-    "success": (
-      bg: theme.$success-color,
-      hover: color.adjust(theme.$success-color, $lightness: -10%),
-      text: var(--text-color-primary),
-      border: theme.$success-color,
-    ),
-    "error": (
-      bg: theme.$error-color,
-      hover: color.adjust(theme.$error-color, $lightness: -10%),
-      text: var(--text-color-primary),
-      border: theme.$error-color,
-    ),
-    "warning": (
-      bg: theme.$warning-color,
-      hover: color.adjust(theme.$warning-color, $lightness: -10%),
-      text: var(--text-color-primary),
-      border: theme.$warning-color,
-    ),
-    "clear": (
-      bg: transparent,
-      hover: transparent,
-      text: var(--text-color-primary),
-      border: none,
-    ),
-  );
-
   &.clear {
     box-shadow: none;
   }
 
-  @each $name, $values in $themes {
+  @each $name, $values in theme.$themes {
     &.#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -88,11 +49,11 @@
         background-color: transparent;
         color: map.get($values, border);
         border: 2px solid map.get($values, border);
+      }
 
-        &:hover {
-          border-color: map.get($values, hover);
-          color: map.get($values, text);
-        }
+      &.#{$name}.outline:hover {
+        border-color: map.get($values, hover);
+        color: map.get($values, text);
       }
     }
   }

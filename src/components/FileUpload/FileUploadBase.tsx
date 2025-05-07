@@ -7,16 +7,7 @@ export interface BaseFileUploadProps extends FileUploadProps {
   Button: React.ComponentType<any>;
   IconButton: React.ComponentType<any>;
   ProgressBar: React.ComponentType<any>;
-  classNames: {
-    wrapper: string;
-    hiddenInput: string;
-    uploadActions: string;
-    fileInput: string;
-    removeButton: string;
-    uploadControls: string;
-    uploadProgress: string;
-    uploadButton: string;
-  };
+  classNames: Record<string, string>;
 }
 
 const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
@@ -26,9 +17,11 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   required = false,
   theme = "primary",
   multiple = false,
+  maxFileSizeBytes = Infinity,
+  allowedFileTypes = [],
   onSubmit,
   uploadProgress,
-  "data-testid": testId,
+  "data-testid": testId = "file-upload",
   FormGroup,
   Button,
   IconButton,
@@ -36,25 +29,69 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   classNames,
 }) => {
   const [fileNames, setFileNames] = useState<string[]>([]);
-  const [files, setFiles] = useState<FileList | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
+  const [rejectedFiles, setRejectedFiles] = useState<
+    { name: string; reason: string }[]
+  >([]);
   const [internalProgress, setInternalProgress] = useState<number>(0);
   const [uploading, setUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadMessage, setUploadMessage] = useState<string | null>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
 
+  const validateFiles = (newFiles: File[]) => {
+    const valid: File[] = [];
+    const rejected: { name: string; reason: string }[] = [];
+
+    newFiles.forEach((file) => {
+      const isSizeOk = file.size <= maxFileSizeBytes;
+      const isTypeOk =
+        allowedFileTypes.length === 0 || allowedFileTypes.includes(file.type);
+
+      if (isSizeOk && isTypeOk) {
+        valid.push(file);
+      } else {
+        rejected.push({
+          name: file.name,
+          reason: !isSizeOk
+            ? `Exceeds size limit (${(file.size / 1024 / 1024).toFixed(2)}MB)`
+            : `Invalid type (${file.type || "unknown"})`,
+        });
+      }
+    });
+
+    return { valid, rejected };
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files;
-    if (selected && selected.length > 0) {
-      const croppedNames = Array.from(selected).map((file) =>
+    if (!selected || selected.length === 0) return;
+
+    const { valid, rejected } = validateFiles(Array.from(selected));
+    const updatedFiles = multiple ? [...files, ...valid] : valid;
+
+    setFiles(updatedFiles);
+    setFileNames(
+      updatedFiles.map((file) =>
         file.name.length > 30 ? file.name.slice(0, 27) + "..." : file.name
-      );
-      setFiles(selected);
-      setFileNames(croppedNames);
-    } else {
-      setFiles(null);
-      setFileNames([]);
-    }
+      )
+    );
+    setRejectedFiles(rejected);
+  };
+
+  const removeFile = (index: number) => {
+    const updatedFiles = files.filter((_, i) => i !== index);
+    setFiles(updatedFiles);
+    setFileNames(
+      updatedFiles.map((file) =>
+        file.name.length > 30 ? file.name.slice(0, 27) + "..." : file.name
+      )
+    );
+  };
+
+  const getButtonLabel = () => {
+    if (fileNames.length > 0) return multiple ? "Add Files" : "Select New";
+    return "Choose File";
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -71,7 +108,9 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     setIsDragging(false);
     const droppedFiles = e.dataTransfer.files;
     if (droppedFiles.length > 0) {
-      handleFileChange({ target: { files: droppedFiles } } as any);
+      handleFileChange({
+        target: { files: droppedFiles },
+      } as React.ChangeEvent<HTMLInputElement>);
     }
   };
 
@@ -102,7 +141,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   };
 
   const handleRemoveFile = () => {
-    setFiles(null);
+    setFiles([]);
     setFileNames([]);
     setInternalProgress(0);
     if (fileInput.current) fileInput.current.value = "";
@@ -117,7 +156,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       data-testid={testId}
     >
       <div
-        className={`${classNames.wrapper} ${isDragging ? "dragging" : ""}`}
+        className={`${classNames.fileUpload} ${isDragging ? "dragging" : ""}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -142,52 +181,77 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             size="small"
             theme={theme}
             className={classNames.fileInput}
+            disabled={uploading}
             onClick={() => fileInput.current?.click()}
             aria-label={
               fileNames.length > 0 ? fileNames.join(", ") : "Choose File"
             }
             data-testid={testId ? `${testId}-file-button` : undefined}
           >
-            {fileNames.length > 0 ? fileNames.join(", ") : "Choose File"}
+            {getButtonLabel()}
           </Button>
-
-          {fileNames.length > 0 && (
-            <IconButton
-              icon={TrashIcon}
-              theme="error"
-              onClick={handleRemoveFile}
-              outline
-              size="small"
-              className={classNames.removeButton}
-              aria-label="Remove file"
-              data-testid={testId ? `${testId}-remove-button` : undefined}
-            />
-          )}
         </div>
+
+        {rejectedFiles.length > 0 && (
+          <div className={classNames.rejectedFiles}>
+            <p className={classNames.rejectedLabel}>Rejected Files:</p>
+            <ul className={classNames.rejectedList}>
+              {rejectedFiles.map((file, index) => (
+                <li key={index} className={classNames.rejectedItem}>
+                  <span>{file.name}</span>
+                  <span className={classNames.rejectedReason}>
+                    {" "}
+                    – {file.reason}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {fileNames.length > 0 && (
           <div
             className={classNames.uploadControls}
             data-testid={testId ? `${testId}-controls` : undefined}
           >
-            <ProgressBar
-              theme={theme}
-              className={classNames.uploadProgress}
-              progress={uploadProgress ?? internalProgress}
-              indeterminate={uploadProgress === undefined}
-              data-testid={testId ? `${testId}-progress` : undefined}
-            />
-            <Button
-              theme={theme}
-              disabled={uploading}
-              onClick={handleUpload}
-              loading={uploading}
-              size="small"
-              className={classNames.uploadButton}
-              data-testid={testId ? `${testId}-upload-button` : undefined}
-            >
-              Upload
-            </Button>
+            <ul className={classNames.fileList}>
+              {fileNames.map((name, index) => (
+                <li key={index} className={classNames.fileListItem}>
+                  <span>{name}</span>
+                  <IconButton
+                    icon={TrashIcon}
+                    theme="error"
+                    size="xsmall"
+                    outline
+                    aria-label={`Remove ${name}`}
+                    onClick={() => removeFile(index)}
+                    className={classNames.removeButton}
+                  />
+                </li>
+              ))}
+            </ul>
+            {uploading && (
+              <ProgressBar
+                theme={theme}
+                className={classNames.uploadProgress}
+                progress={uploadProgress ?? internalProgress}
+                indeterminate={uploadProgress === undefined}
+                data-testid={testId ? `${testId}-progress` : undefined}
+              />
+            )}
+            {!uploading && (
+              <Button
+                theme={theme}
+                disabled={uploading}
+                onClick={handleUpload}
+                loading={uploading}
+                size="small"
+                className={classNames.uploadButton}
+                data-testid={testId ? `${testId}-upload-button` : undefined}
+              >
+                Upload
+              </Button>
+            )}
           </div>
         )}
         <div

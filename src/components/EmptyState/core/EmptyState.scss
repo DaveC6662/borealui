@@ -3,7 +3,7 @@
 @use "sass:color";
 @use "sass:map";
 
-.empty-state {
+.empty_state {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,7 +44,7 @@
       color: map.get($values, color);
     }
 
-    &_#{$theme}.empty-state_outline {
+    &_#{$theme}.empty_state_outline {
       background-color: transparent;
       border: 2px dashed map.get($values, bg);
       color: map.get($values, text-color);
@@ -60,7 +60,7 @@
     box-shadow: none;
   }
 
-  &_clear.empty-state_outline {
+  &_clear.empty_state_outline {
     color: var(--text-color-primary);
     border-color: var(--text-color-primary);
   }
@@ -94,16 +94,16 @@
 
   @each $size, $spacing in $input-sizes {
     &_#{$size} {
-      .empty-state_title {
+      .empty_state_title {
         padding: $spacing;
         font-size: map.get($font-sizes, $size);
       }
 
-      .empty-state_message {
+      .empty_state_message {
         font-size: map.get($font-sizes, $size);
       }
 
-      .empty-state_icon {
+      .empty_state_icon {
         font-size: map.get($icon-sizes, $size);
       }
     }
@@ -113,29 +113,29 @@
     width: 100%;
     padding: theme.$spacing-md;
 
-    .empty-state_title {
+    .empty_state_title {
       font-size: theme.$font-size-base;
     }
 
-    .empty-state_message {
+    .empty_state_message {
       font-size: theme.$font-size-sm;
     }
 
-    .empty-state_icon {
+    .empty_state_icon {
       font-size: 2.5em;
     }
   }
 
   @media (width <= 480px) {
-    .empty-state_title {
+    .empty_state_title {
       font-size: theme.$font-size-sm;
     }
 
-    .empty-state_message {
+    .empty_state_message {
       font-size: theme.$font-size-xs;
     }
 
-    .empty-state_icon {
+    .empty_state_icon {
       font-size: 2em;
     }
   }

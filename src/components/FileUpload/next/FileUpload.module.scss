@@ -1,58 +1,101 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 
-.fileUploadBox {
+.fileUpload {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: theme.$spacing-sm;
   border-radius: theme.$border-radius-lg;
   padding: theme.$spacing-md;
+  text-align: center;
   background-color: var(--background-color-light);
   border: 2px dashed var(--background-color-darker);
   transition: theme.$transition-default;
-  max-width: 250px;
+  max-width: 300px;
 
   &:hover {
     border-color: theme.$secondary-color;
     background-color: var(--background-color-lighter);
   }
 
-  @media (width <= 768px) {
+  @media (width <=768px) {
     padding: theme.$spacing-md;
   }
 
-  @media (width <= 480px) {
+  @media (width <=480px) {
     padding: theme.$spacing-sm;
   }
-}
 
-.uploadActions {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+  .uploadActions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.uploadControls {
-  display: flex;
-  flex-direction: column;
-  gap: theme.$spacing-sm;
-  align-items: flex-start;
-  width: 100%;
-}
+  .uploadControls {
+    display: flex;
+    flex-direction: column;
+    gap: theme.$spacing-sm;
+    align-items: center;
+    width: 100%;
+  }
 
-.uploadProgress {
-  width: 100%;
-  margin-top: theme.$spacing-sm;
-}
+  .uploadProgress {
+    width: 100%;
+    margin-top: theme.$spacing-sm;
+  }
 
-.uploadButton {
-  align-self: center;
-}
+  .uploadButton {
+    align-self: center;
+  }
 
-.removeButton {
-  border: none !important;
-  box-shadow: none !important;
-}
+  .removeButton {
+    border: none !important;
+    box-shadow: none !important;
+  }
 
-.hiddenInput {
-  display: none;
+  .hiddenInput {
+    display: none;
+  }
+
+  .fileList {
+    margin: theme.$spacing-sm 0;
+    padding: 0;
+    list-style: none;
+    font-size: theme.$font-size-sm;
+    color: var(--text-color-secondary);
+  }
+
+  .fileListItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: theme.$spacing-sm;
+    padding: 2px 0;
+    font-size: theme.$font-size-sm;
+    text-overflow: ellipsis;
+  }
+
+  .rejectedFiles {
+    margin-top: theme.$spacing-sm;
+    color: var(--error-color);
+    font-size: theme.$font-size-sm;
+  }
+
+  .rejectedLabel {
+    font-weight: theme.$font-weight-bold;
+    margin-bottom: theme.$spacing-xs;
+  }
+
+  .rejectedList {
+    list-style: disc;
+    padding-left: theme.$spacing-md;
+  }
+
+  .rejectedItem {
+    margin-bottom: 2px;
+  }
 }
