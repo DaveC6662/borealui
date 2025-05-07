@@ -10,3 +10,16 @@
     opacity: 1;
   }
 }
+
+// Slide up animation for dropdown menu
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

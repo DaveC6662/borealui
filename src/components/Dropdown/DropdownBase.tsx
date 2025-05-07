@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { DropdownProps } from "./Dropdown.types";
 import { combineClassNames } from "@/utils/classNames";
+import MenuIcon from "@/Icons/MenuIcon";
 
 export interface BaseDropdownProps extends DropdownProps {
   IconButton: ComponentType<any>;
@@ -33,7 +34,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const menuId = useId();
 
-  const Icon = triggerIcon;
+  const Icon = triggerIcon ?? MenuIcon;
 
   const toggleDropdown = () => setOpen((prev) => !prev);
   const closeDropdown = () => {
@@ -73,8 +74,26 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+
+    if (open && menuRef.current) {
+      const rect = menuRef.current.getBoundingClientRect();
+      const isOverflowingRight = rect.right > window.innerWidth;
+      const isOverflowingLeft = rect.left < 0;
+
+      if (isOverflowingRight) {
+        menuRef.current.setAttribute("data-overflow-right", "true");
+        menuRef.current.removeAttribute("data-overflow-left");
+      } else if (isOverflowingLeft) {
+        menuRef.current.setAttribute("data-overflow-left", "true");
+        menuRef.current.removeAttribute("data-overflow-right");
+      } else {
+        menuRef.current.removeAttribute("data-overflow-right");
+        menuRef.current.removeAttribute("data-overflow-left");
+      }
+    }
+
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [open, menuRef]);
 
   useEffect(() => {
     const menuItems =

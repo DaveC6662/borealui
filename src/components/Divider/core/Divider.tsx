@@ -5,14 +5,14 @@ import { DividerProps } from "../Divider.types";
 
 const styles = {
   divider: "divider",
-  horizontal: "horizontal",
-  vertical: "vertical",
-  dashed: "dashed",
-  primary: "primary",
-  secondary: "secondary",
-  success: "success",
-  warning: "warning",
-  error: "error",
+  horizontal: "divider_horizontal",
+  vertical: "divider_vertical",
+  dashed: "divider_dashed",
+  primary: "divider_primary",
+  secondary: "divider_secondary",
+  success: "divider_success",
+  warning: "divider_warning",
+  error: "divider_error",
 };
 
 const Divider: React.FC<DividerProps> = (props) => (

@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import Dropdown from "@/components/Dropdown/core/Dropdown";
+import { Dropdown } from "@/index.core";
 import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import type { DropdownProps } from "@/components/Dropdown/Dropdown.types";
 
@@ -8,7 +8,6 @@ const meta: Meta<DropdownProps> = {
   component: Dropdown,
   tags: ["autodocs"],
   args: {
-    triggerIcon: FaEllipsisV,
     theme: "primary",
     align: "right",
   },
@@ -58,39 +57,55 @@ export const WithLinks: Story = {
   },
 };
 
-export const AlignedLeft: Story = {
-  args: {
-    align: "left",
-    items: [
-      { label: "Left Item 1", onClick: () => {} },
-      { label: "Left Item 2", onClick: () => {} },
-    ],
-  },
+export const AlignmentVariants: Story = {
+  render: () => (
+    <div style={{ display: "flex", gap: "2rem", padding: "2rem" }}>
+      <div style={{ textAlign: "center" }}>
+        <p>Left Aligned</p>
+        <Dropdown
+          align="left"
+          triggerIcon={FaEllipsisV}
+          items={[{ label: "Left 1" }, { label: "Left 2" }]}
+        />
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <p>Right Aligned</p>
+        <Dropdown
+          align="right"
+          triggerIcon={FaEllipsisV}
+          items={[{ label: "Right 1" }, { label: "Right 2" }]}
+        />
+      </div>
+    </div>
+  ),
 };
 
 export const Themed: Story = {
-  render: () => (
-    <div style={{ display: "flex", gap: "1rem" }}>
-      <Dropdown
-        triggerIcon={FaEllipsisV}
-        theme="primary"
-        items={[{ label: "Primary", onClick: () => {} }]}
-      />
-      <Dropdown
-        triggerIcon={FaEllipsisV}
-        theme="secondary"
-        items={[{ label: "Secondary", onClick: () => {} }]}
-      />
-      <Dropdown
-        triggerIcon={FaEllipsisV}
-        theme="success"
-        items={[{ label: "Success", onClick: () => {} }]}
-      />
-      <Dropdown
-        triggerIcon={FaEllipsisV}
-        theme="error"
-        items={[{ label: "Error", onClick: () => {} }]}
-      />
-    </div>
-  ),
+  render: () => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "error",
+      "warning",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", padding: "1rem" }}>
+        {themes.map((theme) => (
+          <div key={theme} style={{ textAlign: "center" }}>
+            <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+              {theme}
+            </p>
+            <Dropdown
+              triggerIcon={FaEllipsisV}
+              theme={theme}
+              items={[{ label: `Item (${theme})`, onClick: () => {} }]}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
 };

@@ -1,36 +1,50 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/globals";
 
-.dropdownWrapper {
+.dropdown {
   position: relative;
   display: inline-block;
   outline: none;
 
-  .trigger {
+  &_trigger {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
   }
 
-  .dropdownMenu {
+  &_menu {
     position: absolute;
     top: 100%;
     overflow: hidden;
     margin-top: theme.$spacing-xs;
     background-color: var(--background-color-lighter);
-    border-radius: theme.$border-radius-md;
+    border-radius: theme.$border-radius-xs;
     box-shadow: theme.$box-shadow-medium;
     z-index: theme.$z-index-drawer;
     padding: theme.$spacing-xs 0;
     min-width: 200px;
     animation: fade-in 0.2s ease-in-out;
 
-    &.right {
+    &_right {
       right: 0;
+      transform: translateX(0);
     }
 
-    &.left {
+    &_left {
       left: 0;
+      transform: translateX(0);
+    }
+
+    @media (width >= 481px) {
+      &[data-overflow-right="true"] {
+        left: auto;
+        right: 0;
+      }
+
+      &[data-overflow-left="true"] {
+        right: auto;
+        left: 0;
+      }
     }
 
     @media (width <= 480px) {
@@ -46,9 +60,12 @@
     }
   }
 
-  .dropdownItem {
+  &_item {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    gap: theme.$spacing-sm;
+    line-height: 1em;
     width: 100%;
     background: none;
     border: none;
@@ -67,7 +84,7 @@
       outline: none;
     }
 
-    .icon {
+    &_icon {
       margin-right: theme.$spacing-xs;
       display: flex;
       align-items: center;
@@ -79,31 +96,7 @@
     }
   }
 
-  a.dropdownItem {
+  a.dropdown_item {
     text-decoration: none;
-  }
-
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slide-up {
-    from {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
   }
 }
