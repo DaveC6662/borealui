@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import DateTimePicker from "@/components/DateTimePicker/next/DateTimePicker";
+import { DateTimePicker } from "@/index.next";
 import type { DateTimePickerProps } from "@/components/DateTimePicker/DateTimePicker.types";
 
 const meta: Meta<DateTimePickerProps> = {
@@ -41,11 +41,33 @@ export const WithMinMax: Story = {
   },
 };
 
-export const OutlineVariant: Story = {
+export const OutlineVariants: Story = {
   render: (args) => {
-    const [value, setValue] = useState("2025-04-15T16:00");
+    const [value, setValue] = useState("2025-04-15T11:00");
+
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "error",
+      "warning",
+      "clear",
+    ] as const;
+
     return (
-      <DateTimePicker {...args} outline value={value} onChange={setValue} />
+      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
+        {themes.map((theme) => (
+          <DateTimePicker
+            key={theme}
+            {...args}
+            theme={theme}
+            outline
+            value={value}
+            onChange={setValue}
+            label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
+          />
+        ))}
+      </div>
     );
   },
 };
@@ -122,6 +144,36 @@ export const Sizes: Story = {
           onChange={setValue}
           label="xl"
         />
+      </div>
+    );
+  },
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("2025-04-15T11:00");
+
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "error",
+      "warning",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
+        {themes.map((theme) => (
+          <DateTimePicker
+            key={theme}
+            {...args}
+            theme={theme}
+            value={value}
+            onChange={setValue}
+            label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
+          />
+        ))}
       </div>
     );
   },

@@ -94,6 +94,7 @@ $themes: (
   "clear": (
     bg: transparent,
     color: var(--text-color-primary),
+    text: var(--text-color-primary),
     hover: rgb(0 0 0 / 20%),
     text-hover: $disabled-color,
   ),

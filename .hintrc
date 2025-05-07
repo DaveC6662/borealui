@@ -21,7 +21,8 @@
           "background-color: map.get($props, color)",
           "color: map.get($colors, color)",
           "color: map.get($props, color)",
-          "user-select"
+          "user-select",
+          "border-color: map.get($values, color)"
         ]
       }
     ],

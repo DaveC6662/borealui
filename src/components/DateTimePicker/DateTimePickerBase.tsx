@@ -1,6 +1,7 @@
-import React, { useId } from "react";
+import React, { useId, useRef } from "react";
 import { DateTimePickerProps } from "./DateTimePicker.types";
 import { combineClassNames } from "@/utils/classNames";
+import { CalendarIcon } from "@/Icons";
 
 export interface DateTimePickerBaseProps extends DateTimePickerProps {
   styles: Record<string, string>;
@@ -30,8 +31,14 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
 }) => {
   const generatedId = useId();
   const inputId = id || generatedId;
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const descriptionId = description ? `${inputId}-description` : undefined;
   const errorId = error ? `${inputId}-error` : undefined;
+
+  const openPicker = () => {
+    inputRef.current?.showPicker?.();
+  };
 
   return (
     <div
@@ -61,6 +68,7 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
           min={min}
           max={max}
           name={name}
+          ref={inputRef}
           required={required}
           disabled={disabled}
           aria-required={required}
@@ -73,6 +81,18 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
           aria-label={label || "Date and time"}
           data-testid={`${testId}-input`}
         />
+        <span
+          className={styles.icon}
+          onClick={openPicker}
+          onKeyDown={(e) =>
+            (e.key === "Enter" || e.key === " ") && openPicker()
+          }
+          aria-hidden="true"
+          role="button"
+          tabIndex={0}
+        >
+          <CalendarIcon />
+        </span>
       </div>
 
       {description && !error && (

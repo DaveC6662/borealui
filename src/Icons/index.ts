@@ -21,3 +21,4 @@ export { default as RedoIcon } from "./RedoIcon";
 export { default as EraserIcon } from "./EraserIcon";
 export { default as PlusCircleIcon } from "./PlusCircleIcon";
 export { default as FolderIcon } from "./FolderIcon";
+export { default as CalendarIcon } from "./CalendarIcon";
