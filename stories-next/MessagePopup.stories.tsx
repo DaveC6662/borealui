@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import MessagePopup from "@/components/MessagePopUp/next/MessagePopup";
+import { MessagePopUp } from "@/index.next";
 import type { MessagePopupProps } from "@/components/MessagePopUp/MessagePopup.types";
 
 const meta: Meta<MessagePopupProps> = {
   title: "Components/MessagePopup",
-  component: MessagePopup,
+  component: MessagePopUp,
   tags: ["autodocs"],
   decorators: [
     (Story) => (
@@ -29,7 +29,7 @@ export const Default: Story = {
       <>
         <button onClick={() => setOpen(true)}>Show Popup</button>
         {open && (
-          <MessagePopup
+          <MessagePopUp
             message="Are you sure you want to delete this item?"
             onClose={() => setOpen(false)}
             onConfirm={() => {
@@ -54,7 +54,7 @@ export const MessageOnly: Story = {
       <>
         <button onClick={() => setOpen(true)}>Show Message</button>
         {open && (
-          <MessagePopup
+          <MessagePopUp
             message="Just letting you know something happened."
             onClose={() => setOpen(false)}
           />
@@ -71,7 +71,7 @@ export const ConfirmOnly: Story = {
       <>
         <button onClick={() => setOpen(true)}>Show Confirm</button>
         {open && (
-          <MessagePopup
+          <MessagePopUp
             message="This will confirm an action without cancel."
             onClose={() => setOpen(false)}
             onConfirm={() => {
@@ -92,7 +92,7 @@ export const CancelOnly: Story = {
       <>
         <button onClick={() => setOpen(true)}>Show Cancel</button>
         {open && (
-          <MessagePopup
+          <MessagePopUp
             message="Cancel-only option"
             onClose={() => setOpen(false)}
             onCancel={() => {

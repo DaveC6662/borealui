@@ -14,10 +14,10 @@
   z-index: 1000;
   transition: opacity 0.3s ease-in-out;
 
-  .popupContent {
+  &_popupContent {
     background: var(--background-color-light);
-    padding: theme.$spacing-lg theme.$spacing-md;
-    padding-top: theme.$spacing-xl;
+    padding: theme.$spacing-lg theme.$spacing-lg;
+    padding-top: 50px;
     border-radius: theme.$border-radius-xs;
     box-shadow: theme.$box-shadow-medium;
     max-width: 400px;
@@ -25,21 +25,21 @@
     position: relative;
   }
 
-  .closeButton {
+  &_closeButton {
     position: absolute;
     top: theme.$spacing-xs;
     right: theme.$spacing-xs;
     cursor: pointer;
   }
 
-  .popupMessage {
+  &_popupMessage {
     font-size: theme.$font-size-md;
     font-weight: theme.$font-weight-bold;
     color: var(--text-color-primary);
     margin-bottom: theme.$spacing-sm;
   }
 
-  .popupActions {
+  &_popupActions {
     display: flex;
     justify-content: center;
     gap: theme.$spacing-sm;

@@ -7,19 +7,7 @@ import { IconButton } from "@/index.next";
 import { ModalProps } from "../Modal.types";
 
 const Modal: React.FC<ModalProps> = (props) => {
-  return (
-    <BaseModal
-      {...props}
-      IconButton={IconButton}
-      classNames={{
-        overlay: styles.modalOverlay,
-        visible: styles.visible,
-        hidden: styles.hidden,
-        content: styles.modalContent,
-        closeButton: styles.closeButton,
-      }}
-    />
-  );
+  return <BaseModal {...props} IconButton={IconButton} classMap={styles} />;
 };
 
 export default Modal;

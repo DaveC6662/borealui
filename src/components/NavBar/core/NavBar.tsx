@@ -3,6 +3,14 @@ import BaseNavBar from "../NavBarBase";
 import "./NavBar.scss";
 import { NavBarProps } from "../NavBar.types";
 
+const classes = {
+  container: "nav",
+  item: "nav_item",
+  active: "nav_active",
+  icon: "nav_icon_container",
+  label: "nav_label",
+};
+
 const NavBar: React.FC<NavBarProps> = (props) => {
   const [pathname, setPathname] = useState("");
 
@@ -24,13 +32,7 @@ const NavBar: React.FC<NavBarProps> = (props) => {
           {children}
         </a>
       )}
-      classNames={{
-        container: "navContainer",
-        item: "navItem",
-        active: "active",
-        icon: "iconContainer",
-        label: "label",
-      }}
+      classNames={classes}
     />
   );
 };

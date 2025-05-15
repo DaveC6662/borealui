@@ -29,13 +29,13 @@
     outline-offset: 2px;
   }
 
-  &.fullWidth {
+  &_full-width {
     width: 100%;
     max-width: none;
     display: flex;
   }
 
-  .loader {
+  &_loader {
     width: 1.2rem;
     height: 1.2rem;
     border: 2px solid transparent;
@@ -44,30 +44,30 @@
     animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 
-  .buttonIcon {
+  &_button-icon {
     margin-right: theme.$spacing-sm;
     display: flex;
     align-items: center;
     margin-top: -0.1em;
   }
 
-  .buttonLabel {
+  &_label {
     font-size: theme.$font-size-base;
   }
 
-  &.clear {
+  &_clear {
     background-color: transparent;
     box-shadow: none;
     color: var(--text-color-primary);
   }
 
-  &.outline {
+  &_outline {
     background-color: transparent;
     border: 2px solid currentcolor;
     box-shadow: none;
   }
 
-  &.disabled {
+  &_disabled {
     background-color: theme.$disabled-color;
     color: var(--text-color-primary);
     cursor: not-allowed;
@@ -75,36 +75,36 @@
     opacity: 0.6;
     box-shadow: none;
 
-    &.outline {
+    &_outline {
       border-color: theme.$disabled-color;
       color: theme.$disabled-color;
     }
   }
 
   @each $name, $values in theme.$themes {
-    &.#{$name} {
+    &_#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
-    }
 
-    &.#{$name}:hover {
-      background-color: map.get($values, hover);
-    }
+      &_#{$name}:hover {
+        background-color: map.get($values, hover);
+      }
 
-    &.#{$name} .loader {
-      border-top-color: map.get($values, text);
-    }
+      &_#{$name} .loader {
+        border-top-color: map.get($values, text);
+      }
 
-    &.#{$name}.outline {
-      background-color: transparent;
-      color: map.get($values, border);
-      border-color: map.get($values, border);
-    }
+      &.button_outline {
+        background-color: transparent;
+        color: map.get($values, text);
+        border-color: map.get($values, bg);
+      }
 
-    &.#{$name}.outline:hover {
-      border-color: map.get($values, hover);
-      color: map.get($values, text);
-      background-color: map.get($values, bg);
+      &.button_outline:hover {
+        border-color: map.get($values, hover);
+        color: map.get($values, text);
+        background-color: map.get($values, bg);
+      }
     }
   }
 
@@ -137,27 +137,17 @@
   );
 
   @each $size, $values in $sizes {
-    &.#{$size} {
+    &_#{$size} {
       padding: map.get($values, padding);
 
-      .buttonLabel {
+      .button_label {
         font-size: map.get($values, label);
       }
 
-      .icon {
+      .button_icon {
         width: map.get($values, icon);
         height: map.get($values, icon);
       }
-    }
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    100% {
-      transform: rotate(360deg);
     }
   }
 }

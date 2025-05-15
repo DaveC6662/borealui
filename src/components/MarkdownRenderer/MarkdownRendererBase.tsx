@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { marked } from "marked";
-import DOMPurify from "dompurify";
 import { MarkdownRendererProps } from "./MarkdownRenderer.types";
 
 export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
-  classNames: {
-    wrapper: string;
-    loading: string;
-  };
+  classMap: Record<string, string>;
   language?: string;
+}
+
+function sanitizeWithDOMParser(html: string): string {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  doc.querySelectorAll("script").forEach((el) => el.remove());
+  return doc.body.innerHTML;
 }
 
 const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
@@ -16,51 +18,22 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   className = "",
   language = "en",
   "data-testid": testId = "markdown-renderer",
-  classNames,
+  classMap,
 }) => {
-  const [html, setHtml] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const renderMarkdown = async () => {
-      setLoading(true);
-
-      if (!content.trim()) {
-        setHtml("");
-        setLoading(false);
-        return;
-      }
-
-      const raw = await marked.parse(content);
-      const clean = DOMPurify.sanitize(raw, { USE_PROFILES: { html: true } });
-      setHtml(clean);
-      setLoading(false);
-    };
-
-    renderMarkdown();
+  const html = useMemo(() => {
+    const trimmed = content.trim();
+    if (!trimmed) return "";
+    const raw = marked.parse(trimmed, { async: false }) as string;
+    return sanitizeWithDOMParser(raw);
   }, [content]);
-
-  if (loading) {
-    return (
-      <div
-        data-testid="markdown-loading"
-        role="status"
-        aria-live="polite"
-        className={classNames.loading}
-        aria-busy="true"
-      >
-        Loading markdown...
-      </div>
-    );
-  }
 
   if (!html) {
     return (
       <div
-        className={classNames.wrapper}
+        className={classMap.empty}
         data-testid={testId}
         role="region"
-        aria-label="Markdown content"
+        aria-label="No markdown content"
       >
         <p>No content available.</p>
       </div>
@@ -69,7 +42,7 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
 
   return (
     <div
-      className={`${classNames.wrapper} ${className}`}
+      className={`${classMap.wrapper} ${className}`}
       data-testid={testId}
       role="region"
       aria-label="Markdown content"

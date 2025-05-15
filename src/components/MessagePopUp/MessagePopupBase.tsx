@@ -12,15 +12,7 @@ import { MessagePopupProps } from "./MessagePopup.types";
 export interface BaseMessagePopupProps extends MessagePopupProps {
   Button: React.ComponentType<any>;
   IconButton: React.ComponentType<any>;
-  classNames: {
-    wrapper: string;
-    content: string;
-    close: string;
-    message: string;
-    actions: string;
-    confirm: string;
-    cancel: string;
-  };
+  classNames: Record<string, string>;
 }
 
 const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
@@ -116,7 +108,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           aria-label="Close popup"
           icon={CloseIcon}
           theme="error"
-          size="xs"
+          size="small"
           data-testid={`${testId}-close`}
         />
         <h2

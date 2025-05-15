@@ -1,21 +1,30 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/globals";
 
-.footerContent {
+.footer {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  width: 100%;
+  background-color: var(--background-color);
+}
+
+.footer_content {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: theme.$spacing-lg;
-  padding: theme.$spacing-md;
   flex-wrap: wrap;
+  padding: theme.$spacing-md;
 
   @media (width <= 1170px) {
     flex-direction: column;
+    align-items: center;
     text-align: center;
     gap: theme.$spacing-md;
   }
 
-  .footerLeft {
+  .footer_left {
     display: flex;
     align-items: center;
 
@@ -26,9 +35,24 @@
     }
   }
 
-  .footerLinks {
+  .footer_links {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: theme.$spacing-md;
+    padding-left: theme.$spacing-lg;
+
+    ul {
+      list-style: none;
+      display: flex;
+      gap: theme.$spacing-md;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      display: inline;
+    }
 
     a {
       text-decoration: none;
@@ -41,13 +65,31 @@
     }
 
     @media (width <= 1170px) {
-      flex-direction: column;
-      gap: theme.$spacing-xs;
+      ul {
+        flex-direction: column;
+        align-items: center;
+        gap: theme.$spacing-xs;
+      }
     }
   }
 
-  .footerSocial {
+  .footer_logo {
+    max-height: 40px;
+    margin-right: theme.$spacing-lg;
+
+    img {
+      max-height: 100%;
+    }
+
+    svg {
+      height: 50px;
+      width: 50px;
+    }
+  }
+
+  .footer_social {
     display: flex;
+    flex-wrap: wrap;
     gap: theme.$spacing-xs;
     margin-left: auto;
 
@@ -61,13 +103,15 @@
     }
   }
 
-  .themeToggleContainer {
-    position: absolute;
+  .footer_theme_toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
 
     @media (width <= 1170px) {
-      position: relative;
       margin-left: 0;
-      justify-content: center;
+      margin-top: theme.$spacing-xs;
     }
   }
 }

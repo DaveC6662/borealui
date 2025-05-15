@@ -24,13 +24,7 @@ const NavBar: React.FC<NavBarProps> = (props) => {
           {children}
         </Link>
       )}
-      classNames={{
-        container: styles.navContainer,
-        item: styles.navItem,
-        active: styles.active,
-        icon: styles.iconContainer,
-        label: styles.label,
-      }}
+      classNames={styles}
     />
   );
 };

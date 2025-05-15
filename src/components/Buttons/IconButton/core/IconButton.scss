@@ -2,7 +2,7 @@
 @use "sass:color";
 @use "sass:map";
 
-.iconButton {
+.icon_button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,17 +27,17 @@
     outline-offset: 2px;
   }
 
-  svg {
+  .svg {
     height: 20px;
     width: 20px;
   }
 
-  &.clear {
+  &_clear {
     box-shadow: none;
   }
 
   @each $name, $values in theme.$themes {
-    &.#{$name} {
+    &_#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
 
@@ -45,13 +45,13 @@
         background-color: map.get($values, hover);
       }
 
-      &.outline {
+      &.icon_button_outline {
         background-color: transparent;
         color: map.get($values, border);
         border: 2px solid map.get($values, border);
       }
 
-      &.#{$name}.outline:hover {
+      &.icon_button_outline:hover {
         border-color: map.get($values, hover);
         color: map.get($values, text);
       }
@@ -87,7 +87,7 @@
   );
 
   @each $size, $values in $sizes {
-    &.#{$size} {
+    &_#{$size} {
       width: map.get($values, size);
       height: map.get($values, size);
 
@@ -98,7 +98,7 @@
     }
   }
 
-  &.disabled {
+  &_disabled {
     background-color: theme.$disabled-color;
     color: var(--text-color-primary);
     cursor: not-allowed;
@@ -106,22 +106,12 @@
     box-shadow: none;
   }
 
-  .loader {
+  &_loader {
     width: 1.2rem;
     height: 1.2rem;
     border: 2px solid transparent;
     border-top-color: var(--text-color-primary);
     border-radius: 50%;
     animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    100% {
-      transform: rotate(360deg);
-    }
   }
 }

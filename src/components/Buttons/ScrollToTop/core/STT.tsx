@@ -3,14 +3,14 @@ import ScrollToTopBase from "../ScrollToTopBase";
 import "./STT.scss";
 import { ArrowUpIcon } from "@/Icons";
 
-const classMap = {
-  container: "scrollToTop",
-  button: "scrollButton",
-  icon: "scrollIcon",
+const classes = {
+  wrapper: "scrollToTop",
+  button: "scrollToTop_button",
+  icon: "scrollToTop_icon",
 };
 
 const ScrollToTopButton: React.FC = () => (
-  <ScrollToTopBase classMap={classMap} IconComponent={ArrowUpIcon} />
+  <ScrollToTopBase classMap={classes} IconComponent={ArrowUpIcon} />
 );
 
 export default ScrollToTopButton;

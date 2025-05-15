@@ -3,37 +3,32 @@ import BaseMetricBox from "../MetricBoxBase";
 import "./MetricBox.scss";
 import { MetricBoxProps } from "../MetricBox.types";
 
+const classes = {
+  wrapper: "metricBox",
+  outline: "metricBox_outline",
+  primary: "metricBox_primary",
+  secondary: "metricBox_secondary",
+  success: "metricBox_success",
+  error: "metricBox_error",
+  warning: "metricBox_warning",
+  clear: "metricBox_clear",
+  xs: "metricBox_xs",
+  small: "metricBox_small",
+  medium: "metricBox_medium",
+  large: "metricBox_large",
+  xl: "metricBox_xl",
+  left: "metricBox_left",
+  center: "metricBox_center",
+  right: "metricBox_right",
+  icon: "metricBox_icon",
+  content: "metricBox_content",
+  title: "metricBox_title",
+  value: "metricBox_value",
+  subtext: "metricBox_subtext",
+};
+
 const MetricBox: React.FC<MetricBoxProps> = (props) => {
-  return (
-    <BaseMetricBox
-      {...props}
-      classNames={{
-        wrapper: "metricBox",
-        themeMap: {
-          primary: "primary",
-          secondary: "secondary",
-          success: "success",
-          error: "error",
-          warning: "warning",
-        },
-        sizeMap: {
-          small: "small",
-          medium: "medium",
-          large: "large",
-        },
-        alignMap: {
-          left: "left",
-          center: "center",
-          right: "right",
-        },
-        icon: "icon",
-        content: "content",
-        title: "title",
-        value: "value",
-        subtext: "subtext",
-      }}
-    />
-  );
+  return <BaseMetricBox {...props} classMap={classes} />;
 };
 
 export default MetricBox;

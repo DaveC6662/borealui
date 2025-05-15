@@ -23,3 +23,25 @@
     opacity: 1;
   }
 }
+
+// 3D rotation animation for spinning icon
+@keyframes spin-3d {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+// Spinning Animation
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

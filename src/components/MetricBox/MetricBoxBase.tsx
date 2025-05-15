@@ -3,17 +3,7 @@ import { MetricBoxProps } from "./MetricBox.types";
 import { combineClassNames } from "@/utils/classNames";
 
 export interface BaseMetricBoxProps extends MetricBoxProps {
-  classNames: {
-    wrapper: string;
-    themeMap: Record<string, string>;
-    sizeMap: Record<string, string>;
-    alignMap: Record<string, string>;
-    icon: string;
-    content: string;
-    title: string;
-    value: string;
-    subtext: string;
-  };
+  classMap: Record<string, string>;
 }
 
 const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
@@ -22,11 +12,12 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   icon: Icon,
   subtext,
   theme = "primary",
+  outline = false,
   align = "center",
   size = "medium",
   className = "",
   "data-testid": testId = "metric-box",
-  classNames,
+  classMap,
 }) => {
   const titleId = `${testId}-title`;
   const valueId = `${testId}-value`;
@@ -35,10 +26,11 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   return (
     <div
       className={combineClassNames(
-        classNames.wrapper,
-        classNames.themeMap[theme],
-        classNames.sizeMap[size],
-        classNames.alignMap[align],
+        classMap.wrapper,
+        outline && classMap.outline,
+        classMap[theme],
+        classMap[size],
+        classMap[align],
         className
       )}
       role="region"
@@ -47,15 +39,15 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
       data-testid={testId}
     >
       {Icon && (
-        <div className={classNames.icon} data-testid={`${testId}-icon`}>
+        <div className={classMap.icon} data-testid={`${testId}-icon`}>
           <Icon aria-hidden="true" focusable="false" />
         </div>
       )}
 
-      <div className={classNames.content}>
+      <div className={classMap.content}>
         <h3
           id={titleId}
-          className={classNames.title}
+          className={classMap.title}
           data-testid={`${testId}-title`}
         >
           {title}
@@ -63,7 +55,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
 
         <div
           id={valueId}
-          className={classNames.value}
+          className={classMap.value}
           data-testid={`${testId}-value`}
           aria-label={`${value} ${title}`}
         >
@@ -73,7 +65,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
         {subtext && (
           <div
             id={subtextId}
-            className={classNames.subtext}
+            className={classMap.subtext}
             data-testid={`${testId}-subtext`}
           >
             {subtext}

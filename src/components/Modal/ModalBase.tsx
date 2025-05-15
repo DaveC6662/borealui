@@ -12,13 +12,7 @@ import { combineClassNames } from "@/utils/classNames";
 
 export interface BaseModalProps extends ModalProps {
   IconButton: React.ComponentType<any>;
-  classNames: {
-    overlay: string;
-    visible: string;
-    hidden: string;
-    content: string;
-    closeButton: string;
-  };
+  classMap: Record<string, string>;
   portalId?: string;
 }
 
@@ -28,7 +22,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
   onClose,
   "data-testid": testId = "modal",
   IconButton,
-  classNames,
+  classMap,
   portalId = "widget-portal",
 }) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -107,8 +101,8 @@ const BaseModal: React.FC<BaseModalProps> = ({
   return ReactDOM.createPortal(
     <div
       className={combineClassNames(
-        classNames.overlay,
-        isVisible ? classNames.visible : classNames.hidden
+        classMap.overlay,
+        isVisible ? classMap.visible : classMap.hidden
       )}
       onClick={handleClose}
       onKeyDown={handleKeyDown}
@@ -121,7 +115,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
       data-testid={testId}
     >
       <div
-        className={combineClassNames(classNames.content, className)}
+        className={combineClassNames(classMap.content, className)}
         onClick={(e) => e.stopPropagation()}
         data-testid={`${testId}-content`}
         id={descId}
@@ -132,7 +126,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
 
         <IconButton
           ref={firstFocusable}
-          className={classNames.closeButton}
+          className={classMap.closeButton}
           theme="error"
           size="small"
           icon={CloseIcon}

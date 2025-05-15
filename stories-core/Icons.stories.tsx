@@ -25,6 +25,7 @@ import {
   EraserIcon,
   FolderIcon,
   PlusCircleIcon,
+  BorealLogoIcon,
 } from "@/Icons";
 
 const meta: Meta = {
@@ -57,6 +58,7 @@ const iconList = [
   { name: "Eraser", Component: EraserIcon },
   { name: "Folder", Component: FolderIcon },
   { name: "Plus Circle", Component: PlusCircleIcon },
+  { name: "Boreal Logo", Component: BorealLogoIcon },
 ];
 
 export const AllIcons = () => (

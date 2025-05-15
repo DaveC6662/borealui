@@ -3,20 +3,7 @@ import { FormGroupProps } from "./FormGroup.types";
 import { combineClassNames } from "@/utils/classNames";
 
 export interface BaseFormGroupProps extends FormGroupProps {
-  classNames: {
-    wrapper: string;
-    label: string;
-    srOnly: string;
-    required: string;
-    inputWrapper: string;
-    inputField: string;
-    controller: string;
-    description: string;
-    errorMessage: string;
-    layoutMap: Record<string, string>;
-    spacingMap: Record<string, string>;
-    error?: string;
-  };
+  classMap: Record<string, string>;
 }
 
 const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
@@ -29,10 +16,10 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   className = "",
   layout = "vertical",
   hideLabel = false,
-  spacing = "medium",
+  spacing = "xs",
   controller,
   "data-testid": testId = "form-group",
-  classNames,
+  classMap,
 }) => {
   const labelId = id ? `${id}-label` : undefined;
   const descriptionId = description ? `${id}-description` : undefined;
@@ -41,13 +28,15 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   const describedBy =
     [errorId, descriptionId].filter(Boolean).join(" ") || undefined;
 
+  const childrenArray = React.Children.toArray(children);
+
   return (
     <div
       className={combineClassNames(
-        classNames.wrapper,
-        classNames.layoutMap[layout],
-        classNames.spacingMap[spacing],
-        error && classNames.error,
+        classMap.wrapper,
+        classMap[layout],
+        classMap[spacing],
+        error && classMap.error,
         className
       )}
       role="group"
@@ -59,15 +48,15 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
         <label
           id={labelId}
           className={combineClassNames(
-            classNames.label,
-            hideLabel && classNames.srOnly
+            classMap.label,
+            hideLabel && classMap.sr_only
           )}
           data-testid={`${testId}-label`}
         >
           {label}
           {required && (
             <span
-              className={classNames.required}
+              className={classMap.required}
               aria-hidden="true"
               data-testid={`${testId}-required`}
             >
@@ -77,31 +66,34 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
         </label>
       )}
 
-      <div
-        className={classNames.inputWrapper}
-        data-testid={`${testId}-wrapper`}
-      >
+      {childrenArray.map((child, index) => (
         <div
-          className={classNames.inputField}
-          data-testid={`${testId}-input-field`}
+          key={index}
+          className={classMap.inputWrapper}
+          data-testid={`${testId}-wrapper-${index}`}
         >
-          {children}
-        </div>
-
-        {controller && (
           <div
-            className={classNames.controller}
-            data-testid={`${testId}-controller`}
+            className={classMap.inputField}
+            data-testid={`${testId}-input-field-${index}`}
           >
-            {controller}
+            {child}
           </div>
-        )}
-      </div>
+
+          {controller && index === 0 && (
+            <div
+              className={classMap.controller}
+              data-testid={`${testId}-controller`}
+            >
+              {controller}
+            </div>
+          )}
+        </div>
+      ))}
 
       {description && !error && (
         <p
           id={descriptionId}
-          className={classNames.description}
+          className={classMap.description}
           data-testid={`${testId}-description`}
         >
           {description}
@@ -111,7 +103,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
       {error && (
         <p
           id={errorId}
-          className={classNames.errorMessage}
+          className={classMap.errorMessage}
           role="alert"
           data-testid={`${testId}-error`}
         >

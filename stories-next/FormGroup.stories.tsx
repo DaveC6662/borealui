@@ -1,119 +1,143 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import FormGroup from "@/components/FormGroup/next/FormGroup";
-import TextInput from "@/components/TextInput/next/TextInput";
-import Button from "@/components/Buttons/Button/next/Button";
-
+import { FormGroup, TextInput, Button } from "@/index.next";
 import type { FormGroupProps } from "@/components/FormGroup/FormGroup.types";
 
 const meta: Meta<FormGroupProps> = {
   title: "Components/FormGroup",
   component: FormGroup,
   tags: ["autodocs"],
-  args: {
-    label: "Username",
-    id: "username",
-    required: true,
-    layout: "vertical",
-    spacing: "medium",
-  },
 };
 
 export default meta;
 
 type Story = StoryObj<FormGroupProps>;
 
-export const Default: Story = {
-  render: (args) => {
+export const LayoutVariants: Story = {
+  render: () => {
     const [value, setValue] = useState("");
     return (
-      <FormGroup {...args}>
-        <TextInput
-          value={value}
-          onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
-            setValue(e.target.value)
-          }
-        />
-      </FormGroup>
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        <FormGroup label="Vertical" id="layout-vertical" layout="vertical">
+          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+        </FormGroup>
+        <FormGroup
+          label="Horizontal"
+          id="layout-horizontal"
+          layout="horizontal"
+        >
+          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+        </FormGroup>
+      </div>
     );
   },
 };
 
-export const WithDescription: Story = {
-  args: {
-    description: "Enter your preferred display name.",
+export const SpacingVariants: Story = {
+  render: () => {
+    const [value, setValue] = useState("");
+    const spacings = ["xs", "small", "medium", "large", "xl"] as const;
+
+    return (
+      <div style={{ display: "grid", gap: "2rem" }}>
+        {spacings.map((spacing) => (
+          <FormGroup
+            key={spacing}
+            label={`Spacing: ${spacing}`}
+            id={`spacing-${spacing}`}
+            spacing={spacing}
+          >
+            <TextInput
+              placeholder="Text 1"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+            <TextInput
+              placeholder="Text 2"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          </FormGroup>
+        ))}
+      </div>
+    );
   },
-  render: (args) => {
+};
+
+export const DescriptionVariants: Story = {
+  render: () => {
     const [value, setValue] = useState("");
     return (
-      <FormGroup {...args}>
-        <TextInput
-          value={value}
-          onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
-            setValue(e.target.value)
-          }
-        />
-      </FormGroup>
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        <FormGroup label="No Description" id="desc-none">
+          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+        </FormGroup>
+        <FormGroup
+          label="With Description"
+          id="desc-present"
+          description="Helpful context goes here."
+        >
+          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+        </FormGroup>
+      </div>
     );
   },
 };
 
-export const WithError: Story = {
-  args: {
-    error: "Username is required.",
-  },
-  render: (args) => {
+export const ErrorVariants: Story = {
+  render: () => {
     return (
-      <FormGroup {...args}>
-        <TextInput value="" onChange={() => {}} />
-      </FormGroup>
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        <FormGroup label="No Error" id="error-none">
+          <TextInput value="" onChange={() => {}} />
+        </FormGroup>
+        <FormGroup
+          label="With Error"
+          id="error-present"
+          error="This field is required"
+        >
+          <TextInput value="" onChange={() => {}} />
+        </FormGroup>
+      </div>
     );
   },
 };
 
-export const HorizontalLayout: Story = {
-  args: {
-    layout: "horizontal",
-  },
-  render: (args) => {
-    const [value, setValue] = useState("");
+export const HideLabelVariants: Story = {
+  render: () => {
     return (
-      <FormGroup {...args}>
-        <TextInput
-          value={value}
-          onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
-            setValue(e.target.value)
-          }
-        />
-      </FormGroup>
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        <FormGroup label="Visible Label" id="label-visible">
+          <TextInput value="" onChange={() => {}} />
+        </FormGroup>
+        <FormGroup
+          label="Hidden Label"
+          id="label-hidden"
+          hideLabel
+          description="Label is hidden but still available to screen readers"
+        >
+          <TextInput value="" onChange={() => {}} />
+        </FormGroup>
+      </div>
     );
   },
 };
 
-export const HiddenLabel: Story = {
-  args: {
-    hideLabel: true,
-    description: "Screen reader-only label",
-  },
-  render: (args) => {
+export const ControllerVariants: Story = {
+  render: () => {
     return (
-      <FormGroup {...args}>
-        <TextInput value="" onChange={() => {}} />
-      </FormGroup>
-    );
-  },
-};
-
-export const WithController: Story = {
-  args: {
-    label: "Promo Code",
-    controller: <Button size="small">Apply</Button>,
-  },
-  render: (args) => {
-    return (
-      <FormGroup {...args}>
-        <TextInput value="" onChange={() => {}} />
-      </FormGroup>
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        <FormGroup label="No Controller" id="ctrl-none">
+          <TextInput value="" onChange={() => {}} />
+        </FormGroup>
+        <FormGroup
+          label="With Controller"
+          id="ctrl-present"
+          controller={<Button size="small">Search</Button>}
+        >
+          <TextInput value="" onChange={() => {}} />
+        </FormGroup>
+      </div>
     );
   },
 };

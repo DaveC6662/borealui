@@ -27,10 +27,10 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   }, [offset]);
 
   return (
-    <div className={classMap.container}>
+    <div className={classMap.wrapper}>
       <div
         aria-live="polite"
-        className="sr-only"
+        className="sr_only"
         role="status"
         data-testid="scroll-announcement"
       >
@@ -42,6 +42,7 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
           onClick={scrollToTop}
           className={classMap.button}
           title="Scroll to top"
+          type="button"
           aria-label="Scroll to top"
           data-testid="scroll-button"
         >

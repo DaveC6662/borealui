@@ -1,8 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
 import Footer from "@/components/Footer/core/Footer";
 import type { FooterProps } from "@/components/Footer/Footer.types";
-import { FaGithub, FaTwitter, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaTwitter, FaLinkedin, FaTree } from "react-icons/fa";
 import ThemeProvider from "@/context/ThemeContext";
+import { BorealLogoIcon } from "@/Icons";
 
 const meta: Meta<FooterProps> = {
   title: "Components/Footer",
@@ -17,7 +18,7 @@ const meta: Meta<FooterProps> = {
   ],
   args: {
     theme: "primary",
-    showThemeSelect: true,
+    showThemeSelect: false,
   },
 };
 
@@ -33,6 +34,7 @@ export const Default: Story = {
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
     ],
+    logo: <BorealLogoIcon />,
     socialLinks: [
       {
         icon: FaGithub,
@@ -53,10 +55,10 @@ export const Default: Story = {
   },
 };
 
-export const NoThemeSelect: Story = {
+export const ThemeSelect: Story = {
   args: {
     ...Default.args,
-    showThemeSelect: false,
+    showThemeSelect: true,
   },
 };
 
@@ -74,12 +76,5 @@ export const SocialOnly: Story = {
     socialLinks: [
       { icon: FaGithub, href: "https://github.com", title: "GitHub" },
     ],
-  },
-};
-
-export const CustomTheme: Story = {
-  args: {
-    ...Default.args,
-    theme: "secondary",
   },
 };

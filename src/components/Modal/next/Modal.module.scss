@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 
-.modalOverlay {
+.overlay {
   position: fixed;
   inset: 0;
   background-color: rgb(0 0 0 / 50%);
@@ -13,7 +13,7 @@
   transition: opacity 0.2s ease;
 }
 
-.modalContent {
+.content {
   background: var(--background-color-light);
   padding: theme.$spacing-lg;
   border-radius: theme.$border-radius-xs;
@@ -29,7 +29,7 @@
   opacity: 1;
   pointer-events: auto;
 
-  .modalContent {
+  .content {
     opacity: 1;
     transform: scale(1);
   }
@@ -39,7 +39,7 @@
   opacity: 0;
   pointer-events: none;
 
-  .modalContent {
+  .content {
     opacity: 0;
     transform: scale(0.95);
   }

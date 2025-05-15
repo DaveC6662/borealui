@@ -5,30 +5,22 @@ import { combineClassNames } from "@/utils/classNames";
 export interface BaseFooterProps extends FooterProps {
   IconButton: React.ComponentType<any>;
   ThemeSelect: React.ComponentType<any>;
-  classNames: {
-    wrapper: string;
-    theme: Record<string, string>;
-    content: string;
-    left: string;
-    links: string;
-    link: string;
-    social: string;
-    themeToggle: string;
-  };
+  classNames: Record<string, string>;
   LinkWrapper?: (props: {
     href: string;
     children: React.ReactNode;
   }) => JSX.Element;
 }
 
-const BaseFooter: React.FC<BaseFooterProps> = ({
+const FooterBase: React.FC<BaseFooterProps> = ({
   theme = "primary",
   className = "",
   "data-testid": testId = "footer",
   copyright,
   links = [],
+  logo,
   socialLinks = [],
-  showThemeSelect = true,
+  showThemeSelect = false,
   IconButton,
   ThemeSelect,
   classNames,
@@ -37,8 +29,8 @@ const BaseFooter: React.FC<BaseFooterProps> = ({
   return (
     <footer
       className={combineClassNames(
-        classNames.wrapper,
-        classNames.theme[theme],
+        classNames.footer,
+        classNames[theme],
         className
       )}
       role="contentinfo"
@@ -46,6 +38,12 @@ const BaseFooter: React.FC<BaseFooterProps> = ({
       data-testid={testId}
     >
       <div className={classNames.content}>
+        {logo && (
+          <div className={classNames.logo} data-testid={`${testId}-logo`}>
+            {logo}
+          </div>
+        )}
+
         {copyright && (
           <div className={classNames.left} data-testid={`${testId}-copyright`}>
             <p>{copyright}</p>
@@ -58,7 +56,7 @@ const BaseFooter: React.FC<BaseFooterProps> = ({
             aria-label="Footer site links"
             data-testid={`${testId}-nav`}
           >
-            <ul>
+            <ul role="list">
               {links.map((link, i) => (
                 <li key={i}>
                   <LinkWrapper
@@ -118,4 +116,4 @@ const BaseFooter: React.FC<BaseFooterProps> = ({
   );
 };
 
-export default BaseFooter;
+export default FooterBase;

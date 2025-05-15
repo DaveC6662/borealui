@@ -12,13 +12,7 @@ export interface BaseNavBarProps extends NavBarProps {
     testId: string;
     "aria-current"?: "page";
   }) => JSX.Element;
-  classNames: {
-    container: string;
-    item: string;
-    active: string;
-    icon: string;
-    label: string;
-  };
+  classNames: Record<string, string>;
 }
 
 const BaseNavBar: React.FC<BaseNavBarProps> = ({
