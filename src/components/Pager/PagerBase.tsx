@@ -5,14 +5,7 @@ import { PaginationProps } from "./Pager.types";
 export interface BasePagerProps extends PaginationProps {
   Button: React.ComponentType<any>;
   IconButton: React.ComponentType<any>;
-  classNames: {
-    wrapper: string;
-    controls: string;
-    controlButton: string;
-    buttonWrapper: string;
-    button: string;
-    active: string;
-  };
+  classMap: Record<string, string>;
 }
 
 const BasePager: React.FC<BasePagerProps> = ({
@@ -26,24 +19,24 @@ const BasePager: React.FC<BasePagerProps> = ({
   "data-testid": testId = "pager",
   Button,
   IconButton,
-  classNames,
+  classMap,
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <nav
-      className={`${classNames.wrapper} ${className}`}
+      className={`${classMap.wrapper} ${className}`}
       aria-label="Pagination Navigation"
       role="navigation"
       data-testid={testId}
     >
-      <div className={classNames.controls}>
+      <div className={classMap.controls}>
         <IconButton
           icon={ArrowLeftIcon}
           theme={theme}
           size={size}
-          className={classNames.controlButton}
+          className={classMap.controlButton}
           disabled={currentPage === 1}
           aria-label="Go to previous page"
           title="Previous Page"
@@ -52,11 +45,11 @@ const BasePager: React.FC<BasePagerProps> = ({
         />
       </div>
 
-      <div className={classNames.controls} role="list">
+      <div className={classMap.controls} role="list">
         {pages.map((page) => (
           <div
             key={page}
-            className={classNames.buttonWrapper}
+            className={classMap.buttonWrapper}
             data-testid={`${testId}-page-${page}`}
             role="listitem"
           >
@@ -67,8 +60,8 @@ const BasePager: React.FC<BasePagerProps> = ({
               aria-label={`Go to page ${page}`}
               aria-current={page === currentPage ? "page" : undefined}
               disabled={page === currentPage}
-              className={`${classNames.button} ${
-                page === currentPage ? classNames.active : ""
+              className={`${classMap.button} ${
+                page === currentPage ? classMap.active : ""
               }`}
               data-testid={`${testId}-button-${page}`}
             >
@@ -78,12 +71,12 @@ const BasePager: React.FC<BasePagerProps> = ({
         ))}
       </div>
 
-      <div className={classNames.controls}>
+      <div className={classMap.controls}>
         <IconButton
           icon={ArrowRightIcon}
           theme={theme}
           size={size}
-          className={classNames.controlButton}
+          className={classMap.controlButton}
           disabled={currentPage === totalPages}
           aria-label="Go to next page"
           title="Next Page"

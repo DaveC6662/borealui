@@ -4,31 +4,31 @@ import { Button, IconButton } from "@/index.core";
 import "./NotificationCenter.scss";
 import { NotificationCenterProps } from "../NotificationCenter.types";
 
+const classes = {
+  wrapper: "notification_center",
+  header: "notification_center_header",
+  list: "notification_center_list",
+  notification: "notification_center_notification",
+  icon: "notification_center_icon",
+  content: "notification_center_content",
+  message: "notification_center_message",
+  timestamp: "notification_center_timestamp",
+  close: "notification_center_close",
+  clearAll: "notification_center_clearAll",
+  general: "notification_center_general",
+  success: "notification_center_success",
+  error: "notification_center_error",
+  warning: "notification_center_warning",
+  info: "notification_center_info",
+};
+
 const NotificationCenter: React.FC<NotificationCenterProps> = (props) => {
   return (
     <BaseNotificationCenter
       {...props}
       Button={Button}
       IconButton={IconButton}
-      classNames={{
-        wrapper: "notificationCenter",
-        header: "header",
-        list: "list",
-        notification: "notification",
-        icon: "icon",
-        content: "content",
-        message: "message",
-        timestamp: "timestamp",
-        close: "close",
-        clearAll: "clearAll",
-        typeMap: {
-          general: "general",
-          success: "success",
-          error: "error",
-          warning: "warning",
-          info: "info",
-        },
-      }}
+      classMap={classes}
     />
   );
 };

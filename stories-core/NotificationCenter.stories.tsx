@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import NotificationCenter from "@/components/NotificationCenter/core/NotificationCenter";
-import type { NotificationCenterProps, Notification } from "@/components/NotificationCenter/NotificationCenter.types";
+import { NotificationCenter } from "@/index.core";
+import type {
+  NotificationCenterProps,
+  Notification,
+} from "@/components/NotificationCenter/NotificationCenter.types";
 
 const mockNotifications: Notification[] = [
   {

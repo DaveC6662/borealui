@@ -12,14 +12,7 @@ const Pager: React.FC<PaginationProps> = (props) => {
       {...props}
       Button={Button}
       IconButton={IconButton}
-      classNames={{
-        wrapper: styles.pagination,
-        controls: styles.paginationControls,
-        controlButton: styles.paginationControlButton,
-        buttonWrapper: styles.paginationButtonWrapper,
-        button: styles.paginationButton,
-        active: styles.active,
-      }}
+      classMap={styles}
     />
   );
 };

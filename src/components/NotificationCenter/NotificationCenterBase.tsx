@@ -8,19 +8,7 @@ import {
 export interface BaseNotificationCenterProps extends NotificationCenterProps {
   Button: React.ComponentType<any>;
   IconButton: React.ComponentType<any>;
-  classNames: {
-    wrapper: string;
-    header: string;
-    list: string;
-    notification: string;
-    icon: string;
-    content: string;
-    message: string;
-    timestamp: string;
-    close: string;
-    clearAll: string;
-    typeMap: Record<string, string>;
-  };
+  classMap: Record<string, string>;
 }
 
 const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
@@ -30,7 +18,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   showClearAll = true,
   Button,
   IconButton,
-  classNames,
+  classMap,
   "data-testid": testId = "notification-center",
 }) => {
   const timeouts = useRef<Record<string, NodeJS.Timeout>>({});
@@ -52,18 +40,18 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
 
   return (
     <div
-      className={classNames.wrapper}
+      className={classMap.wrapper}
       role="region"
       aria-label="Notification center"
       data-testid={testId}
     >
-      <div className={classNames.header} data-testid={`${testId}-header`}>
+      <div className={classMap.header} data-testid={`${testId}-header`}>
         <h3 id={`${testId}-title`}>Notifications</h3>
         {showClearAll && notifications.length > 0 && onClearAll && (
           <Button
             theme="error"
             size="small"
-            className={classNames.clearAll}
+            className={classMap.clearAll}
             onClick={onClearAll}
             aria-label="Clear all notifications"
             data-testid={`${testId}-clear-all`}
@@ -73,9 +61,8 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
         )}
       </div>
 
-      {/* Live region for screen readers */}
       <div role="status" aria-live="polite" aria-relevant="additions text">
-        <ul className={classNames.list} aria-labelledby={`${testId}-title`}>
+        <ul className={classMap.list} aria-labelledby={`${testId}-title`}>
           {notifications.map((note, index) => {
             const Icon = themeIcons[note.type || "info"];
             const noteTestId = `${testId}-item-${note.id}`;
@@ -87,21 +74,21 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
             return (
               <li
                 key={note.id}
-                className={`${classNames.notification} ${classNames.typeMap[note.type || "info"]}`}
+                className={`${classMap.notification} ${classMap[note.type || "info"]}`}
                 data-testid={noteTestId}
                 aria-label={`Notification ${index + 1}: ${note.message}${timestampStr ? ` at ${timestampStr}` : ""}`}
               >
-                <Icon className={classNames.icon} aria-hidden="true" />
-                <div className={classNames.content}>
+                <Icon className={classMap.icon} aria-hidden="true" />
+                <div className={classMap.content}>
                   <span
-                    className={classNames.message}
+                    className={classMap.message}
                     data-testid={`${noteTestId}-message`}
                   >
                     {note.message}
                   </span>
                   {note.timestamp && (
                     <span
-                      className={classNames.timestamp}
+                      className={classMap.timestamp}
                       data-testid={`${noteTestId}-timestamp`}
                     >
                       {timestampStr}
@@ -109,7 +96,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                   )}
                 </div>
                 <IconButton
-                  className={classNames.close}
+                  className={classMap.close}
                   theme="error"
                   size="small"
                   outline

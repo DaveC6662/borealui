@@ -1,37 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "sass:map";
 
-// Theme Map
-$popover-themes: (
-  "primary": (
-    bg: var(--primary-color),
-    text: var(--text-color-primary),
-  ),
-  "secondary": (
-    bg: var(--secondary-color),
-    text: var(--text-color-secondary),
-  ),
-  "success": (
-    bg: theme.$success-color,
-    text: var(--text-color-primary),
-  ),
-  "error": (
-    bg: theme.$error-color,
-    text: var(--text-color-primary),
-  ),
-  "warning": (
-    bg: theme.$warning-color,
-    text: var(--text-color-primary),
-  ),
-  "clear": (
-    bg: transparent,
-    text: var(--text-color-primary),
-    shadow: none,
-    border: none,
-  ),
-);
-
-// Position Map (Split out popover and arrow styles)
 $position-popover: (
   "top": (
     bottom: 100%,
@@ -55,8 +24,7 @@ $position-popover: (
   ),
 );
 
-// ========== Base ==========
-.popoverContainer {
+.container {
   position: relative;
   display: inline-block;
 }
@@ -82,9 +50,9 @@ $position-popover: (
   color: var(--text-color-secondary);
   border: 1px solid var(--text-color-secondary);
   box-shadow: theme.$box-shadow-medium;
-  animation: fade 0.25s ease-in-out forwards;
+  animation: fade-in-up 0.25s ease-in-out forwards;
 
-  @each $name, $values in $popover-themes {
+  @each $name, $values in theme.$themes {
     &.#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -123,16 +91,4 @@ $position-popover: (
 .popover::after {
   content: none !important;
   display: none !important;
-}
-
-@keyframes fade {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }

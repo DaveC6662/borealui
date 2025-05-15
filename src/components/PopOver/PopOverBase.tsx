@@ -2,13 +2,7 @@ import React, { useState, useRef, useEffect, JSX } from "react";
 import { PopoverProps } from "./PopOver.types";
 
 export interface BasePopoverProps extends PopoverProps {
-  classNames: {
-    container: string;
-    trigger: string;
-    popover: string;
-    placementMap: Record<string, string>;
-    themeMap: Record<string, string>;
-  };
+  classMap: Record<string, string>;
 }
 
 const BasePopover: React.FC<BasePopoverProps> = ({
@@ -18,7 +12,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   theme = "primary",
   className = "",
   "data-testid": testId = "popover",
-  classNames,
+  classMap,
 }: BasePopoverProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -27,10 +21,9 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   const toggleOpen = () => setOpen((prev) => !prev);
   const close = () => {
     setOpen(false);
-    triggerRef.current?.focus(); // Return focus to trigger
+    triggerRef.current?.focus();
   };
 
-  // Handle outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -45,7 +38,6 @@ const BasePopover: React.FC<BasePopoverProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Handle Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -62,12 +54,12 @@ const BasePopover: React.FC<BasePopoverProps> = ({
 
   return (
     <div
-      className={`${classNames.container} ${className}`}
+      className={`${classMap.container} ${className}`}
       ref={popoverRef}
       data-testid={testId}
     >
       <div
-        className={classNames.trigger}
+        className={classMap.trigger}
         onClick={toggleOpen}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
@@ -94,9 +86,9 @@ const BasePopover: React.FC<BasePopoverProps> = ({
           aria-modal="false"
           aria-labelledby={`${testId}-trigger`}
           className={[
-            classNames.popover,
-            classNames.placementMap[placement],
-            classNames.themeMap[theme],
+            classMap.popover,
+            classMap[placement],
+            classMap[theme],
           ].join(" ")}
           data-testid={`${testId}-content`}
         >

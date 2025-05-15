@@ -1,8 +1,6 @@
-// src/stories/Pager.stories.tsx
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import Pager from "@/components/Pager/core/Pager";
+import { Pager } from "@/index.core";
 import type { PaginationProps } from "@/components/Pager/Pager.types";
 
 const meta: Meta<PaginationProps> = {
@@ -49,42 +47,67 @@ export const WithManyPages: Story = {
   },
 };
 
-export const MediumSize: Story = {
+export const SizeVariants: Story = {
   render: (args) => {
-    const [currentPage, setCurrentPage] = useState(2);
+    const sizes = ["xs", "small", "medium", "large", "xl"] as const;
     return (
-      <Pager
-        {...args}
-        size="medium"
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {sizes.map((size) => {
+          const [page, setPage] = useState(1);
+          return (
+            <Pager
+              key={size}
+              {...args}
+              size={size}
+              currentPage={page}
+              onPageChange={setPage}
+            />
+          );
+        })}
+      </div>
     );
   },
 };
 
-export const SecondaryTheme: Story = {
+export const ThemeVariants: Story = {
   render: (args) => {
-    const [currentPage, setCurrentPage] = useState(1);
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+
     return (
-      <Pager
-        {...args}
-        theme="secondary"
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themes.map((theme) => {
+          const [page, setPage] = useState(1);
+          return (
+            <Pager
+              key={theme}
+              {...args}
+              theme={theme}
+              currentPage={page}
+              onPageChange={setPage}
+            />
+          );
+        })}
+      </div>
     );
   },
 };
 
 export const FirstPageDisabled: Story = {
   render: (args) => {
-    const [currentPage] = useState(1);
     return (
       <Pager
         {...args}
-        currentPage={currentPage}
-        onPageChange={() => {}}
+        currentPage={1}
+        onPageChange={() => {
+          /* disabled */
+        }}
       />
     );
   },
@@ -95,13 +118,16 @@ export const LastPageDisabled: Story = {
     const totalItems = 50;
     const itemsPerPage = 10;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
+
     return (
       <Pager
         {...args}
         totalItems={totalItems}
         itemsPerPage={itemsPerPage}
         currentPage={totalPages}
-        onPageChange={() => {}}
+        onPageChange={() => {
+          /* disabled */
+        }}
       />
     );
   },

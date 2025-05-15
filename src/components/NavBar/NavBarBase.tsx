@@ -12,24 +12,29 @@ export interface BaseNavBarProps extends NavBarProps {
     testId: string;
     "aria-current"?: "page";
   }) => JSX.Element;
-  classNames: Record<string, string>;
+  classMap: Record<string, string>;
 }
 
 const BaseNavBar: React.FC<BaseNavBarProps> = ({
   items,
   currentPath,
   LinkWrapper,
-  classNames,
+  classMap,
 }) => {
   return (
     <nav
       role="navigation"
       aria-label="Main navigation"
-      className={classNames.container}
+      className={classMap.container}
       data-testid="nav-bar"
     >
       {items.map((item, index) => {
         const isActive = currentPath === item.path;
+
+        console.log(
+          "Nav item className:",
+          combineClassNames(classMap.item, isActive && classMap.active)
+        );
 
         return (
           <LinkWrapper
@@ -37,20 +42,20 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
             href={item.path}
             isActive={isActive}
             className={combineClassNames(
-              classNames.item,
-              isActive && classNames.active
+              classMap.item,
+              isActive && classMap["item--active"]
             )}
             testId={`nav-item-${item.label.toLowerCase()}`}
             aria-current={isActive ? "page" : undefined}
           >
             <div
-              className={classNames.icon}
+              className={classMap.icon}
               aria-hidden="true"
               data-testid={`nav-icon-${item.label.toLowerCase()}`}
             >
               {item.icon}
             </div>
-            <span className={classNames.label}>{item.label}</span>
+            <span className={classMap.label}>{item.label}</span>
           </LinkWrapper>
         );
       })}

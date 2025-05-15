@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import NavBar from "@/components/NavBar/next/NavBar";
+import { Navbar } from "@/index.next";
 import {
   FaHome,
   FaCompactDisc,
@@ -21,7 +21,7 @@ const mockItems: NavBarProps["items"] = [
 
 const meta: Meta<NavBarProps> = {
   title: "Components/NavBar",
-  component: NavBar,
+  component: Navbar,
   tags: ["autodocs"],
   decorators: [
     (Story) => (
@@ -43,20 +43,28 @@ type Story = StoryObj<NavBarProps>;
 export const Default: Story = {
   render: (args) => {
     window.history.pushState({}, "", "/");
-    return <NavBar {...args} />;
+    return <Navbar {...args} />;
   },
 };
 
 export const MusicActive: Story = {
+  args: {
+    items: mockItems,
+    mockPath: "/Music",
+  },
   render: (args) => {
     window.history.pushState({}, "", "/Music");
-    return <NavBar {...args} />;
+    return <Navbar {...args} />;
   },
 };
 
 export const BlogActive: Story = {
+  args: {
+    items: mockItems,
+    mockPath: "/Blog",
+  },
   render: (args) => {
     window.history.pushState({}, "", "/Blog");
-    return <NavBar {...args} />;
+    return <Navbar {...args} />;
   },
 };

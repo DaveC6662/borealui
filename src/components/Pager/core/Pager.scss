@@ -19,8 +19,7 @@ $large-gap: 20px;
     gap: $medium-gap;
   }
 
-
-  .paginationControls {
+  &_controls {
     display: flex;
     align-items: center;
 
@@ -34,7 +33,7 @@ $large-gap: 20px;
     }
   }
 
-  .paginationButtons {
+  &_buttons {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -48,12 +47,11 @@ $large-gap: 20px;
     }
   }
 
-  .paginationButton {
+  &_button {
     margin: 2px;
 
     @media (width <=480px) {
       font-size: 12px;
     }
   }
-
 }

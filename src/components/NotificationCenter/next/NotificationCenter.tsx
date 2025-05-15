@@ -12,25 +12,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = (props) => {
       {...props}
       Button={Button}
       IconButton={IconButton}
-      classNames={{
-        wrapper: styles.notificationCenter,
-        header: styles.header,
-        list: styles.list,
-        notification: styles.notification,
-        icon: styles.icon,
-        content: styles.content,
-        message: styles.message,
-        timestamp: styles.timestamp,
-        close: styles.close,
-        clearAll: styles.clearAll,
-        typeMap: {
-          general: styles.general,
-          success: styles.success,
-          error: styles.error,
-          warning: styles.warning,
-          info: styles.info,
-        },
-      }}
+      classMap={styles}
     />
   );
 };

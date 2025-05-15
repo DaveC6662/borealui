@@ -6,7 +6,7 @@ import { NavBarProps } from "../NavBar.types";
 const classes = {
   container: "nav",
   item: "nav_item",
-  active: "nav_active",
+  "item--active": "nav_active",
   icon: "nav_icon_container",
   label: "nav_label",
 };
@@ -32,7 +32,7 @@ const NavBar: React.FC<NavBarProps> = (props) => {
           {children}
         </a>
       )}
-      classNames={classes}
+      classMap={classes}
     />
   );
 };
