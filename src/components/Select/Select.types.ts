@@ -16,6 +16,8 @@ interface Option {
 export interface SelectProps {
   /** Theme for styling (e.g., "primary", "secondary"). */
   theme?: ThemeType;
+  /** If true, the select element is styled as outlined. */
+  outline?: boolean;
   /** An array of options that will be rendered as dropdown choices. */
   options: Option[];
   /** The current selected value. */

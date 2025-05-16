@@ -1,25 +1,21 @@
 import { forwardRef, ChangeEvent, useId } from "react";
 import { SelectProps } from "./Select.types";
 import { ChevronDownIcon } from "@/Icons";
+import { combineClassNames } from "@/utils/classNames";
 
 interface BaseSelectProps extends SelectProps {
-  classNames: {
-    main: string;
-    select: string;
-    icon: string;
-    themeClass: (theme: string) => string;
-    disabled?: string;
-  };
+  classMap: Record<string, string>;
 }
 
 /**
  * BaseSelect is the unstyled core logic of the Select component.
- * It receives classNames and testIds from the consuming core/next wrapper.
+ * It receives classMap and testIds from the consuming core/next wrapper.
  */
 const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
   (
     {
       theme = "primary",
+      outline = false,
       options,
       value,
       onChange,
@@ -28,7 +24,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       ariaDescription,
       disabled = false,
       className = "",
-      classNames,
+      classMap,
       "data-testid": testId = "select",
     },
     ref
@@ -43,9 +39,13 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
     return (
       <div
-        className={`${classNames.main} ${classNames.themeClass(theme)} ${className} ${
-          disabled && classNames.disabled ? classNames.disabled : ""
-        }`}
+        className={combineClassNames(
+          classMap.wrapper,
+          classMap[theme],
+          className,
+          outline ? classMap.outline : "",
+          disabled ? classMap.disabled : ""
+        )}
         data-testid={testId}
       >
         <select
@@ -53,7 +53,11 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           id={selectId}
           value={value}
           onChange={handleChange}
-          className={`${classNames.select} ${classNames.themeClass(theme)}`}
+          className={combineClassNames(
+            classMap.select,
+            classMap[theme],
+            outline ? classMap.outline : ""
+          )}
           aria-label={ariaLabel || placeholder}
           aria-describedby={descId}
           aria-disabled={disabled}
@@ -75,8 +79,8 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         </select>
 
         <div
-          className={`${classNames.icon} ${classNames.themeClass(theme)} ${
-            disabled && classNames.disabled ? classNames.disabled : ""
+          className={`${classMap.icon} ${classMap[theme]} ${
+            disabled && classMap.disabled ? classMap.disabled : ""
           }`}
           aria-hidden="true"
           data-testid={`${testId}-icon`}

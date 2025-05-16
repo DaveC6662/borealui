@@ -3,21 +3,23 @@ import BaseSelect from "../SelectBase";
 import "./Select.scss";
 import { SelectProps } from "../Select.types";
 
+const classes = {
+  wrapper: "select_wrapper",
+  select: "select",
+  outline: "select_outline",
+  primary: "select_primary",
+  secondary: "select_secondary",
+  success: "select_success",
+  error: "select_error",
+  warning: "select_warning",
+  clear: "select_clear",
+  icon: "select_icon",
+  disabled: "select_disabled",
+};
+
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   (props, ref) => {
-    return (
-      <BaseSelect
-        {...props}
-        ref={ref}
-        classNames={{
-          main: "selectMain",
-          select: "select",
-          icon: "selectIcon",
-          disabled: "disabled",
-          themeClass: (theme) => theme,
-        }}
-      />
-    );
+    return <BaseSelect {...props} ref={ref} classMap={classes} />;
   }
 );
 

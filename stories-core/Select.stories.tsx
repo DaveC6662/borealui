@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import Select from "@/components/Select/core/Select";
+import { Select } from "@/index.core";
 import type { SelectProps } from "@/components/Select/Select.types";
 
 const meta: Meta<SelectProps> = {
@@ -25,12 +25,11 @@ type Story = StoryObj<SelectProps>;
 export const Default: Story = {
   render: (args) => {
     const [value, setValue] = useState("");
-
     return (
       <Select
         {...args}
         value={value}
-        onChange={(v: React.SetStateAction<string>) => setValue(v)}
+        onChange={setValue}
         ariaLabel="Default select"
       />
     );
@@ -41,19 +40,18 @@ export const WithNumericOptions: Story = {
   args: {
     placeholder: "Choose a number",
     options: [
-      { label: "One", value: `1` },
-      { label: "Two", value: `2` },
-      { label: "Three", value: `3` },
+      { label: "1", value: "1" },
+      { label: "2", value: "2" },
+      { label: "3", value: "3" },
     ],
   },
   render: (args) => {
-    const [value, setValue] = useState<string>("");
-
+    const [value, setValue] = useState("");
     return (
       <Select
         {...args}
         value={value}
-        onChange={(v: React.SetStateAction<string>) => setValue(v)}
+        onChange={setValue}
         ariaLabel="Numeric select"
       />
     );
@@ -70,7 +68,14 @@ export const Disabled: Story = {
 export const ThemeVariants: Story = {
   render: (args) => {
     const [value, setValue] = useState("");
-
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
     const options = [
       { label: "Alpha", value: "alpha" },
       { label: "Beta", value: "beta" },
@@ -79,10 +84,53 @@ export const ThemeVariants: Story = {
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        <Select {...args} theme="primary" options={options} value={value} onChange={setValue} />
-        <Select {...args} theme="secondary" options={options} value={value} onChange={setValue} />
-        <Select {...args} theme="warning" options={options} value={value} onChange={setValue} />
-        <Select {...args} theme="error" options={options} value={value} onChange={setValue} />
+        {themes.map((theme) => (
+          <Select
+            key={theme}
+            {...args}
+            theme={theme}
+            value={value}
+            onChange={setValue}
+            options={options}
+            ariaLabel={`Select with ${theme} theme`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+    const options = [
+      { label: "Outlined A", value: "a" },
+      { label: "Outlined B", value: "b" },
+      { label: "Outlined C", value: "c" },
+    ];
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themes.map((theme) => (
+          <Select
+            key={theme}
+            {...args}
+            theme={theme}
+            outline
+            value={value}
+            onChange={setValue}
+            options={options}
+            ariaLabel={`Outlined ${theme} select`}
+          />
+        ))}
       </div>
     );
   },
