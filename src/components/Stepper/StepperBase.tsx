@@ -1,8 +1,9 @@
 import React from "react";
 import { StepperProps } from "./Stepper.types";
+import { combineClassNames } from "@/utils/classNames";
 
 export interface StepperBaseProps extends StepperProps {
-  styles: Record<string, string>;
+  classMap: Record<string, string>;
   IconButtonComponent: React.FC<any>;
 }
 
@@ -10,11 +11,12 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   steps,
   activeStep,
   onStepClick,
+  disableBackNavigation = false,
   orientation = "horizontal",
   theme = "primary",
   size = "medium",
   "data-testid": testId = "stepper",
-  styles,
+  classMap,
   IconButtonComponent,
 }) => {
   const stepCount = steps.length;
@@ -22,35 +24,41 @@ const StepperBase: React.FC<StepperBaseProps> = ({
 
   return (
     <div
-      className={`${styles.stepper} ${styles[orientation]} ${styles[theme]} ${styles[size]}`}
+      className={`${classMap.stepper} ${classMap[orientation]} ${classMap[theme]} ${classMap[size]}`}
       role="list"
       aria-labelledby={groupLabelId}
       data-testid={testId}
     >
-      <span id={groupLabelId} className="sr-only">
+      <span id={groupLabelId} className="sr_only">
         Progress Stepper
       </span>
 
       {steps.map((step, index) => {
         const Icon = step.icon || (() => <span>{index + 1}</span>);
+        const isCompleted = index < activeStep;
         const isActive = index === activeStep;
-        const isDisabled = index > activeStep;
+        const isBefore = index < activeStep;
+        const isDisabled = disableBackNavigation && isBefore;
+        const canFocus = !!onStepClick && !isDisabled;
         const stepId = `${testId}-step-${index}`;
         const label = `Step ${index + 1} of ${stepCount}: ${step.label}`;
-        const canFocus = !!onStepClick && !isDisabled;
 
         return (
           <div
             key={index}
             role="listitem"
-            className={`${styles.step} ${isActive ? styles.active : ""} ${
-              onStepClick ? styles.clickable : ""
-            }`}
+            className={combineClassNames(
+              classMap.step,
+              isActive ? classMap.active : "",
+              isCompleted ? classMap.completed : "",
+              onStepClick ? classMap.clickable : ""
+            )}
             data-testid={stepId}
           >
             <IconButtonComponent
               icon={Icon}
               theme={theme}
+              className={classMap.stepButton}
               size={size}
               disabled={isDisabled}
               outline={!isActive}
@@ -69,7 +77,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
             />
 
             <span
-              className={styles.stepLabel}
+              className={classMap.stepLabel}
               data-testid={`${stepId}-label`}
               aria-hidden="true"
             >
@@ -78,7 +86,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
 
             {index < steps.length - 1 && (
               <div
-                className={styles.connector}
+                className={classMap.connector}
                 aria-hidden="true"
                 data-testid={`${stepId}-connector`}
               />

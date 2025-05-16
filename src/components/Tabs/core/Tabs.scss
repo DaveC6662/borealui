@@ -2,15 +2,6 @@
 @use "../../../styles/globals";
 @use "sass:map";
 
-// Theme and size maps
-$themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-  "clear": var(--background-color-darker),
-);
 $sizes: (
   "xs": (
     font: theme.$font-size-xs,
@@ -34,27 +25,30 @@ $sizes: (
   ),
 );
 
-// Container styling
-.tabsContainer {
+.tabs_container {
   width: 100%;
-  margin: theme.$spacing-sm;
+  background-color: transparent;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+  border-bottom: 2px solid var(--text-color-primary);
+  padding-bottom: theme.$spacing-sm;
+  gap: theme.$spacing-xxs;
   background-color: transparent;
 
-  .tabs {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: stretch;
-    border-bottom: 2px solid var(--text-color-primary);
-    padding-bottom: theme.$spacing-sm;
-    gap: theme.$spacing-xxs;
-    background-color: transparent;
-
-    @media (width <= 480px) {
-      flex-direction: column;
-    }
+  @media (width <= 480px) {
+    flex-direction: column;
   }
 
-  .tab {
+  &_icon {
+    box-sizing: border-box;
+    margin-right: theme.$spacing-sm;
+  }
+
+  &_tab {
     flex: 1;
     background-color: var(--background-color-lighter);
     display: flex;
@@ -114,13 +108,13 @@ $sizes: (
   }
 
   @each $size, $props in $sizes {
-    &.#{$size} .tab {
+    &_#{$size} .tabs_tab {
       font-size: map.get($props, font);
       padding: map.get($props, padding);
     }
   }
 
-  .content {
+  &_content {
     display: flex;
     flex-direction: column;
     padding: theme.$spacing-md;
@@ -139,21 +133,21 @@ $sizes: (
     }
   }
 
-  @each $theme, $color in $themes {
-    &.#{$theme} {
-      .tab.active {
-        background-color: $color;
-        border-bottom-color: $color;
+  @each $theme, $color in theme.$themes {
+    &_#{$theme} {
+      .tabs_tab.tabs_active {
+        background-color: map.get($color, bg);
+        border-bottom-color: map.get($color, border);
       }
 
-      .tab:focus {
-        outline: 2px solid $color;
+      .tabs_tab:focus {
+        outline: 2px solid map.get($color, border);
         outline-offset: 2px;
       }
     }
   }
 
-  &.secondary .tab.active {
+  &_secondary .tabs_tab.active {
     color: var(--text-color-secondary);
   }
 }

@@ -1,23 +1,36 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import "./TextInput.scss";
 import { TextInputProps } from "../TextInput.types";
 import TextInputBase from "../TextInputBase";
+import { IconButton } from "@/index.core";
+
+const classes = {
+  container: "textInput_container",
+  textInput: "textInput",
+  iconContainer: "textInput_iconContainer",
+  togglePassword: "textInput_togglePassword",
+  primary: "textInput_primary",
+  secondary: "textInput_secondary",
+  success: "textInput_success",
+  warning: "textInput_warning",
+  error: "textInput_error",
+  clear: "textInput_clear",
+  xs: "textInput_xs",
+  xl: "textInput_xl",
+  small: "textInput_small",
+  medium: "textInput_medium",
+  large: "textInput_large",
+  outlined: "textInput_outlined",
+  disabled: "disabled",
+};
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   return (
     <TextInputBase
       {...props}
+      IconButton={IconButton}
       ref={ref}
-      styles={{
-        textBoxContainer: "textBoxContainer",
-        textInput: "textInput",
-        iconContainer: "iconContainer",
-        togglePassword: "togglePassword",
-        srOnly: "srOnly",
-        primary: "primary",
-        secondary: "secondary",
-        disabled: "disabled",
-      }}
+      classMap={classes}
     />
   );
 });

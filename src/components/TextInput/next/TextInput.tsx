@@ -4,22 +4,15 @@ import { forwardRef } from "react";
 import styles from "./TextInput.module.scss";
 import { TextInputProps } from "../TextInput.types";
 import TextInputBase from "../TextInputBase";
+import { IconButton } from "@/index.next";
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   return (
     <TextInputBase
       {...props}
+      IconButton={IconButton}
       ref={ref}
-      styles={{
-        textBoxContainer: styles.textBoxContainer,
-        textInput: styles.textInput,
-        iconContainer: styles.iconContainer,
-        togglePassword: styles.togglePassword,
-        srOnly: styles.srOnly,
-        primary: styles.primary,
-        secondary: styles.secondary,
-        disabled: styles.disabled,
-      }}
+      classMap={styles}
     />
   );
 });

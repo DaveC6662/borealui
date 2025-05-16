@@ -11,7 +11,7 @@ const TagInput: React.FC<TagInputProps> = (props) => {
   return (
     <TagInputBase
       {...props}
-      styles={styles}
+      classMap={styles}
       IconButton={IconButton}
       TextInput={TextInput}
       combineClassNames={combineClassNames}

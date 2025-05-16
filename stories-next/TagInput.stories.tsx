@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import TagInput from "@/components/TagInput/next/Taginput";
+import { TagInput } from "@/index.next";
 import type { TagInputProps } from "@/components/TagInput/Taginput.types";
 
 const meta: Meta<TagInputProps> = {
@@ -34,12 +34,28 @@ export const Empty: Story = {
 
 export const SizeVariants: Story = {
   render: (args) => {
-    const [tags, setTags] = useState(["responsive"]);
+    const sizes: TagInputProps["size"][] = [
+      "xs",
+      "small",
+      "medium",
+      "large",
+      "xl",
+    ];
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
-        <TagInput {...args} tags={tags} size="small" onChange={setTags} />
-        <TagInput {...args} tags={tags} size="medium" onChange={setTags} />
-        <TagInput {...args} tags={tags} size="large" onChange={setTags} />
+        {sizes.map((size) => {
+          const [tags, setTags] = useState(["react", "nextjs"]);
+          return (
+            <TagInput
+              key={size}
+              {...args}
+              size={size}
+              tags={tags}
+              onChange={setTags}
+              placeholder={`Add ${size} tag...`}
+            />
+          );
+        })}
       </div>
     );
   },
@@ -47,13 +63,31 @@ export const SizeVariants: Story = {
 
 export const ThemeVariants: Story = {
   render: (args) => {
-    const [tags, setTags] = useState(["custom"]);
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
-        <TagInput {...args} tags={tags} theme="primary" onChange={setTags} />
-        <TagInput {...args} tags={tags} theme="success" onChange={setTags} />
-        <TagInput {...args} tags={tags} theme="warning" onChange={setTags} />
-        <TagInput {...args} tags={tags} theme="error" onChange={setTags} />
+        {themes.map((theme) => {
+          const [tags, setTags] = useState(["react", "nextjs"]);
+
+          return (
+            <TagInput
+              key={theme}
+              {...args}
+              theme={theme}
+              tags={tags}
+              onChange={setTags}
+              placeholder={`Add ${theme} tag...`}
+            />
+          );
+        })}
       </div>
     );
   },

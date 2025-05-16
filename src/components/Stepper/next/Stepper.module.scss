@@ -1,13 +1,7 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:map";
 
-$stepper-themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-);
 $stepper-sizes: (
   "xs": theme.$font-size-xs,
   "small": theme.$font-size-sm,
@@ -19,6 +13,7 @@ $stepper-sizes: (
 .stepper {
   margin: theme.$spacing-xxs;
   display: flex;
+  width: fit-content;
   align-items: center;
   justify-content: space-between;
   position: relative;
@@ -26,70 +21,95 @@ $stepper-sizes: (
   &.vertical {
     flex-direction: column;
     align-items: flex-start;
-    gap: theme.$spacing-xs;
+    height: fit-content;
+    gap: theme.$spacing-md;
   }
-}
 
-@each $size, $font in $stepper-sizes {
-  .#{$size} {
-    .stepper {
+  @each $size, $font in $stepper-sizes {
+    &.#{$size} {
       font-size: $font;
     }
   }
-}
 
-.step {
-  display: flex;
-  align-items: center;
-  position: relative;
-  cursor: default;
-  transition: color theme.$transition-default;
+  .step {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: default;
+    transition: color theme.$transition-default;
+  }
 
-  &.clickable {
+  .clickable {
     cursor: pointer;
+  }
 
-    &:hover {
-      transform: scale(1.1);
+  .clickable:not(.stepper_disabled) .stepper_step_button:hover {
+    transform: scale(1.1);
+  }
+
+  .disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+
+    .icon {
+      background-color: var(--disabled-color);
+      color: var(--text-color-secondary);
+      transform: none;
+      opacity: 0.5;
+    }
+
+    .label {
+      color: var(--text-color-secondary);
+      opacity: 0.5;
+    }
+  }
+
+  .icon {
+    width: 10px;
+    height: 10px;
+    border-radius: theme.$border-radius-round;
+    background-color: var(--background-light-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition:
+      background-color 0.3s ease-in-out,
+      transform 0.2s ease;
+  }
+
+  .stepLabel {
+    margin-left: theme.$spacing-sm;
+    font-weight: theme.$font-weight-bold;
+  }
+
+  .connector {
+    flex-grow: 1;
+    height: 2px;
+    background-color: var(--text-color-primary);
+    margin: 0 theme.$spacing-xs;
+  }
+
+  .active .stepButton {
+    background-color: var(--primary-color);
+    color: var(--text-color-primary);
+    transform: scale(1.1);
+  }
+
+  .completed {
+    .stepButton {
+      background-color: var(--background-color-light);
+      color: theme.$disabled-color;
+      border: 2px solid var(--background-color-light);
+    }
+
+    .stepLabel {
+      color: theme.$disabled-color;
     }
   }
 }
 
-.stepIcon {
-  width: 10px;
-  height: 10px;
-  border-radius: theme.$border-radius-round;
-  background-color: var(--background-light-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  transition:
-    background-color 0.3s ease-in-out,
-    transform 0.2s ease;
-}
-
-.stepLabel {
-  margin-left: theme.$spacing-xs;
-  font-weight: theme.$font-weight-bold;
-}
-
-.connector {
-  flex-grow: 1;
-  height: 2px;
-  background-color: var(--text-color-secondary);
-  margin: 0 theme.$spacing-xs;
-}
-
-.active .stepIcon {
-  background-color: var(--primary-color);
-  color: var(--text-color-primary);
-  transform: scale(1.1);
-}
-
-@each $theme, $color in $stepper-themes {
-  .#{$theme} {
-    .active .stepIcon {
-      background-color: $color;
-    }
-  }
+.clear .active .stepButton {
+  background-color: var(--background-color-darker);
 }

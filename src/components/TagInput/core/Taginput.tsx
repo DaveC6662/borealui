@@ -6,19 +6,32 @@ import { combineClassNames } from "../../../utils/classNames";
 import TagInputBase from "../TagInputBase";
 import { TagInputProps } from "../Taginput.types";
 
+const classes = {
+  tagInput: "tag_input",
+  tagContainer: "tag_input_tag_container",
+  tag: "tag_input_tag",
+  tagLabel: "tag_input_tag_label",
+  removeButton: "tag_input_remove_button",
+  inputWrapper: "tag_input_input_wrapper",
+  input: "tag_input_input",
+  primary: "tag_input_primary",
+  secondary: "tag_input_secondary",
+  success: "tag_input_success",
+  warning: "tag_input_warning",
+  error: "tag_input_error",
+  clear: "tag_input_clear",
+  xs: "tag_input_xs",
+  small: "tag_input_small",
+  medium: "tag_input_medium",
+  large: "tag_input_large",
+  xl: "tag_input_xl",
+};
+
 const TagInput: React.FC<TagInputProps> = (props) => {
   return (
     <TagInputBase
       {...props}
-      styles={{
-        tagInput: "tagInput",
-        tagContainer: "tagContainer",
-        tag: "tag",
-        tagLabel: "tagLabel",
-        removeButton: "removeButton",
-        inputWrapper: "inputWrapper",
-        input: "input",
-      }}
+      classMap={classes}
       IconButton={IconButton}
       TextInput={TextInput}
       combineClassNames={combineClassNames}

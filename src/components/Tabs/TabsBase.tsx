@@ -1,10 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { TabsProps } from "./Tabs.types";
 
-/**
- * Accessible and keyboard-navigable tab component base.
- */
-const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
+const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
   tabs,
   defaultIndex = 0,
   onChange,
@@ -12,7 +9,7 @@ const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
   theme = "primary",
   size = "medium",
   "data-testid": testId = "tabs",
-  styles,
+  classMap,
 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -51,11 +48,11 @@ const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
 
   return (
     <div
-      className={`${styles.tabsContainer} ${styles[theme]} ${styles[size]} ${className}`}
+      className={`${classMap.container} ${classMap[theme]} ${classMap[size]} ${className}`}
       data-testid={testId}
     >
       <div
-        className={styles.tabs}
+        className={classMap.tabs}
         role="tablist"
         aria-label="Tabs"
         onKeyDown={handleKeyDown}
@@ -71,7 +68,7 @@ const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
               ref={(el): void => {
                 tabRefs.current[index] = el;
               }}
-              className={`${styles.tab} ${isActive ? styles.active : ""}`}
+              className={`${classMap.tab} ${isActive ? classMap.active : ""}`}
               onClick={() => handleTabClick(index)}
               role="tab"
               type="button"
@@ -83,7 +80,7 @@ const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
             >
               {Icon && (
                 <div
-                  className={styles.icon}
+                  className={classMap.icon}
                   aria-hidden="true"
                   data-testid={`${testId}-icon-${index}`}
                 >
@@ -97,7 +94,7 @@ const TabsBase: React.FC<TabsProps & { styles: Record<string, string> }> = ({
       </div>
 
       <div
-        className={styles.content}
+        className={classMap.content}
         role="tabpanel"
         id={`${testId}-panel-${activeIndex}`}
         aria-labelledby={`${testId}-tab-${activeIndex}`}

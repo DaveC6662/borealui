@@ -2,17 +2,11 @@ import { forwardRef, useState, useId, InputHTMLAttributes } from "react";
 import { EyeIcon, EyeSlashIcon } from "@/Icons";
 import { TextInputProps } from "./TextInput.types";
 
-/**
- * Base component for TextInput. Handles shared logic and structure.
- *
- * @param {TextInputProps} props - Input properties.
- * @param {React.Ref<HTMLInputElement>} ref - Forwarded ref.
- * @returns {JSX.Element}
- */
 const TextInputBase = forwardRef<
   HTMLInputElement,
   TextInputProps & {
-    styles: Record<string, string>;
+    classMap: Record<string, string>;
+    IconButton: React.FC<any>;
   }
 >(
   (
@@ -27,7 +21,9 @@ const TextInputBase = forwardRef<
       disabled = false,
       autocomplete = false,
       "data-testid": testId = "text-input",
-      styles,
+      classMap,
+      outline = false,
+      IconButton,
       className = "",
       ...rest
     },
@@ -41,13 +37,13 @@ const TextInputBase = forwardRef<
 
     return (
       <div
-        className={`${styles.textBoxContainer} ${styles[theme]} ${disabled ? styles.disabled : ""} ${className}`}
+        className={`${classMap.container} ${classMap[theme]} ${disabled ? classMap.disabled : ""} ${className}`}
         data-testid={`${testId}-wrapper`}
         aria-disabled={disabled}
       >
         {Icon && (
           <div
-            className={styles.iconContainer}
+            className={classMap.iconContainer}
             aria-hidden="true"
             data-testid={`${testId}-icon`}
           >
@@ -59,7 +55,7 @@ const TextInputBase = forwardRef<
           ref={ref}
           id={inputId}
           type={password && !showPassword ? "password" : "text"}
-          className={`${styles.textInput} ${styles[theme]}`}
+          className={`${classMap.textInput} ${classMap[theme]}`}
           placeholder={placeholder}
           aria-label={ariaLabel || placeholder}
           aria-describedby={ariaDescription ? descId : undefined}
@@ -71,21 +67,21 @@ const TextInputBase = forwardRef<
         />
 
         {password && (
-          <button
+          <IconButton
             type="button"
-            className={styles.togglePassword}
+            className={classMap.togglePassword}
             onClick={togglePasswordVisibility}
+            theme="clear"
             aria-label={showPassword ? "Hide password" : "Show password"}
             data-testid={`${testId}-password-toggle`}
-          >
-            {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
-          </button>
+            icon={showPassword ? EyeIcon : EyeSlashIcon}
+          />
         )}
 
         {ariaDescription && (
           <span
             id={descId}
-            className={styles.srOnly}
+            className={"sr_only"}
             data-testid={`${testId}-input-description`}
           >
             {ariaDescription}

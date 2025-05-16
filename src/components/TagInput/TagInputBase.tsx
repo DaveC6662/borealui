@@ -1,9 +1,10 @@
 import React, { useId, useState, KeyboardEvent } from "react";
 import { TagInputProps } from "./Taginput.types";
+import { CloseIcon } from "@/Icons";
 
 const TagInputBase: React.FC<
   TagInputProps & {
-    styles: Record<string, string>;
+    classMap: Record<string, string>;
     IconButton: React.FC<any>;
     TextInput: React.FC<any>;
     combineClassNames: (...classes: any[]) => string;
@@ -16,7 +17,7 @@ const TagInputBase: React.FC<
   size = "medium",
   "data-testid": testId = "tag-input",
   ariaDescription = "Type a tag and press Enter or comma to add. Existing tags can be removed using the remove button next to each tag.",
-  styles,
+  classMap,
   IconButton,
   TextInput,
   combineClassNames,
@@ -56,28 +57,28 @@ const TagInputBase: React.FC<
   return (
     <div
       className={combineClassNames(
-        styles.tagInput,
-        styles[theme],
-        styles[size]
+        classMap.tagInput,
+        classMap[theme],
+        classMap[size]
       )}
       role="group"
       aria-labelledby={labelId}
       aria-describedby={descId}
       data-testid={testId}
     >
-      <label id={labelId} className="sr-only">
+      <label id={labelId} className="sr_only">
         Tag Input
       </label>
       <div
         id={descId}
-        className="sr-only"
+        className="sr_only"
         data-testid={`${testId}-description`}
       >
         {ariaDescription}
       </div>
 
       <ul
-        className={styles.tagContainer}
+        className={classMap.tagContainer}
         aria-live="polite"
         aria-relevant="additions removals"
         data-testid={`${testId}-list`}
@@ -85,30 +86,30 @@ const TagInputBase: React.FC<
         {tagList.map((tag, index) => (
           <li
             key={tag}
-            className={styles.tag}
+            className={classMap.tag}
             role="listitem"
             data-testid={`${testId}-tag-${index}`}
           >
-            <span className={styles.tagLabel}>{tag}</span>
+            <span className={classMap.tagLabel}>{tag}</span>
             <IconButton
               type="button"
               aria-label={`Remove tag ${tag}`}
-              className={styles.removeButton}
+              className={classMap.removeButton}
               onClick={() => handleRemoveTag(tag)}
               data-testid={`${testId}-remove-${index}`}
-              icon="FaTimes"
+              icon={CloseIcon}
               size="small"
               theme="clear"
             />
           </li>
         ))}
 
-        <li className={styles.inputWrapper}>
+        <li className={classMap.inputWrapper}>
           <TextInput
             id={inputId}
             type="text"
             theme={theme}
-            className={styles.input}
+            className={classMap.input}
             value={inputValue}
             placeholder={tagList.length === 0 ? placeholder : ""}
             onChange={(e: { target: { value: string } }) =>
@@ -122,8 +123,7 @@ const TagInputBase: React.FC<
         </li>
       </ul>
 
-      {/* Screen reader-only feedback for recent changes */}
-      <div aria-live="polite" className="sr-only">
+      <div aria-live="polite" className="sr_only">
         {lastAction}
       </div>
     </div>

@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { FaUser, FaEnvelope } from "react-icons/fa";
-import TextInput from "@/components/TextInput/next/TextInput";
+import { TextInput } from "@/index.next";
 import type { TextInputProps } from "@/components/TextInput/TextInput.types";
 
 const meta: Meta<TextInputProps> = {
@@ -21,45 +22,106 @@ export default meta;
 
 type Story = StoryObj<TextInputProps>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextInput
+        {...args}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
+  },
+};
 
 export const WithIcon: Story = {
-  args: {
-    icon: FaUser,
-    placeholder: "Username",
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextInput
+        {...args}
+        icon={FaUser}
+        placeholder="Username"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
   },
 };
 
 export const EmailExample: Story = {
-  args: {
-    icon: FaEnvelope,
-    placeholder: "Email",
-    autocomplete: true,
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextInput
+        {...args}
+        icon={FaEnvelope}
+        placeholder="Email"
+        autocomplete
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
   },
 };
 
 export const PasswordInput: Story = {
-  args: {
-    placeholder: "Enter password",
-    password: true,
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextInput
+        {...args}
+        placeholder="Enter password"
+        password
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
   },
 };
 
 export const ThemedVariants: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <TextInput {...args} theme="primary" placeholder="Primary" />
-      <TextInput {...args} theme="success" placeholder="Success" />
-      <TextInput {...args} theme="warning" placeholder="Warning" />
-      <TextInput {...args} theme="error" placeholder="Error" />
-    </div>
-  ),
+  render: (args) => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themes.map((theme) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextInput
+              key={theme}
+              {...args}
+              theme={theme}
+              placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
 };
 
 export const WithAriaDescription: Story = {
-  args: {
-    placeholder: "Type a short bio...",
-    ariaDescription:
-      "This field is used to describe yourself in 100 characters or less.",
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextInput
+        {...args}
+        placeholder="Type a short bio..."
+        ariaDescription="This field is used to describe yourself in 100 characters or less."
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
   },
 };

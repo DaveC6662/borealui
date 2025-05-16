@@ -1,14 +1,7 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:map";
 
-$themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-  "clear": var(--background-color-darker),
-);
 $sizes: (
   "xs": (
     font: theme.$font-size-xs,
@@ -32,9 +25,9 @@ $sizes: (
   ),
 );
 
-.tabsContainer {
+.tabs_container {
   width: 100%;
-  margin: theme.$spacing-sm;
+  background-color: transparent;
 }
 
 .tabs {
@@ -44,38 +37,26 @@ $sizes: (
   border-bottom: 2px solid var(--text-color-primary);
   padding-bottom: theme.$spacing-sm;
   gap: theme.$spacing-xxs;
+  background-color: transparent;
 
   @media (width <= 480px) {
     flex-direction: column;
-
-    .tab {
-      border-right: none;
-      border-bottom: 0.5px solid var(--text-color-primary);
-    }
-
-    .tab:first-child {
-      border-radius: 0;
-      border-top-left-radius: theme.$border-radius-md;
-      border-top-right-radius: theme.$border-radius-md;
-    }
-
-    .tab:last-child {
-      border-radius: 0;
-      border-bottom-left-radius: theme.$border-radius-md;
-      border-bottom-right-radius: theme.$border-radius-md;
-      border-bottom: none;
-    }
   }
+}
+
+.icon {
+  box-sizing: border-box;
+  margin-right: theme.$spacing-sm;
 }
 
 .tab {
   flex: 1;
+  background-color: var(--background-color-lighter);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  background: none;
   box-shadow: theme.$box-shadow-medium;
   border: none;
   color: var(--text-color-primary);
@@ -107,10 +88,28 @@ $sizes: (
     border-bottom-right-radius: theme.$border-radius-md;
     border-right: none;
   }
+
+  @media (width <= 480px) {
+    border-right: none;
+    border-bottom: 0.5px solid var(--text-color-primary);
+
+    &:first-child {
+      border-radius: 0;
+      border-top-left-radius: theme.$border-radius-md;
+      border-top-right-radius: theme.$border-radius-md;
+    }
+
+    &:last-child {
+      border-radius: 0;
+      border-bottom-left-radius: theme.$border-radius-md;
+      border-bottom-right-radius: theme.$border-radius-md;
+      border-bottom: none;
+    }
+  }
 }
 
 @each $size, $props in $sizes {
-  .tabsContainer.#{$size} .tab {
+  .#{$size} .tab {
     font-size: map.get($props, font);
     padding: map.get($props, padding);
   }
@@ -135,15 +134,15 @@ $sizes: (
   }
 }
 
-@each $theme, $color in $themes {
+@each $theme, $color in theme.$themes {
   .#{$theme} {
     .tab.active {
-      background-color: $color;
-      border-bottom-color: $color;
+      background-color: map.get($color, bg);
+      border-bottom-color: map.get($color, border);
     }
 
     .tab:focus {
-      outline: 2px solid $color;
+      outline: 2px solid map.get($color, border);
       outline-offset: 2px;
     }
   }

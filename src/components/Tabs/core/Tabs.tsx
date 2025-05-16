@@ -3,22 +3,28 @@ import "./Tabs.scss";
 import TabsBase from "../TabsBase";
 import { TabsProps } from "../Tabs.types";
 
-const Tabs: React.FC<TabsProps> = (props) => {
-  const styles = {
-    tabsContainer: "tabsContainer",
-    tabs: "tabs",
-    tab: "tab",
-    active: "active",
-    content: "content",
-    icon: "icon",
-    primary: "primary",
-    secondary: "secondary",
-    small: "small",
-    medium: "medium",
-    large: "large",
-  };
+const classes = {
+  tabsContainer: "tabs_container",
+  tabs: "tabs",
+  tab: "tabs_tab",
+  active: "tabs_active",
+  content: "tabs_content",
+  icon: "tabs_icon",
+  primary: "tabs_primary",
+  secondary: "tabs_secondary",
+  success: "tabs_success",
+  error: "tabs_error",
+  warning: "tabs_warning",
+  clear: "tabs_clear",
+  xs: "tabs_xs",
+  xl: "tabs_xl",
+  small: "tabs_small",
+  medium: "tabs_medium",
+  large: "tabs_large",
+};
 
-  return <TabsBase {...props} styles={styles} />;
+const Tabs: React.FC<TabsProps> = (props) => {
+  return <TabsBase {...props} classMap={classes} />;
 };
 
 export default Tabs;
