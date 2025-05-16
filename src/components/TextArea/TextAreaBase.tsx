@@ -5,29 +5,24 @@ import {
   useId,
 } from "react";
 import { combineClassNames } from "../../utils/classNames";
+import { TextAreaProps } from "./TextArea.types";
 
-export interface TextAreaBaseProps
-  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  icon?: ComponentType;
-  ariaLabel?: string;
-  ariaDescription?: string;
-  height?: string | number;
-  styles: Record<string, string>;
-  "data-testid"?: string;
-}
-
-const TextAreaBase = forwardRef<HTMLTextAreaElement, TextAreaBaseProps>(
+const TextAreaBase = forwardRef<
+  HTMLTextAreaElement,
+  TextAreaProps & { classMap: Record<string, string> }
+>(
   (
     {
       icon: Icon,
       placeholder = "Enter text",
       readOnly = false,
       autoComplete = "off",
+      theme = "primary",
       ariaLabel,
       ariaDescription,
       disabled = false,
       height,
-      styles,
+      classMap,
       className = "",
       "data-testid": testId = "text-area",
       ...props
@@ -40,15 +35,16 @@ const TextAreaBase = forwardRef<HTMLTextAreaElement, TextAreaBaseProps>(
     return (
       <div
         className={combineClassNames(
-          styles.textArea,
-          disabled && styles.disabled,
+          classMap.textArea,
+          classMap[theme],
+          disabled && classMap.disabled,
           className
         )}
         data-testid={testId}
       >
         {Icon && (
           <div
-            className={styles.iconContainer}
+            className={classMap.iconContainer}
             aria-hidden="true"
             data-testid={`${testId}-icon`}
           >
@@ -66,13 +62,13 @@ const TextAreaBase = forwardRef<HTMLTextAreaElement, TextAreaBaseProps>(
           readOnly={readOnly}
           disabled={disabled}
           style={{ height }}
-          className={styles.textInput}
+          className={classMap.textInput}
           data-testid={`${testId}-input`}
           {...props}
         />
 
         <div
-          className={styles.customResizeHandle}
+          className={classMap.customResizeHandle}
           aria-hidden="true"
           data-testid={`${testId}-resize-handle`}
         />
@@ -80,7 +76,7 @@ const TextAreaBase = forwardRef<HTMLTextAreaElement, TextAreaBaseProps>(
         {ariaDescription && (
           <span
             id={descriptionId}
-            className={styles.srOnly}
+            className={"sr_only"}
             data-testid={`${testId}-description`}
           >
             {ariaDescription}

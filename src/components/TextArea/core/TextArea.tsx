@@ -1,89 +1,29 @@
-import {
-    forwardRef,
-    useId,
-} from "react";
+import { forwardRef } from "react";
+import TextAreaBase from "../TextAreaBase";
+import type { TextAreaProps } from "../TextArea.types";
 import "./TextArea.scss";
-import { combineClassNames } from "../../../utils/classNames";
-import { TextAreaProps } from "../TextArea.types";
 
-/**
- * TextArea is a customizable and accessible textarea component that can display an optional icon,
- * supports theming, and includes a visually hidden description for accessibility. It also provides
- * a custom resize handle.
- *
- * @param {TextAreaProps} props - The props for configuring the TextArea.
- * @param {React.Ref<HTMLTextAreaElement>} ref - A ref forwarded to the underlying textarea.
- * @returns {JSX.Element} A styled textarea component.
- */
+const classes = {
+  textArea: "textArea",
+  textInput: "textArea_textInput",
+  icon: "textArea_icon",
+  primary: "textArea_primary",
+  secondary: "textArea_secondary",
+  success: "textArea_success",
+  error: "textArea_error",
+  warning: "textArea_warning",
+  clear: "textArea_clear",
+  outline: "textArea_outline",
+  disabled: "textArea_disabled",
+  errorMessage: "textArea_errorMessage",
+  iconContainer: "textArea_iconContainer",
+  errorMessageContainer: "textArea_errorMessageContainer",
+};
+
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-    (
-        {
-            icon: Icon,
-            placeholder = "Enter text",
-            className = "",
-            readOnly = false,
-            autoComplete = "off",
-            ariaLabel,
-            ariaDescription,
-            theme = "primary",
-            disabled = false,
-            height,
-            "data-testid": testId = "text-area",
-            ...props
-        },
-        ref
-    ) => {
-        const id = useId();
-
-        return (
-            <div
-                className={combineClassNames(
-                    `textArea`,
-                    theme,
-                    disabled && `disabled`,
-                    className
-                )}
-                data-testid={testId}
-            >
-                {Icon && (
-                    <div
-                        className={`iconContainer`}
-                        aria-hidden="true"
-                        aria-label="textarea icon"
-                    >
-                        <Icon />
-                    </div>
-                )}
-
-                <textarea
-                    ref={ref}
-                    className={combineClassNames(`textInput`, theme)}
-                    id={id}
-                    placeholder={placeholder}
-                    aria-label={ariaLabel || placeholder}
-                    aria-describedby={ariaDescription ? `${id}-description` : undefined}
-                    autoComplete={autoComplete}
-                    readOnly={readOnly}
-                    disabled={disabled}
-                    style={{ height }}
-                    data-testid={`${testId}-input`}
-                    {...props}
-                />
-
-                <div className={`customResizeHandle`} aria-hidden="true" />
-
-                {ariaDescription && (
-                    <span
-                        id={`${id}-description`}
-                        className={`srOnly`}
-                        data-testid={`${testId}-description`}
-                    >
-                        {ariaDescription}
-                    </span>
-                )}
-            </div>
-        );
-    }
+  (props, ref) => {
+    return <TextAreaBase {...props} ref={ref} classMap={classes} />;
+  }
 );
 
 TextArea.displayName = "TextArea";

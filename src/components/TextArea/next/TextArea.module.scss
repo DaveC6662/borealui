@@ -2,46 +2,12 @@
 @use "sass:color";
 @use "sass:map";
 
-$themes: (
-  "primary": (
-    bg: var(--primary-color),
-    text: inherit,
-    hover: var(--primary-color-hover),
-    placeholder: var(--text-color-primary),
-    icon: var(--text-color-primary),
-  ),
-  "secondary": (
-    bg: var(--secondary-color),
-    text: var(--text-color-secondary),
-    hover: var(--secondary-color-hover),
-    placeholder: var(--text-color-secondary),
-    icon: var(--text-color-secondary),
-  ),
-  "success": (
-    bg: theme.$success-color,
-    hover: color.adjust(theme.$success-color, $lightness: -10%),
-  ),
-  "error": (
-    bg: theme.$error-color,
-    hover: color.adjust(theme.$error-color, $lightness: -10%),
-  ),
-  "warning": (
-    bg: theme.$warning-color,
-    hover: color.adjust(theme.$warning-color, $lightness: -10%),
-  ),
-  "clear": (
-    bg: transparent,
-    shadow: none,
-  ),
-);
-
 .textArea {
   display: flex;
-  width: 100%;
+  width: fit-content;
   justify-content: center;
   align-items: center;
   border-radius: theme.$border-radius-xs;
-  margin: theme.$spacing-md;
   box-shadow: theme.$box-shadow-medium;
   transition: theme.$transition-default;
 }
@@ -123,7 +89,7 @@ $themes: (
   }
 }
 
-@each $theme, $props in $themes {
+@each $theme, $props in theme.$themes {
   .#{$theme} {
     background-color: map.get($props, bg);
     color: map.get($props, text, inherit);
