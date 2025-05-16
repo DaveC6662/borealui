@@ -1,10 +1,6 @@
 import React from "react";
 import { SkeletonProps } from "./Skeleton.types";
 
-/**
- * Base SkeletonLoader without styling dependencies.
- * Includes accessibility enhancements for screen readers.
- */
 const SkeletonBase: React.FC<SkeletonProps> = ({
   width = "100%",
   height = "100%",
@@ -29,7 +25,7 @@ const SkeletonBase: React.FC<SkeletonProps> = ({
     >
       <span
         id={descriptionId}
-        className="sr-only"
+        className="sr_only"
         data-testid={`${testId}-description`}
       >
         {label}

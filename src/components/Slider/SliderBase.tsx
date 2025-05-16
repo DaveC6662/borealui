@@ -1,12 +1,8 @@
 import React from "react";
 import { SliderProps } from "./Slider.types";
 
-/**
- * SliderBase is a shared functional component used by both core and next versions.
- * This version includes improved accessibility features.
- */
 const SliderBase: React.FC<
-  SliderProps & { styles: Record<string, string> }
+  SliderProps & { classMap: Record<string, string> }
 > = ({
   value,
   onChange,
@@ -20,7 +16,7 @@ const SliderBase: React.FC<
   className = "",
   "aria-label": ariaLabel,
   "data-testid": testId = "slider",
-  styles,
+  classMap,
 }) => {
   const inputId = `${testId}-input`;
   const labelId = `${testId}-label`;
@@ -28,20 +24,20 @@ const SliderBase: React.FC<
 
   return (
     <div
-      className={`${styles.sliderContainer} ${styles[size]} ${styles[theme]} ${className}`}
+      className={`${classMap.container} ${classMap[size]} ${classMap[theme]} ${className}`}
       data-testid={`${testId}-container`}
     >
       {label && (
-        <label id={labelId} htmlFor={inputId} className={styles.sliderLabel}>
+        <label id={labelId} htmlFor={inputId} className={classMap.label}>
           {label}
         </label>
       )}
 
-      <div className={styles.sliderWrapper}>
+      <div className={classMap.wrapper}>
         <input
           id={inputId}
           type="range"
-          className={styles.slider}
+          className={classMap.slider}
           value={value}
           onChange={onChange}
           min={min}
@@ -57,7 +53,7 @@ const SliderBase: React.FC<
         />
         {showValue && (
           <span
-            className={styles.sliderValue}
+            className={classMap.value}
             id={`${testId}-value`}
             aria-live="polite"
             data-testid={`${testId}-value`}

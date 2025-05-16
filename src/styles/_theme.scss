@@ -96,6 +96,7 @@ $themes: (
     color: var(--text-color-primary),
     text: var(--text-color-primary),
     hover: rgb(0 0 0 / 20%),
+    border: var(--text-color-primary),
     text-hover: $disabled-color,
   ),
 ) !default;

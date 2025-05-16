@@ -1,33 +1,31 @@
 import React from "react";
 import { SpinnerProps } from "./Spinner.types";
 
-/**
- * SpinnerBase handles the shared logic for rendering a spinner with
- * dynamic size, theme, and accessibility features.
- */
 const SpinnerBase: React.FC<
-  SpinnerProps & { styles: Record<string, string> }
+  SpinnerProps & { classMap: Record<string, string> }
 > = ({
   theme = "primary",
   size = 50,
   className = "",
   "data-testid": testId = "spinner",
-  label = "Loading",
-  styles,
+  label,
+  classMap,
 }) => {
   const strokeWidth = `${Math.max(2, Math.floor(size / 12))}px`;
   const spinnerSize = `${size}px`;
 
+  const labelId = `${testId}`;
+
   return (
     <div
-      className={`${styles.spinnerWrapper} ${className}`}
+      className={`${classMap.wrapper} ${className}`}
       role="status"
       aria-live="polite"
       aria-busy="true"
       aria-label={label || "Loading"}
     >
       <div
-        className={`${styles.spinner} ${styles[theme]}`}
+        className={`${classMap.spinner} ${classMap[theme]}`}
         style={{
           width: spinnerSize,
           height: spinnerSize,
@@ -36,7 +34,20 @@ const SpinnerBase: React.FC<
         data-testid={testId}
         aria-hidden="true"
       />
-      <span className={styles.srOnly}>{label}</span>
+      <span
+        id={labelId}
+        className={"sr_only"}
+        data-testid={`${testId}-sr-label`}
+      >
+        {label}
+      </span>
+      <span
+        id={labelId}
+        className={classMap.label}
+        data-testid={`${testId}-label`}
+      >
+        {label}
+      </span>
     </div>
   );
 };

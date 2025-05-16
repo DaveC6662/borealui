@@ -6,7 +6,7 @@ import { SliderProps } from "../Slider.types";
 import SliderBase from "../SliderBase";
 
 const Slider: React.FC<SliderProps> = (props) => {
-  return <SliderBase {...props} styles={styles} />;
+  return <SliderBase {...props} classMap={styles} />;
 };
 
 export default Slider;

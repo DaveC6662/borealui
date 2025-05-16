@@ -1,15 +1,8 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:map";
 @use "sass:color";
 
-$slider-themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-  "clear": var(--text-color-primary),
-);
 $slider-sizes: (
   "xs": (
     track: 2px,
@@ -33,18 +26,18 @@ $slider-sizes: (
   ),
 );
 
-.sliderContainer {
+.container {
   display: flex;
   flex-direction: column;
   gap: theme.$spacing-xs;
 }
 
-.sliderLabel {
+.label {
   font-size: theme.$font-size-sm;
   color: var(--text-color-primary);
 }
 
-.sliderWrapper {
+.wrapper {
   display: flex;
   align-items: center;
   gap: theme.$spacing-sm;
@@ -69,21 +62,25 @@ $slider-sizes: (
   }
 }
 
-.sliderValue {
+.value {
   font-size: theme.$font-size-sm;
   color: var(--text-color-primary);
   min-width: 2ch;
 }
 
-@each $name, $color in $slider-themes {
+@each $name, $color in theme.$themes {
   .#{$name} .slider {
-    background-color: $color;
+    background-color: map.get($color, bg);
 
     &::-webkit-slider-thumb,
     &::-moz-range-thumb {
-      color: $color;
+      color: map.get($color, bg);
     }
   }
+}
+
+.clear .slider {
+  background-color: var(--background-color-light);
 }
 
 @each $size, $props in $slider-sizes {

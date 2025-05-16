@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
 import SkeletonLoader from "@/components/Skeleton/core/Skeleton"; // Adjust path
-import type { SkeletonLoaderProps } from "@/components/Skeleton/Skeleton.types";
+import type { SkeletonProps } from "@/components/Skeleton/Skeleton.types";
 
-const meta: Meta<SkeletonLoaderProps> = {
+const meta: Meta<SkeletonProps> = {
   title: "Components/SkeletonLoader",
   component: SkeletonLoader,
   tags: ["autodocs"],
@@ -14,7 +14,7 @@ const meta: Meta<SkeletonLoaderProps> = {
 
 export default meta;
 
-type Story = StoryObj<SkeletonLoaderProps>;
+type Story = StoryObj<SkeletonProps>;
 
 export const Default: Story = {
   args: {

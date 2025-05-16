@@ -6,7 +6,7 @@ import SpinnerBase from "../SpinnerBase";
 import { SpinnerProps } from "../Spinner.types";
 
 const Spinner: React.FC<SpinnerProps> = (props) => {
-  return <SpinnerBase {...props} styles={styles} />;
+  return <SpinnerBase {...props} classMap={styles} />;
 };
 
 export default Spinner;

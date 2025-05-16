@@ -4,30 +4,24 @@ import SpinnerBase from "../SpinnerBase";
 import { SpinnerProps } from "../Spinner.types";
 import { combineClassNames } from "../../../utils/classNames";
 
-/**
- * Core Spinner component with global styles.
- * This component is not scoped and uses global styles.
- * It is a wrapper around the SpinnerBase component.
- *
- * @param {SpinnerProps} props - Props for the Spinner component.
- * @returns {JSX.Element} - Rendered Spinner component.
- */
-// Note: The Spinner component is a wrapper around the SpinnerBase component
-const Spinner: React.FC<SpinnerProps> = (props) => {
-  const coreStyles = {
-    spinner: "spinner",
-    primary: "primary",
-    secondary: "secondary",
-    success: "success",
-    warning: "warning",
-    error: "error",
-  };
+const classes = {
+  wrapper: "spinner_wrapper",
+  spinner: "spinner",
+  label: "spinner_label",
+  primary: "spinner_primary",
+  secondary: "spinner_secondary",
+  success: "spinner_success",
+  warning: "spinner_warning",
+  error: "spinner_error",
+  clear: "spinner_clear",
+};
 
+const Spinner: React.FC<SpinnerProps> = (props) => {
   return (
     <SpinnerBase
       {...props}
       className={combineClassNames(props.className)}
-      styles={coreStyles}
+      classMap={classes}
     />
   );
 };
