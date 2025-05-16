@@ -17,6 +17,10 @@ export interface RatingProps {
    */
   max?: number;
   /**
+   * The label for the rating component, used for accessibility.
+   */
+  label?: string;
+  /**
    * The size of the rating component (e.g., "small", "medium", "large").
    * @default "medium"
    */

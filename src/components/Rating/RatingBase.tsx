@@ -3,14 +3,7 @@ import { StarIcon } from "@/Icons";
 import { RatingProps } from "./Rating.types";
 
 export interface BaseRatingProps extends RatingProps {
-  classNames: {
-    wrapper: string;
-    star: string;
-    active: string;
-    themeMap: Record<string, string>;
-    sizeMap: Record<string, string>;
-    interactive: string;
-  };
+  classMap: Record<string, string>;
 }
 
 const BaseRating: React.FC<BaseRatingProps> = ({
@@ -21,10 +14,12 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   interactive = true,
   theme = "primary",
   className = "",
+  label,
   "data-testid": testId = "rating",
-  classNames,
+  classMap,
 }: BaseRatingProps): JSX.Element => {
   const [hover, setHover] = useState<number | null>(null);
+  const labelId = label ? `${testId}-label` : undefined;
 
   const handleClick = (index: number) => {
     if (interactive && onChange) {
@@ -53,40 +48,47 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   };
 
   return (
-    <div
-      className={[
-        classNames.wrapper,
-        classNames.themeMap[theme],
-        classNames.sizeMap[size],
-        interactive ? classNames.interactive : "",
-        className,
-      ].join(" ")}
-      role="radiogroup"
-      aria-label="Rating"
-      data-testid={testId}
-    >
-      {Array.from({ length: max }).map((_, index) => {
-        const active = index < (hover ?? value);
-        const isChecked = value === index + 1;
+    <div className={classMap.container || ""}>
+      {label && (
+        <label id={labelId} className={classMap.label} htmlFor={undefined}>
+          {label}
+        </label>
+      )}
+      <div
+        className={[
+          classMap.wrapper,
+          classMap[theme],
+          classMap[size],
+          interactive ? classMap.interactive : "",
+          className,
+        ].join(" ")}
+        role="radiogroup"
+        aria-label="Rating"
+        data-testid={testId}
+      >
+        {Array.from({ length: max }).map((_, index) => {
+          const active = index < (hover ?? value);
+          const isChecked = value === index + 1;
 
-        return (
-          <span
-            key={index}
-            className={`${classNames.star} ${active ? classNames.active : ""}`}
-            onClick={() => handleClick(index)}
-            onMouseEnter={() => interactive && setHover(index)}
-            onMouseLeave={() => interactive && setHover(null)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-            role="radio"
-            aria-checked={isChecked}
-            tabIndex={interactive && (isChecked || index === 0) ? 0 : -1}
-            aria-label={`${index + 1} out of ${max} stars`}
-            data-testid={`${testId}-star-${index + 1}`}
-          >
-            <StarIcon aria-hidden="true" />
-          </span>
-        );
-      })}
+          return (
+            <span
+              key={index}
+              className={`${classMap.star} ${active ? classMap.active : ""}`}
+              onClick={() => handleClick(index)}
+              onMouseEnter={() => interactive && setHover(index)}
+              onMouseLeave={() => interactive && setHover(null)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              role="radio"
+              aria-checked={isChecked}
+              tabIndex={interactive && (isChecked || index === 0) ? 0 : -1}
+              aria-label={`${index + 1} out of ${max} stars`}
+              data-testid={`${testId}-star-${index + 1}`}
+            >
+              <StarIcon aria-hidden="true" />
+            </span>
+          );
+        })}
+      </div>
     </div>
   );
 };

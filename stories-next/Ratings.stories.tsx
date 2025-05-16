@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import Rating from "@/components/Rating/next/Rating";
+import { Rating } from "@/index.next";
 import type { RatingProps } from "@/components/Rating/Rating.types";
 
 const meta: Meta<RatingProps> = {
@@ -32,29 +32,50 @@ export const NonInteractive: Story = {
   },
 };
 
-export const SmallSize: Story = {
+export const SizeVariants: Story = {
   render: () => {
-    const [value, setValue] = useState(2);
-    return <Rating value={value} onChange={setValue} size="small" />;
-  },
-};
+    const sizes = ["xs", "small", "medium", "large", "xl"] as const;
+    const [value, setValue] = useState(3);
 
-export const LargeSize: Story = {
-  render: () => {
-    const [value, setValue] = useState(5);
-    return <Rating value={value} onChange={setValue} size="large" />;
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {sizes.map((size) => (
+          <Rating
+            key={size}
+            size={size}
+            value={value}
+            onChange={setValue}
+            label={`Size: ${size}`}
+          />
+        ))}
+      </div>
+    );
   },
 };
 
 export const ThemedVariants: Story = {
   render: () => {
+    const themes = [
+      "primary",
+      "success",
+      "warning",
+      "error",
+      "secondary",
+      "clear",
+    ] as const;
     const [value, setValue] = useState(3);
+
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <Rating value={value} onChange={setValue} theme="primary" />
-        <Rating value={value} onChange={setValue} theme="success" />
-        <Rating value={value} onChange={setValue} theme="warning" />
-        <Rating value={value} onChange={setValue} theme="error" />
+        {themes.map((theme) => (
+          <Rating
+            key={theme}
+            theme={theme}
+            value={value}
+            onChange={setValue}
+            label={`Theme: ${theme}`}
+          />
+        ))}
       </div>
     );
   },
@@ -63,6 +84,6 @@ export const ThemedVariants: Story = {
 export const TenStars: Story = {
   render: () => {
     const [value, setValue] = useState(7);
-    return <Rating value={value} onChange={setValue} max={10} />;
+    return <Rating max={10} value={value} onChange={setValue} />;
   },
 };

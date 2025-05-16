@@ -2,14 +2,7 @@ import React, { forwardRef } from "react";
 import { RadioButtonProps } from "./RadioButton.types";
 
 export interface BaseRadioButtonProps extends RadioButtonProps {
-  classNames: {
-    wrapper: string;
-    input: string;
-    circle: string;
-    label: string;
-    themeMap: Record<string, string>;
-    disabled?: string;
-  };
+  classMap: Record<string, string>;
 }
 
 const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
@@ -23,7 +16,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       disabled = false,
       className = "",
       "data-testid": testId = "radio-button",
-      classNames,
+      classMap,
       ...props
     },
     ref
@@ -35,9 +28,9 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
     };
 
     const wrapperClasses = [
-      classNames.wrapper,
-      classNames.themeMap[theme],
-      disabled ? classNames.disabled : "",
+      classMap.wrapper,
+      classMap[theme],
+      disabled ? classMap.disabled : "",
       className,
     ]
       .filter(Boolean)
@@ -51,7 +44,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
           ref={ref}
           type="radio"
           id={`${testId}-input`}
-          className={classNames.input}
+          className={classMap.input}
           value={value}
           checked={checked}
           onChange={handleChange}
@@ -61,13 +54,13 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
           {...props}
         />
         <span
-          className={classNames.circle}
+          className={classMap.circle}
           aria-hidden="true"
           data-testid={`${testId}-circle`}
         />
         <span
           id={labelId}
-          className={classNames.label}
+          className={classMap.label}
           data-testid={`${testId}-label`}
         >
           {label}

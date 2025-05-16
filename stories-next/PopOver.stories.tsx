@@ -1,11 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react";
-import Popover from "@/components/PopOver/next/PopOver";
+import { PopOver, Button } from "@/index.next";
 import type { PopoverProps } from "@/components/PopOver/PopOver.types";
-import Button from "@/components/Buttons/Button/next/Button";
 
 const meta: Meta<PopoverProps> = {
   title: "Components/Popover",
-  component: Popover,
+  component: PopOver,
   tags: ["autodocs"],
   args: {
     placement: "bottom",
@@ -29,69 +28,102 @@ export const Default: Story = {
 };
 
 export const ThemedVariants: Story = {
-  render: () => (
-    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-      <Popover
-        trigger={<Button theme="primary">Primary</Button>}
-        content={<div style={{ padding: "0.5rem" }}>Primary theme</div>}
-        theme="primary"
-      />
-      <Popover
-        trigger={<Button theme="secondary">Secondary</Button>}
-        content={<div style={{ padding: "0.5rem" }}>Secondary theme</div>}
-        theme="secondary"
-      />
-      <Popover
-        trigger={<Button theme="warning">Warning</Button>}
-        content={<div style={{ padding: "0.5rem" }}>Warning theme</div>}
-        theme="warning"
-      />
-      <Popover
-        trigger={<Button theme="error">Error</Button>}
-        content={<div style={{ padding: "0.5rem" }}>Error theme</div>}
-        theme="error"
-      />
-    </div>
-  ),
+  render: () => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themes.map((theme) => (
+          <PopOver
+            key={theme}
+            theme={theme}
+            trigger={<Button theme={theme}>{theme}</Button>}
+            content={
+              <div style={{ padding: "0.5rem" }}>
+                {theme.charAt(0).toUpperCase() + theme.slice(1)} theme
+              </div>
+            }
+          />
+        ))}
+      </div>
+    );
+  },
 };
 
 export const PlacementVariants: Story = {
-  render: () => (
-    <div
-      style={{
-        display: "grid",
-        gap: "2rem",
-        gridTemplateColumns: "repeat(2, auto)",
-      }}
-    >
-      <Popover
-        trigger={<Button>Top</Button>}
-        content={<div style={{ padding: "0.5rem" }}>Top popover</div>}
-        placement="top"
-      />
-      <Popover
-        trigger={<Button>Right</Button>}
-        content={<div style={{ padding: "0.5rem" }}>Right popover</div>}
-        placement="right"
-      />
-      <Popover
-        trigger={<Button>Bottom</Button>}
-        content={<div style={{ padding: "0.5rem" }}>Bottom popover</div>}
-        placement="bottom"
-      />
-      <Popover
-        trigger={<Button>Left</Button>}
-        content={<div style={{ padding: "0.5rem" }}>Left popover</div>}
-        placement="left"
-      />
-    </div>
-  ),
+  render: () => {
+    const placements = ["top", "right", "bottom", "left"] as const;
+
+    return (
+      <div
+        style={{
+          display: "grid",
+          gridTemplateAreas: `
+            ".   top    ."
+            "left center right"
+            ".  bottom  ."
+          `,
+          gridTemplateColumns: "1fr auto 1fr",
+          gridTemplateRows: "auto auto auto",
+          gap: "2rem",
+          alignItems: "center",
+          justifyItems: "center",
+          minHeight: "300px",
+          marginTop: "5rem",
+        }}
+      >
+        <div style={{ gridArea: "top" }}>
+          <PopOver
+            placement="top"
+            trigger={<Button>Top</Button>}
+            content={<div style={{ padding: "0.5rem" }}>Top popover</div>}
+          />
+        </div>
+        <div style={{ gridArea: "right" }}>
+          <PopOver
+            placement="right"
+            trigger={<Button>Right</Button>}
+            content={<div style={{ padding: "0.5rem" }}>Right popover</div>}
+          />
+        </div>
+        <div style={{ gridArea: "bottom" }}>
+          <PopOver
+            placement="bottom"
+            trigger={<Button>Bottom</Button>}
+            content={<div style={{ padding: "0.5rem" }}>Bottom popover</div>}
+          />
+        </div>
+        <div style={{ gridArea: "left" }}>
+          <PopOver
+            placement="left"
+            trigger={<Button>Left</Button>}
+            content={<div style={{ padding: "0.5rem" }}>Left popover</div>}
+          />
+        </div>
+        <div style={{ gridArea: "center" }}>
+          <span style={{ opacity: 0.5 }}>Pop over uses dynamic placements</span>
+          <br />
+          <span style={{ opacity: 0.5 }}>
+            and will readjust to avoid overflow
+          </span>
+        </div>
+      </div>
+    );
+  },
 };
 
 export const KeyboardAccessible: Story = {
   args: {
     trigger: (
       <div
+        tabIndex={0}
         style={{
           padding: "0.5rem 1rem",
           border: "1px solid gray",

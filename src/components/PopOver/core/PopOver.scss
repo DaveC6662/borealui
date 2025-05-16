@@ -2,32 +2,10 @@
 @use "../../../styles/globals";
 @use "sass:map";
 
-$position-popover: (
-  "top": (
-    bottom: 100%,
-    left: 50%,
-    transform: translateX(-50%) translateY(-8px),
-  ),
-  "bottom": (
-    top: 100%,
-    left: 50%,
-    transform: translateX(-50%) translateY(8px),
-  ),
-  "left": (
-    right: 100%,
-    top: 50%,
-    transform: translateX(-8px) translateY(-50%),
-  ),
-  "right": (
-    left: 100%,
-    top: 50%,
-    transform: translateX(8px) translateY(-50%),
-  ),
-);
-
 .popover_container {
   position: relative;
   display: inline-block;
+  width: fit-content;
 }
 
 .popover_trigger {
@@ -44,14 +22,15 @@ $position-popover: (
   position: absolute;
   z-index: 1000;
   max-width: 90vw;
-  min-width: 150px;
+  min-width: 100%;
+  width: max-content;
   padding: theme.$spacing-sm;
   border-radius: theme.$border-radius-md;
   background-color: var(--background-light-color);
   color: var(--text-color-secondary);
   border: 1px solid var(--text-color-secondary);
   box-shadow: theme.$box-shadow-medium;
-  animation: fade-in-up 0.25s ease-in-out forwards;
+  animation: fade-in 0.25s ease-in-out forwards;
 
   @each $name, $values in theme.$themes {
     &_#{$name} {
@@ -70,26 +49,37 @@ $position-popover: (
     }
   }
 
-  @each $pos, $props in $position-popover {
-    &_#{$pos} {
-      @each $prop, $val in $props {
-        #{$prop}: $val;
-      }
-    }
-  }
-
-  @media (width <=640px) {
-    &_left,
-    &_right {
-      top: 100%;
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%) translateY(8px) !important;
-    }
+  &_clear {
+    box-shadow: none;
+    border: 1px solid var(--text-color-primary);
   }
 
   &::after {
     content: none !important;
     display: none !important;
   }
+}
+
+.popover_top {
+  bottom: 95%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+.popover_bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+}
+
+.popover_left {
+  right: 100%;
+  top: 50%;
+  transform: translateX(-8px) translateY(-50%);
+}
+
+.popover_right {
+  left: 100%;
+  top: 50%;
+  transform: translateX(8px) translateY(-50%);
 }

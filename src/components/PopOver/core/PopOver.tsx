@@ -6,7 +6,7 @@ import { PopoverProps } from "../PopOver.types";
 const classes = {
   container: "popover_container",
   trigger: "popover_trigger",
-  popover: "popover_popover",
+  popover: "popover",
   top: "popover_top",
   bottom: "popover_bottom",
   left: "popover_left",

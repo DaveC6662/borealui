@@ -1,23 +1,22 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:map";
 
-$themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-  "clear": var(--text-color-primary),
-);
 $sizes: (
-  "xs": theme.$font-size-xxs,
-  "small": theme.$font-size-xs,
-  "medium": theme.$font-size-sm,
+  "xs": theme.$font-size-sm,
+  "small": theme.$font-size-md,
+  "medium": theme.$font-size-base,
   "large": theme.$font-size-lg,
   "xl": theme.$font-size-xl,
 );
 
-.rating {
+.container {
+  display: flex;
+  align-items: center;
+  gap: theme.$spacing-xs;
+}
+
+.wrapper {
   display: flex;
   align-items: center;
   gap: theme.$spacing-xs;
@@ -27,31 +26,52 @@ $sizes: (
       font-size: $font-size;
     }
   }
-}
 
-.interactive {
-  cursor: pointer;
-}
-
-.star {
-  transition:
-    color 0.3s ease-in-out,
-    transform 0.2s ease;
-  color: var(--background-color-dark);
-
-  &:hover {
-    transform: scale(1.2);
+  &.label {
+    font-size: theme.$font-size-md;
+    line-height: 1;
+    color: var(--text-color-primary);
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
   }
 
-  &.active {
+  &.interactive {
+    cursor: pointer;
+
+    .star:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  .star {
+    transition:
+      color 0.3s ease-in-out,
+      transform 0.2s ease;
+    color: var(--background-color-dark);
+
+    svg {
+      width: 1em;
+      height: 1em;
+      display: block;
+    }
+  }
+
+  .active {
     color: var(--primary-color);
   }
-}
 
-@each $theme, $color in $themes {
-  .#{$theme} {
-    .star.active {
-      color: $color;
+  @each $theme, $color in theme.$themes {
+    &.#{$theme} {
+      .active {
+        color: map.get($color, bg);
+      }
+    }
+  }
+
+  &.clear {
+    .active {
+      color: var(--text-color-primary);
     }
   }
 }

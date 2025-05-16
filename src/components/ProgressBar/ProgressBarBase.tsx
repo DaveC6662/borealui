@@ -2,14 +2,7 @@ import React, { JSX } from "react";
 import { ProgressBarProps } from "./ProgressBar.types";
 
 export interface BaseProgressBarProps extends ProgressBarProps {
-  classNames: {
-    container: string;
-    bar: string;
-    themeMap: Record<string, string>;
-    sizeMap: Record<string, string>;
-    animated: string;
-    indeterminate: string;
-  };
+  classMap: Record<string, string>;
 }
 
 const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
@@ -21,17 +14,13 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   className = "",
   ariaLabel = "Progress",
   "data-testid": testId = "progressbar",
-  classNames,
+  classMap,
 }: BaseProgressBarProps): JSX.Element => {
   const value = Math.round(progress);
 
   return (
     <div
-      className={[
-        classNames.container,
-        classNames.sizeMap[size],
-        className,
-      ].join(" ")}
+      className={[classMap.container, classMap[size], className].join(" ")}
       role="progressbar"
       aria-label={ariaLabel}
       aria-valuemin={0}
@@ -43,10 +32,10 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     >
       <div
         className={[
-          classNames.bar,
-          classNames.themeMap[theme],
-          animated ? classNames.animated : "",
-          indeterminate ? classNames.indeterminate : "",
+          classMap.bar,
+          classMap[theme],
+          animated ? classMap.animated : "",
+          indeterminate ? classMap.indeterminate : "",
         ].join(" ")}
         style={{ width: indeterminate ? "100%" : `${value}%` }}
         data-testid={`${testId}-bar`}

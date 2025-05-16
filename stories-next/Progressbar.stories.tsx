@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import ProgressBar from "@/components/ProgressBar/next/ProgressBar";
+import { Progressbar } from "@/index.next";
 import type { ProgressBarProps } from "@/components/ProgressBar/ProgressBar.types";
 
 const meta: Meta<ProgressBarProps> = {
   title: "Components/ProgressBar",
-  component: ProgressBar,
+  component: Progressbar,
   tags: ["autodocs"],
   args: {
     theme: "primary",
@@ -38,24 +38,56 @@ export const StaticBar: Story = {
 };
 
 export const SizeVariants: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <ProgressBar {...args} progress={30} size="small" />
-      <ProgressBar {...args} progress={50} size="medium" />
-      <ProgressBar {...args} progress={75} size="large" />
-    </div>
-  ),
+  render: (args) => {
+    const sizes = ["xs", "small", "medium", "large", "xl"] as const;
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {sizes.map((size) => (
+          <div key={size}>
+            <label style={{ marginBottom: "0.25rem", display: "block" }}>
+              {size.charAt(0).toUpperCase() + size.slice(1)}
+            </label>
+            <Progressbar
+              {...args}
+              progress={40 + sizes.indexOf(size) * 20}
+              size={size}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
 };
 
 export const ThemedVariants: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <ProgressBar {...args} progress={25} theme="primary" />
-      <ProgressBar {...args} progress={50} theme="success" />
-      <ProgressBar {...args} progress={75} theme="warning" />
-      <ProgressBar {...args} progress={90} theme="error" />
-    </div>
-  ),
+  render: (args) => {
+    const themes = [
+      "primary",
+      "success",
+      "warning",
+      "error",
+      "secondary",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themes.map((theme) => (
+          <div key={theme}>
+            <label style={{ marginBottom: "0.25rem", display: "block" }}>
+              {theme.charAt(0).toUpperCase() + theme.slice(1)}
+            </label>
+            <Progressbar
+              {...args}
+              progress={20 + themes.indexOf(theme) * 15}
+              theme={theme}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
 };
 
 export const LiveProgress: Story = {
@@ -69,6 +101,13 @@ export const LiveProgress: Story = {
       return () => clearInterval(interval);
     }, []);
 
-    return <ProgressBar {...args} progress={progress} />;
+    return (
+      <div style={{ maxWidth: "500px" }}>
+        <label style={{ display: "block", marginBottom: "0.5rem" }}>
+          Live Updating Progress: {progress}%
+        </label>
+        <Progressbar {...args} progress={progress} />
+      </div>
+    );
   },
 };

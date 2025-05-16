@@ -1,37 +1,29 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:map";
 
-$radio-themes: (
-  primary: var(--primary-color),
-  secondary: var(--secondary-color),
-  success: theme.$success-color,
-  error: theme.$error-color,
-  warning: theme.$warning-color,
-  clear: var(--text-color-primary),
-);
-
-.radioWrapper {
+.wrapper {
   display: inline-flex;
   align-items: center;
-  cursor: pointer;
   gap: theme.$spacing-sm;
   font-size: theme.$font-size-base;
-  position: relative;
+  cursor: pointer;
   user-select: none;
   transition: all theme.$transition-default;
+  position: relative;
 }
 
-.radioInput {
+.input {
   opacity: 0;
   position: absolute;
   pointer-events: none;
 }
 
-.radioCircle {
+.circle {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid var(--text-color-primary);
+  border: 1px solid;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,23 +42,40 @@ $radio-themes: (
   }
 }
 
-.radioInput:checked + .radioCircle::after {
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@each $name, $color in theme.$themes {
+  .#{$name} {
+    color: map.get($color, bg);
+
+    .circle {
+      border-color: map.get($color, bg);
+    }
+  }
+}
+
+.clear .circle {
+  border-color: var(--text-color-primary);
+}
+
+.input:checked + .circle::after {
   opacity: 1;
   transform: scale(1);
 }
 
-@each $name, $color in $radio-themes {
-  .#{$name} .radioCircle {
-    border-color: $color;
-    color: $color;
-  }
+.clear .circle::after {
+  background-color: var(--text-color-primary);
 }
 
-.radioLabel {
+.label {
   color: var(--text-color-primary);
-}
+  transition: all theme.$transition-default;
 
-.disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
