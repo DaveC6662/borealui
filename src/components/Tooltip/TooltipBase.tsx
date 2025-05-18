@@ -1,42 +1,10 @@
-import React, { forwardRef, useId, useState } from "react";
+import { forwardRef, useId, useState } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { TooltipProps } from "./Tooltip.types";
 
-/**
- * Accessible and interactive base component for a tooltip.
- *
- * This component manages visibility through mouse and keyboard events,
- * enhancing usability for all users, including those relying on keyboard navigation or screen readers.
- *
- * @component
- *
- * @param {TooltipProps & { styles: Record<string, string> }} props - The component props.
- * @param {React.ReactNode} props.content - The content displayed inside the tooltip.
- * @param {"top" | "bottom" | "left" | "right"} [props.position="top"] - The position of the tooltip relative to its trigger.
- * @param {string} [props.theme="primary"] - The visual theme of the tooltip.
- * @param {React.ReactNode} props.children - The element that triggers the tooltip on hover or focus.
- * @param {string} [props.className=""] - Optional additional CSS class names.
- * @param {string} [props["data-testid"]="tooltip"] - Identifier for test automation.
- * @param {Record<string, string>} props.styles - An object mapping style names to CSS module or global class names.
- * @param {React.Ref<HTMLDivElement>} ref - Forwarded ref to the tooltip element.
- *
- * @example
- * ```tsx
- * <TooltipBase
- *   content="Additional info"
- *   position="bottom"
- *   theme="secondary"
- *   styles={styles}
- * >
- *   <button>Hover or focus me</button>
- * </TooltipBase>
- * ```
- *
- * @returns {JSX.Element} The rendered TooltipBase component.
- */
 export const TooltipBase = forwardRef<
   HTMLDivElement,
-  TooltipProps & { styles: Record<string, string> }
+  TooltipProps & { classMap: Record<string, string> }
 >(
   (
     {
@@ -46,7 +14,7 @@ export const TooltipBase = forwardRef<
       children,
       className = "",
       "data-testid": testId = "tooltip",
-      styles,
+      classMap,
       ...rest
     },
     ref
@@ -65,7 +33,7 @@ export const TooltipBase = forwardRef<
 
     return (
       <div
-        className={combineClassNames(styles.tooltipContainer, className)}
+        className={combineClassNames(classMap.tooltipContainer, className)}
         data-testid={`${testId}-container`}
         onMouseEnter={showTooltip}
         onMouseLeave={hideTooltip}
@@ -76,7 +44,7 @@ export const TooltipBase = forwardRef<
           tabIndex={0}
           aria-describedby={tooltipId}
           data-testid={`${testId}-trigger`}
-          className={styles.triggerWrapper}
+          className={classMap.triggerWrapper}
         >
           {children}
         </span>
@@ -84,9 +52,9 @@ export const TooltipBase = forwardRef<
           ref={ref}
           id={tooltipId}
           className={combineClassNames(
-            styles.tooltip,
-            styles[position],
-            styles[theme]
+            classMap.tooltip,
+            classMap[position],
+            classMap[theme]
           )}
           role="tooltip"
           data-testid={testId}

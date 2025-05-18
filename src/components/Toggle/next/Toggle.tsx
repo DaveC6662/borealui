@@ -6,7 +6,7 @@ import ToggleBase from "../ToggleBase";
 import { ToggleProps } from "../Toggle.types";
 
 const Toggle: React.FC<ToggleProps> = (props) => {
-  return <ToggleBase {...props} styles={styles} />;
+  return <ToggleBase {...props} classMap={styles} />;
 };
 
 export default Toggle;

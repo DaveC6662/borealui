@@ -3,8 +3,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { ToggleProps } from "./Toggle.types";
 
 export interface ToggleBaseProps extends ToggleProps {
-  styles: Record<string, string>;
-  className?: string;
+  classMap: Record<string, string>;
 }
 
 const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
@@ -16,8 +15,7 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       theme = "primary",
       size = "medium",
       disabled = false,
-      className = "",
-      styles,
+      classMap,
       "data-testid": testId = "toggle",
     },
     ref
@@ -34,16 +32,15 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
     };
 
     const containerClass = combineClassNames(
-      styles.toggleContainer,
-      styles[theme],
-      styles[size],
-      disabled && styles.disabled,
-      className
+      classMap.container,
+      classMap[theme],
+      classMap[size],
+      disabled && classMap.disabled
     );
 
     const toggleClass = combineClassNames(
-      styles.toggle,
-      checked && styles.active
+      classMap.toggle,
+      checked && classMap.active
     );
 
     const labelId = label ? `${testId}-label` : undefined;
@@ -64,14 +61,14 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
           onKeyDown={handleKeyDown}
           data-testid={testId}
         >
-          <span className={styles.slider} data-testid={`${testId}-slider`} />
+          <span className={classMap.slider} data-testid={`${testId}-slider`} />
         </button>
 
         {label && (
           <label
             id={labelId}
             htmlFor={`${testId}-button`}
-            className={styles.label}
+            className={classMap.label}
             data-testid={`${testId}-label`}
           >
             {label}

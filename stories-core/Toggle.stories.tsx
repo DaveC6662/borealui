@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import Toggle from "@/components/Toggle/core/Toggle";
+import { Toggle } from "@/index.core";
 import type { ToggleProps } from "@/components/Toggle/Toggle.types";
 
 const meta: Meta<ToggleProps> = {
@@ -17,6 +17,7 @@ const meta: Meta<ToggleProps> = {
 };
 
 export default meta;
+
 type Story = StoryObj<ToggleProps>;
 
 const ToggleWrapper = (args: ToggleProps) => {
@@ -44,23 +45,55 @@ export const Disabled: Story = {
   },
 };
 
-export const Themed: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <ToggleWrapper {...args} theme="primary" label="Primary" />
-      <ToggleWrapper {...args} theme="success" label="Success" />
-      <ToggleWrapper {...args} theme="warning" label="Warning" />
-      <ToggleWrapper {...args} theme="error" label="Error" />
-    </div>
-  ),
+export const ThemeVariants: Story = {
+  render: (args) => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themes.map((theme) => {
+          const [checked, setChecked] = useState(false);
+          return (
+            <Toggle
+              key={theme}
+              {...args}
+              theme={theme}
+              label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
+              checked={checked}
+              onChange={setChecked}
+            />
+          );
+        })}
+      </div>
+    );
+  },
 };
 
-export const Sizes: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <ToggleWrapper {...args} size="small" label="Small" />
-      <ToggleWrapper {...args} size="medium" label="Medium" />
-      <ToggleWrapper {...args} size="large" label="Large" />
-    </div>
-  ),
+export const SizeVariants: Story = {
+  render: (args) => {
+    const sizes = ["xs", "small", "medium", "large", "xl"] as const;
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {sizes.map((size) => {
+          const [checked, setChecked] = useState(false);
+          return (
+            <Toggle
+              key={size}
+              {...args}
+              size={size}
+              label={`${size.charAt(0).toUpperCase() + size.slice(1)} Size`}
+              checked={checked}
+              onChange={setChecked}
+            />
+          );
+        })}
+      </div>
+    );
+  },
 };
