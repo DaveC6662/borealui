@@ -79,17 +79,6 @@
     }
   }
 
-  &_disabled {
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-    background-color: theme.$disabled-color;
-
-    .textInput {
-      background-color: transparent;
-    }
-  }
-
   @each $theme, $vals in theme.$themes {
     &_#{$theme} {
       background-color: map.get($vals, bg);
@@ -107,12 +96,25 @@
       .textInput_iconContainer svg {
         color: map.get($vals, text);
       }
+
+      &.textInput_outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
+  }
+
+  &_disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+    background-color: theme.$disabled-color;
   }
 
   &_clear {
     box-shadow: none;
-    border: 1px solid var(--text-color-primary);
 
     .textInput {
       border: none;

@@ -50,22 +50,6 @@ export const WithIcon: Story = {
   },
 };
 
-export const EmailExample: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("");
-    return (
-      <TextInput
-        {...args}
-        icon={FaEnvelope}
-        placeholder="Email"
-        autocomplete
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-    );
-  },
-};
-
 export const PasswordInput: Story = {
   render: (args) => {
     const [value, setValue] = useState("");
@@ -106,6 +90,55 @@ export const ThemedVariants: Story = {
             />
           );
         })}
+      </div>
+    );
+  },
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themes.map((theme) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextInput
+              key={`outline-${theme}`}
+              {...args}
+              outline
+              theme={theme}
+              placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const Disabled: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        <TextInput
+          {...args}
+          disabled
+          theme={"primary"}
+          placeholder={`Disabled`}
+          value=""
+          onChange={() => {}}
+        />
       </div>
     );
   },

@@ -1,6 +1,7 @@
 import { forwardRef, useState, useId, InputHTMLAttributes } from "react";
 import { EyeIcon, EyeSlashIcon } from "@/Icons";
 import { TextInputProps } from "./TextInput.types";
+import { combineClassNames } from "@/utils/classNames";
 
 const TextInputBase = forwardRef<
   HTMLInputElement,
@@ -37,7 +38,13 @@ const TextInputBase = forwardRef<
 
     return (
       <div
-        className={`${classMap.container} ${classMap[theme]} ${disabled ? classMap.disabled : ""} ${className}`}
+        className={combineClassNames(
+          classMap.container,
+          classMap[theme],
+          outline ? classMap.outline : "",
+          disabled ? classMap.disabled : "",
+          className
+        )}
         data-testid={`${testId}-wrapper`}
         aria-disabled={disabled}
       >

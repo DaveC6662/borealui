@@ -20,8 +20,8 @@ const classes = {
   small: "textInput_small",
   medium: "textInput_medium",
   large: "textInput_large",
-  outlined: "textInput_outlined",
-  disabled: "disabled",
+  outline: "textInput_outline",
+  disabled: "textInput_disabled",
 };
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {

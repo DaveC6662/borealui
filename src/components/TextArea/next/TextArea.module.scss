@@ -106,7 +106,18 @@
     .iconContainer svg {
       color: map.get($props, icon, var(--text-color-primary));
     }
+
+    &.outline {
+      background-color: transparent;
+      color: map.get($props, text);
+      box-shadow: none;
+      border: 2px solid map.get($props, border);
+    }
   }
+}
+
+.clear {
+  box-shadow: none;
 }
 
 .disabled {

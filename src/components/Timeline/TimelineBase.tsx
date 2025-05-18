@@ -1,22 +1,18 @@
 import React from "react";
 import { TimelineProps } from "./Timeline.types";
 
-/**
- * TimelineBase provides a reusable structure for rendering a themed, accessible timeline.
- * Styling should be passed via the `styles` prop to allow framework-specific implementations.
- */
 const TimelineBase: React.FC<
-  TimelineProps & { styles: Record<string, string> }
+  TimelineProps & { classMap: Record<string, string> }
 > = ({
   items,
   orientation = "vertical",
   theme = "primary",
-  styles,
+  classMap,
   "data-testid": testId = "timeline",
 }) => {
   return (
     <ul
-      className={`${styles.timeline} ${styles[orientation]} ${styles[theme]}`}
+      className={`${classMap.timeline} ${classMap[orientation]} ${classMap[theme]}`}
       data-testid={testId}
       aria-label="Timeline"
     >
@@ -28,22 +24,25 @@ const TimelineBase: React.FC<
         return (
           <li
             key={index}
-            className={`${styles.timelineItem} ${styles[orientation]}`}
+            className={`${classMap.item} ${classMap[orientation]} ${classMap[theme]}`}
             data-testid={itemTestId}
             aria-labelledby={labelId}
           >
             <div
-              className={`${styles.marker} ${styles[orientation]}`}
+              className={`${classMap.marker} ${classMap[theme]} ${classMap[orientation]}`}
               data-testid={`${itemTestId}-marker`}
               aria-hidden={IconComponent ? "true" : undefined}
             >
               {IconComponent ? (
-                <div className={styles.icon} data-testid={`${itemTestId}-icon`}>
+                <div
+                  className={classMap.icon}
+                  data-testid={`${itemTestId}-icon`}
+                >
                   <IconComponent />
                 </div>
               ) : (
                 <div
-                  className={styles.dot}
+                  className={classMap.dot}
                   data-testid={`${itemTestId}-dot`}
                   aria-hidden="true"
                 />
@@ -51,15 +50,15 @@ const TimelineBase: React.FC<
             </div>
 
             <div
-              className={`${styles.content} ${styles[orientation]}`}
+              className={`${classMap.content} ${classMap[orientation]}`}
               data-testid={`${itemTestId}-content`}
             >
-              <h3 id={labelId} className={styles.title}>
+              <h3 id={labelId} className={classMap.title}>
                 {item.title}
               </h3>
               {item.date && (
                 <p
-                  className={styles.date}
+                  className={classMap.date}
                   data-testid={`${itemTestId}-date`}
                   aria-label={`Date: ${item.date}`}
                 >
@@ -68,7 +67,7 @@ const TimelineBase: React.FC<
               )}
               {item.description && (
                 <p
-                  className={styles.description}
+                  className={classMap.description}
                   data-testid={`${itemTestId}-description`}
                 >
                   {item.description}

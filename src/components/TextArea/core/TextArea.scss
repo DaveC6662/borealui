@@ -17,6 +17,7 @@
     resize: vertical;
     border: none;
     outline: none;
+    color: var(--text-color-primary);
     background-color: transparent;
     font-family: theme.$font-family-primary;
     padding: theme.$spacing-sm;
@@ -67,7 +68,18 @@
       .textInput::placeholder {
         color: map.get($props, placeholder, var(--text-color-primary));
       }
+
+      &.textArea_outline {
+        background-color: transparent;
+        color: map.get($props, text);
+        box-shadow: none;
+        border: 2px solid map.get($props, border);
+      }
     }
+  }
+
+  &_clear {
+    box-shadow: none;
   }
 
   &_disabled {

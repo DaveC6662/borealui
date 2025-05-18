@@ -80,17 +80,6 @@
   }
 }
 
-.disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-  background-color: theme.$disabled-color;
-
-  .textInput {
-    background-color: transparent;
-  }
-}
-
 @each $theme, $vals in theme.$themes {
   .#{$theme} {
     background-color: map.get($vals, bg);
@@ -108,12 +97,29 @@
     .iconContainer svg {
       color: map.get($vals, text);
     }
+
+    &.outline {
+      background-color: transparent;
+      color: map.get($vals, text);
+      box-shadow: none;
+      border: 2px solid map.get($vals, border);
+    }
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+  background-color: theme.$disabled-color;
+
+  .textInput {
+    background-color: transparent;
   }
 }
 
 .clear {
   box-shadow: none;
-  border: 1px solid var(--text-color-primary);
 
   .textInput {
     border: none;

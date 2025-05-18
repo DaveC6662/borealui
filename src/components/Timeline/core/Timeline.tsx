@@ -3,29 +3,28 @@ import "./Timeline.scss";
 import TimelineBase from "../TimelineBase";
 import { TimelineProps } from "../Timeline.types";
 
-const styles: Record<string, string> = {
+const classes = {
   timeline: "timeline",
-  timelineItem: "timelineItem",
-  marker: "marker",
-  icon: "icon",
-  dot: "dot",
-  content: "content",
-  title: "title",
-  date: "date",
-  description: "description",
-
-  vertical: "vertical",
-  horizontal: "horizontal",
-
-  primary: "primary",
-  secondary: "secondary",
-  success: "success",
-  error: "error",
-  warning: "warning",
+  item: "timeline_item",
+  marker: "timeline_marker",
+  icon: "timeline_icon",
+  dot: "timeline_dot",
+  content: "timeline_content",
+  title: "timeline_title",
+  date: "timeline_date",
+  description: "timeline_description",
+  vertical: "timeline_vertical",
+  horizontal: "timeline_horizontal",
+  primary: "timeline_primary",
+  secondary: "timeline_secondary",
+  success: "timeline_success",
+  error: "timeline_error",
+  warning: "timeline_warning",
+  clear: "timeline_clear",
 };
 
 const Timeline: React.FC<TimelineProps> = (props) => {
-  return <TimelineBase {...props} styles={styles} />;
+  return <TimelineBase {...props} classMap={classes} />;
 };
 
 export default Timeline;

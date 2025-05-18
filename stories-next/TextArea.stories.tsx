@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { FaCommentDots } from "react-icons/fa";
-import TextArea from "@/components/TextArea/next/TextArea";
+import { TextArea } from "@/index.next";
 import type { TextAreaProps } from "@/components/TextArea/TextArea.types";
 
 const meta: Meta<TextAreaProps> = {
@@ -17,40 +18,136 @@ const meta: Meta<TextAreaProps> = {
 };
 
 export default meta;
-
 type Story = StoryObj<TextAreaProps>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextArea
+        {...args}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
+  },
+};
 
 export const WithIcon: Story = {
-  args: {
-    icon: FaCommentDots,
-    placeholder: "Leave a comment...",
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextArea
+        {...args}
+        icon={FaCommentDots}
+        placeholder="Leave a comment..."
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
   },
 };
 
 export const ThemedVariants: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <TextArea {...args} theme="primary" placeholder="Primary theme" />
-      <TextArea {...args} theme="success" placeholder="Success theme" />
-      <TextArea {...args} theme="warning" placeholder="Warning theme" />
-      <TextArea {...args} theme="error" placeholder="Error theme" />
-    </div>
-  ),
+  render: (args) => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themes.map((theme) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextArea
+              key={theme}
+              {...args}
+              theme={theme}
+              placeholder={`${theme} theme`}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themes.map((theme) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextArea
+              key={theme}
+              {...args}
+              outline
+              theme={theme}
+              placeholder={`${theme} outline`}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
 };
 
 export const CustomHeight: Story = {
-  args: {
-    height: "150px",
-    placeholder: "Tall textarea for longer input...",
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextArea
+        {...args}
+        height="150px"
+        placeholder="Tall textarea for longer input..."
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
   },
 };
 
 export const WithAriaDescription: Story = {
-  args: {
-    ariaDescription:
-      "Use this field to describe your experience with our product.",
-    placeholder: "Describe your experience...",
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextArea
+        {...args}
+        placeholder="Describe your experience..."
+        ariaDescription="Use this field to describe your experience with our product."
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
   },
+};
+
+export const Disabled: Story = {
+  render: (args) => (
+    <TextArea
+      {...args}
+      disabled
+      value="This field is disabled."
+      onChange={() => {}}
+    />
+  ),
 };

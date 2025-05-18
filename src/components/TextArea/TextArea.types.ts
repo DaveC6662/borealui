@@ -1,13 +1,11 @@
 import { ThemeType } from "@/types/types";
-import {
-    TextareaHTMLAttributes,
-    ComponentType,
-  } from "react";
+import { TextareaHTMLAttributes, ComponentType } from "react";
 
 /**
  * Props for the TextArea component.
  */
-export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextAreaProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   /** Optional icon to display alongside the textarea. Accepts a React component. */
   icon?: ComponentType;
   /** Placeholder text for the textarea. Defaults to "Enter text". */
@@ -24,6 +22,8 @@ export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   ariaDescription?: string;
   /** Theme used for styling (e.g., "primary", "secondary"). Defaults to "primary". */
   theme?: ThemeType;
+  /** If true, the textarea is styled with an outline. */
+  outline?: boolean;
   /** If true, the textarea is disabled. */
   disabled?: boolean;
   /** Optional height for the textarea. Can be a CSS value or a number (interpreted as pixels). */

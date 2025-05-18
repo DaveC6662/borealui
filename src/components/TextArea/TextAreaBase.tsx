@@ -16,6 +16,7 @@ const TextAreaBase = forwardRef<
       icon: Icon,
       placeholder = "Enter text",
       readOnly = false,
+      outline = false,
       autoComplete = "off",
       theme = "primary",
       ariaLabel,
@@ -37,6 +38,7 @@ const TextAreaBase = forwardRef<
         className={combineClassNames(
           classMap.textArea,
           classMap[theme],
+          classMap[outline ? "outline" : ""],
           disabled && classMap.disabled,
           className
         )}
