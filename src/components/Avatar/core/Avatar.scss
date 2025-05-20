@@ -102,17 +102,17 @@
         outline: 2px solid map.get($props, border);
         outline-offset: 2px;
       }
+    }
 
-      &.avatar_outline {
-        background-color: transparent;
-        color: map.get($props, text-color);
-        border-color: map.get($props, border);
+    &_#{$name}.avatar_outline {
+      background-color: transparent;
+      color: map.get($props, text-color);
+      border-color: map.get($props, border);
 
-        &:hover {
-          background-color: map.get($props, hover);
-          border-color: map.get($props, hover);
-          color: map.get($props, text-hover);
-        }
+      &:hover {
+        background-color: map.get($props, hover);
+        border-color: map.get($props, hover);
+        color: map.get($props, text-hover);
       }
     }
   }
@@ -178,7 +178,7 @@
       right: 6px;
     }
 
-    &_icon-only {
+    &_icon_only {
       background-color: transparent;
       border: none;
       font-size: 1em;

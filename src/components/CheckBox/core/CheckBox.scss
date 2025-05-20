@@ -71,14 +71,6 @@
   cursor: not-allowed;
 }
 
-.checkbox_left {
-  flex-direction: row-reverse;
-}
-
-.checkbox_right {
-  flex-direction: row;
-}
-
 @each $theme, $props in theme.$themes {
   .checkbox_#{$theme} {
     color: map.get($props, bg);

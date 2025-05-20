@@ -58,11 +58,6 @@ $sizes: (
   border-bottom-right-radius: 0;
 }
 
-.accordion_expanded .accordion_content {
-  border-bottom-left-radius: theme.$border-radius-md;
-  border-bottom-right-radius: theme.$border-radius-md;
-}
-
 .accordion_disabled {
   background-color: theme.$disabled-color;
   cursor: not-allowed;
@@ -93,11 +88,6 @@ $sizes: (
     outline: 2px solid var(--text-color-primary);
     outline-offset: 2px;
   }
-}
-
-.accordion_expanded .accordion_header {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
 }
 
 @each $name, $values in theme.$themes {
@@ -141,6 +131,8 @@ $sizes: (
   max-height: none;
   opacity: 1;
   padding: theme.$spacing-xl theme.$spacing-xl;
+  border-bottom-left-radius: theme.$border-radius-md;
+  border-bottom-right-radius: theme.$border-radius-md;
 }
 
 .accordion_content_clear {

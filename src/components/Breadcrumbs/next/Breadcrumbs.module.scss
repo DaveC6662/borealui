@@ -12,11 +12,12 @@
   padding: theme.$spacing-xs theme.$spacing-sm;
   list-style: none;
   overflow-x: auto;
+  width: fit-content;
   border-radius: theme.$border-radius-sm;
 }
 
 @each $name, $values in theme.$themes {
-  .breadcrumbs_#{$name} {
+  .#{$name} {
     color: map.get($values, text);
     background-color: map.get($values, bg);
 
@@ -32,7 +33,7 @@
     }
   }
 
-  .breadcrumbs_#{$name}_outline {
+  .#{$name}_outline {
     color: map.get($values, text-color);
     background-color: transparent;
     border: 2px solid map.get($values, border);
@@ -49,28 +50,27 @@
   }
 }
 
-.breadcrumbs_xs {
+.xs {
   font-size: theme.$font-size-xs;
 }
 
-.breadcrumbs_small {
+.small {
   font-size: theme.$font-size-sm;
 }
 
-.breadcrumbs_medium {
+.medium {
   font-size: theme.$font-size-base;
 }
 
-.breadcrumbs_large {
+.large {
   font-size: theme.$font-size-md;
 }
 
-.breadcrumbs_xl {
+.xl {
   font-size: theme.$font-size-lg;
 }
 
-// Sub-elements
-.breadcrumbs_list {
+.list {
   display: flex;
   gap: theme.$spacing-xs;
   padding: 0;
@@ -79,7 +79,7 @@
   flex-wrap: nowrap;
 }
 
-.breadcrumbs_item {
+.item {
   display: flex;
   align-items: center;
   white-space: nowrap;
@@ -87,16 +87,16 @@
   transition: all theme.$transition-default;
 }
 
-.breadcrumbs_item_animate {
+.item_animate {
   animation: fade-in 0.3s ease-in-out;
 }
 
-.breadcrumbs_item_active {
+.item_active {
   font-weight: theme.$font-weight-bolder;
   color: theme.$disabled-color;
 }
 
-.breadcrumbs_ellipsis {
+.ellipsis {
   background: none;
   border: none;
   color: var(--text-color-primary);
@@ -108,12 +108,12 @@
   }
 }
 
-.breadcrumbs_link {
+.link {
   text-decoration: none;
   color: inherit;
 }
 
-.breadcrumbs_link_label {
+.link_label {
   display: inline-block;
 
   .breadcrumbs_link:hover & {
@@ -121,18 +121,18 @@
   }
 }
 
-.breadcrumbs_current {
+.current {
   font-weight: theme.$font-weight-bold;
   color: var(--text-color-primary);
 }
 
-.breadcrumbs_separator {
+.separator {
   margin: 0 theme.$spacing-xs;
   color: var(--text-color-light);
   display: flex;
   align-items: center;
 }
 
-.breadcrumbs_separator_icon {
+.separator_icon {
   font-size: 0.8em;
 }

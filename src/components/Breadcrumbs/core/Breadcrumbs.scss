@@ -2,13 +2,13 @@
 @use "sass:color";
 @use "sass:map";
 
-// Core styles
 .breadcrumbs {
   display: flex;
   align-items: center;
   font-size: theme.$font-size-base;
   font-weight: theme.$font-weight-light;
   gap: theme.$spacing-xs;
+  width: fit-content;
   padding: theme.$spacing-xs theme.$spacing-sm;
   list-style: none;
   overflow-x: auto;
@@ -32,7 +32,7 @@
     }
   }
 
-  .breadcrumbs_#{$name}_outline {
+  .breadcrumbs_#{$name}.breadcrumbs_outline {
     color: map.get($values, text-color);
     background-color: transparent;
     border: 2px solid map.get($values, border);
@@ -69,7 +69,6 @@
   font-size: theme.$font-size-lg;
 }
 
-// Sub-elements
 .breadcrumbs_list {
   display: flex;
   gap: theme.$spacing-xs;

@@ -16,14 +16,14 @@
   background-color: transparent;
 }
 
-.checkbox_input {
+.input {
   position: absolute;
   display: none;
   pointer-events: none;
   left: 0;
 }
 
-.checkbox_box {
+.box {
   width: 18px;
   height: 18px;
   border-radius: 4px;
@@ -36,7 +36,7 @@
   transition: all theme.$transition-default;
 }
 
-.checkbox_box::after {
+.box::after {
   content: "";
   width: 10px;
   height: 5px;
@@ -47,11 +47,11 @@
   transition: all theme.$transition-default;
 }
 
-.checkbox_input:checked + .checkbox_box::after {
+.input:checked + .box::after {
   opacity: 1;
 }
 
-.checkbox_box.checkbox_indeterminate::after {
+.box.indeterminate::after {
   opacity: 1;
   content: "";
   width: 10px;
@@ -61,34 +61,26 @@
   transform: none;
 }
 
-.checkbox_label {
+.label {
   color: var(--text-color-primary);
   font-size: theme.$font-size-sm;
 }
 
-.checkbox_disabled {
+.disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.checkbox_left {
-  flex-direction: row-reverse;
-}
-
-.checkbox_right {
-  flex-direction: row;
-}
-
 @each $theme, $props in theme.$themes {
-  .checkbox_#{$theme} {
+  .#{$theme} {
     color: map.get($props, bg);
   }
 
-  .checkbox_box.checkbox_#{$theme} {
+  .box.#{$theme} {
     border-color: map.get($props, bg);
   }
 
-  .checkbox_input:checked + .checkbox_box.checkbox_#{$theme}::after {
+  .input:checked .box.#{$theme}::after {
     border-color: map.get($props, text);
   }
 }

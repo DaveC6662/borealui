@@ -84,7 +84,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
       className={combineClassNames(
         classMap.status,
         status && classMap[status],
-        statusIcon ? "icon-only" : undefined,
+        statusIcon ? "icon_only" : undefined,
         classMap[statusPosition]
       )}
       aria-hidden="true"

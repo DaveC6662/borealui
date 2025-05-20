@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React, { useId, useMemo } from "react";
 import { ActionButton, CardProps } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
 
@@ -62,18 +62,20 @@ const CardBase: React.FC<CardBaseProps> = ({
 
   const ImageRenderer = ImageComponent || FallbackImage;
 
-  const cardClassName = combineClassNames(
-    classMap.card,
-    classMap[`card_${theme}`],
-    classMap[`card_${size}`],
-    classMap[`card_${layout}`],
-    outline && classMap[`card_${theme}_outline`],
-    loading && classMap["card_loading"],
-    align && classMap[`card_${align}`],
-    className
+  const cardClassName = useMemo(
+    () =>
+      combineClassNames(
+        classMap.card,
+        classMap[layout],
+        align && classMap[align],
+        classMap[theme],
+        classMap[size],
+        outline && classMap.outline,
+        loading && classMap.loading,
+        className
+      ),
+    [classMap, size, outline, align, className]
   );
-
-  const contentClassName = combineClassNames(classMap["card_content"]);
 
   return (
     <div
@@ -86,34 +88,28 @@ const CardBase: React.FC<CardBaseProps> = ({
       {loading ? (
         <SkeletonComponent width="100%" height="250px" data-testid="skeleton" />
       ) : (
-        <div className={contentClassName}>
+        <div className={classMap.content}>
           {hasImage && (
             <ImageRenderer
               src={imageUrl}
               alt={imageAlt || `${title || "Card"} image`}
-              className={combineClassNames(
-                classMap["card_image"],
-                imageClassName
-              )}
+              className={combineClassNames(classMap.image, imageClassName)}
               placeholder={showBlur ? "blur" : undefined}
             />
           )}
 
           <div>
             <div
-              className={combineClassNames(
-                classMap["card_header"],
-                headerClassName
-              )}
+              className={combineClassNames(classMap.header, headerClassName)}
               id={headerId}
             >
               {renderHeader ? (
                 renderHeader()
               ) : title ? (
-                <h2 className={classMap["card_title"]}>
+                <h2 className={classMap.title}>
                   {cardIcon && (
                     <span
-                      className={classMap["card_icon"]}
+                      className={classMap.icon}
                       aria-hidden="true"
                       data-testid="card-icon"
                     >
@@ -126,10 +122,7 @@ const CardBase: React.FC<CardBaseProps> = ({
             </div>
 
             <div
-              className={combineClassNames(
-                classMap["card_body"],
-                bodyClassName
-              )}
+              className={combineClassNames(classMap.body, bodyClassName)}
               role="group"
               aria-describedby={description ? descriptionId : undefined}
             >
@@ -138,15 +131,12 @@ const CardBase: React.FC<CardBaseProps> = ({
               ) : (
                 <>
                   {description && (
-                    <p
-                      id={descriptionId}
-                      className={classMap["card_description"]}
-                    >
+                    <p id={descriptionId} className={classMap.description}>
                       {description}
                     </p>
                   )}
                   {children && (
-                    <div className={classMap["card_children"]}>{children}</div>
+                    <div className={classMap.children}>{children}</div>
                   )}
                 </>
               )}
@@ -154,20 +144,17 @@ const CardBase: React.FC<CardBaseProps> = ({
 
             {(actionButtons.length > 0 || renderFooter) && (
               <div
-                className={combineClassNames(
-                  classMap["card_footer"],
-                  footerClassName
-                )}
+                className={combineClassNames(classMap.footer, footerClassName)}
               >
                 {actionButtons.length > 0 && (
-                  <div className={classMap["card_actions"]}>
+                  <div className={classMap.actions}>
                     {actionButtons.map((button, index) =>
                       useIconButtons && button.icon ? (
                         <button.iconButtonComponent
                           key={index}
                           icon={button.icon}
                           onClick={button.onClick}
-                          className={classMap["card_action_button"]}
+                          className={classMap.action_button}
                           theme={button.theme || "clear"}
                           aria-label={button.label}
                           size={button.size || size}
@@ -178,7 +165,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                         <button.buttonComponent
                           key={index}
                           onClick={button.onClick}
-                          className={classMap["card_action_button"]}
+                          className={classMap.action_button}
                           theme={button.theme || "secondary"}
                           href={button.href}
                           loading={button.loading}

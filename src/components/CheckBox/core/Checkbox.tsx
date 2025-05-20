@@ -3,24 +3,25 @@ import CheckboxBase from "../CheckboxBase";
 import "./Checkbox.scss";
 import { CheckboxProps } from "../Checkbox.types";
 
-const classMap = {
+const classes = {
   checkbox: "checkbox",
-  checkbox_primary: "checkbox_primary",
-  checkbox_secondary: "checkbox_secondary",
-  checkbox_success: "checkbox_success",
-  checkbox_error: "checkbox_error",
-  checkbox_warning: "checkbox_warning",
-  checkbox_disabled: "checkbox_disabled",
-  checkbox_indeterminate: "checkbox_indeterminate",
-  checkbox_left: "checkbox_left",
-  checkbox_right: "checkbox_right",
-  checkbox_label: "checkbox_label",
-  checkbox_input: "checkbox_input",
-  checkbox_box: "checkbox_box",
+  primary: "checkbox_primary",
+  secondary: "checkbox_secondary",
+  success: "checkbox_success",
+  error: "checkbox_error",
+  warning: "checkbox_warning",
+  clear: "checkbox_clear",
+  disabled: "checkbox_disabled",
+  indeterminate: "checkbox_indeterminate",
+  left: "checkbox_left",
+  right: "checkbox_right",
+  label: "checkbox_label",
+  input: "checkbox_input",
+  box: "checkbox_box",
 };
 
 const Checkbox: React.FC<CheckboxProps> = (props) => {
-  return <CheckboxBase {...props} classMap={classMap} />;
+  return <CheckboxBase {...props} classMap={classes} />;
 };
 
 export default Checkbox;

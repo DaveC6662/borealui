@@ -4,42 +4,37 @@ import "./Card.scss";
 import { Button, IconButton, Skeleton } from "../../../index.core";
 import { CardProps } from "../Card.types";
 
-const classMap = {
+const classes = {
   card: "card",
-  card_left: "card_left",
-  card_right: "card_right",
-  card_center: "card_center",
-  card_primary: "card_primary",
-  card_primary_outline: "card_primary_outline",
-  card_secondary: "card_secondary",
-  card_secondary_outline: "card_secondary_outline",
-  card_success: "card_success",
-  card_success_outline: "card_success_outline",
-  card_warning: "card_warning",
-  card_warning_outline: "card_warning_outline",
-  card_error: "card_error",
-  card_error_outline: "card_error_outline",
-  card_clear: "card_clear",
-  card_clear_outline: "card_clear_outline",
-  card_loading: "card_loading",
-  card_content: "card_content",
-  card_xs: "card_xs",
-  card_small: "card_small",
-  card_medium: "card_medium",
-  card_large: "card_large",
-  card_xl: "card_xl",
-  card_vertical: "card_vertical",
-  card_horizontal: "card_horizontal",
-  card_image: "card_image",
-  card_header: "card_header",
-  card_title: "card_title",
-  card_icon: "card_icon",
-  card_body: "card_body",
-  card_description: "card_description",
-  card_children: "card_children",
-  card_footer: "card_footer",
-  card_actions: "card_actions",
-  "card_action-button": "card_action-button",
+  left: "card_left",
+  right: "card_right",
+  center: "card_center",
+  primary: "card_primary",
+  secondary: "card_secondary",
+  success: "card_success",
+  warning: "card_warning",
+  error: "card_error",
+  clear: "card_clear",
+  outline: "card_outline",
+  loading: "card_loading",
+  content: "card_content",
+  xs: "card_xs",
+  small: "card_small",
+  medium: "card_medium",
+  large: "card_large",
+  xl: "card_xl",
+  vertical: "card_vertical",
+  horizontal: "card_horizontal",
+  image: "card_image",
+  header: "card_header",
+  title: "card_title",
+  icon: "card_icon",
+  body: "card_body",
+  description: "card_description",
+  children: "card_children",
+  footer: "card_footer",
+  actions: "card_actions",
+  action_button: "card_action_button",
 };
 
 const Card: React.FC<CardProps> = (props) => {
@@ -53,7 +48,7 @@ const Card: React.FC<CardProps> = (props) => {
     <CardBase
       {...props}
       actionButtons={wrappedButtons}
-      classMap={classMap}
+      classMap={classes}
       SkeletonComponent={Skeleton}
     />
   );

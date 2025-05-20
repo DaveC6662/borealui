@@ -2,7 +2,6 @@
 @use "sass:color";
 @use "sass:map";
 
-// Base badge
 .badge {
   display: inline-flex;
   align-items: center;
@@ -26,13 +25,11 @@
   }
 }
 
-// Icon inside badge
 .badge_icon {
   font-size: 1.2em;
   margin-top: -0.1em;
 }
 
-// Clear variant
 .badge_clear {
   background-color: transparent;
   color: var(--text-color-primary);
@@ -64,7 +61,6 @@
   }
 }
 
-// Theme variants
 @each $name, $values in theme.$themes {
   .badge_#{$name} {
     background-color: map.get($values, bg);
@@ -99,7 +95,6 @@
   }
 }
 
-// Size variants
 .badge_xs {
   font-size: theme.$font-size-xxs;
   padding: 2px 8px;
