@@ -16,76 +16,77 @@ $swatch-sizes: (
   display: flex;
   flex-direction: column;
   gap: theme.$spacing-xs;
+  width: fit-content;
 
   &:disabled {
     opacity: 0.5;
     pointer-events: none;
   }
+}
 
-  &_legend {
-    font-size: theme.$font-size-sm;
-    font-weight: theme.$font-weight-bold;
-    margin-bottom: theme.$spacing-xs;
+.legend {
+  font-size: theme.$font-size-sm;
+  font-weight: theme.$font-weight-bold;
+  margin-bottom: theme.$spacing-xs;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
+  gap: theme.$spacing-xs;
+}
+
+.swatch {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: theme.$border-radius-sm;
+  outline: 2px solid transparent;
+  transition: outline-color 0.2s ease-in-out;
+  box-sizing: border-box;
+  width: map.get($swatch-sizes, medium);
+  height: map.get($swatch-sizes, medium);
+
+  &.selected,
+  &:focus-visible {
+    outline-color: var(--text-color-primary);
   }
 
-  &_grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
-    gap: theme.$spacing-xs;
-  }
-
-  &_swatch {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: theme.$border-radius-sm;
-    outline: 2px solid transparent;
-    transition: outline-color 0.2s ease-in-out;
-    box-sizing: border-box;
-    width: map.get($swatch-sizes, medium);
-    height: map.get($swatch-sizes, medium);
-
-    &.color_picker_selected,
-    &:focus-visible {
-      outline-color: var(--text-color-primary);
+  @each $size, $val in $swatch-sizes {
+    &.#{$size} {
+      width: $val;
+      height: $val;
     }
-
-    @each $size, $val in $swatch-sizes {
-      &.color_picker_#{$size} {
-        width: $val;
-        height: $val;
-      }
-    }
   }
+}
 
-  &_radio_input {
-    display: none;
-  }
+.radio_input {
+  display: none;
+}
 
-  &_preview {
-    width: 80%;
-    height: 80%;
-    display: block;
-    box-shadow: theme.$box-shadow-light;
-    box-sizing: border-box;
-  }
+.preview {
+  width: 80%;
+  height: 80%;
+  display: block;
+  box-shadow: theme.$box-shadow-light;
+  box-sizing: border-box;
+}
 
-  &_square &_preview {
-    border-radius: 6px;
-  }
+.square .preview {
+  border-radius: 6px;
+}
 
-  &_round &_preview {
-    border-radius: 50%;
-  }
+.round .preview {
+  border-radius: 50%;
+}
 
-  &_pill &_preview {
-    border-radius: 9999px;
-    height: 50%;
-  }
+.pill .preview {
+  border-radius: 9999px;
+  height: 50%;
+}
 
-  &_custom_input {
-    margin-top: theme.$spacing-xs;
-    width: 100%;
-  }
+.custom_input {
+  margin-top: theme.$spacing-xs;
+  width: 100%;
 }

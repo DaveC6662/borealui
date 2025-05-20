@@ -4,7 +4,7 @@ import { combineClassNames } from "@/utils/classNames";
 
 export interface BaseEmptyStateProps extends EmptyStateProps {
   Button: React.ComponentType<any>;
-  classNames: Record<string, string>;
+  classMap: Record<string, string>;
 }
 
 const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
@@ -19,7 +19,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   className = "",
   "data-testid": testId = "empty-state",
   Button,
-  classNames,
+  classMap,
 }) => {
   const titleId = `${testId}-title`;
   const descId = `${testId}-message`;
@@ -27,10 +27,10 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   return (
     <section
       className={combineClassNames(
-        classNames.empty_state,
-        classNames[theme],
-        classNames[size],
-        outline && classNames.outline,
+        classMap.empty_state,
+        classMap[theme],
+        classMap[size],
+        outline && classMap.outline,
         className
       )}
       role="region"
@@ -39,14 +39,14 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
       data-testid={testId}
     >
       {Icon && (
-        <div className={classNames.icon} data-testid={`${testId}-icon`}>
+        <div className={classMap.icon} data-testid={`${testId}-icon`}>
           <Icon aria-hidden="true" />
         </div>
       )}
 
       <h2
         id={titleId}
-        className={classNames.title}
+        className={classMap.title}
         data-testid={`${testId}-title`}
       >
         {title}
@@ -54,7 +54,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
 
       <p
         id={descId}
-        className={classNames.message}
+        className={classMap.message}
         data-testid={`${testId}-message`}
       >
         {message}

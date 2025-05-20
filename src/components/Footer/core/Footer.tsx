@@ -5,7 +5,7 @@ import IconButton from "../../Buttons/IconButton/core/IconButton";
 import ThemeSelect from "../../Select/ThemeSelect/core/ThemeSelect";
 import "./Footer.scss";
 
-const styles = {
+const classes = {
   footer: "footer",
   primary: "footer_primary",
   secondary: "footer_secondary",
@@ -24,7 +24,7 @@ const Footer: React.FC<FooterProps> = (props) => {
       {...props}
       IconButton={IconButton}
       ThemeSelect={ThemeSelect}
-      classNames={styles}
+      classMap={classes}
     />
   );
 };

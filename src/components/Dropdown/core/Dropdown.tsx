@@ -4,7 +4,7 @@ import { DropdownProps } from "../Dropdown.types";
 import { IconButton } from "@/index.core";
 import "./Dropdown.scss";
 
-const styles = {
+const classes = {
   wrapper: "dropdown",
   menu: "dropdown_menu",
   item: "dropdown_item",
@@ -14,9 +14,7 @@ const styles = {
 };
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
-  return (
-    <BaseDropdown {...props} IconButton={IconButton} classNames={styles} />
-  );
+  return <BaseDropdown {...props} IconButton={IconButton} classMap={classes} />;
 };
 
 export default Dropdown;

@@ -43,8 +43,8 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
     <div
       className={combineClassNames(
         classMap.circular_progress,
-        classMap[`circular_progress_${theme}`],
-        classMap[`circular_progress_${size}`],
+        classMap[theme],
+        classMap[size],
         className
       )}
       role="progressbar"
@@ -56,7 +56,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
       data-testid={testId}
     >
       <div
-        className={classMap.circular_progress_circle_border}
+        className={classMap.circle_border}
         style={{
           background: `conic-gradient(
             ${progressColor} 0deg,
@@ -65,10 +65,10 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
           )`,
         }}
       >
-        <div className={classMap.circular_progress_inner_circle}>
+        <div className={classMap.inner_circle}>
           <span
             id={`${testId}-desc`}
-            className={classMap.circular_progress_rating_text}
+            className={classMap.rating_text}
             aria-live="polite"
             aria-atomic="true"
           >

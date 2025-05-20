@@ -4,7 +4,7 @@
 
 .data_table_wrapper {
   width: 100%;
-  max-width: 90vw;
+
   overflow-x: auto;
   border-radius: theme.$border-radius-xs;
   box-shadow: theme.$box-shadow-light;
@@ -77,11 +77,11 @@
       }
     }
 
-    .data_table_#{$name}_outline {
+    .data_table_#{$name}.data_table_outline {
       th {
-        border: 2px solid map.get($values, bg);
+        border: 2px solid map.get($values, border);
         background-color: transparent;
-        color: map.get($values, bg);
+        color: map.get($values, text-color);
       }
     }
   }

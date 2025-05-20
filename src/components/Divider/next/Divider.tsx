@@ -6,7 +6,7 @@ import styles from "./Divider.module.scss";
 import { DividerProps } from "../Divider.types";
 
 const Divider: React.FC<DividerProps> = (props) => (
-  <DividerBase {...props} styles={styles} />
+  <DividerBase {...props} classMap={styles} />
 );
 
 export default Divider;

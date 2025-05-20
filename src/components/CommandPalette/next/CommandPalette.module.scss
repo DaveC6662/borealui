@@ -14,7 +14,7 @@
   gap: theme.$spacing-sm;
 }
 
-.command_palette_overlay {
+.overlay {
   position: fixed;
   inset: 0;
   background: rgb(0 0 0 / 40%);
@@ -25,13 +25,13 @@
   padding-top: 10vh;
 }
 
-.command_palette_input {
+.input {
   width: 90%;
   padding: none;
   margin: 0 auto;
 }
 
-.command_palette_list {
+.list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -39,7 +39,7 @@
   overflow-y: auto;
 }
 
-.command_palette_item {
+.item {
   padding: theme.$spacing-sm;
   cursor: pointer;
   border-radius: theme.$border-radius-sm;
@@ -50,26 +50,26 @@
   line-height: 0.8em;
 }
 
-.command_palette_icon {
+.icon {
   flex-shrink: 0;
 }
 
-.command_palette_empty {
+.empty {
   padding: theme.$spacing-sm;
   color: theme.$disabled-color;
 }
 
-.command_palette_active {
+.active {
   font-weight: theme.$font-weight-bold;
 }
 
 @each $name, $values in theme.$themes {
-  .command_palette_#{$name} {
-    border: 2px solid map.get($values, bg);
+  .#{$name} {
+    border: 2px solid map.get($values, border);
   }
 
-  .command_palette_item.command_palette_#{$name}:hover,
-  .command_palette_item.command_palette_#{$name}.command_palette_active {
+  .item.#{$name}:hover,
+  .item.#{$name}.active {
     background-color: map.get($values, bg);
     color: if(
       $name == "primary",
@@ -79,6 +79,6 @@
   }
 }
 
-.command_palette_clear {
+.clear {
   box-shadow: none;
 }

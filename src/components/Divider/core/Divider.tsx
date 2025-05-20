@@ -3,7 +3,7 @@ import DividerBase from "../DividerBase";
 import "./Divider.scss";
 import { DividerProps } from "../Divider.types";
 
-const styles = {
+const classes = {
   divider: "divider",
   horizontal: "divider_horizontal",
   vertical: "divider_vertical",
@@ -16,7 +16,7 @@ const styles = {
 };
 
 const Divider: React.FC<DividerProps> = (props) => (
-  <DividerBase {...props} styles={styles} />
+  <DividerBase {...props} classMap={classes} />
 );
 
 export default Divider;

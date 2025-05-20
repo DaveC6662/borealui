@@ -14,7 +14,7 @@ const FileUpload: React.FC<FileUploadProps> = (props) => {
       Button={Button}
       IconButton={IconButton}
       ProgressBar={Progressbar}
-      classNames={styles}
+      classMap={styles}
     />
   );
 };

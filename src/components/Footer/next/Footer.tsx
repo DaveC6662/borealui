@@ -18,7 +18,7 @@ const Footer: React.FC<FooterProps> = (props) => {
           <a>{children}</a>
         </Link>
       )}
-      classNames={styles}
+      classMap={styles}
     />
   );
 };

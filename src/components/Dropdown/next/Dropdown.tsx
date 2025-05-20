@@ -6,9 +6,7 @@ import { IconButton } from "@/index.next";
 import styles from "./Dropdown.module.scss";
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
-  return (
-    <BaseDropdown {...props} IconButton={IconButton} classNames={styles} />
-  );
+  return <BaseDropdown {...props} IconButton={IconButton} classMap={styles} />;
 };
 
 export default Dropdown;

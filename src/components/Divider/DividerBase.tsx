@@ -3,7 +3,7 @@ import { DividerProps } from "./Divider.types";
 import { combineClassNames } from "@/utils/classNames";
 
 export interface DividerBaseProps extends DividerProps {
-  styles: Record<string, string>;
+  classMap: Record<string, string>;
 }
 
 const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
@@ -16,7 +16,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       dashed = false,
       theme = "",
       as = "div",
-      styles,
+      classMap,
       "data-testid": testId = "divider",
       "aria-hidden": ariaHidden,
       ...rest
@@ -39,10 +39,10 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       <ComponentTag
         ref={ref as never}
         className={combineClassNames(
-          styles.divider,
-          styles[orientation],
-          theme && styles[theme],
-          dashed && styles.dashed,
+          classMap.divider,
+          classMap[orientation],
+          theme && classMap[theme],
+          dashed && classMap.dashed,
           className
         )}
         {...(role && { role })}

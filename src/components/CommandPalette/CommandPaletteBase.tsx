@@ -84,15 +84,12 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
   return ReactDOM.createPortal(
     <div
-      className={classMap.command_palette_overlay}
+      className={classMap.overlay}
       onClick={onClose}
       data-testid={`${testId}-overlay`}
     >
       <div
-        className={combineClassNames(
-          classMap.command_palette,
-          classMap[`command_palette_${theme}`]
-        )}
+        className={combineClassNames(classMap.command_palette, classMap[theme])}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -109,7 +106,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           theme={theme}
-          className={classMap.command_palette_input}
+          className={classMap.input}
           data-testid={`${testId}-input`}
           role="combobox"
           aria-haspopup="listbox"
@@ -122,7 +119,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
         <ul
           id="command-list"
-          className={classMap.command_palette_list}
+          className={classMap.list}
           role="listbox"
           aria-label="Command suggestions"
         >
@@ -134,9 +131,9 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                 role="option"
                 aria-selected={index === activeIndex}
                 className={combineClassNames(
-                  classMap.command_palette_item,
-                  classMap[`command_palette_${theme}`],
-                  index === activeIndex && classMap.command_palette_active
+                  classMap.item,
+                  classMap[theme],
+                  index === activeIndex && classMap.active
                 )}
                 onClick={() => {
                   cmd.action();
@@ -144,10 +141,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                 }}
               >
                 {cmd.icon && (
-                  <span
-                    className={classMap.command_palette_icon}
-                    aria-hidden="true"
-                  >
+                  <span className={classMap.icon} aria-hidden="true">
                     {cmd.icon}
                   </span>
                 )}
@@ -159,10 +153,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
               role="option"
               aria-selected="false"
               aria-disabled="true"
-              className={combineClassNames(
-                classMap.command_palette_item,
-                classMap.command_palette_empty
-              )}
+              className={combineClassNames(classMap.item, classMap.empty)}
             >
               No matching results
             </li>

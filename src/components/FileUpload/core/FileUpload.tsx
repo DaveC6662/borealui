@@ -7,7 +7,7 @@ import ProgressBar from "../../ProgressBar/core/ProgressBar";
 import FormGroup from "../../FormGroup/core/FormGroup";
 import "./FileUpload.scss";
 
-const styles = {
+const classes = {
   fileUpload: "file_upload",
   hiddenInput: "file_upload_hidden_input",
   uploadActions: "file_upload_upload_actions",
@@ -30,7 +30,7 @@ const FileUpload: React.FC<FileUploadProps> = (props) => {
       Button={Button}
       IconButton={IconButton}
       ProgressBar={ProgressBar}
-      classNames={styles}
+      classMap={classes}
     />
   );
 };

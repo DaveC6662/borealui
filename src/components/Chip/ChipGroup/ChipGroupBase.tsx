@@ -13,7 +13,6 @@ import { combineClassNames } from "@/utils/classNames";
 export interface ChipGroupBaseProps extends ChipGroupProps {
   ChipComponent: React.ElementType;
   classMap: Record<string, string>;
-  positionMap: Record<string, string>;
 }
 
 const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
@@ -26,7 +25,6 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
       className = "",
       ChipComponent,
       classMap,
-      positionMap,
     },
     ref
   ) => {
@@ -56,7 +54,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
 
     const containerClassName = [
       classMap.container,
-      positionMap[position],
+      classMap[position],
       className,
     ]
       .filter(Boolean)
@@ -73,7 +71,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
         <ul role="list" className={classMap.list}>
           {visibleChips.map((chip, index) => {
             const chipPosition = chip.position || position;
-            const chipPositionClass = positionMap[chipPosition];
+            const chipPositionClass = classMap[chipPosition];
 
             return (
               <li key={chip.id} role="listitem">

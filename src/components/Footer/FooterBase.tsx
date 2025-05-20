@@ -5,7 +5,7 @@ import { combineClassNames } from "@/utils/classNames";
 export interface BaseFooterProps extends FooterProps {
   IconButton: React.ComponentType<any>;
   ThemeSelect: React.ComponentType<any>;
-  classNames: Record<string, string>;
+  classMap: Record<string, string>;
   LinkWrapper?: (props: {
     href: string;
     children: React.ReactNode;
@@ -23,36 +23,32 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   showThemeSelect = false,
   IconButton,
   ThemeSelect,
-  classNames,
+  classMap,
   LinkWrapper = ({ href, children }) => <a href={href}>{children}</a>,
 }) => {
   return (
     <footer
-      className={combineClassNames(
-        classNames.footer,
-        classNames[theme],
-        className
-      )}
+      className={combineClassNames(classMap.footer, classMap[theme], className)}
       role="contentinfo"
       aria-label="Footer"
       data-testid={testId}
     >
-      <div className={classNames.content}>
+      <div className={classMap.content}>
         {logo && (
-          <div className={classNames.logo} data-testid={`${testId}-logo`}>
+          <div className={classMap.logo} data-testid={`${testId}-logo`}>
             {logo}
           </div>
         )}
 
         {copyright && (
-          <div className={classNames.left} data-testid={`${testId}-copyright`}>
+          <div className={classMap.left} data-testid={`${testId}-copyright`}>
             <p>{copyright}</p>
           </div>
         )}
 
         {links.length > 0 && (
           <nav
-            className={classNames.links}
+            className={classMap.links}
             aria-label="Footer site links"
             data-testid={`${testId}-nav`}
           >
@@ -63,7 +59,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
                     href={link.href}
                     children={
                       <span
-                        className={classNames.link}
+                        className={classMap.link}
                         data-testid={`${testId}-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                       >
                         {link.label}
@@ -78,7 +74,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
         {showThemeSelect && (
           <div
-            className={classNames.themeToggle}
+            className={classMap.themeToggle}
             data-testid={`${testId}-theme-select`}
             aria-label="Theme selector container"
           >
@@ -88,7 +84,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
         {socialLinks.length > 0 && (
           <div
-            className={classNames.social}
+            className={classMap.social}
             aria-label="Social media"
             role="navigation"
             data-testid={`${testId}-social`}

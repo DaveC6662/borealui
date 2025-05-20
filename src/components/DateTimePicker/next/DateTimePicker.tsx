@@ -6,7 +6,7 @@ import styles from "./DateTimePicker.module.scss";
 import type { DateTimePickerProps } from "../DateTimePicker.types";
 
 const DateTimePicker: React.FC<DateTimePickerProps> = (props) => (
-  <DateTimePickerBase {...props} styles={styles} />
+  <DateTimePickerBase {...props} classMap={styles} />
 );
 
 export default DateTimePicker;

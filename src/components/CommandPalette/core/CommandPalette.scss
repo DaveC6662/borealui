@@ -65,7 +65,7 @@
 
 @each $name, $values in theme.$themes {
   .command_palette_#{$name} {
-    border: 2px solid map.get($values, bg);
+    border: 2px solid map.get($values, border);
   }
 
   .command_palette_item.command_palette_#{$name}:hover,

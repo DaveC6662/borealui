@@ -13,7 +13,7 @@ import MenuIcon from "@/Icons/MenuIcon";
 
 export interface BaseDropdownProps extends DropdownProps {
   IconButton: ComponentType<any>;
-  classNames: Record<string, string>;
+  classMap: Record<string, string>;
 }
 
 const BaseDropdown: React.FC<BaseDropdownProps> = ({
@@ -26,7 +26,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   theme = "primary",
   "data-testid": testId = "dropdown",
   IconButton,
-  classNames,
+  classMap,
 }: BaseDropdownProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
@@ -106,7 +106,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   return (
     <div
       ref={dropdownRef}
-      className={combineClassNames(classNames.wrapper, className)}
+      className={combineClassNames(classMap.wrapper, className)}
       onKeyDown={handleKeyDown}
       data-testid={testId}
     >
@@ -128,8 +128,8 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           role="menu"
           aria-label={ariaLabel}
           className={combineClassNames(
-            classNames.menu,
-            align === "right" ? classNames.alignRight : classNames.alignLeft,
+            classMap.menu,
+            align === "right" ? classMap.alignRight : classMap.alignLeft,
             menuClassName
           )}
           data-testid={`${testId}-menu`}
@@ -139,13 +139,13 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
               <a
                 key={index}
                 href={item.href}
-                className={classNames.item}
+                className={classMap.item}
                 role="menuitem"
                 tabIndex={-1}
                 data-testid={item["data-testid"]}
               >
                 {item.icon && (
-                  <span className={classNames.icon}>{item.icon}</span>
+                  <span className={classMap.icon}>{item.icon}</span>
                 )}
                 {item.label}
               </a>
@@ -155,7 +155,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
                 type="button"
                 role="menuitem"
                 tabIndex={-1}
-                className={classNames.item}
+                className={classMap.item}
                 onClick={() => {
                   item.onClick?.();
                   closeDropdown();
@@ -163,7 +163,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
                 data-testid={item["data-testid"]}
               >
                 {item.icon && (
-                  <span className={classNames.icon}>{item.icon}</span>
+                  <span className={classMap.icon}>{item.icon}</span>
                 )}
                 {item.label}
               </button>

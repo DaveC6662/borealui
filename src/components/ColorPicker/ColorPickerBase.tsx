@@ -31,7 +31,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
       role="radiogroup"
       data-testid={testId}
     >
-      <legend id={legendId} className={classMap.color_picker_legend}>
+      <legend id={legendId} className={classMap.legend}>
         {label}
       </legend>
 
@@ -40,10 +40,10 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
           <label
             key={color.value}
             className={combineClassNames(
-              classMap.color_picker_swatch,
-              classMap[`color_picker_${size}`],
-              classMap[`color_picker_${shape}`],
-              selected === color.value && classMap.color_picker_selected
+              classMap.swatch,
+              classMap[size],
+              classMap[shape],
+              selected === color.value && classMap.selected
             )}
             htmlFor={`${testId}-color-${i}`}
             title={color.label}
@@ -57,13 +57,10 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
               value={color.value}
               checked={selected === color.value}
               onChange={() => onChange(color.value)}
-              className={classMap.color_picker_radio_input}
+              className={classMap.radio_input}
             />
             <span
-              className={combineClassNames(
-                classMap.color_picker_preview,
-                classMap[`color_picker_${shape}`]
-              )}
+              className={combineClassNames(classMap.preview, classMap[shape])}
               style={{ backgroundColor: color.value }}
               aria-hidden="true"
             />
@@ -74,7 +71,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
       {allowCustom && (
         <input
           type="color"
-          className={classMap.color_picker_custom_input}
+          className={classMap.custom_input}
           value={selected}
           onChange={(e) => onChange(e.target.value)}
           aria-label="Custom color picker"

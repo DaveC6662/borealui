@@ -5,38 +5,38 @@ import "./Chip.scss";
 import IconButton from "../../Buttons/IconButton/core/IconButton";
 import { ChipProps } from "../Chip.types";
 
-const classMap = {
+const classes = {
   chip: "chip",
-  chip_icon: "chip_icon",
-  chip_message: "chip_message",
-  chip_close: "chip_close",
-  chip_relative: "chip_relative",
-  chip_fixed: "chip_fixed",
-  chip_fadeout: "chip_fadeout",
-  chip_topCenter: "chip_top_center",
-  chip_bottomCenter: "chip_bottom_center",
-  chip_topLeft: "chip_top_left",
-  chip_topRight: "chip_top_right",
-  chip_bottomLeft: "chip_bottom_left",
-  chip_bottomRight: "chip_bottom_right",
-  chip_primary: "chip_primary",
-  chip_secondary: "chip_secondary",
-  chip_success: "chip_success",
-  chip_error: "chip_error",
-  chip_warning: "chip_warning",
-  chip_clear: "chip_clear",
-  chip_xs: "chip_xs",
-  chip_small: "chip_small",
-  chip_medium: "chip_medium",
-  chip_large: "chip_large",
-  chip_xl: "chip_xl",
-  icon: "chip_icon_inner",
+  icon: "chip_icon",
+  inner_icon: "chip_icon_inner",
+  message: "chip_message",
+  close: "chip_close",
+  relative: "chip_relative",
+  fixed: "chip_fixed",
+  fadeout: "chip_fadeout",
+  topCenter: "chip_top_center",
+  bottomCenter: "chip_bottom_center",
+  topLeft: "chip_top_left",
+  topRight: "chip_top_right",
+  bottomLeft: "chip_bottom_left",
+  bottomRight: "chip_bottom_right",
+  primary: "chip_primary",
+  secondary: "chip_secondary",
+  success: "chip_success",
+  error: "chip_error",
+  warning: "chip_warning",
+  clear: "chip_clear",
+  xs: "chip_xs",
+  small: "chip_small",
+  medium: "chip_medium",
+  large: "chip_large",
+  xl: "chip_xl",
 };
 
 const Chip: React.FC<ChipProps> = (props) => (
   <ChipBase
     {...props}
-    classMap={classMap}
+    classMap={classes}
     IconButtonComponent={IconButton}
     closeIcon={CloseIcon}
   />

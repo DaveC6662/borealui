@@ -7,7 +7,7 @@ export interface BaseFileUploadProps extends FileUploadProps {
   Button: React.ComponentType<any>;
   IconButton: React.ComponentType<any>;
   ProgressBar: React.ComponentType<any>;
-  classNames: Record<string, string>;
+  classMap: Record<string, string>;
 }
 
 const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
@@ -26,7 +26,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   Button,
   IconButton,
   ProgressBar,
-  classNames,
+  classMap,
 }) => {
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
@@ -156,7 +156,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       data-testid={testId}
     >
       <div
-        className={`${classNames.fileUpload} ${isDragging ? "dragging" : ""}`}
+        className={`${classMap.fileUpload} ${isDragging ? "dragging" : ""}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -168,19 +168,19 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           type="file"
           multiple={multiple}
           onChange={handleFileChange}
-          className={classNames.hiddenInput}
+          className={classMap.hiddenInput}
           aria-required={required}
           aria-label={label}
           aria-describedby={`${testId}-description ${testId}-error`}
           data-testid={testId ? `${testId}-input` : undefined}
         />
 
-        <div className={classNames.uploadActions}>
+        <div className={classMap.uploadActions}>
           <Button
             icon={FileIcon}
             size="small"
             theme={theme}
-            className={classNames.fileInput}
+            className={classMap.fileInput}
             disabled={uploading}
             onClick={() => fileInput.current?.click()}
             aria-label={
@@ -193,13 +193,13 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         </div>
 
         {rejectedFiles.length > 0 && (
-          <div className={classNames.rejectedFiles}>
-            <p className={classNames.rejectedLabel}>Rejected Files:</p>
-            <ul className={classNames.rejectedList}>
+          <div className={classMap.rejectedFiles}>
+            <p className={classMap.rejectedLabel}>Rejected Files:</p>
+            <ul className={classMap.rejectedList}>
               {rejectedFiles.map((file, index) => (
-                <li key={index} className={classNames.rejectedItem}>
+                <li key={index} className={classMap.rejectedItem}>
                   <span>{file.name}</span>
-                  <span className={classNames.rejectedReason}>
+                  <span className={classMap.rejectedReason}>
                     {" "}
                     – {file.reason}
                   </span>
@@ -211,12 +211,12 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
         {fileNames.length > 0 && (
           <div
-            className={classNames.uploadControls}
+            className={classMap.uploadControls}
             data-testid={testId ? `${testId}-controls` : undefined}
           >
-            <ul className={classNames.fileList}>
+            <ul className={classMap.fileList}>
               {fileNames.map((name, index) => (
-                <li key={index} className={classNames.fileListItem}>
+                <li key={index} className={classMap.fileListItem}>
                   <span>{name}</span>
                   <IconButton
                     icon={TrashIcon}
@@ -225,7 +225,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
                     outline
                     aria-label={`Remove ${name}`}
                     onClick={() => removeFile(index)}
-                    className={classNames.removeButton}
+                    className={classMap.removeButton}
                   />
                 </li>
               ))}
@@ -233,7 +233,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             {uploading && (
               <ProgressBar
                 theme={theme}
-                className={classNames.uploadProgress}
+                className={classMap.uploadProgress}
                 progress={uploadProgress ?? internalProgress}
                 indeterminate={uploadProgress === undefined}
                 data-testid={testId ? `${testId}-progress` : undefined}
@@ -246,7 +246,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
                 onClick={handleUpload}
                 loading={uploading}
                 size="small"
-                className={classNames.uploadButton}
+                className={classMap.uploadButton}
                 data-testid={testId ? `${testId}-upload-button` : undefined}
               >
                 Upload
@@ -255,7 +255,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           </div>
         )}
         <div
-          className="sr-only"
+          className="sr_only"
           aria-live="polite"
           aria-atomic="true"
           data-testid={`${testId}-upload-message`}

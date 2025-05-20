@@ -16,6 +16,7 @@ $swatch-sizes: (
   display: flex;
   flex-direction: column;
   gap: theme.$spacing-xs;
+  width: fit-content;
 
   &:disabled {
     opacity: 0.5;

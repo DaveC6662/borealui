@@ -1,11 +1,16 @@
-import { useCallback, useEffect, useState, KeyboardEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  KeyboardEvent,
+  useMemo,
+} from "react";
 import { createPortal } from "react-dom";
 import { ChipProps } from "./Chip.types";
 import { combineClassNames } from "@/utils/classNames";
 
 export interface ChipBaseProps extends ChipProps {
   classMap: Record<string, string>;
-  positionMap?: Record<string, string>;
   IconButtonComponent: React.ElementType;
   closeIcon?: React.ElementType;
 }
@@ -26,7 +31,6 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   closeIcon: CloseIcon,
   IconButtonComponent,
   classMap,
-  positionMap,
   "data-testid": testId = "chip",
 }) => {
   const [closing, setClosing] = useState(false);
@@ -47,11 +51,11 @@ const ChipBase: React.FC<ChipBaseProps> = ({
 
   const chipClassName = combineClassNames(
     classMap.chip,
-    classMap[`chip_${theme}`],
-    classMap[`chip_${size}`],
-    positionMap?.[position] || classMap[`chip_${position}`],
-    closing && classMap.chip_fadeout,
-    usePortal && classMap.chip_fixed,
+    classMap[theme],
+    classMap[size],
+    classMap[position],
+    closing && classMap.fadeout,
+    usePortal && classMap.fixed,
     className
   );
 
@@ -70,15 +74,11 @@ const ChipBase: React.FC<ChipBaseProps> = ({
       data-testid={testId}
     >
       {Icon && (
-        <span
-          className={classMap.chip_icon}
-          aria-hidden="true"
-          data-testid="icon"
-        >
-          <Icon className={classMap.icon} />
+        <span className={classMap.icon} aria-hidden="true" data-testid="icon">
+          <Icon className={classMap.inner_icon} />
         </span>
       )}
-      <span className={classMap.chip_message} id={`${testId}-message`}>
+      <span className={classMap.message} id={`${testId}-message`}>
         {message}
       </span>
 
@@ -88,7 +88,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
         theme="clear"
         ariaLabel="Close notification"
         aria-controls={`${testId}-message`}
-        className={classMap.chip_close}
+        className={classMap.close}
         onClick={handleClose}
         onKeyDown={(e: KeyboardEvent) => {
           if (e.key === "Enter" || e.key === " ") {

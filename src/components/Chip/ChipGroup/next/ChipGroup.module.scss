@@ -38,7 +38,7 @@ $chip-positions: (
   ),
 );
 
-.chip_group {
+.container {
   position: fixed;
   z-index: 9998;
   display: flex;
@@ -48,7 +48,7 @@ $chip-positions: (
   pointer-events: none;
 
   @each $position, $values in $chip-positions {
-    &_#{$position} {
+    &.#{$position} {
       @if map.has-key($values, top) {
         top: map.get($values, top);
       }
@@ -74,7 +74,7 @@ $chip-positions: (
   }
 }
 
-.chip_group_list {
+.list {
   display: flex;
   flex-direction: column;
   list-style: none;
@@ -83,7 +83,7 @@ $chip-positions: (
   padding: 0;
 }
 
-.group_chip {
+.chip {
   pointer-events: auto;
   align-items: center;
 }

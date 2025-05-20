@@ -31,11 +31,11 @@ $progress-sizes: (
   align-items: center;
 
   @each $size, $props in $progress-sizes {
-    &.circular_progress_#{$size} {
+    &.#{$size} {
       width: map.get($props, dimensions);
       height: map.get($props, dimensions);
 
-      .circular_progress_rating_text {
+      .rating_text {
         font-size: map.get($props, font-size);
         font-weight: theme.$font-weight-bold;
         color: var(--text-color-primary);
@@ -43,7 +43,7 @@ $progress-sizes: (
     }
   }
 
-  .circular_progress_circle_border {
+  .circle_border {
     width: 100%;
     height: 100%;
     border-radius: theme.$border-radius-round;
@@ -53,7 +53,7 @@ $progress-sizes: (
     transition: background 0.5s ease-in-out;
   }
 
-  .circular_progress_inner_circle {
+  .inner_circle {
     width: 80%;
     height: 80%;
     border-radius: theme.$border-radius-round;
@@ -65,8 +65,8 @@ $progress-sizes: (
   }
 
   @each $name, $values in theme.$themes {
-    &_#{$name} {
-      .circular_progress_inner_circle {
+    &.#{$name} {
+      .inner_circle {
         background-color: map.get($values, bg);
       }
     }

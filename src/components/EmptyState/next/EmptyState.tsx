@@ -7,7 +7,7 @@ import { Button } from "../../../index.next";
 import styles from "./EmptyState.module.scss";
 
 const EmptyState: React.FC<EmptyStateProps> = (props) => {
-  return <BaseEmptyState {...props} Button={Button} classNames={styles} />;
+  return <BaseEmptyState {...props} Button={Button} classMap={styles} />;
 };
 
 export default EmptyState;

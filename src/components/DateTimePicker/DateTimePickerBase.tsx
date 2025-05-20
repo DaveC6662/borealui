@@ -4,7 +4,7 @@ import { combineClassNames } from "@/utils/classNames";
 import { CalendarIcon } from "@/Icons";
 
 export interface DateTimePickerBaseProps extends DateTimePickerProps {
-  styles: Record<string, string>;
+  classMap: Record<string, string>;
   error?: string;
   description?: string;
   id?: string;
@@ -24,7 +24,7 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   theme = "primary",
   className = "",
   "data-testid": testId = "datetime-picker",
-  styles,
+  classMap,
   error,
   description,
   id,
@@ -43,26 +43,26 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   return (
     <div
       className={combineClassNames(
-        styles.wrapper,
-        styles[theme],
-        styles[size],
-        outline && styles.outline,
-        disabled && styles.disabled,
+        classMap.wrapper,
+        classMap[theme],
+        classMap[size],
+        outline && classMap.outline,
+        disabled && classMap.disabled,
         className
       )}
       data-testid={testId}
     >
       {label && (
-        <label htmlFor={inputId} className={styles.label}>
+        <label htmlFor={inputId} className={classMap.label}>
           {label} {required && <span aria-hidden="true">*</span>}
         </label>
       )}
 
-      <div className={styles.inputWrapper}>
+      <div className={classMap.inputWrapper}>
         <input
           id={inputId}
           type="datetime-local"
-          className={styles.input}
+          className={classMap.input}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
           min={min}
@@ -82,7 +82,7 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
           data-testid={`${testId}-input`}
         />
         <span
-          className={styles.icon}
+          className={classMap.icon}
           onClick={openPicker}
           onKeyDown={(e) =>
             (e.key === "Enter" || e.key === " ") && openPicker()
@@ -96,13 +96,13 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
       </div>
 
       {description && !error && (
-        <p id={descriptionId} className={styles.description}>
+        <p id={descriptionId} className={classMap.description}>
           {description}
         </p>
       )}
 
       {error && (
-        <p id={errorId} className={styles.error} role="alert">
+        <p id={errorId} className={classMap.error} role="alert">
           {error}
         </p>
       )}
