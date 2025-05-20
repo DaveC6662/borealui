@@ -1,8 +1,51 @@
 @use "../../../styles/theme" as theme;
 @use "sass:color";
 @use "sass:map";
+@use "sass:list";
 
-// Base container
+$sizes: (
+  "xs": (
+    header-padding: (
+      theme.$spacing-xs,
+      theme.$spacing-sm,
+    ),
+    header-font-size: theme.$font-size-xs,
+    icon-size: 1rem,
+  ),
+  "small": (
+    header-padding: (
+      theme.$spacing-xs,
+      theme.$spacing-md,
+    ),
+    header-font-size: theme.$font-size-sm,
+    icon-size: 1.2rem,
+  ),
+  "medium": (
+    header-padding: (
+      theme.$spacing-sm,
+      theme.$spacing-lg,
+    ),
+    header-font-size: theme.$font-size-md,
+    icon-size: 1.5rem,
+  ),
+  "large": (
+    header-padding: (
+      theme.$spacing-sm,
+      theme.$spacing-xl,
+    ),
+    header-font-size: theme.$font-size-md,
+    icon-size: 1.8rem,
+  ),
+  "xl": (
+    header-padding: (
+      theme.$spacing-sm,
+      theme.$spacing-xl,
+    ),
+    header-font-size: theme.$font-size-lg,
+    icon-size: 2rem,
+  ),
+);
+
 .accordion {
   border-radius: theme.$border-radius-md;
   margin-bottom: theme.$spacing-sm;
@@ -10,12 +53,12 @@
   transition: box-shadow theme.$transition-default;
 }
 
-.accordion_expanded .accordionHeader {
+.accordion_expanded .accordion_header {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.accordion_expanded .accordionContent {
+.accordion_expanded .accordion_content {
   border-bottom-left-radius: theme.$border-radius-md;
   border-bottom-right-radius: theme.$border-radius-md;
 }
@@ -27,8 +70,7 @@
   opacity: 0.6;
 }
 
-// Accordion header
-.accordionHeader {
+.accordion_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,42 +95,34 @@
   }
 }
 
-.accordionHeader_clear {
-  border: 1px solid var(--text-color-primary) !important;
-}
-
-.accordionHeader_expanded {
+.accordion_expanded .accordion_header {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 @each $name, $values in theme.$themes {
-  .accordionHeader_#{$name} {
+  .accordion_#{$name} {
     background-color: map.get($values, bg);
     color: var(--text-color-primary);
 
     &:hover {
       background-color: map.get($values, hover);
     }
-  }
 
-  .accordionHeader_#{$name}_outline {
-    background-color: transparent;
-    border: 2px solid map.get($values, bg);
-    color: map.get($values, text-color);
+    &.accordion_outline {
+      background-color: transparent;
+      border: 2px solid map.get($values, border);
+      color: map.get($values, text-color);
 
-    &:hover {
-      background-color: map.get($values, hover);
-      color: map.get($values, text-hover);
+      &:hover {
+        background-color: map.get($values, hover);
+        color: map.get($values, text-hover);
+      }
     }
-  }
-
-  .accordionHeader_clear_outline {
-    border: 1px solid var(--text-color-primary) !important;
   }
 }
 
-.accordionContent {
+.accordion_content {
   box-sizing: border-box;
   padding: 0 theme.$spacing-md;
   max-height: 0;
@@ -103,72 +137,41 @@
     opacity theme.$transition-default;
 }
 
-.accordionContent_expanded {
+.accordion_expanded .accordion_content {
   max-height: none;
   opacity: 1;
   padding: theme.$spacing-xl theme.$spacing-xl;
 }
 
-.accordionContent_clear {
+.accordion_content_clear {
   background-color: transparent;
   border: 1px solid var(--text-color-primary);
 }
 
-.accordionTitle {
+.accordion_title {
   flex-grow: 1;
 }
 
-.accordionIcon {
+.accordion_icon {
   font-size: 1.5rem;
   margin-right: 10px;
   transition: transform theme.$transition-default;
 }
 
-.accordionIcon_expanded {
+.accordion_expanded .accordion_icon {
   transform: rotate(180deg);
 }
 
-.xs .accordionHeader {
-  padding: theme.$spacing-xs theme.$spacing-sm;
-  font-size: theme.$font-size-xs;
-}
+@each $size, $config in $sizes {
+  .accordion_#{$size} {
+    .accordion_header {
+      padding: list.nth(map.get($config, header-padding), 1)
+        list.nth(map.get($config, header-padding), 2);
+      font-size: map.get($config, header-font-size);
+    }
 
-.small .accordionHeader {
-  padding: theme.$spacing-xs theme.$spacing-md;
-  font-size: theme.$font-size-sm;
-}
-
-.medium .accordionHeader {
-  padding: theme.$spacing-sm theme.$spacing-lg;
-  font-size: theme.$font-size-md;
-}
-
-.large .accordionHeader {
-  padding: theme.$spacing-sm theme.$spacing-xl;
-  font-size: theme.$font-size-md;
-}
-
-.xl .accordionHeader {
-  padding: theme.$spacing-sm theme.$spacing-xl;
-  font-size: theme.$font-size-lg;
-}
-
-.xs .accordionIcon {
-  font-size: 1rem;
-}
-
-.small .accordionIcon {
-  font-size: 1.2rem;
-}
-
-.medium .accordionIcon {
-  font-size: 1.5rem;
-}
-
-.large .accordionIcon {
-  font-size: 1.8rem;
-}
-
-.xl .accordionIcon {
-  font-size: 2rem;
+    .accordion_icon {
+      font-size: map.get($config, icon-size);
+    }
+  }
 }

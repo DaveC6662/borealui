@@ -7,7 +7,7 @@ import { IconButton } from "@/index.core";
 const classes = {
   container: "textInput_container",
   textInput: "textInput",
-  iconContainer: "textInput_iconContainer",
+  iconContainer: "textInput_icon_container",
   togglePassword: "textInput_togglePassword",
   primary: "textInput_primary",
   secondary: "textInput_secondary",

@@ -53,7 +53,7 @@
     font-size: calc(theme.$font-size-base * 0.9);
   }
 
-  &_iconContainer {
+  &_icon_container {
     display: flex;
     box-sizing: border-box;
     margin: 0.1em;
@@ -79,33 +79,6 @@
     }
   }
 
-  @each $theme, $vals in theme.$themes {
-    &_#{$theme} {
-      background-color: map.get($vals, bg);
-      color: map.get($vals, text);
-      box-shadow: map.get($vals, shadow, theme.$box-shadow-medium);
-
-      &:hover {
-        background-color: map.get($vals, hover);
-      }
-
-      .textInput::placeholder {
-        color: map.get($vals, text);
-      }
-
-      .textInput_iconContainer svg {
-        color: map.get($vals, text);
-      }
-
-      &.textInput_outline {
-        background-color: transparent;
-        color: map.get($vals, text);
-        box-shadow: none;
-        border: 2px solid map.get($vals, border);
-      }
-    }
-  }
-
   &_disabled {
     cursor: not-allowed;
     pointer-events: none;
@@ -118,6 +91,33 @@
 
     .textInput {
       border: none;
+    }
+  }
+}
+
+@each $theme, $vals in theme.$themes {
+  .textInput_#{$theme} {
+    background-color: map.get($vals, bg);
+    color: map.get($vals, text);
+    box-shadow: map.get($vals, shadow, theme.$box-shadow-medium);
+
+    &:hover {
+      background-color: map.get($vals, hover);
+    }
+
+    .textInput::placeholder {
+      color: map.get($vals, text);
+    }
+
+    .textInput_icon_container svg {
+      color: map.get($vals, text);
+    }
+
+    &.textInput_outline {
+      background-color: transparent;
+      color: map.get($vals, text);
+      box-shadow: none;
+      border: 2px solid map.get($vals, border);
     }
   }
 }

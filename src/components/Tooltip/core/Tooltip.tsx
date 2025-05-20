@@ -4,7 +4,7 @@ import { TooltipBase } from "../TooltipBase";
 import { TooltipProps } from "../Tooltip.types";
 
 const classes = {
-  container: "container",
+  container: "tooltip_container",
   triggerWrapper: "tooltip_triggerWrapper",
   tooltip: "tooltip",
   top: "tooltip_top",

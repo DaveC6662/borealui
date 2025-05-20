@@ -3,49 +3,44 @@ import "./Avatar.scss";
 import { AvatarProps } from "../Avatar.types";
 import { AvatarBase } from "../AvatarBase";
 
-const classMap = {
+const classes = {
   avatar: "avatar",
-  avatar_primary: "avatar_primary",
-  avatar_primary_outline: "avatar_primary_outline",
-  avatar_secondary: "avatar_secondary",
-  avatar_secondary_outline: "avatar_secondary_outline",
-  avatar_success: "avatar_success",
-  avatar_success_outline: "avatar_success_outline",
-  avatar_warning: "avatar_warning",
-  avatar_warning_outline: "avatar_warning_outline",
-  avatar_error: "avatar_error",
-  avatar_error_outline: "avatar_error_outline",
-  avatar_clear: "avatar_clear",
-  avatar_clear_outline: "avatar_clear_outline",
+  primary: "avatar_primary",
+  secondary: "avatar_secondary",
+  success: "avatar_success",
+  warning: "avatar_warning",
+  error: "avatar_error",
+  clear: "avatar_clear",
+  outline: "avatar_outline",
 
-  avatar_circle: "avatar_circle",
-  avatar_square: "avatar_square",
-  avatar_rounded: "avatar_rounded",
+  circle: "avatar_circle",
+  square: "avatar_square",
+  rounded: "avatar_rounded",
 
-  avatar_xs: "avatar_xs",
-  avatar_small: "avatar_small",
-  avatar_medium: "avatar_medium",
-  avatar_large: "avatar_large",
-  avatar_xl: "avatar_xl",
+  xs: "avatar_xs",
+  small: "avatar_small",
+  medium: "avatar_medium",
+  large: "avatar_large",
+  xl: "avatar_xl",
 
-  avatar_image: "avatar_image",
-  avatar_initials: "avatar_initials",
-  avatar_fallback_icon: "avatar_fallback_icon",
-  avatar_status: "avatar_status",
-  avatar_status_online: "avatar_status_online",
-  avatar_status_offline: "avatar_status_offline",
-  avatar_status_away: "avatar_status_away",
-  avatar_status_busy: "avatar_status_busy",
-  avatar_status_topRight: "avatar_status_topRight",
-  avatar_status_bottomRight: "avatar_status_bottomRight",
-  avatar_status_bottomLeft: "avatar_status_bottomLeft",
-  avatar_status_topLeft: "avatar_status_topLeft",
+  image: "avatar_image",
+  initials: "avatar_initials",
+  fallback_icon: "avatar_fallback_icon",
+  status: "avatar_status",
+  online: "avatar_status_online",
+  offline: "avatar_status_offline",
+  away: "avatar_status_away",
+  busy: "avatar_status_busy",
+  topRight: "avatar_status_topRight",
+  bottomRight: "avatar_status_bottomRight",
+  bottomLeft: "avatar_status_bottomLeft",
+  topLeft: "avatar_status_topLeft",
 
-  avatar_dot: "avatar_dot",
+  dot: "avatar_dot",
 };
 
 const Avatar: React.FC<AvatarProps> = (props) => (
-  <AvatarBase {...props} classMap={classMap} />
+  <AvatarBase {...props} classMap={classes} />
 );
 
 export default Avatar;

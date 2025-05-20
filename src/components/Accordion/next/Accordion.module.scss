@@ -1,47 +1,93 @@
 @use "../../../styles/theme" as theme;
 @use "sass:color";
 @use "sass:map";
+@use "sass:list";
+
+$sizes: (
+  "xs": (
+    header-padding: (
+      theme.$spacing-xs,
+      theme.$spacing-sm,
+    ),
+    header-font-size: theme.$font-size-xs,
+    icon-size: 1rem,
+  ),
+  "small": (
+    header-padding: (
+      theme.$spacing-xs,
+      theme.$spacing-md,
+    ),
+    header-font-size: theme.$font-size-sm,
+    icon-size: 1.2rem,
+  ),
+  "medium": (
+    header-padding: (
+      theme.$spacing-sm,
+      theme.$spacing-lg,
+    ),
+    header-font-size: theme.$font-size-md,
+    icon-size: 1.5rem,
+  ),
+  "large": (
+    header-padding: (
+      theme.$spacing-sm,
+      theme.$spacing-xl,
+    ),
+    header-font-size: theme.$font-size-md,
+    icon-size: 1.8rem,
+  ),
+  "xl": (
+    header-padding: (
+      theme.$spacing-sm,
+      theme.$spacing-xl,
+    ),
+    header-font-size: theme.$font-size-lg,
+    icon-size: 2rem,
+  ),
+);
 
 .accordion {
-  border-radius: theme.$border-radius-lg;
+  border-radius: theme.$border-radius-md;
   margin-bottom: theme.$spacing-sm;
+  background-color: transparent !important;
   transition: box-shadow theme.$transition-default;
 }
 
-.accordion_expanded .accordionHeader {
+.expanded .header {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.accordion_expanded .accordionContent {
+.expanded .content {
   border-bottom-left-radius: theme.$border-radius-md;
   border-bottom-right-radius: theme.$border-radius-md;
 }
 
-.accordion_disabled {
+.disabled {
   background-color: theme.$disabled-color;
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
 }
 
-.accordionHeader {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-width: 250px;
   width: 100%;
   color: var(--text-color-primary);
   padding: theme.$spacing-sm;
   font-size: theme.$font-size-base;
   font-weight: theme.$font-weight-bold;
   cursor: pointer;
-  border: none;
-  outline: none;
   background-color: transparent;
+  border: none;
+  border-radius: theme.$border-radius-md;
+  outline: none;
   transition:
     background-color theme.$transition-default,
     border-radius theme.$transition-default;
-  border-radius: theme.$border-radius-lg;
 
   &:focus-visible {
     outline: 2px solid var(--text-color-primary);
@@ -49,30 +95,45 @@
   }
 }
 
-.accordionHeader_clear {
-  border: 1px solid var(--text-color-primary);
-}
-
-.accordionHeader_expanded {
+.expanded .header {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.accordionTitle {
-  flex-grow: 1;
+@each $name, $values in theme.$themes {
+  .#{$name} {
+    background-color: map.get($values, bg);
+    color: var(--text-color-primary);
+
+    &:hover {
+      background-color: map.get($values, hover);
+    }
+
+    &.outline {
+      background-color: transparent;
+      border: 2px solid map.get($values, border);
+      color: map.get($values, text-color);
+
+      &:hover {
+        background-color: map.get($values, hover);
+        color: map.get($values, text-hover);
+      }
+    }
+  }
+
+  .#{$name} .outline {
+    background-color: transparent;
+    border: 2px solid map.get($values, border);
+    color: map.get($values, text-color);
+
+    &:hover {
+      background-color: map.get($values, hover);
+      color: map.get($values, text-hover);
+    }
+  }
 }
 
-.accordionIcon {
-  font-size: 1.5rem;
-  margin-right: 10px;
-  transition: transform theme.$transition-default;
-}
-
-.accordionIcon_expanded {
-  transform: rotate(180deg);
-}
-
-.accordionContent {
+.content {
   box-sizing: border-box;
   padding: 0 theme.$spacing-md;
   max-height: 0;
@@ -87,84 +148,36 @@
     opacity theme.$transition-default;
 }
 
-.accordionContent_expanded {
+.expanded .content {
   max-height: none;
   opacity: 1;
   padding: theme.$spacing-xl theme.$spacing-xl;
 }
 
-.accordionContent_clear {
-  background-color: transparent;
-  border: 1px solid var(--text-color-primary);
+.title {
+  flex-grow: 1;
 }
 
-@each $name, $values in theme.$themes {
-  .accordionHeader_#{$name} {
-    background-color: map.get($values, bg);
-    color: var(--text-color-primary);
-
-    &:hover {
-      background-color: map.get($values, hover);
-    }
-  }
-
-  .accordionHeader_#{$name}_outline {
-    background-color: transparent;
-    border: 2px solid map.get($values, bg);
-    color: map.get($values, text-color);
-
-    &:hover {
-      background-color: map.get($values, hover);
-      color: map.get($values, text-hover);
-    }
-  }
-
-  .accordionHeader_clear_outline {
-    border: 2px solid var(--text-color-primary) !important;
-  }
-}
-
-.xs .accordionHeader {
-  padding: theme.$spacing-xs theme.$spacing-sm;
-  font-size: theme.$font-size-xs;
-}
-
-.small .accordionHeader {
-  padding: theme.$spacing-sm;
-  font-size: theme.$font-size-sm;
-}
-
-.medium .accordionHeader {
-  padding: theme.$spacing-sm;
-  font-size: theme.$font-size-md;
-}
-
-.large .accordionHeader {
-  padding: theme.$spacing-md;
-  font-size: theme.$font-size-md;
-}
-
-.xl .accordionHeader {
-  padding: theme.$spacing-lg;
-  font-size: theme.$font-size-lg;
-}
-
-.xs .accordionIcon {
-  font-size: 1rem;
-}
-
-.small .accordionIcon {
-  font-size: 1.2rem;
-}
-
-.medium .accordionIcon {
+.icon {
   font-size: 1.5rem;
+  margin-right: 10px;
+  transition: transform theme.$transition-default;
 }
 
-.large .accordionIcon {
-  font-size: 1.8rem;
+.expanded .icon {
+  transform: rotate(180deg);
 }
 
-.xl .accordionIcon {
-  font-size: 2rem;
+@each $size, $config in $sizes {
+  .#{$size} {
+    .header {
+      padding: list.nth(map.get($config, header-padding), 1)
+        list.nth(map.get($config, header-padding), 2);
+      font-size: map.get($config, header-font-size);
+    }
+
+    .icon {
+      font-size: map.get($config, icon-size);
+    }
+  }
 }

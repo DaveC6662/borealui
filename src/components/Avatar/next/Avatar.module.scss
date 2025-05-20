@@ -16,53 +16,53 @@
   transition: all theme.$transition-default;
   z-index: 0;
 
-  &_xs {
+  &.xs {
     width: 36px;
     height: 36px;
     font-size: 0.5rem;
   }
 
-  &_small {
+  &.small {
     width: 42px;
     height: 42px;
     font-size: 0.6rem;
   }
 
-  &_medium {
+  &.medium {
     width: 56px;
     height: 56px;
     font-size: 0.7rem;
   }
 
-  &_large {
+  &.large {
     width: 72px;
     height: 72px;
     font-size: 0.8rem;
   }
 
-  &_xl {
+  &.xl {
     width: 84px;
     height: 84px;
     font-size: 0.9rem;
   }
 
-  &_circle {
+  &.circle {
     border-radius: 50%;
   }
 
-  &_rounded {
+  &.rounded {
     border-radius: theme.$border-radius-sm;
   }
 
-  &_square {
+  &.square {
     border-radius: 0;
   }
 
-  &_outline {
+  &.outline {
     border-style: solid;
   }
 
-  &_clear {
+  &.clear {
     background-color: transparent;
 
     &:hover {
@@ -76,7 +76,7 @@
       outline-offset: 1px;
     }
 
-    &_outline {
+    &.outline {
       color: var(--text-color-primary);
       border-color: var(--text-color-primary);
 
@@ -88,7 +88,7 @@
   }
 
   @each $name, $props in theme.$themes {
-    &_#{$name} {
+    &.#{$name} {
       background-color: map.get($props, bg);
       color: var(--text-color-primary);
 
@@ -102,26 +102,27 @@
         outline: 2px solid map.get($props, border);
         outline-offset: 2px;
       }
-    }
 
-    &_#{$name}_outline {
-      background-color: transparent;
-      color: map.get($props, text-color);
-      border-color: map.get($props, border);
+      &.outline {
+        background-color: transparent;
+        color: map.get($props, text-color);
+        border-color: map.get($props, border);
 
-      &:hover {
-        border-color: map.get($props, hover);
-        color: map.get($props, text-hover);
+        &:hover {
+          background-color: map.get($props, hover);
+          border-color: map.get($props, hover);
+          color: map.get($props, text-hover);
+        }
       }
     }
   }
 
-  &_disabled.avatar_outline {
+  &.disabled.outline {
     color: theme.$disabled-color;
     border-color: theme.$disabled-color;
   }
 
-  &_image {
+  &.image {
     object-fit: cover;
     width: 100% !important;
     height: 100% !important;
@@ -131,14 +132,14 @@
     z-index: 1;
   }
 
-  &_initials {
+  &.initials {
     font-size: inherit;
     font-weight: bold;
     z-index: 1;
     position: relative;
   }
 
-  &_fallback_icon {
+  .fallback_icon {
     width: 70%;
     height: 70%;
     margin: auto;
@@ -146,7 +147,7 @@
     color: var(--text-color-primary);
   }
 
-  &_status {
+  .status {
     position: absolute;
     width: 12px;
     height: 12px;
@@ -157,27 +158,27 @@
     pointer-events: none;
     z-index: 2;
 
-    &_topLeft {
+    &.topLeft {
       top: 5px;
       left: 6px;
     }
 
-    &_topRight {
+    &.topRight {
       top: 5px;
       right: 6px;
     }
 
-    &_bottomLeft {
+    &.bottomLeft {
       bottom: 5px;
       left: 6px;
     }
 
-    &_bottomRight {
+    &.bottomRight {
       bottom: 5px;
       right: 6px;
     }
 
-    &_icon-only {
+    &.icon-only {
       background-color: transparent;
       border: none;
       font-size: 1em;
@@ -188,28 +189,28 @@
       }
     }
 
-    &_online {
+    &.online {
       background-color: theme.$success-color;
       border: 1px solid color.adjust(theme.$success-color, $lightness: 20%);
     }
 
-    &_away {
+    &.away {
       background-color: theme.$warning-color;
       border: 1px solid color.adjust(theme.$warning-color, $lightness: 20%);
     }
 
-    &_offline {
+    &.offline {
       background-color: theme.$disabled-color;
       border: 1px solid color.adjust(theme.$disabled-color, $lightness: 20%);
     }
 
-    &_busy {
+    &.busy {
       background-color: theme.$error-color;
       border: 1px solid color.adjust(theme.$error-color, $lightness: 20%);
     }
   }
 
-  &_dot {
+  &.dot {
     width: 100%;
     height: 100%;
     border-radius: 50%;

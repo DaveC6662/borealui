@@ -25,7 +25,7 @@
 
 .icon {
   position: absolute;
-  bottom: -10%;
+  bottom: -5%;
   right: 10px;
   pointer-events: none;
   font-size: 12px;
@@ -52,7 +52,7 @@
   &:focus {
     border-color: var(--primary-color);
     outline: 2px solid var(--text-color-primary);
-    outline-offset: 3px;
+    outline-offset: 5px;
   }
 
   @each $theme, $values in theme.$themes {
@@ -63,21 +63,16 @@
       &:hover {
         background-color: map.get($values, hover);
       }
+    }
 
-      .select {
-        background-color: map.get($values, bg);
-        color: map.get($values, color);
+    &.#{$theme}.outline {
+      background-color: transparent;
+      color: map.get($values, color);
+      border: 2px solid map.get($values, border);
+    }
 
-        &:hover {
-          background-color: map.get($values, hover);
-        }
-      }
-
-      &.outline {
-        background-color: transparent;
-        color: map.get($values, color);
-        border: 1px solid map.get($values, border);
-      }
+    &.clear.#{$theme} {
+      background-color: transparent;
     }
   }
 }
@@ -85,6 +80,7 @@
 option {
   background-color: var(--background-color-dark);
 }
+
 .clear {
   box-shadow: none;
 

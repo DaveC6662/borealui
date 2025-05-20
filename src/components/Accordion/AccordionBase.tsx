@@ -4,7 +4,7 @@ import { combineClassNames } from "../../utils/classNames";
 
 export interface AccordionBaseProps extends AccordionProps {
   getUniqueId: () => string;
-  styles: Record<string, string>;
+  classMap: Record<string, string>;
 }
 
 export const AccordionBase: React.FC<AccordionBaseProps> = ({
@@ -27,7 +27,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   initiallyExpanded = false,
   className = "",
   getUniqueId,
-  styles,
+  classMap,
   ...rest
 }) => {
   const isControlled = expanded !== undefined;
@@ -57,33 +57,37 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     ? (customExpandedIcon ?? "−")
     : (customCollapsedIcon ?? "+");
 
-  const wrapperClassName = combineClassNames(
-    styles.accordion,
-    styles[size],
-    disabled && styles.accordion_disabled,
-    isExpanded && styles.accordion_expanded,
-    className
+  const wrapperClassName = useMemo(
+    () =>
+      combineClassNames(
+        classMap.accordion,
+        classMap[size],
+        disabled && classMap.disabled,
+        isExpanded && classMap.expanded,
+        className
+      ),
+    [classMap, size, disabled, isExpanded, className]
   );
 
-  const themeClass =
-    styles[`accordionHeader_${theme}${outline ? "_outline" : ""}`];
-
-  const headerClassName = combineClassNames(
-    styles.accordionHeader,
-    themeClass,
-    clear && styles.accordionHeader_clear,
-    isExpanded && styles.accordionHeader_expanded
+  const headerClassName = useMemo(
+    () =>
+      combineClassNames(
+        classMap.header,
+        classMap[theme],
+        outline && classMap.outline,
+        isExpanded && classMap.expanded
+      ),
+    [classMap, isExpanded]
   );
 
-  const contentClassName = combineClassNames(
-    styles.accordionContent,
-    isExpanded && styles.accordionContent_expanded,
-    clear && styles.accordionContent_clear
+  const contentClassName = useMemo(
+    () => combineClassNames(classMap.content, isExpanded && classMap.expanded),
+    [classMap, isExpanded]
   );
 
-  const iconClassName = combineClassNames(
-    styles.accordionIcon,
-    isExpanded && styles.accordionIcon_expanded
+  const iconClassName = useMemo(
+    () => combineClassNames(classMap.icon, isExpanded && classMap.expanded),
+    [classMap, isExpanded]
   );
 
   return (
@@ -107,7 +111,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
             {renderedIcon}
           </span>
         )}
-        <span className={styles.accordionTitle}>{title}</span>
+        <span className={classMap.accordionTitle}>{title}</span>
         {iconPosition === "right" && (
           <span className={iconClassName} aria-hidden="true">
             {renderedIcon}

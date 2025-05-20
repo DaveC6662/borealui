@@ -9,7 +9,9 @@ const Accordion: React.FC<AccordionProps> = (props) => {
   const id = useId();
   const getUniqueId = () => `accordion-${id}`;
 
-  return <AccordionBase {...props} getUniqueId={getUniqueId} styles={styles} />;
+  return (
+    <AccordionBase {...props} getUniqueId={getUniqueId} classMap={styles} />
+  );
 };
 
 export default Accordion;

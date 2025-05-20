@@ -101,31 +101,29 @@ $sizes: (
     box-shadow: none;
   }
 
-  @each $name, $vals in $sizes {
-    &_#{$name} {
-      .toggle {
-        width: list.nth(map.get($vals, toggle), 1);
-        height: list.nth(map.get($vals, toggle), 2);
-
-        &_slider {
-          width: list.nth(map.get($vals, slider), 1);
-          height: list.nth(map.get($vals, slider), 2);
-        }
-
-        &_active .toggle_slider {
-          transform: translateX(map.get($vals, translate));
-        }
-      }
-    }
-  }
-
-  @each $theme, $color in theme.$themes {
-    &_#{$theme} .toggle_active {
-      background-color: map.get($color, bg);
-    }
-  }
-
   &_clear .toggle_active {
-    outline: 2px solid var(--text-color-primary);
+    border: 1px solid var(--text-color-primary);
+  }
+}
+
+@each $theme, $color in theme.$themes {
+  .toggle_#{$theme} .toggle_active {
+    background-color: map.get($color, bg);
+  }
+}
+
+@each $name, $vals in $sizes {
+  .toggle_#{$name} .toggle {
+    width: list.nth(map.get($vals, toggle), 1);
+    height: list.nth(map.get($vals, toggle), 2);
+
+    &_slider {
+      width: list.nth(map.get($vals, slider), 1);
+      height: list.nth(map.get($vals, slider), 2);
+    }
+
+    &_active .toggle_slider {
+      transform: translateX(map.get($vals, translate));
+    }
   }
 }

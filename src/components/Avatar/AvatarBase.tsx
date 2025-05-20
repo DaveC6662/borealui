@@ -38,17 +38,17 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
     (name ? (
       getInitials(name)
     ) : (
-      <FallbackUserIcon className={classMap["avatar_fallback_icon"]} />
+      <FallbackUserIcon className={classMap.fallback_icon} />
     ));
 
   const combinedClassName = useMemo(
     () =>
       combineClassNames(
         classMap.avatar,
-        classMap[`avatar_${theme}`],
-        classMap[`avatar_${shape}`],
-        classMap[`avatar_${size}`],
-        outline && classMap[`avatar_${theme}_outline`],
+        classMap[theme],
+        classMap[shape],
+        classMap[size],
+        outline && classMap.outline,
         className
       ),
     [theme, shape, size, outline, className]
@@ -59,7 +59,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
       <ImageComponent
         src={src}
         alt={computedLabel}
-        className={classMap["avatar_image"]}
+        className={classMap.image}
         onError={() => setImgError(true)}
         loading={priority ? "eager" : "lazy"}
         aria-hidden="false"
@@ -69,7 +69,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
       />
     ) : (
       <span
-        className={classMap["avatar_initials"]}
+        className={classMap.initials}
         data-testid="avatar-initials"
         role="img"
         aria-label={computedLabel}
@@ -82,15 +82,15 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
   const statusIndicator = (status || statusIcon) && (
     <span
       className={combineClassNames(
-        classMap["avatar_status"],
-        status && classMap[`avatar_status_${status}`],
+        classMap.status,
+        status && classMap[status],
         statusIcon ? "icon-only" : undefined,
-        classMap[`avatar_status_${statusPosition}`]
+        classMap[statusPosition]
       )}
       aria-hidden="true"
       data-testid="avatar-status"
     >
-      {statusIcon || <span className={classMap["avatar_dot"]} />}
+      {statusIcon || <span className={classMap.dot} />}
     </span>
   );
 

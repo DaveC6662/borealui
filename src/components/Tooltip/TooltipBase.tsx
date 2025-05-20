@@ -33,7 +33,7 @@ export const TooltipBase = forwardRef<
 
     return (
       <div
-        className={combineClassNames(classMap.tooltipContainer, className)}
+        className={combineClassNames(classMap.container, className)}
         data-testid={`${testId}-container`}
         onMouseEnter={showTooltip}
         onMouseLeave={hideTooltip}
@@ -54,15 +54,12 @@ export const TooltipBase = forwardRef<
           className={combineClassNames(
             classMap.tooltip,
             classMap[position],
-            classMap[theme]
+            classMap[theme],
+            visible && classMap.visible
           )}
           role="tooltip"
           data-testid={testId}
           aria-hidden={!visible}
-          style={{
-            visibility: visible ? "visible" : "hidden",
-            opacity: visible ? 1 : 0,
-          }}
           {...rest}
         >
           {content}
