@@ -1,15 +1,22 @@
 // vite.config.next.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import dts from "vite-plugin-dts";
 import path from "path";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    dts({
+      insertTypesEntry: true,
+      outDir: "dist/next",
+    }),
+  ],
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.next.ts"),
       name: "BorealUINext",
-      fileName: (format) => `boreal-ui.next.${format}.js`,
+      fileName: (format) => (format === "es" ? "index.js" : "index.cjs.js"),
       formats: ["es", "cjs"],
     },
     rollupOptions: {
@@ -17,7 +24,6 @@ export default defineConfig({
         "react",
         "react-dom",
         "next",
-        "react-icons",
         "@tiptap/react",
         "@tiptap/starter-kit",
         "@tiptap/extension-heading",

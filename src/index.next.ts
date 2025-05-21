@@ -49,7 +49,6 @@ export { default as Divider } from "./components/Divider/next/Divider";
 export { default as MetricBox } from "./components/MetricBox/next/MetricBox";
 export { default as EmptyState } from "./components/EmptyState/next/EmptyState";
 export { default as CommandPalette } from "./components/CommandPalette/next/CommandPalette";
-export { default as RichTextEditor } from "./components/RichTextEditor/next/RichTextEditor";
 export { default as NotificationCenter } from "./components/NotificationCenter/next/NotificationCenter";
 
 //  Cards & Display Components

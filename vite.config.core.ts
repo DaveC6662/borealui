@@ -16,7 +16,6 @@ export default defineConfig({
         "react",
         "react-dom",
         "next",
-        "react-icons",
         "@tiptap/react",
         "@tiptap/starter-kit",
         "@tiptap/extension-heading",
