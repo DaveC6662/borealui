@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
-import Footer from "@/components/Footer/next/Footer";
-import type { FooterProps } from "@/components/Footer/Footer.types";
-import { FaGithub, FaTwitter, FaLinkedin } from "react-icons/fa";
-import ThemeProvider from "@/context/ThemeContext";
+import { Footer } from "../src/index.next";
+import type { FooterProps } from "../src/components/Footer/Footer.types";
+import { FaGithub, FaTwitter, FaLinkedin, FaIcons } from "react-icons/fa";
+import ThemeProvider from "../src/context/ThemeContext";
 
 const meta: Meta<FooterProps> = {
   title: "Components/Footer",
@@ -17,7 +17,7 @@ const meta: Meta<FooterProps> = {
   ],
   args: {
     theme: "primary",
-    showThemeSelect: true,
+    showThemeSelect: false,
   },
 };
 
@@ -33,6 +33,7 @@ export const Default: Story = {
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
     ],
+    logo: <FaIcons />,
     socialLinks: [
       {
         icon: FaGithub,
@@ -53,10 +54,10 @@ export const Default: Story = {
   },
 };
 
-export const NoThemeSelect: Story = {
+export const ThemeSelect: Story = {
   args: {
     ...Default.args,
-    showThemeSelect: false,
+    showThemeSelect: true,
   },
 };
 
@@ -74,12 +75,5 @@ export const SocialOnly: Story = {
     socialLinks: [
       { icon: FaGithub, href: "https://github.com", title: "GitHub" },
     ],
-  },
-};
-
-export const CustomTheme: Story = {
-  args: {
-    ...Default.args,
-    theme: "secondary",
   },
 };

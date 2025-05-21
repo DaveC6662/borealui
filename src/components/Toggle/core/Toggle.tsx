@@ -13,7 +13,7 @@ const classes = {
   secondary: "toggle_secondary",
   success: "toggle_success",
   warning: "toggle_warning",
-  danger: "toggle_danger",
+  error: "toggle_error",
   clear: "toggle_clear",
   disabled: "toggle_disabled",
   xs: "toggle_xs",

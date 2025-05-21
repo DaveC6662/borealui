@@ -2,7 +2,7 @@ import React from "react";
 import ChipBase from "../ChipBase";
 import { CloseIcon } from "@/Icons";
 import "./Chip.scss";
-import IconButton from "../../Buttons/IconButton/core/IconButton";
+import IconButton from "../../IconButton/core/IconButton";
 import { ChipProps } from "../Chip.types";
 
 const classes = {

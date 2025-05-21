@@ -6,7 +6,6 @@ import { FormGroupProps } from "../FormGroup.types";
 const classes = {
   wrapper: "form_group",
   label: "form_group_label",
-  sr_only: "sr_only",
   required: "form_group_required",
   inputWrapper: "form_group_input_wrapper",
   inputField: "form_group_input_field",

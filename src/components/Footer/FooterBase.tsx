@@ -35,7 +35,12 @@ const FooterBase: React.FC<BaseFooterProps> = ({
     >
       <div className={classMap.content}>
         {logo && (
-          <div className={classMap.logo} data-testid={`${testId}-logo`}>
+          <div
+            className={classMap.logo}
+            aria-label="Logo"
+            role="img"
+            data-testid={`${testId}-logo`}
+          >
             {logo}
           </div>
         )}

@@ -2,11 +2,11 @@
 
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import ScrollToTopButton from "@/components/Buttons/ScrollToTop/next/STT"; // adjust path if needed
+import { ScrollToTop } from "../src/index.next"; // adjust path if needed
 
 const meta: Meta = {
   title: "Components/ScrollToTopButton",
-  component: ScrollToTopButton,
+  component: ScrollToTop,
   tags: ["autodocs"],
 };
 
@@ -26,7 +26,7 @@ export const Default: Story = {
         Scroll down the page to make the ScrollToTopButton appear. This demo
         uses a tall container to simulate a real scroll environment.
       </p>
-      <ScrollToTopButton />
+      <ScrollToTop />
     </div>
   ),
 };

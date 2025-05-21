@@ -1,8 +1,8 @@
 import "./styles/globals.scss";
 
 // Buttons
-export { default as Button } from "./components/Buttons/Button/core/Button";
-export { default as IconButton } from "./components/Buttons/IconButton/core/IconButton";
+export { default as Button } from "./components/Button/core/Button";
+export { default as IconButton } from "./components/IconButton/core/IconButton";
 export { default as ScrollToTop } from "./components/ScrollToTop/core/STT";
 
 // Inputs & Forms

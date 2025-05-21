@@ -27,11 +27,11 @@
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  border: 2px solid var(--text-color-primary);
+  border: 2px solid var(--background-color-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--text-color-primary);
+  background-color: var(--background-color-lighter);
   position: relative;
   transition: all theme.$transition-default;
 }

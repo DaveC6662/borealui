@@ -1,5 +1,5 @@
-@use "../../../../styles/theme" as theme;
-@use "../../../../styles/globals";
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 
@@ -9,6 +9,7 @@
   justify-content: center;
   gap: theme.$spacing-xs;
   padding: 10px 20px;
+  width: fit-content;
   border-radius: theme.$border-radius-xl;
   border: none;
   cursor: pointer;

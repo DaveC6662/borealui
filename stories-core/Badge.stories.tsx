@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { FaCheck, FaExclamation, FaInfoCircle } from "react-icons/fa";
-import Badge from "@/components/Badge/core/Badge";
+import { Badge } from "../src/index.core";
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",

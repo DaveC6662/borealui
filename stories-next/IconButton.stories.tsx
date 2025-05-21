@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { IconButton } from "@/index.next";
-import type { IconButtonProps } from "@/components/Buttons/IconButton/IconButton.types";
+import { IconButton } from "../src/index.next";
+import type { IconButtonProps } from "../src/components/IconButton/IconButton.types";
 import { FaPlus, FaExternalLinkAlt } from "react-icons/fa";
 
 const meta: Meta<IconButtonProps> = {

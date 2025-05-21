@@ -1,6 +1,6 @@
 import React, { forwardRef, useMemo } from "react";
 import { IconButtonProps } from "./IconButton.types";
-import { combineClassNames } from "../../../utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 
 export interface IconButtonBaseProps extends IconButtonProps {
   classMap: Record<string, string>;

@@ -6,10 +6,10 @@ import {
   useImperativeHandle,
   useMemo,
 } from "react";
-import type { CheckboxProps } from "./Checkbox.types";
+import type { CheckBoxProps } from "./Checkbox.types";
 import { combineClassNames } from "../../utils/classNames";
 
-export interface CheckboxBaseProps extends CheckboxProps {
+export interface CheckboxBaseProps extends CheckBoxProps {
   classMap: Record<string, string>;
 }
 

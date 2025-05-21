@@ -1,9 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
-import Footer from "@/components/Footer/core/Footer";
-import type { FooterProps } from "@/components/Footer/Footer.types";
-import { FaGithub, FaTwitter, FaLinkedin, FaTree } from "react-icons/fa";
-import ThemeProvider from "@/context/ThemeContext";
-import { BorealLogoIcon } from "@/Icons";
+import { Footer } from "../src/index.core";
+import type { FooterProps } from "../src/components/Footer/Footer.types";
+import { FaGithub, FaTwitter, FaLinkedin, FaIcons } from "react-icons/fa";
+import ThemeProvider from "../src/context/ThemeContext";
 
 const meta: Meta<FooterProps> = {
   title: "Components/Footer",
@@ -34,7 +33,7 @@ export const Default: Story = {
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
     ],
-    logo: <BorealLogoIcon />,
+    logo: <FaIcons />,
     socialLinks: [
       {
         icon: FaGithub,

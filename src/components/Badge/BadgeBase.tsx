@@ -18,16 +18,13 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   className = "",
   classMap,
 }) => {
-  const themeClass = outline
-    ? classMap[`badge_${theme}_outline`]
-    : classMap[`badge_${theme}`];
-
   const combinedClassName = useMemo(
     () =>
       combineClassNames(
         classMap.badge,
-        classMap[`badge_${size}`],
-        themeClass,
+        classMap[size],
+        classMap[theme],
+        outline && classMap.outline,
         className
       ),
     [theme, size, outline, className]

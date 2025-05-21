@@ -6,9 +6,6 @@ import SkeletonBase from "../SkeletonBase";
 import { SkeletonProps } from "../Skeleton.types";
 import { combineClassNames } from "@/utils/classNames";
 
-/**
- * Next.js SkeletonLoader with scoped styles and client directive.
- */
 const SkeletonLoader: React.FC<SkeletonProps> = (props) => {
   return (
     <SkeletonBase

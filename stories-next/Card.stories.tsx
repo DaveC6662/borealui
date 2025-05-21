@@ -47,10 +47,8 @@ const baseArgs: CardProps = {
   description: "Quick description to show style and layout.",
 };
 
-// Default
 export const Default: Story = {};
 
-// Original static stories preserved
 export const WithImage: Story = {
   args: {
     ...baseArgs,
@@ -106,7 +104,6 @@ export const WithCustomRender: Story = {
   },
 };
 
-// Dynamic variant stories
 export const ThemeVariants = () =>
   withVariants(Card, baseArgs, [
     { propName: "theme", values: [...themeOptions] },

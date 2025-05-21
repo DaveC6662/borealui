@@ -6,125 +6,124 @@
   flex-direction: column;
   margin-bottom: theme.$spacing-md;
   max-width: 400px;
+}
 
-  &_label {
-    font-weight: theme.$font-weight-bold;
-    color: var(--text-color-primary);
-    font-size: theme.$font-size-base;
-    margin-bottom: theme.$spacing-xxs;
+.label {
+  color: var(--text-color-primary);
+  font-size: theme.$font-size-base;
+  margin-bottom: theme.$spacing-xxs;
+}
+
+.required {
+  color: theme.$error-color;
+  margin-left: 4px;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+
+  @media (width >= 600px) {
+    flex-direction: row;
+    gap: theme.$spacing-sm;
+    align-items: center;
   }
+}
 
-  &_required {
-    color: theme.$error-color;
-    margin-left: 4px;
+.inputField {
+  width: 100%;
+}
+
+.controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: theme.$spacing-xs;
+
+  @media (width >= 480px) {
+    margin-top: 0;
   }
+}
 
-  &_input_wrapper {
-    display: flex;
-    flex-direction: column;
+.description,
+.errorMessage {
+  font-size: theme.$font-size-sm;
+  margin-top: 4px;
+}
+
+.description {
+  color: var(--text-color-primary);
+}
+
+.errorMessage {
+  color: theme.$error-color;
+}
+
+.horizontal {
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+
+  .label {
+    margin-bottom: 0;
+    margin-right: theme.$spacing-xs;
+    width: auto;
+    text-align: left;
 
     @media (width >= 600px) {
-      flex-direction: row;
-      gap: theme.$spacing-sm;
-      align-items: center;
+      width: 150px;
+      text-align: right;
     }
   }
 
-  &_input_field {
-    width: 100%;
-  }
-
-  &_controller {
+  .inputWrapper {
+    flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: theme.$spacing-xs;
-
-    @media (width >= 480px) {
-      margin-top: 0;
-    }
-  }
-
-  &_description,
-  &_error_message {
-    font-size: theme.$font-size-sm;
-    margin-top: 4px;
-  }
-
-  &_description {
-    color: var(--text-color-primary);
-  }
-
-  &_error_message {
-    color: theme.$error-color;
-  }
-
-  &_horizontal {
-    flex-flow: row wrap;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    &_label {
-      margin-bottom: 0;
-      margin-right: theme.$spacing-sm;
-      width: auto;
-      text-align: left;
-
-      @media (width >= 600px) {
-        width: 150px;
-        text-align: right;
-      }
-    }
-
-    &_input_wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      @media (width >= 600px) {
-        align-items: flex-start;
-        gap: theme.$spacing-xxs;
-      }
-    }
-
-    &_input_field {
-      width: 100%;
-      flex: 1;
-
-      &_form-error {
-        border: 1px solid theme.$error-color;
-      }
-    }
-
-    &_controller {
-      margin-left: auto;
-      margin-right: theme.$spacing-sm;
-    }
-
-    &_description,
-    &_error_message {
-      margin-left: 0;
-      margin-bottom: 0;
-      text-align: left;
-      line-height: 1em;
+    @media (width >= 600px) {
+      align-items: flex-start;
+      gap: theme.$spacing-xxs;
     }
   }
 
-  $size-margins: (
-    "xs": theme.$spacing-xs,
-    "small": theme.$spacing-sm,
-    "medium": theme.$spacing-md,
-    "large": theme.$spacing-lg,
-    "xl": theme.$spacing-xl,
-  );
+  .inputField {
+    width: 100%;
+    flex: 1;
 
-  @each $size, $spacing in $size-margins {
-    &_#{$size} {
-      .form_group_input_wrapper {
-        margin-bottom: $spacing;
-      }
+    .error {
+      border: 1px solid theme.$error-color;
+    }
+  }
+
+  .controller {
+    margin-left: auto;
+    margin-right: theme.$spacing-sm;
+  }
+
+  .description,
+  .errorMessage {
+    margin-left: 0;
+    margin-bottom: 0;
+    text-align: left;
+    line-height: 1em;
+  }
+}
+
+$size-margins: (
+  "xs": theme.$spacing-xs,
+  "small": theme.$spacing-sm,
+  "medium": theme.$spacing-md,
+  "large": theme.$spacing-lg,
+  "xl": theme.$spacing-xl,
+);
+
+@each $size, $spacing in $size-margins {
+  .#{$size} {
+    .inputWrapper {
+      margin-bottom: $spacing;
     }
   }
 }

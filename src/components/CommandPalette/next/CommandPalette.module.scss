@@ -2,18 +2,6 @@
 @use "../../../styles/globals";
 @use "sass:map";
 
-.command_palette {
-  background: var(--background-color-light);
-  border-radius: theme.$border-radius-lg;
-  box-shadow: theme.$box-shadow-large;
-  width: 90%;
-  max-width: 500px;
-  padding: theme.$spacing-md;
-  display: flex;
-  flex-direction: column;
-  gap: theme.$spacing-sm;
-}
-
 .overlay {
   position: fixed;
   inset: 0;
@@ -25,10 +13,23 @@
   padding-top: 10vh;
 }
 
-.input {
+.command_palette {
+  background: var(--background-color-light);
+  border-radius: theme.$border-radius-lg;
+  box-shadow: theme.$box-shadow-large;
   width: 90%;
-  padding: none;
-  margin: 0 auto;
+  max-width: 500px;
+  padding: theme.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: theme.$spacing-sm;
+}
+
+.input {
+  width: 90% !important;
+  padding: 0px;
+  margin: 0 auto !important;
 }
 
 .list {

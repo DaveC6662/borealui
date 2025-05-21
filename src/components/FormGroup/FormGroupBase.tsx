@@ -47,10 +47,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
       {label && (
         <label
           id={labelId}
-          className={combineClassNames(
-            classMap.label,
-            hideLabel && classMap.sr_only
-          )}
+          className={combineClassNames(classMap.label, hideLabel && "sr_only")}
           data-testid={`${testId}-label`}
         >
           {label}

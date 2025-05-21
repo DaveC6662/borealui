@@ -1,7 +1,7 @@
 import React from "react";
 import FooterBase from "../FooterBase";
 import { FooterProps } from "../Footer.types";
-import IconButton from "../../Buttons/IconButton/core/IconButton";
+import IconButton from "../../IconButton/core/IconButton";
 import ThemeSelect from "../../Select/ThemeSelect/core/ThemeSelect";
 import "./Footer.scss";
 

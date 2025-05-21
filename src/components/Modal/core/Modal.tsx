@@ -1,7 +1,7 @@
 import React from "react";
 import BaseModal from "../ModalBase";
 import "./Modal.scss";
-import IconButton from "../../Buttons/IconButton/core/IconButton";
+import IconButton from "../../IconButton/core/IconButton";
 import { ModalProps } from "../Modal.types";
 
 const classes = {

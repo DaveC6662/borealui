@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { FaPlus } from "react-icons/fa";
-import { Button } from "@/index.next";
-import { ButtonProps } from "@/components/Buttons/Button/Button.types";
+import { Button } from "../src/index.next"; // adjust path if needed
+import { ButtonProps } from "../src/components/Button/Button.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 

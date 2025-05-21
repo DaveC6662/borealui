@@ -81,7 +81,7 @@ export const CustomRowKey: Story = {
 export const NoStripedTheme: Story = {
   args: {
     striped: false,
-    theme: "clear",
+    theme: "primary",
   },
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Taginput.scss";
-import IconButton from "../../Buttons/IconButton/core/IconButton";
+import IconButton from "../../Button/core/Button";
 import TextInput from "../../TextInput/core/TextInput";
 import { combineClassNames } from "../../../utils/classNames";
 import TagInputBase from "../TagInputBase";

@@ -1,8 +1,8 @@
 import React from "react";
 import BaseFileUpload from "../FileUploadBase";
 import { FileUploadProps } from "../FileUpload.types";
-import Button from "../../Buttons/Button/core/Button";
-import IconButton from "../../Buttons/IconButton/core/IconButton";
+import Button from "../../Button/core/Button";
+import IconButton from "../../IconButton/core/IconButton";
 import ProgressBar from "../../ProgressBar/core/ProgressBar";
 import FormGroup from "../../FormGroup/core/FormGroup";
 import "./FileUpload.scss";

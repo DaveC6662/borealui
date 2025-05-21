@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import Modal from "@/components/Modal/core/Modal";
-import Button from "@/components/Buttons/Button/core/Button";
-import type { ModalProps } from "@/components/Modal/Modal.types";
+import { Modal, Button } from "../src/index.core"; // adjust path if needed
+import type { ModalProps } from "../src/components/Modal/Modal.types"; // adjust path if needed
 
 const meta: Meta<ModalProps> = {
   title: "Components/Modal",
@@ -36,8 +35,13 @@ export const Default: Story = {
           <Modal onClose={() => setIsOpen(false)}>
             <div style={{ padding: "1rem" }}>
               <h2 style={{ marginTop: 0 }}>Hello from the modal!</h2>
-              <p>This is a fully accessible, focus-trapped modal component rendered via portal.</p>
-              <Button onClick={() => alert("Action inside modal!")}>Action</Button>
+              <p>
+                This is a fully accessible, focus-trapped modal component
+                rendered via portal.
+              </p>
+              <Button onClick={() => alert("Action inside modal!")}>
+                Action
+              </Button>
             </div>
           </Modal>
         )}
@@ -58,9 +62,14 @@ export const LongContent: Story = {
 
         {isOpen && (
           <Modal onClose={() => setIsOpen(false)}>
-            <div style={{ padding: "1rem", maxHeight: "70vh", overflowY: "auto" }}>
+            <div
+              style={{ padding: "1rem", maxHeight: "70vh", overflowY: "auto" }}
+            >
               <h2>Scrollable Content</h2>
-              <p>This modal contains a lot of content to test vertical scroll behavior.</p>
+              <p>
+                This modal contains a lot of content to test vertical scroll
+                behavior.
+              </p>
               {[...Array(30)].map((_, i) => (
                 <p key={i}>Line {i + 1}: Lorem ipsum dolor sit amet...</p>
               ))}

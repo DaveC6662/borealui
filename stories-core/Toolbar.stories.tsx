@@ -1,8 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
-import Toolbar from "@/components/Toolbar/core/Toolbar";
-import { IconButton } from "@/index.core";
+import { IconButton, Toolbar } from "../src/index.core";
 import { FaBell, FaArrowLeft } from "react-icons/fa";
-import type { ToolbarProps } from "@/components/Toolbar/Toolbar.types";
+import type { ToolbarProps } from "../src/components/Toolbar/Toolbar.types";
 
 const meta: Meta<ToolbarProps> = {
   title: "Components/Toolbar",

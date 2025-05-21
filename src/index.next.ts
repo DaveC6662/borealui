@@ -1,6 +1,6 @@
 // Buttons
-export { default as Button } from "./components/Buttons/Button/next/Button";
-export { default as IconButton } from "./components/Buttons/IconButton/next/IconButton";
+export { default as Button } from "./components/Button/next/Button";
+export { default as IconButton } from "./components/IconButton/next/IconButton";
 export { default as ScrollToTop } from "./components/ScrollToTop/next/STT";
 
 // Inputs & Forms
