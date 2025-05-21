@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@testing-library/react";
-import ScrollToTopBase from "@/components/Buttons/ScrollToTop/ScrollToTopBase";
+import ScrollToTopBase from "../src/components/ScrollToTop/ScrollToTopBase";
 
 const DummyIcon = () => <svg data-testid="icon" />;
 

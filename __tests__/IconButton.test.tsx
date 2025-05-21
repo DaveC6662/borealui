@@ -1,6 +1,5 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import IconButtonBase from "@/components/Buttons/IconButton/IconButtonBase";
+import IconButtonBase from "../src/components/IconButton/IconButtonBase";
 import { FaTimes } from "react-icons/fa";
 
 const classMap = {

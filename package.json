@@ -14,9 +14,11 @@
   ],
   "scripts": {
     "dev": "vite",
+    "clean": "rimraf dist",
     "build:core": "vite build --config vite.config.core.ts",
     "build:next": "vite build --config vite.config.next.ts",
-    "build": "npm run build:core && npm run build:next",
+    "build:types": "tsc -p tsconfig.build.json",
+    "build": "npm run clean && npm run build:core && npm run build:next && npm run build:types",
     "lint": "eslint ./src --ext .ts,.tsx",
     "lint:styles": "stylelint '**/*.{css,scss}'",
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
@@ -113,17 +115,14 @@
   "exports": {
     ".": {
       "import": "./dist/core/index.js",
-      "require": "./dist/core/index.cjs",
       "types": "./dist/core/index.d.ts"
     },
     "./core": {
       "import": "./dist/core/index.js",
-      "require": "./dist/core/index.cjs",
       "types": "./dist/core/index.d.ts"
     },
     "./next": {
       "import": "./dist/next/index.js",
-      "require": "./dist/next/index.cjs.js",
       "types": "./dist/next/index.d.ts"
     }
   },

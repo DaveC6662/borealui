@@ -1,5 +1,6 @@
 import { MouseEvent } from "react";
 import {
+  ShapeType,
   SizeType,
   StatusPositionType,
   StatusType,

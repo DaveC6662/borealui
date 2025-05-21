@@ -1,10 +1,6 @@
 import React from "react";
-import { AccordionProps } from "./Accordion.types";
+import type { AccordionProps } from "./Accordion.types";
 
-/**
- * Shared AccordionBase layout. Framework-specific components pass
- * in toggle, classNames, and expanded state.
- */
 export interface AccordionBaseProps extends AccordionProps {
   isExpanded: boolean;
   toggle: () => void;

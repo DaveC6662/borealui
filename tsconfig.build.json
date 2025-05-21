@@ -1,17 +1,27 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
     "declaration": true,
-    "declarationDir": "dist",
+    "noEmit": false,
+    "declarationMap": true,
     "emitDeclarationOnly": true,
-    "outDir": "dist",
-    "removeComments": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "lib": ["dom", "esnext"]
+    "outDir": "dist/types",
+    "rootDir": "./src",
+    "moduleResolution": "bundler",
+    "composite": true,
+    "skipLibCheck": true,
+    "isolatedModules": true
   },
-  "include": ["src"],
+  "include": [
+    "src/index.core.ts",
+    "src/index.next.ts",
+    "src/components",
+    "src/Icons",
+    "src/context",
+    "src/utils",
+    "src/styles",
+    "src/types"
+  ],
   "exclude": [
     "node_modules",
     "dist",
