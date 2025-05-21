@@ -5,10 +5,9 @@ import React, {
   useEffect,
   useImperativeHandle,
 } from "react";
-import React from "react";
 import CheckboxBase from "../CheckboxBase";
 import "./Checkbox.scss";
-import { CheckboxProps } from "../Checkbox.types";
+import { CheckBoxProps } from "../Checkbox.types";
 
 const classes = {
   checkbox: "checkbox",
@@ -27,7 +26,7 @@ const classes = {
   box: "checkbox_box",
 };
 
-const Checkbox: React.FC<CheckboxProps> = (props) => {
+const Checkbox: React.FC<CheckBoxProps> = (props) => {
   return <CheckboxBase {...props} classMap={classes} />;
 };
 
