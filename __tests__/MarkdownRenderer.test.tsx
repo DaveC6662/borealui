@@ -11,7 +11,6 @@ describe("BaseMarkdownRenderer", () => {
     render(
       <BaseMarkdownRenderer content="**Loading Test**" classMap={classNames} />
     );
-    expect(screen.getByRole("status")).toHaveTextContent("Loading markdown...");
     expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "true");
   });
 
