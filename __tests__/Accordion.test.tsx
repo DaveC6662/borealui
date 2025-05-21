@@ -22,7 +22,7 @@ describe("AccordionBase (Jest)", () => {
       <AccordionBase
         title="Test Accordion"
         getUniqueId={getUniqueId}
-        styles={styles}
+        classMap={styles}
       >
         <div>Accordion content</div>
       </AccordionBase>
@@ -42,7 +42,7 @@ describe("AccordionBase (Jest)", () => {
         title="Disabled Accordion"
         disabled
         getUniqueId={getUniqueId}
-        styles={styles}
+        classMap={styles}
       >
         <div>Content</div>
       </AccordionBase>

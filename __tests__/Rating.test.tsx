@@ -6,8 +6,8 @@ const mockClassNames = {
   wrapper: "wrapper",
   star: "star",
   active: "active",
-  themeMap: { primary: "primary" },
-  sizeMap: { medium: "medium" },
+  primary: "primary",
+  medium: "medium",
   interactive: "interactive",
 };
 
@@ -19,7 +19,7 @@ describe("BaseRating", () => {
         onChange={jest.fn()}
         max={5}
         theme="primary"
-        classNames={mockClassNames}
+        classMap={mockClassNames}
         data-testid="rating"
       />
     );
@@ -33,11 +33,7 @@ describe("BaseRating", () => {
   it("triggers onChange on click", () => {
     const handleChange = jest.fn();
     render(
-      <BaseRating
-        value={2}
-        onChange={handleChange}
-        classNames={mockClassNames}
-      />
+      <BaseRating value={2} onChange={handleChange} classMap={mockClassNames} />
     );
 
     fireEvent.click(screen.getByTestId("rating-star-4"));
@@ -47,11 +43,7 @@ describe("BaseRating", () => {
   it("triggers onChange on keyboard events", () => {
     const handleChange = jest.fn();
     render(
-      <BaseRating
-        value={2}
-        onChange={handleChange}
-        classNames={mockClassNames}
-      />
+      <BaseRating value={2} onChange={handleChange} classMap={mockClassNames} />
     );
 
     const star = screen.getByTestId("rating-star-2");

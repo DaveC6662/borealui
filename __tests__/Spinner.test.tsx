@@ -10,7 +10,7 @@ const mockStyles = {
 
 describe("SpinnerBase", () => {
   it("renders with correct size and theme classes", () => {
-    render(<SpinnerBase size={60} theme="primary" styles={mockStyles} />);
+    render(<SpinnerBase size={60} theme="primary" classMap={mockStyles} />);
     const spinnerInner = screen.getByTestId("spinner");
     expect(spinnerInner).toHaveClass("spinner-base", "theme-primary");
     expect(spinnerInner).toHaveStyle({
@@ -22,7 +22,7 @@ describe("SpinnerBase", () => {
 
   it("has appropriate accessibility attributes", () => {
     render(
-      <SpinnerBase size={50} label="Loading content..." styles={mockStyles} />
+      <SpinnerBase size={50} label="Loading content..." classMap={mockStyles} />
     );
     const spinner = screen.getByRole("status");
 
@@ -35,7 +35,7 @@ describe("SpinnerBase", () => {
 
   it("is accessible according to jest-axe", async () => {
     const { container } = render(
-      <SpinnerBase label="Loading" styles={mockStyles} />
+      <SpinnerBase label="Loading" classMap={mockStyles} />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

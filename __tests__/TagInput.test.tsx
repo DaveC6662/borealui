@@ -39,7 +39,7 @@ describe("TagInputBase", () => {
 
     render(
       <TagInputBase
-        styles={mockStyles}
+        classMap={mockStyles}
         TextInput={MockTextInput}
         IconButton={MockIconButton}
         combineClassNames={(...classes) => classes.join(" ")}
@@ -60,7 +60,7 @@ describe("TagInputBase", () => {
 
     render(
       <TagInputBase
-        styles={mockStyles}
+        classMap={mockStyles}
         TextInput={MockTextInput}
         IconButton={MockIconButton}
         combineClassNames={(...classes) => classes.join(" ")}
@@ -76,7 +76,7 @@ describe("TagInputBase", () => {
   it("is accessible", async () => {
     const { container } = render(
       <TagInputBase
-        styles={mockStyles}
+        classMap={mockStyles}
         TextInput={MockTextInput}
         IconButton={MockIconButton}
         combineClassNames={(...classes) => classes.join(" ")}

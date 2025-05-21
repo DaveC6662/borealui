@@ -37,7 +37,7 @@ describe("StepperBase", () => {
   const defaultProps: StepperBaseProps = {
     steps: mockSteps,
     activeStep: 1,
-    styles,
+    classMap: styles,
     IconButtonComponent: MockIconButton,
     "data-testid": "stepper",
   };
@@ -67,7 +67,7 @@ describe("StepperBase", () => {
             <Icon />
           </button>
         )}
-        styles={styles}
+        classMap={styles}
         data-testid="stepper"
       />
     );

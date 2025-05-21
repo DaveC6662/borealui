@@ -29,7 +29,7 @@ describe("ToolbarBase", () => {
         center={<div>Center Content</div>}
         right={<div>Right Section</div>}
         AvatarComponent={AvatarMock}
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
 
@@ -51,7 +51,7 @@ describe("ToolbarBase", () => {
       <ToolbarBase
         avatar={{ name: "JD" }}
         AvatarComponent={AvatarMock}
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
 
@@ -68,7 +68,7 @@ describe("ToolbarBase", () => {
         AvatarComponent={({ name, onClick }) => (
           <button onClick={onClick}>{name}</button>
         )}
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
 
@@ -83,7 +83,7 @@ describe("ToolbarBase", () => {
         title="Custom Heading"
         headingLevel={2}
         AvatarComponent={AvatarMock}
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
 
@@ -97,7 +97,7 @@ describe("ToolbarBase", () => {
         title="Toolbar"
         ariaLabel="Main toolbar"
         AvatarComponent={AvatarMock}
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
 
@@ -115,7 +115,7 @@ describe("ToolbarBase", () => {
         right={<div>Right Section</div>}
         avatar={{ name: "JD" }}
         AvatarComponent={AvatarMock}
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
 

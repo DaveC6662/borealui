@@ -7,7 +7,7 @@ const classNames = {
   main: "main",
   select: "select",
   icon: "icon",
-  themeClass: (theme: string) => `theme-${theme}`,
+  primary: "themePrimary",
   disabled: "disabled",
 };
 
@@ -24,7 +24,7 @@ describe("BaseSelect", () => {
   };
 
   it("renders and allows selecting an option", () => {
-    render(<BaseSelect {...defaultProps} />);
+    render(<BaseSelect {...defaultProps} classMap={classNames} />);
 
     const select = screen.getByTestId("select-input");
     fireEvent.change(select, { target: { value: "banana" } });
@@ -33,7 +33,13 @@ describe("BaseSelect", () => {
   });
 
   it("displays the correct placeholder", () => {
-    render(<BaseSelect {...defaultProps} placeholder="Choose fruit" />);
+    render(
+      <BaseSelect
+        {...defaultProps}
+        placeholder="Choose fruit"
+        classMap={classNames}
+      />
+    );
     const option = screen.getByText("Choose fruit") as HTMLOptionElement;
     expect(option.disabled).toBe(true);
   });
@@ -44,6 +50,7 @@ describe("BaseSelect", () => {
         {...defaultProps}
         ariaLabel="Fruit select"
         ariaDescription="Select your favorite fruit"
+        classMap={classNames}
       />
     );
 
@@ -56,7 +63,9 @@ describe("BaseSelect", () => {
   });
 
   it("is accessible according to axe", async () => {
-    const { container } = render(<BaseSelect {...defaultProps} />);
+    const { container } = render(
+      <BaseSelect {...defaultProps} classMap={classNames} />
+    );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

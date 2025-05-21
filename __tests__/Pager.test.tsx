@@ -30,7 +30,7 @@ describe("BasePager", () => {
         onPageChange={jest.fn()}
         Button={DummyButton}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="pager"
       />
     );
@@ -50,7 +50,7 @@ describe("BasePager", () => {
         onPageChange={onPageChange}
         Button={DummyButton}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
       />
     );
 
@@ -67,7 +67,7 @@ describe("BasePager", () => {
         onPageChange={jest.fn()}
         Button={DummyButton}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
       />
     );
 
@@ -83,7 +83,7 @@ describe("BasePager", () => {
         onPageChange={jest.fn()}
         Button={DummyButton}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
       />
     );
 

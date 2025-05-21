@@ -11,7 +11,7 @@ const styles = {
 
 describe("DividerBase", () => {
   it("renders horizontal divider with default props", () => {
-    render(<DividerBase styles={styles} data-testid="divider" />);
+    render(<DividerBase classMap={styles} data-testid="divider" />);
 
     const divider = screen.getByTestId("divider");
     expect(divider).toHaveClass("divider");
@@ -24,7 +24,7 @@ describe("DividerBase", () => {
     render(
       <DividerBase
         orientation="vertical"
-        styles={styles}
+        classMap={styles}
         data-testid="divider-vertical"
       />
     );
@@ -40,7 +40,7 @@ describe("DividerBase", () => {
       <DividerBase
         dashed
         theme="primary"
-        styles={styles}
+        classMap={styles}
         data-testid="divider-styled"
       />
     );
@@ -55,7 +55,7 @@ describe("DividerBase", () => {
       <DividerBase
         as="hr"
         orientation="vertical"
-        styles={styles}
+        classMap={styles}
         data-testid="divider-hr"
       />
     );
@@ -69,7 +69,7 @@ describe("DividerBase", () => {
   it("respects aria-hidden for decorative usage", () => {
     render(
       <DividerBase
-        styles={styles}
+        classMap={styles}
         aria-hidden="true"
         data-testid="divider-hidden"
       />

@@ -6,10 +6,8 @@ const mockClassNames = {
   input: "radioInput",
   circle: "radioCircle",
   label: "radioLabel",
-  themeMap: {
-    primary: "themePrimary",
-    secondary: "themeSecondary",
-  },
+  primary: "themePrimary",
+  secondary: "themeSecondary",
   disabled: "radioDisabled",
 };
 
@@ -21,7 +19,7 @@ describe("BaseRadioButton", () => {
         value="A"
         checked={false}
         onChange={() => {}}
-        classNames={mockClassNames}
+        classMap={mockClassNames}
         data-testid="radio"
       />
     );
@@ -37,7 +35,7 @@ describe("BaseRadioButton", () => {
         value="B"
         checked={false}
         onChange={handleChange}
-        classNames={mockClassNames}
+        classMap={mockClassNames}
         data-testid="radio"
       />
     );

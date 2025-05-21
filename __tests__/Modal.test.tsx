@@ -35,7 +35,7 @@ describe("BaseModal", () => {
       <BaseModal
         onClose={onClose}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
       >
         <p>Modal content</p>
       </BaseModal>
@@ -54,7 +54,7 @@ describe("BaseModal", () => {
       <BaseModal
         onClose={onClose}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
       >
         <p>Close me</p>
       </BaseModal>
@@ -73,7 +73,7 @@ describe("BaseModal", () => {
       <BaseModal
         onClose={onClose}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
       >
         <p>Press Escape</p>
       </BaseModal>
@@ -90,7 +90,7 @@ describe("BaseModal", () => {
       <BaseModal
         onClose={jest.fn()}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
       >
         <button>Focusable Button</button>
       </BaseModal>

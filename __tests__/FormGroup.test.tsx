@@ -11,14 +11,10 @@ const classNames = {
   controller: "controller",
   description: "description",
   errorMessage: "errorMessage",
-  layoutMap: {
-    vertical: "layoutVertical",
-    horizontal: "layoutHorizontal",
-  },
-  spacingMap: {
-    medium: "spacingMedium",
-    large: "spacingLarge",
-  },
+  vertical: "layoutVertical",
+  horizontal: "layoutHorizontal",
+  medium: "spacingMedium",
+  large: "spacingLarge",
 };
 
 describe("BaseFormGroup", () => {
@@ -28,7 +24,7 @@ describe("BaseFormGroup", () => {
         id="login"
         label="Login Info"
         description="Enter your email and password"
-        classNames={classNames}
+        classMap={classNames}
         spacing="medium"
         layout="vertical"
       >
@@ -61,7 +57,7 @@ describe("BaseFormGroup", () => {
         label="Contact Info"
         error="This field is required"
         required
-        classNames={classNames}
+        classMap={classNames}
       >
         <input title="contact" id="contact" type="text" aria-invalid="true" />
       </BaseFormGroup>

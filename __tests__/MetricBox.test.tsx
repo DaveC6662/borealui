@@ -4,15 +4,9 @@ import { FaUsers } from "react-icons/fa";
 
 const classNames = {
   wrapper: "metricWrapper",
-  themeMap: {
-    primary: "themePrimary",
-  },
-  sizeMap: {
-    medium: "sizeMedium",
-  },
-  alignMap: {
-    center: "alignCenter",
-  },
+  primary: "themePrimary",
+  medium: "sizeMedium",
+  center: "alignCenter",
   icon: "metricIcon",
   content: "metricContent",
   title: "metricTitle",
@@ -28,7 +22,7 @@ describe("BaseMetricBox", () => {
         value="12"
         subtext="Since yesterday"
         icon={FaUsers}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="metric-box"
       />
     );
@@ -56,7 +50,7 @@ describe("BaseMetricBox", () => {
       <BaseMetricBox
         title="Active Users"
         value="24"
-        classNames={classNames}
+        classMap={classNames}
         data-testid="metric-box"
       />
     );

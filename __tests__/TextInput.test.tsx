@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { axe } from "jest-axe";
 import { FaUser } from "react-icons/fa";
 import TextInputBase from "@/components/TextInput/TextInputBase";
+import { IconButton } from "@/index.core";
 
 const mockStyles = {
   textBoxContainer: "textBoxContainer",
@@ -17,8 +18,9 @@ describe("TextInputBase", () => {
   it("renders a standard text input with icon and label", async () => {
     const { container } = render(
       <TextInputBase
-        styles={mockStyles}
+        classMap={mockStyles}
         placeholder="Username"
+        IconButton={IconButton}
         icon={FaUser}
         ariaLabel="Username field"
       />
@@ -34,8 +36,9 @@ describe("TextInputBase", () => {
   it("renders a password input and toggles visibility", () => {
     render(
       <TextInputBase
-        styles={mockStyles}
+        classMap={mockStyles}
         password
+        IconButton={IconButton}
         placeholder="Password"
         ariaLabel="Enter your password"
       />
@@ -56,8 +59,9 @@ describe("TextInputBase", () => {
   it("respects disabled and readonly props", () => {
     render(
       <TextInputBase
-        styles={mockStyles}
+        classMap={mockStyles}
         placeholder="Disabled field"
+        IconButton={IconButton}
         disabled
         readOnly
       />
@@ -71,8 +75,9 @@ describe("TextInputBase", () => {
   it("displays an accessible description", () => {
     render(
       <TextInputBase
-        styles={mockStyles}
+        classMap={mockStyles}
         placeholder="With description"
+        IconButton={IconButton}
         ariaDescription="This input is used to test aria-describedby"
       />
     );

@@ -5,12 +5,8 @@ const classNames = {
   container: "popoverContainer",
   trigger: "popoverTrigger",
   popover: "popoverContent",
-  placementMap: {
-    bottom: "placementBottom",
-  },
-  themeMap: {
-    primary: "themePrimary",
-  },
+  bottom: "placementBottom",
+  primary: "themePrimary",
 };
 
 describe("BasePopover", () => {
@@ -19,7 +15,7 @@ describe("BasePopover", () => {
       <BasePopover
         trigger={<span>Open Popover</span>}
         content={<div>Popover Content</div>}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="popover"
       />
     );
@@ -43,7 +39,7 @@ describe("BasePopover", () => {
       <BasePopover
         trigger={<span>Toggle</span>}
         content={<div>More info</div>}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="popover"
       />
     );
@@ -60,7 +56,7 @@ describe("BasePopover", () => {
       <BasePopover
         trigger={<span>Open</span>}
         content={<div>Text</div>}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="popover"
       />
     );

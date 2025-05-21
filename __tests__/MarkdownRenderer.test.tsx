@@ -9,10 +9,7 @@ const classNames = {
 describe("BaseMarkdownRenderer", () => {
   it("shows loading indicator initially", () => {
     render(
-      <BaseMarkdownRenderer
-        content="**Loading Test**"
-        classNames={classNames}
-      />
+      <BaseMarkdownRenderer content="**Loading Test**" classMap={classNames} />
     );
     expect(screen.getByRole("status")).toHaveTextContent("Loading markdown...");
     expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "true");
@@ -22,7 +19,7 @@ describe("BaseMarkdownRenderer", () => {
     render(
       <BaseMarkdownRenderer
         content={"# Cypress Markdown Test\n\n**Bold Text**"}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="markdown-renderer"
       />
     );
@@ -35,7 +32,7 @@ describe("BaseMarkdownRenderer", () => {
   });
 
   it("renders fallback message on empty content", async () => {
-    render(<BaseMarkdownRenderer content=" " classNames={classNames} />);
+    render(<BaseMarkdownRenderer content=" " classMap={classNames} />);
 
     await waitFor(() => {
       const fallback = screen.getByRole("region", {
@@ -49,7 +46,7 @@ describe("BaseMarkdownRenderer", () => {
     render(
       <BaseMarkdownRenderer
         content="*Bonjour*"
-        classNames={classNames}
+        classMap={classNames}
         language="fr"
       />
     );

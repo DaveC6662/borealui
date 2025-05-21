@@ -1,8 +1,9 @@
-// vite.config.next.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
 import path from "path";
+
+const externals = ["react", "react-dom", "next", "marked", "uuid"];
 
 export default defineConfig({
   plugins: [
@@ -12,46 +13,28 @@ export default defineConfig({
       outDir: "dist/next",
     }),
   ],
+
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
+
   build: {
+    outDir: "dist/next",
+    emptyOutDir: true,
+    sourcemap: true,
+    minify: false,
+
     lib: {
       entry: path.resolve(__dirname, "src/index.next.ts"),
       name: "BorealUINext",
-      fileName: (format) => (format === "es" ? "index.js" : "index.cjs.js"),
       formats: ["es", "cjs"],
+      fileName: (format) => (format === "es" ? "index.js" : "index.cjs.js"),
     },
+
     rollupOptions: {
-      external: [
-        "react",
-        "react-dom",
-        "next",
-        "@tiptap/react",
-        "@tiptap/starter-kit",
-        "@tiptap/extension-heading",
-        "@tiptap/extension-paragraph",
-        "dompurify",
-        "marked",
-        "uuid",
-      ],
-      output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
-      },
-    },
-    outDir: "dist/next",
-    emptyOutDir: false,
-    sourcemap: true,
-    minify: false,
-  },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "@components": path.resolve(__dirname, "./src/components"),
-      "@styles": path.resolve(__dirname, "./src/styles"),
-      "@utils": path.resolve(__dirname, "./src/utils"),
-      "@types": path.resolve(__dirname, "./src/types"),
-      "@context": path.resolve(__dirname, "./src/context"),
+      external: externals,
     },
   },
 });

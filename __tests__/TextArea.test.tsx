@@ -16,7 +16,7 @@ describe("TextAreaBase", () => {
   it("renders a basic textarea", () => {
     render(
       <TextAreaBase
-        styles={mockStyles}
+        classMap={mockStyles}
         placeholder="Type your message"
         ariaLabel="Message input"
       />
@@ -30,7 +30,7 @@ describe("TextAreaBase", () => {
   it("renders with an icon", () => {
     render(
       <TextAreaBase
-        styles={mockStyles}
+        classMap={mockStyles}
         placeholder="Comment"
         icon={FaCommentDots}
       />
@@ -42,7 +42,7 @@ describe("TextAreaBase", () => {
   it("includes an accessible description", () => {
     render(
       <TextAreaBase
-        styles={mockStyles}
+        classMap={mockStyles}
         placeholder="Describe yourself"
         ariaDescription="Please describe your skills and experience"
       />
@@ -58,7 +58,7 @@ describe("TextAreaBase", () => {
   it("is accessible with axe", async () => {
     const { container } = render(
       <TextAreaBase
-        styles={mockStyles}
+        classMap={mockStyles}
         placeholder="Write something"
         ariaLabel="Text area field"
       />

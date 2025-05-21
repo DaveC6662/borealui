@@ -3,7 +3,9 @@ import BaseNotificationCenter from "@/components/NotificationCenter/Notification
 
 // Mock themeIcons
 jest.mock("@/components/NotificationCenter/NotificationCenter.types", () => ({
-  ...jest.requireActual("@/components/NotificationCenter/NotificationCenter.types"),
+  ...jest.requireActual(
+    "@/components/NotificationCenter/NotificationCenter.types"
+  ),
   themeIcons: {
     success: () => <svg data-testid="icon-success" />,
     error: () => <svg data-testid="icon-error" />,
@@ -29,11 +31,9 @@ const classNames = {
   timestamp: "timestamp",
   close: "close",
   clearAll: "clearAll",
-  typeMap: {
-    success: "success",
-    error: "error",
-    info: "info",
-  },
+  success: "success",
+  error: "error",
+  info: "info",
 };
 
 describe("BaseNotificationCenter", () => {
@@ -60,11 +60,13 @@ describe("BaseNotificationCenter", () => {
         showClearAll
         Button={DummyButton}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
       />
     );
 
-    expect(screen.getByRole("region", { name: /notification center/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: /notification center/i })
+    ).toBeInTheDocument();
     expect(screen.getByText("Success message")).toBeInTheDocument();
     expect(screen.getByText("Error occurred")).toBeInTheDocument();
     expect(screen.getByRole("status")).toBeInTheDocument();
@@ -80,7 +82,7 @@ describe("BaseNotificationCenter", () => {
         onClearAll={jest.fn()}
         Button={DummyButton}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
       />
     );
 
@@ -97,7 +99,7 @@ describe("BaseNotificationCenter", () => {
         onClearAll={onClearAll}
         Button={DummyButton}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
       />
     );
 

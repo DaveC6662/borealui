@@ -21,7 +21,7 @@ describe("DateTimePickerBase", () => {
         label="Select date and time"
         value=""
         onChange={jest.fn()}
-        styles={styles}
+        classMap={styles}
         data-testid="datetime"
       />
     );
@@ -39,7 +39,7 @@ describe("DateTimePickerBase", () => {
         label="Event Time"
         value=""
         onChange={jest.fn()}
-        styles={styles}
+        classMap={styles}
         required
         disabled
         data-testid="datetime"
@@ -59,7 +59,7 @@ describe("DateTimePickerBase", () => {
         label="Deadline"
         value=""
         onChange={jest.fn()}
-        styles={styles}
+        classMap={styles}
         error="This field is required"
         data-testid="datetime"
       />
@@ -79,7 +79,7 @@ describe("DateTimePickerBase", () => {
         label="Appointment"
         value=""
         onChange={jest.fn()}
-        styles={styles}
+        classMap={styles}
         description="Select an available time slot"
         data-testid="datetime"
       />
@@ -101,7 +101,7 @@ describe("DateTimePickerBase", () => {
         label="Schedule"
         value=""
         onChange={handleChange}
-        styles={styles}
+        classMap={styles}
         data-testid="datetime"
       />
     );

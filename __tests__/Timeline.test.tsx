@@ -34,7 +34,7 @@ const items = [
 
 describe("TimelineBase", () => {
   it("renders timeline items with correct structure", () => {
-    render(<TimelineBase items={items} styles={mockStyles} />);
+    render(<TimelineBase items={items} classMap={mockStyles} />);
 
     expect(screen.getByRole("list")).toBeInTheDocument();
     expect(screen.getAllByRole("listitem")).toHaveLength(items.length);
@@ -44,7 +44,7 @@ describe("TimelineBase", () => {
 
   it("is accessible", async () => {
     const { container } = render(
-      <TimelineBase items={items} styles={mockStyles} />
+      <TimelineBase items={items} classMap={mockStyles} />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

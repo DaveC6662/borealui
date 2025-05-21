@@ -12,15 +12,11 @@ const classNames = {
   title: "emptyTitle",
   message: "emptyMessage",
   icon: "emptyIcon",
-  themeMap: {
-    primary: "themePrimary",
-    secondary: "themeSecondary",
-  },
-  sizeMap: {
-    small: "sizeSmall",
-    medium: "sizeMedium",
-    large: "sizeLarge",
-  },
+  primary: "themePrimary",
+  secondary: "themeSecondary",
+  small: "sizeSmall",
+  medium: "sizeMedium",
+  large: "sizeLarge",
   outline: "outline",
 };
 
@@ -32,7 +28,7 @@ describe("BaseEmptyState", () => {
         title="No Data"
         message="Please add some data to get started."
         Button={DummyButton}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="empty-state"
       />
     );
@@ -56,7 +52,7 @@ describe("BaseEmptyState", () => {
         actionLabel="Try Again"
         onActionClick={onClick}
         Button={DummyButton}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="empty-state"
       />
     );

@@ -22,7 +22,7 @@ describe("SliderBase", () => {
         value={25}
         onChange={() => {}}
         label="Volume"
-        styles={mockStyles}
+        classMap={mockStyles}
         data-testid="slider"
       />
     );
@@ -37,7 +37,7 @@ describe("SliderBase", () => {
       <SliderBase
         value={50}
         onChange={handleChange}
-        styles={mockStyles}
+        classMap={mockStyles}
         data-testid="slider"
       />
     );
@@ -52,7 +52,7 @@ describe("SliderBase", () => {
         value={30}
         onChange={() => {}}
         label="Progress"
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
     const results = await axe(container);

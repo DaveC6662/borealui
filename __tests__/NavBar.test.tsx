@@ -40,7 +40,7 @@ describe("BaseNavBar", () => {
       <BaseNavBar
         items={mockItems}
         currentPath="/home"
-        classNames={classNames}
+        classMap={classNames}
         LinkWrapper={LinkWrapper}
       />
     );
@@ -63,7 +63,7 @@ describe("BaseNavBar", () => {
       <BaseNavBar
         items={mockItems}
         currentPath="/profile"
-        classNames={classNames}
+        classMap={classNames}
         LinkWrapper={LinkWrapper}
       />
     );

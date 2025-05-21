@@ -21,7 +21,7 @@ const mockStyles = {
 describe("TooltipBase", () => {
   it("renders the trigger and tooltip content", () => {
     render(
-      <TooltipBase content="Tooltip content" styles={mockStyles}>
+      <TooltipBase content="Tooltip content" classMap={mockStyles}>
         <button>Hover me</button>
       </TooltipBase>
     );
@@ -33,7 +33,7 @@ describe("TooltipBase", () => {
 
   it("shows tooltip on hover", () => {
     render(
-      <TooltipBase content="Hover tooltip" styles={mockStyles}>
+      <TooltipBase content="Hover tooltip" classMap={mockStyles}>
         <button>Hover me</button>
       </TooltipBase>
     );
@@ -55,7 +55,7 @@ describe("TooltipBase", () => {
 
   it("shows tooltip on focus and hides on blur", () => {
     render(
-      <TooltipBase content="Focus tooltip" styles={mockStyles}>
+      <TooltipBase content="Focus tooltip" classMap={mockStyles}>
         <button>Focus me</button>
       </TooltipBase>
     );
@@ -78,7 +78,7 @@ describe("TooltipBase", () => {
         content="Positioned tooltip"
         position="bottom"
         theme="error"
-        styles={mockStyles}
+        classMap={mockStyles}
       >
         <button>Check styles</button>
       </TooltipBase>
@@ -92,7 +92,7 @@ describe("TooltipBase", () => {
   describe("TooltipBase accessibility", () => {
     it("has no accessibility violations when visible", async () => {
       const { container } = render(
-        <TooltipBase content="Accessible tooltip" styles={mockStyles}>
+        <TooltipBase content="Accessible tooltip" classMap={mockStyles}>
           <button>Hover me</button>
         </TooltipBase>
       );

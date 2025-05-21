@@ -5,15 +5,11 @@ import BaseProgressBar from "@/components/ProgressBar/ProgressBarBase";
 const classNames = {
   container: "progressContainer",
   bar: "progressBar",
-  themeMap: {
-    primary: "themePrimary",
-    secondary: "themeSecondary",
-  },
-  sizeMap: {
-    small: "sizeSmall",
-    medium: "sizeMedium",
-    large: "sizeLarge",
-  },
+  primary: "themePrimary",
+  secondary: "themeSecondary",
+  small: "sizeSmall",
+  medium: "sizeMedium",
+  large: "sizeLarge",
   animated: "animated",
   indeterminate: "indeterminate",
 };
@@ -23,7 +19,7 @@ describe("BaseProgressBar", () => {
     render(
       <BaseProgressBar
         progress={70}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="progressbar"
       />
     );
@@ -40,7 +36,7 @@ describe("BaseProgressBar", () => {
     render(
       <BaseProgressBar
         indeterminate
-        classNames={classNames}
+        classMap={classNames}
         data-testid="progressbar"
       />
     );
@@ -54,7 +50,7 @@ describe("BaseProgressBar", () => {
     const { container } = render(
       <BaseProgressBar
         progress={50}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="progressbar"
       />
     );

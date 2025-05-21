@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import DataTableBase from "@/components/DataTable/DataTableBase";
 import { Column } from "@/components/DataTable/DataTable.types";

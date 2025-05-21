@@ -24,8 +24,18 @@ const classMap = {
 
 describe("ChipGroupBase", () => {
   const chips = [
-    { id: "chip1", message: "First chip", "data-testid": "chip-1" },
-    { id: "chip2", message: "Second chip", "data-testid": "chip-2" },
+    {
+      id: "chip1",
+      message: "First chip",
+      "data-testid": "chip-1",
+      visble: true,
+    },
+    {
+      id: "chip2",
+      message: "Second chip",
+      "data-testid": "chip-2",
+      visible: true,
+    },
   ];
 
   const classMap = {

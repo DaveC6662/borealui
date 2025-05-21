@@ -39,7 +39,7 @@ describe("BaseDropdown", () => {
         triggerIcon={FaEllipsisV}
         items={items}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="dropdown"
         ariaLabel="More options"
       />
@@ -61,7 +61,7 @@ describe("BaseDropdown", () => {
         triggerIcon={FaEllipsisV}
         items={items}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="dropdown"
       />
     );
@@ -79,7 +79,7 @@ describe("BaseDropdown", () => {
         triggerIcon={FaEllipsisV}
         items={items}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classNames}
         data-testid="dropdown"
       />
     );

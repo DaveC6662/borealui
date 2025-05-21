@@ -31,9 +31,7 @@ describe("BadgeBase", () => {
 
   it("renders badge with children instead of text", () => {
     render(
-      <BadgeBase classMap={classMap} testId="badge">
-        Custom Badge
-      </BadgeBase>
+      <BadgeBase classMap={classMap} testId="badge" text="Custom Badge" />
     );
 
     const badge = screen.getByTestId("badge");
@@ -53,7 +51,7 @@ describe("BadgeBase", () => {
   });
 
   it("does not render if no text or children", () => {
-    const { container } = render(<BadgeBase classMap={classMap} />);
+    const { container } = render(<BadgeBase classMap={classMap} text="" />);
     expect(container).toBeEmptyDOMElement();
   });
 });

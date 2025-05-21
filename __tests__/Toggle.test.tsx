@@ -20,7 +20,7 @@ describe("ToggleBase", () => {
         checked={false}
         onChange={() => {}}
         label="Enable setting"
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
 
@@ -36,7 +36,7 @@ describe("ToggleBase", () => {
         checked={false}
         onChange={onChange}
         label="Click me"
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
 
@@ -52,7 +52,7 @@ describe("ToggleBase", () => {
         checked={false}
         onChange={onChange}
         label="Press me"
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
 
@@ -69,7 +69,7 @@ describe("ToggleBase", () => {
         onChange={onChange}
         label="Disabled"
         disabled
-        styles={mockStyles}
+        classMap={mockStyles}
       />
     );
 

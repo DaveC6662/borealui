@@ -21,7 +21,9 @@ const tabsMock = [
 
 describe("TabsBase", () => {
   it("renders tabs and content correctly", () => {
-    render(<TabsBase tabs={tabsMock} styles={mockStyles} data-testid="tabs" />);
+    render(
+      <TabsBase tabs={tabsMock} classMap={mockStyles} data-testid="tabs" />
+    );
 
     expect(screen.getByRole("tablist")).toBeInTheDocument();
     expect(screen.getAllByRole("tab")).toHaveLength(3);
@@ -29,13 +31,13 @@ describe("TabsBase", () => {
   });
 
   it("switches tab on click", () => {
-    render(<TabsBase tabs={tabsMock} styles={mockStyles} />);
+    render(<TabsBase tabs={tabsMock} classMap={mockStyles} />);
     fireEvent.click(screen.getByText("Tab 2"));
     expect(screen.getByRole("tabpanel")).toHaveTextContent("Content 2");
   });
 
   it("supports keyboard arrow navigation", () => {
-    render(<TabsBase tabs={tabsMock} styles={mockStyles} />);
+    render(<TabsBase tabs={tabsMock} classMap={mockStyles} />);
 
     const [tab1, tab2] = screen.getAllByRole("tab");
 
@@ -46,7 +48,7 @@ describe("TabsBase", () => {
 
   it("passes axe accessibility check", async () => {
     const { container } = render(
-      <TabsBase tabs={tabsMock} styles={mockStyles} />
+      <TabsBase tabs={tabsMock} classMap={mockStyles} />
     );
 
     const results = await axe(container);

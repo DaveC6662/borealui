@@ -5,7 +5,7 @@ import { FaGithub, FaTwitter } from "react-icons/fa";
 
 const classNames = {
   wrapper: "footerWrapper",
-  theme: { primary: "themePrimary" },
+  primary: "themePrimary",
   content: "footerContent",
   left: "footerLeft",
   links: "footerLinks",
@@ -40,7 +40,7 @@ describe("BaseFooter", () => {
     render(
       <BaseFooter
         theme="primary"
-        classNames={classNames}
+        classMap={classNames}
         IconButton={DummyIconButton}
         ThemeSelect={DummyThemeSelect}
         LinkWrapper={DummyLinkWrapper}
