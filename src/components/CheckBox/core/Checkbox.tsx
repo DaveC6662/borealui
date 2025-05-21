@@ -1,10 +1,4 @@
-import React, {
-  forwardRef,
-  useRef,
-  useId,
-  useEffect,
-  useImperativeHandle,
-} from "react";
+import React from "react";
 import CheckboxBase from "../CheckboxBase";
 import "./Checkbox.scss";
 import { CheckBoxProps } from "../Checkbox.types";
