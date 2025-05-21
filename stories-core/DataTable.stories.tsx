@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { DataTable } from "@/index.core";
-import type { DataTableProps } from "@/components/DataTable/DataTable.types";
+import { DataTable } from "../src/index.core";
+import type { DataTableProps } from "../src/components/DataTable/DataTable.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
 type SampleRow = {

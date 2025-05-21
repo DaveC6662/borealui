@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Card } from "@/index.next";
+import { Card } from "../src/index.next";
 import { FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import testImage from "./assets/test_pattern.jpg";
-import type { CardProps } from "@/components/Card/Card.types";
+import type { CardProps } from "../src/components/Card/Card.types";
 
 // Constants
 const themeOptions = [

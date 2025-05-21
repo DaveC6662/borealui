@@ -13,22 +13,13 @@ const DummyChip = ({ id, message, onClose, "data-testid": testId }: any) => (
   </div>
 );
 
-const classMap = {
-  container: "chip-container",
-  list: "chip-list",
-  stackClassPrefix: "chip-",
-  positionMap: {
-    topCenter: "top-center",
-  },
-};
-
 describe("ChipGroupBase", () => {
   const chips = [
     {
       id: "chip1",
       message: "First chip",
       "data-testid": "chip-1",
-      visble: true,
+      visible: true,
     },
     {
       id: "chip2",
@@ -44,18 +35,12 @@ describe("ChipGroupBase", () => {
     stackClassPrefix: "chip-",
   };
 
-  const positionMap = {
-    topCenter: "top-center",
-    bottomLeft: "bottom-left",
-  };
-
   it("renders chips with correct accessibility", () => {
     render(
       <ChipGroupBase
         chips={chips}
         ChipComponent={DummyChip}
         classMap={classMap}
-        positionMap={positionMap}
         onRemove={jest.fn()}
       />
     );
@@ -77,7 +62,6 @@ describe("ChipGroupBase", () => {
         chips={chips}
         ChipComponent={DummyChip}
         classMap={classMap}
-        positionMap={positionMap}
         onRemove={onRemove}
       />
     );

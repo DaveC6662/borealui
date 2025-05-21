@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ButtonBase from "@/components/Buttons/Button/ButtonBase";
+import ButtonBase from "../src/components/Button/ButtonBase";
 import { FaStar } from "react-icons/fa";
 
 const classMap = {

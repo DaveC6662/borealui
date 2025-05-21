@@ -81,6 +81,6 @@ export const ThemeVariants = () => (
 );
 
 export const SizeVariants = () =>
-  withVariants(Button, { children: "Button" }, [
+  withVariants(Button, { size: "medium" }, [
     { propName: "size", values: [...sizeOptions] },
   ]);

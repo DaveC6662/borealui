@@ -13,7 +13,8 @@
   display: flex;
   flex-direction: column;
   max-width: 450px;
-  width: 100%;
+  width: fit-content;
+  height: fit-content;
   color: var(--text-color-primary);
   transition: transform 0.3s ease;
 }
@@ -159,6 +160,7 @@
   display: flex;
   flex-direction: column;
   gap: theme.$spacing-sm;
+  padding: theme.$spacing-md;
 }
 
 .title {
@@ -182,13 +184,14 @@
 }
 
 .footer {
-  padding: theme.$spacing-sm;
+  padding: theme.$spacing-md;
   border-top: 2px solid rgb(0 0 0 / 10%);
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
+  padding: theme.$spacing-sm;
   gap: theme.$spacing-sm;
 }
 
