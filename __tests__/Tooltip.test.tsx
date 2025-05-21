@@ -3,7 +3,7 @@ import { axe } from "jest-axe";
 import { TooltipBase } from "@/components/Tooltip/TooltipBase";
 
 const mockStyles = {
-  tooltipContainer: "tooltipContainer",
+  container: "tooltipContainer",
   triggerWrapper: "triggerWrapper",
   tooltip: "tooltip",
   top: "top",
@@ -16,6 +16,7 @@ const mockStyles = {
   error: "error",
   warning: "warning",
   clear: "clear",
+  visible: "visible", // Add this line
 };
 
 describe("TooltipBase", () => {
@@ -42,15 +43,18 @@ describe("TooltipBase", () => {
     const tooltip = screen.getByTestId("tooltip");
 
     // Initially hidden
-    expect(tooltip).toHaveStyle({ visibility: "hidden", opacity: "0" });
+    expect(tooltip).not.toHaveClass("visible");
+    expect(tooltip).toHaveAttribute("aria-hidden", "true");
 
     // Hover shows tooltip
     fireEvent.mouseEnter(container);
-    expect(tooltip).toHaveStyle({ visibility: "visible", opacity: "1" });
+    expect(tooltip).toHaveClass("visible");
+    expect(tooltip).toHaveAttribute("aria-hidden", "false");
 
     // Mouse leave hides it again
     fireEvent.mouseLeave(container);
-    expect(tooltip).toHaveStyle({ visibility: "hidden", opacity: "0" });
+    expect(tooltip).not.toHaveClass("visible");
+    expect(tooltip).toHaveAttribute("aria-hidden", "true");
   });
 
   it("shows tooltip on focus and hides on blur", () => {
@@ -63,13 +67,16 @@ describe("TooltipBase", () => {
     const trigger = screen.getByTestId("tooltip-trigger");
     const tooltip = screen.getByTestId("tooltip");
 
-    expect(tooltip).toHaveStyle({ visibility: "hidden", opacity: "0" });
+    expect(tooltip).not.toHaveClass("visible");
+    expect(tooltip).toHaveAttribute("aria-hidden", "true");
 
     fireEvent.focus(trigger);
-    expect(tooltip).toHaveStyle({ visibility: "visible", opacity: "1" });
+    expect(tooltip).toHaveClass("visible");
+    expect(tooltip).toHaveAttribute("aria-hidden", "false");
 
     fireEvent.blur(trigger);
-    expect(tooltip).toHaveStyle({ visibility: "hidden", opacity: "0" });
+    expect(tooltip).not.toHaveClass("visible");
+    expect(tooltip).toHaveAttribute("aria-hidden", "true");
   });
 
   it("applies position and theme classes", () => {
@@ -90,7 +97,7 @@ describe("TooltipBase", () => {
   });
 
   describe("TooltipBase accessibility", () => {
-    it("has no accessibility violations when visible", async () => {
+    it("has no accessibility violations when rendered", async () => {
       const { container } = render(
         <TooltipBase content="Accessible tooltip" classMap={mockStyles}>
           <button>Hover me</button>
