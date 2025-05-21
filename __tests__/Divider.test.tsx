@@ -1,52 +1,81 @@
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { Divider } from "@/index.next";
+import DividerBase from "@/components/Divider/DividerBase";
 
-describe("Divider", () => {
-  it("renders horizontal divider by default", () => {
-    render(<Divider data-testid="divider" />);
+const styles = {
+  divider: "divider",
+  horizontal: "horizontal",
+  vertical: "vertical",
+  dashed: "dashed",
+  primary: "themePrimary",
+};
+
+describe("DividerBase", () => {
+  it("renders horizontal divider with default props", () => {
+    render(<DividerBase classMap={styles} data-testid="divider" />);
+
     const divider = screen.getByTestId("divider");
-    expect(divider).toBeInTheDocument();
-    expect(divider).toHaveClass("divider", "horizontal");
+    expect(divider).toHaveClass("divider");
+    expect(divider).toHaveClass("horizontal");
+    expect(divider).toHaveAttribute("role", "separator");
+    expect(divider).not.toHaveAttribute("aria-orientation");
   });
 
-  it("renders vertical orientation", () => {
-    render(<Divider orientation="vertical" data-testid="divider-vertical" />);
+  it("renders vertical divider with aria-orientation", () => {
+    render(
+      <DividerBase
+        orientation="vertical"
+        classMap={styles}
+        data-testid="divider-vertical"
+      />
+    );
+
     const divider = screen.getByTestId("divider-vertical");
+    expect(divider).toHaveAttribute("role", "separator");
+    expect(divider).toHaveAttribute("aria-orientation", "vertical");
     expect(divider).toHaveClass("vertical");
   });
 
-  it("applies dashed style", () => {
-    render(<Divider dashed data-testid="divider-dashed" />);
-    const divider = screen.getByTestId("divider-dashed");
-    expect(divider).toHaveClass("dashed");
-  });
-
-  it("applies custom thickness and length", () => {
+  it("applies dashed and themed styles", () => {
     render(
-      <Divider
-        orientation="horizontal"
-        thickness="5px"
-        length="80%"
-        data-testid="divider-size"
+      <DividerBase
+        dashed
+        theme="primary"
+        classMap={styles}
+        data-testid="divider-styled"
       />
     );
-    const divider = screen.getByTestId("divider-size");
-    expect(divider).toHaveStyle({
-      height: "5px",
-      width: "80%",
-    });
+
+    const divider = screen.getByTestId("divider-styled");
+    expect(divider).toHaveClass("dashed");
+    expect(divider).toHaveClass("themePrimary");
   });
 
-  it("applies themed color classes", () => {
-    render(<Divider theme="success" data-testid="divider-success" dashed />);
-    const divider = screen.getByTestId("divider-success");
-    expect(divider).toHaveClass("success", "dashed");
+  it("does not include role or aria-orientation when using semantic <hr>", () => {
+    render(
+      <DividerBase
+        as="hr"
+        orientation="vertical"
+        classMap={styles}
+        data-testid="divider-hr"
+      />
+    );
+
+    const divider = screen.getByTestId("divider-hr");
+    expect(divider.tagName).toBe("HR");
+    expect(divider).not.toHaveAttribute("role");
+    expect(divider).not.toHaveAttribute("aria-orientation");
   });
 
-  it("includes role='separator'", () => {
-    render(<Divider data-testid="divider-role" />);
-    const divider = screen.getByTestId("divider-role");
-    expect(divider).toHaveAttribute("role", "separator");
+  it("respects aria-hidden for decorative usage", () => {
+    render(
+      <DividerBase
+        classMap={styles}
+        aria-hidden="true"
+        data-testid="divider-hidden"
+      />
+    );
+
+    const divider = screen.getByTestId("divider-hidden");
+    expect(divider).toHaveAttribute("aria-hidden", "true");
   });
 });

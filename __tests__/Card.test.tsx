@@ -1,66 +1,85 @@
+import { render, screen } from "@testing-library/react";
+import CardBase from "@/components/Card/CardBase";
 
-import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { Card } from "@/index.next";
-import { FaBook} from "react-icons/fa";
-import { ThemeType } from "@/types/types";
+const DummySkeleton = ({
+  width,
+  height,
+}: {
+  width: string;
+  height: string;
+}) => <div data-testid="skeleton" style={{ width, height }} />;
 
-describe("Card Component", () => {
-  const defaultProps = {
-    title: "Test Title",
-    description: "Test Description",
-    cardIcon: FaBook,
-    actionButtons: [
-      {
-        label: "Click Me",
-        onClick: jest.fn(),
-        theme: "primary" as ThemeType,
-      },
-    ],
-  };
+const DummyImage = ({ src, alt }: { src: string; alt: string }) => (
+  <img src={src} alt={alt} data-testid="card-image" />
+);
 
-  it("renders with title and description", () => {
-    render(<Card {...defaultProps} />);
-    expect(screen.getByText("Test Title")).toBeInTheDocument();
-    expect(screen.getByText("Test Description")).toBeInTheDocument();
-  });
+const DummyButton = ({ children, ...props }: any) => (
+  <button {...props}>{children}</button>
+);
 
-  it("renders the card icon if provided", () => {
-    render(<Card {...defaultProps} />);
-    expect(screen.getByTestId("card-icon")).toBeInTheDocument();
-  });
+const DummyIconButton = ({ icon: Icon, ...props }: any) => (
+  <button {...props}>{Icon && <Icon data-testid="card-icon" />}</button>
+);
 
-  it("calls action button onClick handler", () => {
-    render(<Card {...defaultProps} />);
-    fireEvent.click(screen.getByText("Click Me"));
-    expect(defaultProps.actionButtons[0].onClick).toHaveBeenCalled();
-  });
+const classMap = {
+  card: "card",
+  solid: "solid",
+  primary: "primary",
+  cardLoading: "loading",
+  cardContent: "card-content",
+  fadeIn: "fade-in",
+  vertical: "vertical",
+  cardImage: "card-img",
+  cardHeader: "card-header",
+  cardTitle: "card-title",
+  cardIcon: "card-icon",
+  cardBody: "card-body",
+  cardDescription: "card-desc",
+  cardChildren: "card-children",
+  cardFooter: "card-footer",
+  cardActions: "card-actions",
+  actionButton: "action-btn",
+};
 
-  it("renders children when passed", () => {
+describe("CardBase", () => {
+  it("renders title, description, and action button", () => {
     render(
-      <Card {...defaultProps}>
-        <p>Child content</p>
-      </Card>
-    );
-    expect(screen.getByText("Child content")).toBeInTheDocument();
-  });
-
-  it("renders custom header, content, and footer", () => {
-    render(
-      <Card
-        {...defaultProps}
-        renderHeader={() => <div>Custom Header</div>}
-        renderContent={() => <div>Custom Content</div>}
-        renderFooter={() => <div>Custom Footer</div>}
+      <CardBase
+        title="Card Title"
+        description="Card description"
+        classMap={classMap}
+        SkeletonComponent={DummySkeleton}
+        actionButtons={[
+          {
+            label: "Click Me",
+            onClick: jest.fn(),
+            buttonComponent: DummyButton,
+            iconButtonComponent: DummyIconButton,
+          },
+        ]}
       />
     );
-    expect(screen.getByText("Custom Header")).toBeInTheDocument();
-    expect(screen.getByText("Custom Content")).toBeInTheDocument();
-    expect(screen.getByText("Custom Footer")).toBeInTheDocument();
+
+    expect(screen.getByRole("region")).toHaveAttribute("aria-labelledby");
+    expect(screen.getByText("Card Title")).toBeInTheDocument();
+    expect(screen.getByText("Card description")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Click Me" })
+    ).toBeInTheDocument();
   });
 
-  it("displays loading skeleton when loading=true", () => {
-    render(<Card {...defaultProps} loading />);
+  it("renders image and loading state", () => {
+    render(
+      <CardBase
+        loading={true}
+        imageUrl="/img.jpg"
+        imageAlt="Example image"
+        classMap={classMap}
+        SkeletonComponent={DummySkeleton}
+        actionButtons={[]}
+      />
+    );
+
     expect(screen.getByTestId("skeleton")).toBeInTheDocument();
   });
 });

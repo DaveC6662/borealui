@@ -1,16 +1,7 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
-
-$divider-themes: (
-  "primary": (bg: var(--primary-color), color: var(--text-color-primary), hover: var(--primary-color-hover)),
-  "secondary": (bg: var(--secondary-color), color: var(--text-color-secondary), hover: var(--secondary-color-hover)),
-  "success": (bg: theme.$success-color, color: var(--text-color-primary), hover: color.adjust(theme.$success-color, $lightness: -10%)),
-  "error": (bg: theme.$error-color, color: var(--text-color-primary), hover: color.adjust(theme.$error-color, $lightness: -10%)),
-  "warning": (bg: theme.$warning-color, color: var(--text-color-primary), hover: color.adjust(theme.$warning-color, $lightness: -10%)),
-  "clear": (bg: transparent, color: var(--text-color-primary), hover: var(--text-color-primary))
-);
 
 .divider {
   display: block;
@@ -20,48 +11,44 @@ $divider-themes: (
   background-color: var(--text-color-primary);
   border-color: var(--text-color-primary);
 
-
-  &.horizontal {
+  &_horizontal {
     width: 100%;
     height: 1px;
   }
 
-  &.vertical {
+  &_vertical {
     width: 1px;
     height: 100%;
   }
 
-  @each $theme, $values in $divider-themes {
-    &.#{$theme} {
-      background-color: map.get($values, bg);
-      border-color: map.get($values, bg);
-    }
-  }
-
-  &.dashed {
+  &_dashed {
     background-color: transparent;
     border-color: transparent;
 
-    &.horizontal {
+    &.divider_horizontal {
       height: 0;
       border-top: 1px dashed currentcolor;
     }
 
-    &.vertical {
-      border-left: 1px dashed currentcolor;
+    &.divider_vertical {
       width: 0;
+      border-left: 1px dashed currentcolor;
     }
   }
 
-  @each $theme, $values in $divider-themes {
-    &.#{$theme}.dashed {
-      color: map.get($values, bg);
-    }
-  }
-
-  &.disabled {
+  &_disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
 
+  @each $theme, $values in theme.$themes {
+    &_#{$theme} {
+      background-color: map.get($values, bg);
+      border-color: map.get($values, bg);
+    }
+
+    &_#{$theme}.divider_dashed {
+      color: map.get($values, bg);
+    }
+  }
 }

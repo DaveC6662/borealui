@@ -1,4 +1,8 @@
 # .npmignore
 playground/
 __tests__/
+.storybook-core/
+.storybook-next/
+stories-core/
+stories-next/
 tsconfig.build.tsbuildinfo

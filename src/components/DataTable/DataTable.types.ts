@@ -29,6 +29,8 @@ export interface DataTableProps<T> {
   className?: string;
   /** Theme used for styling the table. */
   theme?: ThemeType;
+  /** Whether to use outline styling. */
+  outline?: boolean;
   /** Whether to use striped row styling. */
   striped?: boolean;
   /** Default key to sort by on initial render. */
@@ -39,4 +41,8 @@ export interface DataTableProps<T> {
   rowKey?: (row: T) => string | number;
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
+}
+
+export interface DataTableBaseProps<T> extends DataTableProps<T> {
+  classMap: Record<string, string>;
 }

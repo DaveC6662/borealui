@@ -1,9 +1,9 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 
-.emptyState {
+.empty_state {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,62 +18,54 @@
   width: 400px;
   max-width: 100%;
 
-  &.outline {
-    background-color: transparent;
-    border: 2px dashed var(--text-color-primary);
-    box-shadow: none;
-  }
-
-  .icon {
+  &_icon {
     font-size: 3em;
   }
 
-  .title,
-  .message {
+  &_title,
+  &_message {
     margin: theme.$spacing-sm;
   }
 
-  .title {
+  &_title {
     font-size: theme.$font-size-lg;
     font-weight: theme.$font-weight-bold;
   }
 
-  .message {
+  &_message {
     font-size: theme.$font-size-base;
     opacity: 0.8;
     width: 90%;
   }
 
-  @each $theme, $values in (
-    "primary": (bg: var(--primary-color), color: var(--text-color-primary)),
-    "secondary": (bg: var(--secondary-color), color: var(--text-color-secondary)),
-    "success": (bg: theme.$success-color, color: var(--text-color-primary)),
-    "error": (bg: theme.$error-color, color: var(--text-color-primary)),
-    "warning": (bg: theme.$warning-color, color: var(--text-color-primary)),
-    "clear": (bg: transparent, color: var(--text-color-primary))
-  ) {
-    &.#{$theme} {
+  @each $theme, $values in theme.$themes {
+    &_#{$theme} {
       background-color: map.get($values, bg);
       color: map.get($values, color);
+    }
 
-      &.outline {
-        background-color: transparent;
-        border-color: map.get($values, bg);
-        color: map.get($values, bg);
-      }
+    &_#{$theme}.empty_state_outline {
+      background-color: transparent;
+      border: 2px dashed map.get($values, bg);
+      color: map.get($values, text-color);
     }
   }
 
-  &.clear {
+  &_outline {
+    background-color: transparent;
     box-shadow: none;
   }
 
-  &.clear.outline {
+  &_clear {
+    box-shadow: none;
+  }
+
+  &_clear.empty_state_outline {
     color: var(--text-color-primary);
     border-color: var(--text-color-primary);
   }
 
-  &.disabled {
+  &_disabled {
     opacity: 0.6;
     pointer-events: none;
   }
@@ -83,69 +75,67 @@
     "small": theme.$spacing-sm,
     "medium": theme.$spacing-md,
     "large": theme.$spacing-lg,
-    "xl": theme.$spacing-xl
+    "xl": theme.$spacing-xl,
   );
-
   $font-sizes: (
     "xs": theme.$font-size-xs,
     "small": theme.$font-size-sm,
     "medium": theme.$font-size-md,
     "large": theme.$font-size-base,
-    "xl": theme.$font-size-lg
+    "xl": theme.$font-size-lg,
   );
-
   $icon-sizes: (
     "xs": 2em,
     "small": 3em,
     "medium": 3.5em,
     "large": 4em,
-    "xl": 4.5em
+    "xl": 4.5em,
   );
 
   @each $size, $spacing in $input-sizes {
-    &.#{$size} {
-      .title {
+    &_#{$size} {
+      .empty_state_title {
         padding: $spacing;
         font-size: map.get($font-sizes, $size);
       }
 
-      .message {
+      .empty_state_message {
         font-size: map.get($font-sizes, $size);
       }
 
-      .icon {
+      .empty_state_icon {
         font-size: map.get($icon-sizes, $size);
       }
     }
   }
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     width: 100%;
     padding: theme.$spacing-md;
 
-    .title {
+    .empty_state_title {
       font-size: theme.$font-size-base;
     }
 
-    .message {
+    .empty_state_message {
       font-size: theme.$font-size-sm;
     }
 
-    .icon {
+    .empty_state_icon {
       font-size: 2.5em;
     }
   }
 
-  @media (max-width: 480px) {
-    .title {
+  @media (width <= 480px) {
+    .empty_state_title {
       font-size: theme.$font-size-sm;
     }
 
-    .message {
+    .empty_state_message {
       font-size: theme.$font-size-xs;
     }
 
-    .icon {
+    .empty_state_icon {
       font-size: 2em;
     }
   }

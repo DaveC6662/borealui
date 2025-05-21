@@ -1,35 +1,32 @@
-import React from "react";
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import Accordion from "@/components/Accordion/core/Accordion";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
+import { SizeType, ThemeType } from "@/types/types";
+
+// Valid options
+const themeOptions = [
+  "primary",
+  "secondary",
+  "success",
+  "error",
+  "warning",
+  "clear",
+];
+const sizeOptions = ["xs", "small", "medium", "large", "xl"];
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
   component: Accordion,
   tags: ["autodocs"],
   argTypes: {
-    theme: {
-      control: "select",
-      options: ["primary", "secondary", "success", "error", "warning", "clear"],
-    },
-    size: {
-      control: "select",
-      options: ["small", "medium", "large"],
-    },
-    initiallyExpanded: {
-      control: "boolean",
-    },
-    outline: {
-      control: "boolean",
-    },
-    disabled: {
-      control: "boolean",
-    },
-    customExpandedIcon: {
-      control: "text",
-    },
-    customCollapsedIcon: {
-      control: "text",
-    },
+    theme: { control: "select", options: themeOptions },
+    size: { control: "select", options: sizeOptions },
+    initiallyExpanded: { control: "boolean" },
+    outline: { control: "boolean" },
+    disabled: { control: "boolean" },
+    customExpandedIcon: { control: "text" },
+    customCollapsedIcon: { control: "text" },
   },
 };
 
@@ -37,23 +34,29 @@ export default meta;
 
 type Story = StoryObj<typeof Accordion>;
 
+const defaultArgs = {
+  title: "Sample Accordion",
+  children: <p>This is the content revealed when expanded.</p>,
+  size: "medium" as SizeType,
+  theme: "primary" as ThemeType,
+};
+
 export const Default: Story = {
   args: {
-    title: "Uncontrolled Accordion",
-    children: <p>This is the content revealed when expanded.</p>,
+    ...defaultArgs,
     initiallyExpanded: false,
   },
 };
 
 export const Controlled: Story = {
-  render: (args: any) => {
-    const [open, setOpen] = React.useState(true);
+  render: (args) => {
+    const [open, setOpen] = useState(true);
     return (
       <Accordion
         {...args}
         expanded={open}
-        onToggle={(val: boolean | ((prevState: boolean) => boolean)) =>
-          setOpen(val)
+        onToggle={(val: boolean | ((prev: boolean) => boolean)) =>
+          setOpen(typeof val === "function" ? val(open) : val)
         }
         customCollapsedIcon="⏵"
         customExpandedIcon="⏷"
@@ -61,6 +64,7 @@ export const Controlled: Story = {
     );
   },
   args: {
+    ...defaultArgs,
     title: "Controlled Accordion",
     children: <p>This accordion is fully controlled via external state.</p>,
   },
@@ -68,16 +72,128 @@ export const Controlled: Story = {
 
 export const Disabled: Story = {
   args: {
+    ...defaultArgs,
     title: "Disabled Accordion",
-    children: <p>This accordion is not interactive.</p>,
     disabled: true,
   },
 };
 
-export const Outlined: Story = {
+// Theme Variants
+export const ThemeVariants = () =>
+  withVariants(Accordion, { ...defaultArgs }, [
+    { propName: "theme", values: themeOptions },
+  ]);
+
+// Size Variants
+export const SizeVariants = () =>
+  withVariants(Accordion, { ...defaultArgs }, [
+    { propName: "size", values: sizeOptions },
+  ]);
+
+// Outline Variants (theme + outline = true)
+export const OutlineVariants = () =>
+  withVariants(
+    Accordion,
+    {
+      ...defaultArgs,
+      outline: true,
+    },
+    [{ propName: "theme", values: themeOptions }]
+  );
+
+export const LotsOfContent: Story = {
   args: {
-    title: "Outlined Accordion",
-    children: <p>This accordion has an outline style applied.</p>,
-    outline: true,
+    ...defaultArgs,
+    title: "Accordion With Lots of Content",
+    initiallyExpanded: false,
+    children: (
+      <div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+          lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod
+          malesuada.
+        </p>
+        {[...Array(10)].map((_, i) => (
+          <p key={i}>
+            This is paragraph #{i + 1} of the accordion content. Pellentesque
+            habitant morbi tristique senectus et netus et malesuada fames ac
+            turpis egestas.
+          </p>
+        ))}
+        <ul>
+          {["Item A", "Item B", "Item C", "Item D", "Item E"].map((item, i) => (
+            <li key={i}>{item}</li>
+          ))}
+        </ul>
+        <p>
+          End of content. Scroll or expand/collapse the accordion to test
+          transitions and max-height handling.
+        </p>
+      </div>
+    ),
+  },
+};
+
+export const LazyLoadContent: Story = {
+  args: {
+    title: "Lazy Loaded Accordion",
+    lazyLoad: true,
+    initiallyExpanded: false,
+    children: (
+      <div>
+        <p>
+          This content is <strong>not rendered</strong> in the DOM until the
+          accordion is expanded.
+        </p>
+        <p>
+          Try inspecting the DOM before expanding — the content won't exist
+          until you open it.
+        </p>
+      </div>
+    ),
+  },
+};
+
+export const IconOnLeft: Story = {
+  args: {
+    title: "Icon on the Left",
+    iconPosition: "left",
+    initiallyExpanded: true,
+    customCollapsedIcon: "▶",
+    customExpandedIcon: "▼",
+    children: (
+      <p>
+        The expand/collapse icon appears <strong>to the left</strong> of the
+        title.
+      </p>
+    ),
+  },
+};
+
+export const NonToggleableAccordion: Story = {
+  args: {
+    title: "Non-Toggleable Accordion",
+    initiallyExpanded: true,
+    isToggleable: false,
+    children: (
+      <p>
+        Once opened, this accordion cannot be closed. This is useful for locked
+        or non-interruptible sections.
+      </p>
+    ),
+  },
+};
+
+export const WithDescription: Story = {
+  args: {
+    title: "Accordion with Screen Reader Description",
+    description: "This section contains tips for screen reader users.",
+    initiallyExpanded: false,
+    children: (
+      <p>
+        The description prop is visually hidden but read aloud to users of
+        assistive technologies.
+      </p>
+    ),
   },
 };

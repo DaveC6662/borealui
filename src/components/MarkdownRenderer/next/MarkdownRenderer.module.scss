@@ -1,6 +1,6 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 
-.markdown {
+.wrapper {
   font-family: Inter, sans-serif;
   line-height: 1.6;
   color: var(--text-color-primary);

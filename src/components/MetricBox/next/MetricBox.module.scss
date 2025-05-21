@@ -1,18 +1,9 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 
-
-$theme-variations: (
-  "primary": (bg: var(--primary-color), color: var(--text-color-primary), border: var(--primary-color)),
-  "secondary": (bg: var(--secondary-color), color: var(--text-color-secondary), border: var(--secondary-color)),
-  "success": (bg: theme.$success-color, color: var(--text-color-primary), border: theme.$success-color),
-  "error": (bg: theme.$error-color, color: var(--text-color-primary), border: theme.$error-color),
-  "warning": (bg: theme.$warning-color, color: var(--text-color-primary), border: theme.$warning-color),
-  "clear": (bg: transparent, color: var(--text-color-primary), border: var(--text-color-primary))
-);
-
-.metricBox {
+.wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,23 +18,32 @@ $theme-variations: (
   transition: theme.$transition-default;
   gap: theme.$spacing-sm;
 
-  @media(width >= 480px) {
+  @media (width >=480px) {
     padding: theme.$spacing-sm;
   }
+}
 
-  @each $theme, $properties in $theme-variations {
-    &.#{$theme} {
-      background-color: map.get($properties, bg);
+.clear {
+  border: none;
+  box-shadow: none;
+}
+
+@each $theme, $properties in theme.$themes {
+  .#{$theme} {
+    background-color: map.get($properties, bg);
+    color: map.get($properties, color);
+
+    .title {
       color: map.get($properties, color);
+    }
+
+    .subtext {
+      color: map.get($properties, color);
+    }
+
+    &.outline {
+      background-color: transparent;
       border: 2px solid map.get($properties, border);
-
-      .title {
-        color: map.get($properties, color);
-      }
-
-      .subtext {
-        color: map.get($properties, color);
-      }
     }
   }
 }
@@ -51,14 +51,14 @@ $theme-variations: (
 .icon {
   font-size: 2rem;
   color: inherit;
-  padding: theme.$spacing-sm
+  padding: theme.$spacing-sm;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   align-items: inherit;
-  padding: theme.$spacing-sm
+  padding: theme.$spacing-sm;
 }
 
 .title {
@@ -88,11 +88,41 @@ $theme-variations: (
 }
 
 $size-variations: (
-  "xs": (width: 80px, icon-size: 1.5rem, title-size: theme.$font-size-xs, value-size: theme.$font-size-sm, subtext-size: theme.$font-size-xs),
-  "small": (width: 140px, icon-size: 2rem, title-size: theme.$font-size-sm, value-size: theme.$font-size-md, subtext-size: theme.$font-size-sm),
-  "medium": (width: 160px, icon-size: 2rem, title-size: theme.$font-size-base, value-size: theme.$font-size-lg, subtext-size: theme.$font-size-base),
-  "large": (width: 200px, icon-size: 2.5rem, title-size: theme.$font-size-lg, value-size: theme.$font-size-xl, subtext-size: theme.$font-size-lg),
-  "xl": (width: 220px, icon-size: 2.5rem, title-size: theme.$font-size-xl, value-size: theme.$font-size-xl, subtext-size: theme.$font-size-lg)
+  "xs": (
+    width: 80px,
+    icon-size: 1.5rem,
+    title-size: theme.$font-size-xs,
+    value-size: theme.$font-size-sm,
+    subtext-size: theme.$font-size-xs,
+  ),
+  "small": (
+    width: 140px,
+    icon-size: 2rem,
+    title-size: theme.$font-size-sm,
+    value-size: theme.$font-size-md,
+    subtext-size: theme.$font-size-sm,
+  ),
+  "medium": (
+    width: 160px,
+    icon-size: 2rem,
+    title-size: theme.$font-size-base,
+    value-size: theme.$font-size-lg,
+    subtext-size: theme.$font-size-base,
+  ),
+  "large": (
+    width: 200px,
+    icon-size: 2.5rem,
+    title-size: theme.$font-size-lg,
+    value-size: theme.$font-size-xl,
+    subtext-size: theme.$font-size-lg,
+  ),
+  "xl": (
+    width: 220px,
+    icon-size: 2.5rem,
+    title-size: theme.$font-size-xl,
+    value-size: theme.$font-size-xl,
+    subtext-size: theme.$font-size-lg,
+  ),
 );
 
 @each $size, $properties in $size-variations {

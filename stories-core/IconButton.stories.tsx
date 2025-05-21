@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import IconButton from "@/components/Buttons/IconButton/core/IconButton";
+import { IconButton } from "@/index.core";
 import type { IconButtonProps } from "@/components/Buttons/IconButton/IconButton.types";
 import { FaPlus, FaExternalLinkAlt } from "react-icons/fa";
 
@@ -25,49 +25,101 @@ type Story = StoryObj<IconButtonProps>;
 
 export const Default: Story = {};
 
-export const Outline: Story = {
-  args: {
-    outline: true,
+export const OutlineAndDisabledVariants: Story = {
+  render: (args) => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "flex", gap: "1rem" }}>
+        {themes.map((theme) => (
+          <IconButton
+            key={theme}
+            {...args}
+            theme={theme}
+            outline
+            ariaLabel={`Theme: ${theme}`}
+          />
+        ))}
+        <IconButton {...args} disabled ariaLabel="Disabled" />
+      </div>
+    );
   },
 };
 
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-  },
-};
-
-export const Loading: Story = {
+export const LoadingState: Story = {
   args: {
     loading: true,
   },
 };
 
-export const ExternalLink: Story = {
-  args: {
-    href: "https://example.com",
-    isExternal: true,
-    icon: FaExternalLinkAlt,
-    ariaLabel: "External link",
+export const LinkVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", gap: "1rem" }}>
+      <IconButton
+        {...args}
+        href="https://example.com"
+        icon={FaExternalLinkAlt}
+        isExternal
+        ariaLabel="External Link"
+      />
+      <IconButton
+        {...args}
+        href="/internal-route"
+        icon={FaPlus}
+        ariaLabel="Internal Link"
+      />
+    </div>
+  ),
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themes.map((theme) => (
+          <IconButton
+            key={theme}
+            {...args}
+            theme={theme}
+            ariaLabel={`Theme: ${theme}`}
+          />
+        ))}
+      </div>
+    );
   },
 };
 
-export const InternalLink: Story = {
-  args: {
-    href: "/internal-route",
-    icon: FaPlus,
-    ariaLabel: "Internal link",
-  },
-};
+export const SizeVariants: Story = {
+  render: (args) => {
+    const sizes = ["xs", "small", "medium", "large", "xl"] as const;
 
-export const LargeSize: Story = {
-  args: {
-    size: "large",
-  },
-};
-
-export const SmallSize: Story = {
-  args: {
-    size: "small",
+    return (
+      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+        {sizes.map((size) => (
+          <IconButton
+            key={size}
+            {...args}
+            size={size}
+            ariaLabel={`Size: ${size}`}
+          />
+        ))}
+      </div>
+    );
   },
 };

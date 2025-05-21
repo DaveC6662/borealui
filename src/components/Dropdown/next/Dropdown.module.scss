@@ -1,6 +1,6 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 
-.dropdownWrapper {
+.wrapper {
   position: relative;
   display: inline-block;
   outline: none;
@@ -12,33 +12,42 @@
   align-items: center;
 }
 
-.dropdownMenu {
+.alignRight {
+  right: 0;
+}
+
+.alignLeft {
+  left: 0;
+}
+
+.menu {
   position: absolute;
   top: 100%;
   overflow: hidden;
   margin-top: theme.$spacing-xs;
   background-color: var(--background-color-lighter);
-  border-radius: theme.$border-radius-md;
+  border-radius: theme.$border-radius-xs;
   box-shadow: theme.$box-shadow-medium;
   z-index: theme.$z-index-drawer;
   padding: theme.$spacing-xs 0;
   min-width: 200px;
   animation: fade-in 0.2s ease-in-out;
 
-  &.right {
-    right: 0;
+  @media (width >= 481px) {
+    &[data-overflow-right="true"] {
+      left: auto;
+      right: 0;
+    }
+
+    &[data-overflow-left="true"] {
+      right: auto;
+      left: 0;
+    }
   }
 
-  &.left {
-    left: 0;
-  }
-
-  @media (max-width: 480px) {
+  @media (width <= 480px) {
     position: fixed;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    inset: auto 0 0;
     margin: 0;
     border-radius: 0;
     min-width: 100%;
@@ -49,11 +58,13 @@
   }
 }
 
-.dropdownItem {
+.item {
   display: flex;
   align-items: center;
   width: 100%;
   background: none;
+  gap: theme.$spacing-sm;
+  line-height: 1em;
   border: none;
   padding: theme.$spacing-sm theme.$spacing-md;
   font-weight: theme.$font-weight-bold;
@@ -76,36 +87,12 @@
     align-items: center;
   }
 
-  @media (max-width: 480px) {
+  a {
+    text-decoration: none;
+  }
+
+  @media (width <= 480px) {
     font-size: theme.$font-size-base;
     padding: theme.$spacing-md;
-  }
-}
-
-a.dropdownItem {
-  text-decoration: none;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
   }
 }

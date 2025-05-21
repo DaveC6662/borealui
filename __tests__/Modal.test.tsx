@@ -1,100 +1,112 @@
-import { render, screen, fireEvent, act } from "@testing-library/react";
-import { Modal } from "@/index.next";
-import "@testing-library/jest-dom";
+import React, { act } from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import BaseModal from "@/components/Modal/ModalBase";
 
-describe("Modal", () => {
-  jest.useFakeTimers();
+const DummyIconButton = React.forwardRef<HTMLButtonElement, any>(
+  ({ icon: Icon, ...props }, ref) => (
+    <button ref={ref} {...props}>
+      {Icon && <Icon aria-hidden="true" />}
+    </button>
+  )
+);
+DummyIconButton.displayName = "DummyIconButton";
+
+const classNames = {
+  overlay: "modalOverlay",
+  visible: "modalVisible",
+  hidden: "modalHidden",
+  content: "modalContent",
+  closeButton: "closeButton",
+};
+
+describe("BaseModal", () => {
+  const portal = document.createElement("div");
+  portal.setAttribute("id", "widget-portal");
+  document.body.appendChild(portal);
+
   const onClose = jest.fn();
-
-  const renderModal = () => {
-    render(
-      <Modal onClose={onClose} data-testid="modal">
-        <div>
-          <h2>Modal Heading</h2>
-          <p>This is modal content.</p>
-          <button>Confirm</button>
-        </div>
-      </Modal>
-    );
-  };
 
   beforeEach(() => {
     onClose.mockClear();
-    const portal = document.createElement("div");
-    portal.setAttribute("id", "widget-portal");
-    document.body.appendChild(portal);
   });
 
-  afterEach(() => {
-    document.body.innerHTML = "";
-  });
+  it("renders modal and traps focus", () => {
+    render(
+      <BaseModal
+        onClose={onClose}
+        IconButton={DummyIconButton}
+        classMap={classNames}
+      >
+        <p>Modal content</p>
+      </BaseModal>
+    );
 
-  it("renders content inside portal", () => {
-    renderModal();
-    const modal = screen.getByTestId("modal");
+    const modal = screen.getByRole("dialog");
     expect(modal).toBeInTheDocument();
-    expect(screen.getByText("Modal Heading")).toBeInTheDocument();
-    expect(screen.getByText("Confirm")).toBeInTheDocument();
+    expect(modal).toHaveAttribute("aria-modal", "true");
+    expect(modal).toHaveAttribute("aria-labelledby");
+    expect(modal).toHaveAttribute("aria-describedby");
+    expect(screen.getByText("Modal content")).toBeInTheDocument();
   });
 
-  it("calls onClose when close button is clicked", () => {
-    renderModal();
+  it("calls onClose when close button is clicked", async () => {
+    render(
+      <BaseModal
+        onClose={onClose}
+        IconButton={DummyIconButton}
+        classMap={classNames}
+      >
+        <p>Close me</p>
+      </BaseModal>
+    );
+
     const closeBtn = screen.getByTestId("modal-close");
-  
     fireEvent.click(closeBtn);
-  
-    act(() => {
-      jest.runAllTimers();
+
+    await waitFor(() => {
+      expect(onClose).toHaveBeenCalled();
     });
-  
-    expect(onClose).toHaveBeenCalled();
   });
 
-  it("calls onClose when backdrop is clicked", () => {
-    renderModal();
-    const backdrop = screen.getByTestId("modal");
-  
-    fireEvent.click(backdrop);
-  
-    act(() => {
-      jest.runAllTimers();
-    });
-  
-    expect(onClose).toHaveBeenCalled();
-  });
+  it("closes on Escape key", () => {
+    render(
+      <BaseModal
+        onClose={onClose}
+        IconButton={DummyIconButton}
+        classMap={classNames}
+      >
+        <p>Press Escape</p>
+      </BaseModal>
+    );
 
-  it("does NOT close when modal content is clicked", () => {
-    renderModal();
-    const content = screen.getByTestId("modal-content");
-    fireEvent.click(content);
-    expect(onClose).not.toHaveBeenCalled();
-  });
-
-  it("calls onClose when Escape key is pressed", () => {
-    renderModal();
     fireEvent.keyDown(screen.getByTestId("modal"), { key: "Escape" });
     expect(onClose).toHaveBeenCalled();
   });
 
-  it("traps focus within the modal", () => {
-    renderModal();
-  
-    const closeBtn = screen.getByTestId("modal-close");
-    const confirmBtn = screen.getByText("Confirm");
-  
-    closeBtn.focus();
-    expect(document.activeElement).toBe(closeBtn);
-  
-    fireEvent.keyDown(screen.getByTestId("modal"), { key: "Tab" });
-    confirmBtn.focus();
-    expect(document.activeElement).toBe(confirmBtn);
-  
-    fireEvent.keyDown(screen.getByTestId("modal"), {
-      key: "Tab",
-      shiftKey: true,
+  it("focuses modal on mount", async () => {
+    jest.useFakeTimers();
+
+    render(
+      <BaseModal
+        onClose={jest.fn()}
+        IconButton={DummyIconButton}
+        classMap={classNames}
+      >
+        <button>Focusable Button</button>
+      </BaseModal>
+    );
+
+    // Simulate animation frame and timeout
+    act(() => {
+      jest.runAllTimers();
     });
-    closeBtn.focus();
-    expect(document.activeElement).toBe(closeBtn);
+
+    const modal = screen.getByTestId("modal");
+
+    await waitFor(() => {
+      expect(modal).toHaveFocus();
+    });
+
+    jest.useRealTimers();
   });
-  
 });

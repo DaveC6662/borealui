@@ -14,6 +14,8 @@ export interface ChipProps {
   icon?: React.ElementType;
   /** Size of the chip (e.g., "small", "medium", "large"). */
   size?: SizeType;
+  /** Whether to use a portal for rendering the chip. */
+  usePortal?: boolean;
   /** Callback when the chip is closed manually or automatically. */
   onClose?: () => void;
   /** Theme color for the chip (e.g., "primary", "success", "error"). */

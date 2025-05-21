@@ -1,12 +1,12 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
 
-.messagePopup {
+.wrapper {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgb(0 0 0 / 50%); 
+  background: rgb(0 0 0 / 50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,10 +14,10 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-.popupContent {
+.content {
   background: var(--background-color-light);
   padding: theme.$spacing-lg theme.$spacing-md;
-  padding-top: theme.$spacing-lg;
+  padding-top: 50px;
   border-radius: theme.$border-radius-xs;
   box-shadow: theme.$box-shadow-medium;
   max-width: 400px;
@@ -25,23 +25,23 @@
   position: relative;
 }
 
-.closeButton {
+.close {
   position: absolute;
-  top: theme.$spacing-xs; 
+  top: theme.$spacing-xs;
   right: theme.$spacing-xs;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
-.popupMessage {
+.message {
   font-size: theme.$font-size-md;
   font-weight: theme.$font-weight-bold;
   color: var(--text-color-primary);
-  margin-bottom: theme.$spacing-sm; 
+  margin-bottom: theme.$spacing-sm;
 }
 
-.popupActions {
+.actions {
   display: flex;
   justify-content: center;
-  gap: theme.$spacing-sm;  
-  margin-top: theme.$spacing-sm; 
+  gap: theme.$spacing-sm;
+  margin-top: theme.$spacing-sm;
 }

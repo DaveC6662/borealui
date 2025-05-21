@@ -19,8 +19,23 @@
           "border: 2px solid map.get($values, color)",
           "color: map.get($values, color)",
           "background-color: map.get($props, color)",
-          "color: map.get($colors, color)"
+          "color: map.get($colors, color)",
+          "color: map.get($props, color)",
+          "user-select",
+          "border-color: map.get($values, color)",
+          "color: map.get($properties, color)",
+          "scrollbar-width",
+          "scrollbar-width: none",
+          "scrollbar-width: thin",
+          "scrollbar-color",
+          "-webkit-overflow-scrolling"
         ]
+      }
+    ],
+    "axe/language": [
+      "default",
+      {
+        "html-has-lang": "off"
       }
     ]
   }

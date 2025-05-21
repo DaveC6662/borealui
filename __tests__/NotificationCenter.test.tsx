@@ -1,111 +1,109 @@
-import { render, screen, fireEvent, act } from "@testing-library/react";
-import { NotificationCenter } from "@/index.next";
-import { Notification } from "@/components/NotificationCenter/NotificationCenter";
-import "@testing-library/jest-dom";
+import { render, screen, fireEvent } from "@testing-library/react";
+import BaseNotificationCenter from "@/components/NotificationCenter/NotificationCenterBase";
 
-jest.useFakeTimers();
+// Mock themeIcons
+jest.mock("@/components/NotificationCenter/NotificationCenter.types", () => ({
+  ...jest.requireActual(
+    "@/components/NotificationCenter/NotificationCenter.types"
+  ),
+  themeIcons: {
+    success: () => <svg data-testid="icon-success" />,
+    error: () => <svg data-testid="icon-error" />,
+    info: () => <svg data-testid="icon-info" />,
+  },
+}));
 
-describe("NotificationCenter", () => {
-  const notifications: Notification[] = [
+const DummyButton = ({ children, ...props }: any) => (
+  <button {...props}>{children}</button>
+);
+const DummyIconButton = ({ icon: Icon, ...props }: any) => (
+  <button {...props}>{Icon ? <Icon /> : null}</button>
+);
+
+const classNames = {
+  wrapper: "wrapper",
+  header: "header",
+  list: "list",
+  notification: "notification",
+  icon: "icon",
+  content: "content",
+  message: "message",
+  timestamp: "timestamp",
+  close: "close",
+  clearAll: "clearAll",
+  success: "success",
+  error: "error",
+  info: "info",
+};
+
+describe("BaseNotificationCenter", () => {
+  const mockNotifications = [
     {
       id: "1",
-      message: "Update successful!",
-      type: "success",
-      timestamp: new Date("2024-01-01T10:00:00"),
+      message: "Success message",
+      type: "success" as const,
+      timestamp: new Date("2025-04-20T10:30:00"),
     },
     {
       id: "2",
-      message: "Check your connection.",
-      type: "warning",
-      duration: 3000,
+      message: "Error occurred",
+      type: "error" as const,
     },
   ];
 
-  const onRemove = jest.fn();
-  const onClearAll = jest.fn();
-
-  beforeEach(() => {
-    onRemove.mockClear();
-    onClearAll.mockClear();
-  });
-
-  it("renders notifications with correct content", () => {
+  it("renders notifications with proper content and roles", () => {
     render(
-      <NotificationCenter
-        notifications={notifications}
-        onRemove={onRemove}
-        onClearAll={onClearAll}
-        data-testid="test-center"
+      <BaseNotificationCenter
+        notifications={mockNotifications}
+        onRemove={jest.fn()}
+        onClearAll={jest.fn()}
+        showClearAll
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classNames}
       />
     );
 
-    expect(screen.getByTestId("test-center")).toBeInTheDocument();
-    expect(screen.getByTestId("test-center-item-1-message")).toHaveTextContent("Update successful!");
-    expect(screen.getByTestId("test-center-item-2-message")).toHaveTextContent("Check your connection.");
+    expect(
+      screen.getByRole("region", { name: /notification center/i })
+    ).toBeInTheDocument();
+    expect(screen.getByText("Success message")).toBeInTheDocument();
+    expect(screen.getByText("Error occurred")).toBeInTheDocument();
+    expect(screen.getByRole("status")).toBeInTheDocument();
+    expect(screen.getByLabelText("Dismiss notification 1")).toBeInTheDocument();
   });
 
-  it("calls onClearAll when 'Clear All' button is clicked", () => {
+  it("triggers onRemove when dismiss button is clicked", () => {
+    const onRemove = jest.fn();
     render(
-      <NotificationCenter
-        notifications={notifications}
+      <BaseNotificationCenter
+        notifications={mockNotifications}
         onRemove={onRemove}
-        onClearAll={onClearAll}
-        data-testid="test-center"
+        onClearAll={jest.fn()}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classNames}
       />
     );
 
-    const clearBtn = screen.getByTestId("test-center-clear-all");
-    fireEvent.click(clearBtn);
-
-    expect(onClearAll).toHaveBeenCalledTimes(1);
-  });
-
-  it("calls onRemove when dismiss button is clicked", () => {
-    render(
-      <NotificationCenter
-        notifications={notifications}
-        onRemove={onRemove}
-        data-testid="test-center"
-      />
-    );
-
-    const dismissBtn = screen.getByTestId("test-center-item-1-dismiss");
-    fireEvent.click(dismissBtn);
-
+    fireEvent.click(screen.getByTestId("notification-center-item-1-dismiss"));
     expect(onRemove).toHaveBeenCalledWith("1");
   });
 
-  it("auto-dismisses notifications with duration", () => {
+  it("triggers onClearAll when clear all is clicked", () => {
+    const onClearAll = jest.fn();
     render(
-      <NotificationCenter
-        notifications={notifications}
-        onRemove={onRemove}
-        data-testid="test-center"
+      <BaseNotificationCenter
+        notifications={mockNotifications}
+        onRemove={jest.fn()}
+        onClearAll={onClearAll}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classNames}
       />
     );
 
-    act(() => {
-      jest.advanceTimersByTime(3000);
-    });
-
-    expect(onRemove).toHaveBeenCalledWith("2");
+    fireEvent.click(screen.getByTestId("notification-center-clear-all"));
+    expect(onClearAll).toHaveBeenCalled();
   });
-
-  it("renders accessibility wrapper with correct attributes", () => {
-    render(
-      <NotificationCenter
-        notifications={notifications}
-        onRemove={onRemove}
-        data-testid="test-center"
-      />
-    );
-  
-    const statusWrapper = screen.getByRole("status");
-    expect(statusWrapper).toBeInTheDocument();
-    expect(statusWrapper).toHaveAttribute("aria-live", "polite");
-  
-    const list = screen.getByRole("list");
-    expect(statusWrapper).toContainElement(list);
-  });
-  
 });

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
-import MetricBox from "@/components/MetricBox/core/MetricBox";
+import { MetricBox } from "@/index.core";
 import type { MetricBoxProps } from "@/components/MetricBox/MetricBox.types";
-import { FaChartLine, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import { FaChartLine, FaCheckCircle } from "react-icons/fa";
 
 const meta: Meta<MetricBoxProps> = {
   title: "Components/MetricBox",
@@ -35,32 +35,92 @@ export const WithSubtext: Story = {
   },
 };
 
-export const WarningState: Story = {
-  args: {
-    title: "System Alerts",
-    value: "5",
-    icon: FaExclamationTriangle,
-    subtext: "Check server logs",
-    theme: "warning",
+export const AlignmentVariants: Story = {
+  render: () => {
+    const alignments = ["left", "center", "right"] as const;
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {alignments.map((align) => (
+          <MetricBox
+            key={align}
+            title={`${align.charAt(0).toUpperCase() + align.slice(1)} Aligned`}
+            value="91%"
+            align={align}
+          />
+        ))}
+      </div>
+    );
   },
 };
 
-export const AlignmentVariants: Story = {
-  render: () => (
-    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-      <MetricBox title="Left Aligned" value="87%" align="left" />
-      <MetricBox title="Center Aligned" value="91%" align="center" />
-      <MetricBox title="Right Aligned" value="76%" align="right" />
-    </div>
-  ),
+export const SizeVariants: Story = {
+  render: () => {
+    const sizes = ["xs", "small", "medium", "large", "xl"] as const;
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {sizes.map((size) => (
+          <MetricBox
+            key={size}
+            title={`${size.charAt(0).toUpperCase() + size.slice(1)} Size`}
+            value="1,000"
+            size={size}
+          />
+        ))}
+      </div>
+    );
+  },
 };
 
-export const SizeVariants: Story = {
-  render: () => (
-    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-      <MetricBox title="Small" value="320" size="small" />
-      <MetricBox title="Medium" value="1,240" size="medium" />
-      <MetricBox title="Large" value="8,920" size="large" />
-    </div>
-  ),
+export const ThemeVariants: Story = {
+  render: () => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themes.map((theme) => (
+          <MetricBox
+            key={theme}
+            title={theme.charAt(0).toUpperCase() + theme.slice(1)}
+            value="3,210"
+            theme={theme}
+            icon={FaChartLine}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const OutlineVariants: Story = {
+  render: () => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themes.map((theme) => (
+          <MetricBox
+            key={`outline-${theme}`}
+            title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
+            value="999"
+            outline
+            theme={theme}
+            icon={FaChartLine}
+          />
+        ))}
+      </div>
+    );
+  },
 };

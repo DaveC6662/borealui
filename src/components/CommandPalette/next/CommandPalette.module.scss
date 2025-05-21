@@ -1,14 +1,18 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:map";
 
-$theme-states: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-  "clear": var(--text-color-primary)
-);
+.command_palette {
+  background: var(--background-color-light);
+  border-radius: theme.$border-radius-lg;
+  box-shadow: theme.$box-shadow-large;
+  width: 90%;
+  max-width: 500px;
+  padding: theme.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: theme.$spacing-sm;
+}
 
 .overlay {
   position: fixed;
@@ -19,18 +23,6 @@ $theme-states: (
   justify-content: center;
   align-items: flex-start;
   padding-top: 10vh;
-}
-
-.palette {
-  background: var(--background-color-light);
-  border-radius: theme.$border-radius-lg;
-  box-shadow: theme.$box-shadow-large;
-  width: 90%;
-  max-width: 500px;
-  padding: theme.$spacing-md;
-  display: flex;
-  flex-direction: column;
-  gap: theme.$spacing-sm;
 }
 
 .input {
@@ -52,6 +44,7 @@ $theme-states: (
   cursor: pointer;
   border-radius: theme.$border-radius-sm;
   display: flex;
+  margin: theme.$spacing-xs;
   align-items: center;
   gap: theme.$spacing-xs;
   line-height: 0.8em;
@@ -66,16 +59,26 @@ $theme-states: (
   color: theme.$disabled-color;
 }
 
-@each $state, $color in $theme-states {
-  .#{$state} {
-    border: 2px solid $color;
+.active {
+  font-weight: theme.$font-weight-bold;
+}
 
-    .item {
-      &:hover,
-      &.active {
-        background-color: $color;
-        color: if($state == "primary", var(--text-color-primary), var(--text-color-secondary));
-      }
-    }
+@each $name, $values in theme.$themes {
+  .#{$name} {
+    border: 2px solid map.get($values, border);
   }
+
+  .item.#{$name}:hover,
+  .item.#{$name}.active {
+    background-color: map.get($values, bg);
+    color: if(
+      $name == "primary",
+      var(--text-color-primary),
+      var(--text-color-secondary)
+    );
+  }
+}
+
+.clear {
+  box-shadow: none;
 }

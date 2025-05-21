@@ -1,74 +1,72 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { DataTable } from "@/index.next";
-import { Column } from "@/components/DataTable/DataTable";
+import DataTableBase from "@/components/DataTable/DataTableBase";
+import { Column } from "@/components/DataTable/DataTable.types";
 
-interface TestData {
-  name: string;
-  age: number;
-}
+const columns: Column<{ name: string; age: number }>[] = [
+  { key: "name", label: "Name", sortable: true },
+  { key: "age", label: "Age", sortable: true },
+];
 
-describe("DataTable Component", () => {
-  const testData: TestData[] = [
-    { name: "Alice", age: 25 },
-    { name: "Bob", age: 30 },
-    { name: "Charlie", age: 22 },
-  ];
+const data = [
+  { name: "Alice", age: 28 },
+  { name: "Bob", age: 34 },
+];
 
-  const testColumns: Column<TestData>[] = [
-    { key: "name", label: "Name", sortable: true },
-    { key: "age", label: "Age", sortable: true },
-  ];
+const classMap = {
+  wrapper: "tableWrapper",
+  table: "table",
+  striped: "striped",
+  headerCell: "header",
+  sortIcon: "sortIcon",
+  sortable: "sortable",
+  clickable: "clickable",
+  cell: "cell",
+};
 
-  it("renders headers and rows", () => {
-    render(<DataTable columns={testColumns} data={testData} data-testid="data-table" />);
+describe("DataTableBase", () => {
+  it("renders a table with headers and rows", () => {
+    render(<DataTableBase columns={columns} data={data} classMap={classMap} />);
 
-    expect(screen.getByText("Name")).toBeInTheDocument();
-    expect(screen.getByText("Age")).toBeInTheDocument();
-    expect(screen.getByText("Alice")).toBeInTheDocument();
-    expect(screen.getByText("Bob")).toBeInTheDocument();
+    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getAllByRole("columnheader")).toHaveLength(2);
+    expect(screen.getAllByRole("row")).toHaveLength(3); // 1 header + 2 rows
   });
 
-  it("sorts rows when clicking a header", () => {
-    render(<DataTable columns={testColumns} data={testData} />);
+  it("sorts columns when header is clicked", () => {
+    render(<DataTableBase columns={columns} data={data} classMap={classMap} />);
+    const header = screen.getByText("Age").closest("th");
 
-    const ageHeader = screen.getByText("Age");
-    fireEvent.click(ageHeader);
-    const firstRowCell = screen.getAllByRole("cell")[1]; // Age cell in first row
-    expect(firstRowCell).toHaveTextContent("22"); // Charlie should be first by age ascending
+    fireEvent.click(header!);
+    expect(header).toHaveAttribute("aria-sort", "ascending");
 
-    fireEvent.click(ageHeader);
-    const newFirstRowCell = screen.getAllByRole("cell")[1];
-    expect(newFirstRowCell).toHaveTextContent("30"); // Bob should be first by age descending
+    fireEvent.click(header!);
+    expect(header).toHaveAttribute("aria-sort", "descending");
   });
 
-  it("handles row clicks if onRowClick is provided", () => {
+  it("supports keyboard interaction for sorting", () => {
+    render(<DataTableBase columns={columns} data={data} classMap={classMap} />);
+    const header = screen.getByText("Name").closest("th");
+
+    header && fireEvent.keyDown(header, { key: "Enter" });
+    expect(header).toHaveAttribute("aria-sort", "ascending");
+
+    header && fireEvent.keyDown(header, { key: " " });
+    expect(header).toHaveAttribute("aria-sort", "descending");
+  });
+
+  it("triggers onRowClick when a row is clicked", () => {
     const handleClick = jest.fn();
-    render(<DataTable columns={testColumns} data={testData} onRowClick={handleClick} />);
-    const firstRow = screen.getAllByRole("row")[1];
-    fireEvent.click(firstRow);
-    expect(handleClick).toHaveBeenCalledTimes(1);
-    expect(handleClick).toHaveBeenCalledWith(testData[0]);
-  });
+    render(
+      <DataTableBase
+        columns={columns}
+        data={data}
+        classMap={classMap}
+        onRowClick={handleClick}
+      />
+    );
 
-  it("supports custom cell rendering", () => {
-    const customColumns: Column<TestData>[] = [
-      {
-        key: "name",
-        label: "Name",
-        render: (value: unknown) => <span data-testid="custom-name">{String(value)}</span>,
-      },
-      { key: "age", label: "Age" },
-    ];
-
-    render(<DataTable columns={customColumns} data={testData} />);
-    expect(screen.getAllByTestId("custom-name").length).toBe(3);
-  });
-
-  it("applies striped rows when enabled", () => {
-    render(<DataTable columns={testColumns} data={testData} striped={true} />);
-    const rows = screen.getAllByRole("row");
-    expect(rows[2].className).toMatch(/striped/);
+    const row = screen.getAllByRole("row")[1];
+    fireEvent.click(row);
+    expect(handleClick).toHaveBeenCalledWith(data[0]);
   });
 });

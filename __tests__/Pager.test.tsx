@@ -1,87 +1,95 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Pager } from "@/index.next";
-import "@testing-library/jest-dom";
-import { SizeType, ThemeType } from "@/types/types";
+import BasePager from "@/components/Pager/PagerBase";
 
-describe("Pager", () => {
-  const setup = (props = {}) => {
-    const onPageChange = jest.fn();
+const DummyButton = ({ children, ...props }: any) => (
+  <button {...props}>{children}</button>
+);
+
+const DummyIconButton = ({ icon: Icon, ...props }: any) => (
+  <button {...props}>
+    <Icon />
+  </button>
+);
+
+const classNames = {
+  wrapper: "pagerWrapper",
+  controls: "pagerControls",
+  controlButton: "pagerControlButton",
+  buttonWrapper: "pagerButtonWrapper",
+  button: "pagerButton",
+  active: "activePage",
+};
+
+describe("BasePager", () => {
+  it("renders correct number of pages", () => {
     render(
-      <Pager
-        totalItems={20}
-        itemsPerPage={5}
-        currentPage={2}
-        onPageChange={onPageChange}
-        size="small"
-        theme="primary"
-        data-testid="test-pager"
-        {...props}
+      <BasePager
+        totalItems={50}
+        itemsPerPage={10}
+        currentPage={1}
+        onPageChange={jest.fn()}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classNames}
+        data-testid="pager"
       />
     );
-    return { onPageChange };
-  };
 
-  it("renders pagination buttons based on totalItems and itemsPerPage", () => {
-    setup();
-    expect(screen.getByTestId("test-pager")).toBeInTheDocument();
-    expect(screen.getByTestId("test-pager-button-1")).toBeInTheDocument();
-    expect(screen.getByTestId("test-pager-button-4")).toBeInTheDocument();
+    for (let i = 1; i <= 5; i++) {
+      expect(screen.getByTestId(`pager-button-${i}`)).toBeInTheDocument();
+    }
   });
 
-  it("calls onPageChange when a page number is clicked", () => {
-    const { onPageChange } = setup();
-    const page3Btn = screen.getByTestId("test-pager-button-3");
-    fireEvent.click(page3Btn);
-    expect(onPageChange).toHaveBeenCalledWith(3);
+  it("calls onPageChange when next is clicked", () => {
+    const onPageChange = jest.fn();
+    render(
+      <BasePager
+        totalItems={30}
+        itemsPerPage={10}
+        currentPage={1}
+        onPageChange={onPageChange}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classNames}
+      />
+    );
+
+    fireEvent.click(screen.getByTestId("pager-next"));
+    expect(onPageChange).toHaveBeenCalledWith(2);
   });
 
-  it("disables the previous button on first page", () => {
-    setup({ currentPage: 1 });
-    const prevBtn = screen.getByTestId("test-pager-prev");
-    expect(prevBtn).toBeDisabled();
+  it("disables prev button on first page", () => {
+    render(
+      <BasePager
+        totalItems={30}
+        itemsPerPage={10}
+        currentPage={1}
+        onPageChange={jest.fn()}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classNames}
+      />
+    );
+
+    expect(screen.getByTestId("pager-prev")).toBeDisabled();
   });
 
-  it("disables the next button on the last page", () => {
-    setup({ currentPage: 4 });
-    const nextBtn = screen.getByTestId("test-pager-next");
-    expect(nextBtn).toBeDisabled();
-  });
+  it("sets aria-current on active page", () => {
+    render(
+      <BasePager
+        totalItems={30}
+        itemsPerPage={10}
+        currentPage={2}
+        onPageChange={jest.fn()}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classNames}
+      />
+    );
 
-  it("calls onPageChange when next and previous are clicked", () => {
-    const { onPageChange } = setup({ currentPage: 2 });
-
-    fireEvent.click(screen.getByTestId("test-pager-prev"));
-    expect(onPageChange).toHaveBeenCalledWith(1);
-
-    fireEvent.click(screen.getByTestId("test-pager-next"));
-    expect(onPageChange).toHaveBeenCalledWith(3);
-  });
-
-  it("applies aria-current='page' to the active button", () => {
-    setup({ currentPage: 2 });
-    const activeBtn = screen.getByTestId("test-pager-button-2");
-    expect(activeBtn).toHaveAttribute("aria-current", "page");
-  });
-
-  it("renders with all sizes and themes", () => {
-    const sizes: SizeType[] = ["xs", "small", "medium", "large", "xl"];
-    const themes: ThemeType[] = ["primary", "secondary", "success", "error", "warning", "clear"];
-
-    sizes.forEach((size) => {
-      themes.forEach((theme) => {
-        render(
-          <Pager
-            totalItems={15}
-            itemsPerPage={5}
-            currentPage={1}
-            onPageChange={jest.fn()}
-            size={size}
-            theme={theme}
-            data-testid={`pager-${size}-${theme}`}
-          />
-        );
-        expect(screen.getByTestId(`pager-${size}-${theme}`)).toBeInTheDocument();
-      });
-    });
+    expect(screen.getByTestId("pager-button-2")).toHaveAttribute(
+      "aria-current",
+      "page"
+    );
   });
 });

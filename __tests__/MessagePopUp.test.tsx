@@ -1,56 +1,94 @@
-import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
-import MessagePopup from "@/components/MessagePopUp/MessagePopUp";
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import BaseMessagePopup from "@/components/MessagePopUp/MessagePopupBase";
 
-describe("MessagePopup", () => {
+const DummyButton = React.forwardRef<HTMLButtonElement, any>(
+  ({ children, ...props }, ref) => (
+    <button ref={ref} type="button" {...props}>
+      {children}
+    </button>
+  )
+);
+DummyButton.displayName = "DummyButton";
+
+const DummyIconButton = React.forwardRef<HTMLButtonElement, any>(
+  ({ icon: Icon, ...props }, ref) => (
+    <button ref={ref} type="button" {...props}>
+      {Icon && <Icon aria-hidden="true" />}
+    </button>
+  )
+);
+DummyIconButton.displayName = "DummyIconButton";
+
+const classNames = {
+  wrapper: "popupWrapper",
+  content: "popupContent",
+  close: "popupClose",
+  message: "popupMessage",
+  actions: "popupActions",
+  confirm: "popupConfirm",
+  cancel: "popupCancel",
+};
+
+describe("BaseMessagePopup", () => {
   beforeEach(() => {
-    const portalRoot = document.createElement("div");
-    portalRoot.setAttribute("id", "popup-portal");
-    document.body.appendChild(portalRoot);
+    document.body.innerHTML = '<div id="popup-portal"></div>';
   });
 
-  afterEach(() => {
-    const portalRoot = document.getElementById("popup-portal");
-    if (portalRoot) {
-      document.body.removeChild(portalRoot);
-    }
+  it("renders message and buttons", async () => {
+    render(
+      <BaseMessagePopup
+        message="Are you sure?"
+        onClose={jest.fn()}
+        onConfirm={jest.fn()}
+        onCancel={jest.fn()}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classNames={classNames}
+      />
+    );
+
+    const dialog = screen.getByRole("dialog");
+    expect(dialog).toBeInTheDocument();
+    expect(screen.getByText("Are you sure?")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /confirm/i })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /close popup/i })
+    ).toBeInTheDocument();
   });
 
-  it("renders the message and close button", () => {
-    render(<MessagePopup message="Test message" onClose={() => {}} />);
+  it("calls onClose when escape is pressed", async () => {
+    const onClose = jest.fn();
+    render(
+      <BaseMessagePopup
+        message="Close test"
+        onClose={onClose}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classNames={classNames}
+      />
+    );
 
-    expect(screen.getByTestId("message-popup-message")).toHaveTextContent("Test message");
-    expect(screen.getByTestId("message-popup-close")).toBeInTheDocument();
+    fireEvent.keyDown(document, { key: "Escape" });
+    await waitFor(() => expect(onClose).toHaveBeenCalled());
   });
 
-  it("calls onClose when clicking outside the popup", () => {
-    const handleClose = jest.fn();
-    render(<MessagePopup message="Outside click test" onClose={handleClose} />);
-
-    fireEvent.click(screen.getByTestId("message-popup"));
-    expect(handleClose).toHaveBeenCalled();
-  });
-
-  it("calls onClose when clicking the close button", () => {
-    const handleClose = jest.fn();
-    render(<MessagePopup message="Dismiss" onClose={handleClose} />);
-
-    fireEvent.click(screen.getByTestId("message-popup-close"));
-    expect(handleClose).toHaveBeenCalled();
-  });
-
-  it("calls onConfirm and onCancel callbacks", () => {
+  it("calls onConfirm and onCancel correctly", () => {
     const onConfirm = jest.fn();
     const onCancel = jest.fn();
 
     render(
-      <MessagePopup
-        message="Confirm or Cancel?"
-        onClose={() => {}}
+      <BaseMessagePopup
+        message="Click test"
+        onClose={jest.fn()}
         onConfirm={onConfirm}
         onCancel={onCancel}
-        confirmText="Yes"
-        cancelText="No"
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classNames={classNames}
       />
     );
 

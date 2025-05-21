@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 
@@ -17,7 +18,7 @@
   transition: transform 0.3s ease;
 }
 
-.cardLoading {
+.loading {
   background: none !important;
   box-shadow: none !important;
   padding: 0;
@@ -28,13 +29,11 @@
   min-height: 250px;
 }
 
-.cardContent {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+.fade_in {
+  animation: fade-in 0.8s ease-in-out;
 }
 
-.cardImage {
+.image {
   width: 100%;
   height: auto;
   position: relative;
@@ -42,147 +41,55 @@
   border-bottom: 1px solid rgb(0 0 0 / 5%);
 }
 
-.cardHeader, .cardBody {
-  padding: theme.$spacing-md;
-}
-
-.cardBody {
-  display: flex;
-  flex-direction: column;
-  gap: theme.$spacing-sm;
-}
-
-.cardTitle {
-  font-size: 1.2em;
-  font-weight: theme.$font-weight-bold;
-  margin: 0;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  gap: theme.$spacing-sm;
-}
-
-.cardIcon {
-  font-size: 1.2em;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-color-primary);
-}
-
-.cardDescription {
-  font-size: theme.$font-size-base;
-  color: var(--text-color-primary);
-  width: 95%;
-  margin: theme.$spacing-xxs auto;
-  text-align: center;
-}
-
-.cardFooter {
-  padding: theme.$spacing-sm;
-  border-top: 2px solid rgb(0 0 0 / 10%);
-}
-
-.cardActions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: theme.$spacing-sm;
-}
-
-.fadeIn {
-  animation: fade-in 0.8s ease-in-out;
-}
-
 .vertical {
   flex-direction: column;
 
-  .cardContent {
+  .content {
     flex-direction: column;
   }
 
-  .cardImage {
+  .image {
     width: 100%;
+    max-height: 200px;
   }
 }
 
 .horizontal {
   flex-direction: row;
-  max-width: none;
   justify-content: center;
   align-items: center;
+  min-height: 200px;
+  width: 100%;
+  height: auto;
+  max-width: 900px;
 
-  .cardContent {
+  .content {
+    display: flex;
     flex-direction: row;
+    flex: 1;
     width: 100%;
-    align-items: flex-start;
-  }
-
-  .cardImage {
-    width: 50%;
     height: 100%;
-    padding: theme.$spacing-xs;
-    object-fit: cover;
-    border-radius: theme.$border-radius-sm;
   }
 
-  .cardBody {
+  .image {
+    width: 50%;
+    height: auto;
+    aspect-ratio: 1.5;
+    object-fit: cover;
+    display: block;
+  }
+
+  .body {
     flex: 1;
     padding: theme.$spacing-md;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
-  .cardFooter {
+  .footer {
     padding: theme.$spacing-md;
   }
-}
-
-$theme-variants: (
-  "primary": (bg: var(--primary-color), light: var(--primary-color-light), hover: var(--primary-color-hover)),
-  "secondary": (bg: var(--secondary-color), light: var(--secondary-color-light), hover: var(--secondary-color-hover)),
-  "success": (bg: theme.$success-color, light: color.adjust(theme.$success-color, $lightness: 20%), hover: color.adjust(theme.$success-color, $lightness: -10%)),
-  "error": (bg: theme.$error-color, light: color.adjust(theme.$error-color, $lightness: 20%), hover: color.adjust(theme.$error-color, $lightness: -10%)),
-  "warning": (bg: theme.$warning-color, light: color.adjust(theme.$warning-color, $lightness: 20%), hover: color.adjust(theme.$warning-color, $lightness: -10%))
-);
-
-@each $name, $props in $theme-variants {
-  .#{$name} {
-    background: linear-gradient(to bottom, map.get($props, bg) 0%, map.get($props, light) 100%);
-    color: var(--text-color-primary);
-
-    &:hover {
-      background-color: map.get($props, hover);
-    }
-
-    .cardIcon {
-      color: var(--text-color-primary);
-    }
-
-    .cardDescription {
-      color: var(--text-color-primary);
-    }
-
-    .loading {
-      background-color: transparent;
-     }
-  }
-}
-
-.solid {
-  background: var(--primary-color);
-
-  .cardTitle, .cardDescription {
-    color: var(--text-color-primary); 
-  }
-
-  &.primary { background: var(--primary-color); }
-  &.secondary { background: var(--secondary-color); }
-  &.success { background: theme.$success-color; }
-  &.error { background: theme.$error-color; }
-  &.warning { background: theme.$warning-color; }
-  &.clear { background: transparent; }
 }
 
 .disabled {
@@ -194,42 +101,227 @@ $theme-variants: (
   box-shadow: none;
 }
 
-.secondary {
-  color: var(--text-color-secondary);
-
-  .cardTitle {
-    color: var(--text-color-secondary);
-  }
-
-  .cardIcon {
-    color: var(--text-color-secondary);
-  }
-  
-  .cardDescription {
-    color: var(--text-color-secondary);
-  }
-}
-
-
-.clear {
-  background: transparent;
-  box-shadow: none;
-}
-
 .outline {
   background: transparent;
   border: 2px solid currentcolor;
   box-shadow: none;
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+@each $name, $props in theme.$themes {
+  .#{$name} {
+    background: linear-gradient(
+      to bottom,
+      map.get($props, bg),
+      map.get($props, bg)
+    );
+    color: var(--text-color-primary);
+
+    :hover {
+      background-color: map.get($props, hover);
+    }
+
+    .icon,
+    .description {
+      color: var(--text-color-primary);
+    }
+
+    .loading {
+      background-color: transparent;
+    }
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .#{$name}.outline {
+    background: transparent;
+    border: 2px solid map.get($props, border);
+    box-shadow: none;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  padding: theme.$spacing-md;
+}
+
+.header,
+.body {
+  padding: theme.$spacing-md;
+  display: flex;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: theme.$spacing-sm;
+}
+
+.title {
+  font-weight: theme.$font-weight-bold;
+  margin: 0;
+  flex: 1;
+  display: flex;
+  gap: theme.$spacing-sm;
+}
+
+.icon {
+  font-size: 1.2em;
+  display: flex;
+  color: var(--text-color-primary);
+}
+
+.description {
+  color: var(--text-color-primary);
+  width: 95%;
+  margin: theme.$spacing-xxs auto;
+}
+
+.footer {
+  padding: theme.$spacing-sm;
+  border-top: 2px solid rgb(0 0 0 / 10%);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: theme.$spacing-sm;
+}
+
+.xs {
+  .description {
+    font-size: theme.$font-size-xs;
+  }
+
+  .icon {
+    font-size: 0.9em;
+  }
+
+  .title {
+    font-size: theme.$font-size-sm;
+    line-height: 0.9em;
+  }
+
+  .children {
+    font-size: theme.$font-size-xs;
+  }
+}
+
+.small {
+  .description {
+    font-size: theme.$font-size-sm;
+  }
+
+  .icon {
+    font-size: 1em;
+  }
+
+  .title {
+    font-size: theme.$font-size-md;
+  }
+
+  .children {
+    font-size: theme.$font-size-sm;
+  }
+}
+
+.medium {
+  .description {
+    font-size: theme.$font-size-md;
+  }
+
+  .icon {
+    font-size: 1.2em;
+  }
+
+  .title {
+    font-size: theme.$font-size-base;
+  }
+
+  .children {
+    font-size: theme.$font-size-md;
+  }
+}
+
+.large {
+  .description {
+    font-size: theme.$font-size-lg;
+  }
+
+  .icon {
+    font-size: 1.4em;
+  }
+
+  .title {
+    font-size: 1.4em;
+  }
+
+  .children {
+    font-size: theme.$font-size-lg;
+  }
+}
+
+.xl {
+  .description {
+    font-size: theme.$font-size-xl;
+  }
+
+  .icon {
+    font-size: 1.2em;
+  }
+
+  .title {
+    font-size: 1.6em;
+  }
+
+  .children {
+    font-size: theme.$font-size-xl;
+  }
+}
+
+.clear {
+  box-shadow: none;
+}
+
+.left {
+  text-align: left;
+
+  .header,
+  .body,
+  .footer,
+  .actions {
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
+}
+
+.center {
+  text-align: center;
+
+  .header,
+  .body,
+  .footer,
+  .actions {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+.right {
+  text-align: right;
+
+  .header,
+  .body,
+  .footer,
+  .actions {
+    align-items: flex-end;
+    justify-content: flex-end;
+    text-align: right;
   }
 }

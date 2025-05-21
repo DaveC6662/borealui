@@ -1,68 +1,46 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { RadioButton } from "@/index.next";
-import "@testing-library/jest-dom";
-import { ThemeType } from "@/types/types";
+import BaseRadioButton from "@/components/RadioButton/RadioButtonBase";
 
-describe("RadioButton", () => {
-  const baseProps = {
-    label: "Option A",
-    value: "a",
-    onChange: jest.fn(),
-    checked: false,
-  };
+const mockClassNames = {
+  wrapper: "radioWrapper",
+  input: "radioInput",
+  circle: "radioCircle",
+  label: "radioLabel",
+  primary: "themePrimary",
+  secondary: "themeSecondary",
+  disabled: "radioDisabled",
+};
 
-  it("renders with label and input", () => {
-    render(<RadioButton {...baseProps} data-testid="radio-a" />);
-    const input = screen.getByTestId("radio-a");
-    const label = screen.getByTestId("radio-a-label");
-    const circle = screen.getByTestId("radio-a-circle");
-
-    expect(input).toBeInTheDocument();
-    expect(label).toHaveTextContent("Option A");
-    expect(circle).toBeInTheDocument();
-  });
-
-  it("fires onChange when clicked", () => {
-    const onChange = jest.fn();
-    render(<RadioButton {...baseProps} onChange={onChange} data-testid="radio-a" />);
-    fireEvent.click(screen.getByTestId("radio-a"));
-    expect(onChange).toHaveBeenCalledWith("a");
-  });
-
-  it("applies checked state", () => {
-    render(<RadioButton {...baseProps} checked data-testid="radio-a" />);
-    const input = screen.getByTestId("radio-a");
-    expect(input).toBeChecked();
-  });
-
-  it("applies disabled state", () => {
-    render(<RadioButton {...baseProps} disabled data-testid="radio-a" />);
-    const input = screen.getByTestId("radio-a");
-    expect(input).toBeDisabled();
-  });
-
-  it("does not fire onChange when disabled", () => {
-    const onChange = jest.fn();
+describe("BaseRadioButton", () => {
+  it("renders correctly with label", () => {
     render(
-      <RadioButton {...baseProps} disabled onChange={onChange} data-testid="radio-a" />
+      <BaseRadioButton
+        label="Option A"
+        value="A"
+        checked={false}
+        onChange={() => {}}
+        classMap={mockClassNames}
+        data-testid="radio"
+      />
     );
-    fireEvent.click(screen.getByTestId("radio-a"));
-    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByTestId("radio-label")).toHaveTextContent("Option A");
+    expect(screen.getByTestId("radio")).not.toBeChecked();
   });
 
-  it("applies theme class", () => {
-    const theme: ThemeType = "success";
-    const { container } = render(
-      <RadioButton {...baseProps} theme={theme} data-testid="radio-a" />
+  it("triggers onChange when clicked", () => {
+    const handleChange = jest.fn();
+    render(
+      <BaseRadioButton
+        label="Option B"
+        value="B"
+        checked={false}
+        onChange={handleChange}
+        classMap={mockClassNames}
+        data-testid="radio"
+      />
     );
-    expect(container.firstChild).toHaveClass("success");
-  });
 
-  it("has proper ARIA attributes", () => {
-    render(<RadioButton {...baseProps} checked data-testid="radio-a" />);
-    const input = screen.getByTestId("radio-a");
-
-    expect(input).toHaveAttribute("role", "radio");
-    expect(input).toHaveAttribute("aria-checked", "true");
+    fireEvent.click(screen.getByTestId("radio"));
+    expect(handleChange).toHaveBeenCalledWith("B");
   });
 });

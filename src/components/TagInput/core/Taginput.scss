@@ -1,25 +1,31 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:map";
 
-$themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-  "clear": transparent
-);
-
 $sizes: (
-  "xs": (font-size: theme.$font-size-xs, padding: theme.$spacing-xxs theme.$spacing-xs),
-  "small": (font-size: theme.$font-size-sm, padding: theme.$spacing-xxs theme.$spacing-xs),
-  "medium": (font-size: theme.$font-size-md, padding: theme.$spacing-xs theme.$spacing-sm),
-  "large": (font-size: theme.$font-size-base, padding: theme.$spacing-sm),
-  "xl": (font-size: theme.$font-size-lg, padding: theme.$spacing-sm)
+  "xs": (
+    font-size: theme.$font-size-xs,
+    padding: theme.$spacing-xxs theme.$spacing-xs,
+  ),
+  "small": (
+    font-size: theme.$font-size-sm,
+    padding: theme.$spacing-xxs theme.$spacing-xs,
+  ),
+  "medium": (
+    font-size: theme.$font-size-md,
+    padding: theme.$spacing-xs theme.$spacing-sm,
+  ),
+  "large": (
+    font-size: theme.$font-size-base,
+    padding: theme.$spacing-sm,
+  ),
+  "xl": (
+    font-size: theme.$font-size-lg,
+    padding: theme.$spacing-sm,
+  ),
 );
 
-.tagInput {
+.tag_input {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -33,8 +39,7 @@ $sizes: (
     border-color: var(--primary-color);
   }
 
-
-  .inputWrapper {
+  &_input_wrapper {
     list-style: none;
 
     li {
@@ -42,46 +47,47 @@ $sizes: (
     }
   }
 
-  .tagContainer {
+  &_tag_container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: theme.$spacing-xs;
     width: 100%;
+    width: fit-content;
   }
 
-  .tag {
+  &_remove_button {
+    color: theme.$error-color;
+  }
+
+  &_tag {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: theme.$spacing-md;
+    width: fit-content;
+    gap: theme.$spacing-xs;
     background-color: var(--primary-color);
     color: var(--text-color-primary);
     border-radius: theme.$border-radius-md;
-    font-weight: theme.$font-weight-bold;
     font-size: theme.$font-size-sm;
-    padding: theme.$spacing-xs theme.$spacing-sm;
-
-    .tagLabel {
-      padding: theme.$spacing-xs;
-    }
+    padding: theme.$spacing-xxs theme.$spacing-xs;
   }
 
-  @each $theme, $color in $themes {
-    .#{$theme} {
-      .tag {
-        background-color: $color;
+  &_tag_label {
+    padding: theme.$spacing-xxs;
+  }
 
-        @if $theme =="clear" {
-          border: 1px solid var(--text-color-primary);
-        }
+  @each $theme, $color in theme.$themes {
+    &_#{$theme} {
+      .tag_input_tag {
+        background-color: map.get($color, bg);
       }
     }
   }
 
   @each $size, $props in $sizes {
-    .#{$size} {
-      .tag {
+    &_#{$size} {
+      .tag_input_tag {
         font-size: map.get($props, font-size);
         padding: map.get($props, padding);
       }

@@ -1,163 +1,56 @@
-import React, { useId } from "react";
-import Button from "../../Buttons/Button/core/Button";
-import IconButton from "../../Buttons/IconButton/core/IconButton";
-import Skeleton from "../../Skeleton/core/Skeleton";
+import React from "react";
+import CardBase from "../CardBase";
 import "./Card.scss";
-import { combineClassNames } from "../../../utils/classNames";
+import { Button, IconButton, Skeleton } from "../../../index.core";
 import { CardProps } from "../Card.types";
 
+const classes = {
+  card: "card",
+  left: "card_left",
+  right: "card_right",
+  center: "card_center",
+  primary: "card_primary",
+  secondary: "card_secondary",
+  success: "card_success",
+  warning: "card_warning",
+  error: "card_error",
+  clear: "card_clear",
+  outline: "card_outline",
+  loading: "card_loading",
+  content: "card_content",
+  xs: "card_xs",
+  small: "card_small",
+  medium: "card_medium",
+  large: "card_large",
+  xl: "card_xl",
+  vertical: "card_vertical",
+  horizontal: "card_horizontal",
+  image: "card_image",
+  header: "card_header",
+  title: "card_title",
+  icon: "card_icon",
+  body: "card_body",
+  description: "card_description",
+  children: "card_children",
+  footer: "card_footer",
+  actions: "card_actions",
+  action_button: "card_action_button",
+};
 
-/**
- * A highly flexible and themeable card component with optional media,
- * header, footer, and content customization. Includes loading state
- * and accessible markup.
- *
- * @param {CardProps} props - Component props.
- * @returns {JSX.Element} Rendered Card component.
- */
-const Card: React.FC<CardProps> = ({
-  theme = "primary",
-  cardIcon,
-  title = "",
-  description = "",
-  imageUrl,
-  imageAlt,
-  className = "",
-  imageClassName = "",
-  headerClassName = "",
-  bodyClassName = "",
-  footerClassName = "",
-  solid = false,
-  renderHeader,
-  renderContent,
-  renderFooter,
-  actionButtons = [],
-  useIconButtons = false,
-  layout = "vertical",
-  blur = false,
-  loading = false,
-  children,
-  "data-testid": testId = "card",
-  "aria-labelledby": ariaLabelledBy,
-}) => {
-  const autoId = useId();
-  const headerId = ariaLabelledBy || `${autoId}-header`;
-  const hasImage = !!imageUrl;
+const Card: React.FC<CardProps> = (props) => {
+  const wrappedButtons = (props.actionButtons ?? []).map((b) => ({
+    ...b,
+    buttonComponent: Button,
+    iconButtonComponent: IconButton,
+  }));
 
   return (
-    <div
-      data-testid={testId}
-      className={combineClassNames(
-        "card",
-        solid && "solid",
-        theme,
-        loading && "cardLoading",
-        className
-      )}
-      role="region"
-      aria-labelledby={headerId}
-    >
-      {loading ? (
-        <Skeleton width="100%" height="250px" data-testid="skeleton" />
-      ) : (
-        <div
-          className={combineClassNames(
-            "cardContent",
-            "fadeIn",
-            layout
-          )}
-        >
-          {hasImage && (
-            <img
-              src={typeof imageUrl === "string" ? imageUrl : imageUrl?.src}
-              alt={imageAlt || "Card image"}
-              className={combineClassNames("cardImage", imageClassName)}
-              loading="lazy"
-            />
-          )}
-
-          <div>
-            <div
-              className={combineClassNames("cardHeader", headerClassName)}
-              id={headerId}
-            >
-              {renderHeader ? (
-                renderHeader()
-              ) : title ? (
-                <h2 className={"cardTitle"}>
-                  {cardIcon && (
-                    <span
-                      className={"cardIcon"}
-                      aria-hidden="true"
-                      data-testid="card-icon"
-                    >
-                      {React.createElement(cardIcon)}
-                    </span>
-                  )}
-                  {title}
-                </h2>
-              ) : null}
-            </div>
-
-            <div className={combineClassNames("cardBody", bodyClassName)}>
-              {renderContent ? (
-                renderContent()
-              ) : (
-                <>
-                  {description && (
-                    <p className={"cardDescription"}>{description}</p>
-                  )}
-                  {children && (
-                    <div className={"cardChildren"}>{children}</div>
-                  )}
-                </>
-              )}
-            </div>
-
-            {(actionButtons.length > 0 || renderFooter) && (
-              <div
-                className={combineClassNames(
-                  "cardFooter",
-                  footerClassName
-                )}
-              >
-                {actionButtons.length > 0 && (
-                  <div className={"cardActions"}>
-                    {actionButtons.map((button, index) =>
-                      useIconButtons && button.icon ? (
-                        <IconButton
-                          key={index}
-                          icon={button.icon}
-                          onClick={button.onClick}
-                          className={"actionButton"}
-                          theme={button.theme || "clear"}
-                          ariaLabel={button.label}
-                          href={button.href}
-                          loading={button.loading}
-                        />
-                      ) : (
-                        <Button
-                          key={index}
-                          onClick={button.onClick}
-                          className={"actionButton"}
-                          theme={button.theme || "secondary"}
-                          href={button.href}
-                          loading={button.loading}
-                          ariaLabel={button.label}
-                        >
-                          {button.label}
-                        </Button>
-                      )
-                    )}
-                  </div>
-                )}
-                {renderFooter && renderFooter()}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+    <CardBase
+      {...props}
+      actionButtons={wrappedButtons}
+      classMap={classes}
+      SkeletonComponent={Skeleton}
+    />
   );
 };
 

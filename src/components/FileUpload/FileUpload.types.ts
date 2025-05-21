@@ -17,9 +17,13 @@ export interface FileUploadProps {
   /** Allows multiple file selection if true. */
   multiple?: boolean;
   /** Called after simulated upload completes. */
-  onSubmit: (files: FileList | null) => void;
+  onSubmit: (files: File[]) => void;
   /** External upload progress value (overrides internal simulation). */
   uploadProgress?: number;
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
+  /** Maximum file size in bytes (e.g., 5MB = 5 * 1024 * 1024). */
+  maxFileSizeBytes?: number;
+  /** Allowed file MIME types (e.g., ["image/png", "application/pdf"]). */
+  allowedFileTypes?: string[];
 }

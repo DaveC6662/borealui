@@ -1,17 +1,8 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 @use "sass:map";
 
-$theme-states: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-  "clear": var(--text-color-primary)
-);
-
-.overlay {
+.command_palette_overlay {
   position: fixed;
   inset: 0;
   background: rgb(0 0 0 / 40%);
@@ -20,9 +11,9 @@ $theme-states: (
   justify-content: center;
   align-items: flex-start;
   padding-top: 10vh;
+}
 
-
-.palette {
+.command_palette {
   background: var(--background-color-light);
   border-radius: theme.$border-radius-lg;
   box-shadow: theme.$box-shadow-large;
@@ -34,13 +25,13 @@ $theme-states: (
   gap: theme.$spacing-sm;
 }
 
-.input {
+.command_palette_input {
   width: 90%;
   padding: none;
   margin: 0 auto;
 }
 
-.list {
+.command_palette_list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -48,7 +39,7 @@ $theme-states: (
   overflow-y: auto;
 }
 
-.item {
+.command_palette_item {
   padding: theme.$spacing-sm;
   cursor: pointer;
   border-radius: theme.$border-radius-sm;
@@ -59,27 +50,35 @@ $theme-states: (
   line-height: 0.8em;
 }
 
-.icon {
+.command_palette_icon {
   flex-shrink: 0;
 }
 
-.empty {
+.command_palette_empty {
   padding: theme.$spacing-sm;
   color: theme.$disabled-color;
 }
 
-@each $state, $color in $theme-states {
-  .#{$state} {
-    border: 2px solid $color;
+.command_palette_active {
+  font-weight: theme.$font-weight-bold;
+}
 
-    .item {
-      &:hover,
-      &.active {
-        background-color: $color;
-        color: if($state == "primary", var(--text-color-primary), var(--text-color-secondary));
-      }
-    }
+@each $name, $values in theme.$themes {
+  .command_palette_#{$name} {
+    border: 2px solid map.get($values, border);
+  }
+
+  .command_palette_item.command_palette_#{$name}:hover,
+  .command_palette_item.command_palette_#{$name}.command_palette_active {
+    background-color: map.get($values, bg);
+    color: if(
+      $name == "primary",
+      var(--text-color-primary),
+      var(--text-color-secondary)
+    );
   }
 }
 
+.command_palette_clear {
+  box-shadow: none;
 }

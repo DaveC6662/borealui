@@ -1,38 +1,31 @@
-@use "@styles/theme.scss" as theme;
-
-$themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-  "clear": transparent
-);
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
+@use "sass:map";
 
 .toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
   padding: theme.$spacing-sm theme.$spacing-md;
   background-color: var(--background-light-color);
   color: var(--text-color-primary);
-  box-shadow: theme.$box-shadow-medium;
   gap: theme.$spacing-sm;
-}
 
-@each $theme, $color in $themes {
-  .toolbar.#{$theme} {
-    background-color: $color;
+  @each $theme, $color in theme.$themes {
+    &.#{$theme} {
+      background-color: map.get($color, bg);
 
-    @if $theme == "clear" {
-      box-shadow: none;
-    }
+      @if $theme == "clear" {
+        box-shadow: none;
+      }
 
-    @if $theme == "secondary" {
-      color: var(--text-color-secondary);
-    } @else {
-      color: var(--text-color-primary);
+      @if $theme == "secondary" {
+        color: var(--text-color-secondary);
+      } @else {
+        color: var(--text-color-primary);
+      }
     }
   }
 }
@@ -51,7 +44,7 @@ $themes: (
     justify-content: flex-end;
   }
 
-  @media (width <= 600px) {
+  @media (width <=600px) {
     width: 100%;
     justify-content: space-between;
     margin-bottom: theme.$spacing-xs;
@@ -67,7 +60,7 @@ $themes: (
   font-weight: theme.$font-weight-bold;
   margin: 0;
 
-  @media (width <= 600px) {
+  @media (width <=600px) {
     font-size: theme.$font-size-md;
     margin-bottom: theme.$spacing-xs;
   }
@@ -76,7 +69,7 @@ $themes: (
 .avatarWrapper {
   margin-left: theme.$spacing-sm;
 
-  @media (width <= 600px) {
+  @media (width <=600px) {
     margin-left: 0;
     margin-top: theme.$spacing-xs;
   }

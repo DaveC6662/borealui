@@ -1,68 +1,31 @@
-import React, { useId } from "react";
+import React from "react";
+import DateTimePickerBase from "../DateTimePickerBase";
 import "./DateTimePicker.scss";
-import { combineClassNames } from "../../../utils/classNames";
-import { DateTimePickerProps } from "../DateTimePicker.types";
+import type { DateTimePickerProps } from "../DateTimePicker.types";
 
-/**
- * A styled `datetime-local` input with optional label, theming, sizing,
- * and accessibility support.
- *
- * @param {DateTimePickerProps} props - Props for configuring the date/time picker.
- * @returns {JSX.Element} A datetime input field with optional label.
- */
-const DateTimePicker: React.FC<DateTimePickerProps> = ({
-  label,
-  value,
-  onChange,
-  min,
-  max,
-  name,
-  className = "",
-  required = false,
-  disabled = false,
-  size = "medium",
-  outline,
-  theme = "primary",
-  "data-testid": testId,
-}) => {
-  const inputId = useId();
-
-  return (
-    <div
-      className={combineClassNames(
-        "wrapper",
-        size,
-        outline && "outline",
-        disabled && "disabled",
-        className
-      )}
-      data-testid={testId}
-    >
-      {label && (
-        <label htmlFor={inputId} className={"label"}>
-          {label}
-        </label>
-      )}
-      <div className={"inputWrapper"}>
-        <input
-          id={inputId}
-          type="datetime-local"
-          className={combineClassNames("input", theme)}
-          value={value}
-          onChange={(e) => onChange?.(e.target.value)}
-          min={min}
-          max={max}
-          name={name}
-          required={required}
-          disabled={disabled}
-          aria-required={required}
-          aria-disabled={disabled}
-          aria-label={label || "Date and time"}
-          data-testid={testId ? `${testId}-input` : undefined}
-        />
-      </div>
-    </div>
-  );
+const classes = {
+  wrapper: "datetime_picker_wrapper",
+  label: "datetime_picker_label",
+  inputWrapper: "datetime_picker_inputWrapper",
+  input: "datetime_picker_input",
+  primary: "datetime_picker_primary",
+  secondary: "datetime_picker_secondary",
+  success: "datetime_picker_success",
+  error: "datetime_picker_error",
+  warning: "datetime_picker_warning",
+  clear: "datetime_picker_clear",
+  xs: "datetime_picker_xs",
+  small: "datetime_picker_small",
+  medium: "datetime_picker_medium",
+  large: "datetime_picker_large",
+  xl: "datetime_picker_xl",
+  outline: "datetime_picker_outline",
+  disabled: "datetime_picker_disabled",
+  icon: "datetime_picker_icon",
 };
+
+const DateTimePicker: React.FC<DateTimePickerProps> = (props) => (
+  <DateTimePickerBase {...props} classMap={classes} />
+);
 
 export default DateTimePicker;

@@ -1,28 +1,11 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:map";
 
-// Theme Map
-$popover-themes: (
-  "primary": (bg: var(--primary-color), text: var(--text-color-primary)),
-  "secondary": (bg: var(--secondary-color), text: var(--text-color-secondary)),
-  "success": (bg: theme.$success-color, text: var(--text-color-primary)),
-  "error": (bg: theme.$error-color, text: var(--text-color-primary)),
-  "warning": (bg: theme.$warning-color, text: var(--text-color-primary)),
-  "clear": (bg: transparent, text: var(--text-color-primary), shadow: none, border: none)
-);
-
-// Position Map (Split out popover and arrow styles)
-$position-popover: (
-  "top": (bottom: 100%, left: 50%, transform: translateX(-50%) translateY(-8px)),
-  "bottom": (top: 100%, left: 50%, transform: translateX(-50%) translateY(8px)),
-  "left": (right: 100%, top: 50%, transform: translateX(-8px) translateY(-50%)),
-  "right": (left: 100%, top: 50%, transform: translateX(8px) translateY(-50%))
-);
-
-// ========== Base ==========
-.popoverContainer {
+.container {
   position: relative;
   display: inline-block;
+  width: fit-content;
 }
 
 .trigger {
@@ -39,58 +22,64 @@ $position-popover: (
   position: absolute;
   z-index: 1000;
   max-width: 90vw;
-  min-width: 150px;
+  min-width: 100%;
+  width: max-content;
   padding: theme.$spacing-sm;
   border-radius: theme.$border-radius-md;
   background-color: var(--background-light-color);
   color: var(--text-color-secondary);
   border: 1px solid var(--text-color-secondary);
   box-shadow: theme.$box-shadow-medium;
-  animation: fade 0.25s ease-in-out forwards;
+  animation: fade-in 0.25s ease-in-out forwards;
 
-
-  @each $name, $values in $popover-themes {
+  @each $name, $values in theme.$themes {
     &.#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
-      box-shadow: if(map.has-key($values, shadow), map.get($values, shadow), theme.$box-shadow-medium);
-      border: if(map.has-key($values, border), map.get($values, border), 1px solid var(--text-color-secondary));
+      box-shadow: if(
+        map.has-key($values, shadow),
+        map.get($values, shadow),
+        theme.$box-shadow-medium
+      );
+      border: if(
+        map.has-key($values, border),
+        map.get($values, border),
+        1px solid var(--text-color-secondary)
+      );
     }
   }
 
-  @each $pos, $props in $position-popover {
-    &.#{$pos} {
-      @each $prop, $val in $props {
-        #{$prop}: $val;
-      }
-    }
+  &.clear {
+    box-shadow: none;
+    border: 1px solid var(--text-color-primary);
   }
 
-  @media (width <= 640px) {
-    &.left,
-    &.right {
-      top: 100%;
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%) translateY(8px) !important;
-    }
+  &::after {
+    content: none !important;
+    display: none !important;
   }
 }
 
-.popover::after {
-  content: none !important;
-  display: none !important;
+.top {
+  bottom: 95%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
 }
 
+.bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+}
 
-@keyframes fade {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
+.left {
+  right: 100%;
+  top: 50%;
+  transform: translateX(-8px) translateY(-50%);
+}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.right {
+  left: 100%;
+  top: 50%;
+  transform: translateX(8px) translateY(-50%);
 }

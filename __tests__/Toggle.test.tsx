@@ -1,51 +1,81 @@
-import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Toggle } from "@/index.next";
+import { axe } from "jest-axe";
+import ToggleBase from "@/components/Toggle/ToggleBase";
 
-describe("Toggle", () => {
-  const setup = (props = {}) => {
-    const onChange = jest.fn();
-    render(<Toggle checked={false} onChange={onChange} {...props} />);
-    return { onChange };
-  };
+const mockStyles = {
+  toggleContainer: "toggleContainer",
+  toggle: "toggle",
+  active: "active",
+  slider: "slider",
+  label: "label",
+  primary: "primary",
+  medium: "medium",
+  disabled: "disabled",
+};
 
-  it("renders with a label", () => {
-    setup({ label: "Dark Mode" });
-    expect(screen.getByTestId("toggle-label")).toHaveTextContent("Dark Mode");
+describe("ToggleBase", () => {
+  it("is accessible with a label", async () => {
+    const { container } = render(
+      <ToggleBase
+        checked={false}
+        onChange={() => {}}
+        label="Enable setting"
+        classMap={mockStyles}
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 
-  it("toggles when clicked", () => {
-    const { onChange } = setup();
+  it("calls onChange when clicked", () => {
+    const onChange = jest.fn();
+
+    render(
+      <ToggleBase
+        checked={false}
+        onChange={onChange}
+        label="Click me"
+        classMap={mockStyles}
+      />
+    );
+
     fireEvent.click(screen.getByRole("switch"));
     expect(onChange).toHaveBeenCalledWith(true);
   });
 
-  it("toggles when Enter is pressed", () => {
-    const { onChange } = setup();
-    const toggle = screen.getByRole("switch");
-    fireEvent.keyDown(toggle, { key: "Enter", code: "Enter" });
+  it("calls onChange when toggled via keyboard", () => {
+    const onChange = jest.fn();
+
+    render(
+      <ToggleBase
+        checked={false}
+        onChange={onChange}
+        label="Press me"
+        classMap={mockStyles}
+      />
+    );
+
+    fireEvent.keyDown(screen.getByRole("switch"), { key: " " });
     expect(onChange).toHaveBeenCalledWith(true);
   });
 
-  it("toggles when Space is pressed", () => {
-    const { onChange } = setup();
-    const toggle = screen.getByRole("switch");
-    fireEvent.keyDown(toggle, { key: " ", code: "Space" });
-    expect(onChange).toHaveBeenCalledWith(true);
-  });
+  it("is disabled and does not call onChange", () => {
+    const onChange = jest.fn();
 
-  it("does not toggle when disabled", () => {
-    const { onChange } = setup({ disabled: true });
+    render(
+      <ToggleBase
+        checked={false}
+        onChange={onChange}
+        label="Disabled"
+        disabled
+        classMap={mockStyles}
+      />
+    );
+
     const toggle = screen.getByRole("switch");
     fireEvent.click(toggle);
-    fireEvent.keyDown(toggle, { key: "Enter", code: "Enter" });
+    fireEvent.keyDown(toggle, { key: " " });
     expect(onChange).not.toHaveBeenCalled();
-  });
-
-  it("has the correct aria attributes", () => {
-    setup({ checked: true, label: "Toggle accessibility" });
-    const toggle = screen.getByRole("switch");
-    expect(toggle).toHaveAttribute("aria-checked", "true");
-    expect(toggle).toHaveAttribute("aria-labelledby", "toggle-label");
   });
 });

@@ -1,72 +1,40 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import "./Accordion.scss";
-import { AccordionProps } from "../Accordion.types";
-import { AccordionBase } from "../Accordion.base";
-import { combineClassNames } from "../../../utils/classNames";
+import { AccordionBase } from "../AccordionBase";
+import type { AccordionProps } from "../Accordion.types";
+
+const classes = {
+  accordion: "accordion",
+  header: "accordion_header",
+  content: "accordion_content",
+  icon: "accordion_icon",
+  title: "accordion_title",
+
+  disabled: "accordion_disabled",
+  expanded: "accordion_expanded",
+
+  primary: "accordion_primary",
+  secondary: "accordion_secondary",
+  success: "accordion_success",
+  error: "accordion_error",
+  warning: "accordion_warning",
+  clear: "accordion_clear",
+  outline: "accordion_outline",
+
+  xs: "accordion_xs",
+  small: "accordion_small",
+  medium: "accordion_medium",
+  large: "accordion_large",
+  xl: "accordion_xl",
+};
 
 const generateUniqueId = (() => {
   let counter = 0;
   return () => `accordion-core-${counter++}`;
 })();
 
-const Accordion: React.FC<AccordionProps> = (props) => {
-  const {
-    id,
-    theme = "primary",
-    outline = false,
-    size = "medium",
-    disabled,
-    expanded,
-    onToggle,
-    initiallyExpanded = false,
-    className = "",
-  } = props;
-
-  const isControlled = expanded !== undefined;
-  const internalId = useMemo(generateUniqueId, []);
-  const [internalExpanded, setInternalExpanded] = useState(initiallyExpanded);
-  const isExpanded = isControlled ? expanded : internalExpanded;
-
-  const accordionId = useMemo(() => id || internalId, [id, internalId]);
-
-  const toggle = () => {
-    if (disabled) return;
-    isControlled ? onToggle?.(!expanded) : setInternalExpanded((prev) => !prev);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (disabled) return;
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      toggle();
-    }
-  };
-
-  const classNames = {
-    wrapper: combineClassNames(
-      "accordion",
-      theme,
-      outline && "outline",
-      size,
-      disabled && "disabled",
-      className
-    ),
-    header: combineClassNames("accordionHeader", theme),
-    content: combineClassNames("accordionContent", isExpanded && "expanded"),
-    icon: combineClassNames("accordionIcon", isExpanded && "expanded"),
-    title: "accordionTitle",
-  };
-
-  return (
-    <AccordionBase
-      {...props}
-      id={accordionId}
-      isExpanded={isExpanded}
-      toggle={toggle}
-      handleKeyDown={handleKeyDown}
-      classNames={classNames}
-    />
-  );
-};
+const Accordion: React.FC<AccordionProps> = (props) => (
+  <AccordionBase {...props} getUniqueId={generateUniqueId} classMap={classes} />
+);
 
 export default Accordion;

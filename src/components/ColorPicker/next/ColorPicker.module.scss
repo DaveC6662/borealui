@@ -1,4 +1,5 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:map";
 
 $swatch-sizes: (
@@ -9,12 +10,13 @@ $swatch-sizes: (
   xl: 40px,
 );
 
-.colorPicker {
+.color_picker {
   border: none;
   padding: theme.$spacing-sm;
   display: flex;
   flex-direction: column;
   gap: theme.$spacing-xs;
+  width: fit-content;
 
   &:disabled {
     opacity: 0.5;
@@ -28,13 +30,13 @@ $swatch-sizes: (
   margin-bottom: theme.$spacing-xs;
 }
 
-.colorGrid {
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
   gap: theme.$spacing-xs;
 }
 
-.colorSwatch {
+.swatch {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -59,11 +61,11 @@ $swatch-sizes: (
   }
 }
 
-.radioInput {
+.radio_input {
   display: none;
 }
 
-.colorPreview {
+.preview {
   width: 80%;
   height: 80%;
   display: block;
@@ -71,20 +73,20 @@ $swatch-sizes: (
   box-sizing: border-box;
 }
 
-.square .colorPreview {
+.square .preview {
   border-radius: 6px;
 }
 
-.round .colorPreview {
+.round .preview {
   border-radius: 50%;
 }
 
-.pill .colorPreview {
+.pill .preview {
   border-radius: 9999px;
   height: 50%;
 }
 
-.customColorInput {
+.custom_input {
   margin-top: theme.$spacing-xs;
   width: 100%;
 }

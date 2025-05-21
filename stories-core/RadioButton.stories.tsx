@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import RadioButton from "@/components/RadioButton/core/RadioButton";
+import { RadioButton } from "@/index.core";
 import type { RadioButtonProps } from "@/components/RadioButton/RadioButton.types";
 
 const meta: Meta<RadioButtonProps> = {
@@ -11,7 +11,7 @@ const meta: Meta<RadioButtonProps> = {
     label: "Option A",
     value: "a",
     checked: false,
-    theme: "primary",
+    theme: "secondary",
   },
 };
 
@@ -27,7 +27,7 @@ export const Default: Story = {
       <RadioButton
         {...args}
         checked={selected === args.value}
-        onChange={(value: React.SetStateAction<string>) => setSelected(value)}
+        onChange={setSelected}
       />
     );
   },
@@ -36,27 +36,20 @@ export const Default: Story = {
 export const Grouped: Story = {
   render: () => {
     const [selected, setSelected] = useState("b");
+    const options = ["a", "b", "c"];
 
     return (
       <div style={{ display: "flex", gap: "1rem" }}>
-        <RadioButton
-          label="Option A"
-          value="a"
-          checked={selected === "a"}
-          onChange={setSelected}
-        />
-        <RadioButton
-          label="Option B"
-          value="b"
-          checked={selected === "b"}
-          onChange={setSelected}
-        />
-        <RadioButton
-          label="Option C"
-          value="c"
-          checked={selected === "c"}
-          onChange={setSelected}
-        />
+        {options.map((opt) => (
+          <RadioButton
+            key={opt}
+            theme="secondary"
+            label={`Option ${opt.toUpperCase()}`}
+            value={opt}
+            checked={selected === opt}
+            onChange={setSelected}
+          />
+        ))}
       </div>
     );
   },
@@ -73,45 +66,29 @@ export const Disabled: Story = {
 
 export const ThemeVariants: Story = {
   render: () => {
-    const [selected, setSelected] = useState("a");
+    const [selected, setSelected] = useState("primary");
+
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        <RadioButton
-          label="Primary"
-          value="a"
-          theme="primary"
-          checked={selected === "a"}
-          onChange={setSelected}
-        />
-        <RadioButton
-          label="Secondary"
-          value="b"
-          theme="secondary"
-          checked={selected === "b"}
-          onChange={setSelected}
-        />
-        <RadioButton
-          label="Success"
-          value="c"
-          theme="success"
-          checked={selected === "c"}
-          onChange={setSelected}
-        />
-        <RadioButton
-          label="Warning"
-          value="d"
-          theme="warning"
-          checked={selected === "d"}
-          onChange={setSelected}
-        />
-        <RadioButton
-          label="Error"
-          value="e"
-          theme="error"
-          checked={selected === "e"}
-          onChange={setSelected}
-        />
+        {themes.map((theme) => (
+          <RadioButton
+            key={theme}
+            label={theme.charAt(0).toUpperCase() + theme.slice(1)}
+            value={theme}
+            theme={theme}
+            checked={selected === theme}
+            onChange={setSelected}
+          />
+        ))}
       </div>
     );
   },

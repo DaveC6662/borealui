@@ -1,65 +1,91 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { Footer } from "@/index.next";
-import ThemeProvider from "@/context/ThemeContext";
-import { FaFacebook, FaTwitter } from "react-icons/fa";
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import BaseFooter from "@/components/Footer/FooterBase";
+import { FaGithub, FaTwitter } from "react-icons/fa";
 
-// Mock Firebase Analytics
-jest.mock("../../../firebaseConfig", () => ({
-  getAnalyticsInstance: jest.fn().mockResolvedValue({
-    logEvent: jest.fn(),
-  }),
-}));
-jest.mock("firebase/analytics", () => ({
-  logEvent: jest.fn(),
-}));
+const classNames = {
+  wrapper: "footerWrapper",
+  primary: "themePrimary",
+  content: "footerContent",
+  left: "footerLeft",
+  links: "footerLinks",
+  link: "footerLink",
+  social: "footerSocial",
+  themeToggle: "footerThemeToggle",
+};
 
-describe("Footer", () => {
-  const defaultProps = {
-    copyright: "© 2025 My Company",
-    links: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
-    ],
-    socialLinks: [
-      { title: "Facebook", icon: FaFacebook, href: "https://facebook.com" },
-      { title: "Twitter", icon: FaTwitter, href: "https://twitter.com" },
-    ],
-    showThemeSelect: true,
-    "data-testid": "custom-footer",
-  };
+const DummyIconButton = ({ icon: Icon, href, ariaLabel, ...props }: any) => (
+  <a href={href} aria-label={ariaLabel} {...props}>
+    {Icon && <Icon aria-hidden="true" />}
+  </a>
+);
+DummyIconButton.displayName = "DummyIconButton";
 
-  it("renders all main sections", () => {
-    render(<ThemeProvider><Footer {...defaultProps} /></ThemeProvider>);
+const DummyThemeSelect = () => (
+  <select aria-label="Theme selector">
+    <option>Light</option>
+  </select>
+);
 
-    expect(screen.getByTestId("custom-footer")).toBeInTheDocument();
-    expect(screen.getByTestId("custom-footer-copyright")).toHaveTextContent("© 2025 My Company");
-    expect(screen.getByTestId("custom-footer-nav")).toBeInTheDocument();
-    expect(screen.getByTestId("custom-footer-theme-select")).toBeInTheDocument();
-    expect(screen.getByTestId("custom-footer-social")).toBeInTheDocument();
-  });
+const DummyLinkWrapper = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => <a href={href}>{children}</a>;
 
-  it("renders footer links correctly", () => {
-    render(<ThemeProvider><Footer {...defaultProps} /></ThemeProvider>);
-    expect(screen.getByTestId("custom-footer-link-privacy-policy")).toHaveTextContent("Privacy Policy");
-    expect(screen.getByTestId("custom-footer-link-terms-of-service")).toHaveTextContent("Terms of Service");
-  });
+describe("BaseFooter", () => {
+  it("renders links, social icons, theme selector, and copyright", () => {
+    render(
+      <BaseFooter
+        theme="primary"
+        classMap={classNames}
+        IconButton={DummyIconButton}
+        ThemeSelect={DummyThemeSelect}
+        LinkWrapper={DummyLinkWrapper}
+        showThemeSelect
+        links={[
+          { label: "Home", href: "/" },
+          { label: "About", href: "/about" },
+        ]}
+        socialLinks={[
+          { icon: FaGithub, title: "GitHub", href: "https://github.com" },
+          { icon: FaTwitter, title: "Twitter", href: "https://twitter.com" },
+        ]}
+        copyright="© 2025 MyCompany"
+      />
+    );
 
-  it("renders social icons and triggers click handler", async () => {
-    render(<ThemeProvider><Footer {...defaultProps} /></ThemeProvider>);
+    // Landmark
+    expect(
+      screen.getByRole("contentinfo", { name: /footer/i })
+    ).toBeInTheDocument();
 
-    const fbButton = screen.getByTestId("custom-footer-social-facebook");
-    expect(fbButton).toBeInTheDocument();
+    // Navigation
+    expect(
+      screen.getByRole("navigation", { name: /footer site links/i })
+    ).toBeInTheDocument();
+    expect(screen.getByText("Home")).toBeInTheDocument();
+    expect(screen.getByText("About")).toBeInTheDocument();
 
-    const openSpy = jest.spyOn(window, "open").mockImplementation(() => null);
+    // Social
+    expect(
+      screen.getByRole("navigation", { name: /social media/i })
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText("GitHub")).toHaveAttribute(
+      "href",
+      "https://github.com"
+    );
+    expect(screen.getByLabelText("Twitter")).toHaveAttribute(
+      "href",
+      "https://twitter.com"
+    );
 
-    await fireEvent.click(fbButton);
-    expect(openSpy).toHaveBeenCalledWith("https://facebook.com", "_blank", "noopener,noreferrer");
+    // Theme selector
+    expect(screen.getByLabelText("Theme selector")).toBeInTheDocument();
 
-    openSpy.mockRestore();
-  });
-
-  it("does not render theme select if showThemeSelect is false", () => {
-    render(<Footer {...defaultProps} showThemeSelect={false} />);
-    expect(screen.queryByTestId("custom-footer-theme-select")).not.toBeInTheDocument();
+    // Copyright
+    expect(screen.getByText(/© 2025 MyCompany/i)).toBeInTheDocument();
   });
 });

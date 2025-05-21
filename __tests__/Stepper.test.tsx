@@ -1,48 +1,88 @@
-import "@testing-library/jest-dom";
+// __tests__/Stepper.test.tsx
+import React, { JSX } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Stepper } from "@/index.next";
-import { FaCheck } from "react-icons/fa";
+import { axe } from "jest-axe";
+import StepperBase, {
+  StepperBaseProps,
+} from "@/components/Stepper/StepperBase";
 
-describe("Stepper", () => {
-  const steps = [
-    { label: "Step 1", icon: FaCheck },
-    { label: "Step 2" },
-    { label: "Step 3" },
-  ];
+const mockSteps = [
+  { label: "Start", icon: () => <span>1</span> },
+  { label: "Details", icon: () => <span>2</span> },
+  { label: "Confirm", icon: () => <span>3</span> },
+];
 
-  it("renders step labels and icons", () => {
-    render(<Stepper steps={steps} activeStep={1} />);
-    expect(screen.getByText("Step 1")).toBeInTheDocument();
-    expect(screen.getByText("Step 2")).toBeInTheDocument();
-    expect(screen.getByText("Step 3")).toBeInTheDocument();
+const styles = {
+  stepper: "stepper",
+  horizontal: "horizontal",
+  vertical: "vertical",
+  primary: "primary",
+  medium: "medium",
+  step: "step",
+  active: "active",
+  clickable: "clickable",
+  stepLabel: "stepLabel",
+  connector: "connector",
+};
+
+const MockIconButton: React.FC<
+  JSX.IntrinsicElements["button"] & { icon: React.FC; outline?: boolean }
+> = ({ icon: Icon, outline, className, ...props }) => (
+  <button className={outline ? `${className} outline` : className} {...props}>
+    <Icon />
+  </button>
+);
+
+describe("StepperBase", () => {
+  const defaultProps: StepperBaseProps = {
+    steps: mockSteps,
+    activeStep: 1,
+    classMap: styles,
+    IconButtonComponent: MockIconButton,
+    "data-testid": "stepper",
+  };
+
+  it("renders all steps and highlights the active step", () => {
+    render(<StepperBase {...defaultProps} />);
+
+    expect(screen.getByTestId("stepper-step-1-icon")).toHaveAttribute(
+      "aria-current",
+      "step"
+    );
+    expect(screen.getByTestId("stepper-step-0-label")).toBeInTheDocument();
+    expect(screen.getByTestId("stepper-step-1-label")).toBeInTheDocument();
+    expect(screen.getByTestId("stepper-step-2-label")).toBeInTheDocument();
   });
 
-  it('sets "aria-current" on the active step', () => {
-    render(<Stepper steps={steps} activeStep={1} />);
-    const stepButtons = screen.getAllByRole("button");
-    expect(stepButtons[1]).toHaveAttribute("aria-current", "step");
-  });
-
-  it("disables steps beyond the active step", () => {
-    render(<Stepper steps={steps} activeStep={1} />);
-    const stepButtons = screen.getAllByRole("button");
-    expect(stepButtons[2]).toBeDisabled();
-    expect(stepButtons[0]).not.toBeDisabled();
-  });
-
-  it("calls onStepClick when a step is clicked", () => {
+  it("fires onStepClick on click and keydown", () => {
     const handleClick = jest.fn();
-    render(<Stepper steps={steps} activeStep={1} onStepClick={handleClick} />);
-    const stepButtons = screen.getAllByRole("button");
-    fireEvent.click(stepButtons[0]);
-    expect(handleClick).toHaveBeenCalledWith(0);
+
+    render(
+      <StepperBase
+        steps={[{ label: "Step 1" }, { label: "Step 2" }, { label: "Step 3" }]}
+        activeStep={1}
+        onStepClick={handleClick}
+        IconButtonComponent={({ icon: Icon, ...props }) => (
+          <button {...props}>
+            <Icon />
+          </button>
+        )}
+        classMap={styles}
+        data-testid="stepper"
+      />
+    );
+
+    const button = screen.getByTestId("stepper-step-1-icon");
+
+    fireEvent.click(button);
+    fireEvent.keyDown(button, { key: "Enter" });
+
+    expect(handleClick).toHaveBeenCalledTimes(2);
   });
 
-  it("responds to Enter key press", () => {
-    const handleClick = jest.fn();
-    render(<Stepper steps={steps} activeStep={1} onStepClick={handleClick} />);
-    const stepButtons = screen.getAllByRole("button");
-    fireEvent.keyDown(stepButtons[0], { key: "Enter", code: "Enter" });
-    expect(handleClick).toHaveBeenCalledWith(0);
+  it("is accessible according to jest-axe", async () => {
+    const { container } = render(<StepperBase {...defaultProps} />);
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

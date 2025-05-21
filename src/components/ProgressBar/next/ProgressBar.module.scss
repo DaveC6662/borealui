@@ -1,28 +1,20 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:map";
-
 
 $progress-sizes: (
   xs: 2px,
   small: 5px,
   medium: 10px,
   large: 15px,
-  xl: 20px
-);
-$progress-themes: (
-  primary: var(--primary-color),
-  secondary: var(--secondary-color),
-  success: theme.$success-color,
-  error: theme.$error-color,
-  warning: theme.$warning-color,
-  clear: var(--text-color-primary)
+  xl: 20px,
 );
 
-.progressContainer {
+.container {
   width: 100%;
   min-width: 100px;
   height: 10px;
-  background-color: var(--background-color-light);
+  background-color: var(--background-color-lighter);
   border-radius: theme.$border-radius-lg;
   overflow: hidden;
   position: relative;
@@ -34,48 +26,28 @@ $progress-themes: (
   }
 }
 
-.progressBar {
+.bar {
   height: 100%;
   width: 0;
   border-radius: theme.$border-radius-lg;
   transition: width 0.4s ease-in-out;
 
-  &.animated {
-    animation: progress-grow 0.8s ease-out;
-  }
-
-  &.indeterminate {
-    width: 100%;
-    animation: indeterminate-move 1.5s infinite ease-in-out;
-  }
-
-  @each $theme, $color in $progress-themes {
+  @each $theme, $color in theme.$themes {
     &.#{$theme} {
-      background-color: $color;
+      background-color: map.get($color, bg);
     }
   }
-}
 
-@keyframes progress-grow {
-  from {
-    width: 0;
-  }
-
-  to {
-    width: 100%;
+  &.clear {
+    background-color: var(--text-color-primary);
   }
 }
 
-@keyframes indeterminate-move {
-  0% {
-    transform: translateX(-100%);
-  }
+.animated {
+  animation: progress-grow 0.8s ease-out;
+}
 
-  50% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
+.indeterminate {
+  width: 100%;
+  animation: indeterminate-move 1.5s infinite ease-in-out;
 }

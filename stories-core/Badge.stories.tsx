@@ -30,17 +30,26 @@ export const Themes: Story = {
       <Badge text="Success" theme="success" />
       <Badge text="Warning" theme="warning" />
       <Badge text="Error" theme="error" />
+      <Badge text="Clear" theme="clear" />
     </div>
   ),
 };
 
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
+    <div
+      style={{
+        display: "flex",
+        gap: "1rem",
+        alignItems: "center",
+        flexWrap: "wrap",
+      }}
+    >
       <Badge text="XS" size="xs" />
       <Badge text="Small" size="small" />
       <Badge text="Medium" size="medium" />
       <Badge text="Large" size="large" />
+      <Badge text="XL" size="xl" />
     </div>
   ),
 };
@@ -53,13 +62,21 @@ export const Outline: Story = {
       <Badge text="Success" theme="success" outline />
       <Badge text="Warning" theme="warning" outline />
       <Badge text="Error" theme="error" outline />
+      <Badge text="Clear" theme="clear" outline />
     </div>
   ),
 };
 
 export const WithIcon: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        gap: "1rem",
+        flexWrap: "wrap",
+        alignItems: "center",
+      }}
+    >
       <Badge text="Check" icon={FaCheck} theme="success" />
       <Badge text="Warning" icon={FaExclamation} theme="warning" />
       <Badge text="Info" icon={FaInfoCircle} theme="primary" />

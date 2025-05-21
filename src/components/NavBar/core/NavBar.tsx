@@ -1,49 +1,39 @@
-import React, { JSX, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import BaseNavBar from "../NavBarBase";
 import "./NavBar.scss";
-import { combineClassNames } from "../../../utils/classNames";
 import { NavBarProps } from "../NavBar.types";
 
+const classes = {
+  container: "nav",
+  item: "nav_item",
+  "item--active": "nav_active",
+  icon: "nav_icon_container",
+  label: "nav_label",
+};
 
-
-/**
- * NavBar renders a horizontal navigation bar using provided nav items.
- * It highlights the active item based on the current URL pathname.
- *
- * @param {NavBarProps} props - Props including nav items.
- * @returns {JSX.Element} The rendered navigation bar.
- */
-const NavBar: React.FC<NavBarProps> = ({ items }: NavBarProps): JSX.Element => {
-  const [pathname, setPathname] = useState<string>("");
+const NavBar: React.FC<NavBarProps> = (props) => {
+  const [pathname, setPathname] = useState("");
 
   useEffect(() => {
     setPathname(window.location.pathname);
   }, []);
 
   return (
-    <nav
-      role="navigation"
-      aria-label="Main navigation"
-      className="navContainer"
-      data-testid="nav-bar"
-    >
-      {items.map((item, index) => {
-        const isActive = pathname === item.path;
-        return (
-          <a
-            key={index}
-            href={item.path}
-            className={combineClassNames("navItem", isActive && "active")}
-            aria-current={isActive ? "page" : undefined}
-            data-testid={`nav-item-${item.label.toLowerCase()}`}
-          >
-            <div className="iconContainer" aria-hidden="true">
-              {item.icon}
-            </div>
-            <span className="label">{item.label}</span>
-          </a>
-        );
-      })}
-    </nav>
+    <BaseNavBar
+      {...props}
+      currentPath={pathname}
+      LinkWrapper={({ href, children, className, isActive, testId }) => (
+        <a
+          href={href}
+          className={className}
+          aria-current={isActive ? "page" : undefined}
+          data-testid={testId}
+        >
+          {children}
+        </a>
+      )}
+      classMap={classes}
+    />
   );
 };
 

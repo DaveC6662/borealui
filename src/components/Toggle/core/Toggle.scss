@@ -1,88 +1,129 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
 @use "sass:map";
 @use "sass:list";
 
-$themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-  "clear": var(--background-color-darker)
-);
 $sizes: (
-  "xs": (toggle: (30px, 12px), slider: (8px, 8px), translate: 15px),
-  "small": (toggle: (40px, 20px), slider: (16px, 16px), translate: 18px),
-  "medium": (toggle: (50px, 28px), slider: (20px, 20px), translate: 22px),
-  "large": (toggle: (60px, 34px), slider: (25px, 25px), translate: 28px),
-  "xl": (toggle: (70px, 44px), slider: (30px, 30px), translate: 32px)
+  "xs": (
+    toggle: (
+      30px,
+      12px,
+    ),
+    slider: (
+      8px,
+      8px,
+    ),
+    translate: 15px,
+  ),
+  "small": (
+    toggle: (
+      40px,
+      20px,
+    ),
+    slider: (
+      16px,
+      16px,
+    ),
+    translate: 18px,
+  ),
+  "medium": (
+    toggle: (
+      50px,
+      28px,
+    ),
+    slider: (
+      20px,
+      20px,
+    ),
+    translate: 22px,
+  ),
+  "large": (
+    toggle: (
+      60px,
+      34px,
+    ),
+    slider: (
+      25px,
+      25px,
+    ),
+    translate: 28px,
+  ),
+  "xl": (
+    toggle: (
+      70px,
+      44px,
+    ),
+    slider: (
+      30px,
+      30px,
+    ),
+    translate: 32px,
+  ),
 );
 
-.toggleContainer {
+.container {
   display: flex;
   align-items: center;
-  gap: theme.$spacing-xs;
+  gap: theme.$spacing-sm;
+}
 
+.toggle_label {
+  font-size: theme.$font-size-md;
+  color: var(--text-color-primary);
+}
 
-  .label {
-    font-size: theme.$font-size-md;
-    color: var(--text-color-primary);
+.toggle {
+  background-color: theme.$disabled-color;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  transition: background 0.3s ease-in-out;
+  outline: none;
+
+  &_slider {
+    background-color: var(--text-color-primary);
+    border-radius: 50%;
+    position: absolute;
+    left: 4px;
+    transition: transform 0.3s ease-in-out;
   }
 
-  .toggle {
-    background-color: theme.$disabled-color;
-    border-radius: 50px;
-    position: relative;
-    cursor: pointer;
-    border: none;
-    display: flex;
-    align-items: center;
-    transition: background 0.3s ease-in-out;
-    outline: none;
-
-    .slider {
-      background-color: var(--text-color-primary);
-      border-radius: 50%;
-      position: absolute;
-      left: 4px;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    &.active {
-      background-color: var(--primary-color);
-    }
+  &_active {
+    background-color: var(--primary-color);
   }
 
-  &.disabled {
+  &_disabled {
     cursor: not-allowed;
     pointer-events: none;
     opacity: 0.6;
     box-shadow: none;
   }
 
-  @each $name, $vals in $sizes {
-    &.#{$name} {
-      .toggle {
-        width: list.nth(map.get($vals, toggle), 1);
-        height: list.nth(map.get($vals, toggle), 2);
+  &_clear .toggle_active {
+    border: 1px solid var(--text-color-primary);
+  }
+}
 
-        .slider {
-          width: list.nth(map.get($vals, slider), 1);
-          height: list.nth(map.get($vals, slider), 2);
-        }
+@each $theme, $color in theme.$themes {
+  .toggle_#{$theme} .toggle_active {
+    background-color: map.get($color, bg);
+  }
+}
 
-        &.active .slider {
-          transform: translateX(map.get($vals, translate));
-        }
-      }
+@each $name, $vals in $sizes {
+  .toggle_#{$name} .toggle {
+    width: list.nth(map.get($vals, toggle), 1);
+    height: list.nth(map.get($vals, toggle), 2);
+
+    &_slider {
+      width: list.nth(map.get($vals, slider), 1);
+      height: list.nth(map.get($vals, slider), 2);
+    }
+
+    &_active .toggle_slider {
+      transform: translateX(map.get($vals, translate));
     }
   }
-
-  @each $theme, $color in $themes {
-    &.#{$theme} .toggle.active {
-      background-color: $color;
-    }
-  }
-
 }

@@ -1,75 +1,89 @@
-import { render, fireEvent, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import Checkbox from "@/components/CheckBox/CheckBox";
+// __tests__/CheckboxBase.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import CheckboxBase from "@/components/CheckBox/CheckboxBase";
 
-describe("Checkbox Component", () => {
-  const label = "Accept Terms";
+const classMap = {
+  checkboxWrapper: "checkboxWrapper",
+  checkboxInput: "checkboxInput",
+  checkboxBox: "checkboxBox",
+  checkboxLabel: "checkboxLabel",
+  primary: "themePrimary",
+  disabled: "disabled",
+  left: "labelLeft",
+  right: "labelRight",
+};
 
-  const setup = (overrideProps = {}) => {
-    const onChange = jest.fn();
+describe("CheckboxBase", () => {
+  it("renders with label on right and checks accessibility attributes", () => {
     render(
-      <Checkbox
-        label={label}
-        checked={false}
-        onChange={onChange}
-        data-testid="checkbox-input"
-        {...overrideProps}
+      <CheckboxBase
+        checked={true}
+        onChange={jest.fn()}
+        label="Accept Terms"
+        labelPosition="right"
+        classMap={classMap}
+        data-testid="checkbox"
       />
     );
-    const input = screen.getByTestId("checkbox-input") as HTMLInputElement;
-    return { input, onChange };
-  };
 
-  it("renders with label", () => {
-    setup();
-    expect(screen.getByLabelText(label)).toBeInTheDocument();
+    const input = screen.getByLabelText("Accept Terms");
+    const label = screen.getByTestId("checkbox-label");
+
+    expect(input).toBeInTheDocument();
+    expect(label).toHaveTextContent("Accept Terms");
+    expect(input).toHaveAttribute("type", "checkbox");
+    expect(input).toHaveAttribute(
+      "aria-labelledby",
+      expect.stringContaining("label")
+    );
   });
 
-  it("calls onChange when clicked", () => {
-    const { input, onChange } = setup();
-    fireEvent.click(input);
+  it("renders with label on left", () => {
+    render(
+      <CheckboxBase
+        checked={false}
+        onChange={jest.fn()}
+        label="Enable Notifications"
+        labelPosition="left"
+        classMap={classMap}
+        data-testid="checkbox-left"
+      />
+    );
+
+    expect(screen.getByTestId("checkbox-left-label")).toHaveTextContent(
+      "Enable Notifications"
+    );
+  });
+
+  it("fires onChange when toggled", () => {
+    const onChange = jest.fn();
+    render(
+      <CheckboxBase
+        label="I agree"
+        classMap={classMap}
+        data-testid="checkbox-toggle"
+        onChange={onChange}
+        checked={false}
+      />
+    );
+
+    fireEvent.click(screen.getByLabelText("I agree"));
     expect(onChange).toHaveBeenCalledWith(true);
   });
 
-  it("does not call onChange when disabled", () => {
-    const { input, onChange } = setup({ disabled: true });
-    fireEvent.click(input);
-    expect(onChange).not.toHaveBeenCalled();
-  });
-
-  it("handles indeterminate state correctly", () => {
-    const { container } = render(
-      <Checkbox label="Indeterminate" checked={false} onChange={() => {}} indeterminate data-testid="checkbox-wrapper" />
-    );
-    const wrapper = container.querySelector('[role="checkbox"]');
-    expect(wrapper).toHaveAttribute("aria-checked", "mixed");
-  });
-
-  it("renders label on the left", () => {
-    setup({ labelPosition: "left" });
-    expect(screen.getByText(label)).toBeInTheDocument();
-  });
-
-  it("is disabled when prop is true", () => {
-    const { input } = setup({ disabled: true });
-    expect(input).toBeDisabled();
-  });
-
-  it("reflects checked state correctly", () => {
-    const { input } = setup({ checked: true });
-    expect(input.checked).toBe(true);
-  });
-
-  it("applies theme class", () => {
-    const { container } = render(
-      <Checkbox
-        label={label}
+  it("handles indeterminate state", () => {
+    render(
+      <CheckboxBase
+        label="Indeterminate"
+        classMap={classMap}
+        data-testid="checkbox-indeterminate"
+        indeterminate={true}
         checked={false}
-        onChange={() => {}}
-        theme="success"
-        data-testid="checkbox-input"
+        onChange={jest.fn()}
       />
     );
-    expect(container.firstChild).toHaveClass("success");
+
+    const input = screen.getByLabelText("Indeterminate");
+    expect(input).toHaveAttribute("aria-checked", "mixed");
   });
 });

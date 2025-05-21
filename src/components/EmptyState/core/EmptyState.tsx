@@ -1,76 +1,31 @@
 import React from "react";
-import "./EmptyState.scss";
-import Button from "../../Buttons/Button/core/Button";
-import { combineClassNames } from "../../../utils/classNames";
+import BaseEmptyState from "../EmptyStateBase";
 import { EmptyStateProps } from "../EmptyState.types";
+import { Button } from "../../../index.core";
+import "./EmptyState.scss";
 
-/**
- * EmptyState provides a reusable placeholder UI for empty content areas.
- * It supports an icon, title, message, and optional action button.
- *
- * @param {EmptyStateProps} props - Props to configure the empty state component.
- * @returns {JSX.Element} A styled placeholder layout.
- */
-const EmptyState: React.FC<EmptyStateProps> = ({
-  icon: Icon,
-  title = "Nothing Here Yet",
-  message = "There’s no content to display.",
-  theme = "primary",
-  size = "medium",
-  outline = false,
-  actionLabel,
-  onActionClick,
-  className = "",
-  "data-testid": testId,
-}) => {
-  return (
-    <section
-      className={combineClassNames(
-        "emptyState",
-        theme,
-        size,
-        outline && "outline",
-        className
-      )}
-      role="region"
-      aria-label="Empty state"
-      data-testid={testId}
-    >
-      {Icon && (
-        <div
-          className={"icon"}
-          data-testid={testId ? `${testId}-icon` : undefined}
-        >
-          <Icon aria-hidden="true" />
-        </div>
-      )}
+const classes = {
+  empty_state: "empty_state",
+  title: "empty_state_title",
+  message: "empty_state_message",
+  icon: "empty_state_icon",
+  outline: "empty_state_outline",
+  disabled: "empty_state_disabled",
+  primary: "empty_state_primary",
+  secondary: "empty_state_secondary",
+  success: "empty_state_success",
+  error: "empty_state_error",
+  warning: "empty_state_warning",
+  clear: "empty_state_clear",
+  small: "empty_state_small",
+  medium: "empty_state_medium",
+  large: "empty_state_large",
+  xs: "empty_state_xs",
+  xl: "empty_state_xl",
+};
 
-      <h2
-        className={"title"}
-        data-testid={testId ? `${testId}-title` : undefined}
-      >
-        {title}
-      </h2>
-
-      <p
-        className={"message"}
-        data-testid={testId ? `${testId}-message` : undefined}
-      >
-        {message}
-      </p>
-
-      {actionLabel && onActionClick && (
-        <Button
-          theme="clear"
-          outline={outline}
-          onClick={onActionClick}
-          data-testid={testId ? `${testId}-action` : undefined}
-        >
-          {actionLabel}
-        </Button>
-      )}
-    </section>
-  );
+const EmptyState: React.FC<EmptyStateProps> = (props) => {
+  return <BaseEmptyState {...props} Button={Button} classMap={classes} />;
 };
 
 export default EmptyState;

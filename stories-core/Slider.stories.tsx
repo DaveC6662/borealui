@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import Slider from "@/components/Slider/core/Slider";
+import { Slider } from "@/index.core";
 import type { SliderProps } from "@/components/Slider/Slider.types";
 
 const meta: Meta<SliderProps> = {
@@ -59,8 +59,8 @@ export const HiddenValue: Story = {
       <Slider
         {...args}
         value={value}
-        onChange={(e) => setValue(Number(e.target.value))}
         showValue={false}
+        onChange={(e) => setValue(Number(e.target.value))}
       />
     );
   },
@@ -68,12 +68,21 @@ export const HiddenValue: Story = {
 
 export const SizeVariants: Story = {
   render: (args) => {
+    const sizes = ["xs", "small", "medium", "large", "xl"] as const;
     const [value, setValue] = useState(30);
+
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        <Slider {...args} value={value} size="small" label="Small" onChange={(e) => setValue(Number(e.target.value))} />
-        <Slider {...args} value={value} size="medium" label="Medium" onChange={(e) => setValue(Number(e.target.value))} />
-        <Slider {...args} value={value} size="large" label="Large" onChange={(e) => setValue(Number(e.target.value))} />
+        {sizes.map((size) => (
+          <Slider
+            key={size}
+            {...args}
+            size={size}
+            label={`Size: ${size}`}
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+          />
+        ))}
       </div>
     );
   },
@@ -81,14 +90,28 @@ export const SizeVariants: Story = {
 
 export const ThemeVariants: Story = {
   render: (args) => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
     const [value, setValue] = useState(75);
+
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        <Slider {...args} value={value} theme="primary" label="Primary" onChange={(e) => setValue(Number(e.target.value))} />
-        <Slider {...args} value={value} theme="secondary" label="Secondary" onChange={(e) => setValue(Number(e.target.value))} />
-        <Slider {...args} value={value} theme="success" label="Success" onChange={(e) => setValue(Number(e.target.value))} />
-        <Slider {...args} value={value} theme="warning" label="Warning" onChange={(e) => setValue(Number(e.target.value))} />
-        <Slider {...args} value={value} theme="error" label="Error" onChange={(e) => setValue(Number(e.target.value))} />
+        {themes.map((theme) => (
+          <Slider
+            key={theme}
+            {...args}
+            theme={theme}
+            label={`Theme: ${theme}`}
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+          />
+        ))}
       </div>
     );
   },

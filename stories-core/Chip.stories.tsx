@@ -1,10 +1,11 @@
 // src/stories/Chip.stories.tsx
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import Chip from "@/components/Chip/core/Chip";
+import { Chip } from "@/index.core";
 import { FaCheckCircle } from "react-icons/fa";
 import type { ChipProps } from "@/components/Chip/Chip.types";
+import { PositionType, SizeType, ThemeType } from "@/types/types";
 
 const meta: Meta<ChipProps> = {
   title: "Components/Chip",
@@ -20,13 +21,33 @@ const meta: Meta<ChipProps> = {
   ],
 };
 
+const themes: ThemeType[] = [
+  "primary",
+  "secondary",
+  "success",
+  "error",
+  "warning",
+  "clear",
+];
+
+const positions: PositionType[] = [
+  "topLeft",
+  "topCenter",
+  "topRight",
+  "bottomLeft",
+  "bottomCenter",
+  "bottomRight",
+];
+
+const sizes: SizeType[] = ["xs", "small", "medium", "large", "xl"];
+
 export default meta;
 
 type Story = StoryObj<ChipProps>;
 
 export const Default: Story = {
   render: () => {
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     return (
       <>
         <button onClick={() => setVisible(true)}>Show Chip</button>
@@ -35,6 +56,7 @@ export const Default: Story = {
           message="This is a chip message!"
           visible={visible}
           onClose={() => setVisible(false)}
+          autoClose={false}
         />
       </>
     );
@@ -43,10 +65,10 @@ export const Default: Story = {
 
 export const WithIcon: Story = {
   render: () => {
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     return (
       <>
-        <button onClick={() => setVisible(true)}>Show Chip</button>
+        <button onClick={() => setVisible(true)}>Show Chip with Icon</button>
         <Chip
           id="with-icon"
           message="Action completed successfully!"
@@ -54,6 +76,7 @@ export const WithIcon: Story = {
           visible={visible}
           onClose={() => setVisible(false)}
           theme="success"
+          autoClose={false}
         />
       </>
     );
@@ -62,7 +85,7 @@ export const WithIcon: Story = {
 
 export const AutoClose: Story = {
   render: () => {
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     return (
       <>
         <button onClick={() => setVisible(true)}>Show Auto-Close Chip</button>
@@ -72,27 +95,116 @@ export const AutoClose: Story = {
           visible={visible}
           onClose={() => setVisible(false)}
           duration={2000}
-          autoClose
+          autoClose={true}
         />
       </>
     );
   },
 };
 
-export const CustomPositionAndTheme: Story = {
+export const Themes: Story = {
   render: () => {
-    const [visible, setVisible] = useState(true);
+    const [visibleTheme, setVisibleTheme] = useState<ThemeType | null>(null);
+
     return (
       <>
-        <button onClick={() => setVisible(true)}>Show Top Right Warning</button>
-        <Chip
-          id="custom-pos"
-          message="Watch out! This is a warning."
-          visible={visible}
-          onClose={() => setVisible(false)}
-          theme="warning"
-          position="topRight"
-        />
+        <div className="grid grid-cols-6 gap-2">
+          {themes.map((theme) => (
+            <button
+              key={theme}
+              onClick={() => setVisibleTheme(theme)}
+              className="p-2 border rounded"
+            >
+              {theme}
+            </button>
+          ))}
+        </div>
+
+        {visibleTheme && (
+          <Chip
+            id="theme-chip"
+            message={`Theme: ${visibleTheme}`}
+            theme={visibleTheme}
+            position="topRight"
+            visible={true}
+            onClose={() => setVisibleTheme(null)}
+            autoClose={false}
+            icon={FaCheckCircle}
+          />
+        )}
+      </>
+    );
+  },
+};
+
+export const Positions: Story = {
+  render: () => {
+    const [visiblePosition, setVisiblePosition] = useState<PositionType | null>(
+      null
+    );
+
+    return (
+      <>
+        <div className="grid grid-cols-6 gap-2">
+          {positions.map((position) => (
+            <button
+              key={position}
+              onClick={() => setVisiblePosition(position)}
+              className="p-2 border rounded"
+            >
+              {position}
+            </button>
+          ))}
+        </div>
+
+        {visiblePosition && (
+          <Chip
+            id="position-chip"
+            message={`Position: ${visiblePosition}`}
+            theme="primary"
+            position={visiblePosition}
+            visible={true}
+            onClose={() => setVisiblePosition(null)}
+            autoClose={false}
+            icon={FaCheckCircle}
+          />
+        )}
+      </>
+    );
+  },
+};
+
+export const Sizes: Story = {
+  render: () => {
+    const [visibleSize, setVisibleSize] = useState<SizeType | null>(null);
+
+    return (
+      <>
+        <div className="grid grid-cols-5 gap-2">
+          {sizes.map((size) => (
+            <button
+              key={size}
+              onClick={() => setVisibleSize(size)}
+              className="p-2 border rounded"
+            >
+              {size}
+            </button>
+          ))}
+        </div>
+
+        {visibleSize && (
+          <Chip
+            id="size-chip"
+            message={`Size: ${visibleSize}`}
+            theme="primary"
+            position="topRight"
+            size={visibleSize}
+            visible={true}
+            onClose={() => setVisibleSize(null)}
+            autoClose={false}
+            icon={FaCheckCircle}
+          />
+        )}
       </>
     );
   },

@@ -1,44 +1,67 @@
 import { render, screen } from "@testing-library/react";
+import CircularProgressBase from "@/components/CircularProgress/CircularProgressBase";
 import "@testing-library/jest-dom";
-import { CircularProgress } from "@/index.next";
 
-describe("CircularProgress", () => {
-  it("renders the component with correct rating text", () => {
-    render(<CircularProgress rating={75} data-testid="circular-progress" />);
-    const progress = screen.getByTestId("circular-progress");
-    expect(progress).toBeInTheDocument();
-    expect(progress).toHaveTextContent("75%");
-  });
+const classMap = {
+  circularProgress: "circularProgress",
+  circleBorder: "circleBorder",
+  innerCircle: "innerCircle",
+  ratingText: "ratingText",
+  medium: "medium",
+};
 
-  it("shows raw value when showRaw is true", () => {
+describe("CircularProgressBase", () => {
+  it("renders the correct percent with showRaw=false", () => {
     render(
-      <CircularProgress rating={45} showRaw data-testid="circular-progress-raw" />
+      <CircularProgressBase
+        rating={50}
+        max={100}
+        showRaw={false}
+        classMap={classMap}
+        data-testid="circular-progress"
+      />
     );
-    expect(screen.getByTestId("circular-progress-raw")).toHaveTextContent("45/100");
+
+    expect(screen.getByRole("progressbar")).toHaveAttribute(
+      "aria-valuenow",
+      "50"
+    );
+    expect(screen.getByTestId("circular-progress")).toBeInTheDocument();
+    expect(screen.getByText("50%")).toBeInTheDocument();
   });
 
-  it("clamps value to min and max", () => {
+  it("renders the correct raw format when showRaw=true", () => {
     render(
-      <CircularProgress rating={150} max={100} min={0} data-testid="clamped-progress" />
+      <CircularProgressBase
+        rating={30}
+        max={120}
+        showRaw={true}
+        classMap={classMap}
+        data-testid="circular-progress"
+      />
     );
-    expect(screen.getByTestId("clamped-progress")).toHaveTextContent("100%");
+
+    expect(screen.getByText("30/120")).toBeInTheDocument();
   });
 
-  it("applies custom class name", () => {
-    render(<CircularProgress rating={60} className="custom-class" data-testid="custom-progress" />);
-    const progress = screen.getByTestId("custom-progress");
-    expect(progress).toHaveClass("custom-class");
-  });
-
-  it("has appropriate ARIA attributes", () => {
+  it("includes accessible labels and live updates", () => {
     render(
-      <CircularProgress rating={30} min={0} max={100} label="Score" data-testid="aria-progress" />
+      <CircularProgressBase
+        rating={80}
+        classMap={classMap}
+        label="Loading Progress"
+        data-testid="circular-progress"
+      />
     );
-    const progress = screen.getByTestId("aria-progress");
-    expect(progress).toHaveAttribute("role", "progressbar");
-    expect(progress).toHaveAttribute("aria-valuemin", "0");
-    expect(progress).toHaveAttribute("aria-valuemax", "100");
-    expect(progress).toHaveAttribute("aria-valuenow", "30");
-    expect(progress).toHaveAttribute("aria-label", "Score");
+
+    const progressbar = screen.getByRole("progressbar", {
+      name: /loading progress/i,
+    });
+    expect(progressbar).toHaveAttribute("aria-valuemin", "0");
+    expect(progressbar).toHaveAttribute("aria-valuemax", "100");
+
+    const label = screen.getByText("80%");
+    expect(label).toHaveAttribute("aria-live", "polite");
+    expect(label).toHaveAttribute("aria-atomic", "true");
   });
 });

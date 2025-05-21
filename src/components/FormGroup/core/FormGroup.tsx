@@ -1,87 +1,35 @@
-import React, { JSX } from "react";
+import React from "react";
+import BaseFormGroup from "../FormGroupBase";
 import "./FormGroup.scss";
-import { combineClassNames } from "../../../utils/classNames";
 import { FormGroupProps } from "../FormGroup.types";
 
-/**
- * FormGroup is a flexible wrapper for inputs, handling accessibility,
- * layout, labels, descriptions, and validation messaging.
- *
- * @param {FormGroupProps} props - The props used to configure the form group.
- * @returns {JSX.Element} A styled and accessible form group.
- */
-const FormGroup: React.FC<FormGroupProps> = ({
-  label,
-  description,
-  error,
-  children,
-  id,
-  required = false,
-  className = "",
-  layout = "vertical",
-  hideLabel = false,
-  spacing = "medium",
-  controller,
-  "data-testid": testId = "form-group",
-}: FormGroupProps): JSX.Element => {
-  const descriptionId = description ? `${id}-description` : undefined;
-  const errorId = error ? `${id}-error` : undefined;
+const classes = {
+  wrapper: "form_group",
+  label: "form_group_label",
+  sr_only: "sr_only",
+  required: "form_group_required",
+  inputWrapper: "form_group_input_wrapper",
+  inputField: "form_group_input_field",
+  controller: "form_group_controller",
+  description: "form_group_description",
+  errorMessage: "form_group_error_message",
+  vertical: "form_group_vertical",
+  horizontal: "form_group_horizontal",
+  primary: "form_group_primary",
+  secondary: "form_group_secondary",
+  error: "form_group_error",
+  success: "form_group_success",
+  warning: "form_group_warning",
+  clear: "form_group_clear",
+  xs: "form_group_xs",
+  small: "form_group_small",
+  medium: "form_group_medium",
+  large: "form_group_large",
+  xl: "form_group_xl",
+};
 
-  return (
-    <div
-      className={combineClassNames(
-        "formGroup",
-        layout,
-        spacing,
-        className
-      )}
-      role="group"
-      aria-labelledby={id ? `${id}-label` : undefined}
-      data-testid={testId}
-    >
-      {label && (
-        <label
-          id={`${id}-label`}
-          htmlFor={id}
-          className={combineClassNames("label", hideLabel && "srOnly")}
-          data-testid={`${testId}-label`}
-        >
-          {label} {required && <span className={"required"}>*</span>}
-        </label>
-      )}
-
-      <div className={"inputWrapper"} data-testid={`${testId}-wrapper`}>
-        <div className={combineClassNames("inputField")} data-testid={`${testId}-input-field`}>
-          {React.isValidElement(children)
-            ? React.cloneElement(children as React.ReactElement<any>, {
-              id,
-              "aria-describedby": error ? errorId : description ? descriptionId : undefined,
-              "aria-invalid": !!error,
-              "data-testid": `${testId}-input`,
-            })
-            : children}
-        </div>
-
-        {controller && (
-          <div className={"controller"} data-testid={`${testId}-controller`}>
-            {controller}
-          </div>
-        )}
-      </div>
-
-      {description && !error && (
-        <p id={descriptionId} className={"description"} data-testid={`${testId}-description`}>
-          {description}
-        </p>
-      )}
-
-      {error && (
-        <p id={errorId} className={"errorMessage"} role="alert" data-testid={`${testId}-error`}>
-          {error}
-        </p>
-      )}
-    </div>
-  );
+const FormGroup: React.FC<FormGroupProps> = (props) => {
+  return <BaseFormGroup {...props} classMap={classes} />;
 };
 
 export default FormGroup;

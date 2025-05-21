@@ -1,60 +1,27 @@
-import React, { useMemo } from "react";
+import React from "react";
 import "./Badge.scss";
-import { combineClassNames } from "../../../utils/classNames";
+import { BadgeBase } from "../BadgeBase";
 import { BadgeProps } from "../Badge.types";
 
-/**
- * A reusable Badge component with support for theming, icons,
- * outlines, accessibility, and flexible content.
- *
- * @example
- * ```tsx
- * <Badge text="Active" theme="success" icon={FaCheck} />
- * ```
- */
-const Badge: React.FC<BadgeProps> = ({
-  text,
-  children,
-  theme = "primary",
-  title,
-  size = "medium",
-  outline = false,
-  testId = "badge",
-  icon: Icon,
-  className = "",
-}) => {
-  const combinedClassName = useMemo(
-    () =>
-      combineClassNames(
-        "badge",
-        theme,
-        size,
-        outline && "outline",
-        className
-      ),
-    [theme, size, outline, className]
-  );
+const classes = {
+  badge: "badge",
+  primary: "badge_primary",
+  secondary: "badge_secondary",
+  success: "badge_success",
+  error: "badge_error",
+  warning: "badge_warning",
+  clear: "badge_clear",
+  outline: "badge_outline",
+  xs: "badge_xs",
+  small: "badge_small",
+  medium: "badge_medium",
+  large: "badge_large",
+  xl: "badge_xl",
+  icon: "badge_icon",
+};
 
-  if (!text && !children) return null;
-
-  return (
-    <span
-      className={combinedClassName}
-      aria-label={text}
-      title={title || text}
-      data-testid={testId}
-      role="note"
-    >
-      {Icon && (
-        <Icon
-          className={"icon"}
-          aria-hidden="true"
-          focusable="false"
-        />
-      )}
-      {children ?? text}
-    </span>
-  );
+const Badge: React.FC<BadgeProps> = (props) => {
+  return <BadgeBase {...props} classMap={classes} />;
 };
 
 export default Badge;

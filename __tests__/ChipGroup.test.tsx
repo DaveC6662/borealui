@@ -1,69 +1,88 @@
-import { render, fireEvent, act, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { ChipGroup } from "@/index.next";
-import { ChipItem } from "@/components/Chip/ChipGroup/ChipGroup";
+import { render, screen, fireEvent } from "@testing-library/react";
+import ChipGroupBase from "@/components/Chip/ChipGroup/ChipGroupBase";
 
+// Dummy chip component
+const DummyChip = ({ id, message, onClose, "data-testid": testId }: any) => (
+  <div role="status" data-testid={testId}>
+    <span>{message}</span>
+    <button
+      aria-label="Close"
+      onClick={() => onClose?.()}
+      data-testid="close-button"
+    />
+  </div>
+);
 
-function setupPortal() {
-  const portal = document.createElement("div");
-  portal.setAttribute("id", "widget-portal");
-  document.body.appendChild(portal);
-}
+const classMap = {
+  container: "chip-container",
+  list: "chip-list",
+  stackClassPrefix: "chip-",
+  positionMap: {
+    topCenter: "top-center",
+  },
+};
 
-describe("ChipGroup", () => {
-  beforeEach(() => {
-    setupPortal();
-    jest.useFakeTimers();
-  });
-
-  afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
-    document.body.innerHTML = ""; // clean up
-  });
-
-  const defaultChips: ChipItem[] = [
-    { id: "1", message: "Chip One", autoClose: false },
-    { id: "2", message: "Chip Two", autoClose: false },
+describe("ChipGroupBase", () => {
+  const chips = [
+    {
+      id: "chip1",
+      message: "First chip",
+      "data-testid": "chip-1",
+      visble: true,
+    },
+    {
+      id: "chip2",
+      message: "Second chip",
+      "data-testid": "chip-2",
+      visible: true,
+    },
   ];
 
-  it("renders all provided chips", () => {
-    render(<ChipGroup chips={defaultChips} />);
-    expect(screen.getByText("Chip One")).toBeInTheDocument();
-    expect(screen.getByText("Chip Two")).toBeInTheDocument();
+  const classMap = {
+    container: "chip-container",
+    list: "chip-list",
+    stackClassPrefix: "chip-",
+  };
+
+  const positionMap = {
+    topCenter: "top-center",
+    bottomLeft: "bottom-left",
+  };
+
+  it("renders chips with correct accessibility", () => {
+    render(
+      <ChipGroupBase
+        chips={chips}
+        ChipComponent={DummyChip}
+        classMap={classMap}
+        positionMap={positionMap}
+        onRemove={jest.fn()}
+      />
+    );
+
+    expect(
+      screen.getByRole("region", { name: /notifications/i })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("list")).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
+    expect(screen.getByTestId("chip-1")).toHaveTextContent("First chip");
+    expect(screen.getByTestId("chip-2")).toHaveTextContent("Second chip");
   });
 
-  it("calls onRemove when a chip is manually closed", () => {
+  it("calls onRemove when a chip close button is clicked", () => {
     const onRemove = jest.fn();
-    render(<ChipGroup chips={defaultChips} onRemove={onRemove} />);
-    const closeButtons = screen.getAllByTestId("chip-close");
-    fireEvent.click(closeButtons[0]);
 
-    act(() => {
-      jest.advanceTimersByTime(300); // wait for fade-out
-    });
+    render(
+      <ChipGroupBase
+        chips={chips}
+        ChipComponent={DummyChip}
+        classMap={classMap}
+        positionMap={positionMap}
+        onRemove={onRemove}
+      />
+    );
 
-    expect(onRemove).toHaveBeenCalledWith("1");
-  });
-
-  it("auto-closes chips after duration", () => {
-    const autoChips: ChipItem[] = [
-      { id: "a1", message: "Auto Chip", duration: 2000, autoClose: true },
-    ];
-    const onRemove = jest.fn();
-
-    render(<ChipGroup chips={autoChips} onRemove={onRemove} />);
-
-    act(() => {
-      jest.advanceTimersByTime(2300);
-    });
-
-    expect(onRemove).toHaveBeenCalledWith("a1");
-  });
-
-  it("applies chip position and stackIndex styles", () => {
-    render(<ChipGroup chips={defaultChips} position="bottomLeft" />);
-    const chip = screen.getByText("Chip One").parentElement;
-    expect(chip?.className).toMatch(/bottomLeft/);
+    fireEvent.click(screen.getAllByTestId("close-button")[0]);
+    expect(onRemove).toHaveBeenCalledWith("chip1");
   });
 });

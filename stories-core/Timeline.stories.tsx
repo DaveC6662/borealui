@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { FaRocket, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
-import Timeline from "@/components/Timeline/core/Timeline";
+import { Timeline } from "@/index.core";
 import type { TimelineProps } from "@/components/Timeline/Timeline.types";
 
 const meta: Meta<TimelineProps> = {
@@ -56,19 +56,29 @@ export const Horizontal: Story = {
   },
 };
 
-export const Themed: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "2rem" }}>
-      <Timeline {...args} theme="primary" items={sampleEvents} />
-      <Timeline {...args} theme="success" items={sampleEvents} />
-      <Timeline {...args} theme="warning" items={sampleEvents} />
-      <Timeline {...args} theme="error" items={sampleEvents} />
-    </div>
-  ),
-};
-
 export const WithoutIcons: Story = {
   args: {
-    items: sampleEvents.map(({ icon, ...rest }) => rest), // Strip icons
+    items: sampleEvents.map(({ icon, ...rest }) => rest),
+  },
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => {
+    const themes = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "error",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "grid", gap: "2rem" }}>
+        {themes.map((theme) => (
+          <Timeline key={theme} {...args} theme={theme} items={sampleEvents} />
+        ))}
+      </div>
+    );
   },
 };

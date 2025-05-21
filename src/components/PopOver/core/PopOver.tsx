@@ -1,98 +1,26 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
+import BasePopover from "../PopOverBase";
 import "./Popover.scss";
 import { PopoverProps } from "../PopOver.types";
-import { combineClassNames } from "../../../utils/classNames";
 
-/**
- * Popover is a lightweight UI component that displays additional
- * contextual information when triggered. It supports click-based toggling,
- * keyboard activation (using Enter to toggle and Escape to close), and
- * closes automatically when clicking outside of the component.
- *
- * @param {PopoverProps} props - The props for configuring the popover.
- * @returns {JSX.Element} A popover component with trigger and conditional content.
- */
-const Popover: React.FC<PopoverProps> = ({
-  trigger,
-  content,
-  placement = "bottom",
-  theme = "primary",
-  className = "",
-  "data-testid": testId = "popover",
-}) => {
-  const [open, setOpen] = useState(false);
-  const popoverRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null);
+const classes = {
+  container: "popover_container",
+  trigger: "popover_trigger",
+  popover: "popover",
+  top: "popover_top",
+  bottom: "popover_bottom",
+  left: "popover_left",
+  right: "popover_right",
+  primary: "popover_primary",
+  secondary: "popover_secondary",
+  success: "popover_success",
+  error: "popover_error",
+  warning: "popover_warning",
+  clear: "popover_clear",
+};
 
-  /** Toggles the popover open state. */
-  const toggleOpen = () => setOpen((prev) => !prev);
-
-  /** Closes the popover. */
-  const close = () => setOpen(false);
-
-  // Close when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        popoverRef.current &&
-        !popoverRef.current.contains(e.target as Node)
-      ) {
-        close();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Close on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-    if (open) {
-      document.addEventListener("keydown", handleKeyDown);
-      return () => document.removeEventListener("keydown", handleKeyDown);
-    }
-  }, [open]);
-
-  return (
-    <div
-      className={`${`popoverContainer`} ${className}`}
-      ref={popoverRef}
-      data-testid={testId}
-    >
-      <div
-        className={`trigger`}
-        onClick={toggleOpen}
-        onKeyDown={(e) => e.key === "Enter" && toggleOpen()}
-        tabIndex={0}
-        role="button"
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        aria-controls={`${testId}-content`}
-        ref={triggerRef}
-        data-testid={`${testId}-trigger`}
-      >
-        {trigger}
-      </div>
-
-      {open && (
-        <div
-          id={`${testId}-content`}
-          role="dialog"
-          aria-modal="false"
-          className={combineClassNames(
-           `popover`,
-            placement,
-            theme,
-          )}
-          data-testid={`${testId}-content`}
-        >
-          {content}
-        </div>
-      )}
-    </div>
-  );
+const Popover: React.FC<PopoverProps> = (props) => {
+  return <BasePopover {...props} classMap={classes} />;
 };
 
 export default Popover;

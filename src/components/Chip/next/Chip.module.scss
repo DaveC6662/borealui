@@ -1,0 +1,151 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
+@use "sass:color";
+@use "sass:map";
+
+.chip {
+  position: relative;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: theme.$border-radius-lg;
+  font-weight: theme.$font-weight-bold;
+  box-shadow: theme.$box-shadow-medium;
+  max-width: 90vw;
+  width: fit-content;
+  min-width: 180px;
+  opacity: 1;
+  text-align: center;
+  cursor: pointer;
+  animation: fade-in 0.3s ease-out;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+}
+
+.fixed {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.fadeout {
+  opacity: 0;
+  transform: translate(-50%, -10px);
+}
+
+.topCenter {
+  top: 20px;
+}
+
+.bottomCenter {
+  bottom: 20px;
+}
+
+.topLeft {
+  top: 20px;
+  left: 20px;
+  transform: none;
+}
+
+.topRight {
+  top: 20px;
+  right: 20px;
+  left: auto;
+  transform: none;
+}
+
+.bottomLeft {
+  bottom: 20px;
+  left: 20px;
+  transform: none;
+}
+
+.bottomRight {
+  bottom: 20px;
+  right: 20px;
+  left: auto;
+  transform: none;
+}
+
+@each $name, $values in theme.$themes {
+  .#{$name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, text);
+
+    @if map.get($values, border) {
+      border: map.get($values, border);
+    }
+  }
+}
+
+.clear {
+  box-shadow: none;
+}
+
+.icon {
+  margin-right: theme.$spacing-sm;
+  display: flex;
+  align-items: center;
+  margin-top: -0.1em;
+}
+
+.message {
+  flex-grow: 1;
+  margin-right: 12px;
+}
+
+.icon_inner {
+  height: 1em;
+  width: 1em;
+}
+
+$chip-sizes: (
+  "xs": (
+    padding: 5px 9px,
+    font: theme.$font-size-xs,
+    icon: 0.8rem,
+    height: 20px,
+  ),
+  "small": (
+    padding: 6px 10px,
+    font: theme.$font-size-sm,
+    icon: 0.9rem,
+    height: 20px,
+  ),
+  "medium": (
+    padding: 6px 12px,
+    font: theme.$font-size-md,
+    icon: 1.2rem,
+  ),
+  "large": (
+    padding: 6px 14px,
+    font: theme.$font-size-lg,
+    icon: 1.3rem,
+  ),
+  "xl": (
+    padding: 10px 18px,
+    font: theme.$font-size-xl,
+    icon: 2rem,
+  ),
+);
+
+@each $size, $props in $chip-sizes {
+  .#{$size} {
+    padding: map.get($props, padding);
+
+    @if map.get($props, height) {
+      height: map.get($props, height);
+    }
+
+    .message {
+      font-size: map.get($props, font);
+    }
+
+    .icon_inner {
+      height: map.get($props, icon);
+      width: map.get($props, icon);
+    }
+  }
+}

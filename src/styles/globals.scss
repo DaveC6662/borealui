@@ -1,6 +1,9 @@
 @use "sass:color";
 @use "./theme" as theme;
+@use "_animations" as animations;
+@use "_breakpoints" as breakpoints;
 @use "modern-css-reset";
+@use "sass:color";
 
 /* === Root Variables (Light Mode Theme) === */
 :root {
@@ -70,7 +73,8 @@ body {
   padding: 0;
   line-height: 1.5;
   overflow-x: hidden;
-  transition: background-color theme.$transition-default,
+  transition:
+    background-color theme.$transition-default,
     color theme.$transition-default;
 }
 
@@ -132,7 +136,8 @@ a {
   color: var(--link-color);
   font-weight: theme.$link-font-weight;
   text-decoration: theme.$link-text-decoration;
-  transition: color theme.$transition-default,
+  transition:
+    color theme.$transition-default,
     text-decoration theme.$transition-default;
 
   &:hover {
@@ -199,7 +204,7 @@ a {
   display: none;
 }
 
-.sr-only {
+.sr_only {
   position: absolute;
   width: 1px;
   height: 1px;

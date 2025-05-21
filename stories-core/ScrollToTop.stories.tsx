@@ -20,7 +20,6 @@ export const Default: Story = {
       style={{
         height: "200vh",
         padding: "2rem",
-        background: "linear-gradient(to bottom, #f0f0f0, #ccc)",
       }}
     >
       <p style={{ maxWidth: 600 }}>

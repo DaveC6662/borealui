@@ -1,4 +1,5 @@
-@use "@styles/theme" as theme;
+@use "../../../../styles/theme" as theme;
+@use "../../../../styles/animations";
 @use "sass:color";
 @use "sass:map";
 
@@ -33,54 +34,15 @@
   }
 }
 
-$themes: (
-  "primary": (
-    bg: var(--primary-color),
-    hover: var(--primary-color-hover),
-    text: var(--text-color-primary),
-    border: var(--primary-color)
-  ),
-  "secondary": (
-    bg: var(--secondary-color),
-    hover: var(--secondary-color-hover),
-    text: var(--text-color-secondary),
-    border: var(--secondary-color)
-  ),
-  "success": (
-    bg: theme.$success-color,
-    hover: color.adjust(theme.$success-color, $lightness: -10%),
-    text: var(--text-color-primary),
-    border: theme.$success-color
-  ),
-  "error": (
-    bg: theme.$error-color,
-    hover: color.adjust(theme.$error-color, $lightness: -10%),
-    text: var(--text-color-primary),
-    border: theme.$error-color
-  ),
-  "warning": (
-    bg: theme.$warning-color,
-    hover: color.adjust(theme.$warning-color, $lightness: -10%),
-    text: var(--text-color-primary),
-    border: theme.$warning-color
-  ),
-  "clear": (
-    bg: transparent,
-    hover: transparent,
-    text: var(--text-color-primary),
-    border: none
-  )
-);
-
 .clear {
   box-shadow: none;
 }
 
-@each $name, $values in $themes {
+@each $name, $values in theme.$themes {
   .#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
-    
+
     &:hover {
       background-color: map.get($values, hover);
     }
@@ -99,11 +61,31 @@ $themes: (
 }
 
 $sizes: (
-  "xs": (size: 25px, label: theme.$font-size-xs, icon: 0.7rem),
-  "small": (size: 30px, label: theme.$font-size-sm, icon: 1rem),
-  "medium": (size: 40px, label: theme.$font-size-md, icon: 1.2rem),
-  "large": (size: 50px, label: theme.$font-size-lg, icon: 1.3rem),
-  "xl": (size: 60px, label: theme.$font-size-lg, icon: 1.5rem)
+  "xs": (
+    size: 25px,
+    label: theme.$font-size-xs,
+    icon: 0.7rem,
+  ),
+  "small": (
+    size: 30px,
+    label: theme.$font-size-sm,
+    icon: 1rem,
+  ),
+  "medium": (
+    size: 40px,
+    label: theme.$font-size-md,
+    icon: 1.2rem,
+  ),
+  "large": (
+    size: 50px,
+    label: theme.$font-size-lg,
+    icon: 1.3rem,
+  ),
+  "xl": (
+    size: 60px,
+    label: theme.$font-size-lg,
+    icon: 1.5rem,
+  ),
 );
 
 @each $size, $values in $sizes {
@@ -133,14 +115,4 @@ $sizes: (
   border-top-color: var(--text-color-primary);
   border-radius: 50%;
   animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
 }

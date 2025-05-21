@@ -1,27 +1,69 @@
-@use "@styles/theme.scss" as theme;
+@use "../../../styles/theme" as theme;
 @use "sass:map";
 @use "sass:list";
 
-$themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color,
-  "clear": var(--background-color-darker)
-);
 $sizes: (
-  "xs": (toggle: (30px, 12px), slider: (8px, 8px), translate: 15px),
-  "small": (toggle: (40px, 20px), slider: (16px, 16px), translate: 18px),
-  "medium": (toggle: (50px, 28px), slider: (20px, 20px), translate: 22px),
-  "large": (toggle: (60px, 34px), slider: (25px, 25px), translate: 28px),
-  "xl": (toggle: (70px, 44px), slider: (30px, 30px), translate: 32px)
+  "xs": (
+    toggle: (
+      30px,
+      12px,
+    ),
+    slider: (
+      8px,
+      8px,
+    ),
+    translate: 15px,
+  ),
+  "small": (
+    toggle: (
+      40px,
+      20px,
+    ),
+    slider: (
+      16px,
+      16px,
+    ),
+    translate: 18px,
+  ),
+  "medium": (
+    toggle: (
+      50px,
+      28px,
+    ),
+    slider: (
+      20px,
+      20px,
+    ),
+    translate: 22px,
+  ),
+  "large": (
+    toggle: (
+      60px,
+      34px,
+    ),
+    slider: (
+      25px,
+      25px,
+    ),
+    translate: 28px,
+  ),
+  "xl": (
+    toggle: (
+      70px,
+      44px,
+    ),
+    slider: (
+      30px,
+      30px,
+    ),
+    translate: 32px,
+  ),
 );
 
-.toggleContainer {
+.container {
   display: flex;
   align-items: center;
-  gap: theme.$spacing-xs;
+  gap: theme.$spacing-sm;
 }
 
 .label {
@@ -78,8 +120,12 @@ $sizes: (
   }
 }
 
-@each $theme, $color in $themes {
+@each $theme, $color in theme.$themes {
   .#{$theme} .toggle.active {
-    background-color: $color;
+    background-color: map.get($color, bg);
   }
+}
+
+.clear .toggle.active {
+  outline: 2px solid var(--text-color-primary);
 }

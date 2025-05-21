@@ -1,26 +1,43 @@
 import { render, screen } from "@testing-library/react";
-import { Spinner } from "@/index.next";
-import "@testing-library/jest-dom";
+import { axe } from "jest-axe";
+import SpinnerBase from "@/components/Spinner/SpinnerBase";
 
-describe("Spinner", () => {
-  it("renders with default props", () => {
-    render(<Spinner data-testid="spinner" />);
-    const spinner = screen.getByTestId("spinner");
-    expect(spinner).toBeInTheDocument();
-    expect(spinner).toHaveAttribute("role", "status");
-    expect(spinner).toHaveAttribute("aria-label", "Loading");
-    expect(spinner).toHaveStyle({ width: "50px", height: "50px" });
+const mockStyles = {
+  spinner: "spinner-base",
+  primary: "theme-primary",
+  secondary: "theme-secondary",
+};
+
+describe("SpinnerBase", () => {
+  it("renders with correct size and theme classes", () => {
+    render(<SpinnerBase size={60} theme="primary" classMap={mockStyles} />);
+    const spinnerInner = screen.getByTestId("spinner");
+    expect(spinnerInner).toHaveClass("spinner-base", "theme-primary");
+    expect(spinnerInner).toHaveStyle({
+      width: "60px",
+      height: "60px",
+      borderWidth: "5px",
+    });
   });
 
-  it("applies custom size", () => {
-    render(<Spinner size={80} data-testid="spinner-custom" />);
-    const spinner = screen.getByTestId("spinner-custom");
-    expect(spinner).toHaveStyle({ width: "80px", height: "80px" });
+  it("has appropriate accessibility attributes", () => {
+    render(
+      <SpinnerBase size={50} label="Loading content..." classMap={mockStyles} />
+    );
+    const spinner = screen.getByRole("status");
+
+    screen.debug(spinner);
+
+    expect(spinner).toHaveAttribute("aria-busy", "true");
+    expect(spinner).toHaveAttribute("aria-label", "Loading content...");
+    expect(spinner).toHaveAttribute("aria-live", "polite");
   });
 
-  it("applies theme class", () => {
-    render(<Spinner theme="error" data-testid="spinner-error" />);
-    const spinner = screen.getByTestId("spinner-error");
-    expect(spinner.className).toMatch(/error/);
+  it("is accessible according to jest-axe", async () => {
+    const { container } = render(
+      <SpinnerBase label="Loading" classMap={mockStyles} />
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

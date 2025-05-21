@@ -19,6 +19,8 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   ariaDescription?: string;
   /** Theme used for styling (e.g., "primary", "secondary"). Defaults to "primary". */
   theme?: ThemeType;
+  /** If true, the input is outlined instead of filled. */
+  outline?: boolean;
   /**
    * Controls whether autocomplete is enabled.
    * Pass `true` to enable ("on") or `false` to disable ("off").

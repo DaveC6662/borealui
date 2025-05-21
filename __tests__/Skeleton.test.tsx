@@ -1,34 +1,29 @@
 import { render, screen } from "@testing-library/react";
-import SkeletonLoader from "@/components/Skeleton/Skeleton";
+import { axe } from "jest-axe";
+import SkeletonLoaderBase from "@/components/Skeleton/SkeletonBase";
 
-describe("SkeletonLoader", () => {
-  it("renders with default dimensions and accessibility attributes", () => {
-    render(<SkeletonLoader data-testid="skeleton-test" />);
+describe("SkeletonLoaderBase", () => {
+  it("renders with specified dimensions", () => {
+    render(
+      <SkeletonLoaderBase
+        width="150px"
+        height="80px"
+        className="custom-skeleton"
+        data-testid="skeleton-loader"
+      />
+    );
 
-    const skeleton = screen.getByTestId("skeleton-test");
+    const skeleton = screen.getByTestId("skeleton-loader");
     expect(skeleton).toBeInTheDocument();
-    expect(skeleton).toHaveStyle({ width: "100%", height: "100%" });
+    expect(skeleton).toHaveStyle({ width: "150px", height: "80px" });
     expect(skeleton).toHaveAttribute("role", "status");
     expect(skeleton).toHaveAttribute("aria-live", "polite");
     expect(skeleton).toHaveAttribute("aria-busy", "true");
   });
 
-  it("applies custom width and height", () => {
-    render(<SkeletonLoader width="200px" height="50px" data-testid="custom-skeleton" />);
-    const skeleton = screen.getByTestId("custom-skeleton");
-    expect(skeleton).toHaveStyle({ width: "200px", height: "50px" });
-  });
-
-  it("allows custom className override", () => {
-    render(
-      <SkeletonLoader
-        width="150px"
-        height="30px"
-        className="my-custom-class"
-        data-testid="styled-skeleton"
-      />
-    );
-    const skeleton = screen.getByTestId("styled-skeleton");
-    expect(skeleton.className).toContain("my-custom-class");
+  it("has no accessibility violations", async () => {
+    const { container } = render(<SkeletonLoaderBase />);
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

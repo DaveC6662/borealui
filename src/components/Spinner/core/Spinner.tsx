@@ -1,37 +1,27 @@
 import React from "react";
 import "./Spinner.scss";
+import SpinnerBase from "../SpinnerBase";
 import { SpinnerProps } from "../Spinner.types";
+import { combineClassNames } from "../../../utils/classNames";
 
-/**
- * Spinner is a loading indicator used to show the user that content is being loaded.
- * It can be customized in size and theme, and it supports accessibility features
- * such as an aria-live region and an optional label for screen readers.
- *
- * @param {SpinnerProps} props - The props that define the spinner's appearance and behavior.
- * @returns {JSX.Element} A spinner element.
- */
-const Spinner: React.FC<SpinnerProps> = ({
-  theme = "primary",
-  size = 50,
-  className = "",
-  "data-testid": testId = "spinner",
-  label = "Loading",
-}) => {
-  const strokeWidth = `${Math.max(2, Math.floor(size / 12))}px`;
+const classes = {
+  wrapper: "spinner_wrapper",
+  spinner: "spinner",
+  label: "spinner_label",
+  primary: "spinner_primary",
+  secondary: "spinner_secondary",
+  success: "spinner_success",
+  warning: "spinner_warning",
+  error: "spinner_error",
+  clear: "spinner_clear",
+};
 
+const Spinner: React.FC<SpinnerProps> = (props) => {
   return (
-    <div
-      className={`${`spinner`} ${theme} ${className}`}
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        borderWidth: strokeWidth,
-      }}
-      role="status"
-      aria-busy="true"
-      aria-live="polite"
-      aria-label={label}
-      data-testid={testId}
+    <SpinnerBase
+      {...props}
+      className={combineClassNames(props.className)}
+      classMap={classes}
     />
   );
 };

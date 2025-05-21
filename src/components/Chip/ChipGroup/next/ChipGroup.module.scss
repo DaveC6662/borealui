@@ -1,41 +1,89 @@
-@use "@styles/theme" as theme;
+@use "../../../../styles/theme" as theme;
+@use "../../../../styles/globals";
 @use "sass:map";
 
+// Position mappings for chips
 $chip-positions: (
-  "topLeft": (top: 20px, left: 20px, align-items: flex-start),
-  "topCenter": (top: 20px, left: 50%, transform: translateX(-50%), align-items: center),
-  "topRight": (top: 20px, right: 20px, align-items: flex-end),
-  "bottomLeft": (bottom: 20px, left: 20px, align-items: flex-start),
-  "bottomCenter": (bottom: 20px, left: 50%, transform: translateX(-50%), align-items: center),
-  "bottomRight": (bottom: 20px, right: 20px, align-items: flex-end)
+  "topLeft": (
+    top: 20px,
+    left: 20px,
+    align-items: flex-start,
+  ),
+  "topCenter": (
+    top: 20px,
+    left: 50%,
+    transform: translateX(-50%),
+    align-items: center,
+  ),
+  "topRight": (
+    top: 20px,
+    right: 20px,
+    align-items: flex-end,
+  ),
+  "bottomLeft": (
+    bottom: 20px,
+    left: 20px,
+    align-items: flex-start,
+  ),
+  "bottomCenter": (
+    bottom: 20px,
+    left: 50%,
+    transform: translateX(-50%),
+    align-items: center,
+  ),
+  "bottomRight": (
+    bottom: 20px,
+    right: 20px,
+    align-items: flex-end,
+  ),
 );
 
-.chipGroup {
+.container {
   position: fixed;
-  z-index: 9999;
+  z-index: 9998;
   display: flex;
   flex-direction: column;
+  width: 90%;
+  max-width: 90vw;
   pointer-events: none;
 
   @each $position, $values in $chip-positions {
     &.#{$position} {
-      inset: map.get($values, top) map.get($values, right) map.get($values, bottom) map.get($values, left);
-      transform: map.get($values, transform, null);
+      @if map.has-key($values, top) {
+        top: map.get($values, top);
+      }
+
+      @if map.has-key($values, bottom) {
+        bottom: map.get($values, bottom);
+      }
+
+      @if map.has-key($values, left) {
+        left: map.get($values, left);
+      }
+
+      @if map.has-key($values, right) {
+        right: map.get($values, right);
+      }
+
+      @if map.has-key($values, transform) {
+        transform: map.get($values, transform);
+      }
+
       align-items: map.get($values, align-items);
     }
   }
 }
 
-@for $i from 0 through 10 {
-  .chipStack#{$i} {
-    margin-top: calc($i * 50px);
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
+.list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  gap: theme.$spacing-xs;
+  padding: 0;
+}
 
-  .bottom-left.chipStack#{$i},
-  .bottom-center.chipStack#{$i},
-  .bottom-right.chipStack#{$i} {
-    margin-bottom: calc($i * 50px);
-    margin-top: 0;
-  }
+.chip {
+  pointer-events: auto;
+  align-items: center;
 }

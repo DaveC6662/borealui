@@ -1,36 +1,100 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 @use "sass:map";
 
-$table-themes: (
-  "primary": var(--primary-color),
-  "secondary": var(--secondary-color),
-  "success": theme.$success-color,
-  "error": theme.$error-color,
-  "warning": theme.$warning-color
-);
-
-.dataTableWrapper {
+.wrapper {
   width: 100%;
+  max-width: 90vw;
   overflow-x: auto;
   border-radius: theme.$border-radius-xs;
   box-shadow: theme.$box-shadow-light;
   margin: theme.$spacing-md;
 
-  tbody tr:hover {
-    background-color: var(--background-color-lighter);
-  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: theme.$font-size-base;
+    min-width: 600px;
 
-  &.striped {
-    tbody tr:nth-child(odd) {
-      background-color: var(--background-color-dark);
+    th {
+      text-align: left;
+      padding: theme.$spacing-sm;
+      font-weight: theme.$font-weight-bold;
+      white-space: nowrap;
     }
 
-    tbody tr:nth-child(even) {
-      background-color: var(--background-color-darker);
+    td {
+      padding: theme.$spacing-sm;
+      border-bottom: 1px solid var(--text-color-primary);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th:hover {
+      cursor: pointer;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
     }
   }
 
-  @media (max-width: 768px) {
+  .data_table .sortable {
+    cursor: pointer;
+  }
+
+  .sort_icon {
+    margin-left: theme.$spacing-xxs;
+    font-size: 0.9em;
+  }
+
+  .clickable {
+    cursor: pointer;
+    transition: background-color theme.$transition-default;
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
+  }
+
+  .striped:nth-child(even) {
+    background-color: var(--background-color-darker);
+  }
+
+  tbody tr {
+    background-color: var(--background-color-dark);
+
+    &:hover {
+      background-color: var(--background-color-lighter);
+    }
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      th {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+      }
+    }
+
+    .#{$name}.outline {
+      th {
+        border: 2px solid map.get($values, border);
+        background-color: transparent;
+        color: map.get($values, text-color);
+      }
+    }
+  }
+
+  &.clear {
+    box-shadow: none;
+
+    th {
+      background-color: transparent;
+    }
+  }
+
+  @media (width <= 768px) {
     .table {
       font-size: theme.$font-size-sm;
 
@@ -41,12 +105,18 @@ $table-themes: (
     }
   }
 
-  @media (max-width: 480px) {
+  @media (width <= 480px) {
     .table {
       font-size: theme.$font-size-xs;
 
-      thead {
-        display: none;
+      th,
+      td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
+        padding: theme.$spacing-xs;
+        border-bottom: 1px solid var(--text-color-primary);
       }
 
       tbody tr {
@@ -54,15 +124,8 @@ $table-themes: (
         margin-bottom: theme.$spacing-sm;
       }
 
-      td {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        padding: theme.$spacing-xs;
-        text-align: left;
-        border-bottom: 1px solid var(--text-color-primary);
-        white-space: normal;
-        position: relative;
+      thead {
+        display: none;
       }
 
       td::before {
@@ -73,61 +136,5 @@ $table-themes: (
         color: var(--text-color-secondary);
       }
     }
-  }
-}
-
-@each $theme, $color in $table-themes {
-  .#{$theme} th {
-    background-color: $color;
-  }
-}
-
-.clear {
-  box-shadow: none;
-
-  th {
-    background-color: transparent;
-  }
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: theme.$font-size-base;
-  min-width: 600px;
-
-  th {
-    text-align: left;
-    padding: theme.$spacing-sm;
-    font-weight: theme.$font-weight-bold;
-    white-space: nowrap;
-  }
-
-  td {
-    padding: theme.$spacing-sm;
-    border-bottom: 1px solid var(--text-color-primary);
-    text-align: left;
-    white-space: nowrap;
-  }
-
-  th:hover {
-    cursor: pointer;
-  }
-
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
-}
-
-.striped {
-  background-color: var(--background-secondary-light-color);
-}
-
-.clickable {
-  cursor: pointer;
-  transition: background-color theme.$transition-default;
-
-  &:hover {
-    background-color: var(--primary-color-hover);
   }
 }

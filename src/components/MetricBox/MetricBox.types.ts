@@ -13,6 +13,8 @@ export interface MetricBoxProps {
   icon?: IconType;
   /** Optional subtext providing additional context for the metric. */
   subtext?: string;
+  /** Optional outline style for the component (default: false). */
+  outline?: boolean;
   /** Theme to apply for styling (e.g., "primary", "secondary", etc.). */
   theme?: ThemeType;
   /** Size of the component (e.g., "small", "medium", "large"). */

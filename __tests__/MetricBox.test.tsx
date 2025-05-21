@@ -1,50 +1,62 @@
 import { render, screen } from "@testing-library/react";
-import { MetricBox } from "@/index.next";
+import BaseMetricBox from "@/components/MetricBox/MetricBoxBase";
 import { FaUsers } from "react-icons/fa";
-import "@testing-library/jest-dom";
 
-describe("MetricBox", () => {
-  it("renders with required props", () => {
-    render(<MetricBox title="Users" value={120} />);
+const classNames = {
+  wrapper: "metricWrapper",
+  primary: "themePrimary",
+  medium: "sizeMedium",
+  center: "alignCenter",
+  icon: "metricIcon",
+  content: "metricContent",
+  title: "metricTitle",
+  value: "metricValue",
+  subtext: "metricSubtext",
+};
 
-    expect(screen.getByTestId("metric-box")).toBeInTheDocument();
-    expect(screen.getByTestId("metric-box-title")).toHaveTextContent("Users");
-    expect(screen.getByTestId("metric-box-value")).toHaveTextContent("120");
-  });
-
-  it("renders with icon, subtext, and applies theme, align, and size classes", () => {
+describe("BaseMetricBox", () => {
+  it("renders all metric content and includes correct aria attributes", () => {
     render(
-      <MetricBox
-        title="Active Users"
-        value="5,000"
+      <BaseMetricBox
+        title="New Users"
+        value="12"
+        subtext="Since yesterday"
         icon={FaUsers}
-        subtext="+20% growth"
-        theme="success"
-        align="right"
-        size="large"
-        data-testid="custom-metric"
+        classMap={classNames}
+        data-testid="metric-box"
       />
     );
 
-    const box = screen.getByTestId("custom-metric");
+    const region = screen.getByRole("region", { name: /new users/i });
+    expect(region).toBeInTheDocument();
+    expect(region).toHaveAttribute("aria-describedby");
 
-    expect(box).toBeInTheDocument();
-    expect(box).toHaveClass("success");
-    expect(box).toHaveClass("right");
-    expect(box).toHaveClass("large");
-
-    expect(screen.getByTestId("custom-metric-title")).toHaveTextContent("Active Users");
-    expect(screen.getByTestId("custom-metric-value")).toHaveTextContent("5,000");
-    expect(screen.getByTestId("custom-metric-subtext")).toHaveTextContent("+20% growth");
-    expect(screen.getByTestId("custom-metric-icon")).toBeInTheDocument();
+    expect(screen.getByTestId("metric-box-title").tagName).toBe("H3");
+    expect(screen.getByTestId("metric-box-value")).toHaveAttribute(
+      "aria-label",
+      "12 New Users"
+    );
+    expect(screen.getByTestId("metric-box-icon").firstChild).toHaveAttribute(
+      "aria-hidden",
+      "true"
+    );
+    expect(screen.getByTestId("metric-box-subtext")).toHaveTextContent(
+      "Since yesterday"
+    );
   });
 
-  it("falls back to default theme, align, and size if not provided", () => {
-    render(<MetricBox title="Fallback Test" value="42" />);
+  it("does not include aria-describedby if subtext is missing", () => {
+    render(
+      <BaseMetricBox
+        title="Active Users"
+        value="24"
+        classMap={classNames}
+        data-testid="metric-box"
+      />
+    );
 
-    const box = screen.getByTestId("metric-box");
-    expect(box).toHaveClass("primary"); 
-    expect(box).toHaveClass("center");  
-    expect(box).toHaveClass("medium");     
+    const region = screen.getByTestId("metric-box");
+    expect(region).not.toHaveAttribute("aria-describedby");
+    expect(screen.queryByTestId("metric-box-subtext")).not.toBeInTheDocument();
   });
 });

@@ -16,6 +16,10 @@ export interface IconButtonProps {
   isExternal?: boolean;
   /** Click event handler. */
   onClick?: (event: MouseEvent<HTMLElement>) => void;
+  /** Click event handler. */
+  onKeyDown?: (event: React.KeyboardEvent<HTMLElement>) => void;
+  /** Optional tab index override */
+  tabIndex?: number;
   /** Custom class name for additional styling. */
   className?: string;
   /** Title attribute (tooltip text). */

@@ -1,10 +1,18 @@
-// src/stories/CommandPalette.stories.tsx
-
 import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import CommandPalette from "@/components/CommandPalette/core/CommandPalette";
-import { FaSearch, FaUser, FaCog } from "react-icons/fa";
+import { CommandPalette } from "@/index.core";
 import type { CommandPaletteProps } from "@/components/CommandPalette/CommandPalette.types";
+import { FaSearch, FaUser, FaCog } from "react-icons/fa";
+import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "success",
+  "error",
+  "warning",
+  "clear",
+] as const;
 
 const meta: Meta<CommandPaletteProps> = {
   title: "Components/CommandPalette",
@@ -21,7 +29,6 @@ const meta: Meta<CommandPaletteProps> = {
 };
 
 export default meta;
-
 type Story = StoryObj<CommandPaletteProps>;
 
 const sampleCommands = [
@@ -57,6 +64,31 @@ export const Default: Story = {
           theme="primary"
         />
       </div>
+    );
+  },
+};
+
+export const ThemeVariants = {
+  render: () => {
+    const [openPalette, setOpenPalette] = useState<string | null>(null);
+
+    return (
+      <StoryGrid title="Theme Variants">
+        {themeOptions.map((theme) => (
+          <div key={theme} style={{ paddingBottom: "1rem" }}>
+            <button onClick={() => setOpenPalette(theme)}>
+              Open {theme} Palette
+            </button>
+            <CommandPalette
+              isOpen={openPalette === theme}
+              onClose={() => setOpenPalette(null)}
+              commands={sampleCommands}
+              placeholder={`Theme: ${theme}`}
+              theme={theme}
+            />
+          </div>
+        ))}
+      </StoryGrid>
     );
   },
 };

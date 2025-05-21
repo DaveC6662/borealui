@@ -1,65 +1,64 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { EmptyState } from "@/index.next";
-import { FaBoxOpen } from "react-icons/fa";
+import BaseEmptyState from "@/components/EmptyState/EmptyStateBase";
+import { FaRegSmile } from "react-icons/fa";
 
-describe("EmptyState Component", () => {
-  it("renders with default props", () => {
-    render(<EmptyState data-testid="empty" />);
-    expect(screen.getByTestId("empty")).toBeInTheDocument();
-    expect(screen.getByTestId("empty-title")).toHaveTextContent("Nothing Here Yet");
-    expect(screen.getByTestId("empty-message")).toHaveTextContent("There’s no content to display.");
-  });
+// Dummy button
+const DummyButton = ({ children, ...props }: any) => (
+  <button {...props}>{children}</button>
+);
 
-  it("renders custom title and message", () => {
+const classNames = {
+  wrapper: "emptyWrapper",
+  title: "emptyTitle",
+  message: "emptyMessage",
+  icon: "emptyIcon",
+  primary: "themePrimary",
+  secondary: "themeSecondary",
+  small: "sizeSmall",
+  medium: "sizeMedium",
+  large: "sizeLarge",
+  outline: "outline",
+};
+
+describe("BaseEmptyState", () => {
+  it("renders title, message, and icon with correct roles", () => {
     render(
-      <EmptyState
-        title="Custom Title"
-        message="Custom message content."
-        data-testid="empty"
+      <BaseEmptyState
+        icon={FaRegSmile}
+        title="No Data"
+        message="Please add some data to get started."
+        Button={DummyButton}
+        classMap={classNames}
+        data-testid="empty-state"
       />
     );
-    expect(screen.getByTestId("empty-title")).toHaveTextContent("Custom Title");
-    expect(screen.getByTestId("empty-message")).toHaveTextContent("Custom message content.");
+
+    const region = screen.getByRole("region", { name: "No Data" });
+    expect(region).toBeInTheDocument();
+    expect(screen.getByTestId("empty-state-title")).toHaveTextContent(
+      "No Data"
+    );
+    expect(screen.getByTestId("empty-state-message")).toHaveTextContent(
+      "Please add some data to get started."
+    );
+    expect(screen.getByTestId("empty-state-icon")).toBeInTheDocument();
   });
 
-  it("renders icon if provided", () => {
+  it("renders and handles action button click", () => {
+    const onClick = jest.fn();
     render(
-      <EmptyState
-        icon={FaBoxOpen}
-        data-testid="empty"
-      />
-    );
-    expect(screen.getByTestId("empty-icon")).toBeInTheDocument();
-  });
-
-  it("renders action button and handles click", () => {
-    const mockAction = jest.fn();
-    render(
-      <EmptyState
-        actionLabel="Click Me"
-        onActionClick={mockAction}
-        data-testid="empty"
+      <BaseEmptyState
+        icon={FaRegSmile}
+        actionLabel="Try Again"
+        onActionClick={onClick}
+        Button={DummyButton}
+        classMap={classNames}
+        data-testid="empty-state"
       />
     );
 
-    const actionButton = screen.getByTestId("empty-action");
-    expect(actionButton).toBeInTheDocument();
-    fireEvent.click(actionButton);
-    expect(mockAction).toHaveBeenCalledTimes(1);
-  });
-
-  it("respects theme and size classes", () => {
-    const { container } = render(
-      <EmptyState
-        theme="error"
-        size="xl"
-        data-testid="empty"
-      />
-    );
-    const wrapper = screen.getByTestId("empty");
-    expect(wrapper.className).toContain("error");
-    expect(wrapper.className).toContain("xl");
-    expect(container).toMatchSnapshot();
+    const button = screen.getByTestId("empty-state-action");
+    fireEvent.click(button);
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

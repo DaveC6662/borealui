@@ -3,39 +3,45 @@
     "target": "ES2017",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": true,
-    "types": ["node", "jest"],
-    "skipLibCheck": true,
+    "jsx": "react-jsx",
     "strict": true,
     "noEmit": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
     "incremental": true,
+
     "baseUrl": ".",
-    "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@context/*": ["src/context/*"],
-      "@styles/*": ["src/styles/*"],
-      "@types/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"]
+      "@/*": ["src/*"]
     },
+
+    "types": [
+      "node",
+      "jest",
+      "jest-axe",
+      "@testing-library/jest-dom",
+      "@testing-library/cypress"
+    ],
+
+    "forceConsistentCasingInFileNames": true,
     "plugins": [{ "name": "next" }]
   },
+
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "next.config.mjs",
+    "src",
+    "scripts",
+    "__tests__",
     "jest.setup.ts",
     "jest.config.ts",
-    "test/**/*",
-    "scripts",
-    "src/components/EmptyState/core/EmptyState.tsx"
+    "global.d.ts",
+    "next.config.mjs",
+    ".storybook-core/types",
+    "webpack.config.cjs"
   ],
-  "exclude": ["node_modules", "cypress"]
+
+  "exclude": ["node_modules", "cypress", "dist"]
 }

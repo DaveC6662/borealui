@@ -1,121 +1,131 @@
-@use "@styles/theme.scss" as theme;
-
-$themes: (
-    "primary": var(--primary-color),
-    "secondary": var(--secondary-color),
-    "success": theme.$success-color,
-    "error": theme.$error-color,
-    "warning": theme.$warning-color
-);
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
+@use "sass:map";
 
 .timeline {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    padding-left: theme.$spacing-md;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  max-width: 600px;
+  padding-left: theme.$spacing-md;
+}
 
-    &.horizontal {
-        flex-direction: row;
-        align-items: center;
-        overflow-x: auto;
-        padding-left: 0;
-        -webkit-overflow-scrolling: touch;
+.horizontal {
+  flex-direction: row;
+  align-items: center;
+  padding-left: 0;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: scroll;
 
-        ::-webkit-scrollbar-track {
-            background-color: transparent !important;
-        }
+  &::-webkit-scrollbar-track {
+    background-color: transparent !important;
+  }
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  padding-bottom: theme.$spacing-sm;
+  gap: theme.$spacing-sm;
+  position: relative;
+  text-align: center;
+
+  &.horizontal {
+    overflow: visible;
+    gap: 0;
+    margin-bottom: 2px;
+  }
+
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 13.5px;
+    top: 62%;
+    width: 2px;
+    height: 5em;
+    background-color: var(--primary-color);
+  }
+
+  &.horizontal:not(:last-child)::after {
+    top: 46%;
+    left: 100%;
+    width: 20px;
+    height: 2px;
+  }
+}
+
+.marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: theme.$border-radius-round;
+  background-color: var(--primary-color);
+  color: var(--text-color-primary);
+  font-size: theme.$font-size-sm;
+  box-shadow: theme.$box-shadow-medium;
+  transition: transform 0.3s ease-in-out;
+  line-height: 0.5em;
+}
+
+.marker.horizontal {
+  margin: 10px;
+  overflow-x: visible;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--text-color-primary);
+  border-radius: 50%;
+}
+
+.content {
+  background: var(--background-color-lighter);
+  padding: theme.$spacing-sm;
+  border-radius: theme.$border-radius-md;
+  box-shadow: theme.$box-shadow-light;
+  flex: 1;
+  min-width: 15rem;
+
+  &.horizontal {
+    overflow-x: visible;
+  }
+}
+
+.title {
+  text-align: center;
+  font-weight: theme.$font-weight-bold;
+  margin-bottom: theme.$spacing-xs;
+}
+
+.date {
+  font-size: theme.$font-size-sm;
+}
+
+.description {
+  font-size: theme.$font-size-md;
+  margin-top: theme.$spacing-xs;
+}
+
+@each $theme, $color in theme.$themes {
+  .#{$theme} {
+    &.item:not(:last-child)::after {
+      background-color: map.get($color, border);
     }
 
-    .timelineItem {
-        display: flex;
-        align-items: center;
-        padding-bottom: theme.$spacing-sm;
-        gap: theme.$spacing-sm;
-        position: relative;
-
-        &.horizontal {
-            gap: 0;
-            margin-bottom: 2px;
-        }
-
-        &:not(:last-child)::after {
-            content: "";
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            width: 2px;
-            height: 7em;
-            background-color: var(--primary-color);
-        }
-
-        &.horizontal:not(:last-child)::after {
-            top: 46%;
-            left: 100%;
-            width: 20px;
-            height: 2px;
-        }
-
-        .marker {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 25px;
-            height: 25px;
-            min-width: 30px;
-            min-height: 30px;
-            border-radius: theme.$border-radius-round;
-            background-color: var(--primary-color);
-            color: var(--text-color-primary);
-            font-size: theme.$font-size-sm;
-            box-shadow: theme.$box-shadow-medium;
-            transition: transform 0.3s ease-in-out;
-            line-height: 0.5em;
-
-            .dot {
-                width: 8px;
-                height: 8px;
-                background-color: var(--text-color-primary);
-                border-radius: 50%;
-            }
-
-            &.horizontal {
-                margin: 10px;
-            }
-        }
-
-        .content {
-            background: var(--background-color-lighter);
-            padding: theme.$spacing-sm;
-            border-radius: theme.$border-radius-md;
-            box-shadow: theme.$box-shadow-light;
-            flex: 1;
-            min-width: 15rem;
-
-            h3 {
-                text-align: center;
-            }
-
-            .date {
-                font-size: theme.$font-size-sm;
-            }
-
-            .description {
-                font-size: theme.$font-size-md;
-            }
-        }
+    &.marker {
+      background-color: map.get($color, bg);
     }
+  }
+}
 
-    @each $theme, $color in $themes {
-        &.#{$theme} .timelineItem {
-            &:not(:last-child)::after {
-                background-color: $color;
-            }
-
-            .marker {
-                background-color: $color;
-            }
-        }
-    }
+.clear .marker {
+  box-shadow: none;
 }

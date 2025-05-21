@@ -1,58 +1,57 @@
-import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import { FaCheck } from "react-icons/fa";
-import { Badge } from "@/index.next";
+import { BadgeBase } from "@/components/Badge/BadgeBase";
 
-describe("Badge Component", () => {
-  it("renders text correctly", () => {
-    render(<Badge text="Active" />);
-    expect(screen.getByText("Active")).toBeInTheDocument();
+const classMap = {
+  badge: "badge",
+  primary: "primary",
+  medium: "medium",
+  outline: "outline",
+  icon: "icon",
+};
+
+const DummyIcon = () => <svg data-testid="icon-svg" />;
+
+describe("BadgeBase", () => {
+  it("renders badge with text", () => {
+    render(
+      <BadgeBase
+        text="Active"
+        classMap={classMap}
+        theme="primary"
+        testId="badge"
+      />
+    );
+
+    const badge = screen.getByTestId("badge");
+    expect(badge).toBeInTheDocument();
+    expect(badge).toHaveTextContent("Active");
+    expect(badge).toHaveAttribute("aria-label", "Active");
+    expect(badge).toHaveAttribute("role", "status");
   });
 
-  it("renders children instead of text if provided", () => {
-    render(<Badge text="Ignored"><strong>Custom</strong></Badge>);
-    expect(screen.getByText("Custom")).toBeInTheDocument();
-    expect(screen.queryByText("Ignored")).not.toBeInTheDocument();
-  });
+  it("renders badge with children instead of text", () => {
+    render(
+      <BadgeBase classMap={classMap} testId="badge" text="Custom Badge" />
+    );
 
-  it("applies correct theme class", () => {
-    render(<Badge text="Warning" theme="warning" />);
-    const badge = screen.getByRole("note");
-    expect(badge.className).toMatch(/warning/);
-  });
-
-  it("applies correct size class", () => {
-    render(<Badge text="Small" size="small" />);
-    const badge = screen.getByRole("note");
-    expect(badge.className).toMatch(/small/);
-  });
-
-  it("applies outline class when outline is true", () => {
-    render(<Badge text="Outlined" outline />);
-    const badge = screen.getByRole("note");
-    expect(badge.className).toMatch(/outline/);
+    const badge = screen.getByTestId("badge");
+    expect(badge).toHaveTextContent("Custom Badge");
   });
 
   it("renders icon when provided", () => {
-    render(<Badge text="Check" icon={FaCheck} />);
-    const icon = screen.getByTestId("badge").querySelector("svg");
-    expect(icon).toBeInTheDocument();
+    render(
+      <BadgeBase
+        text="New"
+        icon={DummyIcon}
+        classMap={classMap}
+        testId="badge"
+      />
+    );
+    expect(screen.getByTestId("icon-svg")).toBeInTheDocument();
   });
 
-  it("uses custom test ID if provided", () => {
-    render(<Badge text="Tested" testId="custom-badge" />);
-    expect(screen.getByTestId("custom-badge")).toBeInTheDocument();
-  });
-
-  it("returns null if neither text nor children are provided", () => {
-    const { container } = render(<Badge text="" />);
-    expect(container.firstChild).toBeNull();
-  });
-
-  it("sets title and aria-label", () => {
-    render(<Badge text="Info" title="Helpful Info" />);
-    const badge = screen.getByRole("note");
-    expect(badge).toHaveAttribute("title", "Helpful Info");
-    expect(badge).toHaveAttribute("aria-label", "Info");
+  it("does not render if no text or children", () => {
+    const { container } = render(<BadgeBase classMap={classMap} text="" />);
+    expect(container).toBeEmptyDOMElement();
   });
 });

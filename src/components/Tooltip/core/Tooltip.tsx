@@ -1,80 +1,27 @@
-"use client";
-
-import {
-  forwardRef,
-  useId,
-} from "react";
+import { forwardRef } from "react";
 import "./Tooltip.scss";
-import { combineClassNames } from "../../../utils/classNames";
+import { TooltipBase } from "../TooltipBase";
 import { TooltipProps } from "../Tooltip.types";
 
-/**
- * Tooltip component displays additional information when hovering over or focusing on an element.
- * It wraps the trigger element and renders an accessible tooltip with customizable content,
- * position, and theme.
- *
- * @component
- * @example
- * ```tsx
- * <Tooltip content="This is a tooltip message" position="bottom" theme="primary">
- *   <button>Hover over me</button>
- * </Tooltip>
- * ```
- *
- * @param {TooltipProps} props - Props to configure the Tooltip component.
- * @param {React.Ref<HTMLDivElement>} ref - A ref forwarded to the tooltip element.
- * @returns {JSX.Element} The rendered Tooltip component.
- */
-const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
-  (
-    {
-      content,
-      position = "top",
-      theme = "primary",
-      children,
-      className = "",
-      "data-testid": testId = "tooltip",
-      ...rest
-    },
-    ref
-  ) => {
-    // Unique ID for associating the tooltip with the trigger for ARIA.
-    const tooltipId = useId();
+const classes = {
+  container: "tooltip_container",
+  triggerWrapper: "tooltip_triggerWrapper",
+  tooltip: "tooltip",
+  top: "tooltip_top",
+  bottom: "tooltip_bottom",
+  left: "tooltip_left",
+  right: "tooltip_right",
+  primary: "tooltip_primary",
+  secondary: "tooltip_secondary",
+  success: "tooltip_success",
+  error: "tooltip_error",
+  warning: "tooltip_warning",
+  clear: "tooltip_clear",
+};
 
-    return (
-      <div
-        className={combineClassNames('tooltipContainer', className)}
-        data-testid={`${testId}-container`}
-      >
-        {/* Trigger wrapper (can be focused by keyboard if needed) */}
-        <span
-          tabIndex={0}
-          aria-describedby={tooltipId}
-          data-testid={`${testId}-trigger`}
-          className={'triggerWrapper'}
-        >
-          {children}
-        </span>
-
-        {/* Tooltip content */}
-        <div
-          ref={ref}
-          id={tooltipId}
-          className={combineClassNames(
-            'tooltip',
-            position,
-            theme
-          )}
-          role="tooltip"
-          data-testid={testId}
-          {...rest}
-        >
-          {content}
-        </div>
-      </div>
-    );
-  }
-);
+const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props, ref) => (
+  <TooltipBase {...props} ref={ref} classMap={classes} />
+));
 
 Tooltip.displayName = "Tooltip";
 

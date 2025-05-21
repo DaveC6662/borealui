@@ -24,7 +24,7 @@ export const WithLinksAndLists: Story = {
 
 - Item 1
 - Item 2
-- [Visit OpenAI](https://openai.com)
+- [Visit BorealUI](https://boreal.ui)
 - \`Inline code\`
 
 > Blockquote

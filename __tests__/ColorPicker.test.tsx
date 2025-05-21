@@ -1,114 +1,90 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import ColorPickerBase from "@/components/ColorPicker/ColorPickerBase";
 import "@testing-library/jest-dom";
-import { ColorPicker } from "@/index.next";
-import { ColorOption } from "@/components/ColorPicker/ColorPicker";
 
-const colorOptions: ColorOption[] = [
-  { label: "Red", value: "#e74c3c" },
-  { label: "Green", value: "#27ae60" },
-  { label: "Blue", value: "#3498db" },
+const colors = [
+  { label: "Red", value: "#ff0000" },
+  { label: "Green", value: "#00ff00" },
+  { label: "Blue", value: "#0000ff" },
 ];
 
-describe("ColorPicker", () => {
-  it("renders all color options", () => {
+const classMap = {
+  colorPicker: "colorPicker",
+  legend: "legend",
+  colorGrid: "colorGrid",
+  colorSwatch: "colorSwatch",
+  colorPreview: "colorPreview",
+  radioInput: "radioInput",
+  selected: "selected",
+  customColorInput: "customColorInput",
+  medium: "medium",
+  round: "round",
+};
+
+describe("ColorPickerBase", () => {
+  it("renders radio buttons with proper labels", () => {
     render(
-      <ColorPicker
-        colors={colorOptions}
-        selected="#3498db"
-        onChange={() => {}}
+      <ColorPickerBase
+        colors={colors}
+        selected="#ff0000"
+        onChange={jest.fn()}
+        label="Pick a color"
+        classMap={classMap}
+        data-testid="color-picker"
       />
     );
 
-    colorOptions.forEach((color) => {
-      expect(screen.getByTestId(`color-picker-option-${color.value}`)).toBeInTheDocument();
-    });
+    expect(
+      screen.getByRole("radiogroup", { name: "Pick a color" })
+    ).toBeInTheDocument();
+    expect(screen.getAllByRole("radio")).toHaveLength(colors.length);
   });
 
-  it("applies selected state correctly", () => {
+  it("checks the selected radio button", () => {
     render(
-      <ColorPicker
-        colors={colorOptions}
-        selected="#27ae60"
-        onChange={() => {}}
+      <ColorPickerBase
+        colors={colors}
+        selected="#00ff00"
+        onChange={jest.fn()}
+        classMap={classMap}
+        data-testid="color-picker"
       />
     );
 
-    const selectedOption = screen.getByTestId("color-picker-option-#27ae60");
-    expect(selectedOption.classList.contains("selected")).toBe(true);
+    const greenInput = screen
+      .getByTestId("color-picker-option-#00ff00")
+      .querySelector("input") as HTMLInputElement;
+
+    expect(greenInput).toBeChecked();
   });
 
-  it("calls onChange when a color is selected", () => {
+  it("triggers onChange when a color is selected", () => {
     const handleChange = jest.fn();
+
     render(
-      <ColorPicker
-        colors={colorOptions}
-        selected="#e74c3c"
+      <ColorPickerBase
+        colors={colors}
+        selected="#ff0000"
         onChange={handleChange}
-      />
-    );
-    const input = screen.getByLabelText("Blue");
-    fireEvent.click(input);
-
-    expect(handleChange).toHaveBeenCalledWith("#3498db");
-  });
-
-  it("renders with custom label and shape", () => {
-    render(
-      <ColorPicker
-        label="Pick your color"
-        colors={colorOptions}
-        selected="#e74c3c"
-        onChange={() => {}}
-        shape="pill"
+        classMap={classMap}
       />
     );
 
-    expect(screen.getByText("Pick your color")).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId("color-picker-option-#0000ff"));
+    expect(handleChange).toHaveBeenCalledWith("#0000ff");
   });
 
-  it("renders a disabled component", () => {
+  it("renders custom color input if allowCustom is true", () => {
     render(
-      <ColorPicker
-        colors={colorOptions}
-        selected="#e74c3c"
-        onChange={() => {}}
-        disabled
-      />
-    );
-
-    const fieldset = screen.getByTestId("color-picker");
-    expect(fieldset).toBeDisabled();
-  });
-
-  it("renders custom color input when allowCustom is true", () => {
-    render(
-      <ColorPicker
-        colors={colorOptions}
-        selected="#000000"
-        onChange={() => {}}
+      <ColorPickerBase
+        colors={colors}
+        selected="#ff0000"
+        onChange={jest.fn()}
         allowCustom
+        classMap={classMap}
       />
     );
 
-    const customInput = screen.getByTestId("color-picker-custom-input");
-    expect(customInput).toBeInTheDocument();
-    expect(customInput).toHaveAttribute("type", "color");
-  });
-
-  it("calls onChange when custom color input is changed", () => {
-    const handleChange = jest.fn();
-    render(
-      <ColorPicker
-        colors={colorOptions}
-        selected="#000000"
-        onChange={handleChange}
-        allowCustom
-      />
-    );
-
-    const customInput = screen.getByTestId("color-picker-custom-input");
-    fireEvent.change(customInput, { target: { value: "#123456" } });
-
-    expect(handleChange).toHaveBeenCalledWith("#123456");
+    expect(screen.getByLabelText("Custom color picker")).toBeInTheDocument();
   });
 });

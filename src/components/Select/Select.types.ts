@@ -16,6 +16,8 @@ interface Option {
 export interface SelectProps {
   /** Theme for styling (e.g., "primary", "secondary"). */
   theme?: ThemeType;
+  /** If true, the select element is styled as outlined. */
+  outline?: boolean;
   /** An array of options that will be rendered as dropdown choices. */
   options: Option[];
   /** The current selected value. */
@@ -29,6 +31,8 @@ export interface SelectProps {
   placeholder?: string;
   /** Accessible label for the select element. */
   ariaLabel?: string;
+  /** Optional description for the select element, used for accessibility. */
+  ariaDescription?: string;
   /** If true, the select element is disabled. */
   disabled?: boolean;
   /** Additional class name(s) for custom styling. */

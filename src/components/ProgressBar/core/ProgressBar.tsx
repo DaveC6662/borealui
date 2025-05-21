@@ -1,45 +1,28 @@
-import React, { JSX } from "react";
+import React from "react";
+import BaseProgressBar from "../ProgressBarBase";
 import "./Progressbar.scss";
 import { ProgressBarProps } from "../ProgressBar.types";
 
-/**
- * ProgressBar is a visual component used to indicate progress for a given task.
- * It supports both determinate and indeterminate modes and includes ARIA attributes
- * for improved accessibility.
- *
- * @param {ProgressBarProps} props - Props for configuring the progress bar.
- * @returns {JSX.Element} A styled progress bar component.
- */
-const ProgressBar: React.FC<ProgressBarProps> = ({
-  progress = 0,
-  theme = "primary",
-  size = "medium",
-  animated = true,
-  indeterminate = false,
-  className = "",
-  "data-testid": testId = "progressbar",
-}: ProgressBarProps): JSX.Element => {
-  const ariaValue = indeterminate ? undefined : Math.round(progress);
+const classes = {
+  container: "progress_container",
+  bar: "progress_bar",
+  primary: "progress_primary",
+  secondary: "progress_secondary",
+  success: "progress_success",
+  error: "progress_error",
+  warning: "progress_warning",
+  clear: "progress_clear",
+  xs: "progress_xs",
+  xl: "progress_xl",
+  small: "progress_small",
+  medium: "progress_medium",
+  large: "progress_large",
+  animated: "progress_animated",
+  indeterminate: "progress_indeterminate",
+};
 
-  return (
-    <div
-      className={`${"progressContainer"} ${size} ${className}`}
-      role="progressbar"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={ariaValue}
-      aria-label="Progress"
-      data-testid={testId}
-    >
-      <div
-        className={`${"progressBar"} ${theme} ${animated ? "animated" : ""} ${
-          indeterminate ? "indeterminate" : ""
-        }`}
-        style={{ width: indeterminate ? "100%" : `${progress}%` }}
-        data-testid={`${testId}-bar`}
-      />
-    </div>
-  );
+const ProgressBar: React.FC<ProgressBarProps> = (props) => {
+  return <BaseProgressBar {...props} classMap={classes} />;
 };
 
 export default ProgressBar;

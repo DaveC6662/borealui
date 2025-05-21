@@ -1,6 +1,7 @@
-@use "@styles/theme" as theme;
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
 
-.navContainer {
+.container {
   position: fixed;
   top: 10px;
   left: 10px;
@@ -29,13 +30,13 @@
   }
 }
 
-.navItem {
+.item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
   padding: 15px;
   border-radius: 50%;
   background-color: var(--background-color-dark);
@@ -56,7 +57,7 @@
     transform: scale(1.1);
   }
 
-  &.active {
+  &--active {
     background-color: var(--primary-color-light);
     color: var(--secondary-color-darker);
     font-weight: bold;

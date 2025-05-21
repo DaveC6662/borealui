@@ -1,147 +1,57 @@
-import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import {Accordion} from "@/index.next";
+import { AccordionBase } from "@/components/Accordion/AccordionBase";
 
-describe("Accordion Component", () => {
-  it("renders with default props", () => {
-    render(<Accordion title="Test Accordion">Content</Accordion>);
-    expect(screen.getByTestId("accordion-toggle")).toBeInTheDocument();
-    expect(screen.getByTestId("accordion-content")).toHaveAttribute("data-state", "collapsed");
-  });
+const styles = {
+  accordion: "accordion",
+  accordionHeader: "accordionHeader",
+  accordionTitle: "accordionTitle",
+  accordionIcon: "accordionIcon",
+  accordionContent: "accordionContent",
+  expanded: "expanded",
+  primary: "primary",
+  medium: "medium",
+  outline: "outline",
+  disabled: "disabled",
+};
 
-  it("expands and collapses in uncontrolled mode", () => {
-    render(<Accordion title="Toggle Me">Hello World</Accordion>);
+describe("AccordionBase (Jest)", () => {
+  const getUniqueId = () => "unique-id";
 
-    const button = screen.getByTestId("accordion-toggle");
-    const content = screen.getByTestId("accordion-content");
-
-    expect(content).toHaveAttribute("data-state", "collapsed");
-
-    fireEvent.click(button);
-    expect(content).toHaveAttribute("data-state", "open");
-
-    fireEvent.click(button);
-    expect(content).toHaveAttribute("data-state", "collapsed");
-  });
-
-  it("respects initiallyExpanded prop", () => {
-    render(<Accordion title="Initially Open" initiallyExpanded>Visible content</Accordion>);
-    expect(screen.getByTestId("accordion-content")).toHaveAttribute("data-state", "open");
-  });
-
-  it("respects controlled mode (expanded=true)", () => {
+  it("renders with title and toggles content visibility", () => {
     render(
-      <Accordion title="Controlled" expanded>
-        Controlled content
-      </Accordion>
-    );
-    expect(screen.getByTestId("accordion-content")).toHaveAttribute("data-state", "open");
-  });
-
-  it("respects controlled mode (expanded=false)", () => {
-    render(
-      <Accordion title="Controlled" expanded={false}>
-        Controlled content
-      </Accordion>
-    );
-    expect(screen.getByTestId("accordion-content")).toHaveAttribute("data-state", "collapsed");
-  });
-
-  it("fires onToggle in controlled mode", () => {
-    const handleToggle = jest.fn();
-    render(
-      <Accordion title="Controlled" expanded={false} onToggle={handleToggle}>
-        Controlled content
-      </Accordion>
-    );
-
-    fireEvent.click(screen.getByTestId("accordion-toggle"));
-    expect(handleToggle).toHaveBeenCalledWith(true);
-  });
-
-  it("does not toggle when disabled", () => {
-    render(
-      <Accordion title="Disabled" disabled>
-        You shouldn&apos;t see this
-      </Accordion>
-    );
-
-    const button = screen.getByTestId("accordion-toggle");
-    const content = screen.getByTestId("accordion-content");
-
-    expect(content).toHaveAttribute("data-state", "collapsed");
-
-    fireEvent.click(button);
-    expect(content).toHaveAttribute("data-state", "collapsed"); // Should not toggle
-  });
-
-  it("applies the outline class", () => {
-    const { container } = render(
-      <Accordion title="Outline Test" outline>
-        Outline content
-      </Accordion>
-    );
-
-    expect(container.firstChild).toHaveClass("outline");
-  });
-
-  it("applies size and theme classes", () => {
-    const { container } = render(
-      <Accordion title="Styled" size="large" theme="success">
-        Themed content
-      </Accordion>
-    );
-
-    expect(container.firstChild).toHaveClass("large");
-    expect(container.firstChild).toHaveClass("success");
-  });
-
-  it("sets appropriate ARIA attributes", () => {
-    render(<Accordion title="Accessible Accordion">A11y</Accordion>);
-
-    const button = screen.getByTestId("accordion-toggle");
-    const content = screen.getByTestId("accordion-content");
-
-    const controlsId = button.getAttribute("aria-controls");
-    expect(button).toHaveAttribute("aria-expanded", "false");
-    expect(content).toHaveAttribute("id", controlsId);
-    expect(content).toHaveAttribute("role", "region");
-
-    fireEvent.click(button);
-    expect(button).toHaveAttribute("aria-expanded", "true");
-  });
-
-  it("supports custom icons", () => {
-    const CustomExpandedIcon = () => <span data-testid="expanded-icon">▲</span>;
-    const CustomCollapsedIcon = () => <span data-testid="collapsed-icon">▼</span>;
-
-    render(
-      <Accordion
-        title="Icon Accordion"
-        customExpandedIcon={<CustomExpandedIcon />}
-        customCollapsedIcon={<CustomCollapsedIcon />}
+      <AccordionBase
+        title="Test Accordion"
+        getUniqueId={getUniqueId}
+        classMap={styles}
       >
-        Icon Content
-      </Accordion>
+        <div>Accordion content</div>
+      </AccordionBase>
     );
 
-    expect(screen.getByTestId("collapsed-icon")).toBeInTheDocument();
+    expect(screen.getByText("Test Accordion")).toBeInTheDocument();
+    const content = screen.getByTestId("accordion-content");
+    expect(content).toHaveAttribute("data-state", "collapsed");
+
     fireEvent.click(screen.getByTestId("accordion-toggle"));
-    expect(screen.getByTestId("expanded-icon")).toBeInTheDocument();
+    expect(content).toHaveAttribute("data-state", "open");
   });
 
-  it("supports keyboard interaction (Enter & Space)", () => {
-    render(<Accordion title="Keyboard Accessible">Key Content</Accordion>);
+  it("respects disabled state", () => {
+    render(
+      <AccordionBase
+        title="Disabled Accordion"
+        disabled
+        getUniqueId={getUniqueId}
+        classMap={styles}
+      >
+        <div>Content</div>
+      </AccordionBase>
+    );
 
-    const button = screen.getByTestId("accordion-toggle");
-    const content = screen.getByTestId("accordion-content");
-
-    expect(content).toHaveAttribute("data-state", "collapsed");
-
-    fireEvent.keyDown(button, { key: "Enter" });
-    expect(content).toHaveAttribute("data-state", "open");
-
-    fireEvent.keyDown(button, { key: " " });
-    expect(content).toHaveAttribute("data-state", "collapsed");
+    fireEvent.click(screen.getByTestId("accordion-toggle"));
+    expect(screen.getByTestId("accordion-content")).toHaveAttribute(
+      "data-state",
+      "collapsed"
+    );
   });
 });

@@ -3,7 +3,7 @@ import { SizeType, ThemeType } from "@/types/types";
 /**
  * A breadcrumb item used to define a single step in the navigation path.
  */
-interface Breadcrumb {
+export interface Breadcrumb {
   /**
    * The display label for the breadcrumb.
    */

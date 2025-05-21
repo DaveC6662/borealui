@@ -1,45 +1,58 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { MarkdownRenderer } from "@/index.next";
+import BaseMarkdownRenderer from "@/components/MarkdownRenderer/MarkdownRendererBase";
 
-describe("MarkdownRenderer", () => {
-  const markdown = `# Hello **world**`;
+const classNames = {
+  wrapper: "markdownWrapper",
+  loading: "markdownLoading",
+};
 
-  it("renders markdown content as HTML", async () => {
-    render(<MarkdownRenderer content={markdown} data-testid="markdown-renderer" />);
-    
-    await waitFor(() => {
-      const rendered = screen.getByTestId("markdown-renderer");
-      expect(rendered).toBeInTheDocument();
-      expect(rendered.innerHTML).toContain("<h1");
-      expect(rendered.innerHTML).toContain("Hello <strong>world</strong>");
-    });
+describe("BaseMarkdownRenderer", () => {
+  it("shows loading indicator initially", () => {
+    render(
+      <BaseMarkdownRenderer content="**Loading Test**" classMap={classNames} />
+    );
+    expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "true");
   });
 
-  it("sanitizes script tags from markdown input", async () => {
+  it("renders markdown content properly", async () => {
     render(
-      <MarkdownRenderer
-        content={`# Unsafe\n<script>alert("XSS")</script>`}
+      <BaseMarkdownRenderer
+        content={"# Cypress Markdown Test\n\n**Bold Text**"}
+        classMap={classNames}
         data-testid="markdown-renderer"
       />
     );
 
     await waitFor(() => {
-      const rendered = screen.getByTestId("markdown-renderer");
-      expect(rendered.innerHTML).toContain("Unsafe");
-      expect(rendered.innerHTML).not.toContain("<script>");
+      const region = screen.getByRole("region", { name: /markdown content/i });
+      expect(region).toContainHTML("<h1>Cypress Markdown Test</h1>");
+      expect(region).toContainHTML("<strong>Bold Text</strong>");
     });
   });
 
-  it("shows fallback loading text before content loads", async () => {
-    render(<MarkdownRenderer content="# Loading..." data-testid="markdown-renderer" />);
-
-    const fallback = screen.getByTestId("markdown-loading");
-    expect(fallback).toBeInTheDocument();
+  it("renders fallback message on empty content", async () => {
+    render(<BaseMarkdownRenderer content=" " classMap={classNames} />);
 
     await waitFor(() => {
-      const rendered = screen.getByTestId("markdown-renderer");
-      expect(rendered.innerHTML).toContain("Loading...");
+      const fallback = screen.getByRole("region", {
+        name: /markdown content/i,
+      });
+      expect(fallback).toHaveTextContent("No content available.");
+    });
+  });
+
+  it("sets the correct language attribute", async () => {
+    render(
+      <BaseMarkdownRenderer
+        content="*Bonjour*"
+        classMap={classNames}
+        language="fr"
+      />
+    );
+
+    await waitFor(() => {
+      const region = screen.getByRole("region");
+      expect(region).toHaveAttribute("lang", "fr");
     });
   });
 });

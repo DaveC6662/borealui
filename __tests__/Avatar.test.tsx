@@ -1,89 +1,70 @@
-import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Avatar } from "@/index.next";
-import { FaCrown } from "react-icons/fa";
+import { AvatarBase } from "@/components/Avatar/AvatarBase";
 
-describe("Avatar Component", () => {
-  it("renders initials when no image is provided", () => {
-    render(<Avatar name="Jane Doe" />);
-    expect(screen.getByText("JD")).toBeInTheDocument();
+const classMap = {
+  avatar: "avatar",
+  "avatar--primary": "avatar--primary",
+  "avatar--secondary": "avatar--secondary",
+  "avatar--success": "avatar--success",
+  "avatar--warning": "avatar--warning",
+  "avatar--error": "avatar--error",
+  "avatar--clear": "avatar--clear",
+
+  "avatar--circle": "avatar--circle",
+  "avatar--square": "avatar--square",
+  "avatar--rounded": "avatar--rounded",
+
+  "avatar--xs": "avatar--xs",
+  "avatar--small": "avatar--small",
+  "avatar--medium": "avatar--medium",
+  "avatar--large": "avatar--large",
+  "avatar--xl": "avatar--xl",
+
+  "avatar--outline": "avatar--outline",
+
+  avatar__image: "avatar__image",
+  avatar__initials: "avatar__initials",
+  avatar__status: "avatar__status",
+  "avatar__status--online": "avatar__status--online",
+  "avatar__status--offline": "avatar__status--offline",
+  "avatar__status--away": "avatar__status--away",
+  "avatar__status--busy": "avatar__status--busy",
+  "avatar__status--topRight": "avatar__status--topRight",
+  "avatar__status--bottomRight": "avatar__status--bottomRight",
+  "avatar__status--bottomLeft": "avatar__status--bottomLeft",
+  "avatar__status--topLeft": "avatar__status--topLeft",
+
+  avatar__dot: "avatar__dot",
+};
+
+describe("AvatarBase (Jest)", () => {
+  it("renders initials fallback when image fails", () => {
+    render(<AvatarBase name="John Doe" classMap={classMap} />);
+    expect(screen.getByRole("img")).toHaveTextContent("JD");
   });
 
-  it("renders image when src is provided", () => {
-    render(<Avatar src="https://example.com/avatar.jpg" alt="John" />);
-    expect(screen.getByAltText("John")).toBeInTheDocument();
+  it("renders avatar with image if src is valid", () => {
+    render(
+      <AvatarBase src="/avatar.jpg" alt="User avatar" classMap={classMap} />
+    );
+    expect(screen.getByRole("img")).toHaveAttribute("src", "/avatar.jpg");
   });
 
-  it("falls back to initials on image error", () => {
-    render(<Avatar name="Error Test" src="/invalid.jpg" />);
-    const image = screen.getByRole("img");
-    fireEvent.error(image);
-    expect(screen.getByText("ET")).toBeInTheDocument();
-  });
-
-  it("renders status dot when status is provided", () => {
-    render(<Avatar name="Liam" status="online" />);
+  it("renders with status indicator", () => {
+    render(<AvatarBase name="Jane" status="online" classMap={classMap} />);
     const status = screen.getByTestId("avatar-status");
-    expect(status).toHaveClass("status-online");
+
+    expect(status).toBeInTheDocument();
+    expect(status).toHaveAttribute("aria-hidden", "true");
+    expect(status.className).toContain("avatar_status_online");
   });
 
-  it("renders custom status icon", () => {
-    render(<Avatar name="Admin" statusIcon={<FaCrown data-testid="custom-icon" />} />);
-    expect(screen.getByTestId("custom-icon")).toBeInTheDocument();
-  });
-
-  it("applies status position classes", () => {
-    render(<Avatar name="User" status="idle" statusPosition="topLeft" />);
-    const status = screen.getByTestId("avatar-status");
-    expect(status).toHaveClass("top-left");
-  });
-
-  it("renders all size variants", () => {
-    const sizes = ["xs", "small", "medium", "large", "xl"];
-    sizes.forEach(size => {
-      const { unmount } = render(<Avatar name="Sized" size={size} />);
-      expect(screen.getByTestId("avatar")).toHaveClass(size);
-      unmount();
-    });
-  });
-
-  it("renders all shape variants", () => {
-    const shapes = ["circle", "rounded", "square"];
-    shapes.forEach(shape => {
-      const { unmount } = render(<Avatar name="ShapeTest" shape={shape} />);
-      expect(screen.getByTestId("avatar")).toHaveClass(shape);
-      unmount();
-    });
-  });
-
-  it("renders all theme variants", () => {
-    const themes = ["primary", "secondary", "success", "error", "warning", "clear"];
-    themes.forEach(theme => {
-      const { unmount } = render(<Avatar name="Theme" theme={theme} />);
-      expect(screen.getByTestId("avatar")).toHaveClass(theme);
-      unmount();
-    });
-  });
-
-  it("applies outline class", () => {
-    render(<Avatar name="Outlined" outline />);
-    expect(screen.getByTestId("avatar")).toHaveClass("outline");
-  });
-
-  it("renders as anchor link when href is external", () => {
-    render(<Avatar name="LinkOut" href="https://example.com" />);
-    expect(screen.getByRole("link")).toHaveAttribute("href", "https://example.com");
-  });
-
-  it("renders as internal link when href starts with '/'", () => {
-    render(<Avatar name="Internal" href="/dashboard" />);
-    expect(screen.getByRole("link")).toHaveAttribute("href", "/dashboard");
-  });
-
-  it("renders as button and handles click", () => {
+  it("calls onClick handler when clicked", () => {
     const handleClick = jest.fn();
-    render(<Avatar name="Clicker" onClick={handleClick} />);
-    fireEvent.click(screen.getByRole("button"));
+    render(
+      <AvatarBase name="Test" onClick={handleClick} classMap={classMap} />
+    );
+    fireEvent.click(screen.getByTestId("avatar"));
     expect(handleClick).toHaveBeenCalled();
   });
 });

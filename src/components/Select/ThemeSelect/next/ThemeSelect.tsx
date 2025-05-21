@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
 import React, { useContext } from "react";
-import { colorSchemes } from "@styles/Themes";
+import { colorSchemes } from "../../../../styles/Themes";
 import { Select } from "@/index.next";
-import { ThemeContext } from "@context/ThemeContext";
+import { ThemeContext } from "../../../../context/ThemeContext";
 
 /**
  * UserThemeSettings component allows users to select a color scheme/theme
- * from a list of available themes. It retrieves the current theme settings 
+ * from a list of available themes. It retrieves the current theme settings
  * from the ThemeContext and updates the selection through a dropdown (Select component).
  *
  * @component
@@ -24,7 +24,9 @@ const UserThemeSettings: React.FC = () => {
   const themeContext = useContext(ThemeContext);
 
   if (!themeContext) {
-    throw new Error("ThemeContext is undefined. Make sure to wrap this component with ThemeProvider.");
+    throw new Error(
+      "ThemeContext is undefined. Make sure to wrap this component with ThemeProvider."
+    );
   }
 
   // Destructure the selectedScheme and the setter function from the context.

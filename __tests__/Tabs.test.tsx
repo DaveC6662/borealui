@@ -1,49 +1,57 @@
-import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Tabs } from "@/index.next";
-import { FaHome, FaUser } from "react-icons/fa";
+import { axe } from "jest-axe";
+import TabsBase from "@/components/Tabs/TabsBase";
 
-describe("Tabs Component", () => {
-  const mockTabs = [
-    {
-      label: "Home",
-      icon: FaHome,
-      content: <p>Welcome home!</p>,
-    },
-    {
-      label: "Profile",
-      icon: FaUser,
-      content: <p>Your profile info</p>,
-    },
-  ];
+const mockStyles = {
+  tabsContainer: "tabsContainer",
+  tabs: "tabs",
+  tab: "tab",
+  active: "active",
+  content: "content",
+  primary: "primary",
+  medium: "medium",
+  icon: "icon",
+};
 
-  it("renders all tab labels", () => {
-    render(<Tabs tabs={mockTabs} />);
+const tabsMock = [
+  { label: "Tab 1", content: <p>Content 1</p> },
+  { label: "Tab 2", content: <p>Content 2</p> },
+  { label: "Tab 3", content: <p>Content 3</p> },
+];
 
-    expect(screen.getByRole("tab", { name: "Home" })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: "Profile" })).toBeInTheDocument();
+describe("TabsBase", () => {
+  it("renders tabs and content correctly", () => {
+    render(
+      <TabsBase tabs={tabsMock} classMap={mockStyles} data-testid="tabs" />
+    );
+
+    expect(screen.getByRole("tablist")).toBeInTheDocument();
+    expect(screen.getAllByRole("tab")).toHaveLength(3);
+    expect(screen.getByRole("tabpanel")).toHaveTextContent("Content 1");
   });
 
-  it("renders default tab content", () => {
-    render(<Tabs tabs={mockTabs} />);
-    expect(screen.getByText("Welcome home!")).toBeInTheDocument();
+  it("switches tab on click", () => {
+    render(<TabsBase tabs={tabsMock} classMap={mockStyles} />);
+    fireEvent.click(screen.getByText("Tab 2"));
+    expect(screen.getByRole("tabpanel")).toHaveTextContent("Content 2");
   });
 
-  it("switches content when a different tab is clicked", () => {
-    render(<Tabs tabs={mockTabs} />);
-    fireEvent.click(screen.getByRole("tab", { name: "Profile" }));
-    expect(screen.getByText("Your profile info")).toBeInTheDocument();
+  it("supports keyboard arrow navigation", () => {
+    render(<TabsBase tabs={tabsMock} classMap={mockStyles} />);
+
+    const [tab1, tab2] = screen.getAllByRole("tab");
+
+    tab1.focus();
+    fireEvent.keyDown(tab1, { key: "ArrowRight" });
+    expect(tab2).toHaveFocus();
   });
 
-  it("applies the correct size class (xs)", () => {
-    const { container } = render(<Tabs tabs={mockTabs} size="xs" />);
-    const wrapper = container.querySelector("[data-testid='tabs']");
-    expect(wrapper?.className).toMatch(/xs/);
-  });
+  it("passes axe accessibility check", async () => {
+    const { container } = render(
+      <TabsBase tabs={tabsMock} classMap={mockStyles} />
+    );
 
-  it("applies the correct size class (small)", () => {
-    const { container } = render(<Tabs tabs={mockTabs} size="small" />);
-    const wrapper = container.querySelector("[data-testid='tabs']");
-    expect(wrapper?.className).toMatch(/small/);
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

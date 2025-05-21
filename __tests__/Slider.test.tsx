@@ -1,54 +1,61 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Slider } from "@/index.next";
-import { SizeType, ThemeType } from "@/types/types";
+import { axe } from "jest-axe";
+import SliderBase from "@/components/Slider/SliderBase";
 
-describe("Slider Component", () => {
-  const setup = (props = {}) => {
-    const defaultProps = {
-      value: 50,
-      onChange: jest.fn(),
-      min: 0,
-      max: 100,
-      step: 1,
-      label: "Test Slider",
-      theme: "primary" as ThemeType,
-      size: "medium" as SizeType,
-      "data-testid": "test-slider",
-      ...props,
-    };
+const mockStyles = {
+  sliderContainer: "sliderContainer",
+  sliderWrapper: "sliderWrapper",
+  sliderLabel: "sliderLabel",
+  slider: "slider",
+  sliderValue: "sliderValue",
+  small: "small",
+  medium: "medium",
+  large: "large",
+  primary: "primary",
+  secondary: "secondary",
+};
 
-    render(<Slider {...defaultProps} />);
-    return defaultProps;
-  };
-
+describe("SliderBase", () => {
   it("renders with label and value", () => {
-    setup();
-    expect(screen.getByText("Test Slider")).toBeInTheDocument();
-    expect(screen.getByTestId("test-slider-value")).toHaveTextContent("50");
+    render(
+      <SliderBase
+        value={25}
+        onChange={() => {}}
+        label="Volume"
+        classMap={mockStyles}
+        data-testid="slider"
+      />
+    );
+
+    expect(screen.getByLabelText("Volume")).toBeInTheDocument();
+    expect(screen.getByTestId("slider-value")).toHaveTextContent("25");
   });
 
-  it("calls onChange when value changes", () => {
-    const { onChange } = setup();
-    const slider = screen.getByTestId("test-slider") as HTMLInputElement;
-    fireEvent.change(slider, { target: { value: "70" } });
-    expect(onChange).toHaveBeenCalled();
+  it("fires onChange when value changes", () => {
+    const handleChange = jest.fn();
+    render(
+      <SliderBase
+        value={50}
+        onChange={handleChange}
+        classMap={mockStyles}
+        data-testid="slider"
+      />
+    );
+
+    fireEvent.change(screen.getByTestId("slider"), { target: { value: "60" } });
+    expect(handleChange).toHaveBeenCalled();
   });
 
-  it("applies the correct aria-label", () => {
-    setup({ "aria-label": "Volume" });
-    const slider = screen.getByTestId("test-slider");
-    expect(slider).toHaveAttribute("aria-label", "Volume");
-  });
-
-  it("renders with custom size and theme", () => {
-    setup({ size: "xl", theme: "success" });
-    const container = screen.getByTestId("test-slider-container");
-    expect(container.className).toMatch(/success/);
-    expect(container.className).toMatch(/xl/);
-  });
-
-  it("does not show value if showValue is false", () => {
-    setup({ showValue: false });
-    expect(screen.queryByTestId("test-slider-value")).not.toBeInTheDocument();
+  it("is accessible according to jest-axe", async () => {
+    const { container } = render(
+      <SliderBase
+        value={30}
+        onChange={() => {}}
+        label="Progress"
+        classMap={mockStyles}
+      />
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

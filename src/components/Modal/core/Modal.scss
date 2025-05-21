@@ -1,7 +1,7 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals.scss";
+@use "../../../styles/globals";
 
-.modalOverlay {
+.modal_overlay {
   position: fixed;
   inset: 0;
   background-color: rgb(0 0 0 / 50%);
@@ -12,43 +12,43 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
+}
 
+.modal_content {
+  background: var(--background-color-light);
+  padding: theme.$spacing-lg;
+  border-radius: theme.$border-radius-xs;
+  box-shadow: theme.$box-shadow-large;
+  transform: scale(0.95);
+  opacity: 0;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
 
-  .modalContent {
-    background: var(--background-color-light);
-    padding: theme.$spacing-lg;
-    border-radius: theme.$border-radius-xs;
-    box-shadow: theme.$box-shadow-large;
-    transform: scale(0.95);
-    opacity: 0;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
+.modal_visible {
+  opacity: 1;
+  pointer-events: auto;
 
-  &.visible {
+  .modal_content {
     opacity: 1;
-    pointer-events: auto;
-
-    .modalContent {
-      opacity: 1;
-      transform: scale(1);
-    }
+    transform: scale(1);
   }
+}
 
-  &.hidden {
+.modal_hidden {
+  opacity: 0;
+  pointer-events: none;
+
+  .modal_content {
     opacity: 0;
-    pointer-events: none;
-
-    .modalContent {
-      opacity: 0;
-      transform: scale(0.95);
-    }
+    transform: scale(0.95);
   }
+}
 
-  .closeButton {
-    position: absolute;
-    top: theme.$spacing-sm;
-    right: theme.$spacing-sm;
-    z-index: 2;
-  }
-
+.modal_close_button {
+  position: absolute;
+  top: theme.$spacing-sm;
+  right: theme.$spacing-sm;
+  z-index: 2;
 }
