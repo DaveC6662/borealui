@@ -27,13 +27,13 @@
 }
 
 // Icon inside badge
-.badge_icon {
+.icon {
   font-size: 1.2em;
   margin-top: -0.1em;
 }
 
 // Clear variant
-.badge_clear {
+.clear {
   background-color: transparent;
   color: var(--text-color-primary);
 
@@ -66,7 +66,7 @@
 
 // Theme variants
 @each $name, $values in theme.$themes {
-  .badge_#{$name} {
+  .#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
@@ -86,7 +86,7 @@
     }
   }
 
-  .badge_#{$name}_outline {
+  .#{$name}.outline {
     background-color: transparent;
     color: map.get($values, text-color);
     border: 2px solid map.get($values, border);
@@ -100,27 +100,27 @@
 }
 
 // Size variants
-.badge_xs {
+.xs {
   font-size: theme.$font-size-xxs;
   padding: 2px 8px;
 }
 
-.badge_small {
+.small {
   font-size: theme.$font-size-xs;
   padding: 4px 8px;
 }
 
-.badge_medium {
+.medium {
   font-size: theme.$font-size-sm;
   padding: 4px 10px;
 }
 
-.badge_large {
+.large {
   font-size: theme.$font-size-md;
   padding: 4px 12px;
 }
 
-.badge_xl {
+.xl {
   font-size: theme.$font-size-lg;
   padding: 4px 14px;
 }

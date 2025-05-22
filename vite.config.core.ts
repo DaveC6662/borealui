@@ -2,7 +2,15 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
-const externals = ["react", "react-dom", "marked", "uuid"];
+const externals = [
+  "react",
+  "react-dom",
+  "react/jsx-runtime",
+  "react/jsx-dev-runtime",
+  "next",
+  "marked",
+  "uuid",
+];
 
 export default defineConfig({
   plugins: [react()],
