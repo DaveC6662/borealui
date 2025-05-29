@@ -7,6 +7,8 @@ const classes = {
   checkbox: "checkbox",
   primary: "checkbox_primary",
   secondary: "checkbox_secondary",
+  tertiary: "checkbox_tertiary",
+  quaternary: "checkbox_quaternary",
   success: "checkbox_success",
   error: "checkbox_error",
   warning: "checkbox_warning",

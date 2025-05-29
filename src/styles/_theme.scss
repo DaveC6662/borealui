@@ -2,7 +2,7 @@
 
 $primary-color: #1c4d3a;
 $secondary-color: #6e502e;
-$tertiary-color: #446a5a;
+$tertiary-color: #092b1c;
 $quaternary-color: #a1733a;
 $background-color: #222e2e;
 $background-color-surface: #384b4b;
@@ -94,7 +94,6 @@ $themes: (
     text-hover: $disabled-color,
   ),
 ) !default;
-
 $states: (
   "success": (
     bg: $success-color,

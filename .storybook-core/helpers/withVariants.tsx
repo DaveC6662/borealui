@@ -23,9 +23,7 @@ export function withVariants<T extends object>(
           } as T;
 
           return (
-            <Component key={`${propKey}-${String(value)}-${idx}`} {...props}>
-              {String(value)}
-            </Component>
+            <Component key={`${propKey}-${String(value)}-${idx}`} {...props} />
           );
         })}
       </StoryGrid>

@@ -27,7 +27,7 @@
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  border: 2px solid var(--background-color-light);
+  border: 2px solid currentColor;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,14 +73,34 @@
 
 @each $theme, $props in theme.$themes {
   .#{$theme} {
-    color: map.get($props, bg);
+    color: map.get($props, border);
   }
 
   .box.#{$theme} {
-    border-color: map.get($props, bg);
+    border-color: map.get($props, text);
   }
 
   .input:checked .box.#{$theme}::after {
-    border-color: map.get($props, text);
+    border-color: map.get($props, border);
   }
+}
+
+@each $theme, $props in theme.$states {
+  .#{$theme} {
+    color: map.get($props, border);
+  }
+
+  .box.#{$theme} {
+    border-color: map.get($props, border);
+  }
+
+  .input:checked .box.#{$theme}::after {
+    border-color: map.get($props, border);
+  }
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  color: theme.$disabled-color;
 }
