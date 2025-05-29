@@ -20,6 +20,7 @@ export interface CardBaseProps extends CardProps {
 
 const CardBase: React.FC<CardBaseProps> = ({
   theme = "primary",
+  state = "",
   cardIcon,
   title = "",
   description = "",
@@ -69,6 +70,7 @@ const CardBase: React.FC<CardBaseProps> = ({
         classMap[layout],
         align && classMap[align],
         classMap[theme],
+        classMap[state],
         classMap[size],
         outline && classMap.outline,
         loading && classMap.loading,

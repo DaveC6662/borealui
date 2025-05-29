@@ -4,7 +4,6 @@ import { Accordion } from "../src/index.next";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { SizeType, StateType, ThemeType } from "../src/types/types";
 
-// Valid options
 const themeOptions = [
   "primary",
   "secondary",

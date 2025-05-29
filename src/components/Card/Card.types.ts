@@ -1,5 +1,10 @@
 import { IconType } from "react-icons";
-import { OrientationType, SizeType, ThemeType } from "../../types/types";
+import {
+  OrientationType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../../types/types";
 
 /**
  * Defines an action button rendered in the card footer.
@@ -13,6 +18,8 @@ export interface ActionButton {
   icon?: IconType;
   /** Optional theme override for the button. */
   theme?: ThemeType;
+  /** State of the action button ("error", "success") */
+  state?: StateType;
   /** Optional URL to render the button as a link. */
   href?: string;
   /** size for action buttons */
@@ -27,6 +34,8 @@ export interface ActionButton {
 export interface CardProps {
   /** Theme style to apply to the card. */
   theme?: ThemeType;
+  /** State of the card ("error", "success"). */
+  state?: StateType;
   /** Optional card title displayed in the header. */
   title?: string;
   /** Optional description displayed in the body. */

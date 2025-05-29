@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
 import { Badge } from "../src/index.core";
 import { FaCheck, FaExclamation, FaInfoCircle } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import type { SizeType, StateType, ThemeType } from "../src/types/types";
 
 const themeOptions = [

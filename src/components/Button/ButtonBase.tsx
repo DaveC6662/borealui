@@ -15,6 +15,7 @@ const ButtonBase = forwardRef<
     {
       icon: Icon,
       theme = "primary",
+      state = "",
       onClick,
       type = "button",
       children,
@@ -42,6 +43,7 @@ const ButtonBase = forwardRef<
         combineClassNames(
           classMap.button,
           classMap[theme],
+          classMap[state],
           outline && classMap.outline,
           classMap[size],
           fullWidth && classMap.fullWidth,

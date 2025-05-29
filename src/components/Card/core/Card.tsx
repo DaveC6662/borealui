@@ -11,6 +11,8 @@ const classes = {
   center: "card_center",
   primary: "card_primary",
   secondary: "card_secondary",
+  tertiary: "card_tertiary",
+  quaternary: "card_quaternary",
   success: "card_success",
   warning: "card_warning",
   error: "card_error",

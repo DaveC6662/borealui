@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
-import { Breadcrumbs } from "@/index.next";
-import { FaDotCircle } from "react-icons/fa";
+import { Breadcrumbs } from "../src/index.next";
+import { FaArrowRight } from "react-icons/fa";
 
 const meta: Meta<typeof Breadcrumbs> = {
   title: "Components/Breadcrumbs",
@@ -29,10 +29,19 @@ export const Themed: Story = {
     <div style={{ display: "grid", gap: "1rem" }}>
       <Breadcrumbs items={baseItems} theme="primary" />
       <Breadcrumbs items={baseItems} theme="secondary" />
+      <Breadcrumbs items={baseItems} theme="tertiary" />
+      <Breadcrumbs items={baseItems} theme="quaternary" />
+      <Breadcrumbs items={baseItems} theme="clear" />
+    </div>
+  ),
+};
+
+export const State: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1rem" }}>
       <Breadcrumbs items={baseItems} theme="success" />
       <Breadcrumbs items={baseItems} theme="warning" />
       <Breadcrumbs items={baseItems} theme="error" />
-      <Breadcrumbs items={baseItems} theme="clear" />
     </div>
   ),
 };
@@ -42,9 +51,11 @@ export const WithOutline: Story = {
     <div style={{ display: "grid", gap: "1rem" }}>
       <Breadcrumbs items={baseItems} theme="primary" outline />
       <Breadcrumbs items={baseItems} theme="secondary" outline />
-      <Breadcrumbs items={baseItems} theme="success" outline />
-      <Breadcrumbs items={baseItems} theme="warning" outline />
-      <Breadcrumbs items={baseItems} theme="error" outline />
+      <Breadcrumbs items={baseItems} theme="tertiary" outline />
+      <Breadcrumbs items={baseItems} theme="quaternary" outline />
+      <Breadcrumbs items={baseItems} state="success" outline />
+      <Breadcrumbs items={baseItems} state="warning" outline />
+      <Breadcrumbs items={baseItems} state="error" outline />
       <Breadcrumbs items={baseItems} theme="clear" outline />
     </div>
   ),
@@ -63,10 +74,17 @@ export const Truncated: Story = {
   },
 };
 
+export const Disabled: Story = {
+  args: {
+    items: baseItems,
+    disabled: true,
+  },
+};
+
 export const CustomSeparator: Story = {
   args: {
     items: baseItems,
-    separator: <FaDotCircle />,
+    separator: <FaArrowRight />,
   },
 };
 

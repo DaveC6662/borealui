@@ -2,17 +2,16 @@
 @use "sass:color";
 @use "sass:map";
 
-// Core styles
 .breadcrumbs {
   display: flex;
   align-items: center;
   font-size: theme.$font-size-base;
   font-weight: theme.$font-weight-light;
   gap: theme.$spacing-xs;
+  width: fit-content;
   padding: theme.$spacing-xs theme.$spacing-sm;
   list-style: none;
   overflow-x: auto;
-  width: fit-content;
   border-radius: theme.$border-radius-sm;
 }
 
@@ -33,7 +32,41 @@
     }
   }
 
-  .#{$name}_outline {
+  .#{$name}.outline {
+    color: map.get($values, text-color);
+    background-color: transparent;
+    border: 2px solid map.get($values, border);
+
+    &:hover {
+      color: map.get($values, text-hover);
+      background-color: map.get($values, bg-hover);
+    }
+
+    &:focus {
+      outline: 2px solid map.get($values, hover);
+      outline-offset: 2px;
+    }
+  }
+}
+
+@each $name, $values in theme.$states {
+  .#{$name} {
+    color: map.get($values, text);
+    background-color: map.get($values, bg);
+
+    &:hover {
+      background-color: map.get($values, hover);
+      transform: translateY(-2px);
+      box-shadow: theme.$box-shadow-large;
+    }
+
+    &:focus {
+      outline: 2px solid map.get($values, border);
+      outline-offset: 2px;
+    }
+  }
+
+  .#{$name}.outline {
     color: map.get($values, text-color);
     background-color: transparent;
     border: 2px solid map.get($values, border);
@@ -63,11 +96,11 @@
 }
 
 .large {
-  font-size: theme.$font-size-md;
+  font-size: theme.$font-size-lg;
 }
 
 .xl {
-  font-size: theme.$font-size-lg;
+  font-size: theme.$font-size-xl;
 }
 
 .list {
@@ -96,16 +129,11 @@
   color: theme.$disabled-color;
 }
 
-.ellipsis {
-  background: none;
-  border: none;
-  color: var(--text-color-primary);
-  cursor: pointer;
-  font-weight: theme.$font-weight-bold;
-
-  &:hover {
-    text-decoration: underline;
-  }
+.disabled {
+  background-color: theme.$disabled-color;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .link {
@@ -116,7 +144,7 @@
 .link_label {
   display: inline-block;
 
-  .breadcrumbs_link:hover & {
+  .link:hover & {
     text-decoration: underline;
   }
 }

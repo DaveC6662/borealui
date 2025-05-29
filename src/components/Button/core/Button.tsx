@@ -15,6 +15,8 @@ const classes = {
   outline: "button_outline",
   primary: "button_primary",
   secondary: "button_secondary",
+  tertiary: "button_tertiary",
+  quaternary: "button_quaternary",
   success: "button_success",
   warning: "button_warning",
   error: "button_error",

@@ -82,7 +82,7 @@ export const Disabled: Story = {
 // Theme Variants
 export const ThemeVariants = () =>
   withVariants(Accordion, { ...defaultArgs }, [
-    { propName: "theme", values: themeOptions },
+    { propName: "theme", values: [themeOptions] },
   ]);
 
 // State Variants

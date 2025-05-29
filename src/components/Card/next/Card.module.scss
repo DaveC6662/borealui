@@ -117,9 +117,31 @@
     );
     color: var(--text-color-primary);
 
-    :hover {
-      background-color: map.get($props, hover);
+    .icon,
+    .description {
+      color: var(--text-color-primary);
     }
+
+    .loading {
+      background-color: transparent;
+    }
+  }
+
+  .#{$name}.outline {
+    background: transparent;
+    border: 2px solid map.get($props, border);
+    box-shadow: none;
+  }
+}
+
+@each $name, $props in theme.$states {
+  .#{$name} {
+    background: linear-gradient(
+      to bottom,
+      map.get($props, bg),
+      map.get($props, bg)
+    );
+    color: var(--text-color-primary);
 
     .icon,
     .description {

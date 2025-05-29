@@ -26,6 +26,11 @@ export interface BreadcrumbsProps {
   items: Breadcrumb[];
 
   /**
+   * disables interaction and styles as disabled.
+   */
+  disabled?: boolean;
+
+  /**
    * Optional custom separator node between breadcrumb items.
    * Defaults to a right chevron icon.
    */

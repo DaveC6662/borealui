@@ -68,21 +68,34 @@
     box-shadow: none;
   }
 
-  &_disabled {
-    background-color: theme.$disabled-color;
-    color: var(--text-color-primary);
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-    box-shadow: none;
+  @each $name, $values in theme.$themes {
+    &_#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
 
-    &_outline {
-      border-color: theme.$disabled-color;
-      color: theme.$disabled-color;
+      &_#{$name}:hover {
+        background-color: map.get($values, hover);
+      }
+
+      &_#{$name} .loader {
+        border-top-color: map.get($values, text);
+      }
+
+      &.button_outline {
+        background-color: transparent;
+        color: map.get($values, text);
+        border-color: map.get($values, border);
+      }
+
+      &.button_outline:hover {
+        border-color: map.get($values, hover);
+        color: map.get($values, text);
+        background-color: map.get($values, bg);
+      }
     }
   }
 
-  @each $name, $values in theme.$themes {
+  @each $name, $values in theme.$states {
     &_#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -106,6 +119,20 @@
         color: map.get($values, text);
         background-color: map.get($values, bg);
       }
+    }
+  }
+
+  &_disabled {
+    background-color: theme.$disabled-color;
+    color: var(--text-color-primary);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+    box-shadow: none;
+
+    &_outline {
+      border-color: theme.$disabled-color;
+      color: theme.$disabled-color;
     }
   }
 

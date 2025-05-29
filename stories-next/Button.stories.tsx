@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaPlus } from "react-icons/fa";
-import { Button } from "../src/index.next"; // adjust path if needed
+import { Button } from "../src/index.next";
 import { ButtonProps } from "../src/components/Button/Button.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
@@ -8,11 +8,11 @@ import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 const themeOptions = [
   "primary",
   "secondary",
-  "success",
-  "error",
-  "warning",
+  "tertiary",
+  "quaternary",
   "clear",
-] as const;
+];
+const stateOptions = ["success", "error", "warning"];
 
 const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
 
@@ -67,6 +67,11 @@ export const OutlineVariants = () => (
         {theme} Outline
       </Button>
     ))}
+    {stateOptions.map((theme) => (
+      <Button key={theme} theme={theme} outline>
+        {theme} Outline
+      </Button>
+    ))}
   </StoryGrid>
 );
 
@@ -75,6 +80,16 @@ export const ThemeVariants = () => (
     {themeOptions.map((theme) => (
       <Button key={theme} theme={theme}>
         {theme}
+      </Button>
+    ))}
+  </StoryGrid>
+);
+
+export const StateVariants = () => (
+  <StoryGrid title="State Variants">
+    {stateOptions.map((state) => (
+      <Button key={state} state={state}>
+        {state}
       </Button>
     ))}
   </StoryGrid>
