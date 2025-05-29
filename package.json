@@ -127,7 +127,9 @@
       "import": "./dist/next/index.js",
       "require": "./dist/next/index.cjs.js",
       "types": "./dist/types/index.next.d.ts"
-    }
+    },
+    "./next/style.css": "./dist/next/style.css",
+    "./core/style.css": "./dist/core/style.css"
   },
   "typesVersions": {
     "*": {
