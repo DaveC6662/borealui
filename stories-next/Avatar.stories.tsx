@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Avatar } from "@/index.next";
+import { Avatar } from "../src/index.next";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import {
@@ -14,15 +14,20 @@ import {
 } from "react-icons/fa";
 import {
   SizeType,
+  StateType,
   StatusPositionType,
   StatusType,
   ThemeType,
-} from "@/types/types";
+} from "../src/types/types";
 
-// Prop options
 const themeOptions = [
-  ...["primary", "secondary", "success", "error", "warning", "clear"],
-] as string[];
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+const stateOptions = ["success", "error", "warning"];
 const sizeOptions = [...["xs", "small", "medium", "large", "xl"]] as string[];
 const shapeOptions = [...["circle", "rounded", "square"]] as string[];
 const statusOptions = [
@@ -82,21 +87,22 @@ export default meta;
 
 type Story = StoryObj<typeof Avatar>;
 
-const baseArgs = {
+const defaultArgs = {
   name: "Davin Chiupka",
   theme: "primary" as ThemeType,
+  state: "" as StateType,
   size: "medium" as SizeType,
 };
 
 export const Default: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
   },
 };
 
 export const WithImage: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     src: "https://i.pravatar.cc/150?img=12",
     shape: "circle",
     theme: "secondary",
@@ -105,7 +111,7 @@ export const WithImage: Story = {
 
 export const WithHref: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     href: "https://github.com",
     shape: "square",
     status: "online",
@@ -114,7 +120,7 @@ export const WithHref: Story = {
 
 export const WithFallback: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     name: undefined,
     src: "broken-link.png",
   },
@@ -122,20 +128,30 @@ export const WithFallback: Story = {
 
 export const WithChildren: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     children: <strong>👽</strong>,
-    theme: "warning",
+    theme: "warning" as ThemeType,
     shape: "circle",
   },
 };
 
 export const WithStatusIcon: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     statusIcon: <span style={{ fontSize: 12 }}>⭐</span>,
     theme: "secondary",
     shape: "square",
     size: "large",
+  },
+};
+
+export const WithOnClick: Story = {
+  args: {
+    ...defaultArgs,
+    name: "Clickable Avatar",
+    shape: "circle",
+    theme: "success" as ThemeType,
+    onClick: () => alert("Avatar clicked!"),
   },
 };
 
@@ -144,7 +160,7 @@ export const StatusPositionVariants = () => (
     {statusPositionOptions.map((pos) => (
       <Avatar
         key={pos}
-        {...baseArgs}
+        {...defaultArgs}
         status="online"
         statusPosition={pos as StatusPositionType}
         theme="primary"
@@ -172,15 +188,20 @@ export const OutlineVariants = () =>
   );
 
 export const ThemeVariants = () =>
-  withVariants(Avatar, { ...baseArgs }, [
+  withVariants(Avatar, { ...defaultArgs }, [
     {
       propName: "theme",
       values: themeOptions,
     },
   ]);
 
+export const StateVariants = () =>
+  withVariants(Avatar, { ...defaultArgs }, [
+    { propName: "state", values: stateOptions },
+  ]);
+
 export const SizeVariants = () =>
-  withVariants(Avatar, { ...baseArgs }, [
+  withVariants(Avatar, { ...defaultArgs }, [
     {
       propName: "size",
       values: sizeOptions,
