@@ -1,4 +1,4 @@
-import { SizeType, ThemeType } from "../../types/types";
+import { SizeType, StateType, ThemeType } from "../../types/types";
 
 /**
  * Props for the Accordion component.
@@ -26,7 +26,17 @@ export interface AccordionProps {
   theme?: ThemeType;
 
   /**
+   * The state of the accordion (e.g., 'success', 'error').
+   */
+  state?: StateType;
+
+  /**
    * The size of the accordion (e.g., 'small', 'medium', 'large').
+  /**
+   *
+   *
+   * @type {SizeType}
+   * @memberof AccordionProps
    */
   size?: SizeType;
 

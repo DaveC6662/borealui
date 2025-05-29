@@ -1,10 +1,6 @@
-export type ThemeType =
-  | "primary"
-  | "secondary"
-  | "success"
-  | "error"
-  | "warning"
-  | "clear";
+export type ThemeType = "primary" | "secondary" | "tertiary" | "quaternary";
+
+export type StateType = "success" | "error" | "warning" | "clear" | "disabled";
 
 export type NotificationType =
   | "general"

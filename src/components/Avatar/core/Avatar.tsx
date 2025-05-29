@@ -7,11 +7,15 @@ const classes = {
   avatar: "avatar",
   primary: "avatar_primary",
   secondary: "avatar_secondary",
+  tertiary: "avatar_tertiary",
+  quaternary: "avatar_quaternary",
   success: "avatar_success",
   warning: "avatar_warning",
   error: "avatar_error",
   clear: "avatar_clear",
   outline: "avatar_outline",
+
+  clickable: "avatar_clickable",
 
   circle: "avatar_circle",
   square: "avatar_square",

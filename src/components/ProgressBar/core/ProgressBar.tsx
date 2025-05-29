@@ -1,6 +1,6 @@
 import React from "react";
 import BaseProgressBar from "../ProgressBarBase";
-import "./Progressbar.scss";
+import "./ProgressBar.scss";
 import { ProgressBarProps } from "../ProgressBar.types";
 
 const classes = {

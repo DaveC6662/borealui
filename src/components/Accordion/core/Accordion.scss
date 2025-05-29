@@ -58,13 +58,6 @@ $sizes: (
   border-bottom-right-radius: 0;
 }
 
-.accordion_disabled {
-  background-color: theme.$disabled-color;
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
 .accordion_header {
   display: flex;
   justify-content: space-between;
@@ -91,6 +84,35 @@ $sizes: (
 }
 
 @each $name, $values in theme.$themes {
+  .accordion_#{$name} {
+    background-color: map.get($values, bg);
+    color: var(--text-color-primary);
+
+    &:hover {
+      background-color: map.get($values, hover);
+    }
+
+    &.accordion_outline {
+      background-color: transparent;
+      border: 2px solid map.get($values, border);
+      color: map.get($values, text-color);
+
+      &:hover {
+        background-color: map.get($values, hover);
+        color: map.get($values, text-hover);
+      }
+    }
+  }
+}
+
+.accordion_disabled {
+  background-color: theme.$disabled-color;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@each $name, $values in theme.$states {
   .accordion_#{$name} {
     background-color: map.get($values, bg);
     color: var(--text-color-primary);

@@ -1,6 +1,6 @@
 import React from "react";
 import CheckboxBase from "../CheckboxBase";
-import "./Checkbox.scss";
+import "./CheckBox.scss";
 import { CheckBoxProps } from "../Checkbox.types";
 
 const classes = {

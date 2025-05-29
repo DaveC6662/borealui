@@ -2,6 +2,8 @@
 
 $primary-color: #1c4d3a;
 $secondary-color: #6e502e;
+$tertiary-color: #446a5a;
+$quaternary-color: #a1733a;
 $background-color: #222e2e;
 $background-color-surface: #384b4b;
 $error-color: #f83838;
@@ -70,6 +72,30 @@ $themes: (
     border: var(--secondary-color),
     text-hover: var(--text-color-secondary),
   ),
+  "tertiary": (
+    bg: var(--tertiary-color),
+    hover: var(--tertiary-color-hover),
+    text: var(--text-color-primary),
+    border: var(--tertiary-color),
+    text-hover: var(--text-color-primary),
+  ),
+  "quaternary": (
+    bg: var(--quaternary-color),
+    hover: var(--quaternary-color-hover),
+    text: var(--text-color-primary),
+    border: var(--quaternary-color),
+  ),
+  "clear": (
+    bg: transparent,
+    color: var(--text-color-primary),
+    text: var(--text-color-primary),
+    hover: rgb(0 0 0 / 20%),
+    border: var(--text-color-primary),
+    text-hover: $disabled-color,
+  ),
+) !default;
+
+$states: (
   "success": (
     bg: $success-color,
     hover: color.adjust($success-color, $lightness: -10%),
@@ -90,13 +116,5 @@ $themes: (
     text: var(--text-color-primary),
     border: $warning-color,
     text-hover: var(--text-color-primary),
-  ),
-  "clear": (
-    bg: transparent,
-    color: var(--text-color-primary),
-    text: var(--text-color-primary),
-    hover: rgb(0 0 0 / 20%),
-    border: var(--text-color-primary),
-    text-hover: $disabled-color,
   ),
 ) !default;

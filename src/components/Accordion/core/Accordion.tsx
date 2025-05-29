@@ -15,6 +15,10 @@ const classes = {
 
   primary: "accordion_primary",
   secondary: "accordion_secondary",
+
+  tertiary: "accordion_tertiary",
+  quaternary: "accordion_quaternary",
+
   success: "accordion_success",
   error: "accordion_error",
   warning: "accordion_warning",

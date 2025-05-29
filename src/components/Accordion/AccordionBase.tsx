@@ -17,6 +17,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   description,
   size = "medium",
   theme = "primary",
+  state = "",
   outline = false,
   clear = false,
   expanded,
@@ -62,6 +63,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       combineClassNames(
         classMap.accordion,
         classMap[size],
+        classMap[state],
         disabled && classMap.disabled,
         isExpanded && classMap.expanded,
         className
@@ -74,7 +76,9 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       combineClassNames(
         classMap.header,
         classMap[theme],
+        classMap[state],
         outline && classMap.outline,
+        disabled && classMap.disabled,
         isExpanded && classMap.expanded
       ),
     [classMap, isExpanded]

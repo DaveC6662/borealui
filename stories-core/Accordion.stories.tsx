@@ -1,18 +1,18 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import Accordion from "@/components/Accordion/core/Accordion";
+import { Accordion } from "../src/index.core";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-import { SizeType, ThemeType } from "@/types/types";
+import { SizeType, StateType, ThemeType } from "../src/types/types";
 
-// Valid options
 const themeOptions = [
   "primary",
   "secondary",
-  "success",
-  "error",
-  "warning",
+  "tertiary",
+  "quaternary",
   "clear",
 ];
+
+const stateOptions = ["success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"];
 
 const meta: Meta<typeof Accordion> = {
@@ -39,6 +39,7 @@ const defaultArgs = {
   children: <p>This is the content revealed when expanded.</p>,
   size: "medium" as SizeType,
   theme: "primary" as ThemeType,
+  state: "" as StateType,
 };
 
 export const Default: Story = {
@@ -84,6 +85,12 @@ export const ThemeVariants = () =>
     { propName: "theme", values: themeOptions },
   ]);
 
+// State Variants
+export const StateVariants = () =>
+  withVariants(Accordion, { ...defaultArgs }, [
+    { propName: "state", values: stateOptions },
+  ]);
+
 // Size Variants
 export const SizeVariants = () =>
   withVariants(Accordion, { ...defaultArgs }, [
@@ -98,7 +105,7 @@ export const OutlineVariants = () =>
       ...defaultArgs,
       outline: true,
     },
-    [{ propName: "theme", values: themeOptions }]
+    [{ propName: "theme", values: [...themeOptions, ...stateOptions] }]
   );
 
 export const LotsOfContent: Story = {

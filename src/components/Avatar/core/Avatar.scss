@@ -62,16 +62,30 @@
     border-style: solid;
   }
 
+  .avatar_clickable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: theme.$box-shadow-medium;
+    }
+
+    &:focus {
+      outline: 2px solid var(--focus-outline-color);
+      outline-offset: 2px;
+    }
+  }
+
   &_clear {
     background-color: transparent;
 
-    &:hover {
+    &.avatar_clickable:hover {
       background-color: color.adjust(#000, $lightness: -10%);
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-large;
     }
 
-    &:focus {
+    &.avatar_clickable:focus {
       outline: 2px solid var(--text-color-primary);
       outline-offset: 1px;
     }
@@ -80,7 +94,7 @@
       color: var(--text-color-primary);
       border-color: var(--text-color-primary);
 
-      &:hover {
+      &.avatar_clickable:hover {
         background-color: transparent;
         border-color: color.adjust(#000, $lightness: 10%);
       }
@@ -92,13 +106,13 @@
       background-color: map.get($props, bg);
       color: var(--text-color-primary);
 
-      &:hover {
+      &.avatar_clickable:hover {
         background-color: map.get($props, hover);
         transform: translateY(-2px);
         box-shadow: theme.$box-shadow-large;
       }
 
-      &:focus {
+      &.avatar_clickable:focus {
         outline: 2px solid map.get($props, border);
         outline-offset: 2px;
       }
@@ -109,7 +123,37 @@
       color: map.get($props, text-color);
       border-color: map.get($props, border);
 
-      &:hover {
+      &.avatar_clickable:hover {
+        background-color: map.get($props, hover);
+        border-color: map.get($props, hover);
+        color: map.get($props, text-hover);
+      }
+    }
+  }
+
+  @each $name, $props in theme.$states {
+    &_#{$name} {
+      background-color: map.get($props, bg);
+      color: var(--text-color-primary);
+
+      &.avatar_clickable:hover {
+        background-color: map.get($props, hover);
+        transform: translateY(-2px);
+        box-shadow: theme.$box-shadow-large;
+      }
+
+      &.avatar_clickable:focus {
+        outline: 2px solid map.get($props, border);
+        outline-offset: 2px;
+      }
+    }
+
+    &_#{$name}.avatar_outline {
+      background-color: transparent;
+      color: map.get($props, text-color);
+      border-color: map.get($props, border);
+
+      &.avatar_clickable:hover {
         background-color: map.get($props, hover);
         border-color: map.get($props, hover);
         color: map.get($props, text-hover);

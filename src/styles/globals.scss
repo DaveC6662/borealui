@@ -28,6 +28,30 @@
     )};
   --secondary-text-color: #{theme.$text-color-secondary};
 
+  // Tertiary Colors
+  --tertiary-color: #{theme.$tertiary-color};
+  --tertiary-color-light: #{color.adjust(
+      theme.$tertiary-color,
+      $lightness: 40%
+    )};
+  --tertiary-color-hover: #{color.adjust(
+      theme.$tertiary-color,
+      $lightness: -10%
+    )};
+  --tertiary-text-color: #{theme.$text-color-primary};
+
+  // Quaternary Colors
+  --quaternary-color: #{theme.$quaternary-color};
+  --quaternary-color-light: #{color.adjust(
+      theme.$quaternary-color,
+      $lightness: 40%
+    )};
+  --quaternary-color-hover: #{color.adjust(
+      theme.$quaternary-color,
+      $lightness: -10%
+    )};
+  --quaternary-text-color: #{theme.$text-color-primary};
+
   // Background Colors
   --background-color: #{theme.$background-color};
   --background-color-light: #{color.adjust(
@@ -203,7 +227,7 @@ a {
   display: none;
 }
 
-.sr_only {
+:global(.sr_only) {
   position: absolute;
   width: 1px;
   height: 1px;

@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/globals.scss";
 @use "sass:color";
 @use "sass:map";
 @use "sass:list";
@@ -58,13 +59,6 @@ $sizes: (
   border-bottom-right-radius: 0;
 }
 
-.disabled {
-  background-color: theme.$disabled-color;
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -110,17 +104,35 @@ $sizes: (
       }
     }
   }
+}
 
-  .#{$name} .outline {
-    background-color: transparent;
-    border: 2px solid map.get($values, border);
-    color: map.get($values, text-color);
+@each $name, $values in theme.$states {
+  .#{$name} {
+    background-color: map.get($values, bg);
+    color: var(--text-color-primary);
 
     &:hover {
       background-color: map.get($values, hover);
-      color: map.get($values, text-hover);
+    }
+
+    &.outline {
+      background-color: transparent;
+      border: 2px solid map.get($values, border);
+      color: map.get($values, text-color);
+
+      &:hover {
+        background-color: map.get($values, hover);
+        color: map.get($values, text-hover);
+      }
     }
   }
+}
+
+.disabled {
+  background-color: theme.$disabled-color;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .content {
@@ -144,6 +156,11 @@ $sizes: (
   padding: theme.$spacing-xl theme.$spacing-xl;
   border-bottom-left-radius: theme.$border-radius-md;
   border-bottom-right-radius: theme.$border-radius-md;
+}
+
+.content_clear {
+  background-color: transparent;
+  border: 1px solid var(--text-color-primary);
 }
 
 .title {
