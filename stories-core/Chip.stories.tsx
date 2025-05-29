@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { Chip } from "@/index.core";
+import { Chip } from "../src/index.core";
 import { FaCheckCircle } from "react-icons/fa";
-import type { ChipProps } from "@/components/Chip/Chip.types";
-import { PositionType, SizeType, ThemeType } from "@/types/types";
+import type { ChipProps } from "../src/components/Chip/Chip.types";
+import { PositionType, StateType, ThemeType } from "../src/types/types";
 
 const meta: Meta<ChipProps> = {
   title: "Components/Chip",
@@ -21,14 +21,15 @@ const meta: Meta<ChipProps> = {
   ],
 };
 
-const themes: ThemeType[] = [
+const themeOptions = [
   "primary",
   "secondary",
-  "success",
-  "error",
-  "warning",
+  "tertiary",
+  "quaternary",
   "clear",
 ];
+
+const stateOptions = ["success", "error", "warning"];
 
 const positions: PositionType[] = [
   "topLeft",
@@ -38,8 +39,6 @@ const positions: PositionType[] = [
   "bottomCenter",
   "bottomRight",
 ];
-
-const sizes: SizeType[] = ["xs", "small", "medium", "large", "xl"];
 
 export default meta;
 
@@ -55,6 +54,7 @@ export const Default: Story = {
           id="default"
           message="This is a chip message!"
           visible={visible}
+          usePortal={true}
           onClose={() => setVisible(false)}
           autoClose={false}
         />
@@ -109,10 +109,10 @@ export const Themes: Story = {
     return (
       <>
         <div className="grid grid-cols-6 gap-2">
-          {themes.map((theme) => (
+          {themeOptions.map((theme) => (
             <button
               key={theme}
-              onClick={() => setVisibleTheme(theme)}
+              onClick={() => setVisibleTheme(theme as ThemeType)}
               className="p-2 border rounded"
             >
               {theme}
@@ -128,6 +128,41 @@ export const Themes: Story = {
             position="topRight"
             visible={true}
             onClose={() => setVisibleTheme(null)}
+            autoClose={false}
+            icon={FaCheckCircle}
+          />
+        )}
+      </>
+    );
+  },
+};
+
+export const States: Story = {
+  render: () => {
+    const [visibleState, setVisibleState] = useState<StateType | null>(null);
+
+    return (
+      <>
+        <div className="grid grid-cols-6 gap-2">
+          {stateOptions.map((theme) => (
+            <button
+              key={theme}
+              onClick={() => setVisibleState(theme as StateType)}
+              className="p-2 border rounded"
+            >
+              {theme}
+            </button>
+          ))}
+        </div>
+
+        {visibleState && (
+          <Chip
+            id="theme-chip"
+            message={`State: ${visibleState}`}
+            theme={visibleState}
+            position="topRight"
+            visible={true}
+            onClose={() => setVisibleState(null)}
             autoClose={false}
             icon={FaCheckCircle}
           />
@@ -165,42 +200,6 @@ export const Positions: Story = {
             position={visiblePosition}
             visible={true}
             onClose={() => setVisiblePosition(null)}
-            autoClose={false}
-            icon={FaCheckCircle}
-          />
-        )}
-      </>
-    );
-  },
-};
-
-export const Sizes: Story = {
-  render: () => {
-    const [visibleSize, setVisibleSize] = useState<SizeType | null>(null);
-
-    return (
-      <>
-        <div className="grid grid-cols-5 gap-2">
-          {sizes.map((size) => (
-            <button
-              key={size}
-              onClick={() => setVisibleSize(size)}
-              className="p-2 border rounded"
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-
-        {visibleSize && (
-          <Chip
-            id="size-chip"
-            message={`Size: ${visibleSize}`}
-            theme="primary"
-            position="topRight"
-            size={visibleSize}
-            visible={true}
-            onClose={() => setVisibleSize(null)}
             autoClose={false}
             icon={FaCheckCircle}
           />

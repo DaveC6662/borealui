@@ -11,9 +11,10 @@ const classes = {
   clickable: "data_table_row_clickable",
   striped: "data_table_row_striped",
   cell: "data_table_cell",
-
   primary: "data_table_primary",
   secondary: "data_table_secondary",
+  tertiary: "data_table_tertiary",
+  quaternary: "data_table_quaternary",
   success: "data_table_success",
   error: "data_table_error",
   warning: "data_table_warning",

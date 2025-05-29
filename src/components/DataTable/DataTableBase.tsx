@@ -8,6 +8,7 @@ function DataTableBase<T extends object>({
   onRowClick,
   classMap,
   theme = "primary",
+  state = "",
   outline = false,
   className = "",
   striped = true,
@@ -66,6 +67,7 @@ function DataTableBase<T extends object>({
         className={combineClassNames(
           classMap.table,
           classMap[theme],
+          classMap[state],
           outline && classMap.outline
         )}
         role="table"

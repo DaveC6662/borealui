@@ -21,6 +21,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   showRaw = false,
   size = "medium",
   theme = "primary",
+  state = "",
   className = "",
   classMap,
   "data-testid": testId = "circular-progress",

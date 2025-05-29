@@ -15,6 +15,8 @@ const classes = {
   empty: "command_palette_empty",
   primary: "command_palette_primary",
   secondary: "command_palette_secondary",
+  tertiary: "command_palette_tertiary",
+  quaternary: "command_palette_quaternary",
   success: "command_palette_success",
   error: "command_palette_error",
   warning: "command_palette_warning",

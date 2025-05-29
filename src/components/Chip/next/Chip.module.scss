@@ -80,6 +80,17 @@
   }
 }
 
+@each $name, $values in theme.$states {
+  .#{$name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, text);
+
+    @if map.get($values, border) {
+      border: map.get($values, border);
+    }
+  }
+}
+
 .clear {
   box-shadow: none;
 }

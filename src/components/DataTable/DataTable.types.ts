@@ -1,5 +1,5 @@
 import React from "react";
-import { ThemeType } from "@/types/types";
+import { StateType, ThemeType } from "@/types/types";
 
 /**
  * Column definition for the DataTable.
@@ -29,6 +29,8 @@ export interface DataTableProps<T> {
   className?: string;
   /** Theme used for styling the table. */
   theme?: ThemeType;
+  /** State of the table ex "error", "success". */
+  state?: StateType;
   /** Whether to use outline styling. */
   outline?: boolean;
   /** Whether to use striped row styling. */

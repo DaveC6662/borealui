@@ -5,7 +5,7 @@ export type ThemeType =
   | "quaternary"
   | "clear";
 
-export type StateType = "success" | "error" | "warning" | "disabled";
+export type StateType = "success" | "error" | "warning" | "disabled" | "";
 
 export type NotificationType =
   | "general"

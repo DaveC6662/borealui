@@ -80,6 +80,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
                   message={chip.message}
                   icon={chip.icon}
                   theme={chip.theme}
+                  state={chip.state}
                   size={chip.size || size}
                   visible={true}
                   onClose={() => handleClose(chip.id!)}

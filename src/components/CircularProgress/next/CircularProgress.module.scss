@@ -71,4 +71,12 @@ $progress-sizes: (
       }
     }
   }
+
+  @each $name, $values in theme.$states {
+    &.#{$name} {
+      .inner_circle {
+        background-color: map.get($values, bg);
+      }
+    }
+  }
 }

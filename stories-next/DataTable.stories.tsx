@@ -3,6 +3,16 @@ import { DataTable } from "../src/index.next";
 import type { DataTableProps } from "../src/components/DataTable/DataTable.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
+
 type SampleRow = {
   id: number;
   name: string;
@@ -85,19 +95,10 @@ export const NoStripedTheme: Story = {
   },
 };
 
-const themes = [
-  "primary",
-  "secondary",
-  "success",
-  "error",
-  "warning",
-  "clear",
-] as const;
-
 export const ThemeVariants = () => {
   return (
     <StoryGrid title="Theme Variants">
-      {themes.map((theme) => (
+      {themeOptions.map((theme) => (
         <div key={theme}>
           <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
             {theme} Theme
@@ -114,9 +115,29 @@ export const ThemeVariants = () => {
   );
 };
 
+export const StateVariants = () => {
+  return (
+    <StoryGrid title="State Variants">
+      {stateOptions.map((state) => (
+        <div key={state}>
+          <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
+            {state} state
+          </h4>
+          <DataTable
+            data={sampleData}
+            columns={sampleColumns}
+            state={state}
+            striped={true}
+          />
+        </div>
+      ))}
+    </StoryGrid>
+  );
+};
+
 export const OutlineVariants = () => (
   <StoryGrid title="Outline Variants">
-    {themes.map((theme) => (
+    {themeOptions.map((theme) => (
       <div key={`outline-${theme}`}>
         <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
           {theme} Outline
@@ -127,6 +148,20 @@ export const OutlineVariants = () => (
           theme={theme}
           outline
           striped
+        />
+      </div>
+    ))}
+    {stateOptions.map((state) => (
+      <div key={state}>
+        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
+          {state} Outline
+        </h4>
+        <DataTable
+          data={sampleData}
+          columns={sampleColumns}
+          state={state}
+          outline
+          striped={true}
         />
       </div>
     ))}

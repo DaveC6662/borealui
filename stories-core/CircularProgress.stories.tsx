@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { CircularProgress } from "@/index.core";
-import type { CircularProgressProps } from "@/components/CircularProgress/CircularProgress.types";
+import { CircularProgress } from "../src/index.core";
+import type { CircularProgressProps } from "../src/components/CircularProgress/CircularProgress.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
@@ -9,11 +9,12 @@ const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
 const themeOptions = [
   "primary",
   "secondary",
-  "success",
-  "error",
-  "warning",
+  "tertiary",
+  "quaternary",
   "clear",
-] as const;
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<CircularProgressProps> = {
   title: "Components/CircularProgress",
@@ -90,6 +91,19 @@ export const ThemeVariants = () => (
         rating={76}
         theme={theme}
         label={`Theme: ${theme}`}
+      />
+    ))}
+  </StoryGrid>
+);
+
+export const StateVariants = () => (
+  <StoryGrid title="State Variants">
+    {stateOptions.map((state) => (
+      <CircularProgress
+        key={state}
+        rating={76}
+        theme={state}
+        label={`State: ${state}`}
       />
     ))}
   </StoryGrid>

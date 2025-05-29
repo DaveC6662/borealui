@@ -20,6 +20,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   isOpen,
   onClose,
   theme = "primary",
+  state = "",
   classMap,
   TextInputComponent,
   "data-testid": testId = "command-palette",
@@ -89,7 +90,11 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
       data-testid={`${testId}-overlay`}
     >
       <div
-        className={combineClassNames(classMap.command_palette, classMap[theme])}
+        className={combineClassNames(
+          classMap.command_palette,
+          classMap[theme],
+          classMap[state]
+        )}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -106,6 +111,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           theme={theme}
+          state={state}
           className={classMap.input}
           data-testid={`${testId}-input`}
           role="combobox"
