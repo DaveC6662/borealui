@@ -157,11 +157,6 @@ $sizes: (
   border-bottom-right-radius: theme.$border-radius-md;
 }
 
-.accordion_content_clear {
-  background-color: transparent;
-  border: 1px solid var(--text-color-primary);
-}
-
 .accordion_title {
   flex-grow: 1;
 }

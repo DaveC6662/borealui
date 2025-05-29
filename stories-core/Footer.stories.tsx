@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { Footer } from "../src/index.core";
 import type { FooterProps } from "../src/components/Footer/Footer.types";
 import { FaGithub, FaTwitter, FaLinkedin, FaIcons } from "react-icons/fa";

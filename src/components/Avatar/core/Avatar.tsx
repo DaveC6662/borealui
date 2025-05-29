@@ -16,6 +16,7 @@ const classes = {
   outline: "avatar_outline",
 
   clickable: "avatar_clickable",
+  disabled: "avatar_disabled",
 
   circle: "avatar_circle",
   square: "avatar_square",

@@ -2,11 +2,11 @@
 @use "sass:color";
 @use "sass:map";
 
-// Base badge
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  width: fit-content;
   font-size: theme.$font-size-sm;
   font-weight: theme.$font-weight-bold;
   padding: 6px 12px;
@@ -26,13 +26,11 @@
   }
 }
 
-// Icon inside badge
 .icon {
   font-size: 1.2em;
   margin-top: -0.1em;
 }
 
-// Clear variant
 .clear {
   background-color: transparent;
   color: var(--text-color-primary);
@@ -64,7 +62,6 @@
   }
 }
 
-// Theme variants
 @each $name, $values in theme.$themes {
   .#{$name} {
     background-color: map.get($values, bg);
@@ -99,7 +96,47 @@
   }
 }
 
-// Size variants
+@each $name, $values in theme.$states {
+  .#{$name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, text);
+
+    &:hover {
+      background-color: map.get($values, hover);
+      transform: translateY(-2px);
+      box-shadow: theme.$box-shadow-large;
+    }
+
+    &:focus {
+      outline: 2px solid map.get($values, border);
+      outline-offset: 2px;
+    }
+
+    .loader {
+      border-top-color: map.get($values, text);
+    }
+  }
+
+  .#{$name}.outline {
+    background-color: transparent;
+    color: map.get($values, text-color);
+    border: 2px solid map.get($values, border);
+    box-shadow: none;
+
+    &:hover {
+      border-color: map.get($values, hover);
+      color: map.get($values, text-hover);
+    }
+  }
+}
+
+.disabled {
+  background-color: theme.$disabled-color;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
 .xs {
   font-size: theme.$font-size-xxs;
   padding: 2px 8px;

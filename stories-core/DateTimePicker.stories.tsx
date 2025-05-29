@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { DateTimePicker } from "@/index.core";
 import type { DateTimePickerProps } from "@/components/DateTimePicker/DateTimePicker.types";
 

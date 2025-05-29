@@ -91,12 +91,12 @@ fs.writeFileSync(
 // Step 6: Storybook stories
 fs.writeFileSync(
   storyCoreFile,
-  `import React from "react";\nimport type { Meta, StoryObj } from "@storybook/react";\nimport ${componentName}Core from "@/components/${componentName}/core/${componentName}.core";\n\nconst meta: Meta<typeof ${componentName}Core> = {\n  title: "Core/${componentName}",\n  component: ${componentName}Core,\n};\n\nexport default meta;\n\nexport const Default: StoryObj<typeof ${componentName}Core> = {\n  render: () => <${componentName}Core>Hello</${componentName}Core>,\n};\n`
+  `import React from "react";\nimport type { Meta, StoryObj } from "@storybook/nextjs";\nimport ${componentName}Core from "@/components/${componentName}/core/${componentName}.core";\n\nconst meta: Meta<typeof ${componentName}Core> = {\n  title: "Core/${componentName}",\n  component: ${componentName}Core,\n};\n\nexport default meta;\n\nexport const Default: StoryObj<typeof ${componentName}Core> = {\n  render: () => <${componentName}Core>Hello</${componentName}Core>,\n};\n`
 );
 
 fs.writeFileSync(
   storyNextFile,
-  `import React from "react";\nimport type { Meta, StoryObj } from "@storybook/react";\nimport ${componentName}Next from "@/components/${componentName}/next/${componentName}.next";\n\nconst meta: Meta<typeof ${componentName}Next> = {\n  title: "Next/${componentName}",\n  component: ${componentName}Next,\n};\n\nexport default meta;\n\nexport const Default: StoryObj<typeof ${componentName}Next> = {\n  render: () => <${componentName}Next>Hello</${componentName}Next>,\n};\n`
+  `import React from "react";\nimport type { Meta, StoryObj } from "@storybook/nextjs";\nimport ${componentName}Next from "@/components/${componentName}/next/${componentName}.next";\n\nconst meta: Meta<typeof ${componentName}Next> = {\n  title: "Next/${componentName}",\n  component: ${componentName}Next,\n};\n\nexport default meta;\n\nexport const Default: StoryObj<typeof ${componentName}Next> = {\n  render: () => <${componentName}Next>Hello</${componentName}Next>,\n};\n`
 );
 
 console.log(

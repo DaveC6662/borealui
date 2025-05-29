@@ -1,7 +1,7 @@
 // src/stories/Pager.stories.tsx
 
 import React, { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import Pager from "@/components/Pager/next/Pager";
 import type { PaginationProps } from "@/components/Pager/Pager.types";
 

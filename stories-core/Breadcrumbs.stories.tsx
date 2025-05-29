@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import Breadcrumbs from "@components/Breadcrumbs/core/Breadcrumbs";
 import { FaDotCircle } from "react-icons/fa";
 

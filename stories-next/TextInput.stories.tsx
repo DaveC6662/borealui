@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaUser, FaEnvelope } from "react-icons/fa";
 import { TextInput } from "@/index.next";
 import type { TextInputProps } from "@/components/TextInput/TextInput.types";

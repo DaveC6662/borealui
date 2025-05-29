@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaCheckCircle, FaClipboardList, FaFileAlt } from "react-icons/fa";
 import { Stepper } from "@/index.next";
 import type { StepperProps } from "@/components/Stepper/Stepper.types";

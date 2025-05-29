@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { Dropdown } from "@/index.next";
 import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import type { DropdownProps } from "@/components/Dropdown/Dropdown.types";

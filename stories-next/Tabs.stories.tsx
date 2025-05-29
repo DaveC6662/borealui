@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaCode, FaImage, FaMusic } from "react-icons/fa";
 import { Tabs } from "@/index.next";
 import type { TabsProps } from "@/components/Tabs/Tabs.types";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import MessagePopup from "@/components/MessagePopUp/core/MessagePopup";
 import type { MessagePopupProps } from "@/components/MessagePopUp/MessagePopup.types";
 

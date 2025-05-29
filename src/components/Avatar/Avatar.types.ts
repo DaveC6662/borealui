@@ -28,6 +28,8 @@ export interface AvatarProps {
   theme?: ThemeType;
   /** State of the avatar (e.g., success, error) */
   state?: StateType;
+  /** Disables interaction and styles as disabled */
+  disabled?: boolean;
   /**
    * Optional status indicator for user availability and activity.
    * Useful for chat apps, collaboration tools, or profile displays.

@@ -32,11 +32,6 @@ export interface AccordionProps {
 
   /**
    * The size of the accordion (e.g., 'small', 'medium', 'large').
-  /**
-   *
-   *
-   * @type {SizeType}
-   * @memberof AccordionProps
    */
   size?: SizeType;
 

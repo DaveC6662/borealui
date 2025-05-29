@@ -4,9 +4,9 @@ import path from "path";
 const config: StorybookConfig = {
   stories: ["../stories-core/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
   addons: [
-    "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@chromatic-com/storybook",
+    "@storybook/addon-docs"
   ],
   framework: {
     name: "@storybook/react-vite",

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { Select } from "@/index.core";
 import type { SelectProps } from "@/components/Select/Select.types";
 

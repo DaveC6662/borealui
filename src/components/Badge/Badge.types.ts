@@ -1,5 +1,6 @@
 import { IconType } from "react-icons";
-import { SizeType, ThemeType } from "../../types/types";
+import { SizeType, StateType, ThemeType } from "../../types/types";
+import { MouseEvent } from "react";
 
 /**
  * Props for the Badge component.
@@ -16,9 +17,14 @@ export interface BadgeProps {
   children?: React.ReactNode;
 
   /**
-   * Theme color for the badge (e.g., 'primary', 'success', 'error').
+   * Theme color for the badge (e.g., 'primary', 'secondary').
    */
   theme?: ThemeType;
+
+  /**
+   * The badge state (e.g., 'success', 'error', 'warning').
+   */
+  state?: StateType;
 
   /**
    * Optional tooltip shown on hover (defaults to `text`).
@@ -49,4 +55,12 @@ export interface BadgeProps {
    * Additional custom class names.
    */
   className?: string;
+
+  /**
+   * If true, disables user interaction and styles as disabled.
+   */
+  disabled?: boolean;
+
+  /** Click handler*/
+  onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 }

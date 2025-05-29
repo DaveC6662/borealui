@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { Avatar } from "../src/index.core";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
@@ -170,6 +170,14 @@ export const StatusPositionVariants = () => (
   </StoryGrid>
 );
 
+export const Disabled: Story = {
+  args: {
+    ...defaultArgs,
+    disabled: true,
+    onClick: () => alert("Avatar clicked!"),
+  },
+};
+
 export const OutlineVariants = () =>
   withVariants(
     Avatar,
@@ -182,7 +190,7 @@ export const OutlineVariants = () =>
     [
       {
         propName: "theme",
-        values: themeOptions,
+        values: [...themeOptions, ...stateOptions],
       },
     ]
   );

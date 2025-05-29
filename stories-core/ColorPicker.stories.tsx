@@ -1,7 +1,7 @@
 // src/stories/ColorPicker.stories.tsx
 
 import React, { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import ColorPicker from "@/components/ColorPicker/core/ColorPicker";
 import type { ColorPickerProps } from "@/components/ColorPicker/ColorPicker.types";
 

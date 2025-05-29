@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { Slider } from "@/index.core";
 import type { SliderProps } from "@/components/Slider/Slider.types";
 

@@ -161,6 +161,13 @@
     }
   }
 
+  &.disabled {
+    background-color: theme.$disabled-color;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
   &.disabled.outline {
     color: theme.$disabled-color;
     border-color: theme.$disabled-color;

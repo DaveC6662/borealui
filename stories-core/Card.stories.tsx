@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { Card } from "@/index.core";
 import { FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

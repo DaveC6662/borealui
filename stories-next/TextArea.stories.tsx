@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaCommentDots } from "react-icons/fa";
 import { TextArea } from "@/index.next";
 import type { TextAreaProps } from "@/components/TextArea/TextArea.types";

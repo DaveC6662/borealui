@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { FormGroup, TextInput, Button } from "@/index.next";
 import type { FormGroupProps } from "@/components/FormGroup/FormGroup.types";
 

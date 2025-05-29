@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { EmptyState } from "@/index.next";
 import type { EmptyStateProps } from "@/components/EmptyState/EmptyState.types";
 import { FaInbox, FaBug, FaFolderOpen } from "react-icons/fa";

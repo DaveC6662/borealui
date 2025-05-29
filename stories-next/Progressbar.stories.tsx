@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { Progressbar } from "@/index.next";
 import type { ProgressBarProps } from "@/components/ProgressBar/ProgressBar.types";
 

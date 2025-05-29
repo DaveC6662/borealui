@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { MetricBox } from "@/index.core";
 import type { MetricBoxProps } from "@/components/MetricBox/MetricBox.types";
 import { FaChartLine, FaCheckCircle } from "react-icons/fa";

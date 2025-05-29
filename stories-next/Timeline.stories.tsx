@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaRocket, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
 import { Timeline } from "@/index.next";
 import type { TimelineProps } from "@/components/Timeline/Timeline.types";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import Checkbox from "@/components/CheckBox/next/Checkbox";
 import type { CheckboxProps } from "@/components/CheckBox/Checkbox.types";
 

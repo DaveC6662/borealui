@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { CircularProgress } from "@/index.next";
 import type { CircularProgressProps } from "@/components/CircularProgress/CircularProgress.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

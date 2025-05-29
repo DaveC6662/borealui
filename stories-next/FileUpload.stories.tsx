@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { FileUpload } from "@/index.next";
 import type { FileUploadProps } from "@/components/FileUpload/FileUpload.types";
 

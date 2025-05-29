@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import SkeletonLoader from "@/components/Skeleton/core/Skeleton"; // Adjust path
 import type { SkeletonProps } from "@/components/Skeleton/Skeleton.types";
 

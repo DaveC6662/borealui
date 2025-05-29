@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { DataTable } from "../src/index.core";
 import type { DataTableProps } from "../src/components/DataTable/DataTable.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { Accordion } from "../src/index.next";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { SizeType, StateType, ThemeType } from "../src/types/types";
