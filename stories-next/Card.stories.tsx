@@ -26,8 +26,6 @@ const descriptions = [
   "This content is aligned to the right.",
 ];
 
-const image = "https://placekitten.com/400/200";
-
 const meta: Meta<CardProps> = {
   title: "Components/Card",
   component: Card,
