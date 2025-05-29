@@ -10,6 +10,8 @@ const classes = {
   input: "datetime_picker_input",
   primary: "datetime_picker_primary",
   secondary: "datetime_picker_secondary",
+  tertiary: "datetime_picker_tertiary",
+  quaternary: "datetime_picker_quaternary",
   success: "datetime_picker_success",
   error: "datetime_picker_error",
   warning: "datetime_picker_warning",

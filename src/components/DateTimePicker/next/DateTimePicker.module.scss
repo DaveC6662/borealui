@@ -44,12 +44,6 @@
     border-color: var(--text-color-primary);
   }
 
-  &:disabled {
-    background-color: theme.$disabled-color;
-    color: theme.$disabled-color;
-    cursor: not-allowed;
-  }
-
   &::-webkit-calendar-picker-indicator {
     opacity: 1;
     z-index: 2;
@@ -91,6 +85,29 @@
   }
 }
 
+@each $state, $values in theme.$states {
+  .#{$state} .input {
+    background-color: map.get($values, bg);
+    color: map.get($values, text);
+
+    &:focus {
+      border-color: map.get($values, focus);
+    }
+  }
+
+  .#{$state}.outline .input {
+    border: 2px solid map.get($values, bg);
+
+    &:focus {
+      border-color: map.get($values, focus);
+    }
+
+    &:hover {
+      border-color: map.get($values, color);
+    }
+  }
+}
+
 .outline .input {
   background-color: transparent;
   box-shadow: none;
@@ -101,9 +118,12 @@
   border: 2px solid var(--text-color-primary);
 }
 
-.disabled {
+.disabled .input {
   opacity: 0.6;
   pointer-events: none;
+  background-color: theme.$disabled-color;
+  color: theme.$disabled-color;
+  cursor: not-allowed;
 }
 
 $input-sizes: (

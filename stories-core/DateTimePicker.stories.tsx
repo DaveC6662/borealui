@@ -1,7 +1,17 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { DateTimePicker } from "@/index.core";
-import type { DateTimePickerProps } from "@/components/DateTimePicker/DateTimePicker.types";
+import { DateTimePicker } from "../src/index.core";
+import type { DateTimePickerProps } from "../src/components/DateTimePicker/DateTimePicker.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<DateTimePickerProps> = {
   title: "Components/DateTimePicker",
@@ -45,18 +55,9 @@ export const OutlineVariants: Story = {
   render: (args) => {
     const [value, setValue] = useState("2025-04-15T11:00");
 
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "error",
-      "warning",
-      "clear",
-    ] as const;
-
     return (
       <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <DateTimePicker
             key={theme}
             {...args}
@@ -153,18 +154,9 @@ export const ThemeVariants: Story = {
   render: (args) => {
     const [value, setValue] = useState("2025-04-15T11:00");
 
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "error",
-      "warning",
-      "clear",
-    ] as const;
-
     return (
       <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <DateTimePicker
             key={theme}
             {...args}
@@ -172,6 +164,27 @@ export const ThemeVariants: Story = {
             value={value}
             onChange={setValue}
             label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("2025-04-15T11:00");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
+        {stateOptions.map((state) => (
+          <DateTimePicker
+            key={state}
+            {...args}
+            state={state}
+            value={value}
+            onChange={setValue}
+            label={`${state.charAt(0).toUpperCase() + state.slice(1)} State`}
           />
         ))}
       </div>
