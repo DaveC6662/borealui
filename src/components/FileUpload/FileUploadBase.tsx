@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { FileUploadProps } from "./FileUpload.types";
 import { FileIcon, TrashIcon } from "@/Icons";
+import { combineClassNames } from "@/utils/classNames";
 
 export interface BaseFileUploadProps extends FileUploadProps {
   FormGroup: React.ComponentType<any>;
@@ -16,6 +17,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   error,
   required = false,
   theme = "primary",
+  state = "",
   multiple = false,
   maxFileSizeBytes = Infinity,
   allowedFileTypes = [],
@@ -23,6 +25,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   uploadProgress,
   "data-testid": testId = "file-upload",
   FormGroup,
+  disabled = false,
   Button,
   IconButton,
   ProgressBar,
@@ -140,12 +143,14 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     }, 100);
   };
 
-  const handleRemoveFile = () => {
-    setFiles([]);
-    setFileNames([]);
-    setInternalProgress(0);
-    if (fileInput.current) fileInput.current.value = "";
-  };
+  const containerClassName = useMemo(() => combineClassNames(
+    classMap.fileUpload,
+    classMap[state],
+    classMap[theme],
+    error && classMap.error,
+    isDragging ? "dragging" : "",
+    disabled && classMap.disabled,
+  ), [classMap, isDragging, theme, state, disabled]);
 
   return (
     <FormGroup
@@ -156,7 +161,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       data-testid={testId}
     >
       <div
-        className={`${classMap.fileUpload} ${isDragging ? "dragging" : ""}`}
+        className={containerClassName}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -180,8 +185,9 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             icon={FileIcon}
             size="small"
             theme={theme}
+            state={error && classMap.error}
             className={classMap.fileInput}
-            disabled={uploading}
+            disabled={uploading || disabled}
             onClick={() => fileInput.current?.click()}
             aria-label={
               fileNames.length > 0 ? fileNames.join(", ") : "Choose File"
@@ -242,6 +248,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             {!uploading && (
               <Button
                 theme={theme}
+                state={error && classMap.error || state}
                 disabled={uploading}
                 onClick={handleUpload}
                 loading={uploading}

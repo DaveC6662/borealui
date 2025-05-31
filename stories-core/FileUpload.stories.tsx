@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { FileUpload } from "@/index.core";
-import type { FileUploadProps } from "@/components/FileUpload/FileUpload.types";
+import { FileUpload } from "../src/index.core";
+import type { FileUploadProps } from "../src/components/FileUpload/FileUpload.types";
 
 const meta: Meta<FileUploadProps> = {
   title: "Components/FileUpload",
@@ -13,6 +13,16 @@ const meta: Meta<FileUploadProps> = {
     required: false,
   },
 };
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 export default meta;
 
@@ -127,19 +137,18 @@ export const WithDescription: Story = {
   render: (args) => <FileUpload {...args} onSubmit={() => {}} />,
 };
 
-const themes = [
-  "primary",
-  "secondary",
-  "success",
-  "warning",
-  "error",
-  "clear",
-] as const;
+export const Disabled: Story = {
+  args: {
+    disabled: true
+  },
+  render: (args) => <FileUpload {...args} onSubmit={() => {}} />,
+};
+
 
 export const ThemeVariants: Story = {
   render: (args) => (
     <div style={{ display: "grid", gap: "1.5rem" }}>
-      {themes.map((theme) => (
+      {themeOptions.map((theme) => (
         <div key={theme}>
           <h4 style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
             {theme} Theme
@@ -149,6 +158,27 @@ export const ThemeVariants: Story = {
             theme={theme}
             label={`Upload (${theme})`}
             onSubmit={(files) => console.log(`${theme}:`, files)}
+          />
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const StateVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {stateOptions.map((state) => (
+        <div key={state}>
+          <h4 style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+            {state} state
+          </h4>
+          <FileUpload
+            {...args}
+            state={state}
+            theme="secondary"
+            label={`Upload (${state})`}
+            onSubmit={(files) => console.log(`${state}:`, files)}
           />
         </div>
       ))}

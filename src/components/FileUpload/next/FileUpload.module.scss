@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/globals";
+@use  "sass:map";
 
 .fileUpload {
   display: flex;
@@ -16,9 +17,29 @@
   max-width: 300px;
 
   &:hover {
-    border-color: theme.$secondary-color;
     background-color: var(--background-color-lighter);
   }
+
+  @each $theme, $values in theme.$themes {
+    .#{$theme}:hover {
+      border-color: map.get($values, border);
+    }
+  }
+
+  @each $state, $values in theme.$states {
+    .#{$state}:hover {
+      border-color: map.get($values, border);
+    }
+  }
+
+  .disabled {
+    background-color: var(--background-color-light);
+    border-color: var(--background-color-darker);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  
 
   @media (width <=768px) {
     padding: theme.$spacing-md;
