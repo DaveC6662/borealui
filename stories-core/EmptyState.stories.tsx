@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { EmptyState } from "@/index.core";
-import type { EmptyStateProps } from "@/components/EmptyState/EmptyState.types";
+import { EmptyState } from "../src/index.core";
+import type { EmptyStateProps } from "../src/components/EmptyState/EmptyState.types";
 import { FaInbox, FaBug, FaFolderOpen } from "react-icons/fa";
 
 const meta: Meta<EmptyStateProps> = {
@@ -45,19 +45,20 @@ export const WithActionButton: Story = {
   },
 };
 
-const themes = [
+const themeOptions = [
   "primary",
   "secondary",
-  "success",
-  "warning",
-  "error",
+  "tertiary",
+  "quaternary",
   "clear",
-] as const;
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 export const ThemeVariants: Story = {
   render: () => (
     <div style={{ display: "grid", gap: "1.5rem" }}>
-      {themes.map((theme) => (
+      {themeOptions.map((theme) => (
         <EmptyState
           key={theme}
           theme={theme}
@@ -69,10 +70,34 @@ export const ThemeVariants: Story = {
   ),
 };
 
+export const StateVariants: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {stateOptions.map((state) => (
+        <EmptyState
+          key={state}
+          state={state}
+          title={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
+          message={`This is a standard ${state} variant.`}
+        />
+      ))}
+    </div>
+  ),
+};
+
 export const OutlineVariants: Story = {
   render: () => (
     <div style={{ display: "grid", gap: "1.5rem" }}>
-      {themes.map((theme) => (
+      {themeOptions.map((theme) => (
+        <EmptyState
+          key={`outline-${theme}`}
+          theme={theme}
+          outline
+          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
+          message={`This is an outlined ${theme} variant.`}
+        />
+      ))}
+      {stateOptions.map((theme) => (
         <EmptyState
           key={`outline-${theme}`}
           theme={theme}

@@ -93,6 +93,19 @@
   }
 }
 
+@each $state, $values in theme.$states {
+  .#{$state} {
+    background-color: map.get($values, bg);
+    color: map.get($values, color);
+  }
+
+  .#{$state}.outline {
+    background-color: transparent;
+    border: 2px dashed map.get($values, bg);
+    color: map.get($values, text-color);
+  }
+}
+
 .clear {
   box-shadow: none;
 }

@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import { ThemeType, SizeType } from "@/types/types";
+import { ThemeType, SizeType, StateType } from "@/types/types";
 
 /**
  * Props for the EmptyState component.
@@ -13,6 +13,8 @@ export interface EmptyStateProps {
   message?: string;
   /** Theming option for styling (e.g., "primary", "secondary"). */
   theme?: ThemeType;
+  /** The EmptyState state (e.g., "success", "error", "warning"). */
+  state?: StateType;
   /** Size modifier (e.g., "small", "medium", "large"). */
   size?: SizeType;
   /** Whether the component uses outline styles. */

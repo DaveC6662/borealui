@@ -13,6 +13,8 @@ const classes = {
   disabled: "empty_state_disabled",
   primary: "empty_state_primary",
   secondary: "empty_state_secondary",
+  tertiary: "empty_state_tertiary",
+  quaternary: "empty_state_quaternary",
   success: "empty_state_success",
   error: "empty_state_error",
   warning: "empty_state_warning",
