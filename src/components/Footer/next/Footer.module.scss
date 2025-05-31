@@ -1,11 +1,18 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/globals";
+@use "sass:map";
 
 .footer {
   display: flex;
   justify-content: center;
   width: 100%;
-  background-color: var(--background-color);
+
+  @each $theme, $values in theme.$themes {
+    &.#{$theme} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+    }
+  }
 }
 
 .content {
@@ -110,7 +117,7 @@
     }
   }
 
-  .theme_toggle {
+  .themeToggle {
     display: flex;
     align-items: center;
     justify-content: center;

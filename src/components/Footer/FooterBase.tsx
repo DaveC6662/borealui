@@ -1,6 +1,7 @@
 import React, { JSX } from "react";
 import { FooterProps } from "./Footer.types";
 import { combineClassNames } from "@/utils/classNames";
+import { ThemeType } from "@/types/types";
 
 export interface BaseFooterProps extends FooterProps {
   IconButton: React.ComponentType<any>;
@@ -83,7 +84,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
             data-testid={`${testId}-theme-select`}
             aria-label="Theme selector container"
           >
-            <ThemeSelect />
+            <ThemeSelect theme={"clear"}/>
           </div>
         )}
 

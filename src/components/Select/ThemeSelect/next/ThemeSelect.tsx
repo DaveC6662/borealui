@@ -4,22 +4,14 @@ import React, { useContext } from "react";
 import { colorSchemes } from "../../../../styles/Themes";
 import { Select } from "@/index.next";
 import { ThemeContext } from "../../../../context/ThemeContext";
+import { ThemeType } from "@/types/types";
 
-/**
- * UserThemeSettings component allows users to select a color scheme/theme
- * from a list of available themes. It retrieves the current theme settings
- * from the ThemeContext and updates the selection through a dropdown (Select component).
- *
- * @component
- * @example
- * // Wrap your application with ThemeProvider to use UserThemeSettings:
- * // <ThemeProvider>
- * //   <UserThemeSettings />
- * // </ThemeProvider>
- *
- * @returns {JSX.Element} The rendered component for selecting a theme.
- */
-const UserThemeSettings: React.FC = () => {
+interface ThemeSelectProps {
+  theme?: ThemeType;
+}
+
+
+const UserThemeSettings: React.FC<ThemeSelectProps> = ({theme = "primary"}) => {
   // Retrieve the current theme context.
   const themeContext = useContext(ThemeContext);
 
@@ -41,7 +33,7 @@ const UserThemeSettings: React.FC = () => {
   return (
     <div className={`control-container`}>
       <Select
-        theme="primary"
+        theme={theme}
         options={options}
         // Value is kept as a string since Select expects a string or number.
         value={selectedScheme.toString()}
