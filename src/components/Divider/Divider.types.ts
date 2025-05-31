@@ -1,4 +1,4 @@
-import { ThemeType, OrientationType } from "@/types/types";
+import { ThemeType, OrientationType, StateType } from "@/types/types";
 
 /**
  * Props for the Divider component.
@@ -14,6 +14,8 @@ export interface DividerProps extends React.HTMLAttributes<HTMLElement> {
   dashed?: boolean;
   /** Optional theme styling. */
   theme?: ThemeType;
+  /** State of the divider ex "error", "success", "warning*/
+  state?: StateType;
   /** HTML tag to render (e.g., "div", "hr", or "span"). */
   as?: "div" | "hr" | "span";
   /** Optional test ID for testing frameworks. */

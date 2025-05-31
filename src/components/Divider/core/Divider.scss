@@ -43,12 +43,23 @@
 
   @each $theme, $values in theme.$themes {
     &_#{$theme} {
-      background-color: map.get($values, bg);
-      border-color: map.get($values, bg);
+      background-color: map.get($values, border);
+      border-color: map.get($values, border);
     }
 
     &_#{$theme}.divider_dashed {
-      color: map.get($values, bg);
+      color: map.get($values, border);
+    }
+  }
+
+  @each $state, $values in theme.$states {
+    &_#{$state} {
+      background-color: map.get($values, border);
+      border-color: map.get($values, border);
+    }
+
+    &_#{$state}.divider_dashed {
+      color: map.get($values, border);
     }
   }
 }
