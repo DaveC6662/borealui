@@ -12,7 +12,8 @@
   border-radius: theme.$border-radius-lg;
   box-shadow: theme.$box-shadow-medium;
   min-width: 120px;
-  width: 160px;
+  width: fit-content;
+  height: fit-content;
   text-align: center;
   margin: theme.$spacing-sm;
   transition: theme.$transition-default;
@@ -24,6 +25,26 @@
 
   @each $theme, $properties in theme.$themes {
     &_#{$theme} {
+      background-color: map.get($properties, bg);
+      color: map.get($properties, color);
+
+      .metricBox_title {
+        color: map.get($properties, color);
+      }
+
+      .metricBox_subtext {
+        color: map.get($properties, color);
+      }
+
+      &.metricBox_outline {
+        border: 2px solid map.get($properties, border);
+        background-color: transparent;
+      }
+    }
+  }
+
+  @each $state, $properties in theme.$states {
+    &_#{$state} {
       background-color: map.get($properties, bg);
       color: map.get($properties, color);
 
@@ -68,12 +89,6 @@
   &_value {
     font-size: theme.$font-size-lg;
     font-weight: theme.$font-weight-bold;
-  }
-
-  &_subtext {
-    font-size: theme.$font-size-sm;
-    color: var(--text-color-primary);
-    opacity: 0.7;
   }
 
   &_left {
@@ -144,5 +159,11 @@
         font-size: map.get($properties, subtext-size);
       }
     }
+  }
+
+  &_subtext {
+    font-size: theme.$font-size-sm !important;
+    color: var(--text-color-primary);
+    opacity: 0.7;
   }
 }

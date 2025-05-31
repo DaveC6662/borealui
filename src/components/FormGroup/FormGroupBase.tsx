@@ -90,7 +90,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
       {description && !error && (
         <p
           id={descriptionId}
-          className={classMap.description}
+          className={`${classMap.description}`}
           data-testid={`${testId}-description`}
         >
           {description}

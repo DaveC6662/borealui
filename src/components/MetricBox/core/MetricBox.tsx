@@ -8,6 +8,8 @@ const classes = {
   outline: "metricBox_outline",
   primary: "metricBox_primary",
   secondary: "metricBox_secondary",
+  tertiary: "metricBox_tertiary",
+  quaternary: "metricBox_quaternary",
   success: "metricBox_success",
   error: "metricBox_error",
   warning: "metricBox_warning",
