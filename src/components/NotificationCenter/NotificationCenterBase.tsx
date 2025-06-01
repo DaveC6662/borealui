@@ -49,7 +49,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
         <h3 id={`${testId}-title`}>Notifications</h3>
         {showClearAll && notifications.length > 0 && onClearAll && (
           <Button
-            theme="error"
+            state="error"
             size="small"
             className={classMap.clearAll}
             onClick={onClearAll}
@@ -97,7 +97,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                 </div>
                 <IconButton
                   className={classMap.close}
-                  theme="error"
+                  state="error"
                   size="small"
                   outline
                   icon={CloseIcon}

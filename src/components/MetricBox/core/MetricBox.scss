@@ -23,6 +23,12 @@
     padding: theme.$spacing-sm;
   }
 
+   &_icon {
+    font-size: 2rem;
+    color: inherit;
+    padding: theme.$spacing-sm;
+  }
+
   @each $theme, $properties in theme.$themes {
     &_#{$theme} {
       background-color: map.get($properties, bg);
@@ -40,6 +46,10 @@
         border: 2px solid map.get($properties, border);
         background-color: transparent;
       }
+    }
+
+    &_#{$theme}.metricBox_outline .metricBox_icon {
+        color: map.get($properties, border);
     }
   }
 
@@ -61,17 +71,15 @@
         background-color: transparent;
       }
     }
+
+    &_#{$state}.metricBox_outline .metricBox_icon {
+        color: map.get($properties, bg);
+    }
   }
 
   &_clear {
     border: none;
     box-shadow: none;
-  }
-
-  &_icon {
-    font-size: 2rem;
-    color: inherit;
-    padding: theme.$spacing-sm;
   }
 
   &_content {

@@ -127,7 +127,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
         <IconButton
           ref={firstFocusable}
           className={classMap.closeButton}
-          theme="error"
+          state="error"
           size="small"
           icon={CloseIcon}
           aria-label="Close modal"

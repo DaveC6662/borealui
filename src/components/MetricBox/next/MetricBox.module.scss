@@ -41,6 +41,10 @@
         background-color: transparent;
       }
     }
+
+    &.#{$theme}.outline .icon {
+        color: map.get($properties, border);
+    }
   }
 
   @each $state, $properties in theme.$states {
@@ -60,6 +64,10 @@
         border: 2px solid map.get($properties, border);
         background-color: transparent;
       }
+    }
+
+    &.#{$state}.outline .icon {
+        color: map.get($properties, border);
     }
   }
 

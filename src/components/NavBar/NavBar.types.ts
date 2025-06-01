@@ -1,3 +1,5 @@
+import { StateType, ThemeType } from "@/types/types";
+
 /**
  * Describes a single navigation item for the NavBar component.
  */
@@ -16,4 +18,6 @@ export interface NavItem {
 export interface NavBarProps {
   /** Array of navigation items to render in the NavBar. */
   items: NavItem[];
+  /** Optional theme class names to apply to the NavBar. */
+  theme?: ThemeType;
 }

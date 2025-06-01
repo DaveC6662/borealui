@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/globals";
+@use "sass:map";
 
 .nav {
   position: fixed;
@@ -29,6 +30,24 @@
     justify-content: center;
   }
 
+  @each $name, $values in theme.$themes {
+    &_#{$name} .nav_item {
+      background-color: map.get($values, bg);
+
+      
+    &:hover {
+      background-color: map.get($values, hover);
+      transform: scale(1.1);
+    }
+    }
+
+    &_#{$name}  &_active {
+    background-color: map.get($values, bg-light);
+    color: var(--secondary-color-darker);
+    font-weight: bold;
+  }
+  }
+
   &_item {
     display: flex;
     flex-direction: column;
@@ -37,8 +56,7 @@
     width: 80px;
     height: 80px;
     padding: 15px;
-    border-radius: 50%;
-    background-color: var(--background-color-dark);
+    border-radius: theme.$border-radius-round;
     box-shadow: theme.$box-shadow-large;
     color: var(--text-color-primary);
     text-decoration: none;
@@ -50,17 +68,11 @@
       height: 35px;
       padding: 5px;
     }
-
-    &:hover {
-      background-color: var(--background-color-darker);
-      transform: scale(1.1);
-    }
   }
 
-  &_active {
-    background-color: var(--primary-color-light);
-    color: var(--secondary-color-darker);
-    font-weight: bold;
+  
+  &_clear .nav_item{
+    box-shadow: none;
   }
 
   &_icon_container {

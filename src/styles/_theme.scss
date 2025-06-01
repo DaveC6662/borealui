@@ -60,6 +60,7 @@ $z-index-tooltip: 110;
 $themes: (
   "primary": (
     bg: var(--primary-color),
+    bg-light: var(--primary-color-light),
     hover: var(--primary-color-hover),
     text: var(--text-color-primary),
     border: var(--primary-color),
@@ -67,6 +68,7 @@ $themes: (
   ),
   "secondary": (
     bg: var(--secondary-color),
+    bg-light: var(--secondary-color-light),
     hover: var(--secondary-color-hover),
     text: var(--text-color-secondary),
     border: var(--secondary-color),
@@ -74,6 +76,7 @@ $themes: (
   ),
   "tertiary": (
     bg: var(--tertiary-color),
+    bg-light: var(--tertiary-color-light),
     hover: var(--tertiary-color-hover),
     text: var(--text-color-primary),
     border: var(--tertiary-color),
@@ -81,12 +84,14 @@ $themes: (
   ),
   "quaternary": (
     bg: var(--quaternary-color),
+    bg-light: var(--quaternary-color-light),
     hover: var(--quaternary-color-hover),
     text: var(--text-color-primary),
     border: var(--quaternary-color),
   ),
   "clear": (
     bg: transparent,
+    bg-light: rgb(0 0 0 / 40%),
     color: var(--text-color-primary),
     text: var(--text-color-primary),
     hover: rgb(0 0 0 / 20%),

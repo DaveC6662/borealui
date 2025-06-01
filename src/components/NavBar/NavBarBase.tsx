@@ -20,12 +20,13 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   currentPath,
   LinkWrapper,
   classMap,
+  theme = "primary",
 }) => {
   return (
     <nav
       role="navigation"
       aria-label="Main navigation"
-      className={classMap.container}
+      className={combineClassNames(classMap.container, classMap[theme])}
       data-testid="nav-bar"
     >
       {items.map((item, index) => {
