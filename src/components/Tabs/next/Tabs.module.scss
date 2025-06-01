@@ -148,6 +148,20 @@ $sizes: (
   }
 }
 
+@each $state, $color in theme.$states {
+  .#{$state} {
+    .tab.active {
+      background-color: map.get($color, bg);
+      border-bottom-color: map.get($color, border);
+    }
+
+    .tab:focus {
+      outline: 2px solid map.get($color, border);
+      outline-offset: 2px;
+    }
+  }
+}
+
 .secondary .tab.active {
   color: var(--text-color-secondary);
 }

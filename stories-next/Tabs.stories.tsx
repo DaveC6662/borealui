@@ -1,7 +1,17 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaCode, FaImage, FaMusic } from "react-icons/fa";
-import { Tabs } from "@/index.next";
-import type { TabsProps } from "@/components/Tabs/Tabs.types";
+import { Tabs } from "../src/index.next";
+import type { TabsProps } from "../src/components/Tabs/Tabs.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const tabsWithIcons: TabsProps["tabs"] = [
   { label: "Code", icon: FaCode, content: <div>Code content goes here.</div> },
@@ -49,19 +59,24 @@ export const NoIcons: Story = {
 
 export const ThemeVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
 
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <Tabs key={theme} {...args} theme={theme} />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: (args) => {
+
+    return (
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        {stateOptions.map((state) => (
+          <Tabs key={state} {...args} state={state} />
         ))}
       </div>
     );
