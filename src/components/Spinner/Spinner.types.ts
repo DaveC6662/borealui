@@ -1,4 +1,4 @@
-import { ThemeType } from "@/types/types";
+import { StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the Spinner component.
@@ -6,6 +6,8 @@ import { ThemeType } from "@/types/types";
 export interface SpinnerProps {
   /** The theme color of the spinner (e.g., primary, secondary). */
   theme?: ThemeType;
+  /** The state of the spinner (e.g., 'success', 'error'). */
+  state?: StateType;
   /** The size of the spinner (in pixels). */
   size?: number;
   /** Additional class names for styling customization. */

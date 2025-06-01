@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaCheckCircle, FaClipboardList, FaFileAlt } from "react-icons/fa";
-import { Stepper } from "@/index.core";
-import type { StepperProps } from "@/components/Stepper/Stepper.types";
+import { Stepper } from "../src/index.core";
+import type { StepperProps } from "../src/components/Stepper/Stepper.types";
 
 const steps = [
   { label: "Start", icon: FaClipboardList },
@@ -21,6 +21,16 @@ const meta: Meta<StepperProps> = {
     steps,
   },
 };
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 export default meta;
 
@@ -51,24 +61,38 @@ export const Vertical: Story = {
 
 export const ThemedVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => {
+        {themeOptions.map((theme) => {
           const [activeStep, setActiveStep] = useState(1);
           return (
             <Stepper
               key={theme}
               {...args}
               theme={theme}
+              activeStep={activeStep}
+              onStepClick={setActiveStep}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: (args) => {
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => {
+          const [activeStep, setActiveStep] = useState(1);
+          return (
+            <Stepper
+              key={state}
+              {...args}
+              state={state}
               activeStep={activeStep}
               onStepClick={setActiveStep}
             />

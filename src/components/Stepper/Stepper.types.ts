@@ -1,4 +1,4 @@
-import { OrientationType, SizeType, ThemeType } from "@/types/types";
+import { OrientationType, SizeType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Represents a step in the Stepper.
@@ -26,6 +26,8 @@ export interface StepperProps {
   orientation?: OrientationType;
   /** The theme of the stepper. */
   theme?: ThemeType;
+  /** The state of the stepper ex "success", "error", "warning" */
+  state?: StateType;
   /** The size of the stepper icons. */
   size?: SizeType;
   /** Optional test ID for testing purposes. */

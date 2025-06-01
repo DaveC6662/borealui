@@ -37,6 +37,12 @@
     }
   }
 
+  @each $name, $color in theme.$states {
+    &_#{$name} {
+      border-top-color: map.get($color, border);
+    }
+  }
+
   &_clear {
     border-top-color: var;
   }

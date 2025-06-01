@@ -1,10 +1,12 @@
 import React from "react";
 import { SpinnerProps } from "./Spinner.types";
+import { combineClassNames } from "@/utils/classNames";
 
 const SpinnerBase: React.FC<
   SpinnerProps & { classMap: Record<string, string> }
 > = ({
   theme = "primary",
+  state = "",
   size = 50,
   className = "",
   "data-testid": testId = "spinner",
@@ -25,7 +27,7 @@ const SpinnerBase: React.FC<
       aria-label={label || "Loading"}
     >
       <div
-        className={`${classMap.spinner} ${classMap[theme]}`}
+        className={combineClassNames(classMap.spinner, classMap[theme], classMap[state])}
         style={{
           width: spinnerSize,
           height: spinnerSize,
