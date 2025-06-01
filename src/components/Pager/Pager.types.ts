@@ -1,4 +1,4 @@
-import { SizeType, ThemeType } from "@/types/types";
+import { SizeType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the Pager (pagination) component.
@@ -18,6 +18,8 @@ export interface PaginationProps {
   size?: SizeType;
   /** Optional theme to apply (e.g., "primary", "secondary"). */
   theme?: ThemeType;
+  /** Optional state of the component (e.g., "success", "error", "warning"). */
+  state?: StateType;
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }

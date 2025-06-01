@@ -1,17 +1,15 @@
-// src/stories/Pager.stories.tsx
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import Pager from "@/components/Pager/next/Pager";
-import type { PaginationProps } from "@/components/Pager/Pager.types";
+import { Pager } from "../src/index.next";
+import type { PaginationProps } from "../src/components/Pager/Pager.types";
 
 const meta: Meta<PaginationProps> = {
   title: "Components/Pager",
   component: Pager,
   tags: ["autodocs"],
   args: {
-    totalItems: 50,
-    itemsPerPage: 10,
+    totalItems: 20,
+    itemsPerPage: 2,
     size: "small",
     theme: "primary",
   },
@@ -24,12 +22,21 @@ type Story = StoryObj<PaginationProps>;
 export const Default: Story = {
   render: (args) => {
     const [currentPage, setCurrentPage] = useState(1);
+    const start = (currentPage - 1) * args.itemsPerPage;
+    const items = Array.from({ length: args.totalItems }, (_, i) => `Item ${i + 1}`);
+    const pageItems = items.slice(start, start + args.itemsPerPage);
+
     return (
-      <Pager
-        {...args}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      <div style={{ display: "grid", gap: "1rem", maxWidth: "500px" }}>
+        <div>
+          {pageItems.map((item) => (
+            <div key={item} style={{ padding: "0.5rem", borderBottom: "1px solid #ccc" }}>
+              {item}
+            </div>
+          ))}
+        </div>
+        <Pager {...args} currentPage={currentPage} onPageChange={setCurrentPage} />
+      </div>
     );
   },
 };
@@ -49,56 +56,76 @@ export const WithManyPages: Story = {
   },
 };
 
-export const MediumSize: Story = {
+export const SizeVariants: Story = {
   render: (args) => {
-    const [currentPage, setCurrentPage] = useState(2);
+    const sizes = ["xs", "small", "medium", "large", "xl"] as const;
     return (
-      <Pager
-        {...args}
-        size="medium"
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {sizes.map((size) => {
+          const [page, setPage] = useState(1);
+          return (
+            <Pager
+              key={size}
+              {...args}
+              size={size}
+              currentPage={page}
+              onPageChange={setPage}
+            />
+          );
+        })}
+      </div>
     );
   },
 };
 
-export const SecondaryTheme: Story = {
+export const ThemeVariants: Story = {
   render: (args) => {
-    const [currentPage, setCurrentPage] = useState(1);
+    const themes = [
+      "primary",
+      "secondary",
+      "tertiary",
+      "quaternary",
+      "clear",
+    ] as const;
+
     return (
-      <Pager
-        {...args}
-        theme="secondary"
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themes.map((theme) => {
+          const [page, setPage] = useState(1);
+          return (
+            <Pager
+              key={theme}
+              {...args}
+              theme={theme}
+              currentPage={page}
+              onPageChange={setPage}
+            />
+          );
+        })}
+      </div>
     );
   },
 };
 
-export const FirstPageDisabled: Story = {
+export const StateVariants: Story = {
   render: (args) => {
-    const [currentPage] = useState(1);
-    return (
-      <Pager {...args} currentPage={currentPage} onPageChange={() => {}} />
-    );
-  },
-};
+    const states = ["success", "error", "warning"];
 
-export const LastPageDisabled: Story = {
-  render: (args) => {
-    const totalItems = 50;
-    const itemsPerPage = 10;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
     return (
-      <Pager
-        {...args}
-        totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
-        currentPage={totalPages}
-        onPageChange={() => {}}
-      />
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {states.map((state) => {
+          const [page, setPage] = useState(1);
+          return (
+            <Pager
+              key={state}
+              {...args}
+              theme={state}
+              currentPage={page}
+              onPageChange={setPage}
+            />
+          );
+        })}
+      </div>
     );
   },
 };
