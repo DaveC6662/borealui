@@ -9,6 +9,8 @@ const classes = {
   outline: "select_outline",
   primary: "select_primary",
   secondary: "select_secondary",
+  tertiary: "select_tertiary",
+  quaternary: "select_quaternary",
   success: "select_success",
   error: "select_error",
   warning: "select_warning",

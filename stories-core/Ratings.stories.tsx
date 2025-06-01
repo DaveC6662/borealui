@@ -1,7 +1,17 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { Rating } from "@/index.core";
-import type { RatingProps } from "@/components/Rating/Rating.types";
+import { Rating } from "../src/index.core";
+import type { RatingProps } from "../src/components/Rating/Rating.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<RatingProps> = {
   title: "Components/Rating",
@@ -55,19 +65,31 @@ export const SizeVariants: Story = {
 
 export const ThemedVariants: Story = {
   render: () => {
-    const themes = [
-      "primary",
-      "success",
-      "warning",
-      "error",
-      "secondary",
-      "clear",
-    ] as const;
     const [value, setValue] = useState(3);
 
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
+          <Rating
+            key={theme}
+            theme={theme}
+            value={value}
+            onChange={setValue}
+            label={`Theme: ${theme}`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: () => {
+    const [value, setValue] = useState(3);
+
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {stateOptions.map((theme) => (
           <Rating
             key={theme}
             theme={theme}

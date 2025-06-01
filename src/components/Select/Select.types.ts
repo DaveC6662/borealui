@@ -1,4 +1,4 @@
-import { ThemeType } from "@/types/types";
+import { StateType, ThemeType } from "@/types/types";
 
 /**
  * Represents a single option in the Select component.
@@ -16,6 +16,8 @@ interface Option {
 export interface SelectProps {
   /** Theme for styling (e.g., "primary", "secondary"). */
   theme?: ThemeType;
+  /** State variant for styling (e.g., "success", "error", "warning"). */
+  state?: StateType;
   /** If true, the select element is styled as outlined. */
   outline?: boolean;
   /** An array of options that will be rendered as dropdown choices. */

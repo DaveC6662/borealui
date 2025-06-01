@@ -69,6 +69,14 @@ $sizes: (
     }
   }
 
+  @each $state, $color in theme.$states {
+    &.#{$state} {
+      .active {
+        color: map.get($color, bg);
+      }
+    }
+  }
+
   &.clear {
     .active {
       color: var(--text-color-primary);

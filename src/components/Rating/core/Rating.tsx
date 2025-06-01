@@ -11,6 +11,8 @@ const classes = {
   active: "rating_active",
   primary: "rating_primary",
   secondary: "rating_secondary",
+  tertiary: "rating_tertiary",
+  quaternary: "rating_quaternary",
   success: "rating_success",
   error: "rating_error",
   warning: "rating_warning",
