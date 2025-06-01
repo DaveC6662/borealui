@@ -1,7 +1,17 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { Slider } from "@/index.core";
-import type { SliderProps } from "@/components/Slider/Slider.types";
+import { Slider } from "../src/index.core";
+import type { SliderProps } from "../src/components/Slider/Slider.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<SliderProps> = {
   title: "Components/Slider",
@@ -90,24 +100,37 @@ export const SizeVariants: Story = {
 
 export const ThemeVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
     const [value, setValue] = useState(75);
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <Slider
             key={theme}
             {...args}
             theme={theme}
             label={`Theme: ${theme}`}
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState(75);
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <Slider
+            key={state}
+            {...args}
+            theme={state}
+            label={`State: ${state}`}
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
           />
