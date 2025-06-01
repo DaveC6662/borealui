@@ -13,6 +13,8 @@ const classes = {
   right: "popover_right",
   primary: "popover_primary",
   secondary: "popover_secondary",
+  tertiary: "popover_tertiary",
+  quaternary: "popover_quaternary",
   success: "popover_success",
   error: "popover_error",
   warning: "popover_warning",

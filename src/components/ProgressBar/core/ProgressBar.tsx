@@ -8,6 +8,8 @@ const classes = {
   bar: "progress_bar",
   primary: "progress_primary",
   secondary: "progress_secondary",
+  tertiary: "progress_tertiary",
+  quaternary: "progress_quaternary",
   success: "progress_success",
   error: "progress_error",
   warning: "progress_warning",

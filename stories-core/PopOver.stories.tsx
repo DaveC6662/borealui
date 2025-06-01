@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { PopOver, Button } from "@/index.core";
-import type { PopoverProps } from "@/components/PopOver/PopOver.types";
+import { PopOver, Button } from "../src/index.core";
+import type { PopoverProps } from "../src/components/PopOver/PopOver.types";
 
 const meta: Meta<PopoverProps> = {
   title: "Components/Popover",
@@ -32,9 +32,8 @@ export const ThemedVariants: Story = {
     const themes = [
       "primary",
       "secondary",
-      "success",
-      "warning",
-      "error",
+      "tertiary",
+      "quaternary",
       "clear",
     ] as const;
 
@@ -48,6 +47,29 @@ export const ThemedVariants: Story = {
             content={
               <div style={{ padding: "0.5rem" }}>
                 {theme.charAt(0).toUpperCase() + theme.slice(1)} theme
+              </div>
+            }
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: () => {
+    const stateOptions = ["success", "error", "warning"];
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {stateOptions.map((state) => (
+          <PopOver
+            key={state}
+            state={state}
+            trigger={<Button state={state}>{state}</Button>}
+            content={
+              <div style={{ padding: "0.5rem" }}>
+                {state.charAt(0).toUpperCase() + state.slice(1)} state
               </div>
             }
           />

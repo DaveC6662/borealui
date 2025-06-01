@@ -43,6 +43,12 @@ $progress-sizes: (
     }
   }
 
+  @each $state, $color in theme.$states {
+    &_#{$state} {
+      background-color: map.get($color, bg);
+    }
+  }
+
   @each $size, $height in $progress-sizes {
     &_#{$size} {
       height: $height;

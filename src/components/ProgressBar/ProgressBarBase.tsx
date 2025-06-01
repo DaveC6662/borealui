@@ -1,5 +1,6 @@
 import React, { JSX } from "react";
 import { ProgressBarProps } from "./ProgressBar.types";
+import { combineClassNames } from "@/utils/classNames";
 
 export interface BaseProgressBarProps extends ProgressBarProps {
   classMap: Record<string, string>;
@@ -8,6 +9,7 @@ export interface BaseProgressBarProps extends ProgressBarProps {
 const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   progress = 0,
   theme = "primary",
+  state = "",
   size = "medium",
   animated = true,
   indeterminate = false,
@@ -20,7 +22,7 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
 
   return (
     <div
-      className={[classMap.container, classMap[size], className].join(" ")}
+      className={combineClassNames(classMap.container, classMap[size], className)}
       role="progressbar"
       aria-label={ariaLabel}
       aria-valuemin={0}
@@ -31,12 +33,13 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
       data-testid={testId}
     >
       <div
-        className={[
+        className={combineClassNames(
           classMap.bar,
           classMap[theme],
+          classMap[state],
           animated ? classMap.animated : "",
           indeterminate ? classMap.indeterminate : "",
-        ].join(" ")}
+  )}
         style={{ width: indeterminate ? "100%" : `${value}%` }}
         data-testid={`${testId}-bar`}
       />

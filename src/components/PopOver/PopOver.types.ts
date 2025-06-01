@@ -1,4 +1,4 @@
-import { ThemeType } from "@/types/types";
+import { StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the Popover component.
@@ -15,6 +15,8 @@ export interface PopoverProps {
   placement?: "top" | "bottom" | "left" | "right";
   /** Optional theme for the popover styling. */
   theme?: ThemeType;
+  /** State of the pop over ex "success", "error", "warning"*/
+  state?: StateType;
   /** Optional additional class name(s) for custom styling. */
   className?: string;
   /** Optional test ID for testing frameworks. */
