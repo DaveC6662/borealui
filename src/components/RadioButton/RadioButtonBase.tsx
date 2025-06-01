@@ -1,5 +1,6 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useMemo } from "react";
 import { RadioButtonProps } from "./RadioButton.types";
+import { combineClassNames } from "@/utils/classNames";
 
 export interface BaseRadioButtonProps extends RadioButtonProps {
   classMap: Record<string, string>;
@@ -13,6 +14,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       checked,
       onChange,
       theme = "primary",
+      state = "",
       disabled = false,
       className = "",
       "data-testid": testId = "radio-button",
@@ -27,14 +29,13 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       }
     };
 
-    const wrapperClasses = [
+    const wrapperClasses = useMemo(() => combineClassNames(
       classMap.wrapper,
       classMap[theme],
+      classMap[state],
       disabled ? classMap.disabled : "",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    ), [classMap, theme, state, disabled, className]);
 
     const labelId = `${testId}-label`;
 

@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { RadioButton } from "@/index.core";
-import type { RadioButtonProps } from "@/components/RadioButton/RadioButton.types";
+import { RadioButton } from "../src/index.core";
+import type { RadioButtonProps } from "../src/components/RadioButton/RadioButton.types";
+
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<RadioButtonProps> = {
   title: "Components/RadioButton",
@@ -68,18 +79,30 @@ export const ThemeVariants: Story = {
   render: () => {
     const [selected, setSelected] = useState("primary");
 
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <RadioButton
+            key={theme}
+            label={theme.charAt(0).toUpperCase() + theme.slice(1)}
+            value={theme}
+            theme={theme}
+            checked={selected === theme}
+            onChange={setSelected}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: () => {
+    const [selected, setSelected] = useState("primary");
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => (
+        {stateOptions.map((theme) => (
           <RadioButton
             key={theme}
             label={theme.charAt(0).toUpperCase() + theme.slice(1)}

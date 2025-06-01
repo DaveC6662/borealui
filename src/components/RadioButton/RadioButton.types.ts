@@ -1,4 +1,4 @@
-import { ThemeType } from "@/types/types";
+import { StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the RadioButton component.
@@ -15,6 +15,8 @@ export interface RadioButtonProps
   onChange: (value: string) => void;
   /** Theme applied for styling (e.g., "primary", "secondary"). */
   theme?: ThemeType;
+  /** State of the radio button (e.g., "success", "error"). */
+  state?: StateType;
   /** Whether the radio button is disabled. */
   disabled?: boolean;
   /** Additional CSS class names for custom styling. */

@@ -11,6 +11,8 @@ const classes = {
   disabled: "radio_disabled",
   primary: "radio_primary",
   secondary: "radio_secondary",
+  tertiary: "radio_tertiary",
+  quaternary: "radio_quaternary",
   success: "radio_success",
   error: "radio_error",
   warning: "radio_warning",
