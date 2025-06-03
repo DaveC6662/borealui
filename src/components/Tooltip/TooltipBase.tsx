@@ -1,4 +1,4 @@
-import { forwardRef, useId, useState } from "react";
+import { forwardRef, useId, useMemo, useState } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { TooltipProps } from "./Tooltip.types";
 
@@ -11,6 +11,7 @@ export const TooltipBase = forwardRef<
       content,
       position = "top",
       theme = "primary",
+      state = "",
       children,
       className = "",
       "data-testid": testId = "tooltip",
@@ -19,17 +20,22 @@ export const TooltipBase = forwardRef<
     },
     ref
   ) => {
-    /** Unique ID used for ARIA linkage between the tooltip trigger and tooltip content. */
     const tooltipId = useId();
-
-    /** Manages the tooltip visibility state. */
     const [visible, setVisible] = useState(false);
-
-    /** Shows the tooltip when user focuses or hovers over the trigger. */
     const showTooltip = () => setVisible(true);
-
-    /** Hides the tooltip when user blurs or moves away from the trigger. */
     const hideTooltip = () => setVisible(false);
+
+    const toolTipClassName = useMemo(
+      () =>
+        combineClassNames(
+          classMap.tooltip,
+          classMap[position],
+          classMap[theme],
+          classMap[state],
+          visible && classMap.visible
+        ),
+      [classMap, position, theme, visible]
+    );
 
     return (
       <div
@@ -51,12 +57,7 @@ export const TooltipBase = forwardRef<
         <div
           ref={ref}
           id={tooltipId}
-          className={combineClassNames(
-            classMap.tooltip,
-            classMap[position],
-            classMap[theme],
-            visible && classMap.visible
-          )}
+          className={toolTipClassName}
           role="tooltip"
           data-testid={testId}
           aria-hidden={!visible}

@@ -11,8 +11,8 @@ const classes = {
   avatarWrapper: "toolbar_avatarWrapper",
   primary: "toolbar_primary",
   secondary: "toolbar_secondary",
-  success: "toolbar_success",
-  error: "toolbar_error",
+  tertiary: "toolbar_tertiary",
+  quaternary: "toolbar_quaternary",
   warning: "toolbar_warning",
   clear: "toolbar_clear",
 };

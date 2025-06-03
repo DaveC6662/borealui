@@ -3,6 +3,14 @@ import { IconButton, Toolbar } from "../src/index.core";
 import { FaBell, FaArrowLeft } from "react-icons/fa";
 import type { ToolbarProps } from "../src/components/Toolbar/Toolbar.types";
 
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
 const meta: Meta<ToolbarProps> = {
   title: "Components/Toolbar",
   component: Toolbar,
@@ -43,18 +51,9 @@ export const WithAvatar: Story = {
 
 export const ThemedVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
-
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <Toolbar
             key={theme}
             {...args}

@@ -1,6 +1,16 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { Tooltip, Button } from "@/index.core";
-import type { TooltipProps } from "@/components/Tooltip/Tooltip.types";
+import { Tooltip, Button } from "../src/index.core";
+import type { TooltipProps } from "../src/components/Tooltip/Tooltip.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<TooltipProps> = {
   title: "Components/Tooltip",
@@ -45,7 +55,6 @@ const meta: Meta<TooltipProps> = {
 export default meta;
 type Story = StoryObj<TooltipProps>;
 
-// Default example
 export const Default: Story = {
   name: "Default Tooltip",
   args: {
@@ -53,7 +62,6 @@ export const Default: Story = {
   },
 };
 
-// Position variants
 export const Positions: Story = {
   name: "Tooltip Positions",
   render: (args) => (
@@ -82,36 +90,38 @@ export const Positions: Story = {
   ),
 };
 
-// Theme variants
 export const Themed: Story = {
   name: "Tooltip Themes",
   render: (args) => (
-    <div
-      style={{
-        display: "flex",
-        gap: "2rem",
-        justifyContent: "center",
-        flexWrap: "wrap",
-      }}
-    >
-      <Tooltip {...args} theme="primary" content="Primary tooltip">
-        <Button>Primary</Button>
-      </Tooltip>
-      <Tooltip {...args} theme="secondary" content="Secondary tooltip">
-        <Button>Secondary</Button>
-      </Tooltip>
-      <Tooltip {...args} theme="success" content="Success tooltip">
-        <Button>Success</Button>
-      </Tooltip>
-      <Tooltip {...args} theme="warning" content="Warning tooltip">
-        <Button>Warning</Button>
-      </Tooltip>
-      <Tooltip {...args} theme="error" content="Error tooltip">
-        <Button>Error</Button>
-      </Tooltip>
-      <Tooltip {...args} theme="clear" content="Clear tooltip">
-        <Button>Clear</Button>
-      </Tooltip>
+    <div style={{ display: "grid", gap: "5rem" }}>
+      {themeOptions.map((theme) => (
+        <Tooltip
+          key={theme}
+          {...args}
+          theme={theme}
+          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
+        >
+          <Button>{theme.charAt(0).toUpperCase() + theme.slice(1)}</Button>
+        </Tooltip>
+      ))}
+    </div>
+  ),
+};
+
+export const States: Story = {
+  name: "Tooltip State",
+  render: (args) => (
+    <div style={{ display: "grid", gap: "5rem" }}>
+      {stateOptions.map((state) => (
+        <Tooltip
+          key={state}
+          {...args}
+          state={state}
+          title={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
+        >
+          <Button>{state.charAt(0).toUpperCase() + state.slice(1)}</Button>
+        </Tooltip>
+      ))}
     </div>
   ),
 };
