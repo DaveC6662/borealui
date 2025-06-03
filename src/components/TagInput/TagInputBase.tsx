@@ -1,26 +1,26 @@
-import React, { useId, useState, KeyboardEvent } from "react";
+import React, { useId, useState, KeyboardEvent, useMemo } from "react";
 import { TagInputProps } from "./Taginput.types";
 import { CloseIcon } from "@/Icons";
+import { combineClassNames } from "@/utils/classNames";
 
 const TagInputBase: React.FC<
   TagInputProps & {
     classMap: Record<string, string>;
     IconButton: React.FC<any>;
     TextInput: React.FC<any>;
-    combineClassNames: (...classes: any[]) => string;
   }
 > = ({
   tags = [],
   onChange,
   placeholder = "Add a tag...",
   theme = "primary",
+  state = "",
   size = "medium",
   "data-testid": testId = "tag-input",
   ariaDescription = "Type a tag and press Enter or comma to add. Existing tags can be removed using the remove button next to each tag.",
   classMap,
   IconButton,
   TextInput,
-  combineClassNames,
 }) => {
   const inputId = useId();
   const descId = `${inputId}-desc`;
@@ -54,13 +54,20 @@ const TagInputBase: React.FC<
     setLastAction(`Removed tag ${tag}`);
   };
 
-  return (
-    <div
-      className={combineClassNames(
+  const wrapperClass = useMemo(
+    () =>
+      combineClassNames(
         classMap.tagInput,
         classMap[theme],
+        classMap[state],
         classMap[size]
-      )}
+      ),
+    [classMap, theme, state, size]
+  );
+
+  return (
+    <div
+      className={wrapperClass}
       role="group"
       aria-labelledby={labelId}
       aria-describedby={descId}
@@ -109,6 +116,7 @@ const TagInputBase: React.FC<
             id={inputId}
             type="text"
             theme={theme}
+            state={state}
             className={classMap.input}
             value={inputValue}
             placeholder={tagList.length === 0 ? placeholder : ""}

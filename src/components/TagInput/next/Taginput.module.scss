@@ -57,7 +57,7 @@ $sizes: (
   width: fit-content;
 }
 
-.removeButton {
+.removeButton svg {
   color: theme.$error-color;
 }
 
@@ -82,6 +82,14 @@ $sizes: (
   .#{$theme} {
     .tag {
       background-color: map.get($color, bg);
+    }
+  }
+}
+
+@each $state, $color in theme.$states {
+  .#{$state} {
+    .tag {
+      outline: 2px solid map.get($color, border);
     }
   }
 }

@@ -1,7 +1,17 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { TagInput } from "@/index.core";
-import type { TagInputProps } from "@/components/TagInput/Taginput.types";
+import { TagInput } from "../src/index.core";
+import type { TagInputProps } from "../src/components/TagInput/Taginput.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<TagInputProps> = {
   title: "Components/TagInput",
@@ -63,18 +73,9 @@ export const SizeVariants: Story = {
 
 export const ThemeVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
-
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
-        {themes.map((theme) => {
+        {themeOptions.map((theme) => {
           const [tags, setTags] = useState(["react", "nextjs"]);
 
           return (
@@ -85,6 +86,29 @@ export const ThemeVariants: Story = {
               tags={tags}
               onChange={setTags}
               placeholder={`Add ${theme} tag...`}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        {stateOptions.map((state) => {
+          const [tags, setTags] = useState(["react", "nextjs"]);
+
+          return (
+            <TagInput
+              key={state}
+              {...args}
+              state={state}
+              tags={tags}
+              onChange={setTags}
+              placeholder={`Add ${state} tag...`}
             />
           );
         })}
