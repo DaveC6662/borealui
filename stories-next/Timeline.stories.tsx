@@ -1,7 +1,15 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaRocket, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
-import { Timeline } from "@/index.next";
-import type { TimelineProps } from "@/components/Timeline/Timeline.types";
+import { Timeline } from "../src/index.next";
+import type { TimelineProps } from "../src/components/Timeline/Timeline.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
 
 const meta: Meta<TimelineProps> = {
   title: "Components/Timeline",
@@ -64,18 +72,9 @@ export const WithoutIcons: Story = {
 
 export const ThemeVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
-
     return (
       <div style={{ display: "grid", gap: "2rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <Timeline key={theme} {...args} theme={theme} items={sampleEvents} />
         ))}
       </div>

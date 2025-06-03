@@ -1,4 +1,4 @@
-import { SizeType, ThemeType } from "@/types/types";
+import { SizeType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the Toggle component.
@@ -15,6 +15,8 @@ export interface ToggleProps {
   label?: string;
   /** Theme used for styling the toggle (e.g., "primary", "secondary"). Defaults to "primary". */
   theme?: ThemeType;
+  /** State of the toggle (e.g., "success", "error"). Defaults to "". */
+  state?: StateType;
   /** Size variant for the toggle (e.g., "small", "medium", "large"). Defaults to "medium". */
   size?: SizeType;
   /** If true, disables user interaction with the toggle. */

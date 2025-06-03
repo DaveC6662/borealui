@@ -94,13 +94,6 @@ $sizes: (
     background-color: var(--primary-color);
   }
 
-  &_disabled {
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-    box-shadow: none;
-  }
-
   &_clear .toggle_active {
     border: 1px solid var(--text-color-primary);
   }
@@ -109,6 +102,12 @@ $sizes: (
 @each $theme, $color in theme.$themes {
   .toggle_#{$theme} .toggle_active {
     background-color: map.get($color, bg);
+  }
+}
+
+@each $state, $color in theme.$states {
+  .toggle_#{$state} .toggle_active {
+    outline: 2px solid map.get($color, border);
   }
 }
 
@@ -125,5 +124,16 @@ $sizes: (
     &_active .toggle_slider {
       transform: translateX(map.get($vals, translate));
     }
+  }
+}
+
+.toggle_disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+  box-shadow: none;
+
+  .toggle {
+    background-color: theme.$disabled-color;
   }
 }

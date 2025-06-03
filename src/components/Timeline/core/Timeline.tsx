@@ -17,8 +17,8 @@ const classes = {
   horizontal: "timeline_horizontal",
   primary: "timeline_primary",
   secondary: "timeline_secondary",
-  success: "timeline_success",
-  error: "timeline_error",
+  tertiary: "timeline_tertiary",
+  quaternary: "timeline_quaternary",
   warning: "timeline_warning",
   clear: "timeline_clear",
 };

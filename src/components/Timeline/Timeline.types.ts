@@ -1,4 +1,4 @@
-import { OrientationType, ThemeType } from "@/types/types";
+import { OrientationType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Represents a single item within the timeline.

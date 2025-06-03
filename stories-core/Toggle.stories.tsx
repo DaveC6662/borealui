@@ -1,7 +1,17 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { Toggle } from "@/index.core";
-import type { ToggleProps } from "@/components/Toggle/Toggle.types";
+import { Toggle } from "../src/index.core";
+import type { ToggleProps } from "../src/components/Toggle/Toggle.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<ToggleProps> = {
   title: "Components/Toggle",
@@ -47,17 +57,9 @@ export const Disabled: Story = {
 
 export const ThemeVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => {
+        {themeOptions.map((theme) => {
           const [checked, setChecked] = useState(false);
           return (
             <Toggle
@@ -65,6 +67,28 @@ export const ThemeVariants: Story = {
               {...args}
               theme={theme}
               label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
+              checked={checked}
+              onChange={setChecked}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => {
+          const [checked, setChecked] = useState(false);
+          return (
+            <Toggle
+              key={state}
+              {...args}
+              state={state}
+              label={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
               checked={checked}
               onChange={setChecked}
             />
