@@ -1,8 +1,18 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaCommentDots } from "react-icons/fa";
-import { TextArea } from "@/index.next";
-import type { TextAreaProps } from "@/components/TextArea/TextArea.types";
+import { TextArea } from "../src/index.next";
+import type { TextAreaProps } from "../src/components/TextArea/TextArea.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<TextAreaProps> = {
   title: "Components/TextArea",
@@ -50,18 +60,9 @@ export const WithIcon: Story = {
 
 export const ThemedVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
-
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => {
+        {themeOptions.map((theme) => {
           const [value, setValue] = useState("");
           return (
             <TextArea
@@ -79,20 +80,33 @@ export const ThemedVariants: Story = {
   },
 };
 
-export const OutlineVariants: Story = {
+export const StateVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
-
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => {
+        {stateOptions.map((state) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextArea
+              key={state}
+              {...args}
+              state={state}
+              placeholder={`${state} state`}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => {
           const [value, setValue] = useState("");
           return (
             <TextArea

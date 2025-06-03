@@ -1,4 +1,4 @@
-import { ThemeType } from "@/types/types";
+import { StateType, ThemeType } from "@/types/types";
 import { ComponentType, InputHTMLAttributes } from "react";
 
 /**
@@ -19,6 +19,11 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   ariaDescription?: string;
   /** Theme used for styling (e.g., "primary", "secondary"). Defaults to "primary". */
   theme?: ThemeType;
+  /**
+   * State of the input, either  "success" (valid input), "error" (invalid input) or "warning" (check input).
+   * Defaults to "".
+   */
+  state?: StateType;
   /** If true, the input is outlined instead of filled. */
   outline?: boolean;
   /**

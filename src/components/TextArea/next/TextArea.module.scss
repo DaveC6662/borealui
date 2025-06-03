@@ -116,6 +116,14 @@
   }
 }
 
+@each $state, $props in theme.$states {
+  .#{$state} {
+    border: 2px solid map.get($props, border);
+    color: map.get($props, text, inherit);
+    box-shadow: map.get($props, shadow, theme.$box-shadow-medium);
+  }
+}
+
 .clear {
   box-shadow: none;
 }
@@ -128,5 +136,6 @@
 
   .textInput {
     background-color: transparent;
+    color: var(--text-color-primary);
   }
 }

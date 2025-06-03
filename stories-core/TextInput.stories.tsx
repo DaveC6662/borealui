@@ -1,8 +1,18 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { FaUser, FaEnvelope } from "react-icons/fa";
-import { TextInput } from "@/index.core";
-import type { TextInputProps } from "@/components/TextInput/TextInput.types";
+import { FaUser } from "react-icons/fa";
+import { TextInput } from "../src/index.core";
+import type { TextInputProps } from "../src/components/TextInput/TextInput.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<TextInputProps> = {
   title: "Components/TextInput",
@@ -67,17 +77,9 @@ export const PasswordInput: Story = {
 
 export const ThemedVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => {
+        {themeOptions.map((theme) => {
           const [value, setValue] = useState("");
           return (
             <TextInput
@@ -95,20 +97,33 @@ export const ThemedVariants: Story = {
   },
 };
 
-export const OutlineVariants: Story = {
+export const StateVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
-
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => {
+        {stateOptions.map((state) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextInput
+              key={state}
+              {...args}
+              state={state}
+              placeholder={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => {
           const [value, setValue] = useState("");
           return (
             <TextInput

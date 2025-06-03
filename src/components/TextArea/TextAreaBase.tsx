@@ -1,9 +1,4 @@
-import {
-  ComponentType,
-  forwardRef,
-  TextareaHTMLAttributes,
-  useId,
-} from "react";
+import { forwardRef, useId, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { TextAreaProps } from "./TextArea.types";
 
@@ -19,6 +14,7 @@ const TextAreaBase = forwardRef<
       outline = false,
       autoComplete = "off",
       theme = "primary",
+      state = "",
       ariaLabel,
       ariaDescription,
       disabled = false,
@@ -33,17 +29,21 @@ const TextAreaBase = forwardRef<
     const id = useId();
     const descriptionId = ariaDescription ? `${id}-description` : undefined;
 
-    return (
-      <div
-        className={combineClassNames(
+    const wrapperClass = useMemo(
+      () =>
+        combineClassNames(
           classMap.textArea,
           classMap[theme],
-          classMap[outline ? "outline" : ""],
+          classMap[state],
+          outline && classMap.outline,
           disabled && classMap.disabled,
           className
-        )}
-        data-testid={testId}
-      >
+        ),
+      [classMap, outline, disabled, className]
+    );
+
+    return (
+      <div className={wrapperClass} data-testid={testId}>
         {Icon && (
           <div
             className={classMap.iconContainer}

@@ -9,6 +9,8 @@ const classes = {
   icon: "textArea_icon",
   primary: "textArea_primary",
   secondary: "textArea_secondary",
+  tertiary: "textArea_tertiary",
+  quaternary: "textArea_quaternary",
   success: "textArea_success",
   error: "textArea_error",
   warning: "textArea_warning",

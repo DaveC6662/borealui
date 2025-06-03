@@ -11,6 +11,8 @@ const classes = {
   togglePassword: "textInput_togglePassword",
   primary: "textInput_primary",
   secondary: "textInput_secondary",
+  tertiary: "textInput_tertiary",
+  quaternary: "textInput_quaternary",
   success: "textInput_success",
   warning: "textInput_warning",
   error: "textInput_error",
