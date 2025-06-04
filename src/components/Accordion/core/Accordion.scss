@@ -47,10 +47,37 @@ $sizes: (
 );
 
 .accordion {
-  border-radius: theme.$border-radius-md;
   margin-bottom: theme.$spacing-sm;
   background-color: transparent !important;
   transition: box-shadow theme.$transition-default;
+}
+
+@each $key, $value in theme.$rounding {
+  .accordion_round-#{$key} {
+    border-radius: $value;
+
+    .accordion_header {
+      border-radius: $value;
+    }
+
+    .accordion_content {
+      border-bottom-left-radius: $value;
+      border-bottom-right-radius: $value;
+    }
+
+    .accordion_expanded .accordion_content {
+      border-bottom-left-radius: $value;
+      border-bottom-right-radius: $value;
+    }
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .accordion_shadow-#{$key} {
+    .accordion_header {
+      box-shadow: $value;
+    }
+  }
 }
 
 .accordion_expanded .accordion_header {
@@ -71,7 +98,6 @@ $sizes: (
   cursor: pointer;
   background-color: transparent;
   border: none;
-  border-radius: theme.$border-radius-md;
   outline: none;
   transition:
     background-color theme.$transition-default,
@@ -110,6 +136,10 @@ $sizes: (
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
+}
+
+.accordion_clear {
+  box-shadow: none;
 }
 
 @each $name, $values in theme.$states {
@@ -153,8 +183,6 @@ $sizes: (
   max-height: none;
   opacity: 1;
   padding: theme.$spacing-xl theme.$spacing-xl;
-  border-bottom-left-radius: theme.$border-radius-md;
-  border-bottom-right-radius: theme.$border-radius-md;
 }
 
 .accordion_title {

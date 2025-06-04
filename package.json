@@ -35,7 +35,7 @@
     "prepare": "tsc -p tsconfig.build.json && npm run build",
     "playground": "vite --config playground/vite.config.ts",
     "storybook:core": "storybook dev -p 6006 -c .storybook-core",
-    "storybook:next": "storybook dev -p 6006 -c .storybook-next",
+    "storybook:next": "storybook dev -p 6007 -c .storybook-next",
     "build-storybook": "storybook build"
   },
   "keywords": [

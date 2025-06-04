@@ -54,6 +54,34 @@ $sizes: (
   transition: box-shadow theme.$transition-default;
 }
 
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+
+    .header {
+      border-radius: $value;
+    }
+
+    .content {
+      border-bottom-left-radius: $value;
+      border-bottom-right-radius: $value;
+    }
+
+    .expanded .content {
+      border-bottom-left-radius: $value;
+      border-bottom-right-radius: $value;
+    }
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    .header {
+      box-shadow: $value;
+    }
+  }
+}
+
 .expanded .header {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;

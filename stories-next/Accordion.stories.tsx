@@ -1,8 +1,14 @@
 import { useState } from "react";
-import type { Meta, StoryObj } from "@storybook/nextjs";
+import type { Meta, StoryObj } from "@storybook/react";
 import { Accordion } from "../src/index.next";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-import { SizeType, StateType, ThemeType } from "../src/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../src/types/types";
 
 const themeOptions = [
   "primary",
@@ -14,6 +20,8 @@ const themeOptions = [
 
 const stateOptions = ["success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"];
+const roundingOptions = ["none", "xs", "sm", "md", "lg", "xl"];
+const shdaowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
@@ -40,6 +48,8 @@ const defaultArgs = {
   size: "medium" as SizeType,
   theme: "primary" as ThemeType,
   state: "" as StateType,
+  rounding: "md" as RoundingType,
+  shadow: "medium" as ShadowType,
 };
 
 export const Default: Story = {
@@ -48,6 +58,16 @@ export const Default: Story = {
     initiallyExpanded: false,
   },
 };
+
+export const RoundingVariants = () =>
+  withVariants(Accordion, { ...defaultArgs }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = () =>
+  withVariants(Accordion, { ...defaultArgs }, [
+    { propName: "shadow", values: shdaowOptions },
+  ]);
 
 export const Controlled: Story = {
   render: (args) => {
@@ -82,7 +102,7 @@ export const Disabled: Story = {
 // Theme Variants
 export const ThemeVariants = () =>
   withVariants(Accordion, { ...defaultArgs }, [
-    { propName: "theme", values: themeOptions },
+    { propName: "theme", values: [...themeOptions] },
   ]);
 
 // State Variants

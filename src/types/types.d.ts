@@ -17,6 +17,9 @@ export type NotificationType =
 export type SizeType = "xs" | "small" | "medium" | "large" | "xl";
 export type OrientationType = "horizontal" | "vertical";
 
+export type ShadowType = "none" | "light" | "medium" | "strong" | "intense";
+export type RoundingType = "none" | "sm" | "md" | "lg" | "xl";
+
 export type PositionType =
   | "topLeft"
   | "topCenter"

@@ -10,6 +10,19 @@ const classes = {
   icon: "accordion_icon",
   title: "accordion_title",
 
+  shadowNone: "accordion_shadow-None",
+  shadowLight: "accordion_shadow-Light",
+  shadowMedium: "accordion_shadow-Medium",
+  shadowStrong: "accordion_shadow-Strong",
+  shadowIntense: "accordion_shadow-Intense",
+
+  roundNone: "accordion_round-None",
+  roundXs: "accordion_round-Xs",
+  roundSm: "accordion_round-Sm",
+  roundMd: "accordion_round-Md",
+  roundLg: "accordion_round-Lg",
+  roundXl: "accordion_round-Xl",
+
   disabled: "accordion_disabled",
   expanded: "accordion_expanded",
 

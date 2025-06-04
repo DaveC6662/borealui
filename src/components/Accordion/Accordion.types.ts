@@ -1,4 +1,10 @@
-import { SizeType, StateType, ThemeType } from "../../types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../../types/types";
 
 /**
  * Props for the Accordion component.
@@ -29,6 +35,12 @@ export interface AccordionProps {
    * The state of the accordion (e.g., 'success', 'error').
    */
   state?: StateType;
+
+  /**Controls the shadow of the accordion */
+  shadow?: ShadowType;
+
+  /**Controls the rounding of the accordion */
+  rounding?: RoundingType;
 
   /**
    * The size of the accordion (e.g., 'small', 'medium', 'large').

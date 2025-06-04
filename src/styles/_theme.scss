@@ -39,16 +39,16 @@ $spacing-sm: 8px;
 $spacing-md: 16px;
 $spacing-lg: 24px;
 $spacing-xl: 32px;
-$border-radius-xs: 0.5em;
-$border-radius-sm: 1em;
-$border-radius-md: 1.5em;
-$border-radius-lg: 2em;
-$border-radius-xl: 2.5em;
+$border-radius-xs: 5px;
+$border-radius-sm: 10px;
+$border-radius-md: 15px;
+$border-radius-lg: 20px;
+$border-radius-xl: 25px;
 $border-radius-round: 50%;
 $box-shadow-light: 0px 2px 4px rgb(46 49 49 / 10%);
 $box-shadow-medium: 0px 4px 8px rgb(86 101 116 / 20%);
 $box-shadow-heavy: 0px 6px 12px rgb(52 73 94 / 40%);
-$box-shadow-extra: 0px 6px 12px rgb(52 73 94 / 60%);
+$box-shadow-intense: 0px 6px 12px rgb(52 73 94 / 60%);
 $transition-fast: 0.2s ease-in-out;
 $transition-default: 0.3s ease-in-out;
 $transition-slow: 0.5s ease-in-out;
@@ -123,3 +123,19 @@ $states: (
     text-hover: var(--text-color-primary),
   ),
 ) !default;
+$rounding: (
+  "None": 0,
+  "Xs": $border-radius-xs,
+  "Sm": $border-radius-sm,
+  "Md": $border-radius-md,
+  "Lg": $border-radius-lg,
+  "Xl": $border-radius-xl,
+  "Round": $border-radius-round,
+);
+$shadow: (
+  "None": 0,
+  "Light": $box-shadow-light,
+  "Medium": $box-shadow-medium,
+  "Strong": $box-shadow-heavy,
+  "Intense": $box-shadow-intense,
+);

@@ -1,6 +1,7 @@
 import React, { useMemo, useState, KeyboardEvent } from "react";
 import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface AccordionBaseProps extends AccordionProps {
   getUniqueId: () => string;
@@ -14,6 +15,8 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   lazyLoad = false,
   iconPosition = "right",
   isToggleable = true,
+  rounding = "md",
+  shadow = "light",
   description,
   size = "medium",
   theme = "primary",
@@ -64,6 +67,8 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         classMap.accordion,
         classMap[size],
         classMap[state],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
         isExpanded && classMap.expanded,
         className
