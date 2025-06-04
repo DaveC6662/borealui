@@ -37,7 +37,7 @@
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: theme.$box-shadow-large;
+    box-shadow: theme.$box-shadow-heavy;
   }
 
   &:focus {
@@ -52,7 +52,7 @@
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
+      box-shadow: theme.$box-shadow-heavy;
     }
 
     &:focus {
@@ -70,7 +70,7 @@
     &:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
+      box-shadow: theme.$box-shadow-heavy;
     }
 
     &:focus {
@@ -104,7 +104,7 @@
     &:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
+      box-shadow: theme.$box-shadow-heavy;
     }
 
     &:focus {

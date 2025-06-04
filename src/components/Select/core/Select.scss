@@ -13,7 +13,7 @@
   transition: theme.$transition-default;
 
   &:hover {
-    box-shadow: theme.$box-shadow-large;
+    box-shadow: theme.$box-shadow-heavy;
   }
 
   &.disabled {

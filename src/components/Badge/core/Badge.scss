@@ -38,7 +38,7 @@
 
   &.badge_clickable:hover {
     transform: translateY(-2px);
-    box-shadow: theme.$box-shadow-large;
+    box-shadow: theme.$box-shadow-heavy;
   }
 
   &.badge_clickable:focus {
@@ -53,7 +53,7 @@
 
     &.badge_clickable:hover {
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
+      box-shadow: theme.$box-shadow-heavy;
     }
 
     &.badge_clickable:focus {
@@ -71,7 +71,7 @@
     &.badge_clickable:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
+      box-shadow: theme.$box-shadow-heavy;
     }
 
     &.badge_clickable:focus {
@@ -105,7 +105,7 @@
     &.badge_clickable:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
+      box-shadow: theme.$box-shadow-heavy;
     }
 
     &.badge_clickable:focus {

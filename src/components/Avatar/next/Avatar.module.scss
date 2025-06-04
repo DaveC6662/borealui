@@ -82,7 +82,7 @@
     &.clickable:hover {
       background-color: color.adjust(#000, $lightness: -10%);
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
+      box-shadow: theme.$box-shadow-heavy;
     }
 
     &.clickable:focus {
@@ -109,7 +109,7 @@
       &.clickable:hover {
         background-color: map.get($props, hover);
         transform: translateY(-2px);
-        box-shadow: theme.$box-shadow-large;
+        box-shadow: theme.$box-shadow-heavy;
       }
 
       &.clickable:focus {
@@ -139,7 +139,7 @@
       &.clickable:hover {
         background-color: map.get($props, hover);
         transform: translateY(-2px);
-        box-shadow: theme.$box-shadow-large;
+        box-shadow: theme.$box-shadow-heavy;
       }
 
       &.clickable:focus {

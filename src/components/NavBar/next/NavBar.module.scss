@@ -34,18 +34,17 @@
     &.#{$name} .item {
       background-color: map.get($values, bg);
 
-      
-    &:hover {
-      background-color: map.get($values, hover);
-      transform: scale(1.1);
-    }
+      &:hover {
+        background-color: map.get($values, hover);
+        transform: scale(1.1);
+      }
     }
 
-    &.#{$name}  .item--active {
-    background-color: map.get($values, bg-light);
-    color: var(--secondary-color-darker);
-    font-weight: bold;
-  }
+    &.#{$name} .item--active {
+      background-color: map.get($values, bg-light);
+      color: var(--secondary-color-darker);
+      font-weight: bold;
+    }
   }
 
   .item {
@@ -57,7 +56,7 @@
     height: 80px;
     padding: 15px;
     border-radius: theme.$border-radius-round;
-    box-shadow: theme.$box-shadow-large;
+    box-shadow: theme.$box-shadow-heavy;
     color: var(--text-color-primary);
     text-decoration: none;
     cursor: pointer;
@@ -70,8 +69,7 @@
     }
   }
 
-  
-  &.clear .item{
+  &.clear .item {
     box-shadow: none;
   }
 
