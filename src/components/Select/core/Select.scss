@@ -29,7 +29,7 @@
   right: 10px;
   pointer-events: none;
   font-size: 12px;
-  color: var(--text-color);
+  color: var(--text-color-primary);
   transform-origin: center;
   background-color: transparent !important;
 }
@@ -43,7 +43,7 @@
   border-radius: theme.$border-radius-lg;
   border: none;
   background-color: var(--background-light-color);
-  color: var(--text-color);
+  color: var(--text-color-primary);
   cursor: pointer;
   transition:
     background-color 0.3s ease,
