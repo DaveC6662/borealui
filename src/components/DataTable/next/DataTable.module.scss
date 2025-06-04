@@ -86,6 +86,23 @@
     }
   }
 
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      th {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+      }
+    }
+
+    .#{$name}.outline {
+      th {
+        border: 2px solid map.get($values, border);
+        background-color: transparent;
+        color: map.get($values, text-color);
+      }
+    }
+  }
+
   &.clear {
     box-shadow: none;
 

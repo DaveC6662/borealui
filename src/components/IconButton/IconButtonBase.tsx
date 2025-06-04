@@ -15,6 +15,7 @@ const IconButtonBase = forwardRef<
     {
       icon: Icon,
       theme = "primary",
+      state = "",
       href,
       isExternal = false,
       onClick,
@@ -42,6 +43,7 @@ const IconButtonBase = forwardRef<
         combineClassNames(
           classMap.iconButton,
           classMap[theme],
+          classMap[state],
           size && classMap[size],
           outline && classMap.outline,
           disabled && classMap.disabled,

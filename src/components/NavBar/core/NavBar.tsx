@@ -9,6 +9,11 @@ const classes = {
   "item--active": "nav_active",
   icon: "nav_icon_container",
   label: "nav_label",
+  primary: "nav_primary",
+  secondary: "nav_secondary",
+  tertiary: "nav_tertiary",
+  quaternary: "nav_quaternary",
+  clear: "nav_clear",
 };
 
 const NavBar: React.FC<NavBarProps> = (props) => {

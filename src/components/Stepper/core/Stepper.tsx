@@ -10,6 +10,8 @@ const classes = {
   vertical: "stepper_vertical",
   primary: "stepper_primary",
   secondary: "stepper_secondary",
+  tertiary: "stepper_tertiary",
+  quaternary: "stepper_quaternary",
   success: "stepper_success",
   warning: "stepper_warning",
   error: "stepper_error",

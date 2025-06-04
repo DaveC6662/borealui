@@ -17,6 +17,8 @@ const coreStyles = {
   xl: "slider_xl",
   primary: "slider_primary",
   secondary: "slider_secondary",
+  tertiary: "slider_tertiary",
+  quaternary: "slider_quaternary",
   success: "slider_success",
   error: "slider_error",
   warning: "slider_warning",

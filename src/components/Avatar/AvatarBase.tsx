@@ -15,6 +15,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
   name = "",
   label,
   onClick,
+  disabled = false,
   href,
   status,
   statusIcon,
@@ -25,6 +26,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
   shape = "circle",
   outline = false,
   theme = "primary",
+  state = "",
   className = "",
   priority = false,
   ImageComponent = "img",
@@ -46,9 +48,12 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
       combineClassNames(
         classMap.avatar,
         classMap[theme],
+        classMap[state],
         classMap[shape],
         classMap[size],
+        disabled && classMap.disabled,
         outline && classMap.outline,
+        onClick && classMap.clickable,
         className
       ),
     [theme, shape, size, outline, className]

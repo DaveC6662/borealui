@@ -79,6 +79,17 @@ $slider-sizes: (
   }
 }
 
+@each $name, $color in theme.$states {
+  .#{$name} .slider {
+    background-color: map.get($color, bg);
+
+    &::-webkit-slider-thumb,
+    &::-moz-range-thumb {
+      color: map.get($color, bg);
+    }
+  }
+}
+
 .clear .slider {
   background-color: var(--background-color-light);
 }

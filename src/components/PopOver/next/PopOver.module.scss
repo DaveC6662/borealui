@@ -49,6 +49,23 @@
     }
   }
 
+  @each $name, $values in theme.$states {
+    &.#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+      box-shadow: if(
+        map.has-key($values, shadow),
+        map.get($values, shadow),
+        theme.$box-shadow-medium
+      );
+      border: if(
+        map.has-key($values, border),
+        map.get($values, border),
+        1px solid var(--text-color-secondary)
+      );
+    }
+  }
+
   &.clear {
     box-shadow: none;
     border: 1px solid var(--text-color-primary);

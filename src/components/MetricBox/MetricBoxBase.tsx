@@ -12,6 +12,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   icon: Icon,
   subtext,
   theme = "primary",
+  state = "",
   outline = false,
   align = "center",
   size = "medium",
@@ -29,6 +30,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
         classMap.wrapper,
         outline && classMap.outline,
         classMap[theme],
+        classMap[state],
         classMap[size],
         classMap[align],
         className

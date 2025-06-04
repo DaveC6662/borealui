@@ -16,8 +16,10 @@ export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
 export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   items,
   theme = "primary",
+  state = "",
   separator,
   classMap,
+  disabled = false,
   size = "medium",
   outline = false,
   className = "",
@@ -40,7 +42,9 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
       combineClassNames(
         classMap.breadcrumbs,
         classMap[theme],
+        classMap[state],
         classMap[size],
+        disabled && classMap.disabled,
         outline && classMap.outline,
         className
       ),

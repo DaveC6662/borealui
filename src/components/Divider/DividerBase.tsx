@@ -14,7 +14,8 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       length = "100%",
       className = "",
       dashed = false,
-      theme = "",
+      theme = "primary",
+      state = "",
       as = "div",
       classMap,
       "data-testid": testId = "divider",
@@ -42,6 +43,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
           classMap.divider,
           classMap[orientation],
           theme && classMap[theme],
+          state && classMap[state],
           dashed && classMap.dashed,
           className
         )}

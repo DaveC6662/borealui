@@ -80,6 +80,12 @@
   }
 }
 
+@each $state, $vals in theme.$states {
+  .#{$state} {
+    border: 2px solid map.get($vals, border);
+  }
+}
+
 @each $theme, $vals in theme.$themes {
   .#{$theme} {
     background-color: map.get($vals, bg);

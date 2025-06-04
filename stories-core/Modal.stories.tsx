@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { Modal, Button } from "../src/index.core"; // adjust path if needed
 import type { ModalProps } from "../src/components/Modal/Modal.types"; // adjust path if needed
 

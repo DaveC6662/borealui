@@ -1,7 +1,17 @@
 import { useState, useEffect } from "react";
-import { Meta, StoryObj } from "@storybook/react";
-import { Progressbar } from "@/index.next";
-import type { ProgressBarProps } from "@/components/ProgressBar/ProgressBar.types";
+import { Meta, StoryObj } from "@storybook/nextjs";
+import { Progressbar } from "../src/index.next";
+import type { ProgressBarProps } from "../src/components/ProgressBar/ProgressBar.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<ProgressBarProps> = {
   title: "Components/ProgressBar",
@@ -62,25 +72,39 @@ export const SizeVariants: Story = {
 
 export const ThemedVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "success",
-      "warning",
-      "error",
-      "secondary",
-      "clear",
-    ] as const;
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <div key={theme}>
             <label style={{ marginBottom: "0.25rem", display: "block" }}>
               {theme.charAt(0).toUpperCase() + theme.slice(1)}
             </label>
             <Progressbar
               {...args}
-              progress={20 + themes.indexOf(theme) * 15}
+              progress={20 + themeOptions.indexOf(theme) * 15}
+              theme={theme}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: (args) => {
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((theme) => (
+          <div key={theme}>
+            <label style={{ marginBottom: "0.25rem", display: "block" }}>
+              {theme.charAt(0).toUpperCase() + theme.slice(1)}
+            </label>
+            <Progressbar
+              {...args}
+              progress={20 + stateOptions.indexOf(theme) * 15}
               theme={theme}
             />
           </div>

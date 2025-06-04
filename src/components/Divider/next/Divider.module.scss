@@ -23,8 +23,15 @@
 
 @each $theme, $values in theme.$themes {
   .#{$theme} {
-    background-color: map.get($values, bg);
-    border-color: map.get($values, bg);
+    background-color: map.get($values, border);
+    border-color: map.get($values, border);
+  }
+}
+
+@each $state, $values in theme.$states {
+  .#{$state} {
+    background-color: map.get($values, border);
+    border-color: map.get($values, border);
   }
 }
 
@@ -45,7 +52,7 @@
 
 @each $theme, $values in theme.$themes {
   .#{$theme}.dashed {
-    color: map.get($values, bg);
+    color: map.get($values, border);
   }
 }
 

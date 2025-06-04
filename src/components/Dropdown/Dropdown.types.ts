@@ -1,4 +1,4 @@
-import { ThemeType } from "@/types/types";
+import { StateType, ThemeType } from "@/types/types";
 import { ComponentType } from "react";
 
 /**
@@ -35,6 +35,8 @@ export interface DropdownProps {
   ariaLabel?: string;
   /** Optional theme for styling. */
   theme?: ThemeType;
+  /** State of the drop down ex "success", "error", "warning*/
+  state?: StateType;
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }

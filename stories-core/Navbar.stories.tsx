@@ -1,5 +1,6 @@
+import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import { Navbar } from "@/index.core";
+import { Navbar } from "../src/index.core";
 import {
   FaHome,
   FaCompactDisc,
@@ -8,7 +9,18 @@ import {
   FaCommentAlt,
   FaPaintBrush,
 } from "react-icons/fa";
-import type { NavBarProps } from "@/components/NavBar/NavBar.types";
+import type { NavBarProps } from "../src/components/NavBar/NavBar.types";
+
+// Theme and state options
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+] as const;
+
+const stateOptions = ["success", "error", "warning"] as const;
 
 const mockItems: NavBarProps["items"] = [
   { icon: <FaHome />, label: "Home", path: "/" },
@@ -37,26 +49,36 @@ const meta: Meta<NavBarProps> = {
 };
 
 export default meta;
-
 type Story = StoryObj<NavBarProps>;
 
-export const Default: Story = {
+// Dynamic interactive theme + state story
+export const Themes: Story = {
   render: (args) => {
-    window.history.pushState({}, "", "/");
-    return <Navbar {...args} />;
-  },
-};
+    const [theme, setTheme] = useState<NavBarProps["theme"]>("primary");
 
-export const MusicActive: Story = {
-  render: (args) => {
-    window.history.pushState({}, "", "/Music");
-    return <Navbar {...args} />;
-  },
-};
+    window.history.pushState({}, "", "/"); // Ensure routing for active state
 
-export const BlogActive: Story = {
-  render: (args) => {
-    window.history.pushState({}, "", "/Blog");
-    return <Navbar {...args} />;
+    return (
+      <div style={{ paddingTop: "5rem", textAlign: "center" }}>
+        <div style={{ marginBottom: "2rem" }}>
+          <label style={{ marginRight: "1rem" }}>
+            Theme:
+            <select
+              value={theme}
+              onChange={(e) => setTheme(e.target.value as typeof theme)}
+              style={{ marginLeft: "0.5rem" }}
+            >
+              {themeOptions.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <Navbar {...args} theme={theme}/>
+      </div>
+    );
   },
 };

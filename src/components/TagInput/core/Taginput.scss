@@ -52,12 +52,13 @@ $sizes: (
     flex-wrap: wrap;
     align-items: center;
     gap: theme.$spacing-xs;
-    width: 100%;
     width: fit-content;
   }
 
   &_remove_button {
     color: theme.$error-color;
+    margin: 0;
+    width: fit-content;
   }
 
   &_tag {
@@ -69,18 +70,25 @@ $sizes: (
     background-color: var(--primary-color);
     color: var(--text-color-primary);
     border-radius: theme.$border-radius-md;
-    font-size: theme.$font-size-sm;
-    padding: theme.$spacing-xxs theme.$spacing-xs;
   }
 
   &_tag_label {
     padding: theme.$spacing-xxs;
+    width: fit-content;
   }
 
   @each $theme, $color in theme.$themes {
     &_#{$theme} {
       .tag_input_tag {
         background-color: map.get($color, bg);
+      }
+    }
+  }
+
+  @each $state, $color in theme.$states {
+    &_#{$state} {
+      .tag_input_tag {
+        border: 2px solid map.get($color, bg);
       }
     }
   }

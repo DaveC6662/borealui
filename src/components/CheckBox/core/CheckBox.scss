@@ -27,7 +27,7 @@
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  border: 2px solid var(--background-color-light);
+  border: 2px solid currentcolor;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,21 +66,36 @@
   font-size: theme.$font-size-sm;
 }
 
-.checkbox_disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 @each $theme, $props in theme.$themes {
   .checkbox_#{$theme} {
-    color: map.get($props, bg);
+    color: map.get($props, border);
   }
 
-  .checkbox_box.checkbox_#{$theme} {
-    border-color: map.get($props, bg);
+  .checkbox_#{$theme}.checkbox_box {
+    border-color: map.get($props, border);
   }
 
   .checkbox_input:checked + .checkbox_box.checkbox_#{$theme}::after {
+    border-color: map.get($props, border);
+  }
+}
+
+@each $state, $props in theme.$states {
+  .checkbox_#{$state} {
+    color: map.get($props, bg);
+  }
+
+  .checkbox_box.checkbox_#{$state} {
+    border-color: map.get($props, bg);
+  }
+
+  .checkbox_input:checked + .checkbox_box.checkbox_#{$state}::after {
     border-color: map.get($props, text);
   }
+}
+
+.checkbox_disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  color: theme.$disabled-color;
 }

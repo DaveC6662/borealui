@@ -79,19 +79,18 @@
     }
   }
 
-  &_disabled {
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-    background-color: theme.$disabled-color;
-  }
-
   &_clear {
     box-shadow: none;
 
     .textInput {
       border: none;
     }
+  }
+}
+
+@each $state, $vals in theme.$states {
+  .textInput_#{$state} {
+    border: 2px solid map.get($vals, border);
   }
 }
 
@@ -120,4 +119,11 @@
       border: 2px solid map.get($vals, border);
     }
   }
+}
+
+.textInput_disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+  background-color: theme.$disabled-color;
 }

@@ -24,20 +24,17 @@
     opacity 0.3s ease-in-out;
 }
 
-// Fixed position modifier
 .chip_fixed {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
 }
 
-// Fadeout modifier
 .chip_fadeout {
   opacity: 0;
   transform: translate(-50%, -10px);
 }
 
-// Position modifiers
 .chip_top_center {
   top: 20px;
 }
@@ -72,15 +69,19 @@
   transform: none;
 }
 
-// Theme modifiers
 @each $name, $values in theme.$themes {
   .chip_#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
+    border: map.get($values, border);
+  }
+}
 
-    @if map.get($values, border) {
-      border: map.get($values, border);
-    }
+@each $name, $values in theme.$states {
+  .chip_#{$name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, text);
+    border: map.get($values, border);
   }
 }
 
@@ -88,7 +89,6 @@
   box-shadow: none;
 }
 
-// Elements
 .chip_icon {
   margin-right: theme.$spacing-sm;
   display: flex;
@@ -106,7 +106,6 @@
   width: 1em;
 }
 
-// Size modifiers
 $chip-sizes: (
   "xs": (
     padding: 5px 9px,

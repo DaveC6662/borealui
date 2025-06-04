@@ -1,4 +1,4 @@
-import { SizeType, ThemeType } from "@/types/types";
+import { SizeType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the Rating component.
@@ -35,6 +35,11 @@ export interface RatingProps {
    * @default "primary"
    */
   theme?: ThemeType;
+  /**
+   * State of the rating (e.g., "success", "warning", "danger").
+   * @default ""
+   */
+  state?: StateType;
   /** Optional additional CSS class names for custom styling. */
   className?: string;
   /** Optional test ID for testing frameworks. */

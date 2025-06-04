@@ -1,4 +1,4 @@
-import { SizeType, ThemeType } from "@/types/types";
+import { SizeType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the ProgressBar component.
@@ -14,6 +14,11 @@ export interface ProgressBarProps {
    * @default "primary"
    */
   theme?: ThemeType;
+  /**
+   * State of the progress bar (e.g., "success", "warning", "danger").
+   * @default "primary"
+   */
+  state?: StateType;
   /**
    * Size of the progress bar (e.g., "small", "medium", "large").
    * @default "medium"

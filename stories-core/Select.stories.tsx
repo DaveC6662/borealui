@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
-import { Select } from "@/index.core";
-import type { SelectProps } from "@/components/Select/Select.types";
+import { Meta, StoryObj } from "@storybook/nextjs";
+import { Select } from "../src/index.core";
+import type { SelectProps } from "../src/components/Select/Select.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<SelectProps> = {
   title: "Components/Select",
@@ -68,14 +78,6 @@ export const Disabled: Story = {
 export const ThemeVariants: Story = {
   render: (args) => {
     const [value, setValue] = useState("");
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
     const options = [
       { label: "Alpha", value: "alpha" },
       { label: "Beta", value: "beta" },
@@ -84,7 +86,7 @@ export const ThemeVariants: Story = {
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <Select
             key={theme}
             {...args}
@@ -100,17 +102,36 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const StateVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    const options = [
+      { label: "Alpha", value: "alpha" },
+      { label: "Beta", value: "beta" },
+      { label: "Gamma", value: "gamma" },
+    ];
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <Select
+            key={state}
+            {...args}
+            state={state}
+            value={value}
+            onChange={setValue}
+            options={options}
+            ariaLabel={`Select with ${state} state`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const OutlineVariants: Story = {
   render: (args) => {
     const [value, setValue] = useState("");
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
     const options = [
       { label: "Outlined A", value: "a" },
       { label: "Outlined B", value: "b" },
@@ -119,7 +140,19 @@ export const OutlineVariants: Story = {
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
+          <Select
+            key={theme}
+            {...args}
+            theme={theme}
+            outline
+            value={value}
+            onChange={setValue}
+            options={options}
+            ariaLabel={`Outlined ${theme} select`}
+          />
+        ))}
+        {stateOptions.map((theme) => (
           <Select
             key={theme}
             {...args}

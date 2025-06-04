@@ -2,6 +2,7 @@ import { MouseEvent } from "react";
 import {
   ShapeType,
   SizeType,
+  StateType,
   StatusPositionType,
   StatusType,
   ThemeType,
@@ -25,6 +26,10 @@ export interface AvatarProps {
   shape?: ShapeType;
   /** Visual theme of the avatar (for background or border) */
   theme?: ThemeType;
+  /** State of the avatar (e.g., success, error) */
+  state?: StateType;
+  /** Disables interaction and styles as disabled */
+  disabled?: boolean;
   /**
    * Optional status indicator for user availability and activity.
    * Useful for chat apps, collaboration tools, or profile displays.

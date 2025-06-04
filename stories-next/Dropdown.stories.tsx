@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { Dropdown } from "@/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs";
+import { Dropdown } from "../src/index.next";
 import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
-import type { DropdownProps } from "@/components/Dropdown/Dropdown.types";
+import type { DropdownProps } from "../src/components/Dropdown/Dropdown.types";
 
 const meta: Meta<DropdownProps> = {
   title: "Components/Dropdown",
@@ -84,11 +84,10 @@ export const Themed: Story = {
   render: () => {
     const themes = [
       "primary",
-      "secondary",
-      "success",
-      "error",
-      "warning",
-      "clear",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
     ] as const;
 
     return (
@@ -109,3 +108,27 @@ export const Themed: Story = {
     );
   },
 };
+
+export const States: Story = {
+  render: () => {
+    const stateOptions = ["success", "error", "warning"];
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", padding: "1rem" }}>
+        {stateOptions.map((state) => (
+          <div key={state} style={{ textAlign: "center" }}>
+            <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+              {state}
+            </p>
+            <Dropdown
+              triggerIcon={FaEllipsisV}
+              state={state}
+              items={[{ label: `Item (${state})`, onClick: () => {} }]}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+

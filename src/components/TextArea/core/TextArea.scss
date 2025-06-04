@@ -78,6 +78,14 @@
     }
   }
 
+  @each $state, $props in theme.$states {
+    &_#{$state} {
+      border: 2px solid map.get($props, border);
+      color: map.get($props, text, inherit);
+      box-shadow: map.get($props, shadow, theme.$box-shadow-medium);
+    }
+  }
+
   &_clear {
     box-shadow: none;
   }

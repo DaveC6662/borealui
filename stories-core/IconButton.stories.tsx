@@ -1,9 +1,22 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { IconButton } from "@/index.core";
-import type { IconButtonProps } from "@/components/Buttons/IconButton/IconButton.types";
+import type { Meta, StoryObj } from "@storybook/nextjs";
+import { IconButton } from "../src/index.core";
+import type { IconButtonProps } from "../src/components/IconButton/IconButton.types";
 import { FaPlus, FaExternalLinkAlt } from "react-icons/fa";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const meta: Meta<IconButtonProps> = {
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "warning", "error"];
+
+const sizeOptions = ["xs", "small", "medium", "large", "xl"];
+
+const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",
   component: IconButton,
   tags: ["autodocs"],
@@ -21,37 +34,71 @@ const meta: Meta<IconButtonProps> = {
 
 export default meta;
 
-type Story = StoryObj<IconButtonProps>;
+type Story = StoryObj<typeof IconButton>;
 
 export const Default: Story = {};
 
-export const OutlineAndDisabledVariants: Story = {
-  render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
+export const ThemeVariants = () =>
+  withVariants(
+    IconButton,
+    {
+      icon: FaPlus,
+      size: "medium",
+      ariaLabel: "Theme",
+      theme: "primary",
+    },
+    [{ propName: "theme", values: themeOptions }]
+  );
 
-    return (
-      <div style={{ display: "flex", gap: "1rem" }}>
-        {themes.map((theme) => (
-          <IconButton
-            key={theme}
-            {...args}
-            theme={theme}
-            outline
-            ariaLabel={`Theme: ${theme}`}
-          />
-        ))}
-        <IconButton {...args} disabled ariaLabel="Disabled" />
-      </div>
-    );
-  },
+export const StateVariants = () =>
+  withVariants(
+    IconButton,
+    {
+      icon: FaPlus,
+      size: "medium",
+      ariaLabel: "Theme",
+      state: "",
+    },
+    [{ propName: "state", values: stateOptions }]
+  );
+
+export const OutlineAndDisabledVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+      {themeOptions.map((theme) => (
+        <IconButton
+          key={theme}
+          {...args}
+          theme={theme}
+          outline
+          ariaLabel={`Theme: ${theme}`}
+        />
+      ))}
+      {stateOptions.map((theme) => (
+        <IconButton
+          key={theme}
+          {...args}
+          theme={theme}
+          outline
+          ariaLabel={`Theme: ${theme}`}
+        />
+      ))}
+      <IconButton {...args} disabled ariaLabel="Disabled" />
+    </div>
+  ),
 };
+
+export const SizeVariants = () =>
+  withVariants(
+    IconButton,
+    {
+      icon: FaPlus,
+      theme: "primary",
+      ariaLabel: "Size",
+      size: "medium",
+    },
+    [{ propName: "size", values: sizeOptions }]
+  );
 
 export const LoadingState: Story = {
   args: {
@@ -77,49 +124,4 @@ export const LinkVariants: Story = {
       />
     </div>
   ),
-};
-
-export const ThemeVariants: Story = {
-  render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
-
-    return (
-      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        {themes.map((theme) => (
-          <IconButton
-            key={theme}
-            {...args}
-            theme={theme}
-            ariaLabel={`Theme: ${theme}`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
-export const SizeVariants: Story = {
-  render: (args) => {
-    const sizes = ["xs", "small", "medium", "large", "xl"] as const;
-
-    return (
-      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-        {sizes.map((size) => (
-          <IconButton
-            key={size}
-            {...args}
-            size={size}
-            ariaLabel={`Size: ${size}`}
-          />
-        ))}
-      </div>
-    );
-  },
 };

@@ -22,6 +22,8 @@ const classes = {
   bottomRight: "chip_bottom_right",
   primary: "chip_primary",
   secondary: "chip_secondary",
+  tertiary: "chip_tertiary",
+  quaternary: "chip_quaternary",
   success: "chip_success",
   error: "chip_error",
   warning: "chip_warning",

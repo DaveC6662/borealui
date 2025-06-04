@@ -1,8 +1,16 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { Footer } from "../src/index.next";
 import type { FooterProps } from "../src/components/Footer/Footer.types";
 import { FaGithub, FaTwitter, FaLinkedin, FaIcons } from "react-icons/fa";
 import ThemeProvider from "../src/context/ThemeContext";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
 
 const meta: Meta<FooterProps> = {
   title: "Components/Footer",
@@ -58,6 +66,27 @@ export const ThemeSelect: Story = {
   args: {
     ...Default.args,
     showThemeSelect: true,
+  },
+};
+
+export const Themes: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "2rem" }}>
+      {themeOptions.map((theme) => (
+        <div key={theme} style={{ border: "1px solid #ccc", padding: "1rem" }}>
+          <h3 style={{ textTransform: "capitalize" }}>{theme} theme</h3>
+          <Footer
+            {...args}
+            theme={theme as FooterProps["theme"]}
+            copyright={`© 2025 Your Company (${theme})`}
+            showThemeSelect={true}
+          />
+        </div>
+      ))}
+    </div>
+  ),
+  args: {
+    ...Default.args,
   },
 };
 

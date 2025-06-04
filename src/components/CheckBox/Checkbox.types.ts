@@ -1,4 +1,4 @@
-import { ThemeType } from "@/types/types";
+import { StateType, ThemeType } from "@/types/types";
 import { InputHTMLAttributes } from "react";
 
 /**
@@ -16,6 +16,8 @@ export interface CheckBoxProps
   indeterminate?: boolean;
   /** Optional theme to style the checkbox (e.g., "primary", "secondary"). */
   theme?: ThemeType;
+  /** State of the checkbox (e.g., "success", "error"). */
+  state?: StateType;
   /** Whether the checkbox is disabled. */
   disabled?: boolean;
   /** Custom class name for additional styling. */

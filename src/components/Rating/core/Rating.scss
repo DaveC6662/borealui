@@ -61,6 +61,14 @@ $sizes: (
     }
   }
 
+  @each $state, $color in theme.$states {
+    &_#{$state} {
+      .rating_active {
+        color: map.get($color, bg);
+      }
+    }
+  }
+
   &_clear {
     .rating_active {
       color: var(--text-color-primary);

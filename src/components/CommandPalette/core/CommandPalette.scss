@@ -16,7 +16,7 @@
 .command_palette {
   background: var(--background-color-light);
   border-radius: theme.$border-radius-lg;
-  box-shadow: theme.$box-shadow-large;
+  box-shadow: theme.$box-shadow-heavy;
   width: 90%;
   max-width: 500px;
   padding: theme.$spacing-md;
@@ -69,7 +69,6 @@
     border: 2px solid map.get($values, border);
   }
 
-  .command_palette_item.command_palette_#{$name}:hover,
   .command_palette_item.command_palette_#{$name}.command_palette_active {
     background-color: map.get($values, bg);
     color: if(
@@ -77,6 +76,29 @@
       var(--text-color-primary),
       var(--text-color-secondary)
     );
+  }
+
+  .command_palette_item.command_palette_#{$name}:hover {
+    background-color: map.get($values, hover);
+  }
+}
+
+@each $name, $values in theme.$states {
+  .command_palette_#{$name} {
+    border: 2px solid map.get($values, border);
+  }
+
+  .command_palette_item.command_palette_#{$name}.command_palette_active {
+    background-color: map.get($values, bg);
+    color: if(
+      $name == "primary",
+      var(--text-color-primary),
+      var(--text-color-secondary)
+    );
+  }
+
+  .command_palette_item.command_palette_#{$name}:hover {
+    background-color: map.get($values, hover);
   }
 }
 

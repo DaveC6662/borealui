@@ -1,4 +1,4 @@
-import { SizeType, ThemeType } from "@/types/types";
+import { SizeType, StateType, ThemeType } from "@/types/types";
 import React from "react";
 
 /**
@@ -9,6 +9,8 @@ export interface ButtonProps {
   icon?: React.ElementType;
   /** Theme style of the button (e.g., "primary", "secondary"). */
   theme?: ThemeType;
+  /** State of the button (e.g., "success", "error", "warning"). */
+  state?: StateType;
   /** Click event handler for the button. */
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   /** Child content to display inside the button. */

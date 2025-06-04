@@ -12,6 +12,8 @@ const classes = {
   icon: "tabs_icon",
   primary: "tabs_primary",
   secondary: "tabs_secondary",
+  tertiary: "tabs_tertiary",
+  quaternary: "tabs_quaternary",
   success: "tabs_success",
   error: "tabs_error",
   warning: "tabs_warning",

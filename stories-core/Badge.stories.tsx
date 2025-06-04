@@ -1,13 +1,31 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { FaCheck, FaExclamation, FaInfoCircle } from "react-icons/fa";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { Badge } from "../src/index.core";
+import { FaCheck, FaExclamation, FaInfoCircle } from "react-icons/fa";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
+import type { SizeType, StateType, ThemeType } from "../src/types/types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+const stateOptions = ["success", "error", "warning"];
+const sizeOptions = ["xs", "small", "medium", "large", "xl"];
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
   component: Badge,
   tags: ["autodocs"],
-  args: {
-    text: "Badge",
+  argTypes: {
+    text: { control: "text" },
+    theme: { control: "select", options: themeOptions },
+    state: { control: "select", options: [...stateOptions, ""] },
+    size: { control: "select", options: sizeOptions },
+    outline: { control: "boolean" },
+    icon: { control: false },
+    onClick: { action: "clicked" },
   },
 };
 
@@ -15,71 +33,67 @@ export default meta;
 
 type Story = StoryObj<typeof Badge>;
 
+const defaultArgs = {
+  text: "Badge",
+  theme: "primary" as ThemeType,
+  state: "" as StateType,
+  size: "medium" as SizeType,
+};
+
 export const Default: Story = {
   args: {
-    text: "Default",
-    theme: "primary",
+    ...defaultArgs,
   },
-};
-
-export const Themes: Story = {
-  render: () => (
-    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-      <Badge text="Primary" theme="primary" />
-      <Badge text="Secondary" theme="secondary" />
-      <Badge text="Success" theme="success" />
-      <Badge text="Warning" theme="warning" />
-      <Badge text="Error" theme="error" />
-      <Badge text="Clear" theme="clear" />
-    </div>
-  ),
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <div
-      style={{
-        display: "flex",
-        gap: "1rem",
-        alignItems: "center",
-        flexWrap: "wrap",
-      }}
-    >
-      <Badge text="XS" size="xs" />
-      <Badge text="Small" size="small" />
-      <Badge text="Medium" size="medium" />
-      <Badge text="Large" size="large" />
-      <Badge text="XL" size="xl" />
-    </div>
-  ),
-};
-
-export const Outline: Story = {
-  render: () => (
-    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-      <Badge text="Primary" theme="primary" outline />
-      <Badge text="Secondary" theme="secondary" outline />
-      <Badge text="Success" theme="success" outline />
-      <Badge text="Warning" theme="warning" outline />
-      <Badge text="Error" theme="error" outline />
-      <Badge text="Clear" theme="clear" outline />
-    </div>
-  ),
 };
 
 export const WithIcon: Story = {
   render: () => (
-    <div
-      style={{
-        display: "flex",
-        gap: "1rem",
-        flexWrap: "wrap",
-        alignItems: "center",
-      }}
-    >
-      <Badge text="Check" icon={FaCheck} theme="success" />
-      <Badge text="Warning" icon={FaExclamation} theme="warning" />
+    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+      <Badge text="Check" icon={FaCheck} state="success" />
+      <Badge text="Warning" icon={FaExclamation} state="warning" />
       <Badge text="Info" icon={FaInfoCircle} theme="primary" />
     </div>
   ),
 };
+
+export const WithOnClick: Story = {
+  args: {
+    ...defaultArgs,
+    text: "Clickable Badge",
+    onClick: () => alert("Badge clicked!"),
+    theme: "success" as ThemeType,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    ...defaultArgs,
+    title: "Disabled Badge",
+    disabled: true,
+  },
+};
+
+export const ThemeVariants = () =>
+  withVariants(Badge, { ...defaultArgs }, [
+    { propName: "theme", values: themeOptions },
+  ]);
+
+export const StateVariants = () =>
+  withVariants(Badge, { ...defaultArgs }, [
+    { propName: "state", values: stateOptions },
+  ]);
+
+export const SizeVariants = () =>
+  withVariants(Badge, { ...defaultArgs }, [
+    { propName: "size", values: sizeOptions },
+  ]);
+
+export const OutlineVariants = () =>
+  withVariants(
+    Badge,
+    {
+      ...defaultArgs,
+      outline: true,
+    },
+    [{ propName: "theme", values: [...themeOptions, ...stateOptions] }]
+  );

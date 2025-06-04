@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, MouseEvent } from "react";
 import { BadgeProps } from "./Badge.types";
 import { combineClassNames } from "@/utils/classNames";
 
@@ -10,6 +10,8 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   text,
   children,
   theme = "primary",
+  state = "",
+  disabled = false,
   title,
   size = "medium",
   outline = false,
@@ -17,6 +19,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   icon: Icon,
   className = "",
   classMap,
+  onClick,
 }) => {
   const combinedClassName = useMemo(
     () =>
@@ -24,7 +27,10 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
         classMap.badge,
         classMap[size],
         classMap[theme],
+        classMap[state],
+        disabled && classMap.disabled,
         outline && classMap.outline,
+        onClick && classMap.clickable,
         className
       ),
     [theme, size, outline, className]
@@ -35,6 +41,12 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   const content = children ?? text;
   const label = typeof content === "string" ? content : text;
 
+  const handleClick = (e: MouseEvent<HTMLElement>) => {
+    if (disabled) return;
+    onClick?.(e as MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
+    if (!title && !onClick) e.preventDefault();
+  };
+
   return (
     <span
       className={combinedClassName}
@@ -42,6 +54,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       title={title || label}
       data-testid={testId}
       role="status"
+      onClick={handleClick}
       aria-live="polite"
     >
       {Icon && (

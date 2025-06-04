@@ -11,6 +11,8 @@ const classes = {
   label: "toggle_label",
   primary: "toggle_primary",
   secondary: "toggle_secondary",
+  tertiary: "toggle_tertiary",
+  quaternary: "toggle_quaternary",
   success: "toggle_success",
   warning: "toggle_warning",
   error: "toggle_error",

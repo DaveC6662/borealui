@@ -1,11 +1,11 @@
 // src/stories/Chip.stories.tsx
 
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
-import { Chip } from "@/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs";
+import { Chip } from "../src/index.next";
 import { FaCheckCircle } from "react-icons/fa";
-import type { ChipProps } from "@/components/Chip/Chip.types";
-import { PositionType, ThemeType } from "@/types/types";
+import type { ChipProps } from "../src/components/Chip/Chip.types";
+import { PositionType, StateType, ThemeType } from "../src/types/types";
 
 const meta: Meta<ChipProps> = {
   title: "Components/Chip",
@@ -21,14 +21,15 @@ const meta: Meta<ChipProps> = {
   ],
 };
 
-const themes: ThemeType[] = [
+const themeOptions = [
   "primary",
   "secondary",
-  "success",
-  "error",
-  "warning",
+  "tertiary",
+  "quaternary",
   "clear",
 ];
+
+const stateOptions = ["success", "error", "warning"];
 
 const positions: PositionType[] = [
   "topLeft",
@@ -108,10 +109,10 @@ export const Themes: Story = {
     return (
       <>
         <div className="grid grid-cols-6 gap-2">
-          {themes.map((theme) => (
+          {themeOptions.map((theme) => (
             <button
               key={theme}
-              onClick={() => setVisibleTheme(theme)}
+              onClick={() => setVisibleTheme(theme as ThemeType)}
               className="p-2 border rounded"
             >
               {theme}
@@ -127,6 +128,41 @@ export const Themes: Story = {
             position="topRight"
             visible={true}
             onClose={() => setVisibleTheme(null)}
+            autoClose={false}
+            icon={FaCheckCircle}
+          />
+        )}
+      </>
+    );
+  },
+};
+
+export const States: Story = {
+  render: () => {
+    const [visibleState, setVisibleState] = useState<StateType | null>(null);
+
+    return (
+      <>
+        <div className="grid grid-cols-6 gap-2">
+          {stateOptions.map((theme) => (
+            <button
+              key={theme}
+              onClick={() => setVisibleState(theme as StateType)}
+              className="p-2 border rounded"
+            >
+              {theme}
+            </button>
+          ))}
+        </div>
+
+        {visibleState && (
+          <Chip
+            id="theme-chip"
+            message={`State: ${visibleState}`}
+            theme={visibleState}
+            position="topRight"
+            visible={true}
+            onClose={() => setVisibleState(null)}
             autoClose={false}
             icon={FaCheckCircle}
           />

@@ -15,6 +15,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
   (
     {
       theme = "primary",
+      state = "",
       outline = false,
       options,
       value,
@@ -42,6 +43,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         className={combineClassNames(
           classMap.wrapper,
           classMap[theme],
+          classMap[state],
           className,
           outline ? classMap.outline : "",
           disabled ? classMap.disabled : ""
@@ -56,6 +58,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           className={combineClassNames(
             classMap.select,
             classMap[theme],
+            classMap[state],
             outline ? classMap.outline : ""
           )}
           aria-label={ariaLabel || placeholder}

@@ -12,6 +12,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   title = "Nothing Here Yet",
   message = "There’s no content to display.",
   theme = "primary",
+  state = "",
   size = "medium",
   outline = false,
   actionLabel,
@@ -29,6 +30,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
       className={combineClassNames(
         classMap.empty_state,
         classMap[theme],
+        classMap[state],
         classMap[size],
         outline && classMap.outline,
         className

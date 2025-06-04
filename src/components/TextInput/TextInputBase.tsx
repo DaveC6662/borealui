@@ -1,4 +1,10 @@
-import { forwardRef, useState, useId, InputHTMLAttributes } from "react";
+import {
+  forwardRef,
+  useState,
+  useId,
+  InputHTMLAttributes,
+  useMemo,
+} from "react";
 import { EyeIcon, EyeSlashIcon } from "@/Icons";
 import { TextInputProps } from "./TextInput.types";
 import { combineClassNames } from "@/utils/classNames";
@@ -19,6 +25,7 @@ const TextInputBase = forwardRef<
       ariaLabel,
       ariaDescription,
       theme = "primary",
+      state = "",
       disabled = false,
       autocomplete = false,
       "data-testid": testId = "text-input",
@@ -36,15 +43,22 @@ const TextInputBase = forwardRef<
 
     const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
-    return (
-      <div
-        className={combineClassNames(
+    const wrapperClass = useMemo(
+      () =>
+        combineClassNames(
           classMap.container,
           classMap[theme],
-          outline ? classMap.outline : "",
-          disabled ? classMap.disabled : "",
+          classMap[state],
+          outline && classMap.outline,
+          disabled && classMap.disabled,
           className
-        )}
+        ),
+      [classMap, theme, state, outline, disabled]
+    );
+
+    return (
+      <div
+        className={wrapperClass}
         data-testid={`${testId}-wrapper`}
         aria-disabled={disabled}
       >

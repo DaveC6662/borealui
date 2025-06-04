@@ -1,6 +1,6 @@
 import React from "react";
 import BaseProgressBar from "../ProgressBarBase";
-import "./Progressbar.scss";
+import "./ProgressBar.scss";
 import { ProgressBarProps } from "../ProgressBar.types";
 
 const classes = {
@@ -8,6 +8,8 @@ const classes = {
   bar: "progress_bar",
   primary: "progress_primary",
   secondary: "progress_secondary",
+  tertiary: "progress_tertiary",
+  quaternary: "progress_quaternary",
   success: "progress_success",
   error: "progress_error",
   warning: "progress_warning",

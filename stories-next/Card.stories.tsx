@@ -1,20 +1,21 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { Card } from "../src/index.next";
 import { FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import testImage from "./assets/test_pattern.jpg";
 import type { CardProps } from "../src/components/Card/Card.types";
+import { ThemeType } from "../src/types/types";
 
-// Constants
 const themeOptions = [
   "primary",
   "secondary",
-  "success",
-  "error",
-  "warning",
+  "tertiary",
+  "quaternary",
   "clear",
-] as const;
+];
+
+const stateOptions = ["success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
 const layoutOptions = ["vertical", "horizontal"] as const;
 const alignments: CardProps["align"][] = ["left", "center", "right"];
@@ -45,8 +46,10 @@ const baseArgs: CardProps = {
   description: "Quick description to show style and layout.",
 };
 
+// Default
 export const Default: Story = {};
 
+// Original static stories preserved
 export const WithImage: Story = {
   args: {
     ...baseArgs,
@@ -82,7 +85,7 @@ export const WithActions: Story = {
       {
         label: "Delete",
         icon: FaTrash,
-        theme: "error",
+        state: "error",
         onClick: () => alert("Delete clicked"),
       },
     ],
@@ -107,9 +110,13 @@ export const ThemeVariants = () =>
     { propName: "theme", values: [...themeOptions] },
   ]);
 
+export const StateVariants = () =>
+  withVariants(Card, baseArgs, [
+    { propName: "theme", values: [...stateOptions] },
+  ]);
 export const OutlineThemeVariants = () =>
   withVariants(Card, { ...baseArgs, outline: true }, [
-    { propName: "theme", values: [...themeOptions] },
+    { propName: "theme", values: [...themeOptions, ...stateOptions] },
   ]);
 
 export const SizeVariants = () =>
@@ -131,7 +138,7 @@ export const SizeVariants = () =>
         {
           label: "Delete",
           icon: FaTrash,
-          theme: "error",
+          state: "error",
           onClick: () => alert("Delete clicked"),
         },
       ],
@@ -160,8 +167,8 @@ export const IconButtonVariants = () => (
     <Card
       {...baseArgs}
       actionButtons={[
-        { label: "Edit", icon: FaEdit, theme: "success", onClick: () => {} },
-        { label: "Delete", icon: FaTrash, theme: "error", onClick: () => {} },
+        { label: "Edit", icon: FaEdit, state: "success", onClick: () => {} },
+        { label: "Delete", icon: FaTrash, state: "error", onClick: () => {} },
       ]}
       useIconButtons={true}
     />
@@ -169,7 +176,7 @@ export const IconButtonVariants = () => (
       {...baseArgs}
       actionButtons={[
         { label: "Edit", icon: FaEdit, theme: "secondary", onClick: () => {} },
-        { label: "Remove", icon: FaTrash, theme: "error", onClick: () => {} },
+        { label: "Remove", icon: FaTrash, state: "error", onClick: () => {} },
       ]}
       useIconButtons={false}
     />
@@ -196,20 +203,20 @@ export const AlignmentGrid: Story = {
           imageAlt={`${titles[index]} image`}
           align={align}
           layout="vertical"
-          theme={themeOptions[index]}
+          theme={themeOptions[index] as ThemeType}
           size="medium"
           cardIcon={FaInfoCircle}
           actionButtons={[
             {
               label: "Edit",
               icon: FaEdit,
-              theme: "warning",
+              state: "warning",
               onClick: () => {},
             },
             {
               label: "Remove",
               icon: FaTrash,
-              theme: "error",
+              state: "error",
               onClick: () => {},
             },
           ]}
@@ -221,7 +228,6 @@ export const AlignmentGrid: Story = {
         </Card>
       ))}
 
-      {/* Horizontal Cards */}
       {alignments.map((align, index) => (
         <Card
           key={`horizontal-${align}`}
@@ -231,20 +237,20 @@ export const AlignmentGrid: Story = {
           imageAlt={`${titles[index]} image`}
           align={align}
           layout="horizontal"
-          theme={themeOptions[index]}
+          theme={themeOptions[index] as ThemeType}
           size="medium"
           cardIcon={FaInfoCircle}
           actionButtons={[
             {
               label: "Edit",
               icon: FaEdit,
-              theme: "warning",
+              state: "warning",
               onClick: () => {},
             },
             {
               label: "Remove",
               icon: FaTrash,
-              theme: "error",
+              state: "error",
               onClick: () => {},
             },
           ]}

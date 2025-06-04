@@ -78,9 +78,31 @@
       );
       color: var(--text-color-primary);
 
-      &:hover {
-        background-color: map.get($props, hover);
+      .card_icon,
+      .card_description {
+        color: var(--text-color-primary);
       }
+
+      .card_loading {
+        background-color: transparent;
+      }
+    }
+
+    &_#{$name}.card_outline {
+      background: transparent;
+      border: 2px solid map.get($props, border);
+      box-shadow: none;
+    }
+  }
+
+  @each $name, $props in theme.$states {
+    &_#{$name} {
+      background: linear-gradient(
+        to bottom,
+        map.get($props, bg),
+        map.get($props, bg)
+      );
+      color: var(--text-color-primary);
 
       .card_icon,
       .card_description {

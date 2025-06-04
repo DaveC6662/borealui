@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import NotificationCenter from "@/components/NotificationCenter/next/NotificationCenter";
 import type {
   NotificationCenterProps,

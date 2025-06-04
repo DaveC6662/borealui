@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import MarkdownRenderer from "@/components/MarkdownRenderer/core/MarkdownRenderer"; // adjust path
 import type { MarkdownRendererProps } from "@/components/MarkdownRenderer/MarkdownRenderer.types";
 

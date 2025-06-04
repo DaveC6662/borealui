@@ -42,18 +42,32 @@
   }
 }
 
-.disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 @each $name, $color in theme.$themes {
   .#{$name} {
     color: map.get($color, bg);
 
     .circle {
-      border-color: map.get($color, bg);
+      border-color: map.get($color, border);
     }
+  }
+}
+
+@each $name, $color in theme.$states {
+  .#{$name} {
+    color: map.get($color, bg);
+
+    .circle {
+      border-color: map.get($color, border);
+    }
+  }
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  .circle {
+      border-color: theme.$disabled-color;
   }
 }
 

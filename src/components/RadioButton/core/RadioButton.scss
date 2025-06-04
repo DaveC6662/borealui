@@ -42,18 +42,32 @@
   }
 }
 
-.radio_disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 @each $name, $color in theme.$themes {
   .radio_#{$name} {
     color: map.get($color, bg);
 
     .radio_circle {
-      border-color: map.get($color, bg);
+      border-color: map.get($color, border);
     }
+  }
+}
+
+@each $name, $color in theme.$states {
+  .radio_#{$name} {
+    color: map.get($color, bg);
+
+    .radio_circle {
+      border-color: map.get($color, border);
+    }
+  }
+}
+
+.radio_disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  .radio_circle {
+      border-color: theme.$disabled-color;
   }
 }
 

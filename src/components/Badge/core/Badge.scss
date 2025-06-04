@@ -13,14 +13,15 @@
   border-radius: theme.$border-radius-sm;
   white-space: nowrap;
   transition: all theme.$transition-default;
+  cursor: default;
 
-  &:hover {
+  &.badge_clickable:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgb(0 0 0 / 15%);
     cursor: pointer;
   }
 
-  &:focus {
+  &.badge_clickable:focus {
     outline: 2px solid var(--focus-outline-color);
     outline-offset: 2px;
   }
@@ -35,12 +36,12 @@
   background-color: transparent;
   color: var(--text-color-primary);
 
-  &:hover {
+  &.badge_clickable:hover {
     transform: translateY(-2px);
-    box-shadow: theme.$box-shadow-large;
+    box-shadow: theme.$box-shadow-heavy;
   }
 
-  &:focus {
+  &.badge_clickable:focus {
     outline: 2px solid var(--text-color-primary);
     outline-offset: 2px;
   }
@@ -50,12 +51,12 @@
     color: var(--text-color-primary);
     border: 2px solid var(--text-color-primary);
 
-    &:hover {
+    &.badge_clickable:hover {
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
+      box-shadow: theme.$box-shadow-heavy;
     }
 
-    &:focus {
+    &.badge_clickable:focus {
       outline: 2px solid var(--text-color-primary);
       outline-offset: 2px;
     }
@@ -67,13 +68,13 @@
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
-    &:hover {
+    &.badge_clickable:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
+      box-shadow: theme.$box-shadow-heavy;
     }
 
-    &:focus {
+    &.badge_clickable:focus {
       outline: 2px solid map.get($values, border);
       outline-offset: 2px;
     }
@@ -89,11 +90,52 @@
     border: 2px solid map.get($values, border);
     box-shadow: none;
 
-    &:hover {
+    &.badge_clickable:hover {
       border-color: map.get($values, hover);
       color: map.get($values, text-hover);
     }
   }
+}
+
+@each $name, $values in theme.$states {
+  .badge_#{$name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, text);
+
+    &.badge_clickable:hover {
+      background-color: map.get($values, hover);
+      transform: translateY(-2px);
+      box-shadow: theme.$box-shadow-heavy;
+    }
+
+    &.badge_clickable:focus {
+      outline: 2px solid map.get($values, border);
+      outline-offset: 2px;
+    }
+
+    .loader {
+      border-top-color: map.get($values, text);
+    }
+  }
+
+  .badge_#{$name}.badge_outline {
+    background-color: transparent;
+    color: map.get($values, text-color);
+    border: 2px solid map.get($values, border);
+    box-shadow: none;
+
+    &.badge_clickable:hover {
+      border-color: map.get($values, hover);
+      color: map.get($values, text-hover);
+    }
+  }
+}
+
+.badge_disabled {
+  background-color: theme.$disabled-color;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .badge_xs {

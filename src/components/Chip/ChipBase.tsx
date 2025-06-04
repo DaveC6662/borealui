@@ -23,6 +23,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   icon: Icon,
   size = "medium",
   theme = "primary",
+  state = "",
   position = "topCenter",
   usePortal = true,
   className = "",
@@ -52,6 +53,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   const chipClassName = combineClassNames(
     classMap.chip,
     classMap[theme],
+    classMap[state],
     classMap[size],
     classMap[position],
     closing && classMap.fadeout,

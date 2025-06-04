@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { TabsProps } from "./Tabs.types";
+import { combineClassNames } from "@/utils/classNames";
 
 const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
   tabs,
@@ -7,6 +8,7 @@ const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
   onChange,
   className = "",
   theme = "primary",
+  state = "",
   size = "medium",
   "data-testid": testId = "tabs",
   classMap,
@@ -48,7 +50,7 @@ const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
 
   return (
     <div
-      className={`${classMap.container} ${classMap[theme]} ${classMap[size]} ${className}`}
+      className={combineClassNames(classMap.container, classMap[theme], classMap[state], classMap[size], className)}
       data-testid={testId}
     >
       <div

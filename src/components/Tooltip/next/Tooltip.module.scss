@@ -132,6 +132,34 @@ $positions: (
   }
 }
 
+@each $name, $color in theme.$states {
+  .#{$name} {
+    background-color: map.get($color, bg);
+  }
+
+  .#{$name}::after {
+    border-color: map.get($color, bg) transparent transparent transparent;
+  }
+
+  .bottom ::after {
+    border-color: transparent transparent map.get($color, bg);
+  }
+
+  .left ::after {
+    border-color: transparent map.get($color, bg) transparent transparent;
+  }
+
+  .right ::after {
+    border-color: transparent transparent transparent map.get($color, bg);
+  }
+
+  .secondary {
+    color: var(--text-color-secondary);
+  }
+}
+
 .clear {
   box-shadow: none;
+  border: 2px solid var(--text-color-primary);
+  background-color: map.get(theme.$themes, clear, hover);
 }

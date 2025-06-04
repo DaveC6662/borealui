@@ -1,5 +1,6 @@
 import React from "react";
 import { SliderProps } from "./Slider.types";
+import { combineClassNames } from "@/utils/classNames";
 
 const SliderBase: React.FC<
   SliderProps & { classMap: Record<string, string> }
@@ -12,6 +13,7 @@ const SliderBase: React.FC<
   label,
   size = "medium",
   theme = "primary",
+  state = "",
   showValue = true,
   className = "",
   "aria-label": ariaLabel,
@@ -24,7 +26,7 @@ const SliderBase: React.FC<
 
   return (
     <div
-      className={`${classMap.container} ${classMap[size]} ${classMap[theme]} ${className}`}
+      className={combineClassNames(classMap.container, classMap[size], classMap[theme], classMap[state], className)}
       data-testid={`${testId}-container`}
     >
       {label && (

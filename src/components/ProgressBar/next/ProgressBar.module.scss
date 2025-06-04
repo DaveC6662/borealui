@@ -38,6 +38,12 @@ $progress-sizes: (
     }
   }
 
+  @each $state, $color in theme.$states {
+    &.#{$state} {
+      background-color: map.get($color, bg);
+    }
+  }
+
   &.clear {
     background-color: var(--text-color-primary);
   }

@@ -13,7 +13,7 @@
   transition: theme.$transition-default;
 
   &:hover {
-    box-shadow: theme.$box-shadow-large;
+    box-shadow: theme.$box-shadow-heavy;
   }
 
   &.disabled {
@@ -73,6 +73,23 @@
 
     &_clear.select_#{$theme} {
       background-color: transparent;
+    }
+  }
+
+  @each $state, $values in theme.$states {
+    &_#{$state} {
+      background-color: map.get($values, bg);
+      color: map.get($values, color);
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+    }
+
+    &_#{$state}.select_outline {
+      background-color: transparent;
+      color: map.get($values, color);
+      border: 1px solid map.get($values, border);
     }
   }
 

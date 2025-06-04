@@ -1,6 +1,6 @@
 import React from "react";
 import BasePopover from "../PopOverBase";
-import "./Popover.scss";
+import "./PopOver.scss";
 import { PopoverProps } from "../PopOver.types";
 
 const classes = {
@@ -13,6 +13,8 @@ const classes = {
   right: "popover_right",
   primary: "popover_primary",
   secondary: "popover_secondary",
+  tertiary: "popover_tertiary",
+  quaternary: "popover_quaternary",
   success: "popover_success",
   error: "popover_error",
   warning: "popover_warning",

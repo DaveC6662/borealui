@@ -107,7 +107,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           onClick={onClose}
           aria-label="Close popup"
           icon={CloseIcon}
-          theme="error"
+          state="error"
           size="small"
           data-testid={`${testId}-close`}
         />
@@ -122,7 +122,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           {onConfirm && (
             <Button
               className={classNames.confirm}
-              theme="error"
+              state="success"
               onClick={onConfirm}
               ref={firstButtonRef}
               type="button"
@@ -134,7 +134,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           {onCancel && (
             <Button
               className={classNames.cancel}
-              theme="warning"
+              state="warning"
               onClick={onCancel}
               type="button"
               data-testid={`${testId}-cancel`}

@@ -1,4 +1,4 @@
-import { SizeType, ThemeType } from "@/types/types";
+import { SizeType, StateType, ThemeType } from "@/types/types";
 
 /**
  * A breadcrumb item used to define a single step in the navigation path.
@@ -26,6 +26,11 @@ export interface BreadcrumbsProps {
   items: Breadcrumb[];
 
   /**
+   * disables interaction and styles as disabled.
+   */
+  disabled?: boolean;
+
+  /**
    * Optional custom separator node between breadcrumb items.
    * Defaults to a right chevron icon.
    */
@@ -35,6 +40,12 @@ export interface BreadcrumbsProps {
    * Theme style to apply to the breadcrumbs (e.g., "primary", "secondary").
    */
   theme?: ThemeType;
+
+  /**
+   * State of the breadcrumbs (e.g., "success", "error", "warning").
+   * Used for visual feedback.
+   */
+  state?: StateType;
 
   /**
    * Size of the breadcrumbs (e.g., "small", "medium", "large").

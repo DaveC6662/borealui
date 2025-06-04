@@ -12,7 +12,8 @@
   border-radius: theme.$border-radius-lg;
   box-shadow: theme.$box-shadow-medium;
   min-width: 120px;
-  width: 160px;
+  width: fit-content;
+  height: fit-content;
   text-align: center;
   margin: theme.$spacing-sm;
   transition: theme.$transition-default;
@@ -21,128 +22,156 @@
   @media (width >=480px) {
     padding: theme.$spacing-sm;
   }
-}
 
-.clear {
-  border: none;
-  box-shadow: none;
-}
-
-@each $theme, $properties in theme.$themes {
-  .#{$theme} {
-    background-color: map.get($properties, bg);
-    color: map.get($properties, color);
-
-    .title {
+  @each $theme, $properties in theme.$themes {
+    &.#{$theme} {
+      background-color: map.get($properties, bg);
       color: map.get($properties, color);
+
+      .title {
+        color: map.get($properties, color);
+      }
+
+      .subtext {
+        color: map.get($properties, color);
+      }
+
+      &.outline {
+        border: 2px solid map.get($properties, border);
+        background-color: transparent;
+      }
     }
 
-    .subtext {
-      color: map.get($properties, color);
-    }
-
-    &.outline {
-      background-color: transparent;
-      border: 2px solid map.get($properties, border);
+    &.#{$theme}.outline .icon {
+        color: map.get($properties, border);
     }
   }
-}
 
-.icon {
-  font-size: 2rem;
-  color: inherit;
-  padding: theme.$spacing-sm;
-}
+  @each $state, $properties in theme.$states {
+    &.#{$state} {
+      background-color: map.get($properties, bg);
+      color: map.get($properties, color);
 
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: inherit;
-  padding: theme.$spacing-sm;
-}
+      .title {
+        color: map.get($properties, color);
+      }
 
-.title {
-  font-size: theme.$font-size-sm;
-  color: var(--text-color-primary);
-}
+      .subtext {
+        color: map.get($properties, color);
+      }
 
-.value {
-  font-size: theme.$font-size-lg;
-  font-weight: theme.$font-weight-bold;
-}
-
-.subtext {
-  font-size: theme.$font-size-sm;
-  color: var(--text-color-primary);
-  opacity: 0.7;
-}
-
-.left {
-  align-items: flex-start;
-  text-align: left;
-}
-
-.right {
-  align-items: flex-end;
-  text-align: right;
-}
-
-$size-variations: (
-  "xs": (
-    width: 80px,
-    icon-size: 1.5rem,
-    title-size: theme.$font-size-xs,
-    value-size: theme.$font-size-sm,
-    subtext-size: theme.$font-size-xs,
-  ),
-  "small": (
-    width: 140px,
-    icon-size: 2rem,
-    title-size: theme.$font-size-sm,
-    value-size: theme.$font-size-md,
-    subtext-size: theme.$font-size-sm,
-  ),
-  "medium": (
-    width: 160px,
-    icon-size: 2rem,
-    title-size: theme.$font-size-base,
-    value-size: theme.$font-size-lg,
-    subtext-size: theme.$font-size-base,
-  ),
-  "large": (
-    width: 200px,
-    icon-size: 2.5rem,
-    title-size: theme.$font-size-lg,
-    value-size: theme.$font-size-xl,
-    subtext-size: theme.$font-size-lg,
-  ),
-  "xl": (
-    width: 220px,
-    icon-size: 2.5rem,
-    title-size: theme.$font-size-xl,
-    value-size: theme.$font-size-xl,
-    subtext-size: theme.$font-size-lg,
-  ),
-);
-
-@each $size, $properties in $size-variations {
-  .#{$size} {
-    width: map.get($properties, width);
-
-    .icon {
-      font-size: map.get($properties, icon-size);
+      &.outline {
+        border: 2px solid map.get($properties, border);
+        background-color: transparent;
+      }
     }
 
-    .title {
-      font-size: map.get($properties, title-size);
+    &.#{$state}.outline .icon {
+        color: map.get($properties, border);
     }
+  }
 
-    .value {
-      font-size: map.get($properties, value-size);
-    }
+  &.clear {
+    border: none;
+    box-shadow: none;
+  }
 
-    .subtext {
-      font-size: map.get($properties, subtext-size);
+  &.icon {
+    font-size: 2rem;
+    color: inherit;
+    padding: theme.$spacing-sm;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+    padding: theme.$spacing-sm;
+  }
+
+  .title {
+    font-size: theme.$font-size-sm;
+    color: var(--text-color-primary);
+  }
+
+  .value {
+    font-size: theme.$font-size-lg;
+    font-weight: theme.$font-weight-bold;
+  }
+
+  &.left {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  &.right {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  $size-variations: (
+    "xs": (
+      width: 80px,
+      icon-size: 1.5rem,
+      title-size: theme.$font-size-xs,
+      value-size: theme.$font-size-sm,
+      subtext-size: theme.$font-size-xs,
+    ),
+    "small": (
+      width: 140px,
+      icon-size: 2rem,
+      title-size: theme.$font-size-sm,
+      value-size: theme.$font-size-md,
+      subtext-size: theme.$font-size-sm,
+    ),
+    "medium": (
+      width: 160px,
+      icon-size: 2rem,
+      title-size: theme.$font-size-base,
+      value-size: theme.$font-size-lg,
+      subtext-size: theme.$font-size-base,
+    ),
+    "large": (
+      width: 200px,
+      icon-size: 2.5rem,
+      title-size: theme.$font-size-lg,
+      value-size: theme.$font-size-xl,
+      subtext-size: theme.$font-size-lg,
+    ),
+    "xl": (
+      width: 220px,
+      icon-size: 2.5rem,
+      title-size: theme.$font-size-xl,
+      value-size: theme.$font-size-xl,
+      subtext-size: theme.$font-size-lg,
+    ),
+  );
+
+  @each $size, $properties in $size-variations {
+    &.#{$size} {
+      width: map.get($properties, width);
+
+      .icon {
+        font-size: map.get($properties, icon-size);
+      }
+
+      .title {
+        font-size: map.get($properties, title-size);
+      }
+
+      .value {
+        font-size: map.get($properties, value-size);
+      }
+
+      .subtext {
+        font-size: map.get($properties, subtext-size);
+      }
     }
+  }
+
+  .subtext {
+    font-size: theme.$font-size-sm !important;
+    color: var(--text-color-primary);
+    opacity: 0.7;
   }
 }

@@ -24,6 +24,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   menuClassName = "",
   ariaLabel = "Dropdown menu",
   theme = "primary",
+  state = "",
   "data-testid": testId = "dropdown",
   IconButton,
   classMap,
@@ -117,6 +118,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         aria-expanded={open}
         aria-controls={menuId}
         theme={theme}
+        state={state}
         onClick={toggleDropdown}
         data-testid={`${testId}-trigger`}
       />

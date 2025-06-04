@@ -1,4 +1,4 @@
-import { ThemeType } from "@/types/types";
+import { StateType, ThemeType } from "@/types/types";
 import { ReactNode } from "react";
 
 /**
@@ -23,6 +23,8 @@ export interface CommandPaletteProps {
   placeholder?: string;
   /** Theme style for the palette. */
   theme?: ThemeType;
+  /** The state of the command palette, e.g., "error" or "success". */
+  state?: StateType;
   /** Whether the command palette is currently open. */
   isOpen: boolean;
   /** Callback to close the command palette. */

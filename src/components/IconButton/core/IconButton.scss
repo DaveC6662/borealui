@@ -18,7 +18,7 @@
   &:hover {
     text-decoration: none;
     transform: scale(1.05);
-    box-shadow: theme.$box-shadow-large;
+    box-shadow: theme.$box-shadow-heavy;
     cursor: pointer;
   }
 
@@ -37,6 +37,28 @@
   }
 
   @each $name, $values in theme.$themes {
+    &_#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+
+      &.icon_button_outline {
+        background-color: transparent;
+        color: map.get($values, border);
+        border: 2px solid map.get($values, border);
+      }
+
+      &.icon_button_outline:hover {
+        border-color: map.get($values, hover);
+        color: map.get($values, text);
+      }
+    }
+  }
+
+  @each $name, $values in theme.$states {
     &_#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);

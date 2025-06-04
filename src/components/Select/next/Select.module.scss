@@ -13,7 +13,7 @@
   transition: theme.$transition-default;
 
   &:hover {
-    box-shadow: theme.$box-shadow-large;
+    box-shadow: theme.$box-shadow-heavy;
   }
 
   &.disabled {
@@ -72,6 +72,27 @@
     }
 
     &.clear.#{$theme} {
+      background-color: transparent;
+    }
+  }
+
+  @each $state, $values in theme.$states {
+    &.#{$state} {
+      background-color: map.get($values, bg);
+      color: map.get($values, color);
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+    }
+
+    &.#{$state}.outline {
+      background-color: transparent;
+      color: map.get($values, color);
+      border: 2px solid map.get($values, border);
+    }
+
+    &.clear.#{$state} {
       background-color: transparent;
     }
   }

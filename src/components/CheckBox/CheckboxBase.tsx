@@ -20,6 +20,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
       onChange,
       indeterminate = false,
       theme = "primary",
+      state = "",
       disabled = false,
       label = "",
       labelPosition = "right",
@@ -49,6 +50,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
         combineClassNames(
           classMap.checkbox,
           classMap[theme],
+          classMap[state],
           classMap[labelPosition],
           disabled && classMap.disabled,
           className

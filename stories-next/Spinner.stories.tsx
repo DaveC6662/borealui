@@ -1,6 +1,16 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { Spinner } from "@/index.next";
-import type { SpinnerProps } from "@/components/Spinner/Spinner.types";
+import { Meta, StoryObj } from "@storybook/nextjs";
+import { Spinner } from "../src/index.next";
+import type { SpinnerProps } from "../src/components/Spinner/Spinner.types";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 const meta: Meta<SpinnerProps> = {
   title: "Components/Spinner",
@@ -36,20 +46,27 @@ export const SizeVariants: Story = {
 
 export const ThemeVariants: Story = {
   render: (args) => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
 
     return (
       <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <div key={theme} style={{ textAlign: "center" }}>
             <Spinner {...args} theme={theme} label={`Theme: ${theme}`} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+export const StateVariants: Story = {
+  render: (args) => {
+
+    return (
+      <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+        {stateOptions.map((state) => (
+          <div key={state} style={{ textAlign: "center" }}>
+            <Spinner {...args} state={state} label={`state: ${state}`} />
           </div>
         ))}
       </div>

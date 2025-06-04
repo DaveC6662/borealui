@@ -2,7 +2,6 @@ import React from "react";
 import "./Taginput.scss";
 import IconButton from "../../Button/core/Button";
 import TextInput from "../../TextInput/core/TextInput";
-import { combineClassNames } from "../../../utils/classNames";
 import TagInputBase from "../TagInputBase";
 import { TagInputProps } from "../Taginput.types";
 
@@ -16,6 +15,8 @@ const classes = {
   input: "tag_input_input",
   primary: "tag_input_primary",
   secondary: "tag_input_secondary",
+  tertiary: "tag_input_tertiary",
+  quaternary: "tag_input_quaternary",
   success: "tag_input_success",
   warning: "tag_input_warning",
   error: "tag_input_error",
@@ -34,7 +35,6 @@ const TagInput: React.FC<TagInputProps> = (props) => {
       classMap={classes}
       IconButton={IconButton}
       TextInput={TextInput}
-      combineClassNames={combineClassNames}
     />
   );
 };

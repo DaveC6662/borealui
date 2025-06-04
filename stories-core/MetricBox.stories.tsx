@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { MetricBox } from "@/index.core";
-import type { MetricBoxProps } from "@/components/MetricBox/MetricBox.types";
+import { Meta, StoryObj } from "@storybook/nextjs";
+import { MetricBox } from "../src/index.core";
+import type { MetricBoxProps } from "../src/components/MetricBox/MetricBox.types";
 import { FaChartLine, FaCheckCircle } from "react-icons/fa";
 
 const meta: Meta<MetricBoxProps> = {
@@ -15,6 +15,16 @@ const meta: Meta<MetricBoxProps> = {
     size: "medium",
   },
 };
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
 
 export default meta;
 
@@ -73,17 +83,9 @@ export const SizeVariants: Story = {
 
 export const ThemeVariants: Story = {
   render: () => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <MetricBox
             key={theme}
             title={theme.charAt(0).toUpperCase() + theme.slice(1)}
@@ -97,20 +99,39 @@ export const ThemeVariants: Story = {
   },
 };
 
-export const OutlineVariants: Story = {
+export const StateVariants: Story = {
   render: () => {
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
-
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        {themes.map((theme) => (
+        {stateOptions.map((state) => (
+          <MetricBox
+            key={state}
+            title={state.charAt(0).toUpperCase() + state.slice(1)}
+            value="3,210"
+            state={state}
+            icon={FaChartLine}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const OutlineVariants: Story = {
+  render: () => {
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themeOptions.map((theme) => (
+          <MetricBox
+            key={`outline-${theme}`}
+            title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
+            value="999"
+            outline
+            theme={theme}
+            icon={FaChartLine}
+          />
+        ))}
+        {stateOptions.map((theme) => (
           <MetricBox
             key={`outline-${theme}`}
             title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}

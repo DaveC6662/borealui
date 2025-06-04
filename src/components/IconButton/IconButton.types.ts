@@ -1,6 +1,6 @@
 import React from "react";
 import type { MouseEvent } from "react";
-import { SizeType, ThemeType } from "@/types/types";
+import { SizeType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the IconButton component.
@@ -10,6 +10,8 @@ export interface IconButtonProps {
   icon: React.ComponentType;
   /** Theme style of the button (e.g., "primary", "secondary"). */
   theme?: ThemeType;
+  /** State of the button (e.g., "success", "warning", "error"). */
+  state?: StateType;
   /** Optional href to turn the button into a link. */
   href?: string;
   /** If true, opens the link in a new tab (used with `href`). */

@@ -11,6 +11,8 @@ const classes = {
   primary: "circular_progress_primary",
   secondary: "circular_progress_secondary",
   success: "circular_progress_success",
+  tertiary: "circular_progress_tertiary",
+  quaternary: "circular_progress_quaternary",
   error: "circular_progress_error",
   warning: "circular_progress_warning",
   clear: "circular_progress_clear",

@@ -1,9 +1,19 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
-import Checkbox from "@/components/CheckBox/core/Checkbox";
-import type { CheckboxProps } from "@/components/CheckBox/CheckBox.types";
+import { Meta, StoryObj } from "@storybook/nextjs";
+import { Checkbox } from "../src/index.core";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const meta: Meta<CheckboxProps> = {
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
+
+const meta: Meta<typeof Checkbox> = {
   title: "Components/Checkbox",
   component: Checkbox,
   tags: ["autodocs"],
@@ -17,7 +27,7 @@ const meta: Meta<CheckboxProps> = {
 
 export default meta;
 
-type Story = StoryObj<CheckboxProps>;
+type Story = StoryObj<typeof Checkbox>;
 
 export const Controlled: Story = {
   render: (args) => {
@@ -35,13 +45,13 @@ export const Indeterminate: Story = {
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
         <Checkbox
           {...args}
+          label="Partially selected"
           checked={checked}
           indeterminate={indeterminate}
-          onChange={(val: boolean | ((prevState: boolean) => boolean)) => {
+          onChange={(val) => {
             setChecked(val);
             setIndeterminate(false);
           }}
-          label="Partially selected"
         />
         <button onClick={() => setIndeterminate(!indeterminate)}>
           Toggle Indeterminate
@@ -52,12 +62,16 @@ export const Indeterminate: Story = {
 };
 
 export const LabelLeft: Story = {
-  args: {
-    labelPosition: "left",
-  },
   render: (args) => {
     const [checked, setChecked] = useState(false);
-    return <Checkbox {...args} checked={checked} onChange={setChecked} />;
+    return (
+      <Checkbox
+        {...args}
+        labelPosition="left"
+        checked={checked}
+        onChange={setChecked}
+      />
+    );
   },
 };
 
@@ -68,42 +82,37 @@ export const Disabled: Story = {
   },
 };
 
-export const ThemeVariants: Story = {
-  render: () => {
-    const [checked, setChecked] = useState(true);
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        <Checkbox
-          theme="primary"
-          checked={checked}
-          onChange={setChecked}
-          label="Primary"
-        />
-        <Checkbox
-          theme="secondary"
-          checked={checked}
-          onChange={setChecked}
-          label="Secondary"
-        />
-        <Checkbox
-          theme="success"
-          checked={checked}
-          onChange={setChecked}
-          label="Success"
-        />
-        <Checkbox
-          theme="warning"
-          checked={checked}
-          onChange={setChecked}
-          label="Warning"
-        />
-        <Checkbox
-          theme="error"
-          checked={checked}
-          onChange={setChecked}
-          label="Error"
-        />
-      </div>
-    );
-  },
-};
+export const ThemeVariants = () =>
+  withVariants(
+    Checkbox,
+    {
+      label: "Themed",
+      checked: true,
+      onChange: () => {},
+      theme: "primary",
+    },
+    [
+      {
+        propName: "theme",
+        values: themeOptions,
+      },
+    ]
+  );
+
+export const StateVariants = () =>
+  withVariants(
+    Checkbox,
+    {
+      label: "With State",
+      checked: true,
+      onChange: () => {},
+      theme: "primary",
+      state: "success",
+    },
+    [
+      {
+        propName: "state",
+        values: stateOptions,
+      },
+    ]
+  );

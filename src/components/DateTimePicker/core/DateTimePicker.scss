@@ -55,12 +55,6 @@
       z-index: 2;
       cursor: pointer;
     }
-
-    &:disabled {
-      background-color: theme.$disabled-color;
-      color: theme.$disabled-color;
-      cursor: not-allowed;
-    }
   }
 
   &_icon {
@@ -96,6 +90,29 @@
     }
   }
 
+  @each $state, $values in theme.$states {
+    &_#{$state} &_input {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+
+      &:focus {
+        border-color: map.get($values, focus);
+      }
+    }
+
+    &_#{$state}.datetime_picker_outline &_input {
+      border: 2px solid map.get($values, bg);
+
+      &:focus {
+        border-color: map.get($values, focus);
+      }
+
+      &:hover {
+        border-color: map.get($values, color);
+      }
+    }
+  }
+
   &_outline .datetime_picker_input {
     background-color: transparent;
     box-shadow: none;
@@ -106,9 +123,12 @@
     border: 2px solid var(--text-color-primary);
   }
 
-  &_disabled {
+  &_disabled .datetime_picker_input {
     opacity: 0.6;
     pointer-events: none;
+    background-color: theme.$disabled-color;
+    color: theme.$disabled-color;
+    cursor: not-allowed;
   }
 
   $input-sizes: (

@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from "@storybook/react";
-import Divider from "@/components/Divider/core/Divider";
-import type { DividerProps } from "@/components/Divider/Divider.types";
+import { Meta, StoryObj } from "@storybook/nextjs";
+import { Divider } from "../src/index.core";
+import type { DividerProps } from "../src/components/Divider/Divider.types";
 
 const meta: Meta<DividerProps> = {
   title: "Components/Divider",
@@ -70,9 +70,19 @@ export const Themed: Story = {
     <div style={{ padding: "1rem", display: "grid", gap: "1rem" }}>
       <Divider theme="primary" />
       <Divider theme="secondary" />
+      <Divider theme="tertiary" />
+      <Divider theme="quaternary" />
+      <Divider theme="clear" />
+    </div>
+  ),
+};
+
+export const States: Story = {
+  render: () => (
+    <div style={{ padding: "1rem", display: "grid", gap: "1rem" }}>
       <Divider theme="success" />
-      <Divider theme="warning" />
       <Divider theme="error" />
+      <Divider theme="warning" />
     </div>
   ),
 };

@@ -13,6 +13,8 @@ const classes = {
   right: "tooltip_right",
   primary: "tooltip_primary",
   secondary: "tooltip_secondary",
+  tertiary: "tooltip_tertiary",
+  quaternary: "tooltip_quaternary",
   success: "tooltip_success",
   error: "tooltip_error",
   warning: "tooltip_warning",

@@ -10,6 +10,8 @@ const classes = {
   label: "spinner_label",
   primary: "spinner_primary",
   secondary: "spinner_secondary",
+  tertiary: "spinner_tertiary",
+  quaternary: "spinner_quaternary",
   success: "spinner_success",
   warning: "spinner_warning",
   error: "spinner_error",

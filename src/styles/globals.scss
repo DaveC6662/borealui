@@ -4,9 +4,7 @@
 @use "_breakpoints" as breakpoints;
 @use "modern-css-reset";
 
-/* === Root Variables (Light Mode Theme) === */
 :root {
-  // Primary Colors
   --primary-color: #{theme.$primary-color};
   --primary-color-light: #{color.adjust(theme.$primary-color, $lightness: 40%)};
   --primary-color-hover: #{color.adjust(theme.$primary-color, $lightness: -10%)};
@@ -15,8 +13,6 @@
   --success-color: #{theme.$success-color};
   --warning-color: #{theme.$warning-color};
   --error-color: #{theme.$error-color};
-
-  // Secondary Colors
   --secondary-color: #{theme.$secondary-color};
   --secondary-color-light: #{color.adjust(
       theme.$secondary-color,
@@ -27,8 +23,26 @@
       $lightness: -10%
     )};
   --secondary-text-color: #{theme.$text-color-secondary};
-
-  // Background Colors
+  --tertiary-color: #{theme.$tertiary-color};
+  --tertiary-color-light: #{color.adjust(
+      theme.$tertiary-color,
+      $lightness: 40%
+    )};
+  --tertiary-color-hover: #{color.adjust(
+      theme.$tertiary-color,
+      $lightness: -10%
+    )};
+  --tertiary-text-color: #{theme.$text-color-primary};
+  --quaternary-color: #{theme.$quaternary-color};
+  --quaternary-color-light: #{color.adjust(
+      theme.$quaternary-color,
+      $lightness: 40%
+    )};
+  --quaternary-color-hover: #{color.adjust(
+      theme.$quaternary-color,
+      $lightness: -10%
+    )};
+  --quaternary-text-color: #{theme.$text-color-primary};
   --background-color: #{theme.$background-color};
   --background-color-light: #{color.adjust(
       theme.$background-color,
@@ -46,23 +60,16 @@
       theme.$background-color,
       $lightness: -20%
     )};
-
-  // Text Colors
   --text-color: #{theme.$text-color};
   --text-color-light: #{theme.$text-color-light};
   --text-color-lighter: #{theme.$text-color-lighter};
-
-  // Link Colors
   --link-color: #{theme.$link-color};
   --link-hover-color: #{theme.$link-hover-color};
   --link-hover-color-primary: #{theme.$link-hover-color-primary};
   --link-hover-color-secondary: #{theme.$link-hover-color-secondary};
-
-  /* === ACCESSIBILITY IMPROVEMENTS === */
   --focus-outline-color: theme.$primary-color;
 }
 
-/* === General Styles === */
 body {
   font-family: theme.$font-family-primary;
   font-size: theme.$font-size-base;
@@ -77,7 +84,6 @@ body {
     color theme.$transition-default;
 }
 
-/* === Typography === */
 h1,
 h2,
 h3,
@@ -130,7 +136,6 @@ p {
   margin-bottom: theme.$spacing-md;
 }
 
-/* === Links === */
 a {
   color: var(--link-color);
   font-weight: theme.$link-font-weight;
@@ -145,7 +150,6 @@ a {
   }
 }
 
-/* === Utility Classes === */
 .noScroll {
   overflow: hidden;
 }
@@ -162,8 +166,6 @@ a {
   align-items: center;
   font-size: 1.5rem;
 }
-
-/* === ACCESSIBILITY IMPROVEMENTS === */
 
 * {
   scrollbar-width: thin;
@@ -203,7 +205,7 @@ a {
   display: none;
 }
 
-.sr_only {
+@mixin visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -212,4 +214,12 @@ a {
   clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
+}
+
+.sr_only {
+  @include visually-hidden;
+}
+
+:global(.sr_only) {
+  @include visually-hidden;
 }

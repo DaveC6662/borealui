@@ -1,4 +1,4 @@
-import { ThemeType } from "@/types/types";
+import { StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the FileUpload component.
@@ -14,8 +14,12 @@ export interface FileUploadProps {
   required?: boolean;
   /** Theme for the buttons and progress bar. */
   theme?: ThemeType;
+  /**The State of the file upload ex "success", "warning", "error"*/
+  state?: StateType;
   /** Allows multiple file selection if true. */
   multiple?: boolean;
+  /** Whether to disable the file input. */
+  disabled?: boolean;
   /** Called after simulated upload completes. */
   onSubmit: (files: File[]) => void;
   /** External upload progress value (overrides internal simulation). */

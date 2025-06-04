@@ -22,6 +22,7 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   size = "medium",
   outline,
   theme = "primary",
+  state = "",
   className = "",
   "data-testid": testId = "datetime-picker",
   classMap,
@@ -45,6 +46,7 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
       className={combineClassNames(
         classMap.wrapper,
         classMap[theme],
+        classMap[state],
         classMap[size],
         outline && classMap.outline,
         disabled && classMap.disabled,

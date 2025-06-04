@@ -1,6 +1,7 @@
 import React, { useState, KeyboardEvent, JSX } from "react";
 import { StarIcon } from "@/Icons";
 import { RatingProps } from "./Rating.types";
+import { combineClassNames } from "@/utils/classNames";
 
 export interface BaseRatingProps extends RatingProps {
   classMap: Record<string, string>;
@@ -13,6 +14,7 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   size = "medium",
   interactive = true,
   theme = "primary",
+  state = "",
   className = "",
   label,
   "data-testid": testId = "rating",
@@ -55,13 +57,14 @@ const BaseRating: React.FC<BaseRatingProps> = ({
         </label>
       )}
       <div
-        className={[
+        className={combineClassNames(
           classMap.wrapper,
           classMap[theme],
+          classMap[state],
           classMap[size],
           interactive ? classMap.interactive : "",
           className,
-        ].join(" ")}
+        )}
         role="radiogroup"
         aria-label="Rating"
         data-testid={testId}
@@ -73,7 +76,7 @@ const BaseRating: React.FC<BaseRatingProps> = ({
           return (
             <span
               key={index}
-              className={`${classMap.star} ${active ? classMap.active : ""}`}
+              className={combineClassNames(classMap.star, active ? classMap.active : "")}
               onClick={() => handleClick(index)}
               onMouseEnter={() => interactive && setHover(index)}
               onMouseLeave={() => interactive && setHover(null)}

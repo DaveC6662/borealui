@@ -10,6 +10,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   content,
   placement = "bottom",
   theme = "primary",
+  state = "",
   className = "",
   "data-testid": testId = "popover",
   classMap,
@@ -156,6 +157,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
             classMap.popover,
             classMap[dynamicPlacement],
             classMap[theme],
+            classMap[state],
           ].join(" ")}
           data-testid={`${testId}-content`}
         >

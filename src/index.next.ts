@@ -12,7 +12,7 @@ export { default as FileUpload } from "./components/FileUpload/next/FileUpload";
 export { default as TagInput } from "./components/TagInput/next/Taginput";
 export { default as RadioButton } from "./components/RadioButton/next/RadioButton";
 export { default as Slider } from "./components/Slider/next/Slider";
-export { default as CheckBox } from "./components/CheckBox/next/Checkbox";
+export { default as Checkbox } from "./components/CheckBox/next/Checkbox";
 export { default as ColorPicker } from "./components/ColorPicker/next/ColorPicker";
 export { default as FormGroup } from "./components/FormGroup/next/FormGroup";
 export { default as DataTable } from "./components/DataTable/next/DataTable";

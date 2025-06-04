@@ -20,6 +20,7 @@ export interface CardBaseProps extends CardProps {
 
 const CardBase: React.FC<CardBaseProps> = ({
   theme = "primary",
+  state = "",
   cardIcon,
   title = "",
   description = "",
@@ -69,6 +70,7 @@ const CardBase: React.FC<CardBaseProps> = ({
         classMap[layout],
         align && classMap[align],
         classMap[theme],
+        classMap[state],
         classMap[size],
         outline && classMap.outline,
         loading && classMap.loading,
@@ -156,6 +158,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                           onClick={button.onClick}
                           className={classMap.action_button}
                           theme={button.theme || "clear"}
+                          state={button.state || ""}
                           aria-label={button.label}
                           size={button.size || size}
                           href={button.href}
@@ -167,6 +170,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                           onClick={button.onClick}
                           className={classMap.action_button}
                           theme={button.theme || "secondary"}
+                          state={button.state || ""}
                           href={button.href}
                           loading={button.loading}
                           size={button.size || size}

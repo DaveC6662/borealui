@@ -95,13 +95,6 @@ $sizes: (
   }
 }
 
-.disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-  box-shadow: none;
-}
-
 @each $name, $vals in $sizes {
   .#{$name} {
     .toggle {
@@ -126,6 +119,23 @@ $sizes: (
   }
 }
 
+@each $state, $color in theme.$states {
+  .#{$state} .toggle.active {
+    outline: 2px solid map.get($color, border);
+  }
+}
+
 .clear .toggle.active {
   outline: 2px solid var(--text-color-primary);
+}
+
+.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+  box-shadow: none;
+
+  .toggle.active {
+    background-color: theme.$disabled-color;
+  }
 }

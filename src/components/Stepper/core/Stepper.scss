@@ -91,8 +91,19 @@ $stepper-sizes: (
     margin: 0 theme.$spacing-xs;
   }
 
+  @each $name, $color in theme.$themes {
+  .stepper_#{$name} &_active .stepper_step_button {
+    background-color: map.get($color, bg);
+  }
+}
+
+@each $name, $color in theme.$states {
+  .stepper_#{$name} &_active .stepper_step_button {
+    background-color: map.get($color, bg);
+  }
+}
+
   &_active .stepper_step_button {
-    background-color: var(--primary-color);
     color: var(--text-color-primary);
     transform: scale(1.1);
   }

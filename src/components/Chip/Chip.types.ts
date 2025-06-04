@@ -1,4 +1,4 @@
-import { ThemeType, PositionType, SizeType } from "@/types/types";
+import { ThemeType, PositionType, SizeType, StateType } from "@/types/types";
 
 /**
  * Props for the Chip component.
@@ -20,6 +20,8 @@ export interface ChipProps {
   onClose?: () => void;
   /** Theme color for the chip (e.g., "primary", "success", "error"). */
   theme?: ThemeType;
+  /** State of the chip (e.g., "success", "error"). */
+  state?: StateType;
   /** Position of the chip on the screen. */
   position?: PositionType;
   /** Additional class name for custom styling. */

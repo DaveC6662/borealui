@@ -1,4 +1,4 @@
-import { forwardRef, KeyboardEvent } from "react";
+import { forwardRef, KeyboardEvent, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { ToggleProps } from "./Toggle.types";
 
@@ -13,6 +13,7 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       onChange,
       label,
       theme = "primary",
+      state = "",
       size = "medium",
       disabled = false,
       classMap,
@@ -31,16 +32,21 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       }
     };
 
-    const containerClass = combineClassNames(
-      classMap.container,
-      classMap[theme],
-      classMap[size],
-      disabled && classMap.disabled
+    const containerClass = useMemo(
+      () =>
+        combineClassNames(
+          classMap.container,
+          classMap[theme],
+          classMap[state],
+          classMap[size],
+          disabled && classMap.disabled
+        ),
+      [classMap, size, disabled]
     );
 
-    const toggleClass = combineClassNames(
-      classMap.toggle,
-      checked && classMap.active
+    const toggleClass = useMemo(
+      () => combineClassNames(classMap.toggle, checked && classMap.active),
+      [classMap, checked]
     );
 
     const labelId = label ? `${testId}-label` : undefined;

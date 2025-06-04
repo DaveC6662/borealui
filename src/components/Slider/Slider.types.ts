@@ -1,4 +1,4 @@
-import { SizeType, ThemeType } from "@/types/types";
+import { SizeType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the Slider component.
@@ -24,7 +24,9 @@ export interface SliderProps {
     /** Size variant for the slider (e.g., "small", "medium", "large"). */
     size?: SizeType;
     /** Theme variant for styling (e.g., "primary", "secondary"). */
-    theme?: ThemeType;
+  theme?: ThemeType;
+  /** State of the slider ex "success", "warning", "error" */
+  state?: StateType;
     /** Additional CSS class names for custom styling. */
     className?: string;
     /** Accessible label for the slider if label is not provided. */

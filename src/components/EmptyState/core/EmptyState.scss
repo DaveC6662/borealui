@@ -46,7 +46,20 @@
 
     &_#{$theme}.empty_state_outline {
       background-color: transparent;
-      border: 2px dashed map.get($values, bg);
+      border: 2px solid map.get($values, border);
+      color: map.get($values, text-color);
+    }
+  }
+
+  @each $state, $values in theme.$states {
+    &_#{$state} {
+      background-color: map.get($values, bg);
+      color: map.get($values, color);
+    }
+
+    &_#{$state}.empty_state_outline {
+      background-color: transparent;
+      border: 2px solid map.get($values, bg);
       color: map.get($values, text-color);
     }
   }

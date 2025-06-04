@@ -1,7 +1,7 @@
 // src/stories/ScrollToTopButton.stories.tsx
 
 import React from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import ScrollToTopButton from "@/components/ScrollToTop/core/STT"; // adjust path if needed
 
 const meta: Meta = {

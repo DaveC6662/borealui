@@ -62,21 +62,35 @@
     border-style: solid;
   }
 
-  &.clear {
-    background-color: transparent;
+  &.clickable {
+    cursor: pointer;
 
     &:hover {
-      background-color: color.adjust(#000, $lightness: -10%);
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-large;
+      box-shadow: theme.$box-shadow-medium;
     }
 
     &:focus {
+      outline: 2px solid var(--focus-outline-color);
+      outline-offset: 2px;
+    }
+  }
+
+  &.clear {
+    background-color: transparent;
+
+    &.clickable:hover {
+      background-color: color.adjust(#000, $lightness: -10%);
+      transform: translateY(-2px);
+      box-shadow: theme.$box-shadow-heavy;
+    }
+
+    &.clickable:focus {
       outline: 2px solid var(--text-color-primary);
       outline-offset: 1px;
     }
 
-    &.outline {
+    &.clickable.outline {
       color: var(--text-color-primary);
       border-color: var(--text-color-primary);
 
@@ -92,13 +106,13 @@
       background-color: map.get($props, bg);
       color: var(--text-color-primary);
 
-      &:hover {
+      &.clickable:hover {
         background-color: map.get($props, hover);
         transform: translateY(-2px);
-        box-shadow: theme.$box-shadow-large;
+        box-shadow: theme.$box-shadow-heavy;
       }
 
-      &:focus {
+      &.clickable:focus {
         outline: 2px solid map.get($props, border);
         outline-offset: 2px;
       }
@@ -109,12 +123,49 @@
       color: map.get($props, text-color);
       border-color: map.get($props, border);
 
-      &:hover {
+      &.clickable:hover {
         background-color: map.get($props, hover);
         border-color: map.get($props, hover);
         color: map.get($props, text-hover);
       }
     }
+  }
+
+  @each $name, $props in theme.$states {
+    &.#{$name} {
+      background-color: map.get($props, bg);
+      color: var(--text-color-primary);
+
+      &.clickable:hover {
+        background-color: map.get($props, hover);
+        transform: translateY(-2px);
+        box-shadow: theme.$box-shadow-heavy;
+      }
+
+      &.clickable:focus {
+        outline: 2px solid map.get($props, border);
+        outline-offset: 2px;
+      }
+    }
+
+    &.#{$name}.outline {
+      background-color: transparent;
+      color: map.get($props, text-color);
+      border-color: map.get($props, border);
+
+      &.clickable:hover {
+        background-color: map.get($props, hover);
+        border-color: map.get($props, hover);
+        color: map.get($props, text-hover);
+      }
+    }
+  }
+
+  &.disabled {
+    background-color: theme.$disabled-color;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
   }
 
   &.disabled.outline {
