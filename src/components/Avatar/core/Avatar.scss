@@ -62,12 +62,17 @@
     border-style: solid;
   }
 
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
   .avatar_clickable {
     cursor: pointer;
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-medium;
     }
 
     &:focus {
@@ -82,7 +87,6 @@
     &.avatar_clickable:hover {
       background-color: color.adjust(#000, $lightness: -10%);
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-heavy;
     }
 
     &.avatar_clickable:focus {
@@ -109,7 +113,6 @@
       &.avatar_clickable:hover {
         background-color: map.get($props, hover);
         transform: translateY(-2px);
-        box-shadow: theme.$box-shadow-heavy;
       }
 
       &.avatar_clickable:focus {
@@ -139,7 +142,6 @@
       &.avatar_clickable:hover {
         background-color: map.get($props, hover);
         transform: translateY(-2px);
-        box-shadow: theme.$box-shadow-heavy;
       }
 
       &.avatar_clickable:focus {
@@ -210,23 +212,23 @@
     z-index: 2;
 
     &_topLeft {
-      top: 5px;
-      left: 6px;
+      top: 12%;
+      left: 15%;
     }
 
     &_topRight {
-      top: 5px;
-      right: 6px;
+      top: 12%;
+      right: 15%;
     }
 
     &_bottomLeft {
-      bottom: 5px;
-      left: 6px;
+      bottom: 12%;
+      left: 15%;
     }
 
     &_bottomRight {
-      bottom: 5px;
-      right: 6px;
+      bottom: 12%;
+      right: 15%;
     }
 
     &_icon_only {

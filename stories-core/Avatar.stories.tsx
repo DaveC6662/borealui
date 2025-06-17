@@ -30,6 +30,7 @@ const themeOptions = [
 const stateOptions = ["success", "error", "warning"];
 const sizeOptions = [...["xs", "small", "medium", "large", "xl"]] as string[];
 const shapeOptions = [...["circle", "rounded", "square"]] as string[];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 const statusOptions = [
   ...[
     "online",
@@ -169,6 +170,22 @@ export const StatusPositionVariants = () => (
     ))}
   </StoryGrid>
 );
+
+export const ShadowVariants = () =>
+  withVariants(
+    Avatar,
+    {
+      ...defaultArgs,
+      name: "Shadow Avatar",
+      shape: "circle",
+    },
+    [
+      {
+        propName: "shadow",
+        values: shadowOptions,
+      },
+    ]
+  );
 
 export const Disabled: Story = {
   args: {

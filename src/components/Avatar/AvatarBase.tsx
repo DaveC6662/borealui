@@ -3,6 +3,7 @@ import { AvatarProps } from "./Avatar.types";
 import { getInitials } from "../../utils/getInitials";
 import { combineClassNames } from "../../utils/classNames";
 import { FallbackUserIcon } from "../../Icons/index";
+import { capitalize } from "@/utils/capitalize";
 export interface AvatarBaseProps extends AvatarProps {
   ImageComponent?: React.ElementType;
   LinkComponent?: React.ElementType;
@@ -23,6 +24,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
   fallback,
   children,
   size = "medium",
+  shadow = "light",
   shape = "circle",
   outline = false,
   theme = "primary",
@@ -51,6 +53,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
         classMap[state],
         classMap[shape],
         classMap[size],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
         disabled && classMap.disabled,
         outline && classMap.outline,
         onClick && classMap.clickable,

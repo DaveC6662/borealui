@@ -28,6 +28,12 @@ const classes = {
   large: "avatar_large",
   xl: "avatar_xl",
 
+  shadowNone: "avatar_shadow-None",
+  shadowLight: "avatar_shadow-Light",
+  shadowMedium: "avatar_shadow-Medium",
+  shadowStrong: "avatar_shadow-Strong",
+  shadowIntense: "avatar_shadow-Intense",
+
   image: "avatar_image",
   initials: "avatar_initials",
   fallback_icon: "avatar_fallback_icon",

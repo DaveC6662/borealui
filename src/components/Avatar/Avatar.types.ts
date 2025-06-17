@@ -1,5 +1,7 @@
 import { MouseEvent } from "react";
 import {
+  RoundingType,
+  ShadowType,
   ShapeType,
   SizeType,
   StateType,
@@ -24,6 +26,8 @@ export interface AvatarProps {
   size?: SizeType;
   /** Shape of the avatar border */
   shape?: ShapeType;
+  /** Shaddow of the avatar */
+  shadow?: ShadowType;
   /** Visual theme of the avatar (for background or border) */
   theme?: ThemeType;
   /** State of the avatar (e.g., success, error) */

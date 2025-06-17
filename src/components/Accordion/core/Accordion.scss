@@ -138,10 +138,6 @@ $sizes: (
   opacity: 0.6;
 }
 
-.accordion_clear {
-  box-shadow: none;
-}
-
 @each $name, $values in theme.$states {
   .accordion_#{$name} {
     background-color: map.get($values, bg);
