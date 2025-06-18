@@ -1,11 +1,17 @@
-import { StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 import { InputHTMLAttributes } from "react";
 
 /**
  * Props for the Checkbox component.
  */
 export interface CheckBoxProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "size"> {
   /** Label text displayed beside the checkbox. */
   label?: string;
   /** Checked state of the checkbox. */
@@ -18,6 +24,12 @@ export interface CheckBoxProps
   theme?: ThemeType;
   /** State of the checkbox (e.g., "success", "error"). */
   state?: StateType;
+  /** Controls the rounding of the checkbox */
+  rounding?: RoundingType;
+  /** Size of the checkbox */
+  size?: SizeType;
+  /** Controls the shadow of the checkbox */
+  shadow?: ShadowType;
   /** Whether the checkbox is disabled. */
   disabled?: boolean;
   /** Custom class name for additional styling. */

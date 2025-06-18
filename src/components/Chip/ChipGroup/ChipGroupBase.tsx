@@ -82,6 +82,8 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
                   theme={chip.theme}
                   state={chip.state}
                   size={chip.size || size}
+                  rounding={chip.rounding}
+                  shadow={chip.shadow}
                   visible={true}
                   onClose={() => handleClose(chip.id!)}
                   autoClose={chip.autoClose}

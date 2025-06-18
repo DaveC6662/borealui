@@ -8,6 +8,7 @@ import {
 import { createPortal } from "react-dom";
 import { ChipProps } from "./Chip.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface ChipBaseProps extends ChipProps {
   classMap: Record<string, string>;
@@ -23,6 +24,8 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   icon: Icon,
   size = "medium",
   theme = "primary",
+  rounding = "medium",
+  shadow = "light",
   state = "",
   position = "topCenter",
   usePortal = true,
@@ -56,6 +59,8 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     classMap[state],
     classMap[size],
     classMap[position],
+    shadow && classMap[`shadow${capitalize(shadow)}`],
+    rounding && classMap[`round${capitalize(rounding)}`],
     closing && classMap.fadeout,
     usePortal && classMap.fixed,
     className

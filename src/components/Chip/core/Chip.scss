@@ -9,9 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: theme.$border-radius-lg;
   font-weight: theme.$font-weight-bold;
-  box-shadow: theme.$box-shadow-medium;
   max-width: 90vw;
   width: fit-content;
   min-width: 180px;
@@ -22,6 +20,18 @@
   transition:
     transform 0.3s ease-in-out,
     opacity 0.3s ease-in-out;
+
+  @each $key, $value in theme.$rounding {
+    &_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
 }
 
 .chip_fixed {

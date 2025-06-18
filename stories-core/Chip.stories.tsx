@@ -5,7 +5,13 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { Chip } from "../src/index.core";
 import { FaCheckCircle } from "react-icons/fa";
 import type { ChipProps } from "../src/components/Chip/Chip.types";
-import { PositionType, StateType, ThemeType } from "../src/types/types";
+import {
+  PositionType,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/types/types";
 
 const meta: Meta<ChipProps> = {
   title: "Components/Chip",
@@ -39,6 +45,9 @@ const positions: PositionType[] = [
   "bottomCenter",
   "bottomRight",
 ];
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 export default meta;
 
@@ -200,6 +209,80 @@ export const Positions: Story = {
             position={visiblePosition}
             visible={true}
             onClose={() => setVisiblePosition(null)}
+            autoClose={false}
+            icon={FaCheckCircle}
+          />
+        )}
+      </>
+    );
+  },
+};
+
+export const RoundingVariants: Story = {
+  render: () => {
+    const [visibleRounding, setVisibleRounding] = useState<RoundingType | null>(
+      null
+    );
+
+    return (
+      <>
+        <div className="grid grid-cols-6 gap-2">
+          {roundingOptions.map((rounding) => (
+            <button
+              key={rounding}
+              onClick={() => setVisibleRounding(rounding as RoundingType)}
+              className="p-2 border rounded"
+            >
+              {rounding}
+            </button>
+          ))}
+        </div>
+
+        {visibleRounding && (
+          <Chip
+            id="rounding-chip"
+            message={`Rounding: ${visibleRounding}`}
+            theme="primary"
+            rounding={visibleRounding}
+            position="topRight"
+            visible={true}
+            onClose={() => setVisibleRounding(null)}
+            autoClose={false}
+            icon={FaCheckCircle}
+          />
+        )}
+      </>
+    );
+  },
+};
+
+export const ShadowVariants: Story = {
+  render: () => {
+    const [visibleShadow, setVisibleShadow] = useState<ShadowType | null>(null);
+
+    return (
+      <>
+        <div className="grid grid-cols-6 gap-2">
+          {shadowOptions.map((shadow) => (
+            <button
+              key={shadow}
+              onClick={() => setVisibleShadow(shadow as ShadowType)}
+              className="p-2 border rounded"
+            >
+              {shadow}
+            </button>
+          ))}
+        </div>
+
+        {visibleShadow && (
+          <Chip
+            id="shadow-chip"
+            message={`Shadow: ${visibleShadow}`}
+            theme="primary"
+            shadow={visibleShadow}
+            position="topRight"
+            visible={true}
+            onClose={() => setVisibleShadow(null)}
             autoClose={false}
             icon={FaCheckCircle}
           />

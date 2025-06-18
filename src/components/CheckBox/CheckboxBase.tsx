@@ -8,6 +8,7 @@ import {
 } from "react";
 import type { CheckBoxProps } from "./Checkbox.types";
 import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface CheckboxBaseProps extends CheckBoxProps {
   classMap: Record<string, string>;
@@ -20,6 +21,9 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
       onChange,
       indeterminate = false,
       theme = "primary",
+      rounding = "small",
+      size = "medium",
+      shadow = "none",
       state = "",
       disabled = false,
       label = "",
@@ -52,6 +56,9 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
           classMap[theme],
           classMap[state],
           classMap[labelPosition],
+          classMap[size],
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`],
           disabled && classMap.disabled,
           className
         ),

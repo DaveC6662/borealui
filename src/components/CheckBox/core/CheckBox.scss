@@ -3,6 +3,50 @@
 @use "sass:color";
 @use "sass:map";
 
+$checkbox-sizes: (
+  xs: 0.75em,
+  small: 0.875em,
+  medium: 1em,
+  large: 1.25em,
+  xl: 1.5em,
+);
+
+$checkmark-sizes: (
+  xs: (
+    width: 0.41em,
+    height: 0.15em,
+    border-width: 0.1em,
+  ),
+  small: (
+    width: 0.43em,
+    height: 0.2em,
+    border-width: 0.115em,
+  ),
+  medium: (
+    width: 0.505em,
+    height: 0.215em,
+    border-width: 0.125em,
+  ),
+  large: (
+    width: 0.63em,
+    height: 0.35em,
+    border-width: 0.15em,
+  ),
+  xl: (
+    width: 0.75em,
+    height: 0.4em,
+    border-width: 0.175em,
+  ),
+);
+
+$label-font-sizes: (
+  xs: theme.$font-size-xs,
+  small: theme.$font-size-sm,
+  medium: theme.$font-size-base,
+  large: theme.$font-size-lg,
+  xl: theme.$font-size-xl,
+);
+
 .checkbox {
   display: inline-flex;
   align-items: center;
@@ -23,10 +67,44 @@
   left: 0;
 }
 
+@each $key, $value in theme.$rounding {
+  .checkbox_round-#{$key} .checkbox_box {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .checkbox_shadow-#{$key} .checkbox_box {
+    box-shadow: $value;
+  }
+}
+
+@each $size, $dimension in $checkbox-sizes {
+  .checkbox_#{$size} .checkbox_box {
+    width: $dimension;
+    height: $dimension;
+  }
+
+  .checkbox_#{$size} .checkbox_box::after {
+    $checkmark: map.get($checkmark-sizes, $size);
+    width: map.get($checkmark, width);
+    height: map.get($checkmark, height);
+    border-left: map.get($checkmark, border-width) solid currentcolor;
+    border-bottom: map.get($checkmark, border-width) solid currentcolor;
+  }
+
+  .checkbox_#{$size} .checkbox_box.checkbox_indeterminate::after {
+    $checkmark: map.get($checkmark-sizes, $size);
+    width: map.get($checkmark, width);
+    height: map.get($checkmark, border-width);
+  }
+
+  .checkbox_#{$size} .checkbox_label {
+    font-size: map.get($label-font-sizes, $size);
+  }
+}
+
 .checkbox_box {
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
   border: 2px solid currentcolor;
   display: flex;
   align-items: center;
@@ -38,10 +116,6 @@
 
 .checkbox_box::after {
   content: "";
-  width: 10px;
-  height: 5px;
-  border-left: 2px solid currentcolor;
-  border-bottom: 2px solid currentcolor;
   transform: rotate(-45deg);
   opacity: 0;
   transition: all theme.$transition-default;
@@ -54,8 +128,6 @@
 .checkbox_box.checkbox_indeterminate::after {
   opacity: 1;
   content: "";
-  width: 10px;
-  height: 2px;
   background-color: currentcolor;
   border: none;
   transform: none;
@@ -63,7 +135,7 @@
 
 .checkbox_label {
   color: var(--text-color-primary);
-  font-size: theme.$font-size-sm;
+  margin-bottom: -1px;
 }
 
 @each $theme, $props in theme.$themes {

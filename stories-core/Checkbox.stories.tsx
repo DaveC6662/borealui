@@ -2,6 +2,13 @@ import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Checkbox } from "../src/index.core";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../src/types/types";
 
 const themeOptions = [
   "primary",
@@ -12,6 +19,9 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+const roundingOptions = ["none", "small", "medium", "large"];
+const sizeOptions = ["xs", "small", "medium", "large", "xl"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<typeof Checkbox> = {
   title: "Components/Checkbox",
@@ -27,9 +37,20 @@ const meta: Meta<typeof Checkbox> = {
 
 export default meta;
 
+const defaultArgs = {
+  label: "Label",
+  checked: true,
+  onChange: () => {},
+  size: "medium" as SizeType,
+  theme: "primary" as ThemeType,
+  state: "" as StateType,
+  rounding: "small" as RoundingType,
+  shadow: "none" as ShadowType,
+};
+
 type Story = StoryObj<typeof Checkbox>;
 
-export const Controlled: Story = {
+export const Default: Story = {
   render: (args) => {
     const [checked, setChecked] = useState(false);
     return <Checkbox {...args} checked={checked} onChange={setChecked} />;
@@ -116,3 +137,18 @@ export const StateVariants = () =>
       },
     ]
   );
+
+export const SizeVariants = () =>
+  withVariants(Checkbox, { ...defaultArgs }, [
+    { propName: "size", values: sizeOptions },
+  ]);
+
+export const RoundingVariants = () =>
+  withVariants(Checkbox, { ...defaultArgs }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = () =>
+  withVariants(Checkbox, { ...defaultArgs }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);
