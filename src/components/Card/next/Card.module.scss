@@ -4,8 +4,6 @@
 @use "sass:map";
 
 .card {
-  border-radius: theme.$border-radius-md;
-  box-shadow: theme.$box-shadow-medium;
   overflow: hidden;
   margin: theme.$spacing-sm;
   position: relative;
@@ -17,6 +15,18 @@
   height: fit-content;
   color: var(--text-color-primary);
   transition: transform 0.3s ease;
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
 }
 
 .loading {

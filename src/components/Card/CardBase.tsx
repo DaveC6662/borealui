@@ -1,6 +1,7 @@
 import React, { useId, useMemo } from "react";
 import { ActionButton, CardProps } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 type ExtendedActionButton = ActionButton & {
   buttonComponent: React.ElementType;
@@ -24,6 +25,8 @@ const CardBase: React.FC<CardBaseProps> = ({
   cardIcon,
   title = "",
   description = "",
+  rounding = "medium",
+  shadow = "light",
   imageUrl,
   imageAlt,
   className = "",
@@ -72,6 +75,8 @@ const CardBase: React.FC<CardBaseProps> = ({
         classMap[theme],
         classMap[state],
         classMap[size],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
         loading && classMap.loading,
         className

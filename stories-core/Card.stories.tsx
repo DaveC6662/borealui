@@ -26,7 +26,8 @@ const descriptions = [
   "This content is aligned to the right.",
 ];
 
-const image = "https://placekitten.com/400/200";
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<CardProps> = {
   title: "Components/Card",
@@ -43,7 +44,7 @@ const meta: Meta<CardProps> = {
 export default meta;
 type Story = StoryObj<CardProps>;
 
-const baseArgs: CardProps = {
+const defaultArgs: CardProps = {
   title: "Card Preview",
   description: "Quick description to show style and layout.",
 };
@@ -54,7 +55,7 @@ export const Default: Story = {};
 // Original static stories preserved
 export const WithImage: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     imageUrl: testImage,
     imageAlt: "Placeholder image",
   },
@@ -62,21 +63,21 @@ export const WithImage: Story = {
 
 export const WithIcon: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     cardIcon: FaInfoCircle,
   },
 };
 
 export const Loading: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     loading: true,
   },
 };
 
 export const WithActions: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     actionButtons: [
       {
         label: "Edit",
@@ -108,16 +109,16 @@ export const WithCustomRender: Story = {
 };
 
 export const ThemeVariants = () =>
-  withVariants(Card, baseArgs, [
+  withVariants(Card, defaultArgs, [
     { propName: "theme", values: [...themeOptions] },
   ]);
 
 export const StateVariants = () =>
-  withVariants(Card, baseArgs, [
+  withVariants(Card, defaultArgs, [
     { propName: "theme", values: [...stateOptions] },
   ]);
 export const OutlineThemeVariants = () =>
-  withVariants(Card, { ...baseArgs, outline: true }, [
+  withVariants(Card, { ...defaultArgs, outline: true }, [
     { propName: "theme", values: [...themeOptions, ...stateOptions] },
   ]);
 
@@ -160,14 +161,14 @@ export const SizeVariants = () =>
   );
 
 export const LayoutVariants = () =>
-  withVariants(Card, { ...baseArgs, imageUrl: testImage }, [
+  withVariants(Card, { ...defaultArgs, imageUrl: testImage }, [
     { propName: "layout", values: [...layoutOptions] },
   ]);
 
 export const IconButtonVariants = () => (
   <StoryGrid title="Card with action buttons and icons">
     <Card
-      {...baseArgs}
+      {...defaultArgs}
       actionButtons={[
         { label: "Edit", icon: FaEdit, state: "success", onClick: () => {} },
         { label: "Delete", icon: FaTrash, state: "error", onClick: () => {} },
@@ -175,7 +176,7 @@ export const IconButtonVariants = () => (
       useIconButtons={true}
     />
     <Card
-      {...baseArgs}
+      {...defaultArgs}
       actionButtons={[
         { label: "Edit", icon: FaEdit, theme: "secondary", onClick: () => {} },
         { label: "Remove", icon: FaTrash, state: "error", onClick: () => {} },
@@ -266,3 +267,13 @@ export const AlignmentGrid: Story = {
     </div>
   ),
 };
+
+export const RoundingVariants = () =>
+  withVariants(Card, { ...defaultArgs }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = () =>
+  withVariants(Card, { ...defaultArgs }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

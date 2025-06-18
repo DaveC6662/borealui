@@ -59,16 +59,6 @@ export const Default: Story = {
   },
 };
 
-export const RoundingVariants = () =>
-  withVariants(Accordion, { ...defaultArgs }, [
-    { propName: "rounding", values: roundingOptions },
-  ]);
-
-export const ShadowVariants = () =>
-  withVariants(Accordion, { ...defaultArgs }, [
-    { propName: "shadow", values: shadowOptions },
-  ]);
-
 export const Controlled: Story = {
   render: (args) => {
     const [open, setOpen] = useState(true);
@@ -224,3 +214,13 @@ export const WithDescription: Story = {
     ),
   },
 };
+
+export const RoundingVariants = () =>
+  withVariants(Accordion, { ...defaultArgs }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = () =>
+  withVariants(Accordion, { ...defaultArgs }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

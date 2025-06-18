@@ -1,6 +1,8 @@
 import { IconType } from "react-icons";
 import {
   OrientationType,
+  RoundingType,
+  ShadowType,
   SizeType,
   StateType,
   ThemeType,
@@ -26,6 +28,10 @@ export interface ActionButton {
   size?: SizeType;
   /** Optional loading state for the button. */
   loading?: boolean;
+  /** Rounding style for action button */
+  rounding?: RoundingType;
+  /** Optional shadow style for the button. */
+  shadow?: ShadowType;
 }
 
 /**
@@ -36,6 +42,10 @@ export interface CardProps {
   theme?: ThemeType;
   /** State of the card ("error", "success"). */
   state?: StateType;
+  /** Optional rounding style for the card. */
+  rounding?: RoundingType;
+  /** Optional shadow style for the card. */
+  shadow?: ShadowType;
   /** Optional card title displayed in the header. */
   title?: string;
   /** Optional description displayed in the body. */
