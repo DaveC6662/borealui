@@ -30,6 +30,12 @@ $progress-sizes: (
   justify-content: center;
   align-items: center;
 
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} &_circle_border {
+      box-shadow: $value;
+    }
+  }
+
   @each $size, $props in $progress-sizes {
     &_#{$size} {
       width: map.get($props, dimensions);

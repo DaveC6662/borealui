@@ -31,7 +31,7 @@ $swatch-sizes: (
 
   &_grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
     gap: theme.$spacing-xs;
   }
 
@@ -39,13 +39,11 @@ $swatch-sizes: (
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    margin: 0 1px;
     cursor: pointer;
-    border-radius: theme.$border-radius-sm;
     outline: 2px solid transparent;
     transition: outline-color 0.2s ease-in-out;
     box-sizing: border-box;
-    width: map.get($swatch-sizes, medium);
-    height: map.get($swatch-sizes, medium);
 
     &.color_picker_selected,
     &:focus-visible {
@@ -70,23 +68,41 @@ $swatch-sizes: (
     display: block;
     box-shadow: theme.$box-shadow-light;
     box-sizing: border-box;
-  }
 
-  &_square &_preview {
-    border-radius: 6px;
-  }
+    .color_picker_circle {
+      border-radius: 50%;
+    }
 
-  &_round &_preview {
-    border-radius: 50%;
-  }
+    .color_picker_square {
+      border-radius: 6px;
+    }
 
-  &_pill &_preview {
-    border-radius: 9999px;
-    height: 50%;
+    .color_picker_rounded {
+      border-radius: 9999px;
+      height: 50%;
+    }
   }
 
   &_custom_input {
     margin-top: theme.$spacing-xs;
     width: 100%;
+  }
+}
+
+.color_picker_circle {
+  border-radius: 50%;
+}
+
+.color_picker_square {
+  border-radius: 6px;
+}
+
+.color_picker_rounded {
+  border-radius: 9999px;
+}
+
+@each $key, $value in theme.$shadow {
+  .color_picker_shadow-#{$key} {
+    box-shadow: $value;
   }
 }

@@ -16,6 +16,8 @@ const themeOptions = [
 
 const stateOptions = ["success", "error", "warning"];
 
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
 const meta: Meta<CircularProgressProps> = {
   title: "Components/CircularProgress",
   component: CircularProgress,
@@ -29,7 +31,7 @@ const meta: Meta<CircularProgressProps> = {
 export default meta;
 type Story = StoryObj<CircularProgressProps>;
 
-const baseArgs: CircularProgressProps = {
+const defaultArgs: CircularProgressProps = {
   rating: 75,
   label: "Progress Score",
 };
@@ -38,14 +40,14 @@ export const Default: Story = {};
 
 export const ShowRawScore: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     showRaw: true,
   },
 };
 
 export const LowScore: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     rating: 32,
     label: "Low Score",
   },
@@ -53,7 +55,7 @@ export const LowScore: Story = {
 
 export const WarningZone: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     rating: 58,
     label: "Warning Score",
   },
@@ -61,7 +63,7 @@ export const WarningZone: Story = {
 
 export const HighScore: Story = {
   args: {
-    ...baseArgs,
+    ...defaultArgs,
     rating: 95,
     label: "Excellent Score",
   },
@@ -79,7 +81,7 @@ export const CustomRange: Story = {
 
 // Variant grid
 export const SizeVariants = () =>
-  withVariants(CircularProgress, baseArgs, [
+  withVariants(CircularProgress, defaultArgs, [
     { propName: "size", values: [...sizeOptions] },
   ]);
 
@@ -134,3 +136,8 @@ export const CustomMinMaxExamples = () => (
     <CircularProgress rating={43} min={0} max={50} label="Out of 50" showRaw />
   </StoryGrid>
 );
+
+export const ShadowVariants = () =>
+  withVariants(CircularProgress, { ...defaultArgs }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

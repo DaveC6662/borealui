@@ -40,13 +40,11 @@ $swatch-sizes: (
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  margin: 0 1px;
   cursor: pointer;
-  border-radius: theme.$border-radius-sm;
   outline: 2px solid transparent;
   transition: outline-color 0.2s ease-in-out;
   box-sizing: border-box;
-  width: map.get($swatch-sizes, medium);
-  height: map.get($swatch-sizes, medium);
 
   &.selected,
   &:focus-visible {
@@ -71,22 +69,41 @@ $swatch-sizes: (
   display: block;
   box-shadow: theme.$box-shadow-light;
   box-sizing: border-box;
-}
 
-.square .preview {
-  border-radius: 6px;
-}
+  .circle {
+    border-radius: 50%;
+  }
 
-.round .preview {
-  border-radius: 50%;
-}
+  .square {
+    border-radius: 6px;
+  }
 
-.pill .preview {
-  border-radius: 9999px;
-  height: 50%;
+  .rounded {
+    border-radius: 9999px;
+    height: 50%;
+  }
 }
 
 .custom_input {
   margin-top: theme.$spacing-xs;
   width: 100%;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.square {
+  border-radius: 6px;
+}
+
+.rounded {
+  border-radius: 9999px;
+  height: 50%;
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
 }

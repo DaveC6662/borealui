@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import type { CircularProgressProps } from "./CircularProgress.types";
 import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface CircularProgressBaseProps extends CircularProgressProps {
   classMap: Record<string, string>;
@@ -18,6 +19,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   min = 0,
   max = 100,
   label = "Progress",
+  shadow = "none",
   showRaw = false,
   size = "medium",
   theme = "primary",
@@ -40,14 +42,22 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
 
   const progressColor = getColor(percent);
 
-  return (
-    <div
-      className={combineClassNames(
+  const combinedClassName = useMemo(
+    () =>
+      combineClassNames(
         classMap.circular_progress,
         classMap[theme],
         classMap[size],
+        classMap[state],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
         className
-      )}
+      ),
+    [shadow, className, classMap]
+  );
+
+  return (
+    <div
+      className={combinedClassName}
       role="progressbar"
       aria-valuemin={min}
       aria-valuemax={max}

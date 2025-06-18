@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import type { ColorPickerProps } from "./ColorPicker.types";
+import { capitalize } from "@/utils/capitalize";
 
 export interface ColorPickerBaseProps extends ColorPickerProps {
   classMap: Record<string, string>;
@@ -14,13 +15,19 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   name = "color-picker",
   disabled = false,
   size = "medium",
-  shape = "round",
+  shadow = "none",
+  shape = "circle",
   allowCustom = false,
   className = "",
   classMap,
   "data-testid": testId = "color-picker",
 }) => {
   const legendId = `${testId}-legend`;
+
+  const labelClass = useMemo(
+    () => combineClassNames(classMap.swatch, classMap[size], classMap[shape]),
+    [classMap, size, shape]
+  );
 
   return (
     <fieldset
@@ -40,9 +47,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
           <label
             key={color.value}
             className={combineClassNames(
-              classMap.swatch,
-              classMap[size],
-              classMap[shape],
+              labelClass,
               selected === color.value && classMap.selected
             )}
             htmlFor={`${testId}-color-${i}`}
@@ -60,7 +65,11 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
               className={classMap.radio_input}
             />
             <span
-              className={combineClassNames(classMap.preview, classMap[shape])}
+              className={combineClassNames(
+                classMap.preview,
+                classMap[shape],
+                shadow && classMap[`shadow${capitalize(shadow)}`]
+              )}
               style={{ backgroundColor: color.value }}
               aria-hidden="true"
             />

@@ -12,14 +12,22 @@ const classes = {
   radio_input: "color_picker_radio_input",
   custom_input: "color_picker_custom_input",
   selected: "color_picker_selected",
+
   xs: "color_picker_xs",
   small: "color_picker_small",
   medium: "color_picker_medium",
   large: "color_picker_large",
   xl: "color_picker_xl",
+
+  shadowNone: "color_picker_shadow-None",
+  shadowLight: "color_picker_shadow-Light",
+  shadowMedium: "color_picker_shadow-Medium",
+  shadowStrong: "color_picker_shadow-Strong",
+  shadowIntense: "color_picker_shadow-Intense",
+
+  circle: "color_picker_circle",
+  rounded: "color_picker_rounded",
   square: "color_picker_square",
-  round: "color_picker_round",
-  pill: "color_picker_pill",
 };
 
 const ColorPicker: React.FC<ColorPickerProps> = (props) => (

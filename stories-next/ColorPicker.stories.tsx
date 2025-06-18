@@ -2,8 +2,14 @@
 
 import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import ColorPicker from "@/components/ColorPicker/next/ColorPicker";
-import type { ColorPickerProps } from "@/components/ColorPicker/ColorPicker.types";
+import { ColorPicker } from "../src/index.next";
+import type { ColorPickerProps } from "../src/components/ColorPicker/ColorPicker.types";
+import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
+import { ShadowType, ShapeType, SizeType } from "../src/types/types";
+
+const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
+const shapeOptions: ShapeType[] = ["circle", "rounded", "square"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<ColorPickerProps> = {
   title: "Components/ColorPicker",
@@ -24,6 +30,22 @@ const meta: Meta<ColorPickerProps> = {
 export default meta;
 
 type Story = StoryObj<ColorPickerProps>;
+
+const defaultArgs = {
+  label: "Pick a theme color",
+  name: "theme",
+  shape: "circle" as ShapeType,
+  colors: [
+    { label: "Red", value: "#e63946" },
+    { label: "Green", value: "#2a9d8f" },
+    { label: "Blue", value: "#457b9d" },
+    { label: "Yellow", value: "#f4a261" },
+  ],
+  size: "medium" as SizeType,
+  selected: "#e63946",
+  shadow: "none" as ShadowType,
+  onChange: () => {},
+};
 
 export const Default: Story = {
   render: (args) => {
@@ -46,35 +68,33 @@ export const WithCustomColorInput: Story = {
   },
 };
 
-export const RoundShapeLarge: Story = {
-  render: (args) => {
-    const [selected, setSelected] = useState("#457b9d");
-    return (
-      <ColorPicker
-        {...args}
-        shape="round"
-        size="large"
-        selected={selected}
-        onChange={setSelected}
-      />
-    );
-  },
-};
+export const SizeVariants = () => (
+  <StoryGrid title="Size Variants">
+    {sizeOptions.map((size) => (
+      <ColorPicker key={size} {...defaultArgs} size={size as SizeType} />
+    ))}
+  </StoryGrid>
+);
 
-export const SquareSmall: Story = {
-  render: (args) => {
-    const [selected, setSelected] = useState("#f4a261");
-    return (
+export const ShapeVariants = () => (
+  <StoryGrid title="Shape Variants">
+    {shapeOptions.map((shape) => (
+      <ColorPicker key={shape} {...defaultArgs} shape={shape as ShapeType} />
+    ))}
+  </StoryGrid>
+);
+
+export const ShadowVariants = () => (
+  <StoryGrid title="Shadow Variants">
+    {shadowOptions.map((shadow) => (
       <ColorPicker
-        {...args}
-        shape="square"
-        size="small"
-        selected={selected}
-        onChange={setSelected}
+        key={shadow}
+        {...defaultArgs}
+        shadow={shadow as ShadowType}
       />
-    );
-  },
-};
+    ))}
+  </StoryGrid>
+);
 
 export const Disabled: Story = {
   render: (args) => {

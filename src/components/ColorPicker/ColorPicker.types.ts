@@ -1,4 +1,4 @@
-import { SizeType } from "@/types/types";
+import { ShadowType, SizeType } from "@/types/types";
 
 /**
  * Represents a color option available for selection.
@@ -32,6 +32,8 @@ export interface ColorPickerProps {
   size?: SizeType;
   /** Shape of the swatches ("square", "round", "pill"). */
   shape?: ShapeType;
+  /** Applies a shadow effect to the swatches. */
+  shadow?: ShadowType;
   /** If true, allows picking a custom color via a color input. */
   allowCustom?: boolean;
   /** Custom class name for the component container. */

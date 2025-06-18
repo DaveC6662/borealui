@@ -1,4 +1,4 @@
-import { SizeType, StateType, ThemeType } from "@/types/types";
+import { ShadowType, SizeType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the CircularProgress component.
@@ -18,6 +18,8 @@ export interface CircularProgressProps {
   size?: SizeType;
   /** Optional theme for the component. */
   theme?: ThemeType;
+  /** Optional shadow style for the component. */
+  shadow?: ShadowType;
   /** State of progress ("success", "error") */
   state?: StateType;
   /** Optional class name for custom styling. */
