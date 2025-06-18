@@ -5,7 +5,8 @@ import {
   ELLIPSIS_LABEL,
 } from "./Breadcrumbs.types";
 import { combineClassNames } from "../../utils/classNames";
-import { SeparatorIcon } from "../../Icons/index";
+import { ArrowRightIcon } from "../../Icons/index";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
   classMap: Record<string, string>;
@@ -16,6 +17,8 @@ export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
 export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   items,
   theme = "primary",
+  rounding = "medium",
+  shadow = "light",
   state = "",
   separator,
   classMap,
@@ -44,6 +47,8 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
         classMap[theme],
         classMap[state],
         classMap[size],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
         outline && classMap.outline,
         className
@@ -113,7 +118,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
 
               {!isLast && (
                 <span className={classMap.separator} aria-hidden="true">
-                  {separator ?? <SeparatorIcon />}
+                  {separator ?? <ArrowRightIcon />}
                 </span>
               )}
               <meta itemProp="position" content={`${index + 1}`} />

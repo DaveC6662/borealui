@@ -1,4 +1,10 @@
-import { SizeType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 import React from "react";
 
 /**
@@ -27,6 +33,10 @@ export interface ButtonProps {
   isExternal?: boolean;
   /** Whether to use outline styling. */
   outline?: boolean;
+  /** Rounding style for the button. */
+  rounding?: RoundingType;
+  /** Shadow style for the button. */
+  shadow?: ShadowType;
   /** Size of the button (e.g., "small", "medium", "large"). */
   size?: SizeType;
   /** Whether to show a loading indicator instead of the children. */

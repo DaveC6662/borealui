@@ -1,6 +1,7 @@
 import React, { forwardRef, useMemo } from "react";
 import { ButtonProps } from "./Button.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface ButtonBaseProps extends ButtonProps {
   classMap: Record<string, string>;
@@ -18,6 +19,8 @@ const ButtonBase = forwardRef<
       state = "",
       onClick,
       type = "button",
+      rounding = "medium",
+      shadow = "light",
       children,
       className = "",
       disabled = false,
@@ -44,8 +47,10 @@ const ButtonBase = forwardRef<
           classMap.button,
           classMap[theme],
           classMap[state],
-          outline && classMap.outline,
           classMap[size],
+          outline && classMap.outline,
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`],
           fullWidth && classMap.fullWidth,
           disabled && classMap.disabled,
           className

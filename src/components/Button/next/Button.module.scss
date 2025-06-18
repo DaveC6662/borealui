@@ -10,25 +10,34 @@
   gap: theme.$spacing-xs;
   padding: 10px 20px;
   width: fit-content;
-  border-radius: theme.$border-radius-xl;
   border: none;
   cursor: pointer;
   transition:
     transform theme.$transition-default,
     box-shadow theme.$transition-default;
   font-weight: theme.$font-weight-bold;
-  box-shadow: theme.$box-shadow-medium;
   color: inherit;
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: theme.$box-shadow-heavy;
     text-decoration: none;
   }
 
   &:focus {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
   }
 }
 

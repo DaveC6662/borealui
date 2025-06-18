@@ -1,6 +1,36 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { Breadcrumbs } from "../src/index.next";
 import { FaArrowRight } from "react-icons/fa";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../src/types/types";
+
+const themeOptions: ThemeType[] = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions: StateType[] = ["success", "error", "warning"];
+
+const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
+
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<typeof Breadcrumbs> = {
   title: "Components/Breadcrumbs",
@@ -18,48 +48,55 @@ const baseItems = [
   { label: "Data", href: "/library/data" },
 ];
 
+const defaultArgs = {
+  items: baseItems,
+  size: "medium" as SizeType,
+  theme: "primary" as ThemeType,
+  state: "" as StateType,
+  rounding: "medium" as RoundingType,
+  shadow: "medium" as ShadowType,
+};
+
 export const Default: Story = {
   args: {
-    items: baseItems,
+    ...defaultArgs,
   },
 };
 
-export const Themed: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <Breadcrumbs items={baseItems} theme="primary" />
-      <Breadcrumbs items={baseItems} theme="secondary" />
-      <Breadcrumbs items={baseItems} theme="tertiary" />
-      <Breadcrumbs items={baseItems} theme="quaternary" />
-      <Breadcrumbs items={baseItems} theme="clear" />
-    </div>
-  ),
-};
+export const RoundingVariants = () =>
+  withVariants(Breadcrumbs, { ...defaultArgs }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
 
-export const State: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <Breadcrumbs items={baseItems} theme="success" />
-      <Breadcrumbs items={baseItems} theme="warning" />
-      <Breadcrumbs items={baseItems} theme="error" />
-    </div>
-  ),
-};
+export const ShadowVariants = () =>
+  withVariants(Breadcrumbs, { ...defaultArgs }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);
 
-export const WithOutline: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <Breadcrumbs items={baseItems} theme="primary" outline />
-      <Breadcrumbs items={baseItems} theme="secondary" outline />
-      <Breadcrumbs items={baseItems} theme="tertiary" outline />
-      <Breadcrumbs items={baseItems} theme="quaternary" outline />
-      <Breadcrumbs items={baseItems} state="success" outline />
-      <Breadcrumbs items={baseItems} state="warning" outline />
-      <Breadcrumbs items={baseItems} state="error" outline />
-      <Breadcrumbs items={baseItems} theme="clear" outline />
-    </div>
-  ),
-};
+export const ThemeVariants = () =>
+  withVariants(Breadcrumbs, { ...defaultArgs }, [
+    { propName: "theme", values: [...themeOptions] },
+  ]);
+
+export const StateVariants = () =>
+  withVariants(Breadcrumbs, { ...defaultArgs }, [
+    { propName: "state", values: stateOptions },
+  ]);
+
+export const SizeVariants = () =>
+  withVariants(Breadcrumbs, { ...defaultArgs }, [
+    { propName: "size", values: sizeOptions },
+  ]);
+
+export const OutlineVariants = () =>
+  withVariants(
+    Breadcrumbs,
+    {
+      ...defaultArgs,
+      outline: true,
+    },
+    [{ propName: "theme", values: [...themeOptions, ...stateOptions] }]
+  );
 
 export const Truncated: Story = {
   args: {
@@ -86,16 +123,4 @@ export const CustomSeparator: Story = {
     items: baseItems,
     separator: <FaArrowRight />,
   },
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <Breadcrumbs items={baseItems} size="xs" />
-      <Breadcrumbs items={baseItems} size="small" />
-      <Breadcrumbs items={baseItems} size="medium" />
-      <Breadcrumbs items={baseItems} size="large" />
-      <Breadcrumbs items={baseItems} size="xl" />
-    </div>
-  ),
 };

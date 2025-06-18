@@ -1,4 +1,10 @@
-import { SizeType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * A breadcrumb item used to define a single step in the navigation path.
@@ -40,6 +46,12 @@ export interface BreadcrumbsProps {
    * Theme style to apply to the breadcrumbs (e.g., "primary", "secondary").
    */
   theme?: ThemeType;
+
+  /** Rounding style to apply to the breadcrumbs*/
+  rounding?: RoundingType;
+
+  /** Shadow style to apply to the breadcrumbs*/
+  shadow?: ShadowType;
 
   /**
    * State of the breadcrumbs (e.g., "success", "error", "warning").

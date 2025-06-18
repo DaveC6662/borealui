@@ -12,7 +12,18 @@
   padding: theme.$spacing-xs theme.$spacing-sm;
   list-style: none;
   overflow-x: auto;
-  border-radius: theme.$border-radius-sm;
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
 }
 
 @each $name, $values in theme.$themes {
@@ -156,11 +167,8 @@
 
 .separator {
   margin: 0 theme.$spacing-xs;
-  color: var(--text-color-light);
+  margin-top: -1px;
+  color: var(--text-color-primary);
   display: flex;
   align-items: center;
-}
-
-.separator_icon {
-  font-size: 0.8em;
 }
