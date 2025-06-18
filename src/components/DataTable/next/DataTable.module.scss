@@ -6,8 +6,6 @@
   width: 100%;
   max-width: 90vw;
   overflow-x: auto;
-  border-radius: theme.$border-radius-xs;
-  box-shadow: theme.$box-shadow-light;
   margin: theme.$spacing-md;
 
   .table {
@@ -53,7 +51,11 @@
     transition: background-color theme.$transition-default;
 
     &:hover {
-      background-color: var(--primary-color-hover);
+      background-color: var(--background-color-light);
+    }
+
+    &:hover:nth-child(even) {
+      background-color: var(--background-color);
     }
   }
 
@@ -63,10 +65,6 @@
 
   tbody tr {
     background-color: var(--background-color-dark);
-
-    &:hover {
-      background-color: var(--background-color-lighter);
-    }
   }
 
   @each $name, $values in theme.$themes {
@@ -153,5 +151,17 @@
         color: var(--text-color-secondary);
       }
     }
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
   }
 }

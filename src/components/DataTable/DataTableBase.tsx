@@ -1,6 +1,7 @@
 import { useMemo, useState, KeyboardEvent } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { DataTableBaseProps } from "./DataTable.types";
+import { capitalize } from "@/utils/capitalize";
 
 function DataTableBase<T extends object>({
   columns,
@@ -8,6 +9,8 @@ function DataTableBase<T extends object>({
   onRowClick,
   classMap,
   theme = "primary",
+  rounding = "small",
+  shadow = "none",
   state = "",
   outline = false,
   className = "",
@@ -58,6 +61,8 @@ function DataTableBase<T extends object>({
     <div
       className={combineClassNames(
         classMap.wrapper,
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
         striped && classMap.striped,
         className
       )}

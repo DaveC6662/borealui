@@ -12,6 +12,8 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 type SampleRow = {
   id: number;
@@ -164,6 +166,32 @@ export const OutlineVariants = () => (
           striped={true}
         />
       </div>
+    ))}
+  </StoryGrid>
+);
+
+export const RoundingVariants = () => (
+  <StoryGrid title="Rounding Variants">
+    {roundingOptions.map((rounding) => (
+      <DataTable
+        key={rounding}
+        rounding={rounding}
+        data={sampleData}
+        columns={sampleColumns}
+      />
+    ))}
+  </StoryGrid>
+);
+
+export const ShadowVariants = () => (
+  <StoryGrid title="Shadow Variants">
+    {shadowOptions.map((shadow) => (
+      <DataTable
+        key={shadow}
+        shadow={shadow}
+        data={sampleData}
+        columns={sampleColumns}
+      />
     ))}
   </StoryGrid>
 );

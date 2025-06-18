@@ -5,8 +5,6 @@
 .data_table_wrapper {
   width: 100%;
   overflow-x: auto;
-  border-radius: theme.$border-radius-xs;
-  box-shadow: theme.$box-shadow-light;
   margin: theme.$spacing-md;
 
   .data_table {
@@ -52,7 +50,11 @@
     transition: background-color theme.$transition-default;
 
     &:hover {
-      background-color: var(--primary-color-hover);
+      background-color: var(--background-color-light);
+    }
+
+    &:hover:nth-child(even) {
+      background-color: var(--background-color);
     }
   }
 
@@ -62,10 +64,6 @@
 
   tbody tr {
     background-color: var(--background-color-dark);
-
-    &:hover {
-      background-color: var(--background-color-lighter);
-    }
   }
 
   @each $name, $values in theme.$themes {
@@ -152,5 +150,17 @@
         color: var(--text-color-secondary);
       }
     }
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .data_table_round-#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .data_table_shadow-#{$key} {
+    box-shadow: $value;
   }
 }

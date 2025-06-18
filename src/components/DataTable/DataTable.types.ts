@@ -1,5 +1,5 @@
 import React from "react";
-import { StateType, ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Column definition for the DataTable.
@@ -31,6 +31,10 @@ export interface DataTableProps<T> {
   theme?: ThemeType;
   /** State of the table ex "error", "success". */
   state?: StateType;
+  /** Shadow styling of the data table */
+  rounding?: RoundingType;
+  /** Shadow styling of the data table */
+  shadow?: ShadowType;
   /** Whether to use outline styling. */
   outline?: boolean;
   /** Whether to use striped row styling. */

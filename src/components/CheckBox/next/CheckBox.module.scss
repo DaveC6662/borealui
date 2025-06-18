@@ -10,7 +10,6 @@ $checkbox-sizes: (
   large: 1.25em,
   xl: 1.5em,
 );
-
 $checkmark-sizes: (
   xs: (
     width: 0.41em,
@@ -38,7 +37,6 @@ $checkmark-sizes: (
     border-width: 0.175em,
   ),
 );
-
 $label-font-sizes: (
   xs: theme.$font-size-xs,
   small: theme.$font-size-sm,
@@ -87,6 +85,7 @@ $label-font-sizes: (
 
   .#{$size} .box::after {
     $checkmark: map.get($checkmark-sizes, $size);
+
     width: map.get($checkmark, width);
     height: map.get($checkmark, height);
     border-left: map.get($checkmark, border-width) solid currentcolor;
@@ -95,6 +94,7 @@ $label-font-sizes: (
 
   .#{$size} .box.indeterminate::after {
     $checkmark: map.get($checkmark-sizes, $size);
+
     width: map.get($checkmark, width);
     height: map.get($checkmark, border-width);
   }
