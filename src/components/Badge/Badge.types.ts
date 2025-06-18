@@ -1,5 +1,11 @@
 import { IconType } from "react-icons";
-import { SizeType, StateType, ThemeType } from "../../types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../../types/types";
 import { MouseEvent } from "react";
 
 /**
@@ -35,6 +41,12 @@ export interface BadgeProps {
    * Badge size (e.g., 'small', 'medium', 'large').
    */
   size?: SizeType;
+
+  /** Rounding of the badge */
+  rounding?: RoundingType;
+
+  /** Shadow of the badge */
+  shadow?: ShadowType;
 
   /**
    * Custom test ID for unit tests.

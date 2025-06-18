@@ -14,7 +14,7 @@
   white-space: nowrap;
   transition: all theme.$transition-default;
 
-  &:hover {
+  &.clickable:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgb(0 0 0 / 15%);
     cursor: pointer;
@@ -35,7 +35,7 @@
   background-color: transparent;
   color: var(--text-color-primary);
 
-  &:hover {
+  &.clickable:hover {
     transform: translateY(-2px);
     box-shadow: theme.$box-shadow-heavy;
   }
@@ -50,7 +50,7 @@
     color: var(--text-color-primary);
     border: 2px solid var(--text-color-primary);
 
-    &:hover {
+    &.clickable:hover {
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-heavy;
     }
@@ -62,12 +62,24 @@
   }
 }
 
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
 @each $name, $values in theme.$themes {
   .#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
-    &:hover {
+    &.clickable:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-heavy;
@@ -89,7 +101,7 @@
     border: 2px solid map.get($values, border);
     box-shadow: none;
 
-    &:hover {
+    &.clickable:hover {
       border-color: map.get($values, hover);
       color: map.get($values, text-hover);
     }
@@ -101,7 +113,7 @@
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
-    &:hover {
+    &.clickable:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-heavy;
@@ -123,7 +135,7 @@
     border: 2px solid map.get($values, border);
     box-shadow: none;
 
-    &:hover {
+    &.clickable:hover {
       border-color: map.get($values, hover);
       color: map.get($values, text-hover);
     }

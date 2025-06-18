@@ -63,6 +63,18 @@
   }
 }
 
+@each $key, $value in theme.$shadow {
+  .badge_shadow-#{$key} {
+    box-shadow: $value;
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .badge_round-#{$key} {
+    border-radius: $value;
+  }
+}
+
 @each $name, $values in theme.$themes {
   .badge_#{$name} {
     background-color: map.get($values, bg);

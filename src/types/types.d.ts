@@ -18,7 +18,7 @@ export type SizeType = "xs" | "small" | "medium" | "large" | "xl";
 export type OrientationType = "horizontal" | "vertical";
 
 export type ShadowType = "none" | "light" | "medium" | "strong" | "intense";
-export type RoundingType = "none" | "sm" | "md" | "lg" | "xl";
+export type RoundingType = "none" | "small" | "medium" | "large";
 
 export type PositionType =
   | "topLeft"

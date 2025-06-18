@@ -15,7 +15,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   lazyLoad = false,
   iconPosition = "right",
   isToggleable = true,
-  rounding = "md",
+  rounding = "medium",
   shadow = "light",
   description,
   size = "medium",

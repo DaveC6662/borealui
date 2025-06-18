@@ -20,8 +20,8 @@ const themeOptions = [
 
 const stateOptions = ["success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"];
-const roundingOptions = ["none", "xs", "sm", "md", "lg", "xl"];
-const shdaowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
@@ -66,7 +66,7 @@ export const RoundingVariants = () =>
 
 export const ShadowVariants = () =>
   withVariants(Accordion, { ...defaultArgs }, [
-    { propName: "shadow", values: shdaowOptions },
+    { propName: "shadow", values: shadowOptions },
   ]);
 
 export const Controlled: Story = {

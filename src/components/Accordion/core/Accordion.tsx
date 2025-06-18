@@ -17,11 +17,9 @@ const classes = {
   shadowIntense: "accordion_shadow-Intense",
 
   roundNone: "accordion_round-None",
-  roundXs: "accordion_round-Xs",
-  roundSm: "accordion_round-Sm",
-  roundMd: "accordion_round-Md",
-  roundLg: "accordion_round-Lg",
-  roundXl: "accordion_round-Xl",
+  roundSmall: "accordion_round-Small",
+  roundMedium: "accordion_round-Medium",
+  roundLarge: "accordion_round-Large",
 
   disabled: "accordion_disabled",
   expanded: "accordion_expanded",

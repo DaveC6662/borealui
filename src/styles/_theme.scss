@@ -39,11 +39,12 @@ $spacing-sm: 8px;
 $spacing-md: 16px;
 $spacing-lg: 24px;
 $spacing-xl: 32px;
-$border-radius-xs: 5px;
-$border-radius-sm: 10px;
-$border-radius-md: 15px;
+$border-radius-xs: 2.5px;
+$border-radius-sm: 5px;
+$border-radius-md: 10px;
 $border-radius-lg: 20px;
-$border-radius-xl: 25px;
+$border-radius-xl: 40px;
+$border-radius-full: 40px;
 $border-radius-round: 50%;
 $box-shadow-light: 0px 2px 4px rgb(46 49 49 / 10%);
 $box-shadow-medium: 0px 4px 8px rgb(86 101 116 / 20%);
@@ -125,12 +126,10 @@ $states: (
 ) !default;
 $rounding: (
   "None": 0,
-  "Xs": $border-radius-xs,
-  "Sm": $border-radius-sm,
-  "Md": $border-radius-md,
-  "Lg": $border-radius-lg,
-  "Xl": $border-radius-xl,
-  "Round": $border-radius-round,
+  "Small": $border-radius-sm,
+  "Medium": $border-radius-md,
+  "Large": $border-radius-lg,
+  "Full": $border-radius-full,
 );
 $shadow: (
   "None": 0,

@@ -1,6 +1,7 @@
 import React, { useMemo, MouseEvent } from "react";
 import { BadgeProps } from "./Badge.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BadgeBaseProps extends BadgeProps {
   classMap: Record<string, string>;
@@ -12,6 +13,8 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   theme = "primary",
   state = "",
   disabled = false,
+  rounding = "small",
+  shadow = "none",
   title,
   size = "medium",
   outline = false,
@@ -28,6 +31,8 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
         classMap[size],
         classMap[theme],
         classMap[state],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
         outline && classMap.outline,
         onClick && classMap.clickable,

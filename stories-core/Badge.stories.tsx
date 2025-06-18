@@ -2,7 +2,13 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
 import { Badge } from "../src/index.core";
 import { FaCheck, FaExclamation, FaInfoCircle } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-import type { SizeType, StateType, ThemeType } from "../src/types/types";
+import type {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../src/types/types";
 
 const themeOptions = [
   "primary",
@@ -13,6 +19,8 @@ const themeOptions = [
 ];
 const stateOptions = ["success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions = ["none", "small", "medium", "large"];
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
@@ -38,6 +46,8 @@ const defaultArgs = {
   theme: "primary" as ThemeType,
   state: "" as StateType,
   size: "medium" as SizeType,
+  shadow: "none" as ShadowType,
+  rounding: "sm" as RoundingType,
 };
 
 export const Default: Story = {
@@ -86,6 +96,16 @@ export const StateVariants = () =>
 export const SizeVariants = () =>
   withVariants(Badge, { ...defaultArgs }, [
     { propName: "size", values: sizeOptions },
+  ]);
+
+export const RoundingVariants = () =>
+  withVariants(Badge, { ...defaultArgs }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = () =>
+  withVariants(Badge, { ...defaultArgs }, [
+    { propName: "shadow", values: shadowOptions },
   ]);
 
 export const OutlineVariants = () =>
