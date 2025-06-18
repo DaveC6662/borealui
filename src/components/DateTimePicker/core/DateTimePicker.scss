@@ -37,7 +37,6 @@
     z-index: 1;
     width: 100%;
     padding: theme.$spacing-sm;
-    border-radius: theme.$border-radius-lg;
     border: 2px solid transparent;
     font-size: theme.$font-size-base;
     background-color: transparent;
@@ -63,7 +62,7 @@
     z-index: 2;
     pointer-events: auto;
     transition: color 0.2s ease-in-out;
-    color: theme.$text-color-primary;
+    color: var(--text-color-primary);
     line-height: 1em;
   }
 
@@ -127,7 +126,14 @@
     opacity: 0.6;
     pointer-events: none;
     background-color: theme.$disabled-color;
-    color: theme.$disabled-color;
+    color: var(--text-color-secondary);
+    cursor: not-allowed;
+  }
+
+  &_disabled .datetime_picker_icon {
+    opacity: 0.6;
+    pointer-events: none;
+    color: var(--text-color-secondary);
     cursor: not-allowed;
   }
 
@@ -188,6 +194,18 @@
 
   &_description {
     font-size: theme.$font-size-sm;
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .datetime_picker_round-#{$key} .datetime_picker_input {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .datetime_picker_shadow-#{$key} .datetime_picker_input {
+    box-shadow: $value;
   }
 }

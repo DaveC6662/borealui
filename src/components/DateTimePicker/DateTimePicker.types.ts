@@ -1,4 +1,10 @@
-import { SizeType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * Props for the DateTimePicker component.
@@ -26,6 +32,10 @@ export interface DateTimePickerProps {
   theme?: ThemeType;
   /** State of the input (e.g., "success", "error", "warning", "disabled"). */
   state?: StateType;
+  /** Controls the rounding of the input. */
+  rounding?: RoundingType;
+  /** Controls the shadow of the input. */
+  shadow?: ShadowType;
   /** Size of the component ("small", "medium", "large"). */
   size?: SizeType;
   /** Whether to use outlined styling. */

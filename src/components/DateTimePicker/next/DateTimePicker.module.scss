@@ -58,7 +58,7 @@
   z-index: 2;
   pointer-events: auto;
   transition: color 0.2s ease-in-out;
-  color: theme.$text-color-primary;
+  color: var(--text-color-primary);
   line-height: 1em;
 }
 
@@ -122,7 +122,14 @@
   opacity: 0.6;
   pointer-events: none;
   background-color: theme.$disabled-color;
-  color: theme.$disabled-color;
+  color: var(--text-color-secondary);
+  cursor: not-allowed;
+}
+
+.disabled .icon {
+  opacity: 0.6;
+  pointer-events: none;
+  color: var(--text-color-secondary);
   cursor: not-allowed;
 }
 
@@ -184,4 +191,16 @@ $input-sizes: (
 .description {
   font-size: theme.$font-size-sm;
   color: var(--text-color-secondary);
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} .input {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} .input {
+    box-shadow: $value;
+  }
 }

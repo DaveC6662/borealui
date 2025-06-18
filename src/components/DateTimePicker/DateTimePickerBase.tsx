@@ -1,7 +1,8 @@
-import React, { useId, useRef } from "react";
+import React, { useId, useMemo, useRef } from "react";
 import { DateTimePickerProps } from "./DateTimePicker.types";
 import { combineClassNames } from "@/utils/classNames";
 import { CalendarIcon } from "@/Icons";
+import { capitalize } from "@/utils/capitalize";
 
 export interface DateTimePickerBaseProps extends DateTimePickerProps {
   classMap: Record<string, string>;
@@ -23,6 +24,8 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   outline,
   theme = "primary",
   state = "",
+  rounding = "medium",
+  shadow = "light",
   className = "",
   "data-testid": testId = "datetime-picker",
   classMap,
@@ -41,19 +44,24 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
     inputRef.current?.showPicker?.();
   };
 
-  return (
-    <div
-      className={combineClassNames(
+  const pickerClass = useMemo(
+    () =>
+      combineClassNames(
         classMap.wrapper,
         classMap[theme],
         classMap[state],
         classMap[size],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
         disabled && classMap.disabled,
         className
-      )}
-      data-testid={testId}
-    >
+      ),
+    [classMap, theme, state, size, outline, disabled, className]
+  );
+
+  return (
+    <div className={pickerClass} data-testid={testId}>
       {label && (
         <label htmlFor={inputId} className={classMap.label}>
           {label} {required && <span aria-hidden="true">*</span>}

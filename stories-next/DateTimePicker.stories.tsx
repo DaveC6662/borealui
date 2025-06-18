@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { DateTimePicker } from "../src/index.next";
 import type { DateTimePickerProps } from "../src/components/DateTimePicker/DateTimePicker.types";
+import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
 const themeOptions = [
   "primary",
@@ -12,6 +13,9 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<DateTimePickerProps> = {
   title: "Components/DateTimePicker",
@@ -191,3 +195,19 @@ export const StateVariants: Story = {
     );
   },
 };
+
+export const RoundingVariants = () => (
+  <StoryGrid title="Rounding Variants">
+    {roundingOptions.map((rounding) => (
+      <DateTimePicker key={rounding} rounding={rounding} />
+    ))}
+  </StoryGrid>
+);
+
+export const ShadowVariants = () => (
+  <StoryGrid title="Shadow Variants">
+    {shadowOptions.map((shadow) => (
+      <DateTimePicker key={shadow} shadow={shadow} />
+    ))}
+  </StoryGrid>
+);
