@@ -10,9 +10,7 @@
   justify-content: center;
   text-align: center;
   padding: theme.$spacing-lg;
-  border-radius: theme.$border-radius-lg;
   background-color: var(--background-color-light);
-  box-shadow: theme.$box-shadow-light;
   gap: theme.$spacing-xs;
   transition: theme.$transition-default;
   width: 400px;
@@ -151,5 +149,17 @@
     .empty_state_icon {
       font-size: 2em;
     }
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .empty_state_round-#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .empty_state_shadow-#{$key} {
+    box-shadow: $value;
   }
 }

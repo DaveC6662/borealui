@@ -9,9 +9,7 @@
   justify-content: center;
   text-align: center;
   padding: theme.$spacing-lg;
-  border-radius: theme.$border-radius-lg;
   background-color: var(--background-color-light);
-  box-shadow: theme.$box-shadow-light;
   gap: theme.$spacing-xs;
   transition: theme.$transition-default;
   width: 400px;
@@ -151,5 +149,17 @@ $icon-sizes: (
     .icon {
       font-size: map.get($icon-sizes, $size);
     }
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
   }
 }

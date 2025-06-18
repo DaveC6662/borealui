@@ -3,6 +3,18 @@ import { EmptyState } from "../src/index.core";
 import type { EmptyStateProps } from "../src/components/EmptyState/EmptyState.types";
 import { FaInbox, FaBug, FaFolderOpen } from "react-icons/fa";
 
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+const sizeOptions = ["xs", "small", "medium", "large", "xl"];
+const stateOptions = ["success", "error", "warning"];
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
 const meta: Meta<EmptyStateProps> = {
   title: "Components/EmptyState",
   component: EmptyState,
@@ -44,16 +56,6 @@ export const WithActionButton: Story = {
     onActionClick: () => alert("Retry clicked"),
   },
 };
-
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions = ["success", "error", "warning"];
 
 export const ThemeVariants: Story = {
   render: () => (
@@ -113,11 +115,44 @@ export const OutlineVariants: Story = {
 export const SizeVariants: Story = {
   render: () => (
     <div style={{ display: "grid", gap: "1.5rem" }}>
-      <EmptyState size="xs" title="Xs Empty" message="Mini mode" />
-      <EmptyState size="small" title="Small Empty" message="Compact mode" />
-      <EmptyState size="medium" title="Medium Empty" message="Default size" />
-      <EmptyState size="large" title="Large Empty" message="Expanded layout" />
-      <EmptyState size="xl" title="Xl Empty" message="Extra Expanded layout" />
+      {sizeOptions.map((size) => (
+        <EmptyState
+          key={`size-${size}`}
+          size={size}
+          title={`${size.charAt(0).toUpperCase() + size.slice(1)} Size`}
+          message={`This is a ${size} variant.`}
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const RoundingVariants: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {roundingOptions.map((rounding) => (
+        <EmptyState
+          key={`rounding-${rounding}`}
+          rounding={rounding}
+          title={`${rounding.charAt(0).toUpperCase() + rounding.slice(1)} Rounding`}
+          message={`Rounding ${rounding}.`}
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const ShadowVariants: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {shadowOptions.map((shadow) => (
+        <EmptyState
+          key={`shadow-${shadow}`}
+          shadow={shadow}
+          title={`${shadow.charAt(0).toUpperCase() + shadow.slice(1)} Shadow`}
+          message={`Shadow ${shadow}.`}
+        />
+      ))}
     </div>
   ),
 };

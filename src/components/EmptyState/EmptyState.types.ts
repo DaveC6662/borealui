@@ -1,5 +1,11 @@
 import { IconType } from "react-icons";
-import { ThemeType, SizeType, StateType } from "@/types/types";
+import {
+  ThemeType,
+  SizeType,
+  StateType,
+  RoundingType,
+  ShadowType,
+} from "@/types/types";
 
 /**
  * Props for the EmptyState component.
@@ -17,6 +23,10 @@ export interface EmptyStateProps {
   state?: StateType;
   /** Size modifier (e.g., "small", "medium", "large"). */
   size?: SizeType;
+  /** Controls the rounding of the component. */
+  rounding?: RoundingType;
+  /** Controls the shadow of the component. */
+  shadow?: ShadowType;
   /** Whether the component uses outline styles. */
   outline?: boolean;
   /** Optional label for an action button. */

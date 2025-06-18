@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { EmptyStateProps } from "./EmptyState.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseEmptyStateProps extends EmptyStateProps {
   Button: React.ComponentType<any>;
@@ -14,6 +15,8 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   theme = "primary",
   state = "",
   size = "medium",
+  rounding = "medium",
+  shadow = "light",
   outline = false,
   actionLabel,
   onActionClick,
@@ -25,16 +28,24 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   const titleId = `${testId}-title`;
   const descId = `${testId}-message`;
 
-  return (
-    <section
-      className={combineClassNames(
+  const sectionClassNames = useMemo(
+    () =>
+      combineClassNames(
         classMap.empty_state,
         classMap[theme],
         classMap[state],
         classMap[size],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
         className
-      )}
+      ),
+    [classMap, rounding, shadow, size, state, theme, outline, className]
+  );
+
+  return (
+    <section
+      className={sectionClassNames}
       role="region"
       aria-labelledby={titleId}
       aria-describedby={descId}
