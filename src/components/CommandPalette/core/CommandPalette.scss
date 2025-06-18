@@ -5,7 +5,7 @@
 .command_palette_overlay {
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 40%);
+  background: rgb(0 0 0 / 60%);
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -15,8 +15,6 @@
 
 .command_palette {
   background: var(--background-color-light);
-  border-radius: theme.$border-radius-lg;
-  box-shadow: theme.$box-shadow-heavy;
   width: 90%;
   max-width: 500px;
   padding: theme.$spacing-md;
@@ -24,6 +22,22 @@
   flex-direction: column;
   justify-content: center;
   gap: theme.$spacing-sm;
+}
+
+@each $key, $value in theme.$rounding {
+  .command_palette_round-#{$key} {
+    border-radius: $value;
+  }
+
+  .command_palette_round-#{$key} .command_palette_item {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .command_palette_shadow-#{$key} {
+    box-shadow: $value;
+  }
 }
 
 .command_palette_input {
@@ -43,7 +57,6 @@
 .command_palette_item {
   padding: theme.$spacing-sm;
   cursor: pointer;
-  border-radius: theme.$border-radius-sm;
   display: flex;
   margin: theme.$spacing-xs;
   align-items: center;

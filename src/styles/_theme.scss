@@ -138,3 +138,10 @@ $shadow: (
   "Strong": $box-shadow-heavy,
   "Intense": $box-shadow-intense,
 );
+$inverted-shadows: (
+  "None": none,
+  "Light": 0 2px 4px rgba(255, 255, 255, 0.05),
+  "Medium": 0 4px 8px rgba(255, 255, 255, 0.08),
+  "Strong": 0 6px 12px rgba(255, 255, 255, 0.12),
+  "Intense": 0 8px 16px rgba(255, 255, 255, 0.2),
+);

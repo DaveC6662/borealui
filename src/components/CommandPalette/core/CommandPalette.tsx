@@ -13,14 +13,28 @@ const classes = {
   icon: "command_palette_icon",
   active: "command_palette_active",
   empty: "command_palette_empty",
+
   primary: "command_palette_primary",
   secondary: "command_palette_secondary",
   tertiary: "command_palette_tertiary",
   quaternary: "command_palette_quaternary",
+
   success: "command_palette_success",
   error: "command_palette_error",
   warning: "command_palette_warning",
+
   clear: "command_palette_clear",
+
+  shadowNone: "command_palette_shadow-None",
+  shadowLight: "command_palette_shadow-Light",
+  shadowMedium: "command_palette_shadow-Medium",
+  shadowStrong: "command_palette_shadow-Strong",
+  shadowIntense: "command_palette_shadow-Intense",
+
+  roundNone: "command_palette_round-None",
+  roundSmall: "command_palette_round-Small",
+  roundMedium: "command_palette_round-Medium",
+  roundLarge: "command_palette_round-Large",
 };
 
 const CommandPalette: React.FC<CommandPaletteProps> = (props) => (

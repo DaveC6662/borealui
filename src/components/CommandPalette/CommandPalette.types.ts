@@ -1,4 +1,4 @@
-import { StateType, ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import { ReactNode } from "react";
 
 /**
@@ -23,6 +23,10 @@ export interface CommandPaletteProps {
   placeholder?: string;
   /** Theme style for the palette. */
   theme?: ThemeType;
+  /** Rounding style for the palette. */
+  rounding?: RoundingType;
+  /** Shadow style for the palette. */
+  shadow?: ShadowType;
   /** The state of the command palette, e.g., "error" or "success". */
   state?: StateType;
   /** Whether the command palette is currently open. */

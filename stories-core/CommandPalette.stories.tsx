@@ -15,6 +15,9 @@ const themeOptions = [
 
 const stateOptions = ["success", "error", "warning"];
 
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
 const meta: Meta<CommandPaletteProps> = {
   title: "Components/CommandPalette",
   component: CommandPalette,
@@ -111,6 +114,56 @@ export const StateVariants = {
               commands={sampleCommands}
               placeholder={`state: ${state}`}
               state={state}
+            />
+          </div>
+        ))}
+      </StoryGrid>
+    );
+  },
+};
+
+export const RoundingVariants = {
+  render: () => {
+    const [openPalette, setOpenPalette] = useState<string | null>(null);
+
+    return (
+      <StoryGrid title="Rounding Variants">
+        {roundingOptions.map((rounding) => (
+          <div key={rounding} style={{ paddingBottom: "1rem" }}>
+            <button onClick={() => setOpenPalette(rounding)}>
+              Rounding {rounding}
+            </button>
+            <CommandPalette
+              isOpen={openPalette === rounding}
+              onClose={() => setOpenPalette(null)}
+              commands={sampleCommands}
+              placeholder={`Rounding: ${rounding}`}
+              rounding={rounding}
+            />
+          </div>
+        ))}
+      </StoryGrid>
+    );
+  },
+};
+
+export const ShadowVariants = {
+  render: () => {
+    const [openPalette, setOpenPalette] = useState<string | null>(null);
+
+    return (
+      <StoryGrid title="Shadow Variants">
+        {shadowOptions.map((shadow) => (
+          <div key={shadow} style={{ paddingBottom: "1rem" }}>
+            <button onClick={() => setOpenPalette(shadow)}>
+              Shadow {shadow} Palette
+            </button>
+            <CommandPalette
+              isOpen={openPalette === shadow}
+              onClose={() => setOpenPalette(null)}
+              commands={sampleCommands}
+              placeholder={`Shadow: ${shadow}`}
+              shadow={shadow}
             />
           </div>
         ))}

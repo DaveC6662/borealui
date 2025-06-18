@@ -8,6 +8,7 @@ import React, {
 import ReactDOM from "react-dom";
 import { combineClassNames } from "@/utils/classNames";
 import type { CommandPaletteProps } from "./CommandPalette.types";
+import { capitalize } from "@/utils/capitalize";
 
 export interface CommandPaletteBaseProps extends CommandPaletteProps {
   classMap: Record<string, string>;
@@ -20,6 +21,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   isOpen,
   onClose,
   theme = "primary",
+  rounding = "medium",
+  shadow = "medium",
   state = "",
   classMap,
   TextInputComponent,
@@ -93,7 +96,9 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         className={combineClassNames(
           classMap.command_palette,
           classMap[theme],
-          classMap[state]
+          classMap[state],
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`]
         )}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
@@ -112,6 +117,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           placeholder={placeholder}
           theme={theme}
           state={state}
+          shadow={"none"}
+          rounding={rounding}
           className={classMap.input}
           data-testid={`${testId}-input`}
           role="combobox"

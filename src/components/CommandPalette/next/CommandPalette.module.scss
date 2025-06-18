@@ -5,7 +5,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 40%);
+  background: rgb(0 0 0 / 60%);
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -24,6 +24,22 @@
   flex-direction: column;
   justify-content: center;
   gap: theme.$spacing-sm;
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+
+  .round#{$key} .item {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
 }
 
 .input {
