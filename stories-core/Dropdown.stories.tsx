@@ -2,6 +2,7 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { Dropdown } from "../src/index.core";
 import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import type { DropdownProps } from "../src/components/Dropdown/Dropdown.types";
+import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
 const meta: Meta<DropdownProps> = {
   title: "Components/Dropdown",
@@ -12,6 +13,16 @@ const meta: Meta<DropdownProps> = {
     align: "right",
   },
 };
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 export default meta;
 
@@ -82,17 +93,9 @@ export const AlignmentVariants: Story = {
 
 export const Themed: Story = {
   render: () => {
-    const themes = [
-      "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-    ] as const;
-
     return (
       <div style={{ display: "flex", gap: "1rem", padding: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <div key={theme} style={{ textAlign: "center" }}>
             <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
               {theme}
@@ -114,7 +117,7 @@ export const States: Story = {
     const stateOptions = ["success", "error", "warning"];
 
     return (
-      <div style={{ display: "flex", gap: "1rem", padding: "1rem" }}>
+      <StoryGrid title="State Variants">
         {stateOptions.map((state) => (
           <div key={state} style={{ textAlign: "center" }}>
             <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
@@ -127,8 +130,43 @@ export const States: Story = {
             />
           </div>
         ))}
-      </div>
+      </StoryGrid>
     );
   },
 };
 
+export const MenuRoundingVariants = () => (
+  <StoryGrid title="Menu Rounding Variants">
+    {roundingOptions.map((rounding) => (
+      <div key={rounding} style={{ textAlign: "center" }}>
+        <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+          {rounding}
+        </p>
+        <Dropdown
+          key={rounding}
+          menuRounding={rounding}
+          triggerIcon={FaEllipsisV}
+          items={[{ label: `Item (${rounding})`, onClick: () => {} }]}
+        />
+      </div>
+    ))}
+  </StoryGrid>
+);
+
+export const MenuShadowVariants = () => (
+  <StoryGrid title="Menu Shadow Variants">
+    {shadowOptions.map((shadow) => (
+      <div key={shadow} style={{ textAlign: "center" }}>
+        <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+          {shadow}
+        </p>
+        <Dropdown
+          key={shadow}
+          menuShadow={shadow}
+          triggerIcon={FaEllipsisV}
+          items={[{ label: `Item (${shadow})`, onClick: () => {} }]}
+        />
+      </div>
+    ))}
+  </StoryGrid>
+);

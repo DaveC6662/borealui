@@ -6,10 +6,12 @@ import React, {
   useId,
   JSX,
   ComponentType,
+  useMemo,
 } from "react";
 import { DropdownProps } from "./Dropdown.types";
 import { combineClassNames } from "@/utils/classNames";
 import MenuIcon from "@/Icons/MenuIcon";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseDropdownProps extends DropdownProps {
   IconButton: ComponentType<any>;
@@ -24,6 +26,11 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   menuClassName = "",
   ariaLabel = "Dropdown menu",
   theme = "primary",
+  toggleRounding = "medium",
+  menuRounding = "medium",
+  toggleShadow = "light",
+  menuShadow = "light",
+  toggleOutline = false,
   state = "",
   "data-testid": testId = "dropdown",
   IconButton,
@@ -104,6 +111,18 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     }
   }, [activeIndex, open]);
 
+  const menuClassNames = useMemo(
+    () =>
+      combineClassNames(
+        classMap.menu,
+        align === "right" ? classMap.alignRight : classMap.alignLeft,
+        menuShadow && classMap[`shadow${capitalize(menuShadow)}`],
+        menuRounding && classMap[`round${capitalize(menuRounding)}`],
+        menuClassName
+      ),
+    [classMap, align, menuShadow, menuRounding, menuClassName]
+  );
+
   return (
     <div
       ref={dropdownRef}
@@ -117,6 +136,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={menuId}
+        rounding={toggleRounding}
+        shadow={toggleShadow}
+        outline={toggleOutline}
         theme={theme}
         state={state}
         onClick={toggleDropdown}
@@ -129,11 +151,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           ref={menuRef}
           role="menu"
           aria-label={ariaLabel}
-          className={combineClassNames(
-            classMap.menu,
-            align === "right" ? classMap.alignRight : classMap.alignLeft,
-            menuClassName
-          )}
+          className={menuClassNames}
           data-testid={`${testId}-menu`}
         >
           {items.map((item, index) =>

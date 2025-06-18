@@ -1,4 +1,4 @@
-import { StateType, ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import { ComponentType } from "react";
 
 /**
@@ -31,6 +31,16 @@ export interface DropdownProps {
   className?: string;
   /** Custom class name for the dropdown menu. */
   menuClassName?: string;
+  /** Rounding of toggle button. */
+  toggleRounding?: RoundingType;
+  /** Rounding of dropdown menu. */
+  menuRounding?: RoundingType;
+  /** Shadow of toggle button. */
+  toggleShadow?: ShadowType;
+  /** Shadow of dropdown menu. */
+  menuShadow?: ShadowType;
+  /** Whether to use the outline style on toggle button. */
+  toggleOutline?: boolean;
   /** ARIA label for accessibility. */
   ariaLabel?: string;
   /** Optional theme for styling. */

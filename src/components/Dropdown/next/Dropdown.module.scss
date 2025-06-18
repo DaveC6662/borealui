@@ -26,8 +26,6 @@
   overflow: hidden;
   margin-top: theme.$spacing-xs;
   background-color: var(--background-color-lighter);
-  border-radius: theme.$border-radius-xs;
-  box-shadow: theme.$box-shadow-medium;
   z-index: theme.$z-index-drawer;
   padding: theme.$spacing-xs 0;
   min-width: 200px;
@@ -94,5 +92,17 @@
   @media (width <= 480px) {
     font-size: theme.$font-size-base;
     padding: theme.$spacing-md;
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
   }
 }
