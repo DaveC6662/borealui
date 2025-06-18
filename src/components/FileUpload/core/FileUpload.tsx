@@ -20,15 +20,28 @@ const classes = {
   fileListItem: "file_upload_file_list_item",
   fileListFileName: "file_upload_file_list_file_name",
   fileListRemoveButton: "file_upload_file_list_remove_button",
+
   primary: "file_upload_primary",
   secondary: "file_upload_secondary",
   tertiary: "file_upload_tertiary",
   quaternary: "file_upload_quaternary",
   clear: "file_upload_clear",
+
   disabled: "file_upload_disabled",
   error: "file_upload_error",
   success: "file_upload_success",
   warning: "file_upload_warning",
+
+  shadowNone: "file_upload_shadow-None",
+  shadowLight: "file_upload_shadow-Light",
+  shadowMedium: "file_upload_shadow-Medium",
+  shadowStrong: "file_upload_shadow-Strong",
+  shadowIntense: "file_upload_shadow-Intense",
+
+  roundNone: "file_upload_round-None",
+  roundSmall: "file_upload_round-Small",
+  roundMedium: "file_upload_round-Medium",
+  roundLarge: "file_upload_round-Large",
 };
 
 const FileUpload: React.FC<FileUploadProps> = (props) => {

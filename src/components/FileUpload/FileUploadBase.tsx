@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState } from "react";
 import { FileUploadProps } from "./FileUpload.types";
 import { FileIcon, TrashIcon } from "@/Icons";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseFileUploadProps extends FileUploadProps {
   FormGroup: React.ComponentType<any>;
@@ -17,6 +18,11 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   error,
   required = false,
   theme = "primary",
+  controlRounding = "medium",
+  controlShadow = "none",
+  outline = false,
+  outlineRounding = "small",
+  outlineShadow = "none",
   state = "",
   multiple = false,
   maxFileSizeBytes = Infinity,
@@ -143,14 +149,20 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     }, 100);
   };
 
-  const containerClassName = useMemo(() => combineClassNames(
-    classMap.fileUpload,
-    classMap[state],
-    classMap[theme],
-    error && classMap.error,
-    isDragging ? "dragging" : "",
-    disabled && classMap.disabled,
-  ), [classMap, isDragging, theme, state, disabled]);
+  const containerClassName = useMemo(
+    () =>
+      combineClassNames(
+        classMap.fileUpload,
+        classMap[state],
+        classMap[theme],
+        outlineShadow && classMap[`shadow${capitalize(outlineShadow)}`],
+        outlineRounding && classMap[`round${capitalize(outlineRounding)}`],
+        error && classMap.error,
+        isDragging ? "dragging" : "",
+        disabled && classMap.disabled
+      ),
+    [classMap, isDragging, theme, state, disabled]
+  );
 
   return (
     <FormGroup
@@ -188,6 +200,9 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             state={error && classMap.error}
             className={classMap.fileInput}
             disabled={uploading || disabled}
+            outline={outline}
+            rounding={controlRounding}
+            shadow={controlShadow}
             onClick={() => fileInput.current?.click()}
             aria-label={
               fileNames.length > 0 ? fileNames.join(", ") : "Choose File"
@@ -248,7 +263,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             {!uploading && (
               <Button
                 theme={theme}
-                state={error && classMap.error || state}
+                state={(error && classMap.error) || state}
                 disabled={uploading}
                 onClick={handleUpload}
                 loading={uploading}

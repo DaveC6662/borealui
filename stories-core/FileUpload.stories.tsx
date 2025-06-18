@@ -24,6 +24,9 @@ const themeOptions = [
 
 const stateOptions = ["success", "error", "warning"];
 
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
 export default meta;
 
 type Story = StoryObj<FileUploadProps>;
@@ -139,11 +142,10 @@ export const WithDescription: Story = {
 
 export const Disabled: Story = {
   args: {
-    disabled: true
+    disabled: true,
   },
   render: (args) => <FileUpload {...args} onSubmit={() => {}} />,
 };
-
 
 export const ThemeVariants: Story = {
   render: (args) => (
@@ -179,6 +181,46 @@ export const StateVariants: Story = {
             theme="secondary"
             label={`Upload (${state})`}
             onSubmit={(files) => console.log(`${state}:`, files)}
+          />
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const OutlineRoundingVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {roundingOptions.map((rounding) => (
+        <div key={rounding}>
+          <h4 style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+            {rounding} rounding
+          </h4>
+          <FileUpload
+            {...args}
+            outlineRounding={rounding}
+            label={`Upload (${rounding})`}
+            onSubmit={(files) => console.log(`${rounding}:`, files)}
+          />
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const OutlineShadowVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {shadowOptions.map((shadow) => (
+        <div key={shadow}>
+          <h4 style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+            {shadow} shadow
+          </h4>
+          <FileUpload
+            {...args}
+            outlineShadow={shadow}
+            label={`Upload (${shadow})`}
+            onSubmit={(files) => console.log(`${shadow}:`, files)}
           />
         </div>
       ))}

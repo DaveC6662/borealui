@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/globals";
-@use  "sass:map";
+@use "sass:map";
 
 .file_upload {
   display: flex;
@@ -8,7 +8,6 @@
   justify-content: center;
   align-items: center;
   gap: theme.$spacing-sm;
-  border-radius: theme.$border-radius-lg;
   padding: theme.$spacing-md;
   text-align: center;
   background-color: var(--background-color-light);
@@ -20,6 +19,18 @@
     background-color: var(--background-color-lighter);
   }
 
+  @each $key, $value in theme.$rounding {
+    &_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
   @each $theme, $values in theme.$themes {
     &_#{$theme}:hover {
       border-color: map.get($values, border);
@@ -27,8 +38,12 @@
   }
 
   @each $state, $values in theme.$states {
-    &_#{$state}:hover {
+    &_#{$state} {
       border-color: map.get($values, border);
+    }
+
+    &_#{$state}:hover {
+      border-color: map.get($values, hover);
     }
   }
 
@@ -38,8 +53,6 @@
     cursor: not-allowed;
     pointer-events: none;
   }
-
-  
 
   @media (width <=768px) {
     padding: theme.$spacing-md;

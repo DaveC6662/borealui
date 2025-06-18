@@ -1,4 +1,4 @@
-import { StateType, ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the FileUpload component.
@@ -16,6 +16,16 @@ export interface FileUploadProps {
   theme?: ThemeType;
   /**The State of the file upload ex "success", "warning", "error"*/
   state?: StateType;
+  /** Rounding of the control button */
+  controlRounding?: RoundingType;
+  /** Shadow of the control button */
+  controlShadow?: ShadowType;
+  /** Rounding of the wrapping element */
+  outlineRounding?: RoundingType;
+  /** Shadow of the wrapping element */
+  outlineShadow?: ShadowType;
+  /** Whether to display the control button as an outline. */
+  outline?: boolean;
   /** Allows multiple file selection if true. */
   multiple?: boolean;
   /** Whether to disable the file input. */
