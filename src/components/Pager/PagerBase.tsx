@@ -16,6 +16,8 @@ const BasePager: React.FC<BasePagerProps> = ({
   className = "",
   size = "small",
   theme = "primary",
+  rounding = "medium",
+  shadow = "light",
   state = "",
   "data-testid": testId = "pager",
   Button,
@@ -38,6 +40,8 @@ const BasePager: React.FC<BasePagerProps> = ({
           theme={theme}
           state={state}
           size={size}
+          shadow={shadow}
+          rounding={rounding}
           className={classMap.controlButton}
           disabled={currentPage === 1}
           aria-label="Go to previous page"
@@ -59,6 +63,8 @@ const BasePager: React.FC<BasePagerProps> = ({
               theme={theme}
               state={state}
               size={size}
+              rounding={rounding}
+              shadow={shadow}
               onClick={() => onPageChange(page)}
               aria-label={`Go to page ${page}`}
               aria-current={page === currentPage ? "page" : undefined}
@@ -79,6 +85,8 @@ const BasePager: React.FC<BasePagerProps> = ({
           icon={ArrowRightIcon}
           theme={theme}
           state={state}
+          rounding={rounding}
+          shadow={shadow}
           size={size}
           className={classMap.controlButton}
           disabled={currentPage === totalPages}

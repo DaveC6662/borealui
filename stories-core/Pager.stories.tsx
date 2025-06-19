@@ -15,6 +15,9 @@ const meta: Meta<PaginationProps> = {
   },
 };
 
+const roundingOptions = ["none", "small", "medium", "large"] as const;
+const shadowOptions = ["none", "light", "medium", "strong", "intense"] as const;
+
 export default meta;
 
 type Story = StoryObj<PaginationProps>;
@@ -23,19 +26,29 @@ export const Default: Story = {
   render: (args) => {
     const [currentPage, setCurrentPage] = useState(1);
     const start = (currentPage - 1) * args.itemsPerPage;
-    const items = Array.from({ length: args.totalItems }, (_, i) => `Item ${i + 1}`);
+    const items = Array.from(
+      { length: args.totalItems },
+      (_, i) => `Item ${i + 1}`
+    );
     const pageItems = items.slice(start, start + args.itemsPerPage);
 
     return (
       <div style={{ display: "grid", gap: "1rem", maxWidth: "500px" }}>
         <div>
           {pageItems.map((item) => (
-            <div key={item} style={{ padding: "0.5rem", borderBottom: "1px solid #ccc" }}>
+            <div
+              key={item}
+              style={{ padding: "0.5rem", borderBottom: "1px solid #ccc" }}
+            >
               {item}
             </div>
           ))}
         </div>
-        <Pager {...args} currentPage={currentPage} onPageChange={setCurrentPage} />
+        <Pager
+          {...args}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
     );
   },
@@ -120,6 +133,48 @@ export const StateVariants: Story = {
               key={state}
               {...args}
               theme={state}
+              currentPage={page}
+              onPageChange={setPage}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const RoundingVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {roundingOptions.map((rounding) => {
+          const [page, setPage] = useState(1);
+          return (
+            <Pager
+              key={rounding}
+              {...args}
+              rounding={rounding}
+              currentPage={page}
+              onPageChange={setPage}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const ShadowVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {shadowOptions.map((shadow) => {
+          const [page, setPage] = useState(1);
+          return (
+            <Pager
+              key={shadow}
+              {...args}
+              shadow={shadow}
               currentPage={page}
               onPageChange={setPage}
             />

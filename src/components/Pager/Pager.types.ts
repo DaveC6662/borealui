@@ -1,4 +1,10 @@
-import { SizeType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * Props for the Pager (pagination) component.
@@ -20,6 +26,10 @@ export interface PaginationProps {
   theme?: ThemeType;
   /** Optional state of the component (e.g., "success", "error", "warning"). */
   state?: StateType;
+  /** Rounding of the controls */
+  rounding?: RoundingType;
+  /** Shadow of the controls */
+  shadow?: ShadowType;
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
