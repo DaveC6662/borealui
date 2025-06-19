@@ -12,6 +12,17 @@ const classes = {
   actions: "messagePopup_popupActions",
   confirm: "messagePopup_confirmBtn",
   cancel: "messagePopup_cancelBtn",
+
+  shadowNone: "messagePopup_shadow-None",
+  shadowLight: "messagePopup_shadow-Light",
+  shadowMedium: "messagePopup_shadow-Medium",
+  shadowStrong: "messagePopup_shadow-Strong",
+  shadowIntense: "messagePopup_shadow-Intense",
+
+  roundNone: "messagePopup_round-None",
+  roundSmall: "messagePopup_round-Small",
+  roundMedium: "messagePopup_round-Medium",
+  roundLarge: "messagePopup_round-Large",
 };
 
 const MessagePopup: React.FC<MessagePopupProps> = (props) => {
@@ -20,7 +31,7 @@ const MessagePopup: React.FC<MessagePopupProps> = (props) => {
       {...props}
       Button={Button}
       IconButton={IconButton}
-      classNames={classes}
+      classMap={classes}
     />
   );
 };

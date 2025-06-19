@@ -18,8 +18,6 @@
   background: var(--background-color-light);
   padding: theme.$spacing-lg theme.$spacing-md;
   padding-top: 50px;
-  border-radius: theme.$border-radius-xs;
-  box-shadow: theme.$box-shadow-medium;
   max-width: 400px;
   text-align: center;
   position: relative;
@@ -44,4 +42,16 @@
   justify-content: center;
   gap: theme.$spacing-sm;
   margin-top: theme.$spacing-sm;
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} .content {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} .content {
+    box-shadow: $value;
+  }
 }

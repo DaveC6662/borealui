@@ -12,7 +12,7 @@ const MessagePopup: React.FC<MessagePopupProps> = (props) => {
       {...props}
       Button={Button}
       IconButton={IconButton}
-      classNames={styles}
+      classMap={styles}
     />
   );
 };

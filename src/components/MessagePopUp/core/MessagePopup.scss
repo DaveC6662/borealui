@@ -14,12 +14,22 @@
   z-index: 1000;
   transition: opacity 0.3s ease-in-out;
 
+  @each $key, $value in theme.$rounding {
+    &_round-#{$key} &_popupContent {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} &_popupContent {
+      box-shadow: $value;
+    }
+  }
+
   &_popupContent {
     background: var(--background-color-light);
     padding: theme.$spacing-lg theme.$spacing-lg;
     padding-top: 50px;
-    border-radius: theme.$border-radius-xs;
-    box-shadow: theme.$box-shadow-medium;
     max-width: 400px;
     text-align: center;
     position: relative;

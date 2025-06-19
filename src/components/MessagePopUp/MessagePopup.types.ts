@@ -1,3 +1,5 @@
+import { RoundingType, ShadowType } from "@/types/types";
+
 /**
  * Props for the MessagePopup component.
  */
@@ -10,6 +12,12 @@ export interface MessagePopupProps {
   onConfirm?: () => void;
   /** Optional callback when the user cancels the action. */
   onCancel?: () => void;
+  /** Optional rounding for controls in the message popup. */
+  controlsRounding?: RoundingType;
+  /** Optional rounding for the message popup. */
+  rounding?: RoundingType;
+  /** Optional shadow for the message popup. */
+  shadow?: ShadowType;
   /** Optional text for the confirm button (default: "Confirm"). */
   confirmText?: string;
   /** Optional text for the cancel button (default: "Cancel"). */

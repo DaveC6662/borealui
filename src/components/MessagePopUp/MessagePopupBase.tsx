@@ -8,11 +8,13 @@ import React, {
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@/Icons";
 import { MessagePopupProps } from "./MessagePopup.types";
+import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseMessagePopupProps extends MessagePopupProps {
   Button: React.ComponentType<any>;
   IconButton: React.ComponentType<any>;
-  classNames: Record<string, string>;
+  classMap: Record<string, string>;
 }
 
 const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
@@ -20,13 +22,16 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   onClose,
   onConfirm,
   onCancel,
+  controlsRounding = "medium",
+  rounding = "medium",
+  shadow = "light",
   confirmText = "Confirm",
   cancelText = "Cancel",
   className = "",
   "data-testid": testId = "message-popup",
   Button,
   IconButton,
-  classNames,
+  classMap,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
@@ -84,15 +89,22 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
 
   if (!isMounted || !portalElement) return null;
 
+  const wrapperClass = combineClassNames(
+    classMap.wrapper,
+    shadow && classMap[`shadow${capitalize(shadow)}`],
+    rounding && classMap[`round${capitalize(rounding)}`],
+    className
+  );
+
   return ReactDOM.createPortal(
     <div
-      className={`${classNames.wrapper} ${className}`}
+      className={wrapperClass}
       onClick={onClose}
       role="presentation"
       data-testid={testId}
     >
       <div
-        className={classNames.content}
+        className={classMap.content}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -103,7 +115,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
         data-testid={`${testId}-dialog`}
       >
         <IconButton
-          className={classNames.close}
+          className={classMap.close}
           onClick={onClose}
           aria-label="Close popup"
           icon={CloseIcon}
@@ -113,18 +125,19 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
         />
         <h2
           id={messageId}
-          className={classNames.message}
+          className={classMap.message}
           data-testid={`${testId}-message`}
         >
           {message}
         </h2>
-        <div className={classNames.actions} data-testid={`${testId}-actions`}>
+        <div className={classMap.actions} data-testid={`${testId}-actions`}>
           {onConfirm && (
             <Button
-              className={classNames.confirm}
+              className={classMap.confirm}
               state="success"
               onClick={onConfirm}
               ref={firstButtonRef}
+              rounding={controlsRounding}
               type="button"
               data-testid={`${testId}-confirm`}
             >
@@ -133,7 +146,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           )}
           {onCancel && (
             <Button
-              className={classNames.cancel}
+              className={classMap.cancel}
               state="warning"
               onClick={onCancel}
               type="button"
