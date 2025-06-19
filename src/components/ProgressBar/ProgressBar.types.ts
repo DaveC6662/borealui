@@ -1,4 +1,10 @@
-import { SizeType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * Props for the ProgressBar component.
@@ -24,6 +30,10 @@ export interface ProgressBarProps {
    * @default "medium"
    */
   size?: SizeType;
+  /** Applied rounding to progress bar */
+  rounding?: RoundingType;
+  /** Applied shadow to progress bar */
+  shadow?: ShadowType;
   /**
    * If true, applies an animated effect to the progress bar.
    * @default true

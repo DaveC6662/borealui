@@ -6,19 +6,35 @@ import { ProgressBarProps } from "../ProgressBar.types";
 const classes = {
   container: "progress_container",
   bar: "progress_bar",
+
   primary: "progress_primary",
   secondary: "progress_secondary",
   tertiary: "progress_tertiary",
   quaternary: "progress_quaternary",
+
   success: "progress_success",
   error: "progress_error",
   warning: "progress_warning",
+
   clear: "progress_clear",
+
   xs: "progress_xs",
   xl: "progress_xl",
   small: "progress_small",
   medium: "progress_medium",
   large: "progress_large",
+
+  shadowNone: "progress_shadow-None",
+  shadowLight: "progress_shadow-Light",
+  shadowMedium: "progress_shadow-Medium",
+  shadowStrong: "progress_shadow-Strong",
+  shadowIntense: "progress_shadow-Intense",
+
+  roundNone: "progress_round-None",
+  roundSmall: "progress_round-Small",
+  roundMedium: "progress_round-Medium",
+  roundLarge: "progress_round-Large",
+
   animated: "progress_animated",
   indeterminate: "progress_indeterminate",
 };

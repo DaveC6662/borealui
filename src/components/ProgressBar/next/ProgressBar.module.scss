@@ -15,7 +15,6 @@ $progress-sizes: (
   min-width: 100px;
   height: 10px;
   background-color: var(--background-color-lighter);
-  border-radius: theme.$border-radius-lg;
   overflow: hidden;
   position: relative;
 
@@ -29,7 +28,6 @@ $progress-sizes: (
 .bar {
   height: 100%;
   width: 0;
-  border-radius: theme.$border-radius-lg;
   transition: width 0.4s ease-in-out;
 
   @each $theme, $color in theme.$themes {
@@ -56,4 +54,16 @@ $progress-sizes: (
 .indeterminate {
   width: 100%;
   animation: indeterminate-move 1.5s infinite ease-in-out;
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
 }

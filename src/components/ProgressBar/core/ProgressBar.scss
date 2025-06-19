@@ -16,7 +16,6 @@ $progress-sizes: (
     min-width: 100px;
     height: 10px;
     background-color: var(--background-color-lighter);
-    border-radius: theme.$border-radius-lg;
     overflow: hidden;
     position: relative;
   }
@@ -24,7 +23,6 @@ $progress-sizes: (
   &_bar {
     height: 100%;
     width: 0;
-    border-radius: theme.$border-radius-lg;
     transition: width 0.4s ease-in-out;
   }
 
@@ -57,5 +55,17 @@ $progress-sizes: (
 
   &_clear {
     background-color: var(--text-color-primary);
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .progress_round-#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .progress_shadow-#{$key} {
+    box-shadow: $value;
   }
 }

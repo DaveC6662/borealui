@@ -1,6 +1,7 @@
-import React, { JSX } from "react";
+import React, { JSX, useMemo } from "react";
 import { ProgressBarProps } from "./ProgressBar.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseProgressBarProps extends ProgressBarProps {
   classMap: Record<string, string>;
@@ -11,6 +12,8 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   theme = "primary",
   state = "",
   size = "medium",
+  rounding = "medium",
+  shadow = "none",
   animated = true,
   indeterminate = false,
   className = "",
@@ -20,9 +23,34 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
 }: BaseProgressBarProps): JSX.Element => {
   const value = Math.round(progress);
 
+  const wrapperClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.container,
+        classMap[size],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
+        className
+      ),
+    [classMap, size, shadow, rounding, className]
+  );
+
+  const barClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.bar,
+        classMap[theme],
+        classMap[state],
+        animated ? classMap.animated : "",
+        rounding && classMap[`round${capitalize(rounding)}`],
+        indeterminate ? classMap.indeterminate : ""
+      ),
+    [classMap, theme, state, rounding, indeterminate]
+  );
+
   return (
     <div
-      className={combineClassNames(classMap.container, classMap[size], className)}
+      className={wrapperClass}
       role="progressbar"
       aria-label={ariaLabel}
       aria-valuemin={0}
@@ -33,13 +61,7 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
       data-testid={testId}
     >
       <div
-        className={combineClassNames(
-          classMap.bar,
-          classMap[theme],
-          classMap[state],
-          animated ? classMap.animated : "",
-          indeterminate ? classMap.indeterminate : "",
-  )}
+        className={barClass}
         style={{ width: indeterminate ? "100%" : `${value}%` }}
         data-testid={`${testId}-bar`}
       />

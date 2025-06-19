@@ -13,6 +13,9 @@ const themeOptions = [
 
 const stateOptions = ["success", "error", "warning"];
 
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
 const meta: Meta<ProgressBarProps> = {
   title: "Components/ProgressBar",
   component: Progressbar,
@@ -72,7 +75,6 @@ export const SizeVariants: Story = {
 
 export const ThemedVariants: Story = {
   render: (args) => {
-
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
         {themeOptions.map((theme) => (
@@ -94,7 +96,6 @@ export const ThemedVariants: Story = {
 
 export const StateVariants: Story = {
   render: (args) => {
-
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
         {stateOptions.map((theme) => (
@@ -131,6 +132,48 @@ export const LiveProgress: Story = {
           Live Updating Progress: {progress}%
         </label>
         <Progressbar {...args} progress={progress} />
+      </div>
+    );
+  },
+};
+
+export const RoundingVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {roundingOptions.map((rounding) => (
+          <div key={rounding}>
+            <label style={{ marginBottom: "0.25rem", display: "block" }}>
+              {rounding.charAt(0).toUpperCase() + rounding.slice(1)}
+            </label>
+            <Progressbar
+              {...args}
+              progress={20 + stateOptions.indexOf(rounding) * 15}
+              rounding={rounding}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+export const ShadowVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {shadowOptions.map((shadow) => (
+          <div key={shadow}>
+            <label style={{ marginBottom: "0.25rem", display: "block" }}>
+              {shadow.charAt(0).toUpperCase() + shadow.slice(1)}
+            </label>
+            <Progressbar
+              {...args}
+              progress={20 + stateOptions.indexOf(shadow) * 15}
+              shadow={shadow}
+            />
+          </div>
+        ))}
       </div>
     );
   },
