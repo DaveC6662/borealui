@@ -9,6 +9,7 @@ import ReactDOM from "react-dom";
 import { CloseIcon } from "@/Icons";
 import { ModalProps } from "./Modal.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseModalProps extends ModalProps {
   IconButton: React.ComponentType<any>;
@@ -19,6 +20,8 @@ export interface BaseModalProps extends ModalProps {
 const BaseModal: React.FC<BaseModalProps> = ({
   className = "",
   children,
+  rounding = "medium",
+  shadow = "light",
   onClose,
   "data-testid": testId = "modal",
   IconButton,
@@ -56,7 +59,6 @@ const BaseModal: React.FC<BaseModalProps> = ({
     if (isMounted) {
       requestAnimationFrame(() => {
         setIsVisible(true);
-        // Ensure focus enters modal after open
         setTimeout(() => {
           modalRef.current?.focus();
         }, 10);
@@ -98,6 +100,13 @@ const BaseModal: React.FC<BaseModalProps> = ({
 
   if (!isMounted || !portalElement) return null;
 
+  const contentClassName = combineClassNames(
+    classMap.content,
+    className,
+    shadow && classMap[`shadow${capitalize(shadow)}`],
+    rounding && classMap[`round${capitalize(rounding)}`]
+  );
+
   return ReactDOM.createPortal(
     <div
       className={combineClassNames(
@@ -115,7 +124,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
       data-testid={testId}
     >
       <div
-        className={combineClassNames(classMap.content, className)}
+        className={contentClassName}
         onClick={(e) => e.stopPropagation()}
         data-testid={`${testId}-content`}
         id={descId}

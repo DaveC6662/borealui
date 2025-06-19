@@ -15,14 +15,24 @@
 
 .content {
   background: var(--background-color-light);
-  padding: theme.$spacing-lg;
-  border-radius: theme.$border-radius-xs;
-  box-shadow: theme.$box-shadow-heavy;
+  padding: theme.$spacing-xl;
   transform: scale(0.95);
   opacity: 0;
   transition:
     transform 0.2s ease,
     opacity 0.2s ease;
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
 }
 
 .visible {

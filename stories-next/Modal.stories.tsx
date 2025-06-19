@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { Modal, Button } from "../src/index.next"; // adjust path if needed
+import { Modal, Button } from "../src/index.next";
 import type { ModalProps } from "../src/components/Modal/Modal.types";
+import { RoundingType, ShadowType } from "../src/types/types";
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<ModalProps> = {
   title: "Components/Modal",
@@ -76,6 +80,66 @@ export const LongContent: Story = {
               <Button onClick={() => setIsOpen(false)}>Close</Button>
             </div>
           </Modal>
+        )}
+      </>
+    );
+  },
+};
+
+export const RoundingVariants: Story = {
+  render: () => {
+    const [visibleRounding, setVisibleRounding] = useState<RoundingType | null>(
+      null
+    );
+
+    return (
+      <>
+        <div className="grid grid-cols-6 gap-2">
+          {roundingOptions.map((rounding) => (
+            <button
+              key={rounding}
+              onClick={() => setVisibleRounding(rounding as RoundingType)}
+              className="p-2 border rounded"
+            >
+              {rounding}
+            </button>
+          ))}
+        </div>
+
+        {visibleRounding && (
+          <Modal
+            rounding={visibleRounding}
+            onClose={() => setVisibleRounding(null)}
+          />
+        )}
+      </>
+    );
+  },
+};
+
+export const ShadowVariants: Story = {
+  render: () => {
+    const [visibleShadow, setVisibleShadow] = useState<ShadowType | null>(null);
+
+    return (
+      <>
+        <div className="grid grid-cols-6 gap-2">
+          {shadowOptions.map((shadow) => (
+            <button
+              key={shadow}
+              onClick={() => setVisibleShadow(shadow as ShadowType)}
+              className="p-2 border rounded"
+            >
+              {shadow}
+            </button>
+          ))}
+        </div>
+
+        {visibleShadow && (
+          <Modal
+            shadow={visibleShadow}
+            onClose={() => setVisibleShadow(null)}
+          />
         )}
       </>
     );

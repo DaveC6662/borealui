@@ -1,3 +1,4 @@
+import { RoundingType, ShadowType } from "@/types/types";
 import { ReactElement } from "react";
 
 /**
@@ -8,6 +9,10 @@ export interface ModalProps {
   className?: string;
   /** The content to be rendered inside the modal. Expected to be a single React element. */
   children?: ReactElement;
+  /** Rounding of the modal corners. */
+  rounding?: RoundingType;
+  /** Shadow of the modal. */
+  shadow?: ShadowType;
   /** Callback function fired when the modal is closed. */
   onClose: () => void;
   /** Optional test ID for testing frameworks. */
