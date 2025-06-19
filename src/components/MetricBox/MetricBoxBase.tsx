@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { MetricBoxProps } from "./MetricBox.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseMetricBoxProps extends MetricBoxProps {
   classMap: Record<string, string>;
@@ -12,6 +13,8 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   icon: Icon,
   subtext,
   theme = "primary",
+  shadow = "none",
+  rounding = "medium",
   state = "",
   outline = false,
   align = "center",
@@ -24,17 +27,25 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   const valueId = `${testId}-value`;
   const subtextId = subtext ? `${testId}-subtext` : undefined;
 
-  return (
-    <div
-      className={combineClassNames(
+  const wrapperClass = useMemo(
+    () =>
+      combineClassNames(
         classMap.wrapper,
         outline && classMap.outline,
         classMap[theme],
         classMap[state],
         classMap[size],
         classMap[align],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
         className
-      )}
+      ),
+    [classMap, theme, state, size, align, outline, shadow, rounding, className]
+  );
+
+  return (
+    <div
+      className={wrapperClass}
       role="region"
       aria-labelledby={titleId}
       aria-describedby={subtextId}

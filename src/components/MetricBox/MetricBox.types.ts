@@ -1,5 +1,11 @@
 import { IconType } from "react-icons";
-import { SizeType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * Props for the MetricBox component.
@@ -17,6 +23,10 @@ export interface MetricBoxProps {
   outline?: boolean;
   /** Theme to apply for styling (e.g., "primary", "secondary", etc.). */
   theme?: ThemeType;
+  /** Rounding style for the component (e.g., "none", "small", "medium", "large"). */
+  rounding?: RoundingType;
+  /** Shadow style for the component (e.g., "none", "small", "medium", "large"). */
+  shadow?: ShadowType;
   /** State of the metric (e.g., "success", "error", "warning"). */
   state?: StateType;
   /** Size of the component (e.g., "small", "medium", "large"). */

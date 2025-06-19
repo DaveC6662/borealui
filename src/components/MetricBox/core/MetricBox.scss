@@ -9,8 +9,6 @@
   align-items: center;
   justify-content: center;
   background: var(--background-primary-light-color);
-  border-radius: theme.$border-radius-lg;
-  box-shadow: theme.$box-shadow-medium;
   min-width: 120px;
   width: fit-content;
   height: fit-content;
@@ -23,10 +21,22 @@
     padding: theme.$spacing-sm;
   }
 
-   &_icon {
+  &_icon {
     font-size: 2rem;
     color: inherit;
     padding: theme.$spacing-sm;
+  }
+
+  @each $key, $value in theme.$rounding {
+    &_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} {
+      box-shadow: $value;
+    }
   }
 
   @each $theme, $properties in theme.$themes {
@@ -49,7 +59,7 @@
     }
 
     &_#{$theme}.metricBox_outline .metricBox_icon {
-        color: map.get($properties, border);
+      color: map.get($properties, border);
     }
   }
 
@@ -73,7 +83,7 @@
     }
 
     &_#{$state}.metricBox_outline .metricBox_icon {
-        color: map.get($properties, bg);
+      color: map.get($properties, bg);
     }
   }
 
