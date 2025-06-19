@@ -1,6 +1,7 @@
 import React, { forwardRef, useMemo } from "react";
 import { RadioButtonProps } from "./RadioButton.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseRadioButtonProps extends RadioButtonProps {
   classMap: Record<string, string>;
@@ -14,6 +15,8 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       checked,
       onChange,
       theme = "primary",
+      rounding = "large",
+      shadow = "none",
       state = "",
       disabled = false,
       className = "",
@@ -29,13 +32,27 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       }
     };
 
-    const wrapperClasses = useMemo(() => combineClassNames(
-      classMap.wrapper,
-      classMap[theme],
-      classMap[state],
-      disabled ? classMap.disabled : "",
-      className,
-    ), [classMap, theme, state, disabled, className]);
+    const wrapperClasses = useMemo(
+      () =>
+        combineClassNames(
+          classMap.wrapper,
+          classMap[theme],
+          classMap[state],
+          disabled ? classMap.disabled : "",
+          className
+        ),
+      [classMap, theme, state, disabled, className]
+    );
+
+    const radioClasses = useMemo(
+      () =>
+        combineClassNames(
+          classMap.circle,
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`]
+        ),
+      [classMap, rounding, shadow]
+    );
 
     const labelId = `${testId}-label`;
 
@@ -55,7 +72,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
           {...props}
         />
         <span
-          className={classMap.circle}
+          className={radioClasses}
           aria-hidden="true"
           data-testid={`${testId}-circle`}
         />

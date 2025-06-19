@@ -22,7 +22,6 @@
 .circle {
   width: 18px;
   height: 18px;
-  border-radius: 50%;
   border: 1px solid;
   display: flex;
   align-items: center;
@@ -34,7 +33,6 @@
     content: "";
     width: 10px;
     height: 10px;
-    border-radius: 50%;
     background-color: currentcolor;
     opacity: 0;
     transform: scale(0.6);
@@ -67,7 +65,7 @@
   cursor: not-allowed;
 
   .circle {
-      border-color: theme.$disabled-color;
+    border-color: theme.$disabled-color;
   }
 }
 
@@ -91,5 +89,18 @@
   &.disabled {
     cursor: not-allowed;
     opacity: 0.6;
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key},
+  .circle::after {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
   }
 }

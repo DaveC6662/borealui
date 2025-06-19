@@ -1,4 +1,4 @@
-import { StateType, ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the RadioButton component.
@@ -17,6 +17,10 @@ export interface RadioButtonProps
   theme?: ThemeType;
   /** State of the radio button (e.g., "success", "error"). */
   state?: StateType;
+  /** Rounding of the radio button */
+  rounding?: RoundingType;
+  /** Shadow style of the radio button. */
+  shadow?: ShadowType;
   /** Whether the radio button is disabled. */
   disabled?: boolean;
   /** Additional CSS class names for custom styling. */

@@ -3,7 +3,6 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { RadioButton } from "../src/index.next";
 import type { RadioButtonProps } from "../src/components/RadioButton/RadioButton.types";
 
-
 const themeOptions = [
   "primary",
   "secondary",
@@ -13,6 +12,9 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<RadioButtonProps> = {
   title: "Components/RadioButton",
@@ -109,6 +111,48 @@ export const StateVariants: Story = {
             value={theme}
             theme={theme}
             checked={selected === theme}
+            onChange={setSelected}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const RoundingVariants: Story = {
+  render: () => {
+    const [selected, setSelected] = useState("primary");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {roundingOptions.map((rounding) => (
+          <RadioButton
+            key={rounding}
+            label={rounding.charAt(0).toUpperCase() + rounding.slice(1)}
+            value={rounding}
+            rounding={rounding}
+            checked={selected === rounding}
+            onChange={setSelected}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const ShadowVariants: Story = {
+  render: () => {
+    const [selected, setSelected] = useState("primary");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {shadowOptions.map((shadow) => (
+          <RadioButton
+            key={shadow}
+            label={shadow.charAt(0).toUpperCase() + shadow.slice(1)}
+            value={shadow}
+            shadow={shadow}
+            checked={selected === shadow}
             onChange={setSelected}
           />
         ))}
