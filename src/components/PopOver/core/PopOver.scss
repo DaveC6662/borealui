@@ -25,22 +25,27 @@
   min-width: 100%;
   width: max-content;
   padding: theme.$spacing-sm;
-  border-radius: theme.$border-radius-md;
   background-color: var(--background-light-color);
   color: var(--text-color-secondary);
   border: 1px solid var(--text-color-secondary);
-  box-shadow: theme.$box-shadow-medium;
   animation: fade-in 0.25s ease-in-out forwards;
+
+  @each $key, $value in theme.$rounding {
+    &_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
 
   @each $name, $values in theme.$themes {
     &_#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
-      box-shadow: if(
-        map.has-key($values, shadow),
-        map.get($values, shadow),
-        theme.$box-shadow-medium
-      );
       border: if(
         map.has-key($values, border),
         map.get($values, border),
@@ -67,7 +72,6 @@
   }
 
   &_clear {
-    box-shadow: none;
     border: 1px solid var(--text-color-primary);
   }
 

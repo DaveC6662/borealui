@@ -1,4 +1,4 @@
-import { StateType, ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the Popover component.
@@ -17,6 +17,10 @@ export interface PopoverProps {
   theme?: ThemeType;
   /** State of the pop over ex "success", "error", "warning"*/
   state?: StateType;
+  /** Rounding of the popover content */
+  rounding?: RoundingType;
+  /** Shadow of the popover content */
+  shadow?: ShadowType;
   /** Optional additional class name(s) for custom styling. */
   className?: string;
   /** Optional test ID for testing frameworks. */

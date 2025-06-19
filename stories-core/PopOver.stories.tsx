@@ -14,6 +14,9 @@ const meta: Meta<PopoverProps> = {
 
 export default meta;
 
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
 type Story = StoryObj<PopoverProps>;
 
 export const Default: Story = {
@@ -81,8 +84,6 @@ export const StateVariants: Story = {
 
 export const PlacementVariants: Story = {
   render: () => {
-    const placements = ["top", "right", "bottom", "left"] as const;
-
     return (
       <div
         style={{
@@ -161,5 +162,47 @@ export const KeyboardAccessible: Story = {
         This opens on Enter and closes on Escape.
       </div>
     ),
+  },
+};
+
+export const RoundingVariants: Story = {
+  render: () => {
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {roundingOptions.map((state) => (
+          <PopOver
+            key={state}
+            rounding={state}
+            trigger={<Button>{state}</Button>}
+            content={
+              <div style={{ padding: "0.5rem" }}>
+                {state.charAt(0).toUpperCase() + state.slice(1)} state
+              </div>
+            }
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const ShadowVariants: Story = {
+  render: () => {
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {shadowOptions.map((state) => (
+          <PopOver
+            key={state}
+            shadow={state}
+            trigger={<Button>{state}</Button>}
+            content={
+              <div style={{ padding: "0.5rem" }}>
+                {state.charAt(0).toUpperCase() + state.slice(1)} state
+              </div>
+            }
+          />
+        ))}
+      </div>
+    );
   },
 };

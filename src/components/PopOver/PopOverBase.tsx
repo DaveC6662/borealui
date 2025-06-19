@@ -1,5 +1,7 @@
-import React, { useState, useRef, useEffect, JSX } from "react";
+import React, { useState, useRef, useEffect, JSX, useMemo } from "react";
 import { PopoverProps } from "./PopOver.types";
+import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BasePopoverProps extends PopoverProps {
   classMap: Record<string, string>;
@@ -10,6 +12,8 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   content,
   placement = "bottom",
   theme = "primary",
+  rounding = "medium",
+  shadow = "light",
   state = "",
   className = "",
   "data-testid": testId = "popover",
@@ -123,6 +127,19 @@ const BasePopover: React.FC<BasePopoverProps> = ({
     };
   }, [open]);
 
+  const popoverContentClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.popover,
+        classMap[dynamicPlacement],
+        classMap[theme],
+        classMap[state],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`]
+      ),
+    [classMap, dynamicPlacement, rounding, shadow, theme, state]
+  );
+
   return (
     <div className={`${classMap.container} ${className}`} data-testid={testId}>
       <div
@@ -153,12 +170,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
           role="dialog"
           aria-modal="false"
           aria-labelledby={`${testId}-trigger`}
-          className={[
-            classMap.popover,
-            classMap[dynamicPlacement],
-            classMap[theme],
-            classMap[state],
-          ].join(" ")}
+          className={popoverContentClass}
           data-testid={`${testId}-content`}
         >
           {content}
