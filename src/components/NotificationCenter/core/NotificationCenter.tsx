@@ -15,11 +15,23 @@ const classes = {
   timestamp: "notification_center_timestamp",
   close: "notification_center_close",
   clearAll: "notification_center_clearAll",
+
   general: "notification_center_general",
   success: "notification_center_success",
   error: "notification_center_error",
   warning: "notification_center_warning",
   info: "notification_center_info",
+
+  shadowNone: "notification_center_shadow-None",
+  shadowLight: "notification_center_shadow-Light",
+  shadowMedium: "notification_center_shadow-Medium",
+  shadowStrong: "notification_center_shadow-Strong",
+  shadowIntense: "notification_center_shadow-Intense",
+
+  roundNone: "notification_center_round-None",
+  roundSmall: "notification_center_round-Small",
+  roundMedium: "notification_center_round-Medium",
+  roundLarge: "notification_center_round-Large",
 };
 
 const NotificationCenter: React.FC<NotificationCenterProps> = (props) => {

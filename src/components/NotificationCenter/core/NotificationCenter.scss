@@ -44,9 +44,7 @@ $notification-colors: (
     display: flex;
     align-items: center;
     padding: theme.$spacing-xs;
-    border-radius: theme.$border-radius-xs;
     background-color: var(--background-color-dark);
-    box-shadow: theme.$box-shadow-light;
     border-left: 4px solid transparent;
     animation: fade-in-up 0.3s ease;
   }
@@ -66,7 +64,7 @@ $notification-colors: (
 
     .notification_center_timestamp {
       font-size: theme.$font-size-sm;
-      color: theme.$disabled-color;
+      color: var(--text-color-secondary);
     }
   }
 
@@ -84,5 +82,17 @@ $notification-colors: (
     &_#{$type} {
       border-color: $color;
     }
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .notification_center_round-#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .notification_center_shadow-#{$key} {
+    box-shadow: $value;
   }
 }

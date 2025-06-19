@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { CloseIcon } from "@/Icons";
 import {
   NotificationCenterProps,
   themeIcons,
 } from "./NotificationCenter.types";
+import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseNotificationCenterProps extends NotificationCenterProps {
   Button: React.ComponentType<any>;
@@ -16,6 +18,10 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   onRemove,
   onClearAll,
   showClearAll = true,
+  controlRounding = "medium",
+  controlShadow = "light",
+  notificationRounding = "medium",
+  notificationShadow = "light",
   Button,
   IconButton,
   classMap,
@@ -38,6 +44,18 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
     };
   }, [notifications, onRemove]);
 
+  const notifcationClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.notification,
+        notificationShadow &&
+          classMap[`shadow${capitalize(notificationShadow)}`],
+        notificationRounding &&
+          classMap[`round${capitalize(notificationRounding)}`]
+      ),
+    []
+  );
+
   return (
     <div
       className={classMap.wrapper}
@@ -51,6 +69,8 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
           <Button
             state="error"
             size="small"
+            rounding={controlRounding}
+            shadow={controlShadow}
             className={classMap.clearAll}
             onClick={onClearAll}
             aria-label="Clear all notifications"
@@ -74,7 +94,10 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
             return (
               <li
                 key={note.id}
-                className={`${classMap.notification} ${classMap[note.type || "info"]}`}
+                className={combineClassNames(
+                  notifcationClass,
+                  classMap[note.type || "info"]
+                )}
                 data-testid={noteTestId}
                 aria-label={`Notification ${index + 1}: ${note.message}${timestampStr ? ` at ${timestampStr}` : ""}`}
               >

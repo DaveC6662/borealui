@@ -1,6 +1,10 @@
-import { FaCheckCircle, FaExclamationCircle, FaInfoCircle } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaExclamationCircle,
+  FaInfoCircle,
+} from "react-icons/fa";
 import { IconType } from "react-icons";
-import { NotificationType } from "@/types/types";
+import { NotificationType, RoundingType, ShadowType } from "@/types/types";
 
 /**
  * Represents an individual notification to be displayed in the NotificationCenter.
@@ -30,6 +34,14 @@ export interface NotificationCenterProps {
   onClearAll?: () => void;
   /** Whether to show a "Clear All" button if notifications are present. */
   showClearAll?: boolean;
+  /** Rounding for the notification control */
+  controlRounding?: RoundingType;
+  /** Shadow for the notification control */
+  controlShadow?: ShadowType;
+  /** Rounding of the notification */
+  notificationRounding?: RoundingType;
+  /** Shadow of the notification */
+  notificationShadow?: ShadowType;
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }

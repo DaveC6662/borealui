@@ -86,3 +86,15 @@ $notification-colors: (
     }
   }
 }
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
+}
