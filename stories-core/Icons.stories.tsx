@@ -1,4 +1,3 @@
-import React from "react";
 import { Meta } from "@storybook/nextjs";
 
 import {
@@ -26,7 +25,7 @@ import {
   FolderIcon,
   PlusCircleIcon,
   BorealLogoIcon,
-} from "@/Icons";
+} from "../src/Icons";
 
 const meta: Meta = {
   title: "Icons/All Custom Icons",

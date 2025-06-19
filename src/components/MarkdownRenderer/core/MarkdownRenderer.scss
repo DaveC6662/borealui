@@ -7,8 +7,18 @@
   color: var(--text-color-primary);
   border: 1px solid var(--text-color-primary);
   padding: theme.$spacing-md;
-  border-radius: theme.$border-radius-xs;
-  box-shadow: theme.$box-shadow-heavy;
+
+  @each $key, $value in theme.$rounding {
+    &_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
 
   h1,
   h2,

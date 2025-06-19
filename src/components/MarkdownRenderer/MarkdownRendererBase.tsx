@@ -1,6 +1,8 @@
 import React, { useMemo } from "react";
 import { marked } from "marked";
 import { MarkdownRendererProps } from "./MarkdownRenderer.types";
+import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
   classMap: Record<string, string>;
@@ -17,6 +19,8 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   content,
   className = "",
   language = "en",
+  rounding = "medium",
+  shadow = "none",
   "data-testid": testId = "markdown-renderer",
   classMap,
 }) => {
@@ -26,6 +30,17 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
     const raw = marked.parse(trimmed, { async: false }) as string;
     return sanitizeWithDOMParser(raw);
   }, [content]);
+
+  const wrapperClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.wrapper,
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
+        className
+      ),
+    [classMap, rounding, shadow, className]
+  );
 
   if (!html) {
     return (
@@ -42,7 +57,7 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
 
   return (
     <div
-      className={`${classMap.wrapper} ${className}`}
+      className={wrapperClass}
       data-testid={testId}
       role="region"
       aria-label="Markdown content"
