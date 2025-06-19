@@ -1,6 +1,7 @@
-import React, { JSX } from "react";
+import React, { JSX, useMemo } from "react";
 import { NavBarProps } from "./NavBar.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseNavBarProps extends NavBarProps {
   currentPath: string;
@@ -21,12 +22,29 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   LinkWrapper,
   classMap,
   theme = "primary",
+  rounding = "Full",
+  shadow = "light",
 }) => {
+  const wrapperClass = useMemo(
+    () => combineClassNames(classMap.container, classMap[theme]),
+    [classMap, theme]
+  );
+
+  const itemClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.item,
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`]
+      ),
+    [classMap, shadow, rounding]
+  );
+
   return (
     <nav
       role="navigation"
       aria-label="Main navigation"
-      className={combineClassNames(classMap.container, classMap[theme])}
+      className={wrapperClass}
       data-testid="nav-bar"
     >
       {items.map((item, index) => {
@@ -43,7 +61,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
             href={item.path}
             isActive={isActive}
             className={combineClassNames(
-              classMap.item,
+              itemClass,
               isActive && classMap["item--active"]
             )}
             testId={`nav-item-${item.label.toLowerCase()}`}

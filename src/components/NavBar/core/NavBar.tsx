@@ -9,11 +9,24 @@ const classes = {
   "item--active": "nav_active",
   icon: "nav_icon_container",
   label: "nav_label",
+
   primary: "nav_primary",
   secondary: "nav_secondary",
   tertiary: "nav_tertiary",
   quaternary: "nav_quaternary",
   clear: "nav_clear",
+
+  shadowNone: "nav_shadow-None",
+  shadowLight: "nav_shadow-Light",
+  shadowMedium: "nav_shadow-Medium",
+  shadowStrong: "nav_shadow-Strong",
+  shadowIntense: "nav_shadow-Intense",
+
+  roundNone: "nav_round-None",
+  roundSmall: "nav_round-Small",
+  roundMedium: "nav_round-Medium",
+  roundLarge: "nav_round-Large",
+  roundFull: "nav_round-Full",
 };
 
 const NavBar: React.FC<NavBarProps> = (props) => {

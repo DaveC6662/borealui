@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { Navbar } from "../src/index.next";
 import {
@@ -11,7 +11,6 @@ import {
 } from "react-icons/fa";
 import type { NavBarProps } from "../src/components/NavBar/NavBar.types";
 
-// Theme and state options
 const themeOptions = [
   "primary",
   "secondary",
@@ -20,7 +19,8 @@ const themeOptions = [
   "clear",
 ] as const;
 
-const stateOptions = ["success", "error", "warning"] as const;
+const roundingOptions = ["full", "none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const mockItems: NavBarProps["items"] = [
   { icon: <FaHome />, label: "Home", path: "/" },
@@ -45,6 +45,9 @@ const meta: Meta<NavBarProps> = {
   ],
   args: {
     items: mockItems,
+    theme: "primary",
+    rounding: "full",
+    shadow: "light",
   },
 };
 
@@ -55,6 +58,8 @@ type Story = StoryObj<NavBarProps>;
 export const Themes: Story = {
   render: (args) => {
     const [theme, setTheme] = useState<NavBarProps["theme"]>("primary");
+    const [rounding, setRounding] = useState<NavBarProps["rounding"]>("full");
+    const [shadow, setShadow] = useState<NavBarProps["shadow"]>("light");
 
     window.history.pushState({}, "", "/"); // Ensure routing for active state
 
@@ -75,9 +80,37 @@ export const Themes: Story = {
               ))}
             </select>
           </label>
+          <label style={{ marginRight: "1rem" }}>
+            Rounding:
+            <select
+              value={rounding}
+              onChange={(e) => setRounding(e.target.value as typeof rounding)}
+              style={{ marginLeft: "0.5rem" }}
+            >
+              {roundingOptions.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label style={{ marginRight: "1rem" }}>
+            Shadow:
+            <select
+              value={shadow}
+              onChange={(e) => setShadow(e.target.value as typeof shadow)}
+              style={{ marginLeft: "0.5rem" }}
+            >
+              {shadowOptions.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
 
-        <Navbar {...args} theme={theme}/>
+        <Navbar {...args} theme={theme} rounding={rounding} shadow={shadow} />
       </div>
     );
   },

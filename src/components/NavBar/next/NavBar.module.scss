@@ -55,8 +55,6 @@
     width: 80px;
     height: 80px;
     padding: 15px;
-    border-radius: theme.$border-radius-round;
-    box-shadow: theme.$box-shadow-heavy;
     color: var(--text-color-primary);
     text-decoration: none;
     cursor: pointer;
@@ -95,5 +93,17 @@
     @media (width >= 800px) {
       display: block;
     }
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
   }
 }
