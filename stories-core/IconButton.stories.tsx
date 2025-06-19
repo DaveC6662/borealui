@@ -16,6 +16,9 @@ const stateOptions = ["success", "warning", "error"];
 
 const sizeOptions = ["xs", "small", "medium", "large", "xl"];
 
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
 const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",
   component: IconButton,
@@ -24,6 +27,7 @@ const meta: Meta<typeof IconButton> = {
     icon: FaPlus,
     theme: "primary",
     size: "medium",
+    rounding: "large",
     ariaLabel: "Add",
   },
   argTypes: {
@@ -125,3 +129,29 @@ export const LinkVariants: Story = {
     </div>
   ),
 };
+
+export const RoundingVariants = () =>
+  withVariants(
+    IconButton,
+    {
+      icon: FaPlus,
+      theme: "primary",
+      ariaLabel: "Size",
+      rounding: "large",
+      size: "medium",
+    },
+    [{ propName: "rounding", values: roundingOptions }]
+  );
+
+export const ShadowVariants = () =>
+  withVariants(
+    IconButton,
+    {
+      icon: FaPlus,
+      theme: "primary",
+      ariaLabel: "Size",
+      shadow: "none",
+      size: "medium",
+    },
+    [{ propName: "shadow", values: shadowOptions }]
+  );

@@ -1,6 +1,7 @@
 import React, { forwardRef, useMemo } from "react";
 import { IconButtonProps } from "./IconButton.types";
 import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface IconButtonBaseProps extends IconButtonProps {
   classMap: Record<string, string>;
@@ -25,6 +26,8 @@ const IconButtonBase = forwardRef<
       ariaLabel,
       title,
       outline = false,
+      rounding = "full",
+      shadow = "none",
       size = "medium",
       loading = false,
       type = "button",
@@ -45,6 +48,8 @@ const IconButtonBase = forwardRef<
           classMap[theme],
           classMap[state],
           size && classMap[size],
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`],
           outline && classMap.outline,
           disabled && classMap.disabled,
           className

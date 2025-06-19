@@ -1,6 +1,12 @@
 import React from "react";
 import type { MouseEvent } from "react";
-import { SizeType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * Props for the IconButton component.
@@ -12,6 +18,10 @@ export interface IconButtonProps {
   theme?: ThemeType;
   /** State of the button (e.g., "success", "warning", "error"). */
   state?: StateType;
+  /** Rounding style of the button. */
+  rounding?: RoundingType;
+  /** Shadow style of the button. */
+  shadow?: ShadowType;
   /** Optional href to turn the button into a link. */
   href?: string;
   /** If true, opens the link in a new tab (used with `href`). */

@@ -7,24 +7,33 @@
   align-items: center;
   justify-content: center;
   line-height: 0.8rem;
-  border-radius: 50%;
   border: none;
   transition: theme.$transition-default;
   text-decoration: none;
   color: inherit;
-  box-shadow: theme.$box-shadow-medium;
   transform-origin: center;
 
   &:hover {
     text-decoration: none;
     transform: scale(1.05);
-    box-shadow: theme.$box-shadow-heavy;
     cursor: pointer;
   }
 
   &:focus {
     outline: 2px solid theme.$disabled-color;
     outline-offset: 2px;
+  }
+
+  @each $key, $value in theme.$rounding {
+    &_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} {
+      box-shadow: $value;
+    }
   }
 
   .svg {
