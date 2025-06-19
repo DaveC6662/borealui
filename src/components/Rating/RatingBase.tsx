@@ -1,7 +1,8 @@
-import React, { useState, KeyboardEvent, JSX } from "react";
+import React, { useState, KeyboardEvent, JSX, useMemo } from "react";
 import { StarIcon } from "@/Icons";
 import { RatingProps } from "./Rating.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseRatingProps extends RatingProps {
   classMap: Record<string, string>;
@@ -49,6 +50,19 @@ const BaseRating: React.FC<BaseRatingProps> = ({
     }
   };
 
+  const wrapperClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.wrapper,
+        classMap[theme],
+        classMap[state],
+        classMap[size],
+        interactive ? classMap.interactive : "",
+        className
+      ),
+    [classMap, theme, state, size, interactive, className]
+  );
+
   return (
     <div className={classMap.container || ""}>
       {label && (
@@ -57,14 +71,7 @@ const BaseRating: React.FC<BaseRatingProps> = ({
         </label>
       )}
       <div
-        className={combineClassNames(
-          classMap.wrapper,
-          classMap[theme],
-          classMap[state],
-          classMap[size],
-          interactive ? classMap.interactive : "",
-          className,
-        )}
+        className={wrapperClass}
         role="radiogroup"
         aria-label="Rating"
         data-testid={testId}
@@ -76,7 +83,10 @@ const BaseRating: React.FC<BaseRatingProps> = ({
           return (
             <span
               key={index}
-              className={combineClassNames(classMap.star, active ? classMap.active : "")}
+              className={combineClassNames(
+                classMap.star,
+                active ? classMap.active : ""
+              )}
               onClick={() => handleClick(index)}
               onMouseEnter={() => interactive && setHover(index)}
               onMouseLeave={() => interactive && setHover(null)}
