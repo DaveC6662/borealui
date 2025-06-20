@@ -1,13 +1,14 @@
-// src/stories/ScrollToTopButton.stories.tsx
-
-import React from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import ScrollToTopButton from "@/components/ScrollToTop/core/STT"; // adjust path if needed
+import { ScrollToTop } from "../src/index.core"; // adjust path if needed
 
 const meta: Meta = {
   title: "Components/ScrollToTopButton",
-  component: ScrollToTopButton,
+  component: ScrollToTop,
   tags: ["autodocs"],
+  args: {
+    rounding: "large",
+    shadow: "light",
+  },
 };
 
 export default meta;
@@ -15,7 +16,11 @@ export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
-  render: () => (
+  args: {
+    rounding: "none",
+  },
+
+  render: (args) => (
     <div
       style={{
         height: "200vh",
@@ -26,7 +31,7 @@ export const Default: Story = {
         Scroll down the page to make the ScrollToTopButton appear. This demo
         uses a tall container to simulate a real scroll environment.
       </p>
-      <ScrollToTopButton />
+      <ScrollToTop {...args} />
     </div>
   ),
 };

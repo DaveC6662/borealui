@@ -1,13 +1,20 @@
+import { RoundingType, ShadowType } from "@/types/types";
+import { capitalize } from "@/utils/capitalize";
+import { combineClassNames } from "@/utils/classNames";
 import React, { useEffect, useState } from "react";
 
 export interface ScrollToTopBaseProps {
   classMap: Record<string, string>;
+  rounding?: RoundingType;
+  shadow?: ShadowType;
   IconComponent: React.ElementType;
   offset?: number;
 }
 
 const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   classMap,
+  rounding = "large",
+  shadow = "none",
   IconComponent,
   offset = 300,
 }) => {
@@ -25,6 +32,12 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
     window.addEventListener("scroll", toggleVisibility);
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, [offset]);
+
+  const iconClass = combineClassNames(
+    classMap.icon,
+    shadow && classMap[`shadow${capitalize(shadow)}`],
+    rounding && classMap[`round${capitalize(rounding)}`]
+  );
 
   return (
     <div className={classMap.wrapper}>
@@ -46,7 +59,7 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
           aria-label="Scroll to top"
           data-testid="scroll-button"
         >
-          <IconComponent className={classMap.icon} />
+          <IconComponent className={iconClass} />
         </button>
       )}
     </div>

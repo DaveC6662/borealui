@@ -8,6 +8,10 @@ const meta: Meta = {
   title: "Components/ScrollToTopButton",
   component: ScrollToTop,
   tags: ["autodocs"],
+  args: {
+    rounding: "large",
+    shadow: "light",
+  },
 };
 
 export default meta;
@@ -15,7 +19,7 @@ export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
-  render: () => (
+  render: (args) => (
     <div
       style={{
         height: "200vh",
@@ -26,7 +30,7 @@ export const Default: Story = {
         Scroll down the page to make the ScrollToTopButton appear. This demo
         uses a tall container to simulate a real scroll environment.
       </p>
-      <ScrollToTop />
+      <ScrollToTop {...args} />
     </div>
   ),
 };
