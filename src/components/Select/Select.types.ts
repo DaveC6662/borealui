@@ -1,4 +1,4 @@
-import { StateType, ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Represents a single option in the Select component.
@@ -31,6 +31,10 @@ export interface SelectProps {
   onChange: (value: string) => void;
   /** Placeholder text to display when no option is selected. */
   placeholder?: string;
+  /* Rounding style of the select element. */
+  rounding?: RoundingType;
+  /** Shadow style of the select element. */
+  shadow?: ShadowType;
   /** Accessible label for the select element. */
   ariaLabel?: string;
   /** Optional description for the select element, used for accessibility. */

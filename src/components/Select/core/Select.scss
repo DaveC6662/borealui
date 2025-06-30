@@ -8,8 +8,6 @@
   display: inline-flex;
   width: 300px;
   margin: theme.$spacing-xs 0;
-  border-radius: theme.$border-radius-lg;
-  box-shadow: theme.$box-shadow-medium;
   transition: theme.$transition-default;
 
   &:hover {
@@ -20,6 +18,18 @@
     opacity: 0.6;
     pointer-events: none;
     cursor: not-allowed;
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .select_round-#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .select_shadow-#{$key} {
+    box-shadow: $value;
   }
 }
 
@@ -40,7 +50,6 @@
   font-size: theme.$font-size-sm;
   appearance: none;
   font-weight: 800;
-  border-radius: theme.$border-radius-lg;
   border: none;
   background-color: var(--background-light-color);
   color: var(--text-color-primary);
@@ -98,8 +107,6 @@
   }
 
   &_clear {
-    box-shadow: none;
-
     .select {
       background-color: transparent;
     }

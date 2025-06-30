@@ -1,7 +1,21 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { Select } from "@/index.next";
-import type { SelectProps } from "@/components/Select/Select.types";
+import { Select } from "../src/index.next";
+import type { SelectProps } from "../src/components/Select/Select.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
+
+const themeOptions = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+];
+
+const stateOptions = ["success", "error", "warning"];
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<SelectProps> = {
   title: "Components/Select",
@@ -16,6 +30,20 @@ const meta: Meta<SelectProps> = {
       { label: "Option C", value: "c" },
     ],
   },
+};
+
+const defaultArgs = {
+  placeholder: "Choose an option",
+  theme: "primary",
+  options: [
+    { label: "Option A", value: "a" },
+    { label: "Option B", value: "b" },
+    { label: "Option C", value: "c" },
+  ],
+  value: "a",
+  onChange: () => {},
+  rounding: "medium",
+  shadow: "light",
 };
 
 export default meta;
@@ -68,14 +96,6 @@ export const Disabled: Story = {
 export const ThemeVariants: Story = {
   render: (args) => {
     const [value, setValue] = useState("");
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
     const options = [
       { label: "Alpha", value: "alpha" },
       { label: "Beta", value: "beta" },
@@ -84,7 +104,7 @@ export const ThemeVariants: Story = {
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
           <Select
             key={theme}
             {...args}
@@ -100,17 +120,36 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const StateVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    const options = [
+      { label: "Alpha", value: "alpha" },
+      { label: "Beta", value: "beta" },
+      { label: "Gamma", value: "gamma" },
+    ];
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <Select
+            key={state}
+            {...args}
+            state={state}
+            value={value}
+            onChange={setValue}
+            options={options}
+            ariaLabel={`Select with ${state} state`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const OutlineVariants: Story = {
   render: (args) => {
     const [value, setValue] = useState("");
-    const themes = [
-      "primary",
-      "secondary",
-      "success",
-      "warning",
-      "error",
-      "clear",
-    ] as const;
     const options = [
       { label: "Outlined A", value: "a" },
       { label: "Outlined B", value: "b" },
@@ -119,7 +158,19 @@ export const OutlineVariants: Story = {
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {themes.map((theme) => (
+        {themeOptions.map((theme) => (
+          <Select
+            key={theme}
+            {...args}
+            theme={theme}
+            outline
+            value={value}
+            onChange={setValue}
+            options={options}
+            ariaLabel={`Outlined ${theme} select`}
+          />
+        ))}
+        {stateOptions.map((theme) => (
           <Select
             key={theme}
             {...args}
@@ -135,3 +186,13 @@ export const OutlineVariants: Story = {
     );
   },
 };
+
+export const RoundingVariants = () =>
+  withVariants(Select, { ...defaultArgs }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = () =>
+  withVariants(Select, { ...defaultArgs }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

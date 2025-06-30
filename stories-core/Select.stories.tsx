@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Select } from "../src/index.core";
 import type { SelectProps } from "../src/components/Select/Select.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -12,6 +13,9 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<SelectProps> = {
   title: "Components/Select",
@@ -26,6 +30,20 @@ const meta: Meta<SelectProps> = {
       { label: "Option C", value: "c" },
     ],
   },
+};
+
+const defaultArgs = {
+  placeholder: "Choose an option",
+  theme: "primary",
+  options: [
+    { label: "Option A", value: "a" },
+    { label: "Option B", value: "b" },
+    { label: "Option C", value: "c" },
+  ],
+  value: "a",
+  onChange: () => {},
+  rounding: "medium",
+  shadow: "light",
 };
 
 export default meta;
@@ -168,3 +186,13 @@ export const OutlineVariants: Story = {
     );
   },
 };
+
+export const RoundingVariants = () =>
+  withVariants(Select, { ...defaultArgs }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = () =>
+  withVariants(Select, { ...defaultArgs }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

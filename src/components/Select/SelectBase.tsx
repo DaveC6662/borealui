@@ -1,22 +1,21 @@
-import { forwardRef, ChangeEvent, useId } from "react";
+import { forwardRef, ChangeEvent, useId, useMemo } from "react";
 import { SelectProps } from "./Select.types";
 import { ChevronDownIcon } from "@/Icons";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 interface BaseSelectProps extends SelectProps {
   classMap: Record<string, string>;
 }
 
-/**
- * BaseSelect is the unstyled core logic of the Select component.
- * It receives classMap and testIds from the consuming core/next wrapper.
- */
 const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
   (
     {
       theme = "primary",
       state = "",
       outline = false,
+      rounding = "medium",
+      shadow = "light",
       options,
       value,
       onChange,
@@ -38,29 +37,42 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       onChange(event.target.value);
     };
 
-    return (
-      <div
-        className={combineClassNames(
+    const wrapperClasses = useMemo(
+      () =>
+        combineClassNames(
           classMap.wrapper,
           classMap[theme],
           classMap[state],
           className,
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`],
           outline ? classMap.outline : "",
           disabled ? classMap.disabled : ""
-        )}
-        data-testid={testId}
-      >
+        ),
+      [classMap, theme, state, className, shadow, rounding, outline, disabled]
+    );
+
+    const selectClasses = useMemo(
+      () =>
+        combineClassNames(
+          classMap.select,
+          classMap[theme],
+          classMap[state],
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`],
+          outline ? classMap.outline : ""
+        ),
+      [classMap, theme, state, outline]
+    );
+
+    return (
+      <div className={wrapperClasses} data-testid={testId}>
         <select
           ref={ref}
           id={selectId}
           value={value}
           onChange={handleChange}
-          className={combineClassNames(
-            classMap.select,
-            classMap[theme],
-            classMap[state],
-            outline ? classMap.outline : ""
-          )}
+          className={selectClasses}
           aria-label={ariaLabel || placeholder}
           aria-describedby={descId}
           aria-disabled={disabled}
