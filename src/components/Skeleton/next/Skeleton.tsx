@@ -11,6 +11,7 @@ const SkeletonLoader: React.FC<SkeletonProps> = (props) => {
     <SkeletonBase
       {...props}
       className={combineClassNames(styles.skeletonLoader, props.className)}
+      classMap={styles}
     />
   );
 };

@@ -3,7 +3,6 @@
 
 .skeletonLoader {
   background-color: var(--background-color-light);
-  border-radius: theme.$border-radius-sm;
   position: relative;
   overflow: hidden;
 
@@ -22,5 +21,17 @@
       transparent 100%
     );
     animation: skeleton-loading 1.5s infinite ease-in-out;
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
   }
 }

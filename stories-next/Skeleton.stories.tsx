@@ -1,10 +1,14 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
-import SkeletonLoader from "@/components/Skeleton/next/Skeleton"; // Adjust path
-import type { SkeletonLoaderProps } from "@/components/Skeleton/Skeleton.types";
+import { Skeleton } from "../src/index.next";
+import type { SkeletonProps } from "../src/components/Skeleton/Skeleton.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const meta: Meta<SkeletonLoaderProps> = {
-  title: "Components/SkeletonLoader",
-  component: SkeletonLoader,
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
+const meta: Meta<SkeletonProps> = {
+  title: "Components/Skeleton",
+  component: Skeleton,
   tags: ["autodocs"],
   args: {
     width: "100%",
@@ -14,7 +18,7 @@ const meta: Meta<SkeletonLoaderProps> = {
 
 export default meta;
 
-type Story = StoryObj<SkeletonLoaderProps>;
+type Story = StoryObj<SkeletonProps>;
 
 export const Default: Story = {
   args: {
@@ -33,9 +37,9 @@ export const FixedSize: Story = {
 export const InlineSkeletons: Story = {
   render: (args) => (
     <div style={{ display: "flex", gap: "1rem" }}>
-      <SkeletonLoader {...args} width="80px" height="20px" />
-      <SkeletonLoader {...args} width="120px" height="20px" />
-      <SkeletonLoader {...args} width="100px" height="20px" />
+      <Skeleton {...args} width="80px" height="20px" />
+      <Skeleton {...args} width="120px" height="20px" />
+      <Skeleton {...args} width="100px" height="20px" />
     </div>
   ),
 };
@@ -51,10 +55,20 @@ export const BlockPlaceholder: Story = {
 export const MultipleLines: Story = {
   render: (args) => (
     <div style={{ display: "grid", gap: "0.5rem" }}>
-      <SkeletonLoader {...args} width="100%" height="20px" />
-      <SkeletonLoader {...args} width="95%" height="20px" />
-      <SkeletonLoader {...args} width="90%" height="20px" />
-      <SkeletonLoader {...args} width="85%" height="20px" />
+      <Skeleton {...args} width="100%" height="20px" />
+      <Skeleton {...args} width="95%" height="20px" />
+      <Skeleton {...args} width="90%" height="20px" />
+      <Skeleton {...args} width="85%" height="20px" />
     </div>
   ),
 };
+
+export const RoundingVariants = (args) =>
+  withVariants(Skeleton, { ...args }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = (args) =>
+  withVariants(Skeleton, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);
