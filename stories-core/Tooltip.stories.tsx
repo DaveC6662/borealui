@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Tooltip, Button } from "../src/index.core";
 import type { TooltipProps } from "../src/components/Tooltip/Tooltip.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -11,6 +12,8 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<TooltipProps> = {
   title: "Components/Tooltip",
@@ -120,6 +123,44 @@ export const States: Story = {
           title={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
         >
           <Button>{state.charAt(0).toUpperCase() + state.slice(1)}</Button>
+        </Tooltip>
+      ))}
+    </div>
+  ),
+};
+
+export const Rounding: Story = {
+  name: "Tooltip Rounding Variants",
+  render: (args) => (
+    <div style={{ display: "grid", gap: "5rem" }}>
+      {roundingOptions.map((rounding) => (
+        <Tooltip
+          key={rounding}
+          {...args}
+          rounding={rounding}
+          title={`${rounding.charAt(0).toUpperCase() + rounding.slice(1)} rounding`}
+        >
+          <Button>
+            {rounding.charAt(0).toUpperCase() + rounding.slice(1)}
+          </Button>
+        </Tooltip>
+      ))}
+    </div>
+  ),
+};
+
+export const Shadow: Story = {
+  name: "Tooltip Shadow Variants",
+  render: (args) => (
+    <div style={{ display: "grid", gap: "5rem" }}>
+      {shadowOptions.map((shadow) => (
+        <Tooltip
+          key={shadow}
+          {...args}
+          shadow={shadow}
+          title={`${shadow.charAt(0).toUpperCase() + shadow.slice(1)} shadow`}
+        >
+          <Button>{shadow.charAt(0).toUpperCase() + shadow.slice(1)}</Button>
         </Tooltip>
       ))}
     </div>

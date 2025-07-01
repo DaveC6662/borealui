@@ -1,6 +1,7 @@
 import { forwardRef, useId, useMemo, useState } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { TooltipProps } from "./Tooltip.types";
+import { capitalize } from "@/utils/capitalize";
 
 export const TooltipBase = forwardRef<
   HTMLDivElement,
@@ -11,6 +12,8 @@ export const TooltipBase = forwardRef<
       content,
       position = "top",
       theme = "primary",
+      rounding = "medium",
+      shadow = "light",
       state = "",
       children,
       className = "",
@@ -32,9 +35,11 @@ export const TooltipBase = forwardRef<
           classMap[position],
           classMap[theme],
           classMap[state],
-          visible && classMap.visible
+          visible && classMap.visible,
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`]
         ),
-      [classMap, position, theme, visible]
+      [classMap, position, theme, visible, shadow, rounding]
     );
 
     return (

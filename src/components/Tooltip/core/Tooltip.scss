@@ -73,8 +73,6 @@ $positions: (
   background-color: var(--primary-color);
   padding: theme.$spacing-xs theme.$spacing-sm;
   font-size: theme.$font-size-sm;
-  border-radius: theme.$border-radius-md;
-  box-shadow: theme.$box-shadow-medium;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
@@ -162,4 +160,16 @@ $positions: (
   box-shadow: none;
   border: 2px solid var(--text-color-primary);
   background-color: map.get(theme.$themes, clear, hover);
+}
+
+@each $key, $value in theme.$rounding {
+  .tooltip_round-#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .tooltip_shadow-#{$key} {
+    box-shadow: $value;
+  }
 }
