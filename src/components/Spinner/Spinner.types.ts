@@ -1,4 +1,4 @@
-import { StateType, ThemeType } from "@/types/types";
+import { ShadowType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the Spinner component.
@@ -10,6 +10,8 @@ export interface SpinnerProps {
   state?: StateType;
   /** The size of the spinner (in pixels). */
   size?: number;
+  /** Shadow of the spinner */
+  shadow?: ShadowType;
   /** Additional class names for styling customization. */
   className?: string;
   /** Test ID for testing frameworks (e.g., for use with Jest or Cypress). */

@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Spinner } from "../src/index.core";
 import type { SpinnerProps } from "../src/components/Spinner/Spinner.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -11,6 +12,8 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<SpinnerProps> = {
   title: "Components/Spinner",
@@ -46,7 +49,6 @@ export const SizeVariants: Story = {
 
 export const ThemeVariants: Story = {
   render: (args) => {
-
     return (
       <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
         {themeOptions.map((theme) => (
@@ -61,7 +63,6 @@ export const ThemeVariants: Story = {
 
 export const StateVariants: Story = {
   render: (args) => {
-
     return (
       <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
         {stateOptions.map((state) => (
@@ -79,3 +80,8 @@ export const WithCustomLabel: Story = {
     label: "Fetching data...",
   },
 };
+
+export const ShadowVariants = (args) =>
+  withVariants(Spinner, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { SpinnerProps } from "./Spinner.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 const SpinnerBase: React.FC<
   SpinnerProps & { classMap: Record<string, string> }
@@ -8,6 +9,7 @@ const SpinnerBase: React.FC<
   theme = "primary",
   state = "",
   size = 50,
+  shadow = "none",
   className = "",
   "data-testid": testId = "spinner",
   label,
@@ -18,6 +20,11 @@ const SpinnerBase: React.FC<
 
   const labelId = `${testId}`;
 
+  const spinnerClasses = useMemo(
+    () => combineClassNames(classMap.spinner, classMap[theme], classMap[state]),
+    [classMap, theme, state]
+  );
+
   return (
     <div
       className={`${classMap.wrapper} ${className}`}
@@ -27,7 +34,14 @@ const SpinnerBase: React.FC<
       aria-label={label || "Loading"}
     >
       <div
-        className={combineClassNames(classMap.spinner, classMap[theme], classMap[state])}
+        className={combineClassNames(
+          classMap.shadowElement,
+          shadow && classMap[`shadow${capitalize(shadow)}`]
+        )}
+        style={{ width: spinnerSize, height: spinnerSize }}
+      />
+      <div
+        className={spinnerClasses}
         style={{
           width: spinnerSize,
           height: spinnerSize,

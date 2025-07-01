@@ -48,6 +48,22 @@
   }
 }
 
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
+}
+
+.shadowElement {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: transparent;
+  z-index: 0;
+}
+
 .label {
   font-size: theme.$font-size-sm;
   margin-top: theme.$spacing-xs;

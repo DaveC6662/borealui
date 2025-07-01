@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { SliderProps } from "./Slider.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 const SliderBase: React.FC<
   SliderProps & { classMap: Record<string, string> }
@@ -12,6 +13,8 @@ const SliderBase: React.FC<
   step = 1,
   label,
   size = "medium",
+  rounding = "medium",
+  shadow = "none",
   theme = "primary",
   state = "",
   showValue = true,
@@ -24,11 +27,22 @@ const SliderBase: React.FC<
   const labelId = `${testId}-label`;
   const valueText = `${value}`;
 
+  const containerClasses = useMemo(
+    () =>
+      combineClassNames(
+        classMap.container,
+        classMap[size],
+        classMap[theme],
+        classMap[state],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
+        className
+      ),
+    [classMap, size, theme, state, className]
+  );
+
   return (
-    <div
-      className={combineClassNames(classMap.container, classMap[size], classMap[theme], classMap[state], className)}
-      data-testid={`${testId}-container`}
-    >
+    <div className={containerClasses} data-testid={`${testId}-container`}>
       {label && (
         <label id={labelId} htmlFor={inputId} className={classMap.label}>
           {label}

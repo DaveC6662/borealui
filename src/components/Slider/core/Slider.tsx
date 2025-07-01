@@ -10,19 +10,34 @@ const coreStyles = {
   wrapper: "slider_wrapper",
   slider: "slider",
   value: "slider_value",
+
   xs: "slider_xs",
   small: "slider_small",
   medium: "slider_medium",
   large: "slider_large",
   xl: "slider_xl",
+
   primary: "slider_primary",
   secondary: "slider_secondary",
   tertiary: "slider_tertiary",
   quaternary: "slider_quaternary",
+
   success: "slider_success",
   error: "slider_error",
   warning: "slider_warning",
+
   clear: "slider_clear",
+
+  shadowNone: "slider_shadow-None",
+  shadowLight: "slider_shadow-Light",
+  shadowMedium: "slider_shadow-Medium",
+  shadowStrong: "slider_shadow-Strong",
+  shadowIntense: "slider_shadow-Intense",
+
+  roundNone: "slider_round-None",
+  roundSmall: "slider_round-Small",
+  roundMedium: "slider_round-Medium",
+  roundLarge: "slider_round-Large",
 };
 
 const Slider: React.FC<SliderProps> = (props) => {

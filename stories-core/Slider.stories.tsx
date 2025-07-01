@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Slider } from "../src/index.core";
 import type { SliderProps } from "../src/components/Slider/Slider.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -12,6 +13,9 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<SliderProps> = {
   title: "Components/Slider",
@@ -139,3 +143,13 @@ export const StateVariants: Story = {
     );
   },
 };
+
+export const RoundingVariants = (args) =>
+  withVariants(Slider, { ...args }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = (args) =>
+  withVariants(Slider, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

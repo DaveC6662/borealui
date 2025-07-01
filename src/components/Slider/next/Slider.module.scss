@@ -48,7 +48,6 @@ $slider-sizes: (
   width: 100%;
   appearance: none;
   outline: none;
-  border-radius: 6px;
   background-color: var(--background-color-light);
   transition: background 0.3s ease;
 
@@ -59,6 +58,18 @@ $slider-sizes: (
     background: currentcolor;
     cursor: pointer;
     box-shadow: 0 0 2px rgb(0 0 0 / 20%);
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} .slider {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} .slider {
+    box-shadow: $value;
   }
 }
 
