@@ -16,6 +16,8 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   theme = "primary",
   state = "",
   size = "medium",
+  shadow = "none",
+  rounding = "full",
   "data-testid": testId = "stepper",
   classMap,
   IconButtonComponent,
@@ -25,7 +27,13 @@ const StepperBase: React.FC<StepperBaseProps> = ({
 
   return (
     <div
-      className={combineClassNames(classMap.stepper, classMap[orientation], classMap[theme], classMap[state], classMap[size])}
+      className={combineClassNames(
+        classMap.stepper,
+        classMap[orientation],
+        classMap[theme],
+        classMap[state],
+        classMap[size]
+      )}
       role="list"
       aria-labelledby={groupLabelId}
       data-testid={testId}
@@ -60,11 +68,17 @@ const StepperBase: React.FC<StepperBaseProps> = ({
               icon={Icon}
               theme={theme}
               state={state}
-              className={combineClassNames(classMap.stepButton, isActive ? classMap.active : "", isCompleted? classMap.completed : "" )}
+              className={combineClassNames(
+                classMap.stepButton,
+                isActive ? classMap.active : "",
+                isCompleted ? classMap.completed : ""
+              )}
               size={size}
+              shadow={shadow}
+              rounding={rounding}
               disabled={isDisabled}
               outline={!isActive}
-              aria-label={label} 
+              aria-label={label}
               aria-current={isActive ? "step" : undefined}
               aria-disabled={isDisabled}
               data-testid={`${stepId}-icon`}

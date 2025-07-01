@@ -3,6 +3,10 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaCheckCircle, FaClipboardList, FaFileAlt } from "react-icons/fa";
 import { Stepper } from "../src/index.next";
 import type { StepperProps } from "../src/components/Stepper/Stepper.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const steps = [
   { label: "Start", icon: FaClipboardList },
@@ -61,7 +65,6 @@ export const Vertical: Story = {
 
 export const ThemedVariants: Story = {
   render: (args) => {
-
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
         {themeOptions.map((theme) => {
@@ -83,7 +86,6 @@ export const ThemedVariants: Story = {
 
 export const StateVariants: Story = {
   render: (args) => {
-
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
         {stateOptions.map((state) => {
@@ -128,7 +130,7 @@ export const SizeVariants: Story = {
 
 export const NoBackwardsNavigation: Story = {
   args: {
-    activeStep: 0
+    activeStep: 0,
   },
 
   render: (args) => {
@@ -143,5 +145,15 @@ export const NoBackwardsNavigation: Story = {
         }}
       />
     );
-  }
+  },
 };
+
+export const RoundingVariants = (args) =>
+  withVariants(Stepper, { ...args }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = (args) =>
+  withVariants(Stepper, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

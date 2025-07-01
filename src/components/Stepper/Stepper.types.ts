@@ -1,4 +1,11 @@
-import { OrientationType, SizeType, StateType, ThemeType } from "@/types/types";
+import {
+  OrientationType,
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * Represents a step in the Stepper.
@@ -28,6 +35,10 @@ export interface StepperProps {
   theme?: ThemeType;
   /** The state of the stepper ex "success", "error", "warning" */
   state?: StateType;
+  /** Shadow of the stepper buttons */
+  shadow?: ShadowType;
+  /** Rounding of the stepper buttons */
+  rounding?: RoundingType;
   /** The size of the stepper icons. */
   size?: SizeType;
   /** Optional test ID for testing purposes. */
