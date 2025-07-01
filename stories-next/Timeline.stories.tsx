@@ -2,6 +2,7 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaRocket, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
 import { Timeline } from "../src/index.next";
 import type { TimelineProps } from "../src/components/Timeline/Timeline.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -11,18 +12,8 @@ const themeOptions = [
   "clear",
 ];
 
-const meta: Meta<TimelineProps> = {
-  title: "Components/Timeline",
-  component: Timeline,
-  tags: ["autodocs"],
-  args: {
-    orientation: "vertical",
-    theme: "primary",
-  },
-};
-
-export default meta;
-type Story = StoryObj<TimelineProps>;
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const sampleEvents = [
   {
@@ -49,6 +40,20 @@ const sampleEvents = [
     icon: FaCheckCircle,
   },
 ];
+
+const meta: Meta<TimelineProps> = {
+  title: "Components/Timeline",
+  component: Timeline,
+  tags: ["autodocs"],
+  args: {
+    orientation: "vertical",
+    theme: "primary",
+    items: sampleEvents,
+  },
+};
+
+export default meta;
+type Story = StoryObj<TimelineProps>;
 
 export const Vertical: Story = {
   args: {
@@ -81,3 +86,13 @@ export const ThemeVariants: Story = {
     );
   },
 };
+
+export const RoundingVariants = (args) =>
+  withVariants(Timeline, { ...args }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = (args) =>
+  withVariants(Timeline, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

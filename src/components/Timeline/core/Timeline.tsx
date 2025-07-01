@@ -13,14 +13,27 @@ const classes = {
   title: "timeline_title",
   date: "timeline_date",
   description: "timeline_description",
+
   vertical: "timeline_vertical",
   horizontal: "timeline_horizontal",
+
   primary: "timeline_primary",
   secondary: "timeline_secondary",
   tertiary: "timeline_tertiary",
   quaternary: "timeline_quaternary",
-  warning: "timeline_warning",
+
   clear: "timeline_clear",
+
+  shadowNone: "timeline_shadow-None",
+  shadowLight: "timeline_shadow-Light",
+  shadowMedium: "timeline_shadow-Medium",
+  shadowStrong: "timeline_shadow-Strong",
+  shadowIntense: "timeline_shadow-Intense",
+
+  roundNone: "timeline_round-None",
+  roundSmall: "timeline_round-Small",
+  roundMedium: "timeline_round-Medium",
+  roundLarge: "timeline_round-Large",
 };
 
 const Timeline: React.FC<TimelineProps> = (props) => {

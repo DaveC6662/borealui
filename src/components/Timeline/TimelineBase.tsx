@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { TimelineProps } from "./Timeline.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 const TimelineBase: React.FC<
   TimelineProps & { classMap: Record<string, string> }
@@ -8,6 +9,8 @@ const TimelineBase: React.FC<
   items,
   orientation = "vertical",
   theme = "primary",
+  rounding = "medium",
+  shadow = "light",
   classMap,
   "data-testid": testId = "timeline",
 }) => {
@@ -18,7 +21,7 @@ const TimelineBase: React.FC<
         classMap[orientation],
         classMap[theme]
       ),
-    [classMap, orientation, theme]
+    [classMap, orientation, theme, shadow, rounding]
   );
 
   const itemClassName = useMemo(
@@ -32,9 +35,21 @@ const TimelineBase: React.FC<
       combineClassNames(
         classMap.marker,
         classMap[theme],
-        classMap[orientation]
+        classMap[orientation],
+        shadow && classMap[`shadow${capitalize(shadow)}`]
       ),
-    [classMap, orientation, theme]
+    [classMap, orientation, theme, shadow]
+  );
+
+  const contentClassName = useMemo(
+    () =>
+      combineClassNames(
+        classMap.content,
+        classMap[orientation],
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`]
+      ),
+    [classMap, orientation, shadow, rounding]
   );
 
   return (
@@ -73,7 +88,7 @@ const TimelineBase: React.FC<
             </div>
 
             <div
-              className={`${classMap.content} ${classMap[orientation]}`}
+              className={contentClassName}
               data-testid={`${itemTestId}-content`}
             >
               <h3 id={labelId} className={classMap.title}>

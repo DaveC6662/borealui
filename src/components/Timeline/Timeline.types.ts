@@ -1,4 +1,10 @@
-import { OrientationType, StateType, ThemeType } from "@/types/types";
+import {
+  OrientationType,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * Represents a single item within the timeline.
@@ -24,6 +30,10 @@ export interface TimelineProps {
   orientation?: OrientationType;
   /** Theme to apply for styling, e.g., "primary", "secondary". Defaults to "primary". */
   theme?: ThemeType;
+  /** Rounding of the component */
+  rounding?: RoundingType;
+  /** Shadow style of the component */
+  shadow?: ShadowType;
   /** Optional test ID for testing purposes. */
   "data-testid"?: string;
 }

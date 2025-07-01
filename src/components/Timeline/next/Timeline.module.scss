@@ -69,7 +69,6 @@
   background-color: var(--primary-color);
   color: var(--text-color-primary);
   font-size: theme.$font-size-sm;
-  box-shadow: theme.$box-shadow-medium;
   transition: transform 0.3s ease-in-out;
   line-height: 0.5em;
 }
@@ -89,8 +88,6 @@
 .content {
   background: var(--background-color-lighter);
   padding: theme.$spacing-sm;
-  border-radius: theme.$border-radius-md;
-  box-shadow: theme.$box-shadow-light;
   flex: 1;
   min-width: 15rem;
 
@@ -128,4 +125,16 @@
 
 .clear .marker {
   box-shadow: none;
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
 }
