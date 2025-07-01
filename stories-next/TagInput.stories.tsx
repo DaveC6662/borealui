@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { TagInput } from "../src/index.next";
 import type { TagInputProps } from "../src/components/TagInput/Taginput.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -13,6 +14,9 @@ const themeOptions = [
 
 const stateOptions = ["success", "error", "warning"];
 
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
 const meta: Meta<TagInputProps> = {
   title: "Components/TagInput",
   component: TagInput,
@@ -21,6 +25,7 @@ const meta: Meta<TagInputProps> = {
     placeholder: "Add a tag...",
     theme: "primary",
     size: "medium",
+    tags: ["react", "nextjs"],
   },
 };
 
@@ -132,3 +137,13 @@ export const WithOnChangeAlert: Story = {
     );
   },
 };
+
+export const RoundingVariants = (args) =>
+  withVariants(TagInput, { ...args }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = (args) =>
+  withVariants(TagInput, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

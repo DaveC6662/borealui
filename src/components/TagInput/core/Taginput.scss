@@ -69,7 +69,6 @@ $sizes: (
     gap: theme.$spacing-xs;
     background-color: var(--primary-color);
     color: var(--text-color-primary);
-    border-radius: theme.$border-radius-md;
   }
 
   &_tag_label {
@@ -100,5 +99,17 @@ $sizes: (
         padding: map.get($props, padding);
       }
     }
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .tag_round-#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .tag_shadow-#{$key} {
+    box-shadow: $value;
   }
 }

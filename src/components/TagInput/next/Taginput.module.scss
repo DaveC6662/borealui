@@ -69,7 +69,6 @@ $sizes: (
   gap: theme.$spacing-xs;
   background-color: var(--primary-color);
   color: var(--text-color-primary);
-  border-radius: theme.$border-radius-md;
   font-size: theme.$font-size-sm;
   padding: theme.$spacing-xxs theme.$spacing-xs;
 }
@@ -100,5 +99,17 @@ $sizes: (
       font-size: map.get($props, font-size);
       padding: map.get($props, padding);
     }
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
   }
 }

@@ -2,6 +2,7 @@ import React, { useId, useState, KeyboardEvent, useMemo } from "react";
 import { TagInputProps } from "./Taginput.types";
 import { CloseIcon } from "@/Icons";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 const TagInputBase: React.FC<
   TagInputProps & {
@@ -16,6 +17,8 @@ const TagInputBase: React.FC<
   theme = "primary",
   state = "",
   size = "medium",
+  rounding = "medium",
+  shadow = "light",
   "data-testid": testId = "tag-input",
   ariaDescription = "Type a tag and press Enter or comma to add. Existing tags can be removed using the remove button next to each tag.",
   classMap,
@@ -65,6 +68,16 @@ const TagInputBase: React.FC<
     [classMap, theme, state, size]
   );
 
+  const tagClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.tag,
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`]
+      ),
+    [classMap]
+  );
+
   return (
     <div
       className={wrapperClass}
@@ -93,7 +106,7 @@ const TagInputBase: React.FC<
         {tagList.map((tag, index) => (
           <li
             key={tag}
-            className={classMap.tag}
+            className={tagClass}
             role="listitem"
             data-testid={`${testId}-tag-${index}`}
           >
@@ -117,6 +130,8 @@ const TagInputBase: React.FC<
             type="text"
             theme={theme}
             state={state}
+            rounding={rounding}
+            shadow={shadow}
             className={classMap.input}
             value={inputValue}
             placeholder={tagList.length === 0 ? placeholder : ""}
