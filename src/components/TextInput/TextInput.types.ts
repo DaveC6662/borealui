@@ -1,4 +1,4 @@
-import { StateType, ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import { ComponentType, InputHTMLAttributes } from "react";
 
 /**
@@ -24,6 +24,10 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
    * Defaults to "".
    */
   state?: StateType;
+  /** Rounding of the component */
+  rounding?: RoundingType;
+  /** Shadow of the component */
+  shadow?: ShadowType;
   /** If true, the input is outlined instead of filled. */
   outline?: boolean;
   /**

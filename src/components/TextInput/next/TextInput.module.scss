@@ -10,9 +10,7 @@
   width: fit-content;
   padding-left: theme.$spacing-sm;
   padding-right: theme.$spacing-xs;
-  border-radius: theme.$border-radius-xl;
   margin: theme.$spacing-sm;
-  box-shadow: theme.$box-shadow-medium;
   transition: theme.$transition-default;
   max-width: 400px;
 
@@ -39,7 +37,6 @@
   margin-left: 1em;
   font-size: theme.$font-size-base;
   border: none;
-  border-radius: theme.$border-radius-lg;
   background-color: transparent;
   color: var(--text-color-primary);
 
@@ -90,7 +87,6 @@
   .#{$theme} {
     background-color: map.get($vals, bg);
     color: map.get($vals, text);
-    box-shadow: map.get($vals, shadow, theme.$box-shadow-medium);
 
     &:hover {
       background-color: map.get($vals, hover);
@@ -107,7 +103,6 @@
     &.outline {
       background-color: transparent;
       color: map.get($vals, text);
-      box-shadow: none;
       border: 2px solid map.get($vals, border);
     }
   }
@@ -125,9 +120,19 @@
 }
 
 .clear {
-  box-shadow: none;
-
   .textInput {
     border: none;
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
   }
 }

@@ -1,6 +1,7 @@
 import { forwardRef, useId, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { TextAreaProps } from "./TextArea.types";
+import { capitalize } from "@/utils/capitalize";
 
 const TextAreaBase = forwardRef<
   HTMLTextAreaElement,
@@ -14,6 +15,8 @@ const TextAreaBase = forwardRef<
       outline = false,
       autoComplete = "off",
       theme = "primary",
+      rounding = "medium",
+      shadow = "light",
       state = "",
       ariaLabel,
       ariaDescription,
@@ -37,9 +40,11 @@ const TextAreaBase = forwardRef<
           classMap[state],
           outline && classMap.outline,
           disabled && classMap.disabled,
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`],
           className
         ),
-      [classMap, outline, disabled, className]
+      [classMap, outline, disabled, rounding, shadow, className]
     );
 
     return (

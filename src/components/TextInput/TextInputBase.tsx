@@ -8,6 +8,7 @@ import {
 import { EyeIcon, EyeSlashIcon } from "@/Icons";
 import { TextInputProps } from "./TextInput.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 const TextInputBase = forwardRef<
   HTMLInputElement,
@@ -25,6 +26,8 @@ const TextInputBase = forwardRef<
       ariaLabel,
       ariaDescription,
       theme = "primary",
+      rounding = "medium",
+      shadow = "light",
       state = "",
       disabled = false,
       autocomplete = false,
@@ -51,6 +54,8 @@ const TextInputBase = forwardRef<
           classMap[state],
           outline && classMap.outline,
           disabled && classMap.disabled,
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`],
           className
         ),
       [classMap, theme, state, outline, disabled]

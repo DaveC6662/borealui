@@ -3,6 +3,7 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaCommentDots } from "react-icons/fa";
 import { TextArea } from "../src/index.next";
 import type { TextAreaProps } from "../src/components/TextArea/TextArea.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -13,6 +14,9 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<TextAreaProps> = {
   title: "Components/TextArea",
@@ -165,3 +169,13 @@ export const Disabled: Story = {
     />
   ),
 };
+
+export const RoundingVariants = (args) =>
+  withVariants(TextArea, { ...args }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = (args) =>
+  withVariants(TextArea, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

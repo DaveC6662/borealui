@@ -1,4 +1,4 @@
-import { StateType, ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import { TextareaHTMLAttributes, ComponentType } from "react";
 
 /**
@@ -24,6 +24,10 @@ export interface TextAreaProps
   theme?: ThemeType;
   /** State of the text area ex "success", "error", "warning" */
   state?: StateType;
+  /** Rounding of the component */
+  rounding?: RoundingType;
+  /** Shadow of the component */
+  shadow?: ShadowType;
   /** If true, the textarea is styled with an outline. */
   outline?: boolean;
   /** If true, the textarea is disabled. */

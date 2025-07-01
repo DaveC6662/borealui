@@ -3,6 +3,7 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaUser } from "react-icons/fa";
 import { TextInput } from "../src/index.core";
 import type { TextInputProps } from "../src/components/TextInput/TextInput.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -13,6 +14,8 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<TextInputProps> = {
   title: "Components/TextInput",
@@ -173,3 +176,13 @@ export const WithAriaDescription: Story = {
     );
   },
 };
+
+export const RoundingVariants = (args) =>
+  withVariants(TextInput, { ...args }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = (args) =>
+  withVariants(TextInput, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

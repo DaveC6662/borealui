@@ -7,9 +7,19 @@
   width: fit-content;
   justify-content: center;
   align-items: center;
-  border-radius: theme.$border-radius-xs;
-  box-shadow: theme.$box-shadow-medium;
   transition: theme.$transition-default;
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
 }
 
 .textInput {

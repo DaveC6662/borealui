@@ -10,9 +10,7 @@
   width: fit-content;
   padding-left: theme.$spacing-sm;
   padding-right: theme.$spacing-xs;
-  border-radius: theme.$border-radius-xl;
   margin: theme.$spacing-sm;
-  box-shadow: theme.$box-shadow-medium;
   transition: theme.$transition-default;
   max-width: 400px;
 
@@ -126,4 +124,16 @@
   pointer-events: none;
   opacity: 0.6;
   background-color: theme.$disabled-color;
+}
+
+@each $key, $value in theme.$rounding {
+  .textInput_round-#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .textInput_shadow-#{$key} {
+    box-shadow: $value;
+  }
 }
