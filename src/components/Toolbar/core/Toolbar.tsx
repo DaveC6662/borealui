@@ -9,12 +9,24 @@ const classes = {
   section: "toolbar_section",
   title: "toolbar_title",
   avatarWrapper: "toolbar_avatarWrapper",
+
   primary: "toolbar_primary",
   secondary: "toolbar_secondary",
   tertiary: "toolbar_tertiary",
   quaternary: "toolbar_quaternary",
-  warning: "toolbar_warning",
+
   clear: "toolbar_clear",
+
+  shadowNone: "toolbar_shadow-None",
+  shadowLight: "toolbar_shadow-Light",
+  shadowMedium: "toolbar_shadow-Medium",
+  shadowStrong: "toolbar_shadow-Strong",
+  shadowIntense: "toolbar_shadow-Intense",
+
+  roundNone: "toolbar_round-None",
+  roundSmall: "toolbar_round-Small",
+  roundMedium: "toolbar_round-Medium",
+  roundLarge: "toolbar_round-Large",
 };
 
 const Toolbar: React.FC<ToolbarProps> = (props) => (

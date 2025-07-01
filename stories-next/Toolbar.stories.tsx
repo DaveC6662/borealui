@@ -2,6 +2,7 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { IconButton, Toolbar } from "../src/index.next";
 import { FaBell, FaArrowLeft } from "react-icons/fa";
 import type { ToolbarProps } from "../src/components/Toolbar/Toolbar.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -10,6 +11,8 @@ const themeOptions = [
   "quaternary",
   "clear",
 ];
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<ToolbarProps> = {
   title: "Components/Toolbar",
@@ -67,3 +70,13 @@ export const ThemedVariants: Story = {
     );
   },
 };
+
+export const RoundingVariants = (args) =>
+  withVariants(Toolbar, { ...args }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = (args) =>
+  withVariants(Toolbar, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

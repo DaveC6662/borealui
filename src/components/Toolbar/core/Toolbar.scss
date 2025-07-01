@@ -17,10 +17,6 @@
     &_#{$theme} {
       background-color: map.get($color, bg);
 
-      @if $theme == "clear" {
-        box-shadow: none;
-      }
-
       @if $theme == "secondary" {
         color: var(--text-color-secondary);
       } @else {
@@ -72,5 +68,18 @@
       margin-left: 0;
       margin-top: theme.$spacing-xs;
     }
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .toolbar_round-#{$key} {
+    border-bottom-right-radius: $value;
+    border-bottom-left-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .toolbar_shadow-#{$key} {
+    box-shadow: $value;
   }
 }

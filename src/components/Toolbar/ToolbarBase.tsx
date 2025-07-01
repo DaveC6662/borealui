@@ -1,6 +1,7 @@
-import React, { JSX } from "react";
+import React, { JSX, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { ToolbarProps } from "./Toolbar.types";
+import { capitalize } from "@/utils/capitalize";
 
 export const ToolbarBase: React.FC<
   ToolbarProps & {
@@ -16,6 +17,8 @@ export const ToolbarBase: React.FC<
   right,
   avatar,
   theme = "primary",
+  shadow = "none",
+  rounding = "none",
   className = "",
   "data-testid": testId = "toolbar",
   AvatarComponent,
@@ -25,13 +28,21 @@ export const ToolbarBase: React.FC<
 }): JSX.Element => {
   const TitleTag = `h${headingLevel}` as keyof JSX.IntrinsicElements;
 
-  return (
-    <header
-      className={combineClassNames(
+  const headerClass = useMemo(
+    () =>
+      combineClassNames(
         classMap.toolbar,
         classMap[theme],
-        className
-      )}
+        className,
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`]
+      ),
+    [classMap, theme, className]
+  );
+
+  return (
+    <header
+      className={headerClass}
       role="banner"
       aria-label={ariaLabel}
       data-testid={testId}
