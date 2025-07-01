@@ -1,4 +1,10 @@
-import { SizeType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * Represents a single tab with a label, optional icon, and content.
@@ -28,6 +34,10 @@ export interface TabsProps {
   theme?: ThemeType;
   /** The state of the tabs (e.g., "success", "error", etc.). */
   state?: StateType;
+  /** Rounding of the tabs. */
+  rounding?: RoundingType;
+  /** Shadow style of the tabs. */
+  shadow?: ShadowType;
   /** The size of the tabs (e.g., "small", "medium", etc.). */
   size?: SizeType;
   /** Test ID for testing purposes. */

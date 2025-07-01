@@ -57,7 +57,6 @@ $sizes: (
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  box-shadow: theme.$box-shadow-medium;
   border: none;
   color: var(--text-color-primary);
   font-weight: theme.$font-weight-bold;
@@ -95,14 +94,10 @@ $sizes: (
 
     &:first-child {
       border-radius: 0;
-      border-top-left-radius: theme.$border-radius-md;
-      border-top-right-radius: theme.$border-radius-md;
     }
 
     &:last-child {
       border-radius: 0;
-      border-bottom-left-radius: theme.$border-radius-md;
-      border-bottom-right-radius: theme.$border-radius-md;
       border-bottom: none;
     }
   }
@@ -164,4 +159,22 @@ $sizes: (
 
 .secondary .tab.active {
   color: var(--text-color-secondary);
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key}:first-child {
+    border-top-left-radius: $value;
+    border-bottom-left-radius: $value;
+  }
+
+  .round#{$key}:last-child {
+    border-top-right-radius: $value;
+    border-bottom-right-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
 }

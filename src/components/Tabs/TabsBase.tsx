@@ -1,11 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { TabsProps } from "./Tabs.types";
 import { combineClassNames } from "@/utils/classNames";
+import { capitalize } from "@/utils/capitalize";
 
 const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
   tabs,
   defaultIndex = 0,
   onChange,
+  rounding = "medium",
+  shadow = "light",
   className = "",
   theme = "primary",
   state = "",
@@ -48,11 +51,30 @@ const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
     }
   };
 
+  const containerClassNames = useMemo(
+    () =>
+      combineClassNames(
+        classMap.container,
+        classMap[theme],
+        classMap[state],
+        classMap[size],
+        className
+      ),
+    [classMap, theme, state, size, className]
+  );
+
+  const tabClassNames = useMemo(
+    () =>
+      combineClassNames(
+        classMap.tab,
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`]
+      ),
+    [classMap]
+  );
+
   return (
-    <div
-      className={combineClassNames(classMap.container, classMap[theme], classMap[state], classMap[size], className)}
-      data-testid={testId}
-    >
+    <div className={containerClassNames} data-testid={testId}>
       <div
         className={classMap.tabs}
         role="tablist"
@@ -70,7 +92,10 @@ const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
               ref={(el): void => {
                 tabRefs.current[index] = el;
               }}
-              className={`${classMap.tab} ${isActive ? classMap.active : ""}`}
+              className={combineClassNames(
+                tabClassNames,
+                isActive ? classMap.active : ""
+              )}
               onClick={() => handleTabClick(index)}
               role="tab"
               type="button"

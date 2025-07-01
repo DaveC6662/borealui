@@ -2,6 +2,7 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { FaCode, FaImage, FaMusic } from "react-icons/fa";
 import { Tabs } from "../src/index.next";
 import type { TabsProps } from "../src/components/Tabs/Tabs.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -12,6 +13,9 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const tabsWithIcons: TabsProps["tabs"] = [
   { label: "Code", icon: FaCode, content: <div>Code content goes here.</div> },
@@ -59,7 +63,6 @@ export const NoIcons: Story = {
 
 export const ThemeVariants: Story = {
   render: (args) => {
-
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
         {themeOptions.map((theme) => (
@@ -72,7 +75,6 @@ export const ThemeVariants: Story = {
 
 export const StateVariants: Story = {
   render: (args) => {
-
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
         {stateOptions.map((state) => (
@@ -101,3 +103,13 @@ export const WithOnChange: Story = {
     <Tabs {...args} onChange={(index) => alert(`Tab ${index + 1} clicked`)} />
   ),
 };
+
+export const RoundingVariants = (args) =>
+  withVariants(Tabs, { ...args }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = (args) =>
+  withVariants(Tabs, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);
