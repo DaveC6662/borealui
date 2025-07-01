@@ -1,4 +1,10 @@
-import { SizeType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * Props for the Toggle component.
@@ -17,6 +23,10 @@ export interface ToggleProps {
   theme?: ThemeType;
   /** State of the toggle (e.g., "success", "error"). Defaults to "". */
   state?: StateType;
+  /** Rounding applied to the toggle (e.g., "small", "medium", "large"). Defaults to "medium". */
+  rounding?: RoundingType;
+  /** Shadow style applied to the toggle (e.g., "none", "light", "medium"). Defaults to "medium". */
+  shadow?: ShadowType;
   /** Size variant for the toggle (e.g., "small", "medium", "large"). Defaults to "medium". */
   size?: SizeType;
   /** If true, disables user interaction with the toggle. */

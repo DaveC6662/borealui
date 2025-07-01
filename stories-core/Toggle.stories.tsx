@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Toggle } from "../src/index.core";
 import type { ToggleProps } from "../src/components/Toggle/Toggle.types";
+import { withVariants } from "../.storybook-core/helpers/withVariants";
 
 const themeOptions = [
   "primary",
@@ -12,6 +13,8 @@ const themeOptions = [
 ];
 
 const stateOptions = ["success", "error", "warning"];
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<ToggleProps> = {
   title: "Components/Toggle",
@@ -121,3 +124,13 @@ export const SizeVariants: Story = {
     );
   },
 };
+
+export const RoundingVariants = (args) =>
+  withVariants(Toggle, { ...args }, [
+    { propName: "rounding", values: roundingOptions },
+  ]);
+
+export const ShadowVariants = (args) =>
+  withVariants(Toggle, { ...args }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);

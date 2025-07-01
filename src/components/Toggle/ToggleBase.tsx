@@ -1,6 +1,7 @@
 import { forwardRef, KeyboardEvent, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { ToggleProps } from "./Toggle.types";
+import { capitalize } from "@/utils/capitalize";
 
 export interface ToggleBaseProps extends ToggleProps {
   classMap: Record<string, string>;
@@ -13,6 +14,8 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       onChange,
       label,
       theme = "primary",
+      rounding = "large",
+      shadow = "none",
       state = "",
       size = "medium",
       disabled = false,
@@ -39,14 +42,21 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
           classMap[theme],
           classMap[state],
           classMap[size],
+          rounding && classMap[`round${capitalize(rounding)}`],
           disabled && classMap.disabled
         ),
-      [classMap, size, disabled]
+      [classMap, size, disabled, shadow, rounding, theme, state]
     );
 
     const toggleClass = useMemo(
-      () => combineClassNames(classMap.toggle, checked && classMap.active),
-      [classMap, checked]
+      () =>
+        combineClassNames(
+          classMap.toggle,
+          checked && classMap.active,
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`]
+        ),
+      [classMap, checked, rounding]
     );
 
     const labelId = label ? `${testId}-label` : undefined;

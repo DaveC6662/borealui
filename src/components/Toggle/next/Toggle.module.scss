@@ -73,7 +73,6 @@ $sizes: (
 
 .toggle {
   background-color: theme.$disabled-color;
-  border-radius: 50px;
   position: relative;
   cursor: pointer;
   border: none;
@@ -84,7 +83,6 @@ $sizes: (
 
   .slider {
     background-color: var(--text-color-primary);
-    border-radius: 50%;
     position: absolute;
     left: 4px;
     transition: transform 0.3s ease-in-out;
@@ -122,6 +120,21 @@ $sizes: (
 @each $state, $color in theme.$states {
   .#{$state} .toggle.active {
     outline: 2px solid map.get($color, border);
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+    .slider {
+      border-radius: $value;
+    }
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
   }
 }
 
