@@ -12,6 +12,7 @@ const BasePager: React.FC<BasePagerProps> = ({
   totalItems,
   itemsPerPage,
   currentPage,
+  serverControlled = false,
   onPageChange,
   className = "",
   size = "small",
@@ -25,7 +26,9 @@ const BasePager: React.FC<BasePagerProps> = ({
   classMap,
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const pages = serverControlled
+    ? []
+    : Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <nav
@@ -52,12 +55,11 @@ const BasePager: React.FC<BasePagerProps> = ({
       </div>
 
       <div className={classMap.controls} role="list">
-        {pages.map((page) => (
+        {serverControlled ? (
           <div
-            key={page}
             className={classMap.buttonWrapper}
-            data-testid={`${testId}-page-${page}`}
             role="listitem"
+            data-testid={`${testId}-page-${currentPage}`}
           >
             <Button
               theme={theme}
@@ -65,19 +67,44 @@ const BasePager: React.FC<BasePagerProps> = ({
               size={size}
               rounding={rounding}
               shadow={shadow}
-              onClick={() => onPageChange(page)}
-              aria-label={`Go to page ${page}`}
-              aria-current={page === currentPage ? "page" : undefined}
-              disabled={page === currentPage}
-              className={`${classMap.button} ${
-                page === currentPage ? classMap.active : ""
-              }`}
-              data-testid={`${testId}-button-${page}`}
+              onClick={() => onPageChange(currentPage)}
+              aria-label={`Page ${currentPage}`}
+              aria-current="page"
+              disabled
+              className={`${classMap.button} ${classMap.active}`}
+              data-testid={`${testId}-button-${currentPage}`}
             >
-              {page}
+              {currentPage}
             </Button>
           </div>
-        ))}
+        ) : (
+          pages.map((page) => (
+            <div
+              key={page}
+              className={classMap.buttonWrapper}
+              data-testid={`${testId}-page-${page}`}
+              role="listitem"
+            >
+              <Button
+                theme={theme}
+                state={state}
+                size={size}
+                rounding={rounding}
+                shadow={shadow}
+                onClick={() => onPageChange(page)}
+                aria-label={`Go to page ${page}`}
+                aria-current={page === currentPage ? "page" : undefined}
+                disabled={page === currentPage}
+                className={`${classMap.button} ${
+                  page === currentPage ? classMap.active : ""
+                }`}
+                data-testid={`${testId}-button-${page}`}
+              >
+                {page}
+              </Button>
+            </div>
+          ))
+        )}
       </div>
 
       <div className={classMap.controls}>

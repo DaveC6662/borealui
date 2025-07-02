@@ -18,6 +18,8 @@ export interface PaginationProps {
   currentPage: number;
   /** Callback function invoked when a page change occurs. */
   onPageChange: (page: number) => void;
+  /** Enables server side control of the paging */
+  serverControlled?: boolean;
   /** Optional extra class name(s) for custom styling. */
   className?: string;
   /** Optional size modifier for buttons ("small", "medium", etc.). */
