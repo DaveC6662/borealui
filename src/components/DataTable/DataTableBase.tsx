@@ -17,6 +17,8 @@ function DataTableBase<T extends object>({
   striped = true,
   defaultSortKey,
   defaultSortOrder = "asc",
+  serverSort = false,
+  onSortChange,
   rowKey,
   "data-testid": testId = "data-table",
 }: DataTableBaseProps<T>) {
@@ -24,6 +26,7 @@ function DataTableBase<T extends object>({
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(defaultSortOrder);
 
   const sortedData = useMemo(() => {
+    if (serverSort || !sortKey) return data;
     if (!sortKey) return data;
     return [...data].sort((a, b) => {
       const valA = a[sortKey];
@@ -42,12 +45,10 @@ function DataTableBase<T extends object>({
   }, [data, sortKey, sortOrder]);
 
   const handleSort = (key: keyof T) => {
-    if (key === sortKey)
-      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-    else {
-      setSortKey(key);
-      setSortOrder("asc");
-    }
+    const newOrder = key === sortKey && sortOrder === "asc" ? "desc" : "asc";
+    setSortKey(key);
+    setSortOrder(newOrder);
+    if (serverSort && onSortChange) onSortChange(key, newOrder);
   };
 
   const handleSortKeyDown = (e: KeyboardEvent, key: keyof T) => {

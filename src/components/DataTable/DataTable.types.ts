@@ -43,6 +43,10 @@ export interface DataTableProps<T> {
   defaultSortKey?: keyof T;
   /** Default sort order (ascending or descending). */
   defaultSortOrder?: "asc" | "desc";
+  /** Whether to enable server-side sorting. */
+  serverSort?: boolean;
+  /** Function to handle server-side sorting. */
+  onSortChange?: (key: keyof T, order: "asc" | "desc") => void;
   /** Function to derive a unique key for each row. */
   rowKey?: (row: T) => string | number;
   /** Optional test ID for testing frameworks. */
