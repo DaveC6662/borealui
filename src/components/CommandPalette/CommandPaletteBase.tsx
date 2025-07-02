@@ -35,12 +35,44 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
+  const [asyncResults, setAsyncResults] = useState<typeof commands>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  //TODO - Implement the asyncSearch feature and debounce mechanism
+  const filtered = asyncSearch
+    ? asyncResults
+    : commands.filter((cmd) =>
+        cmd.label.toLowerCase().includes(query.toLowerCase())
+      );
 
-  const filtered = commands.filter((cmd) =>
-    cmd.label.toLowerCase().includes(query.toLowerCase())
-  );
+  useEffect(() => {
+    if (!asyncSearch) return;
+
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+
+    if (!query.trim()) {
+      setAsyncResults([]);
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+    debounceRef.current = setTimeout(() => {
+      asyncSearch(query)
+        .then((results) => {
+          setAsyncResults(results);
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setAsyncResults([]);
+          setIsLoading(false);
+        });
+    }, debounceMs);
+
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [query, asyncSearch, debounceMs]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -140,7 +172,11 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           role="listbox"
           aria-label="Command suggestions"
         >
-          {filtered.length > 0 ? (
+          {isLoading ? (
+            <div className={combineClassNames(classMap.item, classMap.empty)}>
+              Searching...
+            </div>
+          ) : filtered.length > 0 ? (
             filtered.map((cmd, index) => (
               <li
                 key={cmd.label}

@@ -171,3 +171,37 @@ export const ShadowVariants = {
     );
   },
 };
+
+export const AsyncSearch: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+
+    const asyncSearch = async (query: string) => {
+      return new Promise<typeof sampleCommands>((resolve) => {
+        setTimeout(() => {
+          const filtered = sampleCommands.filter((cmd) =>
+            cmd.label.toLowerCase().includes(query.toLowerCase())
+          );
+          resolve(filtered);
+        }, 500);
+      });
+    };
+
+    return (
+      <div style={{ padding: "2rem" }}>
+        <button onClick={() => setOpen(true)}>
+          Open Async Command Palette
+        </button>
+        <CommandPalette
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          commands={sampleCommands}
+          asyncSearch={asyncSearch}
+          debounceMs={300}
+          placeholder="Search async commands..."
+          theme="primary"
+        />
+      </div>
+    );
+  },
+};

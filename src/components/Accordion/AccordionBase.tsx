@@ -38,13 +38,13 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   const isControlled = expanded !== undefined;
   const internalId = useMemo(getUniqueId, []);
   const [internalExpanded, setInternalExpanded] = useState(initiallyExpanded);
+  const [hasBeenExpanded, setHasBeenExpanded] = useState(initiallyExpanded);
+  const [isLoading, setIsLoading] = useState(asyncContent && initiallyExpanded);
   const isExpanded = isControlled ? expanded : internalExpanded;
 
   const contentId = `${id || internalId}-content`;
   const buttonId = `${id || internalId}-button`;
   const descId = description ? `${id || internalId}-desc` : undefined;
-
-  //TODO implement lazy load for content and asyncContent
 
   const toggleAccordion = () => {
     if (disabled) return;
@@ -59,6 +59,22 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       toggleAccordion();
     }
   };
+
+  useMemo(() => {
+    if (isExpanded && !hasBeenExpanded) {
+      setHasBeenExpanded(true);
+    }
+  }, [isExpanded]);
+
+  useMemo(() => {
+    if (asyncContent && isExpanded && isLoading) {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [asyncContent, isExpanded, isLoading]);
 
   const renderedIcon = isExpanded
     ? (customExpandedIcon ?? "−")
@@ -145,7 +161,12 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         data-state={isExpanded ? "open" : "collapsed"}
         data-testid="accordion-content"
       >
-        {(!lazyLoad || isExpanded) && children}
+        {isExpanded && asyncContent && isLoading && (
+          <div className={classMap.loading}>Loading...</div>
+        )}
+        {(!lazyLoad || hasBeenExpanded) &&
+          (!asyncContent || !isLoading) &&
+          children}
       </div>
     </div>
   );

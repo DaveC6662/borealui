@@ -89,25 +89,46 @@ export const Disabled: Story = {
   },
 };
 
-// Theme Variants
+export const LazyAndAsync: Story = {
+  args: {
+    title: "Lazy & Async Accordion",
+    lazyLoad: true,
+    asyncContent: true,
+    initiallyExpanded: false,
+    children: (
+      <div>
+        <p>
+          This content is both <strong>lazy-loaded</strong> and{" "}
+          <strong>async-loaded</strong>.
+        </p>
+        <p>
+          It will not render into the DOM until the accordion is expanded, and
+          then simulates a delay to fetch content.
+        </p>
+        <p>
+          After a short simulated loading period, the content appears. You can
+          customize this delay or replace it with a real fetch call.
+        </p>
+      </div>
+    ),
+  },
+};
+
 export const ThemeVariants = () =>
   withVariants(Accordion, { ...defaultArgs }, [
     { propName: "theme", values: [...themeOptions] },
   ]);
 
-// State Variants
 export const StateVariants = () =>
   withVariants(Accordion, { ...defaultArgs }, [
     { propName: "state", values: stateOptions },
   ]);
 
-// Size Variants
 export const SizeVariants = () =>
   withVariants(Accordion, { ...defaultArgs }, [
     { propName: "size", values: sizeOptions },
   ]);
 
-// Outline Variants (theme + outline = true)
 export const OutlineVariants = () =>
   withVariants(
     Accordion,
