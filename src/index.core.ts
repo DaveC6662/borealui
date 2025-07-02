@@ -1,5 +1,7 @@
 import "./styles/globals.scss";
 
+export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
+
 // Buttons
 export { default as Button } from "./components/Button/core/Button";
 export { default as IconButton } from "./components/IconButton/core/IconButton";

@@ -73,7 +73,8 @@ $sizes: (
 
 .toggle {
   background-color: theme.$disabled-color;
-  //border-radius: 50px;
+
+  // border-radius: 50px;
   position: relative;
   cursor: pointer;
   border: none;
@@ -84,7 +85,8 @@ $sizes: (
 
   &_slider {
     background-color: var(--text-color-primary);
-    //border-radius: 50%;
+
+    // border-radius: 50%;
     position: absolute;
     left: 4px;
     transition: transform 0.3s ease-in-out;
@@ -141,6 +143,7 @@ $sizes: (
 @each $key, $value in theme.$rounding {
   .toggle_round-#{$key} {
     border-radius: $value;
+
     .toggle_slider {
       border-radius: $value;
     }

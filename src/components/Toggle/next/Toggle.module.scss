@@ -126,6 +126,7 @@ $sizes: (
 @each $key, $value in theme.$rounding {
   .round#{$key} {
     border-radius: $value;
+
     .slider {
       border-radius: $value;
     }

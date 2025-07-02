@@ -62,7 +62,7 @@ $sizes: (
 
   &_remove_button {
     color: theme.$error-color;
-    padding: 0px;
+    padding: 0;
     width: 20px;
   }
 
@@ -84,12 +84,8 @@ $sizes: (
 
   &_suggestion_list {
     position: absolute;
-    align-self: flex-end;
-    justify-self: flex-end;
-    left: 0;
-    right: 0;
-    bottom: auto;
-    top: 80%;
+    place-self: flex-end flex-end;
+    inset: 80% 0 auto;
     width: fit-content;
     max-width: 300px;
     max-height: 200px;
@@ -97,7 +93,6 @@ $sizes: (
     display: flex;
     justify-content: right;
     flex-wrap: wrap;
-
     padding: 0;
     list-style: none;
     height: fit-content;

@@ -1,3 +1,5 @@
+export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
+
 // Buttons
 export { default as Button } from "./components/Button/next/Button";
 export { default as IconButton } from "./components/IconButton/next/IconButton";
