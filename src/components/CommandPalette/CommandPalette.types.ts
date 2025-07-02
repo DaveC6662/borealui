@@ -33,6 +33,10 @@ export interface CommandPaletteProps {
   isOpen: boolean;
   /** Callback to close the command palette. */
   onClose: () => void;
+  /** Callback to handle the search input. */
+  asyncSearch?: (query: string) => Promise<CommandItem[]>;
+  /** Optional debounce time for the search input. */
+  debounceMs?: number;
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }

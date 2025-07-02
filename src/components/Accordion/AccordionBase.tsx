@@ -15,6 +15,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   lazyLoad = false,
   iconPosition = "right",
   isToggleable = true,
+  asyncContent = false,
   rounding = "medium",
   shadow = "light",
   description,
@@ -42,6 +43,8 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   const contentId = `${id || internalId}-content`;
   const buttonId = `${id || internalId}-button`;
   const descId = description ? `${id || internalId}-desc` : undefined;
+
+  //TODO implement lazy load for content and asyncContent
 
   const toggleAccordion = () => {
     if (disabled) return;

@@ -9,6 +9,8 @@ import {
 export interface TagInputProps {
   tags?: string[];
   onChange?: (tags: string[]) => void;
+  fetchSuggestions?: (query: string) => Promise<string[]>;
+  debounceMs?: number;
   placeholder?: string;
   theme?: ThemeType;
   state?: StateType;

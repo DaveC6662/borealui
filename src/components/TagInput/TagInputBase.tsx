@@ -13,6 +13,8 @@ const TagInputBase: React.FC<
 > = ({
   tags = [],
   onChange,
+  fetchSuggestions,
+  debounceMs = 300,
   placeholder = "Add a tag...",
   theme = "primary",
   state = "",
@@ -32,6 +34,8 @@ const TagInputBase: React.FC<
   const [inputValue, setInputValue] = useState("");
   const [tagList, setTagList] = useState<string[]>(tags);
   const [lastAction, setLastAction] = useState<string>("");
+
+  //TODO implement debounce for fetchSuggestions
 
   const handleAddTag = (event: KeyboardEvent<HTMLInputElement>) => {
     if (

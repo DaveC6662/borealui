@@ -17,6 +17,8 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   notifications,
   onRemove,
   onClearAll,
+  fetchNotifications,
+  pollInterval = 5000,
   showClearAll = true,
   controlRounding = "medium",
   controlShadow = "light",
@@ -28,6 +30,8 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   "data-testid": testId = "notification-center",
 }) => {
   const timeouts = useRef<Record<string, NodeJS.Timeout>>({});
+
+  //TODO: Implement fetchNotifications and pollInterval logic
 
   useEffect(() => {
     notifications.forEach((note) => {

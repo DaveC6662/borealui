@@ -32,6 +32,10 @@ export interface NotificationCenterProps {
   onRemove: (id: string) => void;
   /** Optional callback function to clear all notifications. */
   onClearAll?: () => void;
+  /** Optional callback function to fetch more notifications. */
+  fetchNotifications?: (page: number) => Promise<Notification[]>;
+  /** Optional interval (in milliseconds) at which to fetch more notifications. */
+  pollInterval?: number;
   /** Whether to show a "Clear All" button if notifications are present. */
   showClearAll?: boolean;
   /** Rounding for the notification control */

@@ -20,6 +20,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   placeholder = "Search...",
   isOpen,
   onClose,
+  asyncSearch,
+  debounceMs = 300,
   theme = "primary",
   rounding = "medium",
   shadow = "medium",
@@ -33,6 +35,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
+
+  //TODO - Implement the asyncSearch feature and debounce mechanism
 
   const filtered = commands.filter((cmd) =>
     cmd.label.toLowerCase().includes(query.toLowerCase())

@@ -81,6 +81,11 @@ export interface AccordionProps {
   onToggle?: (expanded: boolean) => void;
 
   /**
+   * If true, the accordion content is loaded asynchronously.
+   */
+  asyncContent?: boolean;
+
+  /**
    * If true, the accordion can be toggled open or closed.
    * If false, the accordion is always expanded.
    */
