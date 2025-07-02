@@ -33,12 +33,14 @@ $notification-colors: (
 
   &_list {
     display: flex;
+    width: fit-content;
+    height: fit-content;
     flex-direction: column;
     gap: theme.$spacing-xs;
     margin: 0;
-    padding: 0;
+    padding: 4px;
     list-style: none;
-    max-height: 330px;
+    max-height: 340px;
     overflow-y: auto;
   }
 
