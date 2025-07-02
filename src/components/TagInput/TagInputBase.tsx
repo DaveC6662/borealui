@@ -1,4 +1,10 @@
-import React, { useId, useState, KeyboardEvent, useMemo } from "react";
+import React, {
+  useId,
+  useState,
+  KeyboardEvent,
+  useMemo,
+  useEffect,
+} from "react";
 import { TagInputProps } from "./Taginput.types";
 import { CloseIcon } from "@/Icons";
 import { combineClassNames } from "@/utils/classNames";
@@ -35,7 +41,34 @@ const TagInputBase: React.FC<
   const [tagList, setTagList] = useState<string[]>(tags);
   const [lastAction, setLastAction] = useState<string>("");
 
-  //TODO implement debounce for fetchSuggestions
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (!fetchSuggestions || !inputValue.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+
+    const timeout = setTimeout(async () => {
+      try {
+        const result = await fetchSuggestions(inputValue);
+        setSuggestions(result);
+      } catch (error) {
+        console.error("Failed to fetch tag suggestions:", error);
+      }
+    }, debounceMs);
+
+    setDebounceTimeout(timeout);
+
+    return () => clearTimeout(timeout);
+  }, [inputValue, fetchSuggestions, debounceMs]);
 
   const handleAddTag = (event: KeyboardEvent<HTMLInputElement>) => {
     if (
@@ -127,28 +160,55 @@ const TagInputBase: React.FC<
             />
           </li>
         ))}
-
-        <li className={classMap.inputWrapper}>
-          <TextInput
-            id={inputId}
-            type="text"
-            theme={theme}
-            state={state}
-            rounding={rounding}
-            shadow={shadow}
-            className={classMap.input}
-            value={inputValue}
-            placeholder={tagList.length === 0 ? placeholder : ""}
-            onChange={(e: { target: { value: string } }) =>
-              setInputValue(e.target.value)
-            }
-            onKeyDown={handleAddTag}
-            aria-label="Add new tag"
-            aria-describedby={descId}
-            data-testid={`${testId}-input`}
-          />
-        </li>
       </ul>
+
+      <div className={classMap.inputWrapper}>
+        <TextInput
+          id={inputId}
+          type="text"
+          theme={theme}
+          state={state}
+          rounding={rounding}
+          shadow={shadow}
+          className={classMap.input}
+          value={inputValue}
+          placeholder={tagList.length === 0 ? placeholder : ""}
+          onChange={(e: { target: { value: string } }) =>
+            setInputValue(e.target.value)
+          }
+          onKeyDown={handleAddTag}
+          aria-label="Add new tag"
+          aria-describedby={descId}
+          data-testid={`${testId}-input`}
+        />
+      </div>
+      {suggestions.length > 0 && (
+        <div
+          className={classMap.suggestionList}
+          data-testid={`${testId}-suggestions`}
+        >
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              className={classMap.suggestionItem}
+              onClick={() => {
+                if (!tagList.includes(suggestion)) {
+                  const updated = [...tagList, suggestion];
+                  setTagList(updated);
+                  onChange?.(updated);
+                  setLastAction(`Added tag ${suggestion}`);
+                }
+                setInputValue("");
+                setSuggestions([]);
+              }}
+              role="option"
+              data-testid={`${testId}-suggestion-${index}`}
+            >
+              {suggestion}
+            </li>
+          ))}
+        </div>
+      )}
 
       <div aria-live="polite" className="sr_only">
         {lastAction}

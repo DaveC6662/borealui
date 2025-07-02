@@ -147,3 +147,41 @@ export const ShadowVariants = (args) =>
   withVariants(TagInput, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const WithSuggestions: Story = {
+  render: (args) => {
+    const [tags, setTags] = useState<string[]>([]);
+
+    const allSuggestions = [
+      "react",
+      "nextjs",
+      "typescript",
+      "storybook",
+      "vite",
+      "tailwind",
+      "graphql",
+      "eslint",
+      "prettier",
+    ];
+
+    const fetchSuggestions = async (query: string): Promise<string[]> => {
+      if (!query.trim()) return [];
+      await new Promise((res) => setTimeout(res, 200));
+      return allSuggestions.filter((tag) =>
+        tag.toLowerCase().includes(query.toLowerCase())
+      );
+    };
+
+    return (
+      <TagInput
+        {...args}
+        tags={tags}
+        onChange={setTags}
+        fetchSuggestions={fetchSuggestions}
+        debounceMs={400}
+        placeholder="Type to get tag suggestions..."
+        ariaDescription="Try typing 'r', 't', or 'g' to see suggestions."
+      />
+    );
+  },
+};

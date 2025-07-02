@@ -13,6 +13,8 @@ const classes = {
   removeButton: "tag_input_remove_button",
   inputWrapper: "tag_input_input_wrapper",
   input: "tag_input_input",
+  suggestionList: "tag_input_suggestion_list",
+  suggestionItem: "tag_input_suggestion_item",
 
   primary: "tag_input_primary",
   secondary: "tag_input_secondary",

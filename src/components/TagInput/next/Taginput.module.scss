@@ -27,9 +27,11 @@ $sizes: (
 
 .tagInput {
   display: flex;
+  position: relative;
   align-items: center;
   flex-wrap: wrap;
   gap: theme.$spacing-xxs;
+  width: fit-content;
   border: 2px solid var(--background-light-color);
   border-radius: theme.$border-radius-lg;
   padding: theme.$spacing-xxs theme.$spacing-xs;
@@ -50,11 +52,13 @@ $sizes: (
 
 .tagContainer {
   display: flex;
+  max-width: 400px;
+  max-height: 80px;
   flex-wrap: wrap;
   align-items: center;
   gap: theme.$spacing-xs;
-  width: 100%;
   width: fit-content;
+  overflow-y: auto;
 }
 
 .removeButton svg {
@@ -75,6 +79,42 @@ $sizes: (
 
 .tagLabel {
   padding: theme.$spacing-xxs;
+}
+
+.suggestionList {
+  position: absolute;
+  align-self: flex-end;
+  justify-self: flex-end;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  top: 80%;
+  width: fit-content;
+  max-width: 300px;
+  max-height: 200px;
+  z-index: 10;
+  display: flex;
+  justify-content: right;
+  flex-wrap: wrap;
+
+  padding: 0;
+  list-style: none;
+  height: fit-content;
+  overflow-y: auto;
+}
+
+.suggestionItem {
+  padding: theme.$spacing-xs theme.$spacing-sm;
+  font-size: theme.$font-size-sm;
+  font-weight: theme.$font-weight-bold;
+  color: var(--text-color-primary);
+  cursor: pointer;
+  transition: background-color theme.$transition-default;
+
+  &:hover,
+  &:focus {
+    background-color: var(--background-secondary-light-color);
+  }
 }
 
 @each $theme, $color in theme.$themes {

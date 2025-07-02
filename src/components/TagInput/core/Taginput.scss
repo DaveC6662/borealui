@@ -27,9 +27,11 @@ $sizes: (
 
 .tag_input {
   display: flex;
+  position: relative;
   align-items: center;
   flex-wrap: wrap;
   gap: theme.$spacing-xxs;
+  width: fit-content;
   border: 2px solid var(--background-light-color);
   border-radius: theme.$border-radius-lg;
   padding: theme.$spacing-xxs theme.$spacing-xs;
@@ -49,31 +51,71 @@ $sizes: (
 
   &_tag_container {
     display: flex;
+    max-width: 350px;
+    max-height: 80px;
     flex-wrap: wrap;
     align-items: center;
     gap: theme.$spacing-xs;
     width: fit-content;
+    overflow-y: auto;
   }
 
   &_remove_button {
     color: theme.$error-color;
-    margin: 0;
-    width: fit-content;
+    padding: 0px;
+    width: 20px;
   }
 
   &_tag {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: fit-content;
+    justify-content: space-around;
+    width: max-content;
     gap: theme.$spacing-xs;
     background-color: var(--primary-color);
     color: var(--text-color-primary);
+    font-size: theme.$font-size-sm;
+    padding: theme.$spacing-xxs theme.$spacing-xs;
   }
 
   &_tag_label {
     padding: theme.$spacing-xxs;
+  }
+
+  &_suggestion_list {
+    position: absolute;
+    align-self: flex-end;
+    justify-self: flex-end;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    top: 80%;
     width: fit-content;
+    max-width: 300px;
+    max-height: 200px;
+    z-index: 10;
+    display: flex;
+    justify-content: right;
+    flex-wrap: wrap;
+
+    padding: 0;
+    list-style: none;
+    height: fit-content;
+    overflow-y: auto;
+  }
+
+  &_suggestion_item {
+    padding: theme.$spacing-xs theme.$spacing-sm;
+    font-size: theme.$font-size-sm;
+    font-weight: theme.$font-weight-bold;
+    color: var(--text-color-primary);
+    cursor: pointer;
+    transition: background-color theme.$transition-default;
+
+    &:hover,
+    &:focus {
+      background-color: var(--background-secondary-light-color);
+    }
   }
 
   @each $theme, $color in theme.$themes {
