@@ -1,4 +1,11 @@
-import { forwardRef, ChangeEvent, useId, useMemo } from "react";
+import {
+  forwardRef,
+  ChangeEvent,
+  useId,
+  useMemo,
+  useState,
+  useEffect,
+} from "react";
 import { SelectProps } from "./Select.types";
 import { ChevronDownIcon } from "@/Icons";
 import { combineClassNames } from "@/utils/classNames";
@@ -19,6 +26,8 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       options,
       value,
       onChange,
+      asyncOptions,
+      debounceMs = 300,
       placeholder = "Select an option",
       ariaLabel,
       ariaDescription,
@@ -32,6 +41,22 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     const id = useId();
     const selectId = `${id}-select`;
     const descId = ariaDescription ? `${id}-desc` : undefined;
+
+    const [internalOptions, setInternalOptions] = useState(options);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [debounceTimeout, setDebounceTimeout] =
+      useState<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+      if (!asyncOptions || !searchTerm) return;
+      if (debounceTimeout) clearTimeout(debounceTimeout);
+      const timeout = setTimeout(async () => {
+        const newOptions = await asyncOptions(searchTerm);
+        setInternalOptions(newOptions);
+      }, debounceMs);
+      setDebounceTimeout(timeout);
+      return () => clearTimeout(timeout);
+    }, [searchTerm, asyncOptions, debounceMs]);
 
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
       onChange(event.target.value);
@@ -82,7 +107,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           <option value="" disabled hidden>
             {placeholder}
           </option>
-          {options.map((option) => (
+          {(asyncOptions ? internalOptions : options).map((option) => (
             <option
               key={option.value}
               value={option.value}
