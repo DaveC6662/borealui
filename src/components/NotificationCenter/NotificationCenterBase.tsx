@@ -18,6 +18,9 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   onRemove,
   onClearAll,
   fetchNotifications,
+  setNotifications,
+  maxNotifications = 10,
+  clearOldOnOverflow = true,
   pollInterval = 5000,
   showClearAll = true,
   controlRounding = "medium",
@@ -31,7 +34,32 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
 }) => {
   const timeouts = useRef<Record<string, NodeJS.Timeout>>({});
 
-  //TODO: Implement fetchNotifications and pollInterval logic
+  useEffect(() => {
+    if (
+      maxNotifications &&
+      notifications.length > maxNotifications &&
+      clearOldOnOverflow &&
+      setNotifications
+    ) {
+      const overflow = notifications.length - maxNotifications;
+      setNotifications((prev) => prev.slice(overflow));
+    }
+  }, [notifications, maxNotifications, clearOldOnOverflow, setNotifications]);
+
+  useEffect(() => {
+    if (!fetchNotifications) return;
+
+    const load = () => {
+      fetchNotifications().catch((err) => {
+        console.error("Failed to fetch notifications:", err);
+      });
+    };
+
+    load();
+    const intervalId = setInterval(load, pollInterval);
+
+    return () => clearInterval(intervalId);
+  }, [fetchNotifications, pollInterval]);
 
   useEffect(() => {
     notifications.forEach((note) => {

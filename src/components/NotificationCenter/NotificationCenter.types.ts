@@ -28,16 +28,22 @@ export interface Notification {
 export interface NotificationCenterProps {
   /** Array of notifications to display. */
   notifications: Notification[];
+  /** Callback function to set the notifications array. */
+  setNotifications?: React.Dispatch<React.SetStateAction<Notification[]>>;
   /** Callback function to remove a notification by its ID. */
   onRemove: (id: string) => void;
   /** Optional callback function to clear all notifications. */
   onClearAll?: () => void;
   /** Optional callback function to fetch more notifications. */
-  fetchNotifications?: (page: number) => Promise<Notification[]>;
+  fetchNotifications?: () => Promise<Notification[]>;
   /** Optional interval (in milliseconds) at which to fetch more notifications. */
   pollInterval?: number;
   /** Whether to show a "Clear All" button if notifications are present. */
   showClearAll?: boolean;
+  /** Maximum number of notifications to display. */
+  maxNotifications?: number;
+  /** Clears old notifications is over max */
+  clearOldOnOverflow?: boolean;
   /** Rounding for the notification control */
   controlRounding?: RoundingType;
   /** Shadow for the notification control */

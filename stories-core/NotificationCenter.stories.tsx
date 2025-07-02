@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { NotificationCenter } from "../src/index.core";
 import type {
@@ -59,6 +59,7 @@ export const Default: Story = {
     return (
       <NotificationCenter
         notifications={notifications}
+        setNotifications={setNotifications}
         onRemove={handleRemove}
         onClearAll={handleClearAll}
       />
@@ -77,6 +78,7 @@ export const WithoutClearAll: Story = {
     return (
       <NotificationCenter
         notifications={notifications}
+        setNotifications={setNotifications}
         onRemove={handleRemove}
         showClearAll={false}
       />
@@ -103,8 +105,57 @@ export const AutoDismissOnly: Story = {
     return (
       <NotificationCenter
         notifications={notifications}
+        setNotifications={setNotifications}
         onRemove={handleRemove}
         onClearAll={() => {}}
+      />
+    );
+  },
+};
+
+export const WithPolling: Story = {
+  render: () => {
+    const [notifications, setNotifications] = useState<Notification[]>([]);
+    const counterRef = useRef(1);
+
+    const handleRemove = (id: string) => {
+      setNotifications((prev) => prev.filter((n) => n.id !== id));
+    };
+
+    const handleClearAll = () => {
+      setNotifications([]);
+    };
+
+    const fetchNotifications = useCallback(async (): Promise<
+      Notification[]
+    > => {
+      const newId = `poll-${counterRef.current}`;
+      const newNotification: Notification = {
+        id: newId,
+        type: "info",
+        message: `Polled notification #${counterRef.current}`,
+        timestamp: new Date(),
+      };
+
+      counterRef.current += 1;
+
+      setNotifications((prev) => {
+        if (prev.some((n) => n.id === newNotification.id)) return prev;
+        return [...prev, newNotification];
+      });
+
+      return [newNotification];
+    }, []);
+
+    return (
+      <NotificationCenter
+        notifications={notifications}
+        setNotifications={setNotifications}
+        onRemove={handleRemove}
+        onClearAll={handleClearAll}
+        fetchNotifications={fetchNotifications}
+        pollInterval={3000}
+        maxNotifications={5}
       />
     );
   },
