@@ -43,6 +43,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     const descId = ariaDescription ? `${id}-desc` : undefined;
 
     const [internalOptions, setInternalOptions] = useState(options);
+    //TODO implement options filtering based on searchTerm
     const [searchTerm, setSearchTerm] = useState("");
     const [debounceTimeout, setDebounceTimeout] =
       useState<NodeJS.Timeout | null>(null);
