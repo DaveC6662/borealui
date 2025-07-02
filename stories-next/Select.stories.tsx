@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Select } from "../src/index.next";
 import type { SelectProps } from "../src/components/Select/Select.types";
@@ -196,3 +196,32 @@ export const ShadowVariants = () =>
   withVariants(Select, { ...defaultArgs }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const WithPollingAsyncOptions: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    const counterRef = useRef(1);
+
+    const asyncOptions = useCallback(async () => {
+      const timestamp = new Date().toLocaleTimeString();
+      const newOptions = Array.from({ length: 3 }, (_, i) => ({
+        label: `Polled ${counterRef.current + i} (${timestamp})`,
+        value: `${counterRef.current + i}`,
+      }));
+      counterRef.current += 1;
+      return newOptions;
+    }, []);
+
+    return (
+      <Select
+        {...args}
+        value={value}
+        onChange={setValue}
+        asyncOptions={asyncOptions}
+        pollInterval={10000}
+        placeholder="Polling from server..."
+        ariaLabel="Polling select"
+      />
+    );
+  },
+};

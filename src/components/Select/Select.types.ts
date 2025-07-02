@@ -31,8 +31,8 @@ export interface SelectProps {
   onChange: (value: string) => void;
   /** If true, the select element will render asynchronously with debounce. */
   asyncOptions?: (query: string) => Promise<Option[]>;
-  /** Debounce time in milliseconds for async options. Default: 300. */
-  debounceMs?: number;
+  /** Optional polling interval for updating options in ms */
+  pollInterval?: number;
   /** Placeholder text to display when no option is selected. */
   placeholder?: string;
   /* Rounding style of the select element. */

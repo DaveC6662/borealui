@@ -3,8 +3,8 @@ import {
   ChangeEvent,
   useId,
   useMemo,
-  useState,
   useEffect,
+  useState,
 } from "react";
 import { SelectProps } from "./Select.types";
 import { ChevronDownIcon } from "@/Icons";
@@ -26,14 +26,14 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       options,
       value,
       onChange,
-      asyncOptions,
-      debounceMs = 300,
       placeholder = "Select an option",
       ariaLabel,
       ariaDescription,
       disabled = false,
       className = "",
       classMap,
+      asyncOptions,
+      pollInterval = 0,
       "data-testid": testId = "select",
     },
     ref
@@ -43,21 +43,35 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     const descId = ariaDescription ? `${id}-desc` : undefined;
 
     const [internalOptions, setInternalOptions] = useState(options);
-    //TODO implement options filtering based on searchTerm
-    const [searchTerm, setSearchTerm] = useState("");
-    const [debounceTimeout, setDebounceTimeout] =
-      useState<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-      if (!asyncOptions || !searchTerm) return;
-      if (debounceTimeout) clearTimeout(debounceTimeout);
-      const timeout = setTimeout(async () => {
-        const newOptions = await asyncOptions(searchTerm);
-        setInternalOptions(newOptions);
-      }, debounceMs);
-      setDebounceTimeout(timeout);
-      return () => clearTimeout(timeout);
-    }, [searchTerm, asyncOptions, debounceMs]);
+      if (!asyncOptions) return;
+
+      let isMounted = true;
+
+      const load = async () => {
+        try {
+          const fetched = await asyncOptions("");
+          if (isMounted) setInternalOptions(fetched);
+        } catch (err) {
+          console.error("Failed to load options:", err);
+        }
+      };
+
+      load();
+
+      if (pollInterval > 0) {
+        const intervalId = setInterval(load, pollInterval);
+        return () => {
+          clearInterval(intervalId);
+          isMounted = false;
+        };
+      }
+
+      return () => {
+        isMounted = false;
+      };
+    }, [asyncOptions, pollInterval]);
 
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
       onChange(event.target.value);
