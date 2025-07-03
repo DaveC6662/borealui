@@ -9,6 +9,12 @@ import {
 import type { CheckBoxProps } from "./Checkbox.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface CheckboxBaseProps extends CheckBoxProps {
   classMap: Record<string, string>;
@@ -20,10 +26,10 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
       checked,
       onChange,
       indeterminate = false,
-      theme = "primary",
-      rounding = "small",
-      size = "medium",
-      shadow = "none",
+      theme = defaultTheme,
+      rounding = defaultRounding,
+      size = defaultSize,
+      shadow = defaultShadow,
       state = "",
       disabled = false,
       label = "",

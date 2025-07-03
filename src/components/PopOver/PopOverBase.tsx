@@ -2,6 +2,11 @@ import React, { useState, useRef, useEffect, JSX, useMemo } from "react";
 import { PopoverProps } from "./PopOver.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface BasePopoverProps extends PopoverProps {
   classMap: Record<string, string>;
@@ -11,9 +16,9 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   trigger,
   content,
   placement = "bottom",
-  theme = "primary",
-  rounding = "medium",
-  shadow = "light",
+  theme = defaultTheme,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   state = "",
   className = "",
   "data-testid": testId = "popover",

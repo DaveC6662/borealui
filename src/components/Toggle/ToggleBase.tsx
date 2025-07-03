@@ -2,6 +2,12 @@ import { forwardRef, KeyboardEvent, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { ToggleProps } from "./Toggle.types";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface ToggleBaseProps extends ToggleProps {
   classMap: Record<string, string>;
@@ -13,11 +19,11 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       checked,
       onChange,
       label,
-      theme = "primary",
-      rounding = "large",
-      shadow = "none",
+      theme = defaultTheme,
+      rounding = defaultRounding,
+      shadow = defaultShadow,
       state = "",
-      size = "medium",
+      size = defaultSize,
       disabled = false,
       classMap,
       "data-testid": testId = "toggle",

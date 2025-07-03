@@ -9,6 +9,11 @@ import ReactDOM from "react-dom";
 import { combineClassNames } from "@/utils/classNames";
 import type { CommandPaletteProps } from "./CommandPalette.types";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface CommandPaletteBaseProps extends CommandPaletteProps {
   classMap: Record<string, string>;
@@ -22,9 +27,9 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   onClose,
   asyncSearch,
   debounceMs = 300,
-  theme = "primary",
-  rounding = "medium",
-  shadow = "medium",
+  theme = defaultTheme,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   state = "",
   classMap,
   TextInputComponent,

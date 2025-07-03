@@ -2,15 +2,20 @@ import React, { useMemo } from "react";
 import { TimelineProps } from "./Timeline.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 const TimelineBase: React.FC<
   TimelineProps & { classMap: Record<string, string> }
 > = ({
   items,
   orientation = "vertical",
-  theme = "primary",
-  rounding = "medium",
-  shadow = "light",
+  theme = defaultTheme,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   classMap,
   "data-testid": testId = "timeline",
 }) => {

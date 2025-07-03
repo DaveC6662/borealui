@@ -2,15 +2,20 @@ import { useMemo, useState, KeyboardEvent } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { DataTableBaseProps } from "./DataTable.types";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 function DataTableBase<T extends object>({
   columns,
   data,
   onRowClick,
   classMap,
-  theme = "primary",
-  rounding = "small",
-  shadow = "none",
+  theme = defaultTheme,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   state = "",
   outline = false,
   className = "",

@@ -9,6 +9,12 @@ import { TagInputProps } from "./Taginput.types";
 import { CloseIcon } from "@/Icons";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 const TagInputBase: React.FC<
   TagInputProps & {
@@ -22,11 +28,11 @@ const TagInputBase: React.FC<
   fetchSuggestions,
   debounceMs = 300,
   placeholder = "Add a tag...",
-  theme = "primary",
+  theme = defaultTheme,
   state = "",
-  size = "medium",
-  rounding = "medium",
-  shadow = "light",
+  size = defaultSize,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   "data-testid": testId = "tag-input",
   ariaDescription = "Type a tag and press Enter or comma to add. Existing tags can be removed using the remove button next to each tag.",
   classMap,

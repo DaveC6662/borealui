@@ -2,6 +2,12 @@ import React, { JSX, useMemo } from "react";
 import { ProgressBarProps } from "./ProgressBar.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface BaseProgressBarProps extends ProgressBarProps {
   classMap: Record<string, string>;
@@ -9,11 +15,11 @@ export interface BaseProgressBarProps extends ProgressBarProps {
 
 const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   progress = 0,
-  theme = "primary",
+  theme = defaultTheme,
   state = "",
-  size = "medium",
-  rounding = "medium",
-  shadow = "none",
+  size = defaultSize,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   animated = true,
   indeterminate = false,
   className = "",

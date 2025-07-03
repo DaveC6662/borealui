@@ -7,6 +7,12 @@ import {
 import { combineClassNames } from "../../utils/classNames";
 import { ArrowRightIcon } from "../../Icons/index";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
   classMap: Record<string, string>;
@@ -16,14 +22,14 @@ export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
 
 export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   items,
-  theme = "primary",
-  rounding = "medium",
-  shadow = "light",
+  theme = defaultTheme,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   state = "",
   separator,
   classMap,
   disabled = false,
-  size = "medium",
+  size = defaultSize,
   outline = false,
   className = "",
   maxVisible,

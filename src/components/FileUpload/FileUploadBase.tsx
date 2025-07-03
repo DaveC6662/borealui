@@ -3,6 +3,11 @@ import { FileUploadProps } from "./FileUpload.types";
 import { FileIcon, TrashIcon } from "@/Icons";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface BaseFileUploadProps extends FileUploadProps {
   FormGroup: React.ComponentType<any>;
@@ -17,12 +22,12 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   description,
   error,
   required = false,
-  theme = "primary",
-  controlRounding = "medium",
-  controlShadow = "none",
+  theme = defaultTheme,
+  controlRounding = defaultRounding,
+  controlShadow = defaultShadow,
   outline = false,
-  outlineRounding = "small",
-  outlineShadow = "none",
+  outlineRounding = defaultRounding,
+  outlineShadow = defaultShadow,
   state = "",
   multiple = false,
   maxFileSizeBytes = Infinity,

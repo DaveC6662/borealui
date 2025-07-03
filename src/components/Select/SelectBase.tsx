@@ -10,6 +10,11 @@ import { SelectProps } from "./Select.types";
 import { ChevronDownIcon } from "@/Icons";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 interface BaseSelectProps extends SelectProps {
   classMap: Record<string, string>;
@@ -18,11 +23,11 @@ interface BaseSelectProps extends SelectProps {
 const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
   (
     {
-      theme = "primary",
+      theme = defaultTheme,
       state = "",
       outline = false,
-      rounding = "medium",
-      shadow = "light",
+      rounding = defaultRounding,
+      shadow = defaultShadow,
       options,
       value,
       onChange,

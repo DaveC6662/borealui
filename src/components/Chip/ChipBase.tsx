@@ -9,6 +9,12 @@ import { createPortal } from "react-dom";
 import { ChipProps } from "./Chip.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface ChipBaseProps extends ChipProps {
   classMap: Record<string, string>;
@@ -22,10 +28,10 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   visible,
   onClose,
   icon: Icon,
-  size = "medium",
-  theme = "primary",
-  rounding = "medium",
-  shadow = "light",
+  size = defaultSize,
+  theme = defaultTheme,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   state = "",
   position = "topCenter",
   usePortal = true,

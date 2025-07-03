@@ -2,17 +2,23 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { TabsProps } from "./Tabs.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
   tabs,
   defaultIndex = 0,
   onChange,
-  rounding = "medium",
-  shadow = "light",
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   className = "",
-  theme = "primary",
+  theme = defaultTheme,
   state = "",
-  size = "medium",
+  size = defaultSize,
   "data-testid": testId = "tabs",
   classMap,
 }) => {

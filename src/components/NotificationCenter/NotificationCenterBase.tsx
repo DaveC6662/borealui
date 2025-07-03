@@ -6,6 +6,7 @@ import {
 } from "./NotificationCenter.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import { defaultRounding, defaultShadow } from "@/config/boreal-style-config";
 
 export interface BaseNotificationCenterProps extends NotificationCenterProps {
   Button: React.ComponentType<any>;
@@ -23,10 +24,10 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   clearOldOnOverflow = true,
   pollInterval = 5000,
   showClearAll = true,
-  controlRounding = "medium",
-  controlShadow = "light",
-  notificationRounding = "medium",
-  notificationShadow = "light",
+  controlRounding = defaultRounding,
+  controlShadow = defaultShadow,
+  notificationRounding = defaultRounding,
+  notificationShadow = defaultShadow,
   Button,
   IconButton,
   classMap,

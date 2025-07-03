@@ -2,6 +2,12 @@ import React, { forwardRef, useMemo } from "react";
 import { ButtonProps } from "./Button.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface ButtonBaseProps extends ButtonProps {
   classMap: Record<string, string>;
@@ -15,12 +21,12 @@ const ButtonBase = forwardRef<
   (
     {
       icon: Icon,
-      theme = "primary",
+      theme = defaultTheme,
       state = "",
       onClick,
       type = "button",
-      rounding = "medium",
-      shadow = "light",
+      rounding = defaultRounding,
+      shadow = defaultShadow,
       children,
       className = "",
       disabled = false,
@@ -28,7 +34,7 @@ const ButtonBase = forwardRef<
       href,
       isExternal = false,
       outline = false,
-      size = "medium",
+      size = defaultSize,
       loading = false,
       fullWidth = false,
       "data-testid": testId,

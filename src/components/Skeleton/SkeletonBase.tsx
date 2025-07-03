@@ -2,6 +2,7 @@ import React from "react";
 import { SkeletonProps } from "./Skeleton.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import { defaultRounding, defaultShadow } from "@/config/boreal-style-config";
 
 export interface SkeletonBaseProps extends SkeletonProps {
   classMap: Record<string, string>;
@@ -10,8 +11,8 @@ export interface SkeletonBaseProps extends SkeletonProps {
 const SkeletonBase: React.FC<SkeletonBaseProps> = ({
   width = "100%",
   height = "100%",
-  rounding = "small",
-  shadow = "none",
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   className = "",
   label = "Loading content...",
   "data-testid": testId = "skeleton-loader",

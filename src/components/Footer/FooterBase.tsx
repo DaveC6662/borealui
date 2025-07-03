@@ -2,6 +2,7 @@ import React, { JSX } from "react";
 import { FooterProps } from "./Footer.types";
 import { combineClassNames } from "@/utils/classNames";
 import { ThemeType } from "@/types/types";
+import { defaultTheme } from "@/config/boreal-style-config";
 
 export interface BaseFooterProps extends FooterProps {
   IconButton: React.ComponentType<any>;
@@ -12,9 +13,9 @@ export interface BaseFooterProps extends FooterProps {
     children: React.ReactNode;
   }) => JSX.Element;
 }
-
+//TODO add sticky or fixed and shadow props
 const FooterBase: React.FC<BaseFooterProps> = ({
-  theme = "primary",
+  theme = defaultTheme,
   className = "",
   "data-testid": testId = "footer",
   copyright,
@@ -84,7 +85,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
             data-testid={`${testId}-theme-select`}
             aria-label="Theme selector container"
           >
-            <ThemeSelect theme={"clear"}/>
+            <ThemeSelect theme={"clear"} />
           </div>
         )}
 

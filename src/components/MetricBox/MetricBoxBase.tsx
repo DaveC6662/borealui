@@ -2,6 +2,12 @@ import React, { useMemo } from "react";
 import { MetricBoxProps } from "./MetricBox.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface BaseMetricBoxProps extends MetricBoxProps {
   classMap: Record<string, string>;
@@ -12,13 +18,13 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   value,
   icon: Icon,
   subtext,
-  theme = "primary",
-  shadow = "none",
-  rounding = "medium",
+  theme = defaultTheme,
+  shadow = defaultShadow,
+  rounding = defaultRounding,
   state = "",
   outline = false,
   align = "center",
-  size = "medium",
+  size = defaultSize,
   className = "",
   "data-testid": testId = "metric-box",
   classMap,

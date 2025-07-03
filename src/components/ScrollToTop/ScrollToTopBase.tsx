@@ -1,3 +1,4 @@
+import { defaultRounding, defaultShadow } from "@/config/boreal-style-config";
 import { RoundingType, ShadowType } from "@/types/types";
 import { capitalize } from "@/utils/capitalize";
 import { combineClassNames } from "@/utils/classNames";
@@ -13,8 +14,8 @@ export interface ScrollToTopBaseProps {
 
 const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   classMap,
-  rounding = "large",
-  shadow = "none",
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   IconComponent,
   offset = 300,
 }) => {

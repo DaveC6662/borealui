@@ -2,6 +2,12 @@ import React, { useMemo } from "react";
 import { EmptyStateProps } from "./EmptyState.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface BaseEmptyStateProps extends EmptyStateProps {
   Button: React.ComponentType<any>;
@@ -12,11 +18,11 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   icon: Icon,
   title = "Nothing Here Yet",
   message = "There’s no content to display.",
-  theme = "primary",
+  theme = defaultTheme,
   state = "",
-  size = "medium",
-  rounding = "medium",
-  shadow = "light",
+  size = defaultSize,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   outline = false,
   actionLabel,
   onActionClick,

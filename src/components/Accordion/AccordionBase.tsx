@@ -2,6 +2,12 @@ import React, { useMemo, useState, KeyboardEvent } from "react";
 import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface AccordionBaseProps extends AccordionProps {
   getUniqueId: () => string;
@@ -16,11 +22,11 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   iconPosition = "right",
   isToggleable = true,
   asyncContent = false,
-  rounding = "medium",
-  shadow = "light",
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   description,
-  size = "medium",
-  theme = "primary",
+  size = defaultSize,
+  theme = defaultTheme,
   state = "",
   outline = false,
   clear = false,

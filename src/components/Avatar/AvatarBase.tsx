@@ -4,6 +4,11 @@ import { getInitials } from "../../utils/getInitials";
 import { combineClassNames } from "../../utils/classNames";
 import { FallbackUserIcon } from "../../Icons/index";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 export interface AvatarBaseProps extends AvatarProps {
   ImageComponent?: React.ElementType;
   LinkComponent?: React.ElementType;
@@ -23,11 +28,11 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
   statusPosition = "bottomRight",
   fallback,
   children,
-  size = "medium",
-  shadow = "light",
+  size = defaultSize,
+  shadow = defaultShadow,
   shape = "circle",
   outline = false,
-  theme = "primary",
+  theme = defaultTheme,
   state = "",
   className = "",
   priority = false,

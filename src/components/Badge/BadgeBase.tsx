@@ -2,6 +2,12 @@ import React, { useMemo, MouseEvent } from "react";
 import { BadgeProps } from "./Badge.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface BadgeBaseProps extends BadgeProps {
   classMap: Record<string, string>;
@@ -10,13 +16,13 @@ export interface BadgeBaseProps extends BadgeProps {
 export const BadgeBase: React.FC<BadgeBaseProps> = ({
   text,
   children,
-  theme = "primary",
+  theme = defaultTheme,
   state = "",
   disabled = false,
-  rounding = "small",
-  shadow = "none",
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   title,
-  size = "medium",
+  size = defaultSize,
   outline = false,
   testId = "badge",
   icon: Icon,

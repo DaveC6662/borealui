@@ -59,6 +59,10 @@ $link-hover-decoration: underline;
 $z-index-drawer: 90;
 $z-index-modal: 100;
 $z-index-tooltip: 110;
+$default-rounding: "Medium" !default;
+$default-shadow: "Light" !default;
+$default-theme: "primary" !default;
+$default-size: "medium" !default;
 $themes: (
   "primary": (
     bg: var(--primary-color),

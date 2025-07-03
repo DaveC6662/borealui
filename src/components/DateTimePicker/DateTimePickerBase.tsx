@@ -3,6 +3,12 @@ import { DateTimePickerProps } from "./DateTimePicker.types";
 import { combineClassNames } from "@/utils/classNames";
 import { CalendarIcon } from "@/Icons";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface DateTimePickerBaseProps extends DateTimePickerProps {
   classMap: Record<string, string>;
@@ -20,12 +26,12 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   name,
   required = false,
   disabled = false,
-  size = "medium",
+  size = defaultSize,
   outline,
-  theme = "primary",
+  theme = defaultTheme,
   state = "",
-  rounding = "medium",
-  shadow = "light",
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   className = "",
   "data-testid": testId = "datetime-picker",
   classMap,

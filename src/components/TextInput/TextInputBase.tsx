@@ -9,6 +9,11 @@ import { EyeIcon, EyeSlashIcon } from "@/Icons";
 import { TextInputProps } from "./TextInput.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 const TextInputBase = forwardRef<
   HTMLInputElement,
@@ -25,9 +30,9 @@ const TextInputBase = forwardRef<
       readOnly = false,
       ariaLabel,
       ariaDescription,
-      theme = "primary",
-      rounding = "medium",
-      shadow = "light",
+      theme = defaultTheme,
+      rounding = defaultRounding,
+      shadow = defaultShadow,
       state = "",
       disabled = false,
       autocomplete = false,

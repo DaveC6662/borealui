@@ -2,6 +2,11 @@ import { forwardRef, useId, useMemo, useState } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { TooltipProps } from "./Tooltip.types";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export const TooltipBase = forwardRef<
   HTMLDivElement,
@@ -11,9 +16,9 @@ export const TooltipBase = forwardRef<
     {
       content,
       position = "top",
-      theme = "primary",
-      rounding = "medium",
-      shadow = "light",
+      theme = defaultTheme,
+      rounding = defaultRounding,
+      shadow = defaultShadow,
       state = "",
       children,
       className = "",

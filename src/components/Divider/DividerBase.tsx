@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react";
 import { DividerProps } from "./Divider.types";
 import { combineClassNames } from "@/utils/classNames";
+import { defaultTheme } from "@/config/boreal-style-config";
 
 export interface DividerBaseProps extends DividerProps {
   classMap: Record<string, string>;
@@ -14,7 +15,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       length = "100%",
       className = "",
       dashed = false,
-      theme = "primary",
+      theme = defaultTheme,
       state = "",
       as = "div",
       classMap,

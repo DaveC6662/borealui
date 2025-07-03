@@ -2,6 +2,12 @@ import React, { useMemo } from "react";
 import { SliderProps } from "./Slider.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 const SliderBase: React.FC<
   SliderProps & { classMap: Record<string, string> }
@@ -12,10 +18,10 @@ const SliderBase: React.FC<
   max = 100,
   step = 1,
   label,
-  size = "medium",
-  rounding = "medium",
-  shadow = "none",
-  theme = "primary",
+  size = defaultSize,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
+  theme = defaultTheme,
   state = "",
   showValue = true,
   className = "",

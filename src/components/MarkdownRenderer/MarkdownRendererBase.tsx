@@ -3,6 +3,7 @@ import { marked } from "marked";
 import { MarkdownRendererProps } from "./MarkdownRenderer.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import { defaultRounding, defaultShadow } from "@/config/boreal-style-config";
 
 export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
   classMap: Record<string, string>;
@@ -19,8 +20,8 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   content,
   className = "",
   language = "en",
-  rounding = "medium",
-  shadow = "none",
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   "data-testid": testId = "markdown-renderer",
   classMap,
 }) => {

@@ -2,6 +2,12 @@ import React, { useId, useMemo } from "react";
 import { ActionButton, CardProps } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 type ExtendedActionButton = ActionButton & {
   buttonComponent: React.ElementType;
@@ -20,13 +26,13 @@ export interface CardBaseProps extends CardProps {
 }
 
 const CardBase: React.FC<CardBaseProps> = ({
-  theme = "primary",
+  theme = defaultTheme,
   state = "",
   cardIcon,
   title = "",
   description = "",
-  rounding = "medium",
-  shadow = "light",
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   imageUrl,
   imageAlt,
   className = "",
@@ -35,7 +41,7 @@ const CardBase: React.FC<CardBaseProps> = ({
   bodyClassName = "",
   footerClassName = "",
   outline = false,
-  size = "medium",
+  size = defaultSize,
   align = "center",
   renderHeader,
   renderContent,

@@ -2,14 +2,15 @@ import React, { useMemo } from "react";
 import { SpinnerProps } from "./Spinner.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import { defaultShadow, defaultSize } from "@/config/boreal-style-config";
 
 const SpinnerBase: React.FC<
   SpinnerProps & { classMap: Record<string, string> }
 > = ({
-  theme = "primary",
+  theme = defaultSize,
   state = "",
   size = 50,
-  shadow = "none",
+  shadow = defaultShadow,
   className = "",
   "data-testid": testId = "spinner",
   label,

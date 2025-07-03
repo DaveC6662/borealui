@@ -10,6 +10,7 @@ import { CloseIcon } from "@/Icons";
 import { ModalProps } from "./Modal.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import { defaultRounding, defaultShadow } from "@/config/boreal-style-config";
 
 export interface BaseModalProps extends ModalProps {
   IconButton: React.ComponentType<any>;
@@ -20,8 +21,8 @@ export interface BaseModalProps extends ModalProps {
 const BaseModal: React.FC<BaseModalProps> = ({
   className = "",
   children,
-  rounding = "medium",
-  shadow = "light",
+  rounding = defaultRounding,
+  shadow = defaultShadow,
   onClose,
   "data-testid": testId = "modal",
   IconButton,

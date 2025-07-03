@@ -2,6 +2,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import type { CircularProgressProps } from "./CircularProgress.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultShadow,
+  defaultSize,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface CircularProgressBaseProps extends CircularProgressProps {
   classMap: Record<string, string>;
@@ -19,10 +24,10 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   min = 0,
   max = 100,
   label = "Progress",
-  shadow = "none",
+  shadow = defaultShadow,
   showRaw = false,
-  size = "medium",
-  theme = "primary",
+  size = defaultSize,
+  theme = defaultTheme,
   state = "",
   className = "",
   classMap,

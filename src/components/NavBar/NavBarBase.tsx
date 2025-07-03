@@ -2,6 +2,11 @@ import React, { JSX, useMemo } from "react";
 import { NavBarProps } from "./NavBar.types";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 export interface BaseNavBarProps extends NavBarProps {
   currentPath: string;
@@ -21,9 +26,9 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   currentPath,
   LinkWrapper,
   classMap,
-  theme = "primary",
-  rounding = "Full",
-  shadow = "light",
+  theme = defaultTheme,
+  rounding = defaultRounding,
+  shadow = defaultShadow,
 }) => {
   const wrapperClass = useMemo(
     () => combineClassNames(classMap.container, classMap[theme]),

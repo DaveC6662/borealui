@@ -2,6 +2,11 @@ import { forwardRef, useId, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { TextAreaProps } from "./TextArea.types";
 import { capitalize } from "@/utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+  defaultTheme,
+} from "@/config/boreal-style-config";
 
 const TextAreaBase = forwardRef<
   HTMLTextAreaElement,
@@ -14,9 +19,9 @@ const TextAreaBase = forwardRef<
       readOnly = false,
       outline = false,
       autoComplete = "off",
-      theme = "primary",
-      rounding = "medium",
-      shadow = "light",
+      theme = defaultTheme,
+      rounding = defaultRounding,
+      shadow = defaultShadow,
       state = "",
       ariaLabel,
       ariaDescription,
