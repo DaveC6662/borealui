@@ -1,68 +1,64 @@
 @use "sass:color";
 
-$primary-color: #1c4d3a;
-$secondary-color: #6e502e;
-$tertiary-color: #092b1c;
-$quaternary-color: #a1733a;
-$background-color: #222e2e;
-$background-color-surface: #384b4b;
-$error-color: #f83838;
-$success-color: #51c703;
-$warning-color: #fca505;
-$disabled-color: #b8b8b8dd;
-$link-color: #8bb0c7;
-$link-hover-color: #627e8f;
+$primary-color: #1c4d3a !default;
+$secondary-color: #6e502e !default;
+$tertiary-color: #092b1c !default;
+$quaternary-color: #a1733a !default;
+$background-color: #222e2e !default;
+$background-color-surface: #384b4b !default;
+$error-color: #f83838 !default;
+$success-color: #51c703 !default;
+$warning-color: #fca505 !default;
+$disabled-color: #b8b8b8dd !default;
+$link-color: #8bb0c7 !default;
+$link-hover-color: #627e8f !default;
 $link-hover-color-primary: color.mix(rgb(0 0 0), $primary-color, 20%);
 $link-hover-color-secondary: color.mix(rgb(0 0 0), $secondary-color, 20%);
-$text-color: rgb(255 255 255);
+$text-color: rgb(255 255 255) !default;
 $text-color-light: color.adjust($text-color, $lightness: 20%);
 $text-color-lighter: color.adjust($text-color, $lightness: 40%);
-$text-color-primary: rgb(255 255 255);
-$text-color-secondary: rgb(0 0 0);
-$font-family-primary: "Lora", arial, sans-serif;
-$font-family-secondary: "Lora", serif;
-$font-size-xxs: 10px;
-$font-size-xs: 12px;
-$font-size-sm: 14px;
-$font-size-md: 16px;
-$font-size-base: 18px;
-$font-size-lg: 24px;
-$font-size-xl: 32px;
-$font-size-xxl: 45px;
-$font-weight-light: 300;
-$font-weight-normal: 400;
-$font-weight-bold: 700;
-$font-weight-bolder: 900;
-$spacing-xxs: 2px;
-$spacing-xs: 4px;
-$spacing-sm: 8px;
-$spacing-md: 16px;
-$spacing-lg: 24px;
-$spacing-xl: 32px;
-$border-radius-xs: 2.5px;
-$border-radius-sm: 5px;
-$border-radius-md: 10px;
-$border-radius-lg: 20px;
-$border-radius-xl: 40px;
-$border-radius-full: 50%;
-$border-radius-round: 50%;
-$box-shadow-light: 0px 2px 4px rgb(46 49 49 / 10%);
-$box-shadow-medium: 0px 4px 8px rgb(86 101 116 / 20%);
-$box-shadow-heavy: 0px 6px 12px rgb(52 73 94 / 40%);
-$box-shadow-intense: 0px 6px 12px rgb(52 73 94 / 60%);
-$transition-fast: 0.2s ease-in-out;
-$transition-default: 0.3s ease-in-out;
-$transition-slow: 0.5s ease-in-out;
-$link-font-weight: $font-weight-bold;
-$link-text-decoration: none;
-$link-hover-decoration: underline;
+$text-color-primary: rgb(255 255 255) !default;
+$text-color-secondary: rgb(0 0 0) !default;
+$font-family-primary: "Lora", arial, sans-serif !default;
+$font-family-secondary: "Lora", serif !default;
+$font-size-xxs: 10px !default;
+$font-size-xs: 12px !default;
+$font-size-sm: 14px !default;
+$font-size-md: 16px !default;
+$font-size-base: 18px !default;
+$font-size-lg: 24px !default;
+$font-size-xl: 32px !default;
+$font-size-xxl: 45px !default;
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-bold: 700 !default;
+$font-weight-bolder: 900 !default;
+$spacing-xxs: 2px !default;
+$spacing-xs: 4px !default;
+$spacing-sm: 8px !default;
+$spacing-md: 16px !default;
+$spacing-lg: 24px !default;
+$spacing-xl: 32px !default;
+$border-radius-xs: 2.5px !default;
+$border-radius-sm: 5px !default;
+$border-radius-md: 10px !default;
+$border-radius-lg: 20px !default;
+$border-radius-xl: 40px !default;
+$border-radius-full: 50% !default;
+$border-radius-round: 50% !default;
+$box-shadow-light: 0px 2px 4px rgb(46 49 49 / 10%) !default;
+$box-shadow-medium: 0px 4px 8px rgb(86 101 116 / 20%) !default;
+$box-shadow-heavy: 0px 6px 12px rgb(52 73 94 / 40%) !default;
+$box-shadow-intense: 0px 6px 12px rgb(52 73 94 / 60%) !default;
+$transition-fast: 0.2s ease-in-out !default;
+$transition-default: 0.3s ease-in-out !default;
+$transition-slow: 0.5s ease-in-out !default;
+$link-font-weight: $font-weight-bold !default;
+$link-text-decoration: none !default;
+$link-hover-decoration: underline !default;
 $z-index-drawer: 90;
 $z-index-modal: 100;
 $z-index-tooltip: 110;
-$default-rounding: "Medium" !default;
-$default-shadow: "Light" !default;
-$default-theme: "primary" !default;
-$default-size: "medium" !default;
 $themes: (
   "primary": (
     bg: var(--primary-color),
@@ -134,18 +130,18 @@ $rounding: (
   "Medium": $border-radius-md,
   "Large": $border-radius-lg,
   "Full": $border-radius-full,
-);
+) !default;
 $shadow: (
   "None": 0,
   "Light": $box-shadow-light,
   "Medium": $box-shadow-medium,
   "Strong": $box-shadow-heavy,
   "Intense": $box-shadow-intense,
-);
+) !default;
 $inverted-shadows: (
   "None": none,
   "Light": 0 2px 4px rgb(255 255 255 / 5%),
   "Medium": 0 4px 8px rgb(255 255 255 / 8%),
   "Strong": 0 6px 12px rgb(255 255 255 / 12%),
   "Intense": 0 8px 16px rgb(255 255 255 / 20%),
-);
+) !default;
