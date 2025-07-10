@@ -1,6 +1,8 @@
 import "./styles/globals.scss";
 
 export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
+export { registerColorScheme } from "./styles/colorSchemeRegistry";
+export { colorSchemes } from "./styles/Themes";
 
 // Buttons
 export { default as Button } from "./components/Button/core/Button";

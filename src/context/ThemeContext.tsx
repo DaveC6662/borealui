@@ -1,9 +1,13 @@
 "use client";
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { getAllColorSchemes } from "../styles/colorSchemeRegistry";
+import {
+  getAllColorSchemes,
+  registerColorScheme,
+} from "../styles/colorSchemeRegistry";
 import { defaultColorSchemeName } from "../config/boreal-style-config";
 import { colorSchemes } from "../styles/Themes";
+import { ColorScheme } from "@/types/types";
 
 interface ThemeContextType {
   selectedScheme: number;
@@ -16,6 +20,7 @@ export const ThemeContext = createContext<ThemeContextType | undefined>(
 
 interface ThemeProviderProps {
   children: ReactNode;
+  customSchemes?: ColorScheme[];
 }
 
 const fallbackIndex = colorSchemes.findIndex(
@@ -23,7 +28,10 @@ const fallbackIndex = colorSchemes.findIndex(
 );
 const defaultIndex = fallbackIndex !== -1 ? fallbackIndex : 0;
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+const ThemeProvider: React.FC<ThemeProviderProps> = ({
+  children,
+  customSchemes = [],
+}) => {
   const [selectedScheme, setSelectedScheme] = useState<number>(defaultIndex);
 
   if (fallbackIndex === -1 && process.env.NODE_ENV === "development") {
@@ -31,6 +39,10 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       `Default color scheme "${defaultColorSchemeName}" not found. Falling back to index 0.`
     );
   }
+
+  useEffect(() => {
+    registerColorScheme(customSchemes);
+  }, [customSchemes]);
 
   useEffect(() => {
     const savedScheme = localStorage.getItem("selectedScheme");

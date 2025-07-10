@@ -1,3 +1,12 @@
+export interface ColorScheme {
+  name: string;
+  primaryColor: string;
+  secondaryColor: string;
+  tertiaryColor: string;
+  quaternaryColor: string;
+  backgroundColor: string;
+}
+
 export type ThemeType =
   | "primary"
   | "secondary"

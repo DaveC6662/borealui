@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Select from "../../core/Select";
 import { ThemeContext } from "../../../../context/ThemeContext";
 import { ThemeType } from "@/types/types";
-import { useColorSchemes } from "@/hooks/useColorSchemes";
+import { getAllColorSchemes } from "../../../../styles/colorSchemeRegistry";
 
 interface ThemeSelectProps {
   theme?: ThemeType;
@@ -10,7 +10,7 @@ interface ThemeSelectProps {
 const UserThemeSettings: React.FC<ThemeSelectProps> = ({
   theme = "primary",
 }) => {
-  const colorSchemes = useColorSchemes();
+  const allSchemes = getAllColorSchemes();
   const themeContext = useContext(ThemeContext);
 
   if (!themeContext) {
@@ -21,7 +21,7 @@ const UserThemeSettings: React.FC<ThemeSelectProps> = ({
 
   const { selectedScheme, setSelectedScheme } = themeContext;
 
-  const options = colorSchemes.map((scheme, index) => ({
+  const options = allSchemes.map((scheme, index) => ({
     value: index.toString(),
     label: scheme.name,
   }));

@@ -1,74 +1,76 @@
-export const colorSchemes = [
+import { ColorScheme } from "@/types/types";
+
+export const colorSchemes: ColorScheme[] = [
   {
     name: "Ocean Breeze",
-    primaryColor: "#02a899", // teal
-    secondaryColor: "#de6559", // coral
-    tertiaryColor: "#729E9A", // dark teal
-    quaternaryColor: "#ffa17f", // soft orange
+    primaryColor: "#02a899",
+    secondaryColor: "#de6559",
+    tertiaryColor: "#729E9A",
+    quaternaryColor: "#ffa17f",
     backgroundColor: "#d9dbd9",
   },
   {
     name: "Rose Quartz",
-    primaryColor: "#d98768", // soft rose
-    secondaryColor: "#a37981", // mauve
-    tertiaryColor: "#806868", // deep rose
-    quaternaryColor: "#f1b8a0", // peach
+    primaryColor: "#d98768",
+    secondaryColor: "#a37981",
+    tertiaryColor: "#806868",
+    quaternaryColor: "#f1b8a0",
     backgroundColor: "#f7f4f2",
   },
   {
     name: "Berry Burst",
-    primaryColor: "#b57077", // muted raspberry
-    secondaryColor: "#9183a3", // dusty lavender
-    tertiaryColor: "#78666D", // wine
-    quaternaryColor: "#e4b9c0", // light pink
+    primaryColor: "#b57077",
+    secondaryColor: "#9183a3",
+    tertiaryColor: "#78666D",
+    quaternaryColor: "#e4b9c0",
     backgroundColor: "#EDEDED",
   },
   {
     name: "Autumn Glow",
-    primaryColor: "#dea9a9", // blush
-    secondaryColor: "#CC8430", // burnt orange
-    tertiaryColor: "#B7926A", // earthy brown
-    quaternaryColor: "#ffe2b0", // soft amber
+    primaryColor: "#dea9a9",
+    secondaryColor: "#CC8430",
+    tertiaryColor: "#B7926A",
+    quaternaryColor: "#ffe2b0",
     backgroundColor: "#F5F5F5",
   },
   {
     name: "Tropical Sunrise",
-    primaryColor: "#DAA200", // golden yellow
-    secondaryColor: "#d9a76c", // sandy brown
-    tertiaryColor: "#AD8A59", // dark gold
-    quaternaryColor: "#ffe4b3", // cream yellow
+    primaryColor: "#DAA200",
+    secondaryColor: "#d9a76c",
+    tertiaryColor: "#AD8A59",
+    quaternaryColor: "#ffe4b3",
     backgroundColor: "#fcfbf7",
   },
   {
     name: "Golden Hour",
-    primaryColor: "#B58800", // goldenrod
-    secondaryColor: "#9574cc", // soft violet
-    tertiaryColor: "#B5A163", // deep bronze
-    quaternaryColor: "#c5a8ff", // lavender tint
+    primaryColor: "#B58800",
+    secondaryColor: "#9574cc",
+    tertiaryColor: "#B5A163",
+    quaternaryColor: "#c5a8ff",
     backgroundColor: "#dbdbd9",
   },
   {
     name: "Sunset",
-    primaryColor: "#492578", // deep violet
-    secondaryColor: "#7d533b", // mocha
-    tertiaryColor: "#b372d2", // orchid
-    quaternaryColor: "#C68559", // soft clay
+    primaryColor: "#492578",
+    secondaryColor: "#7d533b",
+    tertiaryColor: "#b372d2",
+    quaternaryColor: "#C68559",
     backgroundColor: "#2b2b2b",
   },
   {
     name: "Forest Dusk",
-    primaryColor: "#1c4d3a", // pine
-    secondaryColor: "#6e502e", // dark wood
-    tertiaryColor: "#2c7160", // moss green
-    quaternaryColor: "#dab57b", // golden tan
+    primaryColor: "#1c4d3a",
+    secondaryColor: "#6e502e",
+    tertiaryColor: "#2c7160",
+    quaternaryColor: "#dab57b",
     backgroundColor: "#222e2e",
   },
   {
     name: "Eclipse Night",
-    primaryColor: "#4c4f5e", // slate
-    secondaryColor: "#444447", // charcoal
-    tertiaryColor: "#989bad", // moonlight grey
-    quaternaryColor: "#a58aff", // soft neon violet
+    primaryColor: "#4c4f5e",
+    secondaryColor: "#444447",
+    tertiaryColor: "#989bad",
+    quaternaryColor: "#a58aff",
     backgroundColor: "#2b2b2b",
   },
 ];

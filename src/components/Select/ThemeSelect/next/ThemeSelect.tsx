@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext } from "react";
-import { colorSchemes } from "../../../../styles/Themes";
+import { getAllColorSchemes } from "../../../../styles/colorSchemeRegistry";
 import { Select } from "@/index.next";
 import { ThemeContext } from "../../../../context/ThemeContext";
 import { ThemeType } from "@/types/types";
@@ -10,8 +10,9 @@ interface ThemeSelectProps {
   theme?: ThemeType;
 }
 
-
-const UserThemeSettings: React.FC<ThemeSelectProps> = ({theme = "primary"}) => {
+const UserThemeSettings: React.FC<ThemeSelectProps> = ({
+  theme = "primary",
+}) => {
   // Retrieve the current theme context.
   const themeContext = useContext(ThemeContext);
 
@@ -23,9 +24,10 @@ const UserThemeSettings: React.FC<ThemeSelectProps> = ({theme = "primary"}) => {
 
   // Destructure the selectedScheme and the setter function from the context.
   const { selectedScheme, setSelectedScheme } = themeContext;
+  const allSchemes = getAllColorSchemes();
 
   // Map available color schemes to options for the Select component.
-  const options = colorSchemes.map((scheme, index) => ({
+  const options = allSchemes.map((scheme, index) => ({
     value: index.toString(),
     label: scheme.name,
   }));

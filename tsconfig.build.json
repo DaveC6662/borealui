@@ -18,6 +18,8 @@
     "src/components",
     "src/Icons",
     "src/context",
+    "src/hooks",
+    "src/config",
     "src/utils",
     "src/styles",
     "src/types"
