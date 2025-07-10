@@ -1,12 +1,15 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { CloseIcon } from "@/Icons";
+import { CloseIcon } from "../../Icons";
 import {
   NotificationCenterProps,
   themeIcons,
 } from "./NotificationCenter.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
-import { defaultRounding, defaultShadow } from "@/config/boreal-style-config";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+} from "../../config/boreal-style-config";
 
 export interface BaseNotificationCenterProps extends NotificationCenterProps {
   Button: React.ComponentType<any>;

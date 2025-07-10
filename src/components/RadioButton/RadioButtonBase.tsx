@@ -1,12 +1,12 @@
 import React, { forwardRef, useMemo } from "react";
 import { RadioButtonProps } from "./RadioButton.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface BaseRadioButtonProps extends RadioButtonProps {
   classMap: Record<string, string>;

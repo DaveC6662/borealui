@@ -1,13 +1,13 @@
 import React, { JSX, useMemo } from "react";
 import { ProgressBarProps } from "./ProgressBar.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface BaseProgressBarProps extends ProgressBarProps {
   classMap: Record<string, string>;

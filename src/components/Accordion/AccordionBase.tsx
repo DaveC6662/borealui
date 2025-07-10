@@ -1,13 +1,13 @@
 import React, { useMemo, useState, KeyboardEvent } from "react";
 import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "../../utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface AccordionBaseProps extends AccordionProps {
   getUniqueId: () => string;

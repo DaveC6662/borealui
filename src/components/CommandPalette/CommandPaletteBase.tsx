@@ -6,14 +6,14 @@ import React, {
   KeyboardEvent,
 } from "react";
 import ReactDOM from "react-dom";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 import type { CommandPaletteProps } from "./CommandPalette.types";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface CommandPaletteBaseProps extends CommandPaletteProps {
   classMap: Record<string, string>;

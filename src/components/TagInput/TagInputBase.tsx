@@ -6,15 +6,15 @@ import React, {
   useEffect,
 } from "react";
 import { TagInputProps } from "./Taginput.types";
-import { CloseIcon } from "@/Icons";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { CloseIcon } from "../../Icons";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 const TagInputBase: React.FC<
   TagInputProps & {
@@ -189,8 +189,11 @@ const TagInputBase: React.FC<
         />
       </div>
       {suggestions.length > 0 && (
-        <div
+        <ul
           className={classMap.suggestionList}
+          role="listbox"
+          id={`${inputId}-listbox`}
+          title="suggestions"
           data-testid={`${testId}-suggestions`}
         >
           {suggestions.map((suggestion, index) => (
@@ -213,7 +216,7 @@ const TagInputBase: React.FC<
               {suggestion}
             </li>
           ))}
-        </div>
+        </ul>
       )}
 
       <div aria-live="polite" className="sr_only">

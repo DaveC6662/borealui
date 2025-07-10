@@ -5,15 +5,15 @@ import {
   InputHTMLAttributes,
   useMemo,
 } from "react";
-import { EyeIcon, EyeSlashIcon } from "@/Icons";
+import { EyeIcon, EyeSlashIcon } from "../../Icons";
 import { TextInputProps } from "./TextInput.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 const TextInputBase = forwardRef<
   HTMLInputElement,

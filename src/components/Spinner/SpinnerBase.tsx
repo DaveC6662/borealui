@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import { SpinnerProps } from "./Spinner.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
-import { defaultShadow, defaultSize } from "@/config/boreal-style-config";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
+import { defaultShadow, defaultSize } from "../../config/boreal-style-config";
 
 const SpinnerBase: React.FC<
   SpinnerProps & { classMap: Record<string, string> }

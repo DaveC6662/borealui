@@ -9,14 +9,14 @@ import React, {
   useMemo,
 } from "react";
 import { DropdownProps } from "./Dropdown.types";
-import { combineClassNames } from "@/utils/classNames";
-import MenuIcon from "@/Icons/MenuIcon";
-import { capitalize } from "@/utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
+import MenuIcon from "../../Icons/MenuIcon";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface BaseDropdownProps extends DropdownProps {
   IconButton: ComponentType<any>;

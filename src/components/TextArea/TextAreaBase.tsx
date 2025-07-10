@@ -1,12 +1,12 @@
 import { forwardRef, useId, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { TextAreaProps } from "./TextArea.types";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 const TextAreaBase = forwardRef<
   HTMLTextAreaElement,

@@ -1,12 +1,12 @@
 import React from "react";
 import { StepperProps } from "./Stepper.types";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface StepperBaseProps extends StepperProps {
   classMap: Record<string, string>;

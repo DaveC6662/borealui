@@ -3,12 +3,12 @@ import { AvatarProps } from "./Avatar.types";
 import { getInitials } from "../../utils/getInitials";
 import { combineClassNames } from "../../utils/classNames";
 import { FallbackUserIcon } from "../../Icons/index";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 export interface AvatarBaseProps extends AvatarProps {
   ImageComponent?: React.ElementType;
   LinkComponent?: React.ElementType;

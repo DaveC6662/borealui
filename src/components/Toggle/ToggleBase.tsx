@@ -1,13 +1,13 @@
 import { forwardRef, KeyboardEvent, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { ToggleProps } from "./Toggle.types";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface ToggleBaseProps extends ToggleProps {
   classMap: Record<string, string>;

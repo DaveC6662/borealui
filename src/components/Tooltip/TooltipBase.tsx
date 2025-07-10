@@ -1,12 +1,12 @@
 import { forwardRef, useId, useMemo, useState } from "react";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 import { TooltipProps } from "./Tooltip.types";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export const TooltipBase = forwardRef<
   HTMLDivElement,

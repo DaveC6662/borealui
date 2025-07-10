@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 import type { ColorPickerProps } from "./ColorPicker.types";
-import { capitalize } from "@/utils/capitalize";
-import { defaultShadow, defaultSize } from "@/config/boreal-style-config";
+import { capitalize } from "../../utils/capitalize";
+import { defaultShadow, defaultSize } from "../../config/boreal-style-config";
 
 export interface ColorPickerBaseProps extends ColorPickerProps {
   classMap: Record<string, string>;

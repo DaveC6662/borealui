@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import type { CircularProgressProps } from "./CircularProgress.types";
 import { combineClassNames } from "../../utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface CircularProgressBaseProps extends CircularProgressProps {
   classMap: Record<string, string>;

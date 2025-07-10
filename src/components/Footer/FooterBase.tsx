@@ -1,8 +1,7 @@
 import React, { JSX } from "react";
 import { FooterProps } from "./Footer.types";
-import { combineClassNames } from "@/utils/classNames";
-import { ThemeType } from "@/types/types";
-import { defaultTheme } from "@/config/boreal-style-config";
+import { combineClassNames } from "../../utils/classNames";
+import { defaultTheme } from "../../config/boreal-style-config";
 
 export interface BaseFooterProps extends FooterProps {
   IconButton: React.ComponentType<any>;

@@ -1,12 +1,12 @@
 import { useMemo, useState, KeyboardEvent } from "react";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 import { DataTableBaseProps } from "./DataTable.types";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 function DataTableBase<T extends object>({
   columns,

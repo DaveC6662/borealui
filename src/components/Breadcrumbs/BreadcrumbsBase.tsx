@@ -6,13 +6,13 @@ import {
 } from "./Breadcrumbs.types";
 import { combineClassNames } from "../../utils/classNames";
 import { ArrowRightIcon } from "../../Icons/index";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
   classMap: Record<string, string>;

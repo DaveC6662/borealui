@@ -1,9 +1,12 @@
 import React, { useMemo } from "react";
 import { marked } from "marked";
 import { MarkdownRendererProps } from "./MarkdownRenderer.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
-import { defaultRounding, defaultShadow } from "@/config/boreal-style-config";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+} from "../../config/boreal-style-config";
 
 export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
   classMap: Record<string, string>;

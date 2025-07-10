@@ -1,7 +1,10 @@
-import { defaultRounding, defaultShadow } from "@/config/boreal-style-config";
-import { RoundingType, ShadowType } from "@/types/types";
-import { capitalize } from "@/utils/capitalize";
-import { combineClassNames } from "@/utils/classNames";
+import {
+  defaultRounding,
+  defaultShadow,
+} from "../../config/boreal-style-config";
+import { RoundingType, ShadowType } from "../../types/types";
+import { capitalize } from "../../utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
 import React, { useEffect, useState } from "react";
 
 export interface ScrollToTopBaseProps {

@@ -1,13 +1,13 @@
 import React, { useMemo, useRef, useState } from "react";
 import { FileUploadProps } from "./FileUpload.types";
-import { FileIcon, TrashIcon } from "@/Icons";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { FileIcon, TrashIcon } from "../../Icons";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface BaseFileUploadProps extends FileUploadProps {
   FormGroup: React.ComponentType<any>;

@@ -1,13 +1,13 @@
 import React, { forwardRef, useMemo } from "react";
 import { ButtonProps } from "./Button.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface ButtonBaseProps extends ButtonProps {
   classMap: Record<string, string>;

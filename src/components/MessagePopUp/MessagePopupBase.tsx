@@ -6,11 +6,14 @@ import React, {
   KeyboardEvent,
 } from "react";
 import ReactDOM from "react-dom";
-import { CloseIcon } from "@/Icons";
+import { CloseIcon } from "../../Icons";
 import { MessagePopupProps } from "./MessagePopup.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
-import { defaultRounding, defaultShadow } from "@/config/boreal-style-config";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
+import {
+  defaultRounding,
+  defaultShadow,
+} from "../../config/boreal-style-config";
 
 export interface BaseMessagePopupProps extends MessagePopupProps {
   Button: React.ComponentType<any>;

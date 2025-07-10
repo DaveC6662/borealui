@@ -8,13 +8,13 @@ import {
 } from "react";
 import type { CheckBoxProps } from "./Checkbox.types";
 import { combineClassNames } from "../../utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface CheckboxBaseProps extends CheckBoxProps {
   classMap: Record<string, string>;

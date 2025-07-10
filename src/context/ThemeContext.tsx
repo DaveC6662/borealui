@@ -2,8 +2,8 @@
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import { getAllColorSchemes } from "../styles/colorSchemeRegistry";
-import { defaultColorSchemeName } from "@/config/boreal-style-config";
-import { colorSchemes } from "@/styles/Themes";
+import { defaultColorSchemeName } from "../config/boreal-style-config";
+import { colorSchemes } from "../styles/Themes";
 
 interface ThemeContextType {
   selectedScheme: number;

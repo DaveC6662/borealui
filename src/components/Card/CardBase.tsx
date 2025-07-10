@@ -1,13 +1,13 @@
 import React, { useId, useMemo } from "react";
 import { ActionButton, CardProps } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 type ExtendedActionButton = ActionButton & {
   buttonComponent: React.ElementType;

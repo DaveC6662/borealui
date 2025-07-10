@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
 import { EmptyStateProps } from "./EmptyState.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface BaseEmptyStateProps extends EmptyStateProps {
   Button: React.ComponentType<any>;

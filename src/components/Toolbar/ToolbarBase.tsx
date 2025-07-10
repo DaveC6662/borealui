@@ -1,12 +1,12 @@
 import React, { JSX, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { ToolbarProps } from "./Toolbar.types";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export const ToolbarBase: React.FC<
   ToolbarProps & {

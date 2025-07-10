@@ -1,12 +1,12 @@
 import React from "react";
-import { ArrowLeftIcon, ArrowRightIcon } from "@/Icons";
+import { ArrowLeftIcon, ArrowRightIcon } from "../../Icons";
 import { PaginationProps } from "./Pager.types";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface BasePagerProps extends PaginationProps {
   Button: React.ComponentType<any>;

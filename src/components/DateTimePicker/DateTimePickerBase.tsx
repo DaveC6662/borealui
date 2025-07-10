@@ -1,14 +1,14 @@
 import React, { useId, useMemo, useRef } from "react";
 import { DateTimePickerProps } from "./DateTimePicker.types";
-import { combineClassNames } from "@/utils/classNames";
-import { CalendarIcon } from "@/Icons";
-import { capitalize } from "@/utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
+import { CalendarIcon } from "../../Icons";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface DateTimePickerBaseProps extends DateTimePickerProps {
   classMap: Record<string, string>;

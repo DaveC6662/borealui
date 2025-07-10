@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
 import { MetricBoxProps } from "./MetricBox.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface BaseMetricBoxProps extends MetricBoxProps {
   classMap: Record<string, string>;

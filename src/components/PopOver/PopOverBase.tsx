@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect, JSX, useMemo } from "react";
 import { PopoverProps } from "./PopOver.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface BasePopoverProps extends PopoverProps {
   classMap: Record<string, string>;

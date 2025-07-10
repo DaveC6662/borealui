@@ -1,8 +1,10 @@
+import { RoundingType, ShadowType, SizeType, ThemeType } from "@/types/types";
+
 export type BorealStyleConfig = {
-  defaultTheme: string;
-  defaultRounding: string;
-  defaultShadow: string;
-  defaultSize: string;
+  defaultTheme: ThemeType;
+  defaultRounding: RoundingType;
+  defaultShadow: ShadowType;
+  defaultSize: SizeType;
 };
 
 const fallback: BorealStyleConfig = {

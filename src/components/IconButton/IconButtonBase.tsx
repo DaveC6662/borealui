@@ -1,13 +1,13 @@
 import React, { forwardRef, useMemo } from "react";
 import { IconButtonProps } from "./IconButton.types";
 import { combineClassNames } from "../../utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultSize,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 export interface IconButtonBaseProps extends IconButtonProps {
   classMap: Record<string, string>;

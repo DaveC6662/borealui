@@ -1,9 +1,8 @@
 import React, { useState, KeyboardEvent, JSX, useMemo } from "react";
-import { StarIcon } from "@/Icons";
+import { StarIcon } from "../../Icons";
 import { RatingProps } from "./Rating.types";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
-import { defaultSize, defaultTheme } from "@/config/boreal-style-config";
+import { combineClassNames } from "../../utils/classNames";
+import { defaultSize, defaultTheme } from "../../config/boreal-style-config";
 
 export interface BaseRatingProps extends RatingProps {
   classMap: Record<string, string>;

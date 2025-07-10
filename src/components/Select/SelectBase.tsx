@@ -7,14 +7,14 @@ import {
   useState,
 } from "react";
 import { SelectProps } from "./Select.types";
-import { ChevronDownIcon } from "@/Icons";
-import { combineClassNames } from "@/utils/classNames";
-import { capitalize } from "@/utils/capitalize";
+import { ChevronDownIcon } from "../../Icons";
+import { combineClassNames } from "../../utils/classNames";
+import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
   defaultShadow,
   defaultTheme,
-} from "@/config/boreal-style-config";
+} from "../../config/boreal-style-config";
 
 interface BaseSelectProps extends SelectProps {
   classMap: Record<string, string>;

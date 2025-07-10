@@ -1,6 +1,6 @@
 import React from "react";
 import { FormGroupProps } from "./FormGroup.types";
-import { combineClassNames } from "@/utils/classNames";
+import { combineClassNames } from "../../utils/classNames";
 
 export interface BaseFormGroupProps extends FormGroupProps {
   classMap: Record<string, string>;
