@@ -1,7 +1,9 @@
 "use client";
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { colorSchemes } from "../styles/Themes";
+import { getAllColorSchemes } from "../styles/colorSchemeRegistry";
+import { defaultColorSchemeName } from "@/config/boreal-style-config";
+import { colorSchemes } from "@/styles/Themes";
 
 interface ThemeContextType {
   selectedScheme: number;
@@ -16,24 +18,38 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
+const fallbackIndex = colorSchemes.findIndex(
+  (scheme) => scheme.name === defaultColorSchemeName
+);
+const defaultIndex = fallbackIndex !== -1 ? fallbackIndex : 0;
+
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [selectedScheme, setSelectedScheme] = useState<number>(7); // default
+  const [selectedScheme, setSelectedScheme] = useState<number>(defaultIndex);
+
+  if (fallbackIndex === -1 && process.env.NODE_ENV === "development") {
+    console.warn(
+      `Default color scheme "${defaultColorSchemeName}" not found. Falling back to index 0.`
+    );
+  }
 
   useEffect(() => {
     const savedScheme = localStorage.getItem("selectedScheme");
     if (savedScheme) {
       setSelectedScheme(parseInt(savedScheme, 10));
+    } else {
+      setSelectedScheme(defaultIndex);
     }
   }, []);
 
   useEffect(() => {
+    const allSchemes = getAllColorSchemes();
     const {
       primaryColor,
       secondaryColor,
       tertiaryColor,
       quaternaryColor,
       backgroundColor,
-    } = colorSchemes[selectedScheme];
+    } = allSchemes[selectedScheme];
 
     const hexToHSL = (hex: string) => {
       const r = parseInt(hex.slice(1, 3), 16) / 255;
@@ -154,7 +170,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     }
 
     if (process.env.NODE_ENV === "development") {
-      console.log(`Theme "${colorSchemes[selectedScheme].name}" loaded`);
+      console.log(`Theme "${allSchemes[selectedScheme].name}" loaded`);
       console.log("Contrast Ratios:");
       console.log(
         "  Primary:",
