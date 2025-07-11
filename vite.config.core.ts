@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-const getEntryMap = require("./scripts/buildEntryMap");
+import getEntryMap from "./scripts/buildEntryMap";
 import path from "path";
 
 const externals = [

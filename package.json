@@ -27,6 +27,7 @@
     "check:sync": "node scripts/checkSync.js",
     "generate:component": "node scripts/generate-component.js",
     "generate:entrypoints": "node scripts/generateEntryPoints.cjs",
+    "generate:exports": "node scripts/generateExports.cjs",
     "test": "jest",
     "cypress": "cypress open",
     "cypress:run": "cypress run",
@@ -127,7 +128,1047 @@
       "types": "./dist/types/index.next.d.ts"
     },
     "./next/style.css": "./dist/next/style.css",
-    "./core/style.css": "./dist/core/style.css"
+    "./core/style.css": "./dist/core/style.css",
+    "./core/Accordion.cjs": {
+      "import": "./dist/core/Accordion.cjs.js",
+      "require": "./dist/core/Accordion.cjs.cjs.js",
+      "types": "./dist/types/core/Accordion.cjs.d.ts"
+    },
+    "./core/Accordion": {
+      "import": "./dist/core/Accordion.js",
+      "require": "./dist/core/Accordion.cjs.js",
+      "types": "./dist/types/core/Accordion.d.ts"
+    },
+    "./core/ArrowRightIcon-BYQv5XS8": {
+      "import": "./dist/core/ArrowRightIcon-BYQv5XS8.js",
+      "require": "./dist/core/ArrowRightIcon-BYQv5XS8.cjs.js",
+      "types": "./dist/types/core/ArrowRightIcon-BYQv5XS8.d.ts"
+    },
+    "./core/Avatar-DMsJJJ9e": {
+      "import": "./dist/core/Avatar-DMsJJJ9e.js",
+      "require": "./dist/core/Avatar-DMsJJJ9e.cjs.js",
+      "types": "./dist/types/core/Avatar-DMsJJJ9e.d.ts"
+    },
+    "./core/Avatar.cjs": {
+      "import": "./dist/core/Avatar.cjs.js",
+      "require": "./dist/core/Avatar.cjs.cjs.js",
+      "types": "./dist/types/core/Avatar.cjs.d.ts"
+    },
+    "./core/Avatar": {
+      "import": "./dist/core/Avatar.js",
+      "require": "./dist/core/Avatar.cjs.js",
+      "types": "./dist/types/core/Avatar.d.ts"
+    },
+    "./core/Badge.cjs": {
+      "import": "./dist/core/Badge.cjs.js",
+      "require": "./dist/core/Badge.cjs.cjs.js",
+      "types": "./dist/types/core/Badge.cjs.d.ts"
+    },
+    "./core/Badge": {
+      "import": "./dist/core/Badge.js",
+      "require": "./dist/core/Badge.cjs.js",
+      "types": "./dist/types/core/Badge.d.ts"
+    },
+    "./core/boreal-style-config-l6aMdvvp": {
+      "import": "./dist/core/boreal-style-config-l6aMdvvp.js",
+      "require": "./dist/core/boreal-style-config-l6aMdvvp.cjs.js",
+      "types": "./dist/types/core/boreal-style-config-l6aMdvvp.d.ts"
+    },
+    "./core/Breadcrumbs.cjs": {
+      "import": "./dist/core/Breadcrumbs.cjs.js",
+      "require": "./dist/core/Breadcrumbs.cjs.cjs.js",
+      "types": "./dist/types/core/Breadcrumbs.cjs.d.ts"
+    },
+    "./core/Breadcrumbs": {
+      "import": "./dist/core/Breadcrumbs.js",
+      "require": "./dist/core/Breadcrumbs.cjs.js",
+      "types": "./dist/types/core/Breadcrumbs.d.ts"
+    },
+    "./core/Button-BSFDEXap": {
+      "import": "./dist/core/Button-BSFDEXap.js",
+      "require": "./dist/core/Button-BSFDEXap.cjs.js",
+      "types": "./dist/types/core/Button-BSFDEXap.d.ts"
+    },
+    "./core/Button.cjs": {
+      "import": "./dist/core/Button.cjs.js",
+      "require": "./dist/core/Button.cjs.cjs.js",
+      "types": "./dist/types/core/Button.cjs.d.ts"
+    },
+    "./core/Button": {
+      "import": "./dist/core/Button.js",
+      "require": "./dist/core/Button.cjs.js",
+      "types": "./dist/types/core/Button.d.ts"
+    },
+    "./core/capitalize-C0TSQSPh": {
+      "import": "./dist/core/capitalize-C0TSQSPh.js",
+      "require": "./dist/core/capitalize-C0TSQSPh.cjs.js",
+      "types": "./dist/types/core/capitalize-C0TSQSPh.d.ts"
+    },
+    "./core/Card.cjs": {
+      "import": "./dist/core/Card.cjs.js",
+      "require": "./dist/core/Card.cjs.cjs.js",
+      "types": "./dist/types/core/Card.cjs.d.ts"
+    },
+    "./core/Card": {
+      "import": "./dist/core/Card.js",
+      "require": "./dist/core/Card.cjs.js",
+      "types": "./dist/types/core/Card.d.ts"
+    },
+    "./core/CheckBox.cjs": {
+      "import": "./dist/core/CheckBox.cjs.js",
+      "require": "./dist/core/CheckBox.cjs.cjs.js",
+      "types": "./dist/types/core/CheckBox.cjs.d.ts"
+    },
+    "./core/CheckBox": {
+      "import": "./dist/core/CheckBox.js",
+      "require": "./dist/core/CheckBox.cjs.js",
+      "types": "./dist/types/core/CheckBox.d.ts"
+    },
+    "./core/Chip.cjs": {
+      "import": "./dist/core/Chip.cjs.js",
+      "require": "./dist/core/Chip.cjs.cjs.js",
+      "types": "./dist/types/core/Chip.cjs.d.ts"
+    },
+    "./core/Chip": {
+      "import": "./dist/core/Chip.js",
+      "require": "./dist/core/Chip.cjs.js",
+      "types": "./dist/types/core/Chip.d.ts"
+    },
+    "./core/CircularProgress.cjs": {
+      "import": "./dist/core/CircularProgress.cjs.js",
+      "require": "./dist/core/CircularProgress.cjs.cjs.js",
+      "types": "./dist/types/core/CircularProgress.cjs.d.ts"
+    },
+    "./core/CircularProgress": {
+      "import": "./dist/core/CircularProgress.js",
+      "require": "./dist/core/CircularProgress.cjs.js",
+      "types": "./dist/types/core/CircularProgress.d.ts"
+    },
+    "./core/classNames-AS8QjFq7": {
+      "import": "./dist/core/classNames-AS8QjFq7.js",
+      "require": "./dist/core/classNames-AS8QjFq7.cjs.js",
+      "types": "./dist/types/core/classNames-AS8QjFq7.d.ts"
+    },
+    "./core/CloseIcon-C3eQm4EK": {
+      "import": "./dist/core/CloseIcon-C3eQm4EK.js",
+      "require": "./dist/core/CloseIcon-C3eQm4EK.cjs.js",
+      "types": "./dist/types/core/CloseIcon-C3eQm4EK.d.ts"
+    },
+    "./core/ColorPicker.cjs": {
+      "import": "./dist/core/ColorPicker.cjs.js",
+      "require": "./dist/core/ColorPicker.cjs.cjs.js",
+      "types": "./dist/types/core/ColorPicker.cjs.d.ts"
+    },
+    "./core/ColorPicker": {
+      "import": "./dist/core/ColorPicker.js",
+      "require": "./dist/core/ColorPicker.cjs.js",
+      "types": "./dist/types/core/ColorPicker.d.ts"
+    },
+    "./core/CommandPalette.cjs": {
+      "import": "./dist/core/CommandPalette.cjs.js",
+      "require": "./dist/core/CommandPalette.cjs.cjs.js",
+      "types": "./dist/types/core/CommandPalette.cjs.d.ts"
+    },
+    "./core/CommandPalette": {
+      "import": "./dist/core/CommandPalette.js",
+      "require": "./dist/core/CommandPalette.cjs.js",
+      "types": "./dist/types/core/CommandPalette.d.ts"
+    },
+    "./core/DataTable.cjs": {
+      "import": "./dist/core/DataTable.cjs.js",
+      "require": "./dist/core/DataTable.cjs.cjs.js",
+      "types": "./dist/types/core/DataTable.cjs.d.ts"
+    },
+    "./core/DataTable": {
+      "import": "./dist/core/DataTable.js",
+      "require": "./dist/core/DataTable.cjs.js",
+      "types": "./dist/types/core/DataTable.d.ts"
+    },
+    "./core/DateTimePicker.cjs": {
+      "import": "./dist/core/DateTimePicker.cjs.js",
+      "require": "./dist/core/DateTimePicker.cjs.cjs.js",
+      "types": "./dist/types/core/DateTimePicker.cjs.d.ts"
+    },
+    "./core/DateTimePicker": {
+      "import": "./dist/core/DateTimePicker.js",
+      "require": "./dist/core/DateTimePicker.cjs.js",
+      "types": "./dist/types/core/DateTimePicker.d.ts"
+    },
+    "./core/Divider.cjs": {
+      "import": "./dist/core/Divider.cjs.js",
+      "require": "./dist/core/Divider.cjs.cjs.js",
+      "types": "./dist/types/core/Divider.cjs.d.ts"
+    },
+    "./core/Divider": {
+      "import": "./dist/core/Divider.js",
+      "require": "./dist/core/Divider.cjs.js",
+      "types": "./dist/types/core/Divider.d.ts"
+    },
+    "./core/Dropdown.cjs": {
+      "import": "./dist/core/Dropdown.cjs.js",
+      "require": "./dist/core/Dropdown.cjs.cjs.js",
+      "types": "./dist/types/core/Dropdown.cjs.d.ts"
+    },
+    "./core/Dropdown": {
+      "import": "./dist/core/Dropdown.js",
+      "require": "./dist/core/Dropdown.cjs.js",
+      "types": "./dist/types/core/Dropdown.d.ts"
+    },
+    "./core/EmptyState.cjs": {
+      "import": "./dist/core/EmptyState.cjs.js",
+      "require": "./dist/core/EmptyState.cjs.cjs.js",
+      "types": "./dist/types/core/EmptyState.cjs.d.ts"
+    },
+    "./core/EmptyState": {
+      "import": "./dist/core/EmptyState.js",
+      "require": "./dist/core/EmptyState.cjs.js",
+      "types": "./dist/types/core/EmptyState.d.ts"
+    },
+    "./core/FileUpload.cjs": {
+      "import": "./dist/core/FileUpload.cjs.js",
+      "require": "./dist/core/FileUpload.cjs.cjs.js",
+      "types": "./dist/types/core/FileUpload.cjs.d.ts"
+    },
+    "./core/FileUpload": {
+      "import": "./dist/core/FileUpload.js",
+      "require": "./dist/core/FileUpload.cjs.js",
+      "types": "./dist/types/core/FileUpload.d.ts"
+    },
+    "./core/Footer.cjs": {
+      "import": "./dist/core/Footer.cjs.js",
+      "require": "./dist/core/Footer.cjs.cjs.js",
+      "types": "./dist/types/core/Footer.cjs.d.ts"
+    },
+    "./core/Footer": {
+      "import": "./dist/core/Footer.js",
+      "require": "./dist/core/Footer.cjs.js",
+      "types": "./dist/types/core/Footer.d.ts"
+    },
+    "./core/FormGroup-DS2tW-lC": {
+      "import": "./dist/core/FormGroup-DS2tW-lC.js",
+      "require": "./dist/core/FormGroup-DS2tW-lC.cjs.js",
+      "types": "./dist/types/core/FormGroup-DS2tW-lC.d.ts"
+    },
+    "./core/FormGroup.cjs": {
+      "import": "./dist/core/FormGroup.cjs.js",
+      "require": "./dist/core/FormGroup.cjs.cjs.js",
+      "types": "./dist/types/core/FormGroup.cjs.d.ts"
+    },
+    "./core/FormGroup": {
+      "import": "./dist/core/FormGroup.js",
+      "require": "./dist/core/FormGroup.cjs.js",
+      "types": "./dist/types/core/FormGroup.d.ts"
+    },
+    "./core/IconButton-BhcmfNkS": {
+      "import": "./dist/core/IconButton-BhcmfNkS.js",
+      "require": "./dist/core/IconButton-BhcmfNkS.cjs.js",
+      "types": "./dist/types/core/IconButton-BhcmfNkS.d.ts"
+    },
+    "./core/IconButton.cjs": {
+      "import": "./dist/core/IconButton.cjs.js",
+      "require": "./dist/core/IconButton.cjs.cjs.js",
+      "types": "./dist/types/core/IconButton.cjs.d.ts"
+    },
+    "./core/IconButton": {
+      "import": "./dist/core/IconButton.js",
+      "require": "./dist/core/IconButton.cjs.js",
+      "types": "./dist/types/core/IconButton.d.ts"
+    },
+    "./core/MarkdownRenderer.cjs": {
+      "import": "./dist/core/MarkdownRenderer.cjs.js",
+      "require": "./dist/core/MarkdownRenderer.cjs.cjs.js",
+      "types": "./dist/types/core/MarkdownRenderer.cjs.d.ts"
+    },
+    "./core/MarkdownRenderer": {
+      "import": "./dist/core/MarkdownRenderer.js",
+      "require": "./dist/core/MarkdownRenderer.cjs.js",
+      "types": "./dist/types/core/MarkdownRenderer.d.ts"
+    },
+    "./core/MessagePopUp.cjs": {
+      "import": "./dist/core/MessagePopUp.cjs.js",
+      "require": "./dist/core/MessagePopUp.cjs.cjs.js",
+      "types": "./dist/types/core/MessagePopUp.cjs.d.ts"
+    },
+    "./core/MessagePopUp": {
+      "import": "./dist/core/MessagePopUp.js",
+      "require": "./dist/core/MessagePopUp.cjs.js",
+      "types": "./dist/types/core/MessagePopUp.d.ts"
+    },
+    "./core/MetricBox.cjs": {
+      "import": "./dist/core/MetricBox.cjs.js",
+      "require": "./dist/core/MetricBox.cjs.cjs.js",
+      "types": "./dist/types/core/MetricBox.cjs.d.ts"
+    },
+    "./core/MetricBox": {
+      "import": "./dist/core/MetricBox.js",
+      "require": "./dist/core/MetricBox.cjs.js",
+      "types": "./dist/types/core/MetricBox.d.ts"
+    },
+    "./core/Modal.cjs": {
+      "import": "./dist/core/Modal.cjs.js",
+      "require": "./dist/core/Modal.cjs.cjs.js",
+      "types": "./dist/types/core/Modal.cjs.d.ts"
+    },
+    "./core/Modal": {
+      "import": "./dist/core/Modal.js",
+      "require": "./dist/core/Modal.cjs.js",
+      "types": "./dist/types/core/Modal.d.ts"
+    },
+    "./core/NavBar.cjs": {
+      "import": "./dist/core/NavBar.cjs.js",
+      "require": "./dist/core/NavBar.cjs.cjs.js",
+      "types": "./dist/types/core/NavBar.cjs.d.ts"
+    },
+    "./core/NavBar": {
+      "import": "./dist/core/NavBar.js",
+      "require": "./dist/core/NavBar.cjs.js",
+      "types": "./dist/types/core/NavBar.d.ts"
+    },
+    "./core/NotificationCenter.cjs": {
+      "import": "./dist/core/NotificationCenter.cjs.js",
+      "require": "./dist/core/NotificationCenter.cjs.cjs.js",
+      "types": "./dist/types/core/NotificationCenter.cjs.d.ts"
+    },
+    "./core/NotificationCenter": {
+      "import": "./dist/core/NotificationCenter.js",
+      "require": "./dist/core/NotificationCenter.cjs.js",
+      "types": "./dist/types/core/NotificationCenter.d.ts"
+    },
+    "./core/Pager.cjs": {
+      "import": "./dist/core/Pager.cjs.js",
+      "require": "./dist/core/Pager.cjs.cjs.js",
+      "types": "./dist/types/core/Pager.cjs.d.ts"
+    },
+    "./core/Pager": {
+      "import": "./dist/core/Pager.js",
+      "require": "./dist/core/Pager.cjs.js",
+      "types": "./dist/types/core/Pager.d.ts"
+    },
+    "./core/PopOver.cjs": {
+      "import": "./dist/core/PopOver.cjs.js",
+      "require": "./dist/core/PopOver.cjs.cjs.js",
+      "types": "./dist/types/core/PopOver.cjs.d.ts"
+    },
+    "./core/PopOver": {
+      "import": "./dist/core/PopOver.js",
+      "require": "./dist/core/PopOver.cjs.js",
+      "types": "./dist/types/core/PopOver.d.ts"
+    },
+    "./core/ProgressBar-DHH6i7-6": {
+      "import": "./dist/core/ProgressBar-DHH6i7-6.js",
+      "require": "./dist/core/ProgressBar-DHH6i7-6.cjs.js",
+      "types": "./dist/types/core/ProgressBar-DHH6i7-6.d.ts"
+    },
+    "./core/ProgressBar.cjs": {
+      "import": "./dist/core/ProgressBar.cjs.js",
+      "require": "./dist/core/ProgressBar.cjs.cjs.js",
+      "types": "./dist/types/core/ProgressBar.cjs.d.ts"
+    },
+    "./core/ProgressBar": {
+      "import": "./dist/core/ProgressBar.js",
+      "require": "./dist/core/ProgressBar.cjs.js",
+      "types": "./dist/types/core/ProgressBar.d.ts"
+    },
+    "./core/RadioButton.cjs": {
+      "import": "./dist/core/RadioButton.cjs.js",
+      "require": "./dist/core/RadioButton.cjs.cjs.js",
+      "types": "./dist/types/core/RadioButton.cjs.d.ts"
+    },
+    "./core/RadioButton": {
+      "import": "./dist/core/RadioButton.js",
+      "require": "./dist/core/RadioButton.cjs.js",
+      "types": "./dist/types/core/RadioButton.d.ts"
+    },
+    "./core/Rating.cjs": {
+      "import": "./dist/core/Rating.cjs.js",
+      "require": "./dist/core/Rating.cjs.cjs.js",
+      "types": "./dist/types/core/Rating.cjs.d.ts"
+    },
+    "./core/Rating": {
+      "import": "./dist/core/Rating.js",
+      "require": "./dist/core/Rating.cjs.js",
+      "types": "./dist/types/core/Rating.d.ts"
+    },
+    "./core/ScrollToTop.cjs": {
+      "import": "./dist/core/ScrollToTop.cjs.js",
+      "require": "./dist/core/ScrollToTop.cjs.cjs.js",
+      "types": "./dist/types/core/ScrollToTop.cjs.d.ts"
+    },
+    "./core/ScrollToTop": {
+      "import": "./dist/core/ScrollToTop.js",
+      "require": "./dist/core/ScrollToTop.cjs.js",
+      "types": "./dist/types/core/ScrollToTop.d.ts"
+    },
+    "./core/Select-CvWKiRtg": {
+      "import": "./dist/core/Select-CvWKiRtg.js",
+      "require": "./dist/core/Select-CvWKiRtg.cjs.js",
+      "types": "./dist/types/core/Select-CvWKiRtg.d.ts"
+    },
+    "./core/Select.cjs": {
+      "import": "./dist/core/Select.cjs.js",
+      "require": "./dist/core/Select.cjs.cjs.js",
+      "types": "./dist/types/core/Select.cjs.d.ts"
+    },
+    "./core/Select": {
+      "import": "./dist/core/Select.js",
+      "require": "./dist/core/Select.cjs.js",
+      "types": "./dist/types/core/Select.d.ts"
+    },
+    "./core/Skeleton-XS7FdKUI": {
+      "import": "./dist/core/Skeleton-XS7FdKUI.js",
+      "require": "./dist/core/Skeleton-XS7FdKUI.cjs.js",
+      "types": "./dist/types/core/Skeleton-XS7FdKUI.d.ts"
+    },
+    "./core/Skeleton.cjs": {
+      "import": "./dist/core/Skeleton.cjs.js",
+      "require": "./dist/core/Skeleton.cjs.cjs.js",
+      "types": "./dist/types/core/Skeleton.cjs.d.ts"
+    },
+    "./core/Skeleton": {
+      "import": "./dist/core/Skeleton.js",
+      "require": "./dist/core/Skeleton.cjs.js",
+      "types": "./dist/types/core/Skeleton.d.ts"
+    },
+    "./core/Slider.cjs": {
+      "import": "./dist/core/Slider.cjs.js",
+      "require": "./dist/core/Slider.cjs.cjs.js",
+      "types": "./dist/types/core/Slider.cjs.d.ts"
+    },
+    "./core/Slider": {
+      "import": "./dist/core/Slider.js",
+      "require": "./dist/core/Slider.cjs.js",
+      "types": "./dist/types/core/Slider.d.ts"
+    },
+    "./core/Spinner.cjs": {
+      "import": "./dist/core/Spinner.cjs.js",
+      "require": "./dist/core/Spinner.cjs.cjs.js",
+      "types": "./dist/types/core/Spinner.cjs.d.ts"
+    },
+    "./core/Spinner": {
+      "import": "./dist/core/Spinner.js",
+      "require": "./dist/core/Spinner.cjs.js",
+      "types": "./dist/types/core/Spinner.d.ts"
+    },
+    "./core/Stepper.cjs": {
+      "import": "./dist/core/Stepper.cjs.js",
+      "require": "./dist/core/Stepper.cjs.cjs.js",
+      "types": "./dist/types/core/Stepper.cjs.d.ts"
+    },
+    "./core/Stepper": {
+      "import": "./dist/core/Stepper.js",
+      "require": "./dist/core/Stepper.cjs.js",
+      "types": "./dist/types/core/Stepper.d.ts"
+    },
+    "./core/Tabs.cjs": {
+      "import": "./dist/core/Tabs.cjs.js",
+      "require": "./dist/core/Tabs.cjs.cjs.js",
+      "types": "./dist/types/core/Tabs.cjs.d.ts"
+    },
+    "./core/Tabs": {
+      "import": "./dist/core/Tabs.js",
+      "require": "./dist/core/Tabs.cjs.js",
+      "types": "./dist/types/core/Tabs.d.ts"
+    },
+    "./core/TagInput.cjs": {
+      "import": "./dist/core/TagInput.cjs.js",
+      "require": "./dist/core/TagInput.cjs.cjs.js",
+      "types": "./dist/types/core/TagInput.cjs.d.ts"
+    },
+    "./core/TagInput": {
+      "import": "./dist/core/TagInput.js",
+      "require": "./dist/core/TagInput.cjs.js",
+      "types": "./dist/types/core/TagInput.d.ts"
+    },
+    "./core/TextArea.cjs": {
+      "import": "./dist/core/TextArea.cjs.js",
+      "require": "./dist/core/TextArea.cjs.cjs.js",
+      "types": "./dist/types/core/TextArea.cjs.d.ts"
+    },
+    "./core/TextArea": {
+      "import": "./dist/core/TextArea.js",
+      "require": "./dist/core/TextArea.cjs.js",
+      "types": "./dist/types/core/TextArea.d.ts"
+    },
+    "./core/TextInput-flUqzzAu": {
+      "import": "./dist/core/TextInput-flUqzzAu.js",
+      "require": "./dist/core/TextInput-flUqzzAu.cjs.js",
+      "types": "./dist/types/core/TextInput-flUqzzAu.d.ts"
+    },
+    "./core/TextInput.cjs": {
+      "import": "./dist/core/TextInput.cjs.js",
+      "require": "./dist/core/TextInput.cjs.cjs.js",
+      "types": "./dist/types/core/TextInput.cjs.d.ts"
+    },
+    "./core/TextInput": {
+      "import": "./dist/core/TextInput.js",
+      "require": "./dist/core/TextInput.cjs.js",
+      "types": "./dist/types/core/TextInput.d.ts"
+    },
+    "./core/Timeline.cjs": {
+      "import": "./dist/core/Timeline.cjs.js",
+      "require": "./dist/core/Timeline.cjs.cjs.js",
+      "types": "./dist/types/core/Timeline.cjs.d.ts"
+    },
+    "./core/Timeline": {
+      "import": "./dist/core/Timeline.js",
+      "require": "./dist/core/Timeline.cjs.js",
+      "types": "./dist/types/core/Timeline.d.ts"
+    },
+    "./core/Toggle.cjs": {
+      "import": "./dist/core/Toggle.cjs.js",
+      "require": "./dist/core/Toggle.cjs.cjs.js",
+      "types": "./dist/types/core/Toggle.cjs.d.ts"
+    },
+    "./core/Toggle": {
+      "import": "./dist/core/Toggle.js",
+      "require": "./dist/core/Toggle.cjs.js",
+      "types": "./dist/types/core/Toggle.d.ts"
+    },
+    "./core/Toolbar.cjs": {
+      "import": "./dist/core/Toolbar.cjs.js",
+      "require": "./dist/core/Toolbar.cjs.cjs.js",
+      "types": "./dist/types/core/Toolbar.cjs.d.ts"
+    },
+    "./core/Toolbar": {
+      "import": "./dist/core/Toolbar.js",
+      "require": "./dist/core/Toolbar.cjs.js",
+      "types": "./dist/types/core/Toolbar.d.ts"
+    },
+    "./core/Tooltip.cjs": {
+      "import": "./dist/core/Tooltip.cjs.js",
+      "require": "./dist/core/Tooltip.cjs.cjs.js",
+      "types": "./dist/types/core/Tooltip.cjs.d.ts"
+    },
+    "./core/Tooltip": {
+      "import": "./dist/core/Tooltip.js",
+      "require": "./dist/core/Tooltip.cjs.js",
+      "types": "./dist/types/core/Tooltip.d.ts"
+    },
+    "./next/Accordion.cjs": {
+      "import": "./dist/next/Accordion.cjs.js",
+      "require": "./dist/next/Accordion.cjs.cjs.js",
+      "types": "./dist/types/next/Accordion.cjs.d.ts"
+    },
+    "./next/Accordion": {
+      "import": "./dist/next/Accordion.js",
+      "require": "./dist/next/Accordion.cjs.js",
+      "types": "./dist/types/next/Accordion.d.ts"
+    },
+    "./next/ArrowRightIcon-BYQv5XS8": {
+      "import": "./dist/next/ArrowRightIcon-BYQv5XS8.js",
+      "require": "./dist/next/ArrowRightIcon-BYQv5XS8.cjs.js",
+      "types": "./dist/types/next/ArrowRightIcon-BYQv5XS8.d.ts"
+    },
+    "./next/Avatar-qYzEuo1h": {
+      "import": "./dist/next/Avatar-qYzEuo1h.js",
+      "require": "./dist/next/Avatar-qYzEuo1h.cjs.js",
+      "types": "./dist/types/next/Avatar-qYzEuo1h.d.ts"
+    },
+    "./next/Avatar.cjs": {
+      "import": "./dist/next/Avatar.cjs.js",
+      "require": "./dist/next/Avatar.cjs.cjs.js",
+      "types": "./dist/types/next/Avatar.cjs.d.ts"
+    },
+    "./next/Avatar": {
+      "import": "./dist/next/Avatar.js",
+      "require": "./dist/next/Avatar.cjs.js",
+      "types": "./dist/types/next/Avatar.d.ts"
+    },
+    "./next/Badge.cjs": {
+      "import": "./dist/next/Badge.cjs.js",
+      "require": "./dist/next/Badge.cjs.cjs.js",
+      "types": "./dist/types/next/Badge.cjs.d.ts"
+    },
+    "./next/Badge": {
+      "import": "./dist/next/Badge.js",
+      "require": "./dist/next/Badge.cjs.js",
+      "types": "./dist/types/next/Badge.d.ts"
+    },
+    "./next/boreal-style-config-l6aMdvvp": {
+      "import": "./dist/next/boreal-style-config-l6aMdvvp.js",
+      "require": "./dist/next/boreal-style-config-l6aMdvvp.cjs.js",
+      "types": "./dist/types/next/boreal-style-config-l6aMdvvp.d.ts"
+    },
+    "./next/Breadcrumbs.cjs": {
+      "import": "./dist/next/Breadcrumbs.cjs.js",
+      "require": "./dist/next/Breadcrumbs.cjs.cjs.js",
+      "types": "./dist/types/next/Breadcrumbs.cjs.d.ts"
+    },
+    "./next/Breadcrumbs": {
+      "import": "./dist/next/Breadcrumbs.js",
+      "require": "./dist/next/Breadcrumbs.cjs.js",
+      "types": "./dist/types/next/Breadcrumbs.d.ts"
+    },
+    "./next/Button-CyrkG5w9": {
+      "import": "./dist/next/Button-CyrkG5w9.js",
+      "require": "./dist/next/Button-CyrkG5w9.cjs.js",
+      "types": "./dist/types/next/Button-CyrkG5w9.d.ts"
+    },
+    "./next/Button.cjs": {
+      "import": "./dist/next/Button.cjs.js",
+      "require": "./dist/next/Button.cjs.cjs.js",
+      "types": "./dist/types/next/Button.cjs.d.ts"
+    },
+    "./next/Button": {
+      "import": "./dist/next/Button.js",
+      "require": "./dist/next/Button.cjs.js",
+      "types": "./dist/types/next/Button.d.ts"
+    },
+    "./next/capitalize-C0TSQSPh": {
+      "import": "./dist/next/capitalize-C0TSQSPh.js",
+      "require": "./dist/next/capitalize-C0TSQSPh.cjs.js",
+      "types": "./dist/types/next/capitalize-C0TSQSPh.d.ts"
+    },
+    "./next/Card.cjs": {
+      "import": "./dist/next/Card.cjs.js",
+      "require": "./dist/next/Card.cjs.cjs.js",
+      "types": "./dist/types/next/Card.cjs.d.ts"
+    },
+    "./next/Card": {
+      "import": "./dist/next/Card.js",
+      "require": "./dist/next/Card.cjs.js",
+      "types": "./dist/types/next/Card.d.ts"
+    },
+    "./next/CheckBox.cjs": {
+      "import": "./dist/next/CheckBox.cjs.js",
+      "require": "./dist/next/CheckBox.cjs.cjs.js",
+      "types": "./dist/types/next/CheckBox.cjs.d.ts"
+    },
+    "./next/CheckBox": {
+      "import": "./dist/next/CheckBox.js",
+      "require": "./dist/next/CheckBox.cjs.js",
+      "types": "./dist/types/next/CheckBox.d.ts"
+    },
+    "./next/Chip.cjs": {
+      "import": "./dist/next/Chip.cjs.js",
+      "require": "./dist/next/Chip.cjs.cjs.js",
+      "types": "./dist/types/next/Chip.cjs.d.ts"
+    },
+    "./next/Chip": {
+      "import": "./dist/next/Chip.js",
+      "require": "./dist/next/Chip.cjs.js",
+      "types": "./dist/types/next/Chip.d.ts"
+    },
+    "./next/CircularProgress.cjs": {
+      "import": "./dist/next/CircularProgress.cjs.js",
+      "require": "./dist/next/CircularProgress.cjs.cjs.js",
+      "types": "./dist/types/next/CircularProgress.cjs.d.ts"
+    },
+    "./next/CircularProgress": {
+      "import": "./dist/next/CircularProgress.js",
+      "require": "./dist/next/CircularProgress.cjs.js",
+      "types": "./dist/types/next/CircularProgress.d.ts"
+    },
+    "./next/classNames-AS8QjFq7": {
+      "import": "./dist/next/classNames-AS8QjFq7.js",
+      "require": "./dist/next/classNames-AS8QjFq7.cjs.js",
+      "types": "./dist/types/next/classNames-AS8QjFq7.d.ts"
+    },
+    "./next/CloseIcon-C3eQm4EK": {
+      "import": "./dist/next/CloseIcon-C3eQm4EK.js",
+      "require": "./dist/next/CloseIcon-C3eQm4EK.cjs.js",
+      "types": "./dist/types/next/CloseIcon-C3eQm4EK.d.ts"
+    },
+    "./next/ColorPicker.cjs": {
+      "import": "./dist/next/ColorPicker.cjs.js",
+      "require": "./dist/next/ColorPicker.cjs.cjs.js",
+      "types": "./dist/types/next/ColorPicker.cjs.d.ts"
+    },
+    "./next/ColorPicker": {
+      "import": "./dist/next/ColorPicker.js",
+      "require": "./dist/next/ColorPicker.cjs.js",
+      "types": "./dist/types/next/ColorPicker.d.ts"
+    },
+    "./next/CommandPalette.cjs": {
+      "import": "./dist/next/CommandPalette.cjs.js",
+      "require": "./dist/next/CommandPalette.cjs.cjs.js",
+      "types": "./dist/types/next/CommandPalette.cjs.d.ts"
+    },
+    "./next/CommandPalette": {
+      "import": "./dist/next/CommandPalette.js",
+      "require": "./dist/next/CommandPalette.cjs.js",
+      "types": "./dist/types/next/CommandPalette.d.ts"
+    },
+    "./next/DataTable.cjs": {
+      "import": "./dist/next/DataTable.cjs.js",
+      "require": "./dist/next/DataTable.cjs.cjs.js",
+      "types": "./dist/types/next/DataTable.cjs.d.ts"
+    },
+    "./next/DataTable": {
+      "import": "./dist/next/DataTable.js",
+      "require": "./dist/next/DataTable.cjs.js",
+      "types": "./dist/types/next/DataTable.d.ts"
+    },
+    "./next/DateTimePicker.cjs": {
+      "import": "./dist/next/DateTimePicker.cjs.js",
+      "require": "./dist/next/DateTimePicker.cjs.cjs.js",
+      "types": "./dist/types/next/DateTimePicker.cjs.d.ts"
+    },
+    "./next/DateTimePicker": {
+      "import": "./dist/next/DateTimePicker.js",
+      "require": "./dist/next/DateTimePicker.cjs.js",
+      "types": "./dist/types/next/DateTimePicker.d.ts"
+    },
+    "./next/Divider.cjs": {
+      "import": "./dist/next/Divider.cjs.js",
+      "require": "./dist/next/Divider.cjs.cjs.js",
+      "types": "./dist/types/next/Divider.cjs.d.ts"
+    },
+    "./next/Divider": {
+      "import": "./dist/next/Divider.js",
+      "require": "./dist/next/Divider.cjs.js",
+      "types": "./dist/types/next/Divider.d.ts"
+    },
+    "./next/Dropdown.cjs": {
+      "import": "./dist/next/Dropdown.cjs.js",
+      "require": "./dist/next/Dropdown.cjs.cjs.js",
+      "types": "./dist/types/next/Dropdown.cjs.d.ts"
+    },
+    "./next/Dropdown": {
+      "import": "./dist/next/Dropdown.js",
+      "require": "./dist/next/Dropdown.cjs.js",
+      "types": "./dist/types/next/Dropdown.d.ts"
+    },
+    "./next/EmptyState.cjs": {
+      "import": "./dist/next/EmptyState.cjs.js",
+      "require": "./dist/next/EmptyState.cjs.cjs.js",
+      "types": "./dist/types/next/EmptyState.cjs.d.ts"
+    },
+    "./next/EmptyState": {
+      "import": "./dist/next/EmptyState.js",
+      "require": "./dist/next/EmptyState.cjs.js",
+      "types": "./dist/types/next/EmptyState.d.ts"
+    },
+    "./next/FileUpload.cjs": {
+      "import": "./dist/next/FileUpload.cjs.js",
+      "require": "./dist/next/FileUpload.cjs.cjs.js",
+      "types": "./dist/types/next/FileUpload.cjs.d.ts"
+    },
+    "./next/FileUpload": {
+      "import": "./dist/next/FileUpload.js",
+      "require": "./dist/next/FileUpload.cjs.js",
+      "types": "./dist/types/next/FileUpload.d.ts"
+    },
+    "./next/Footer.cjs": {
+      "import": "./dist/next/Footer.cjs.js",
+      "require": "./dist/next/Footer.cjs.cjs.js",
+      "types": "./dist/types/next/Footer.cjs.d.ts"
+    },
+    "./next/Footer": {
+      "import": "./dist/next/Footer.js",
+      "require": "./dist/next/Footer.cjs.js",
+      "types": "./dist/types/next/Footer.d.ts"
+    },
+    "./next/FormGroup-BvvUG6cs": {
+      "import": "./dist/next/FormGroup-BvvUG6cs.js",
+      "require": "./dist/next/FormGroup-BvvUG6cs.cjs.js",
+      "types": "./dist/types/next/FormGroup-BvvUG6cs.d.ts"
+    },
+    "./next/FormGroup.cjs": {
+      "import": "./dist/next/FormGroup.cjs.js",
+      "require": "./dist/next/FormGroup.cjs.cjs.js",
+      "types": "./dist/types/next/FormGroup.cjs.d.ts"
+    },
+    "./next/FormGroup": {
+      "import": "./dist/next/FormGroup.js",
+      "require": "./dist/next/FormGroup.cjs.js",
+      "types": "./dist/types/next/FormGroup.d.ts"
+    },
+    "./next/IconButton-32A8Nzp_": {
+      "import": "./dist/next/IconButton-32A8Nzp_.js",
+      "require": "./dist/next/IconButton-32A8Nzp_.cjs.js",
+      "types": "./dist/types/next/IconButton-32A8Nzp_.d.ts"
+    },
+    "./next/IconButton.cjs": {
+      "import": "./dist/next/IconButton.cjs.js",
+      "require": "./dist/next/IconButton.cjs.cjs.js",
+      "types": "./dist/types/next/IconButton.cjs.d.ts"
+    },
+    "./next/IconButton": {
+      "import": "./dist/next/IconButton.js",
+      "require": "./dist/next/IconButton.cjs.js",
+      "types": "./dist/types/next/IconButton.d.ts"
+    },
+    "./next/image-Cs0ZR1Aj": {
+      "import": "./dist/next/image-Cs0ZR1Aj.js",
+      "require": "./dist/next/image-Cs0ZR1Aj.cjs.js",
+      "types": "./dist/types/next/image-Cs0ZR1Aj.d.ts"
+    },
+    "./next/link-CX77u6b-": {
+      "import": "./dist/next/link-CX77u6b-.js",
+      "require": "./dist/next/link-CX77u6b-.cjs.js",
+      "types": "./dist/types/next/link-CX77u6b-.d.ts"
+    },
+    "./next/MarkdownRenderer.cjs": {
+      "import": "./dist/next/MarkdownRenderer.cjs.js",
+      "require": "./dist/next/MarkdownRenderer.cjs.cjs.js",
+      "types": "./dist/types/next/MarkdownRenderer.cjs.d.ts"
+    },
+    "./next/MarkdownRenderer": {
+      "import": "./dist/next/MarkdownRenderer.js",
+      "require": "./dist/next/MarkdownRenderer.cjs.js",
+      "types": "./dist/types/next/MarkdownRenderer.d.ts"
+    },
+    "./next/MessagePopUp.cjs": {
+      "import": "./dist/next/MessagePopUp.cjs.js",
+      "require": "./dist/next/MessagePopUp.cjs.cjs.js",
+      "types": "./dist/types/next/MessagePopUp.cjs.d.ts"
+    },
+    "./next/MessagePopUp": {
+      "import": "./dist/next/MessagePopUp.js",
+      "require": "./dist/next/MessagePopUp.cjs.js",
+      "types": "./dist/types/next/MessagePopUp.d.ts"
+    },
+    "./next/MetricBox.cjs": {
+      "import": "./dist/next/MetricBox.cjs.js",
+      "require": "./dist/next/MetricBox.cjs.cjs.js",
+      "types": "./dist/types/next/MetricBox.cjs.d.ts"
+    },
+    "./next/MetricBox": {
+      "import": "./dist/next/MetricBox.js",
+      "require": "./dist/next/MetricBox.cjs.js",
+      "types": "./dist/types/next/MetricBox.d.ts"
+    },
+    "./next/Modal.cjs": {
+      "import": "./dist/next/Modal.cjs.js",
+      "require": "./dist/next/Modal.cjs.cjs.js",
+      "types": "./dist/types/next/Modal.cjs.d.ts"
+    },
+    "./next/Modal": {
+      "import": "./dist/next/Modal.js",
+      "require": "./dist/next/Modal.cjs.js",
+      "types": "./dist/types/next/Modal.d.ts"
+    },
+    "./next/NavBar.cjs": {
+      "import": "./dist/next/NavBar.cjs.js",
+      "require": "./dist/next/NavBar.cjs.cjs.js",
+      "types": "./dist/types/next/NavBar.cjs.d.ts"
+    },
+    "./next/NavBar": {
+      "import": "./dist/next/NavBar.js",
+      "require": "./dist/next/NavBar.cjs.js",
+      "types": "./dist/types/next/NavBar.d.ts"
+    },
+    "./next/NotificationCenter.cjs": {
+      "import": "./dist/next/NotificationCenter.cjs.js",
+      "require": "./dist/next/NotificationCenter.cjs.cjs.js",
+      "types": "./dist/types/next/NotificationCenter.cjs.d.ts"
+    },
+    "./next/NotificationCenter": {
+      "import": "./dist/next/NotificationCenter.js",
+      "require": "./dist/next/NotificationCenter.cjs.js",
+      "types": "./dist/types/next/NotificationCenter.d.ts"
+    },
+    "./next/Pager.cjs": {
+      "import": "./dist/next/Pager.cjs.js",
+      "require": "./dist/next/Pager.cjs.cjs.js",
+      "types": "./dist/types/next/Pager.cjs.d.ts"
+    },
+    "./next/Pager": {
+      "import": "./dist/next/Pager.js",
+      "require": "./dist/next/Pager.cjs.js",
+      "types": "./dist/types/next/Pager.d.ts"
+    },
+    "./next/PopOver.cjs": {
+      "import": "./dist/next/PopOver.cjs.js",
+      "require": "./dist/next/PopOver.cjs.cjs.js",
+      "types": "./dist/types/next/PopOver.cjs.d.ts"
+    },
+    "./next/PopOver": {
+      "import": "./dist/next/PopOver.js",
+      "require": "./dist/next/PopOver.cjs.js",
+      "types": "./dist/types/next/PopOver.d.ts"
+    },
+    "./next/ProgressBar-CKvOs9vK": {
+      "import": "./dist/next/ProgressBar-CKvOs9vK.js",
+      "require": "./dist/next/ProgressBar-CKvOs9vK.cjs.js",
+      "types": "./dist/types/next/ProgressBar-CKvOs9vK.d.ts"
+    },
+    "./next/ProgressBar.cjs": {
+      "import": "./dist/next/ProgressBar.cjs.js",
+      "require": "./dist/next/ProgressBar.cjs.cjs.js",
+      "types": "./dist/types/next/ProgressBar.cjs.d.ts"
+    },
+    "./next/ProgressBar": {
+      "import": "./dist/next/ProgressBar.js",
+      "require": "./dist/next/ProgressBar.cjs.js",
+      "types": "./dist/types/next/ProgressBar.d.ts"
+    },
+    "./next/RadioButton.cjs": {
+      "import": "./dist/next/RadioButton.cjs.js",
+      "require": "./dist/next/RadioButton.cjs.cjs.js",
+      "types": "./dist/types/next/RadioButton.cjs.d.ts"
+    },
+    "./next/RadioButton": {
+      "import": "./dist/next/RadioButton.js",
+      "require": "./dist/next/RadioButton.cjs.js",
+      "types": "./dist/types/next/RadioButton.d.ts"
+    },
+    "./next/Rating.cjs": {
+      "import": "./dist/next/Rating.cjs.js",
+      "require": "./dist/next/Rating.cjs.cjs.js",
+      "types": "./dist/types/next/Rating.cjs.d.ts"
+    },
+    "./next/Rating": {
+      "import": "./dist/next/Rating.js",
+      "require": "./dist/next/Rating.cjs.js",
+      "types": "./dist/types/next/Rating.d.ts"
+    },
+    "./next/ScrollToTop.cjs": {
+      "import": "./dist/next/ScrollToTop.cjs.js",
+      "require": "./dist/next/ScrollToTop.cjs.cjs.js",
+      "types": "./dist/types/next/ScrollToTop.cjs.d.ts"
+    },
+    "./next/ScrollToTop": {
+      "import": "./dist/next/ScrollToTop.js",
+      "require": "./dist/next/ScrollToTop.cjs.js",
+      "types": "./dist/types/next/ScrollToTop.d.ts"
+    },
+    "./next/Select-DEhrsuBQ": {
+      "import": "./dist/next/Select-DEhrsuBQ.js",
+      "require": "./dist/next/Select-DEhrsuBQ.cjs.js",
+      "types": "./dist/types/next/Select-DEhrsuBQ.d.ts"
+    },
+    "./next/Select.cjs": {
+      "import": "./dist/next/Select.cjs.js",
+      "require": "./dist/next/Select.cjs.cjs.js",
+      "types": "./dist/types/next/Select.cjs.d.ts"
+    },
+    "./next/Select": {
+      "import": "./dist/next/Select.js",
+      "require": "./dist/next/Select.cjs.js",
+      "types": "./dist/types/next/Select.d.ts"
+    },
+    "./next/Skeleton-DUQtvrVe": {
+      "import": "./dist/next/Skeleton-DUQtvrVe.js",
+      "require": "./dist/next/Skeleton-DUQtvrVe.cjs.js",
+      "types": "./dist/types/next/Skeleton-DUQtvrVe.d.ts"
+    },
+    "./next/Skeleton.cjs": {
+      "import": "./dist/next/Skeleton.cjs.js",
+      "require": "./dist/next/Skeleton.cjs.cjs.js",
+      "types": "./dist/types/next/Skeleton.cjs.d.ts"
+    },
+    "./next/Skeleton": {
+      "import": "./dist/next/Skeleton.js",
+      "require": "./dist/next/Skeleton.cjs.js",
+      "types": "./dist/types/next/Skeleton.d.ts"
+    },
+    "./next/Slider.cjs": {
+      "import": "./dist/next/Slider.cjs.js",
+      "require": "./dist/next/Slider.cjs.cjs.js",
+      "types": "./dist/types/next/Slider.cjs.d.ts"
+    },
+    "./next/Slider": {
+      "import": "./dist/next/Slider.js",
+      "require": "./dist/next/Slider.cjs.js",
+      "types": "./dist/types/next/Slider.d.ts"
+    },
+    "./next/Spinner.cjs": {
+      "import": "./dist/next/Spinner.cjs.js",
+      "require": "./dist/next/Spinner.cjs.cjs.js",
+      "types": "./dist/types/next/Spinner.cjs.d.ts"
+    },
+    "./next/Spinner": {
+      "import": "./dist/next/Spinner.js",
+      "require": "./dist/next/Spinner.cjs.js",
+      "types": "./dist/types/next/Spinner.d.ts"
+    },
+    "./next/Stepper.cjs": {
+      "import": "./dist/next/Stepper.cjs.js",
+      "require": "./dist/next/Stepper.cjs.cjs.js",
+      "types": "./dist/types/next/Stepper.cjs.d.ts"
+    },
+    "./next/Stepper": {
+      "import": "./dist/next/Stepper.js",
+      "require": "./dist/next/Stepper.cjs.js",
+      "types": "./dist/types/next/Stepper.d.ts"
+    },
+    "./next/Tabs.cjs": {
+      "import": "./dist/next/Tabs.cjs.js",
+      "require": "./dist/next/Tabs.cjs.cjs.js",
+      "types": "./dist/types/next/Tabs.cjs.d.ts"
+    },
+    "./next/Tabs": {
+      "import": "./dist/next/Tabs.js",
+      "require": "./dist/next/Tabs.cjs.js",
+      "types": "./dist/types/next/Tabs.d.ts"
+    },
+    "./next/TagInput.cjs": {
+      "import": "./dist/next/TagInput.cjs.js",
+      "require": "./dist/next/TagInput.cjs.cjs.js",
+      "types": "./dist/types/next/TagInput.cjs.d.ts"
+    },
+    "./next/TagInput": {
+      "import": "./dist/next/TagInput.js",
+      "require": "./dist/next/TagInput.cjs.js",
+      "types": "./dist/types/next/TagInput.d.ts"
+    },
+    "./next/TextArea.cjs": {
+      "import": "./dist/next/TextArea.cjs.js",
+      "require": "./dist/next/TextArea.cjs.cjs.js",
+      "types": "./dist/types/next/TextArea.cjs.d.ts"
+    },
+    "./next/TextArea": {
+      "import": "./dist/next/TextArea.js",
+      "require": "./dist/next/TextArea.cjs.js",
+      "types": "./dist/types/next/TextArea.d.ts"
+    },
+    "./next/TextInput-DsjifuX6": {
+      "import": "./dist/next/TextInput-DsjifuX6.js",
+      "require": "./dist/next/TextInput-DsjifuX6.cjs.js",
+      "types": "./dist/types/next/TextInput-DsjifuX6.d.ts"
+    },
+    "./next/TextInput.cjs": {
+      "import": "./dist/next/TextInput.cjs.js",
+      "require": "./dist/next/TextInput.cjs.cjs.js",
+      "types": "./dist/types/next/TextInput.cjs.d.ts"
+    },
+    "./next/TextInput": {
+      "import": "./dist/next/TextInput.js",
+      "require": "./dist/next/TextInput.cjs.js",
+      "types": "./dist/types/next/TextInput.d.ts"
+    },
+    "./next/Timeline.cjs": {
+      "import": "./dist/next/Timeline.cjs.js",
+      "require": "./dist/next/Timeline.cjs.cjs.js",
+      "types": "./dist/types/next/Timeline.cjs.d.ts"
+    },
+    "./next/Timeline": {
+      "import": "./dist/next/Timeline.js",
+      "require": "./dist/next/Timeline.cjs.js",
+      "types": "./dist/types/next/Timeline.d.ts"
+    },
+    "./next/Toggle.cjs": {
+      "import": "./dist/next/Toggle.cjs.js",
+      "require": "./dist/next/Toggle.cjs.cjs.js",
+      "types": "./dist/types/next/Toggle.cjs.d.ts"
+    },
+    "./next/Toggle": {
+      "import": "./dist/next/Toggle.js",
+      "require": "./dist/next/Toggle.cjs.js",
+      "types": "./dist/types/next/Toggle.d.ts"
+    },
+    "./next/Toolbar.cjs": {
+      "import": "./dist/next/Toolbar.cjs.js",
+      "require": "./dist/next/Toolbar.cjs.cjs.js",
+      "types": "./dist/types/next/Toolbar.cjs.d.ts"
+    },
+    "./next/Toolbar": {
+      "import": "./dist/next/Toolbar.js",
+      "require": "./dist/next/Toolbar.cjs.js",
+      "types": "./dist/types/next/Toolbar.d.ts"
+    },
+    "./next/Tooltip.cjs": {
+      "import": "./dist/next/Tooltip.cjs.js",
+      "require": "./dist/next/Tooltip.cjs.cjs.js",
+      "types": "./dist/types/next/Tooltip.cjs.d.ts"
+    },
+    "./next/Tooltip": {
+      "import": "./dist/next/Tooltip.js",
+      "require": "./dist/next/Tooltip.cjs.js",
+      "types": "./dist/types/next/Tooltip.d.ts"
+    }
   },
   "typesVersions": {
     "*": {
