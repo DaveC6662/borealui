@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+const getEntryMap = require("./scripts/buildEntryMap");
 import path from "path";
 
 const externals = [
@@ -11,6 +12,9 @@ const externals = [
   "marked",
   "uuid",
 ];
+
+const coreEntries = getEntryMap("./src/core");
+console.log("nextEntries:", coreEntries);
 
 export default defineConfig({
   plugins: [react()],
@@ -28,10 +32,11 @@ export default defineConfig({
     minify: false,
 
     lib: {
-      entry: path.resolve(__dirname, "src/index.core.ts"),
-      name: "BorealUI",
+      entry: coreEntries,
       formats: ["es", "cjs"],
-      fileName: (format) => (format === "es" ? "index.esm.js" : "index.cjs.js"),
+      fileName: (format, entryName) => {
+        return `${entryName}${format === "es" ? ".js" : ".cjs.js"}`;
+      },
     },
 
     rollupOptions: {

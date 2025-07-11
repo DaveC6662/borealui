@@ -40,7 +40,8 @@
     "global.d.ts",
     "next.config.mjs",
     ".storybook-core/types",
-    "webpack.config.cjs"
+    "webpack.config.cjs",
+    "scripts/buildEntryMap.js"
   ],
 
   "exclude": ["node_modules", "cypress", "dist"]

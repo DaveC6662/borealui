@@ -26,6 +26,7 @@
     "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
     "check:sync": "node scripts/checkSync.js",
     "generate:component": "node scripts/generate-component.js",
+    "generate:entrypoints": "node scripts/generateEntryPoints.cjs",
     "test": "jest",
     "cypress": "cypress open",
     "cypress:run": "cypress run",
