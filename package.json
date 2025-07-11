@@ -94,6 +94,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
+    "rollup-plugin-copy": "^3.5.0",
     "sass": "^1.86.3",
     "sass-embedded": "^1.86.3",
     "sass-loader": "^16.0.5",
@@ -123,7 +124,7 @@
       "types": "./dist/types/index.core.d.ts"
     },
     "./core/style.css": {
-      "default": "./core/style.css"
+      "default": "./dist/core/style.css"
     },
     "./next": {
       "import": "./dist/next/index.js",
@@ -131,7 +132,7 @@
       "types": "./dist/types/index.next.d.ts"
     },
     "./next/style.css": {
-      "default": "./next/style.css"
+      "default": "./dist/next/style.css"
     },
     "./core/Accordion-cisTcG4i": {
       "import": "./dist/core/Accordion-cisTcG4i.js",

@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import getEntryMap from "./scripts/buildEntryMap";
 import path from "path";
+import copy from "rollup-plugin-copy";
 
 const externals = [
   "react",
@@ -18,7 +19,16 @@ coreEntries["index"] = path.resolve(__dirname, "./src/index.core.ts");
 console.log("nextEntries:", coreEntries);
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    copy({
+      targets: [
+        { src: "src/styles/style.css", dest: "core/next" },
+        { src: "src/styles/style.css", dest: "core" },
+      ],
+      hook: "writeBundle",
+    }),
+  ],
 
   resolve: {
     alias: {
