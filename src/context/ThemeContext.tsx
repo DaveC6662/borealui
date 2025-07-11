@@ -1,27 +1,17 @@
 "use client";
 
-import React, { createContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import {
   getAllColorSchemes,
   registerColorScheme,
 } from "../styles/colorSchemeRegistry";
 import { defaultColorSchemeName } from "../config/boreal-style-config";
 import { colorSchemes } from "../styles/Themes";
-import { ColorScheme } from "@/types/types";
-
-interface ThemeContextType {
-  selectedScheme: number;
-  setSelectedScheme: React.Dispatch<React.SetStateAction<number>>;
-}
+import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
   undefined
 );
-
-interface ThemeProviderProps {
-  children: ReactNode;
-  customSchemes?: ColorScheme[];
-}
 
 const fallbackIndex = colorSchemes.findIndex(
   (scheme) => scheme.name === defaultColorSchemeName

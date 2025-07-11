@@ -13,6 +13,7 @@ const externals = [
 ];
 
 const nextEntries = getEntryMap("./src/next");
+nextEntries["index"] = path.resolve(__dirname, "./src/index.next.ts");
 console.log("nextEntries:", nextEntries);
 
 export default defineConfig({

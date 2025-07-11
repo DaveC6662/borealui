@@ -14,6 +14,7 @@ const externals = [
 ];
 
 const coreEntries = getEntryMap("./src/core");
+coreEntries["index"] = path.resolve(__dirname, "./src/index.core.ts");
 console.log("nextEntries:", coreEntries);
 
 export default defineConfig({

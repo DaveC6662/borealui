@@ -5,6 +5,7 @@
     "noEmit": false,
     "declarationMap": true,
     "emitDeclarationOnly": true,
+    "declarationDir": "dist/types",
     "outDir": "dist/types",
     "rootDir": "./src",
     "moduleResolution": "bundler",

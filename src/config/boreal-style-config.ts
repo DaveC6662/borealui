@@ -1,4 +1,4 @@
-import { RoundingType, ShadowType, SizeType, ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, SizeType, ThemeType } from "../types/types";
 
 export type BorealStyleConfig = {
   defaultTheme: ThemeType;
