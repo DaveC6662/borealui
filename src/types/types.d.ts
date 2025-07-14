@@ -5,6 +5,7 @@ export interface ColorScheme {
   tertiaryColor: string;
   quaternaryColor: string;
   backgroundColor: string;
+  forceTextColor: string;
 }
 
 export type ThemeType =

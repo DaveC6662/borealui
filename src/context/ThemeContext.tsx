@@ -51,6 +51,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       tertiaryColor,
       quaternaryColor,
       backgroundColor,
+      forceTextColor,
     } = allSchemes[selectedScheme];
 
     const hexToHSL = (hex: string) => {
@@ -130,7 +131,8 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       "--primary-color": primaryColor,
       "--primary-color-light": adjustLightness(primaryColor, 10),
       "--primary-color-hover": adjustLightness(primaryColor, -10),
-      "--text-color-primary": getAccessibleTextColor(primaryColor),
+      "--text-color-primary":
+        forceTextColor ?? getAccessibleTextColor(primaryColor),
 
       "--secondary-color": secondaryColor,
       "--secondary-color-light": adjustLightness(secondaryColor, 10),
