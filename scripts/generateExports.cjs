@@ -10,12 +10,17 @@ function addExports(type) {
   if (!fs.existsSync(distDir)) return;
 
   fs.readdirSync(distDir)
-    .filter((file) => file.endsWith(".js") && !file.startsWith("index"))
+    .filter((file) => {
+      return (
+        file.endsWith(".js") &&
+        !file.startsWith("index") &&
+        !file.includes("-") &&
+        !file.endsWith(".cjs.js")
+      );
+    })
     .forEach((file) => {
       const name = file.replace(/\.js$/, "");
       const key = `./${type}/${name}`;
-
-      // MOVE typeCandidates array here, so name/type are in scope:
       const typeCandidates = [
         `../dist/types/components/${name}/${type}/${name}.d.ts`,
         `../dist/types/config/${name}.d.ts`,
