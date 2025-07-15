@@ -4,14 +4,30 @@ import { RoundingType, ShadowType } from "@/types/types";
  * Props for the MarkdownRenderer component.
  */
 export interface MarkdownRendererProps {
-  /** Raw markdown content to be rendered as HTML. */
+  /**
+   * Raw markdown content to be rendered as HTML.
+   */
   content: string;
-  /** Optional additional class name for styling. */
+
+  /**
+   * Optional additional class name for styling.
+   */
   className?: string;
-  /** Optional rounding*/
+
+  /**
+   * Optional rounding style for the rendered container.
+   * One of: "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** Optional shadow styling */
+
+  /**
+   * Optional shadow styling for the rendered container.
+   * One of: "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   */
   "data-testid"?: string;
 }

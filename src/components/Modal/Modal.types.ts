@@ -9,9 +9,15 @@ export interface ModalProps {
   className?: string;
   /** The content to be rendered inside the modal. Expected to be a single React element. */
   children?: ReactElement;
-  /** Rounding of the modal corners. */
+  /**
+   * Rounding of the modal corners.
+   * One of: "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** Shadow of the modal. */
+  /**
+   * Shadow of the modal.
+   * One of: "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
   /** Callback function fired when the modal is closed. */
   onClose: () => void;

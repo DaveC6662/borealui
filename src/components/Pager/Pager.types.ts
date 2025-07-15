@@ -18,19 +18,34 @@ export interface PaginationProps {
   currentPage: number;
   /** Callback function invoked when a page change occurs. */
   onPageChange: (page: number) => void;
-  /** Enables server side control of the paging */
+  /** Enables server side control of the paging. */
   serverControlled?: boolean;
   /** Optional extra class name(s) for custom styling. */
   className?: string;
-  /** Optional size modifier for buttons ("small", "medium", etc.). */
+  /**
+   * Optional size modifier for pagination buttons.
+   * One of: "xs" | "small" | "medium" | "large" | "xl"
+   */
   size?: SizeType;
-  /** Optional theme to apply (e.g., "primary", "secondary"). */
+  /**
+   * Optional theme to apply for pagination.
+   * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   */
   theme?: ThemeType;
-  /** Optional state of the component (e.g., "success", "error", "warning"). */
+  /**
+   * Optional state of the component for feedback styling.
+   * One of: "success" | "error" | "warning" | "disabled" | ""
+   */
   state?: StateType;
-  /** Rounding of the controls */
+  /**
+   * Rounding of the controls.
+   * One of: "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** Shadow of the controls */
+  /**
+   * Shadow of the controls.
+   * One of: "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;

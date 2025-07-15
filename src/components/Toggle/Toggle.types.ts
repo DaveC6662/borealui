@@ -10,29 +10,64 @@ import {
  * Props for the Toggle component.
  */
 export interface ToggleProps {
-  /** Indicates whether the toggle is in the "on" (true) or "off" (false) state. */
+  /**
+   * Indicates whether the toggle is in the "on" (`true`) or "off" (`false`) state.
+   */
   checked: boolean;
+
   /**
    * Callback that is invoked when the toggle's state changes.
    * Receives the new boolean state as an argument.
    */
   onChange: (checked: boolean) => void;
-  /** Optional label to be displayed next to the toggle switch. */
+
+  /**
+   * Optional label to be displayed next to the toggle switch.
+   */
   label?: string;
-  /** Theme used for styling the toggle (e.g., "primary", "secondary"). Defaults to "primary". */
+
+  /**
+   * Theme used for styling the toggle.
+   * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   */
   theme?: ThemeType;
-  /** State of the toggle (e.g., "success", "error"). Defaults to "". */
+
+  /**
+   * State of the toggle.
+   *   "" | "success" | "error" | "warning" | "disabled"
+   */
   state?: StateType;
-  /** Rounding applied to the toggle (e.g., "small", "medium", "large"). Defaults to "medium". */
+
+  /**
+   * Rounding applied to the toggle.
+   * "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** Shadow style applied to the toggle (e.g., "none", "light", "medium"). Defaults to "medium". */
+
+  /**
+   * Shadow style applied to the toggle.
+   * "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
-  /** Size variant for the toggle (e.g., "small", "medium", "large"). Defaults to "medium". */
+
+  /**
+   * Size variant for the toggle.
+   * "xs" | "small" | "medium" | "large" | "xl"
+   */
   size?: SizeType;
-  /** If true, disables user interaction with the toggle. */
+
+  /**
+   * If true, disables user interaction with the toggle.
+   */
   disabled?: boolean;
-  /** Additional CSS class names for custom styling. */
+
+  /**
+   * Additional CSS class names for custom styling.
+   */
   className?: string;
-  /** Optional test ID for testing frameworks. Defaults to "toggle". */
+
+  /**
+   * Optional test ID for testing frameworks.
+   */
   "data-testid"?: string;
 }

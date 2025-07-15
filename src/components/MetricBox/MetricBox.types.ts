@@ -21,17 +21,35 @@ export interface MetricBoxProps {
   subtext?: string;
   /** Optional outline style for the component (default: false). */
   outline?: boolean;
-  /** Theme to apply for styling (e.g., "primary", "secondary", etc.). */
+  /**
+   * Theme to apply for styling.
+   * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   */
   theme?: ThemeType;
-  /** Rounding style for the component (e.g., "none", "small", "medium", "large"). */
+  /**
+   * Rounding style for the component.
+   * One of: "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** Shadow style for the component (e.g., "none", "small", "medium", "large"). */
+  /**
+   * Shadow style for the component.
+   * One of: "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
-  /** State of the metric (e.g., "success", "error", "warning"). */
+  /**
+   * State of the metric.
+   * One of: "success" | "error" | "warning" | "disabled" | ""
+   */
   state?: StateType;
-  /** Size of the component (e.g., "small", "medium", "large"). */
+  /**
+   * Size of the component.
+   * One of: "xs" | "small" | "medium" | "large" | "xl"
+   */
   size?: SizeType;
-  /** Text alignment for content: "left", "center", or "right". */
+  /**
+   * Text alignment for content.
+   * One of: "left" | "center" | "right"
+   */
   align?: "left" | "center" | "right";
   /** Optional additional CSS class names for custom styling. */
   className?: string;

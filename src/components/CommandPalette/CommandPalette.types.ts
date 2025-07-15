@@ -19,24 +19,46 @@ export interface CommandItem {
 export interface CommandPaletteProps {
   /** Array of available command options. */
   commands: CommandItem[];
+
   /** Optional placeholder for the input field. */
   placeholder?: string;
-  /** Theme style for the palette. */
+
+  /**
+   * Theme style for the palette
+   * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   */
   theme?: ThemeType;
-  /** Rounding style for the palette. */
+
+  /**
+   * Rounding style for the palette
+   * ('none' | 'small' | 'medium' | 'large' | 'full').
+   */
   rounding?: RoundingType;
-  /** Shadow style for the palette. */
+
+  /**
+   * Shadow style for the palette
+   * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   */
   shadow?: ShadowType;
-  /** The state of the command palette, e.g., "error" or "success". */
+
+  /**
+   * The state of the command palette
+   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   */
   state?: StateType;
+
   /** Whether the command palette is currently open. */
   isOpen: boolean;
+
   /** Callback to close the command palette. */
   onClose: () => void;
-  /** Callback to handle the search input. */
+
+  /** Callback to handle the search input asynchronously. */
   asyncSearch?: (query: string) => Promise<CommandItem[]>;
-  /** Optional debounce time for the search input. */
+
+  /** Optional debounce time (in ms) for the search input. */
   debounceMs?: number;
+
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }

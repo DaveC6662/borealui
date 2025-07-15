@@ -23,30 +23,64 @@ interface DropdownItem {
 export interface DropdownProps {
   /** Icon component used for the trigger button. */
   triggerIcon: ComponentType<{ className?: string }>;
+
   /** Array of items to render in the dropdown menu. */
   items: DropdownItem[];
-  /** Menu alignment relative to the trigger ("left" or "right"). */
+
+  /**
+   * Menu alignment relative to the trigger
+   * ('left' | 'right').
+   */
   align?: "left" | "right";
+
   /** Custom class name for the dropdown wrapper. */
   className?: string;
+
   /** Custom class name for the dropdown menu. */
   menuClassName?: string;
-  /** Rounding of toggle button. */
+
+  /**
+   * Rounding of the toggle button
+   * ('none' | 'small' | 'medium' | 'large' | 'full').
+   */
   toggleRounding?: RoundingType;
-  /** Rounding of dropdown menu. */
+
+  /**
+   * Rounding of the dropdown menu
+   * ('none' | 'small' | 'medium' | 'large' | 'full').
+   */
   menuRounding?: RoundingType;
-  /** Shadow of toggle button. */
+
+  /**
+   * Shadow style for the toggle button
+   * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   */
   toggleShadow?: ShadowType;
-  /** Shadow of dropdown menu. */
+
+  /**
+   * Shadow style for the dropdown menu
+   * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   */
   menuShadow?: ShadowType;
-  /** Whether to use the outline style on toggle button. */
+
+  /** Whether to use the outline style on the toggle button. */
   toggleOutline?: boolean;
+
   /** ARIA label for accessibility. */
   ariaLabel?: string;
-  /** Optional theme for styling. */
+
+  /**
+   * Theme for styling
+   * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   */
   theme?: ThemeType;
-  /** State of the drop down ex "success", "error", "warning*/
+
+  /**
+   * State of the dropdown
+   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   */
   state?: StateType;
+
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }

@@ -32,7 +32,7 @@ export interface BreadcrumbsProps {
   items: Breadcrumb[];
 
   /**
-   * disables interaction and styles as disabled.
+   * Disables interaction and styles as disabled.
    */
   disabled?: boolean;
 
@@ -43,24 +43,33 @@ export interface BreadcrumbsProps {
   separator?: React.ReactNode;
 
   /**
-   * Theme style to apply to the breadcrumbs (e.g., "primary", "secondary").
+   * Theme style to apply to the breadcrumbs
+   * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
    */
   theme?: ThemeType;
 
-  /** Rounding style to apply to the breadcrumbs*/
+  /**
+   * Rounding style to apply to the breadcrumbs
+   * ('none' | 'small' | 'medium' | 'large' | 'full').
+   */
   rounding?: RoundingType;
 
-  /** Shadow style to apply to the breadcrumbs*/
+  /**
+   * Shadow style to apply to the breadcrumbs
+   * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   */
   shadow?: ShadowType;
 
   /**
-   * State of the breadcrumbs (e.g., "success", "error", "warning").
+   * State of the breadcrumbs
+   * ('success' | 'error' | 'warning' | 'disabled' | '').
    * Used for visual feedback.
    */
   state?: StateType;
 
   /**
-   * Size of the breadcrumbs (e.g., "small", "medium", "large").
+   * Size of the breadcrumbs
+   * ('xs' | 'small' | 'medium' | 'large' | 'xl').
    */
   size?: SizeType;
 

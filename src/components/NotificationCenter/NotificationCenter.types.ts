@@ -14,7 +14,10 @@ export interface Notification {
   id: string;
   /** The message text of the notification. */
   message: string;
-  /** The type of notification, used for styling and icon selection. */
+  /**
+   * The type of notification, used for styling and icon selection.
+   * One of: "general" | "success" | "error" | "warning" | "info"
+   */
   type?: NotificationType;
   /** Optional timestamp indicating when the notification was created. */
   timestamp?: Date;
@@ -42,15 +45,27 @@ export interface NotificationCenterProps {
   showClearAll?: boolean;
   /** Maximum number of notifications to display. */
   maxNotifications?: number;
-  /** Clears old notifications is over max */
+  /** If true, clears the oldest notifications when over the maximum. */
   clearOldOnOverflow?: boolean;
-  /** Rounding for the notification control */
+  /**
+   * Rounding for the notification control.
+   * One of: "none" | "small" | "medium" | "large" | "full"
+   */
   controlRounding?: RoundingType;
-  /** Shadow for the notification control */
+  /**
+   * Shadow for the notification control.
+   * One of: "none" | "light" | "medium" | "strong" | "intense"
+   */
   controlShadow?: ShadowType;
-  /** Rounding of the notification */
+  /**
+   * Rounding of the notification.
+   * One of: "none" | "small" | "medium" | "large" | "full"
+   */
   notificationRounding?: RoundingType;
-  /** Shadow of the notification */
+  /**
+   * Shadow of the notification.
+   * One of: "none" | "light" | "medium" | "strong" | "intense"
+   */
   notificationShadow?: ShadowType;
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;

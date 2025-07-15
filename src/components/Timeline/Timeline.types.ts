@@ -2,7 +2,6 @@ import {
   OrientationType,
   RoundingType,
   ShadowType,
-  StateType,
   ThemeType,
 } from "@/types/types";
 
@@ -24,16 +23,37 @@ interface TimelineItem {
  * Props for the Timeline component.
  */
 export interface TimelineProps {
-  /** Array of timeline items to display. */
+  /**
+   * Array of timeline items to display.
+   */
   items: TimelineItem[];
-  /** Orientation of the timeline, e.g., "vertical" or "horizontal". Defaults to "vertical". */
+
+  /**
+   * Orientation of the timeline.
+   * "vertical" | "horizontal"
+   */
   orientation?: OrientationType;
-  /** Theme to apply for styling, e.g., "primary", "secondary". Defaults to "primary". */
+
+  /**
+   * Theme to apply for styling.
+   * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   */
   theme?: ThemeType;
-  /** Rounding of the component */
+
+  /**
+   * Rounding of the component.
+   * "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** Shadow style of the component */
+
+  /**
+   * Shadow style of the component.
+   * "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
-  /** Optional test ID for testing purposes. */
+
+  /**
+   * Optional test ID for testing purposes.
+   */
   "data-testid"?: string;
 }

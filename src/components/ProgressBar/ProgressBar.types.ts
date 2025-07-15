@@ -12,51 +12,62 @@ import {
 export interface ProgressBarProps {
   /**
    * Percentage of progress (0 to 100). Ignored if `indeterminate` is true.
-   * @default 0
    */
   progress?: number;
+
   /**
-   * Theme for styling the progress bar (e.g., "primary", "secondary").
-   * @default "primary"
+   * Theme for styling the progress bar.
+   * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
    */
   theme?: ThemeType;
+
   /**
-   * State of the progress bar (e.g., "success", "warning", "danger").
-   * @default "primary"
+   * State of the progress bar.
+   * One of: "success" | "error" | "warning" | "disabled" | ""
    */
   state?: StateType;
+
   /**
-   * Size of the progress bar (e.g., "small", "medium", "large").
-   * @default "medium"
+   * Size of the progress bar.
+   * One of: "xs" | "small" | "medium" | "large" | "xl"
    */
   size?: SizeType;
-  /** Applied rounding to progress bar */
+
+  /**
+   * Rounding to apply to the progress bar.
+   * One of: "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** Applied shadow to progress bar */
+
+  /**
+   * Shadow to apply to the progress bar.
+   * One of: "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
+
   /**
    * If true, applies an animated effect to the progress bar.
-   * @default true
    */
   animated?: boolean;
+
   /**
    * Accessible label for the progress bar.
-   * @default "Progress"
    */
   ariaLabel?: string;
+
   /**
    * If true, the progress bar shows an indeterminate animation.
    * When true, the progress prop is ignored.
-   * @default false
    */
   indeterminate?: boolean;
+
   /**
    * Optional additional class name(s) for custom styling.
    */
   className?: string;
+
   /**
    * Optional test ID for testing purposes.
-   * @default "progressbar"
    */
   "data-testid"?: string;
 }

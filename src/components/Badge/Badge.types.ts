@@ -23,12 +23,14 @@ export interface BadgeProps {
   children?: React.ReactNode;
 
   /**
-   * Theme color for the badge (e.g., 'primary', 'secondary').
+   * Theme color for the badge
+   * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
    */
   theme?: ThemeType;
 
   /**
-   * The badge state (e.g., 'success', 'error', 'warning').
+   * The badge state
+   * ('success' | 'error' | 'warning' | 'disabled' | '').
    */
   state?: StateType;
 
@@ -38,14 +40,21 @@ export interface BadgeProps {
   title?: string;
 
   /**
-   * Badge size (e.g., 'small', 'medium', 'large').
+   * Badge size
+   * ('xs' | 'small' | 'medium' | 'large' | 'xl').
    */
   size?: SizeType;
 
-  /** Rounding of the badge */
+  /**
+   * Rounding of the badge
+   * ('none' | 'small' | 'medium' | 'large' | 'full').
+   */
   rounding?: RoundingType;
 
-  /** Shadow of the badge */
+  /**
+   * Shadow of the badge
+   * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   */
   shadow?: ShadowType;
 
   /**
@@ -73,6 +82,8 @@ export interface BadgeProps {
    */
   disabled?: boolean;
 
-  /** Click handler*/
+  /**
+   * Click handler for the badge.
+   */
   onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 }

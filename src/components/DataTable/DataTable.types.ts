@@ -21,34 +21,64 @@ export interface Column<T> {
 export interface DataTableProps<T> {
   /** Array of column definitions. */
   columns: Column<T>[];
+
   /** Array of row data objects. */
   data: T[];
+
   /** Optional callback when a row is clicked. */
   onRowClick?: (row: T) => void;
+
   /** Optional class name for the table wrapper. */
   className?: string;
-  /** Theme used for styling the table. */
+
+  /**
+   * Theme used for styling the table
+   * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   */
   theme?: ThemeType;
-  /** State of the table ex "error", "success". */
+
+  /**
+   * State of the table
+   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   */
   state?: StateType;
-  /** Shadow styling of the data table */
+
+  /**
+   * Rounding style for the table
+   * ('none' | 'small' | 'medium' | 'large' | 'full').
+   */
   rounding?: RoundingType;
-  /** Shadow styling of the data table */
+
+  /**
+   * Shadow style for the data table
+   * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   */
   shadow?: ShadowType;
+
   /** Whether to use outline styling. */
   outline?: boolean;
+
   /** Whether to use striped row styling. */
   striped?: boolean;
+
   /** Default key to sort by on initial render. */
   defaultSortKey?: keyof T;
-  /** Default sort order (ascending or descending). */
+
+  /**
+   * Default sort order on initial render
+   * ('asc' | 'desc').
+   */
   defaultSortOrder?: "asc" | "desc";
+
   /** Whether to enable server-side sorting. */
   serverSort?: boolean;
+
   /** Function to handle server-side sorting. */
   onSortChange?: (key: keyof T, order: "asc" | "desc") => void;
+
   /** Function to derive a unique key for each row. */
   rowKey?: (row: T) => string | number;
+
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }

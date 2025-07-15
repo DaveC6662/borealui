@@ -14,39 +14,89 @@ interface Option {
  * Props for the Select component.
  */
 export interface SelectProps {
-  /** Theme for styling (e.g., "primary", "secondary"). */
+  /**
+   * Theme for styling.
+   * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   */
   theme?: ThemeType;
-  /** State variant for styling (e.g., "success", "error", "warning"). */
+
+  /**
+   * State variant for styling.
+   * "success" | "error" | "warning" | "disabled" | ""
+   */
   state?: StateType;
-  /** If true, the select element is styled as outlined. */
+
+  /**
+   * If true, the select element is styled as outlined.
+   */
   outline?: boolean;
-  /** An array of options that will be rendered as dropdown choices. */
+
+  /**
+   * An array of options that will be rendered as dropdown choices.
+   */
   options: Option[];
-  /** The current selected value. */
+
+  /**
+   * The current selected value.
+   */
   value: string;
+
   /**
    * Callback fired when the selected option changes.
    * Receives the new value as an argument.
    */
   onChange: (value: string) => void;
-  /** If true, the select element will render asynchronously with debounce. */
+
+  /**
+   * If provided, the select element will render options asynchronously (with debounce).
+   * Should return a Promise resolving to Option[] based on search query.
+   */
   asyncOptions?: (query: string) => Promise<Option[]>;
-  /** Optional polling interval for updating options in ms */
+
+  /**
+   * Optional polling interval for updating options in milliseconds.
+   */
   pollInterval?: number;
-  /** Placeholder text to display when no option is selected. */
+
+  /**
+   * Placeholder text to display when no option is selected.
+   */
   placeholder?: string;
-  /* Rounding style of the select element. */
+
+  /**
+   * Rounding style of the select element.
+   * "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** Shadow style of the select element. */
+
+  /**
+   * Shadow style of the select element.
+   * "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
-  /** Accessible label for the select element. */
+
+  /**
+   * Accessible label for the select element.
+   */
   ariaLabel?: string;
-  /** Optional description for the select element, used for accessibility. */
+
+  /**
+   * Optional description for the select element, used for accessibility.
+   */
   ariaDescription?: string;
-  /** If true, the select element is disabled. */
+
+  /**
+   * If true, the select element is disabled.
+   */
   disabled?: boolean;
-  /** Additional class name(s) for custom styling. */
+
+  /**
+   * Additional class name(s) for custom styling.
+   */
   className?: string;
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   */
   "data-testid"?: string;
 }

@@ -16,12 +16,23 @@ export interface NavItem {
  * Props for the reusable NavBar component.
  */
 export interface NavBarProps {
-  /** Array of navigation items to render in the NavBar. */
+  /**
+   * Array of navigation items to render in the NavBar.
+   */
   items: NavItem[];
-  /** Optional theme class names to apply to the NavBar. */
+  /**
+   * Optional theme class names to apply to the NavBar.
+   * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   */
   theme?: ThemeType;
-  /** Optional rounding to apply to the NavBar. */
+  /**
+   * Optional rounding to apply to the NavBar.
+   * One of: "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** Optional shadow to apply to the NavBar. */
+  /**
+   * Optional shadow to apply to the NavBar.
+   * One of: "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
 }

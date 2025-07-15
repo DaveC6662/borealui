@@ -27,19 +27,37 @@ export interface StepperProps {
   activeStep: number;
   /** Optional callback when a step is clicked. */
   onStepClick?: (stepIndex: number) => void;
-  /** disable backwards navigation. */
+  /** If true, disables backward navigation (users cannot go to previous steps). */
   disableBackNavigation?: boolean;
-  /** Orientation of the stepper, either horizontal or vertical. */
+  /**
+   * Orientation of the stepper.
+   * "horizontal" | "vertical"
+   */
   orientation?: OrientationType;
-  /** The theme of the stepper. */
+  /**
+   * Theme style for the stepper.
+   * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   */
   theme?: ThemeType;
-  /** The state of the stepper ex "success", "error", "warning" */
+  /**
+   * State of the stepper.
+   * "success" | "error" | "warning" | "disabled" | ""
+   */
   state?: StateType;
-  /** Shadow of the stepper buttons */
+  /**
+   * Shadow style for the stepper buttons.
+   * "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
-  /** Rounding of the stepper buttons */
+  /**
+   * Rounding of the stepper buttons.
+   * "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** The size of the stepper icons. */
+  /**
+   * Size of the stepper icons.
+   * "xs" | "small" | "medium" | "large" | "xl"
+   */
   size?: SizeType;
   /** Optional test ID for testing purposes. */
   "data-testid"?: string;

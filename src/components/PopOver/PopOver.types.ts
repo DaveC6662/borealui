@@ -10,16 +10,28 @@ export interface PopoverProps {
   content: React.ReactNode;
   /**
    * Placement of the popover relative to the trigger element.
-   * Possible values: "top", "bottom", "left", "right".
+   * One of: "top" | "bottom" | "left" | "right"
    */
   placement?: "top" | "bottom" | "left" | "right";
-  /** Optional theme for the popover styling. */
+  /**
+   * Theme for the popover styling.
+   * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   */
   theme?: ThemeType;
-  /** State of the pop over ex "success", "error", "warning"*/
+  /**
+   * State of the popover, for feedback styling.
+   * One of: "success" | "error" | "warning" | "disabled" | ""
+   */
   state?: StateType;
-  /** Rounding of the popover content */
+  /**
+   * Rounding of the popover content.
+   * One of: "none" | "small" | "medium" | "large" | "full"
+   */
   rounding?: RoundingType;
-  /** Shadow of the popover content */
+  /**
+   * Shadow of the popover content.
+   * One of: "none" | "light" | "medium" | "strong" | "intense"
+   */
   shadow?: ShadowType;
   /** Optional additional class name(s) for custom styling. */
   className?: string;

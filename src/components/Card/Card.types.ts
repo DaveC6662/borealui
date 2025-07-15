@@ -18,19 +18,34 @@ export interface ActionButton {
   onClick: () => void;
   /** Optional icon for the button (used with `useIconButtons`). */
   icon?: IconType;
-  /** Optional theme override for the button. */
+  /**
+   * Optional theme override for the button
+   * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   */
   theme?: ThemeType;
-  /** State of the action button ("error", "success") */
+  /**
+   * State of the action button
+   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   */
   state?: StateType;
   /** Optional URL to render the button as a link. */
   href?: string;
-  /** size for action buttons */
+  /**
+   * Size for action buttons
+   * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   */
   size?: SizeType;
   /** Optional loading state for the button. */
   loading?: boolean;
-  /** Rounding style for action button */
+  /**
+   * Rounding style for action button
+   * ('none' | 'small' | 'medium' | 'large' | 'full').
+   */
   rounding?: RoundingType;
-  /** Optional shadow style for the button. */
+  /**
+   * Shadow style for the button
+   * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   */
   shadow?: ShadowType;
 }
 
@@ -38,62 +53,114 @@ export interface ActionButton {
  * Props for the customizable Card component.
  */
 export interface CardProps {
-  /** Theme style to apply to the card. */
+  /**
+   * Theme style to apply to the card
+   * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   */
   theme?: ThemeType;
-  /** State of the card ("error", "success"). */
+
+  /**
+   * State of the card
+   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   */
   state?: StateType;
-  /** Optional rounding style for the card. */
+
+  /**
+   * Optional rounding style for the card
+   * ('none' | 'small' | 'medium' | 'large' | 'full').
+   */
   rounding?: RoundingType;
-  /** Optional shadow style for the card. */
+
+  /**
+   * Optional shadow style for the card
+   * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   */
   shadow?: ShadowType;
+
   /** Optional card title displayed in the header. */
   title?: string;
+
   /** Optional description displayed in the body. */
   description?: string;
-  /** Image URL or static asset used as the card's visual. */
+
+  /**
+   * Image URL or static asset used as the card's visual.
+   * Can be a string or an object with { src, width, height }.
+   */
   imageUrl?: string | { src: string; width: number; height: number };
+
   /** Image alt text */
   imageAlt?: string;
+
   /** Custom class name for the card container. */
   className?: string;
+
   /** Custom class name for the header section. */
   headerClassName?: string;
+
   /** Custom class name for the image element. */
   imageClassName?: string;
-  /**Outlines card instead of solid fill */
+
+  /** Outlines card instead of solid fill. */
   outline?: boolean;
-  /** Card size ("xs", "small", "medium", "large", "xl"). */
+
+  /**
+   * Card size
+   * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   */
   size?: SizeType;
-  /**alignment of card content */
+
+  /**
+   * Alignment of card content
+   * ('left' | 'right' | 'center').
+   */
   align?: "left" | "right" | "center";
+
   /** Custom class name for the body section. */
   bodyClassName?: string;
+
   /** Custom class name for the footer section. */
   footerClassName?: string;
+
   /** Custom render function for the header section. */
   renderHeader?: () => React.ReactNode;
+
   /** Custom render function for the body/content section. */
   renderContent?: () => React.ReactNode;
+
   /** Custom render function for the footer section. */
   renderFooter?: () => React.ReactNode;
+
   /** List of action buttons to render in the footer. */
   actionButtons?: ActionButton[];
+
   /** Whether to render action buttons as icon buttons. */
   useIconButtons?: boolean;
+
   /** Whether to apply a blur effect on the image placeholder. */
   blur?: boolean;
-  /** Layout orientation of the card ("vertical" or "horizontal"). */
+
+  /**
+   * Layout orientation of the card
+   * ('horizontal' | 'vertical').
+   */
   layout?: OrientationType;
+
   /** Optional icon to display beside the title. */
   cardIcon?: IconType;
+
   /** Optional custom children passed into the body. */
   children?: React.ReactNode;
+
   /** Whether the card is in a loading state (shows skeleton). */
   loading?: boolean;
+
   /** Optional test ID for test targeting. */
   "data-testid"?: string;
+
   /** Optional ARIA label reference ID for accessibility. */
   "aria-labelledby"?: string;
+
   /** Optional ARIA label for the card. */
   "aria-label"?: string;
 }
