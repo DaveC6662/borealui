@@ -5,7 +5,7 @@ export interface ColorScheme {
   tertiaryColor: string;
   quaternaryColor: string;
   backgroundColor: string;
-  forceTextColor: string;
+  forceTextColor?: string;
 }
 
 export type ThemeType =
@@ -25,9 +25,11 @@ export type NotificationType =
   | "info";
 
 export type SizeType = "xs" | "small" | "medium" | "large" | "xl";
+
 export type OrientationType = "horizontal" | "vertical";
 
 export type ShadowType = "none" | "light" | "medium" | "strong" | "intense";
+
 export type RoundingType = "none" | "small" | "medium" | "large" | "full";
 
 export type PositionType =
@@ -39,6 +41,7 @@ export type PositionType =
   | "bottomRight";
 
 export type ShapeType = "circle" | "rounded" | "square";
+
 export type StatusType =
   | "online"
   | "idle"
@@ -52,8 +55,11 @@ export type StatusType =
   | "speaking"
   | "viewing"
   | "custom";
+
 export type StatusPositionType =
   | "topLeft"
   | "topRight"
   | "bottomLeft"
   | "bottomRight";
+
+export type AttachmentType = "static" | "fixed" | "sticky";

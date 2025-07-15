@@ -1,20 +1,25 @@
-import React, { JSX } from "react";
+import React, { JSX, useMemo } from "react";
 import { FooterProps } from "./Footer.types";
 import { combineClassNames } from "../../utils/classNames";
 import { defaultTheme } from "../../config/boreal-style-config";
+import { capitalize } from "@/utils/capitalize";
 
 export interface BaseFooterProps extends FooterProps {
   IconButton: React.ComponentType<any>;
   ThemeSelect: React.ComponentType<any>;
+  ImageComponent?: React.ElementType;
   classMap: Record<string, string>;
   LinkWrapper?: (props: {
     href: string;
     children: React.ReactNode;
   }) => JSX.Element;
 }
-//TODO add sticky or fixed and shadow props
+
 const FooterBase: React.FC<BaseFooterProps> = ({
   theme = defaultTheme,
+  attachment = "static",
+  shadow = "none",
+  rounding = "none",
   className = "",
   "data-testid": testId = "footer",
   copyright,
@@ -23,34 +28,63 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   socialLinks = [],
   showThemeSelect = false,
   IconButton,
+  ImageComponent = "img",
   ThemeSelect,
   classMap,
   LinkWrapper = ({ href, children }) => <a href={href}>{children}</a>,
 }) => {
+  const footerClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.footer,
+        classMap[theme],
+        classMap[`shadow${capitalize(shadow)}`],
+        classMap[`round${capitalize(rounding)}`],
+        classMap[`attachment${capitalize(attachment)}`],
+        className
+      ),
+    [classMap, theme, className]
+  );
   return (
     <footer
-      className={combineClassNames(classMap.footer, classMap[theme], className)}
+      className={footerClass}
       role="contentinfo"
       aria-label="Footer"
       data-testid={testId}
     >
       <div className={classMap.content}>
-        {logo && (
-          <div
-            className={classMap.logo}
-            aria-label="Logo"
-            role="img"
-            data-testid={`${testId}-logo`}
-          >
-            {logo}
-          </div>
-        )}
+        <div className={classMap.left} data-testid={`${testId}-left`}>
+          {logo &&
+          (typeof logo === "string" ||
+            (typeof logo === "object" && "src" in logo)) ? (
+            <ImageComponent
+              className={classMap.logo}
+              aria-label="Logo"
+              role="img"
+              data-testid={`${testId}-logo`}
+              loading="lazy"
+              src={logo}
+              alt="Logo"
+              height={20}
+              width={20}
+            />
+          ) : (
+            <span
+              className={classMap.logo}
+              aria-label="Logo"
+              role="img"
+              data-testid={`${testId}-logo`}
+            >
+              {logo}
+            </span>
+          )}
 
-        {copyright && (
-          <div className={classMap.left} data-testid={`${testId}-copyright`}>
-            <p>{copyright}</p>
-          </div>
-        )}
+          {copyright && (
+            <div className={classMap.left} data-testid={`${testId}-copyright`}>
+              <p>{copyright}</p>
+            </div>
+          )}
+        </div>
 
         {links.length > 0 && (
           <nav
@@ -106,6 +140,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
                 ariaLabel={social.title}
                 title={social.title}
                 theme="clear"
+                shadow="none"
                 data-testid={`${testId}-social-${social.title
                   .toLowerCase()
                   .replace(/\s+/g, "-")}`}

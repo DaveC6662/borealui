@@ -1,4 +1,9 @@
-import { ThemeType } from "@/types/types";
+import {
+  AttachmentType,
+  RoundingType,
+  ShadowType,
+  ThemeType,
+} from "@/types/types";
 
 /**
  * Represents a navigational link in the footer.
@@ -30,6 +35,12 @@ export interface FooterProps {
   theme?: ThemeType;
   /** Optional class name for custom styles. */
   className?: string;
+  /** Attachment type e.g "static", "fixed", "sticky" */
+  attachment?: AttachmentType;
+  /** Shadow of the component */
+  shadow?: ShadowType;
+  /**Rounding of the component */
+  rounding?: RoundingType;
   /** Test ID for testing frameworks. */
   "data-testid"?: string;
   /** Optional copyright text. */

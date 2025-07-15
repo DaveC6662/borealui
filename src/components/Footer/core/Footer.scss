@@ -13,6 +13,39 @@
       color: map.get($values, text);
     }
   }
+
+  @each $key, $value in theme.$rounding {
+    &_round-#{$key} {
+      border-top-left-radius: $value;
+      border-top-right-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  &_attachment-static {
+    position: static;
+  }
+
+  &_attachment-sticky {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+  }
+
+  &_attachment-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 200;
+  }
 }
 
 .footer_content {
@@ -40,6 +73,14 @@
       font-size: theme.$font-size-sm;
       color: var(--text-color-primary);
       margin: 0;
+    }
+
+    @media (width <= 1170px) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: theme.$spacing-md;
     }
   }
 

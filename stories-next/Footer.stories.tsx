@@ -3,6 +3,7 @@ import { Footer } from "../src/index.next";
 import type { FooterProps } from "../src/components/Footer/Footer.types";
 import { FaGithub, FaTwitter, FaLinkedin, FaIcons } from "react-icons/fa";
 import ThemeProvider from "../src/context/ThemeContext";
+import image from "./assets/tutorials.svg";
 
 const themeOptions = [
   "primary",
@@ -11,6 +12,9 @@ const themeOptions = [
   "quaternary",
   "clear",
 ];
+
+const roundingOptions = ["none", "small", "medium", "large"];
+const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<FooterProps> = {
   title: "Components/Footer",
@@ -41,7 +45,7 @@ export const Default: Story = {
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
     ],
-    logo: <FaIcons />,
+    logo: image,
     socialLinks: [
       {
         icon: FaGithub,
@@ -105,4 +109,32 @@ export const SocialOnly: Story = {
       { icon: FaGithub, href: "https://github.com", title: "GitHub" },
     ],
   },
+};
+
+export const RoundingVariants: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {roundingOptions.map((rounding) => (
+        <Footer
+          key={`rounding-${rounding}`}
+          rounding={rounding}
+          copyright={`Rounding ${rounding.charAt(0).toUpperCase() + rounding.slice(1)}`}
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const ShadowVariants: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {shadowOptions.map((shadow) => (
+        <Footer
+          key={`shadow-${shadow}`}
+          shadow={shadow}
+          copyright={`Shadow ${shadow.charAt(0).toUpperCase() + shadow.slice(1)}`}
+        />
+      ))}
+    </div>
+  ),
 };
