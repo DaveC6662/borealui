@@ -27,23 +27,27 @@ export interface AccordionProps {
   children?: React.ReactNode;
 
   /**
-   * The theme color of the accordion (e.g., 'primary', 'secondary').
+   * The theme color of the accordion ('primary', 'secondary', 'tertiary', 'quaternary', 'clear').
    */
   theme?: ThemeType;
 
   /**
-   * The state of the accordion (e.g., 'success', 'error').
+   * The state of the accordion ('success' | 'error' | 'warning').
    */
   state?: StateType;
 
-  /**Controls the shadow of the accordion */
+  /**
+   * Controls the shadow of the accordion ('none' | 'light' | 'medium' | 'strong' | 'intense')
+   */
   shadow?: ShadowType;
 
-  /**Controls the rounding of the accordion */
+  /**
+   * Controls the rounding of the accordion ('none' | 'small' | 'medium' | 'large' | 'full')
+   */
   rounding?: RoundingType;
 
   /**
-   * The size of the accordion (e.g., 'small', 'medium', 'large').
+   * The size of the accordion ('xs' | 'small' | 'medium' | 'large' | 'xl').
    */
   size?: SizeType;
 
@@ -56,8 +60,6 @@ export interface AccordionProps {
    * If true, applies an outline style to the accordion.
    */
   outline?: boolean;
-
-  clear?: boolean;
 
   /**
    * If true, disables user interaction and styles the accordion as disabled.

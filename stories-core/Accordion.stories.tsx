@@ -18,7 +18,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions = ["", "success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"];
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
@@ -28,13 +28,27 @@ const meta: Meta<typeof Accordion> = {
   component: Accordion,
   tags: ["autodocs"],
   argTypes: {
+    title: { control: "text" },
+    id: { control: "text" },
+    children: { control: false },
     theme: { control: "select", options: themeOptions },
+    state: { control: "select", options: stateOptions },
+    shadow: { control: "select", options: shadowOptions },
+    rounding: { control: "select", options: roundingOptions },
     size: { control: "select", options: sizeOptions },
     initiallyExpanded: { control: "boolean" },
     outline: { control: "boolean" },
     disabled: { control: "boolean" },
+    className: { control: "text" },
+    expanded: { control: "boolean" },
+    onToggle: { action: "onToggle" },
+    asyncContent: { control: "boolean" },
+    isToggleable: { control: "boolean" },
     customExpandedIcon: { control: "text" },
+    iconPosition: { control: "radio", options: ["left", "right"] },
     customCollapsedIcon: { control: "text" },
+    description: { control: "text" },
+    lazyLoad: { control: "boolean" },
   },
 };
 
@@ -55,7 +69,7 @@ const defaultArgs = {
 export const Default: Story = {
   args: {
     ...defaultArgs,
-    initiallyExpanded: false,
+    title: "Default Accordion",
   },
 };
 

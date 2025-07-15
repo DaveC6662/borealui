@@ -29,7 +29,6 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   theme = defaultTheme,
   state = "",
   outline = false,
-  clear = false,
   expanded,
   disabled,
   customCollapsedIcon,
