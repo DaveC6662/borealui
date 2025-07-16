@@ -81,11 +81,7 @@
 
   @each $name, $props in theme.$themes {
     &_#{$name} {
-      background: linear-gradient(
-        to bottom,
-        map.get($props, bg),
-        map.get($props, bg)
-      );
+      background: map.get($props, bg);
       color: var(--text-color-primary);
 
       .card_icon,
@@ -107,12 +103,7 @@
 
   @each $name, $props in theme.$states {
     &_#{$name} {
-      background: linear-gradient(
-        to bottom,
-        map.get($props, bg),
-        map.get($props, bg)
-      );
-      color: var(--text-color-primary);
+      background: map.get($props, bg);
 
       .card_icon,
       .card_description {
@@ -127,7 +118,6 @@
     &_#{$name}.card_outline {
       background: transparent;
       border: 2px solid map.get($props, border);
-      box-shadow: none;
     }
   }
 
@@ -279,10 +269,6 @@
       font-size: theme.$font-size-xl;
     }
   }
-}
-
-.card_clear {
-  box-shadow: none;
 }
 
 .card_left {

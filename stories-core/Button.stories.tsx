@@ -31,8 +31,11 @@ const meta: Meta<ButtonProps> = {
   tags: ["autodocs"],
   args: {
     children: "Click Me",
-    theme: "primary",
-    size: "medium",
+    size: "medium" as SizeType,
+    theme: "primary" as ThemeType,
+    state: "" as StateType,
+    rounding: "medium" as RoundingType,
+    shadow: "medium" as ShadowType,
   },
   argTypes: {
     children: { control: "text" },
@@ -56,8 +59,8 @@ const meta: Meta<ButtonProps> = {
   },
 };
 
-const defaultArgs = {
-  title: "Sample Button",
+const defaultArgs: ButtonProps = {
+  children: "Click Me",
   size: "medium" as SizeType,
   theme: "primary" as ThemeType,
   state: "" as StateType,

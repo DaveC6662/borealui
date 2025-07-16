@@ -120,11 +120,7 @@
 
 @each $name, $props in theme.$themes {
   .#{$name} {
-    background: linear-gradient(
-      to bottom,
-      map.get($props, bg),
-      map.get($props, bg)
-    );
+    background: map.get($props, bg);
     color: var(--text-color-primary);
 
     .icon,
@@ -146,11 +142,7 @@
 
 @each $name, $props in theme.$states {
   .#{$name} {
-    background: linear-gradient(
-      to bottom,
-      map.get($props, bg),
-      map.get($props, bg)
-    );
+    background: map.get($props, bg);
     color: var(--text-color-primary);
 
     .icon,
@@ -166,7 +158,6 @@
   .#{$name}.outline {
     background: transparent;
     border: 2px solid map.get($props, border);
-    box-shadow: none;
   }
 }
 
@@ -316,10 +307,6 @@
   .children {
     font-size: theme.$font-size-xl;
   }
-}
-
-.clear {
-  box-shadow: none;
 }
 
 .left {

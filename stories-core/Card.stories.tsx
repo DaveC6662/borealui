@@ -5,7 +5,7 @@ import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import testImage from "./assets/test_pattern.jpg";
 import type { CardProps } from "../src/components/Card/Card.types";
-import { ThemeType } from "../src/types/types";
+import { StateType, ThemeType } from "../src/types/types";
 
 const themeOptions = [
   "primary",
@@ -37,7 +37,39 @@ const meta: Meta<CardProps> = {
     title: "Card Title",
     description:
       "This is a description of the card. You can include additional info here.",
-    theme: "primary",
+    theme: "primary" as ThemeType,
+    state: "" as StateType,
+  },
+  argTypes: {
+    title: { control: "text" },
+    description: { control: "text" },
+    theme: { control: "select", options: themeOptions },
+    state: { control: "select", options: ["", ...stateOptions] },
+    cardIcon: { control: false },
+    imageUrl: { control: "text" },
+    imageAlt: { control: "text" },
+    imageClassName: { control: "text" },
+    headerClassName: { control: "text" },
+    bodyClassName: { control: "text" },
+    footerClassName: { control: "text" },
+    rounding: { control: "select", options: roundingOptions },
+    shadow: { control: "select", options: shadowOptions },
+    size: { control: "select", options: sizeOptions },
+    align: { control: "select", options: alignments },
+    outline: { control: "boolean" },
+    layout: { control: "select", options: layoutOptions },
+    blur: { control: "boolean" },
+    loading: { control: "boolean" },
+    actionButtons: { control: false },
+    useIconButtons: { control: "boolean" },
+    renderHeader: { control: false },
+    renderContent: { control: false },
+    renderFooter: { control: false },
+    children: { control: false },
+    className: { control: "text" },
+    "data-testid": { control: "text" },
+    "aria-label": { control: "text" },
+    "aria-labelledby": { control: "text" },
   },
 };
 
@@ -49,10 +81,8 @@ const defaultArgs: CardProps = {
   description: "Quick description to show style and layout.",
 };
 
-// Default
 export const Default: Story = {};
 
-// Original static stories preserved
 export const WithImage: Story = {
   args: {
     ...defaultArgs,
@@ -103,7 +133,7 @@ export const WithCustomRender: Story = {
       <div>This content is rendered via a custom render function.</div>
     ),
     renderFooter: () => (
-      <div style={{ fontSize: "0.9rem", color: "#777" }}>Footer text here</div>
+      <div style={{ fontSize: "0.9rem" }}>Footer text here</div>
     ),
   },
 };
@@ -146,7 +176,7 @@ export const SizeVariants = () =>
         },
       ],
       renderFooter: () => (
-        <div style={{ fontSize: "0.8rem", color: "#999" }}>
+        <div style={{ fontSize: "0.8rem" }}>
           This is a footer rendered below the card content.
         </div>
       ),
@@ -196,7 +226,6 @@ export const AlignmentGrid: Story = {
         padding: "2rem",
       }}
     >
-      {/* Vertical Cards */}
       {alignments.map((align, index) => (
         <Card
           key={`vertical-${align}`}
@@ -277,3 +306,38 @@ export const ShadowVariants = () =>
   withVariants(Card, { ...defaultArgs }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const WithClassName: Story = {
+  args: {
+    ...defaultArgs,
+    className: "storybook-card-custom",
+  },
+};
+
+export const WithCustomSectionClassNames: Story = {
+  args: {
+    ...defaultArgs,
+    imageUrl: testImage,
+    imageClassName: "storybook-card-image",
+    headerClassName: "storybook-card-header",
+    bodyClassName: "storybook-card-body",
+    footerClassName: "storybook-card-footer",
+    renderFooter: () => <div>Footer with custom class</div>,
+  },
+};
+
+export const WithBlur: Story = {
+  args: {
+    ...defaultArgs,
+    imageUrl: testImage,
+    blur: true,
+  },
+};
+
+export const WithAccessibilityProps: Story = {
+  args: {
+    ...defaultArgs,
+    "aria-label": "Aria label for the card",
+    "data-testid": "storybook-card",
+  },
+};

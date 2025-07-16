@@ -33,6 +33,22 @@ const meta: Meta<typeof Checkbox> = {
     labelPosition: "right",
     disabled: false,
   },
+  argTypes: {
+    checked: { control: "boolean" },
+    indeterminate: { control: "boolean" },
+    theme: { control: "select", options: themeOptions },
+    rounding: { control: "select", options: roundingOptions },
+    size: { control: "select", options: sizeOptions },
+    shadow: { control: "select", options: shadowOptions },
+    state: { control: "select", options: ["", ...stateOptions] },
+    disabled: { control: "boolean" },
+    label: { control: "text" },
+    labelPosition: { control: "select", options: ["left", "right"] },
+    className: { control: "text" },
+    id: { control: "text" },
+    "data-testid": { control: "text" },
+    onChange: { action: "changed" },
+  },
 };
 
 export default meta;
@@ -152,3 +168,32 @@ export const ShadowVariants = () =>
   withVariants(Checkbox, { ...defaultArgs }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const WithClassName: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return (
+      <Checkbox
+        {...args}
+        className="storybook-checkbox-custom"
+        checked={checked}
+        onChange={setChecked}
+      />
+    );
+  },
+};
+
+export const WithIdAndTestId: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return (
+      <Checkbox
+        {...args}
+        id="custom-checkbox-id"
+        data-testid="storybook-checkbox"
+        checked={checked}
+        onChange={setChecked}
+      />
+    );
+  },
+};
