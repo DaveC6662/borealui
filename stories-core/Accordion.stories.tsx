@@ -140,6 +140,11 @@ const meta: Meta<typeof Accordion> = {
       action: "onToggle",
       table: { category: "Events" },
     },
+    "data-testid": {
+      description: "Test ID for test automation.",
+      control: "text",
+      table: { category: "Testing" },
+    },
   },
 };
 

@@ -38,6 +38,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   className = "",
   getUniqueId,
   classMap,
+  "data-testid": testId,
   ...rest
 }) => {
   const isControlled = expanded !== undefined;
@@ -137,23 +138,40 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         aria-describedby={descId}
         tabIndex={disabled ? -1 : 0}
         disabled={disabled}
-        data-testid="accordion-toggle"
+        data-testid={testId ? `${testId}-accordion-toggle` : undefined}
       >
         {iconPosition === "left" && (
-          <span className={iconClassName} aria-hidden="true">
+          <span
+            className={iconClassName}
+            aria-hidden="true"
+            data-testid={testId ? `${testId}-icon` : undefined}
+          >
             {renderedIcon}
           </span>
         )}
-        <span className={classMap.accordionTitle}>{title}</span>
+        <span
+          className={classMap.accordionTitle}
+          data-testid={testId ? `${testId}-title` : undefined}
+        >
+          {title}
+        </span>
         {iconPosition === "right" && (
-          <span className={iconClassName} aria-hidden="true">
+          <span
+            className={iconClassName}
+            aria-hidden="true"
+            data-testid={testId ? `${testId}-icon` : undefined}
+          >
             {renderedIcon}
           </span>
         )}
       </button>
 
       {description && (
-        <span id={descId} className="sr_only">
+        <span
+          id={descId}
+          className="sr_only"
+          data-testid={testId ? `${testId}-description` : undefined}
+        >
           {description}
         </span>
       )}
@@ -164,7 +182,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         aria-labelledby={buttonId}
         className={contentClassName}
         data-state={isExpanded ? "open" : "collapsed"}
-        data-testid="accordion-content"
+        data-testid={testId ? `${testId}-content` : undefined}
       >
         {isExpanded && asyncContent && isLoading && (
           <div className={classMap.loading}>Loading...</div>

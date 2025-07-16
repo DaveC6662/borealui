@@ -71,6 +71,11 @@ const meta: Meta<typeof Badge> = {
       control: "text",
       table: { category: "Appearance" },
     },
+    "data-testid": {
+      description: "Test ID for test automation.",
+      control: "text",
+      table: { category: "Testing" },
+    },
   },
 };
 

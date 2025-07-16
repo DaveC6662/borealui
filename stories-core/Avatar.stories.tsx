@@ -158,6 +158,11 @@ const meta: Meta<typeof Avatar> = {
       control: false,
       table: { category: "Advanced" },
     },
+    "data-testid": {
+      description: "Test ID for test automation.",
+      control: "text",
+      table: { category: "Testing" },
+    },
   },
 };
 

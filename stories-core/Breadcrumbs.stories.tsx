@@ -101,6 +101,11 @@ const meta: Meta<typeof Breadcrumbs> = {
       control: "number",
       table: { category: "Behavior" },
     },
+    "data-testid": {
+      description: "Test ID for test automation.",
+      control: "text",
+      table: { category: "Testing" },
+    },
   },
 };
 

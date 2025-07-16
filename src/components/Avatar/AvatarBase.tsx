@@ -39,6 +39,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
   ImageComponent = "img",
   LinkComponent = "a",
   classMap,
+  "data-testid": testId,
 }) => {
   const [imgError, setImgError] = useState(false);
   const computedLabel = label || alt || name || "User avatar";
@@ -77,16 +78,16 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
         loading={priority ? "eager" : "lazy"}
         aria-hidden="false"
         role="img"
-        data-testid="avatar-image"
+        data-testid={testId ? `${testId}-image` : undefined}
         fill={true}
       />
     ) : (
       <span
         className={classMap.initials}
-        data-testid="avatar-initials"
         role="img"
         aria-label={computedLabel}
         title={computedLabel}
+        data-testid={testId ? `${testId}-initials` : undefined}
       >
         {fallbackContent}
       </span>
@@ -101,7 +102,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
         classMap[statusPosition]
       )}
       aria-hidden="true"
-      data-testid="avatar-status"
+      data-testid={testId ? `${testId}-status` : undefined}
     >
       {statusIcon || <span className={classMap.dot} />}
     </span>
@@ -146,7 +147,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
         href={href}
         className={combinedClassName}
         onClick={handleClick}
-        data-testid="avatar"
+        data-testid={testId ? `${testId}-main` : undefined}
         {...ariaAttrs}
       >
         {content}
@@ -159,7 +160,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
       type="button"
       className={combinedClassName}
       onClick={handleClick}
-      data-testid="avatar"
+      data-testid={testId ? `${testId}-main` : undefined}
       {...ariaAttrs}
     >
       {content}

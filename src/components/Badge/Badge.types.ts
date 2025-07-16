@@ -58,11 +58,6 @@ export interface BadgeProps {
   shadow?: ShadowType;
 
   /**
-   * Custom test ID for unit tests.
-   */
-  testId?: string;
-
-  /**
    * Whether to use the outline style.
    */
   outline?: boolean;
@@ -86,4 +81,9 @@ export interface BadgeProps {
    * Click handler for the badge.
    */
   onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+
+  /**
+   * Optional test ID for testing frameworks.
+   */
+  "data-testid"?: string;
 }

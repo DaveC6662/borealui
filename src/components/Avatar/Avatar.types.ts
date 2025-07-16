@@ -125,4 +125,9 @@ export interface AvatarProps {
    * Click handler (used only when not a link).
    */
   onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+
+  /**
+   * Optional test ID for testing frameworks.
+   */
+  "data-testid"?: string;
 }

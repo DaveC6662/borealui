@@ -24,10 +24,10 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   title,
   size = defaultSize,
   outline = false,
-  testId = "badge",
   icon: Icon,
   className = "",
   classMap,
+  "data-testid": testId,
   onClick,
 }) => {
   const combinedClassName = useMemo(
@@ -63,7 +63,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       className={combinedClassName}
       aria-label={label}
       title={title || label}
-      data-testid={testId}
+      data-testid={testId ? `${testId}-main` : undefined}
       role="status"
       onClick={handleClick}
       aria-live="polite"
@@ -73,6 +73,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
           className={classMap["badge_icon"]}
           aria-hidden="true"
           focusable="false"
+          data-testid={testId ? `${testId}-icon` : undefined}
         />
       )}
       {content}

@@ -35,6 +35,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   maxVisible,
   LinkComponent = "a",
   ButtonComponent,
+  "data-testid": testId,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleExpand = () => setIsExpanded(true);
@@ -65,12 +66,16 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   return (
     <nav
       aria-label="Breadcrumb"
+      data-testid={testId ? `${testId}-nav-container` : undefined}
       className={breadcrumbsClass}
       itemScope
       role="navigation"
       itemType="https://schema.org/BreadcrumbList"
     >
-      <ol className={classMap.list}>
+      <ol
+        className={classMap.list}
+        data-testid={testId ? `${testId}-nav-list` : undefined}
+      >
         {visibleItems.map((item, index) => {
           const isLast = index === visibleItems.length - 1;
           const isEllipsis = item.label === ELLIPSIS_LABEL;
@@ -83,6 +88,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
 
           return (
             <li
+              data-testid={testId ? `${testId}-nav-item` : undefined}
               key={`${item.label}-${item.href ?? index}`}
               className={itemClassName}
               itemProp="itemListElement"
@@ -98,6 +104,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   aria-label="Show more breadcrumbs"
                   onClick={handleExpand}
                   tabIndex={0}
+                  data-testid={testId ? `${testId}-ellipsis` : undefined}
                 >
                   {item.label}
                 </ButtonComponent>
@@ -107,6 +114,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   itemProp="item"
                   className={classMap.link}
                   title={item.label}
+                  data-testid={testId ? `${testId}-nav-item-label` : undefined}
                 >
                   <span itemProp="name" className={classMap.link_label}>
                     {item.label}
@@ -117,6 +125,9 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   className={classMap.current}
                   itemProp="name"
                   aria-current="page"
+                  data-testid={
+                    testId ? `${testId}-nav-item-current` : undefined
+                  }
                 >
                   {item.label}
                 </span>

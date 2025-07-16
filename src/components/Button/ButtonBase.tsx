@@ -79,12 +79,15 @@ const ButtonBase = forwardRef<
           <span
             className={classMap.buttonIcon}
             aria-hidden="true"
-            data-testid="icon"
+            data-testid={testId ? `${testId}-icon` : undefined}
           >
             <Icon className={classMap.icon} />
           </span>
         )}
-        <span className={classMap.buttonLabel}>
+        <span
+          className={classMap.buttonLabel}
+          data-testid={testId ? `${testId}-loading` : undefined}
+        >
           {loading ? (
             <div className={classMap.loader} aria-hidden="true" />
           ) : (

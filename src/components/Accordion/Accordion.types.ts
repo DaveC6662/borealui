@@ -117,4 +117,9 @@ export interface AccordionProps {
    * If true, the accordion content will be loaded lazily.
    */
   lazyLoad?: boolean;
+
+  /**
+   * Optional test ID for testing frameworks.
+   */
+  "data-testid"?: string;
 }

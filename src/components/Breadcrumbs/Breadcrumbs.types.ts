@@ -87,6 +87,11 @@ export interface BreadcrumbsProps {
    * Maximum number of visible items before collapsing into an ellipsis.
    */
   maxVisible?: number;
+
+  /**
+   * Optional test ID for testing frameworks.
+   */
+  "data-testid"?: string;
 }
 
 /**
