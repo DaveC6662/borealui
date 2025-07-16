@@ -36,6 +36,19 @@ const meta: Meta<typeof Breadcrumbs> = {
   title: "Components/Breadcrumbs",
   component: Breadcrumbs,
   tags: ["autodocs"],
+  argTypes: {
+    items: { control: false },
+    theme: { control: "select", options: themeOptions },
+    rounding: { control: "select", options: roundingOptions },
+    shadow: { control: "select", options: shadowOptions },
+    state: { control: "select", options: ["", ...stateOptions] },
+    separator: { control: false },
+    disabled: { control: "boolean" },
+    size: { control: "select", options: sizeOptions },
+    outline: { control: "boolean" },
+    className: { control: "text" },
+    maxVisible: { control: "number" },
+  },
 };
 
 export default meta;
@@ -122,5 +135,12 @@ export const CustomSeparator: Story = {
   args: {
     items: baseItems,
     separator: <FaArrowRight />,
+  },
+};
+
+export const WithClassName: Story = {
+  args: {
+    ...defaultArgs,
+    className: "storybook-breadcrumbs-custom",
   },
 };

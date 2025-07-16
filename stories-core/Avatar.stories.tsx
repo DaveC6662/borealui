@@ -70,6 +70,8 @@ const meta: Meta<typeof Avatar> = {
     name: { control: "text" },
     src: { control: "text" },
     size: { control: "select", options: sizeOptions },
+    state: { control: "select", options: stateOptions },
+    className: { control: "text" },
     theme: { control: "select", options: themeOptions },
     shape: { control: "select", options: shapeOptions },
     status: { control: "select", options: [...statusOptions, undefined] },

@@ -1,8 +1,7 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { FaPlus, FaCheck } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { Button } from "../src/index.core";
 import { ButtonProps } from "../src/components/Button/Button.types";
-import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import {
   RoundingType,
@@ -34,6 +33,26 @@ const meta: Meta<ButtonProps> = {
     children: "Click Me",
     theme: "primary",
     size: "medium",
+  },
+  argTypes: {
+    children: { control: "text" },
+    icon: { control: false },
+    theme: { control: "select", options: themeOptions },
+    state: { control: "select", options: ["", ...stateOptions] },
+    size: { control: "select", options: sizeOptions },
+    rounding: { control: "select", options: roundingOptions },
+    shadow: { control: "select", options: shadowOptions },
+    outline: { control: "boolean" },
+    onClick: { action: "clicked" },
+    className: { control: "text" },
+    disabled: { control: "boolean" },
+    loading: { control: "boolean" },
+    fullWidth: { control: "boolean" },
+    href: { control: "text" },
+    isExternal: { control: "boolean" },
+    type: { control: "select", options: ["button", "submit", "reset"] },
+    ariaLabel: { control: "text" },
+    "data-testid": { control: "text" },
   },
 };
 
@@ -143,3 +162,44 @@ export const ShadowVariants = () => (
     ))}
   </StoryGrid>
 );
+
+export const WithClassName: Story = {
+  args: {
+    ...defaultArgs,
+    children: "Custom Class",
+    className: "storybook-button-custom",
+  },
+};
+
+export const WithHref: Story = {
+  args: {
+    ...defaultArgs,
+    href: "https://example.com",
+    children: "Link Button",
+  },
+};
+
+export const WithExternalLink: Story = {
+  args: {
+    ...defaultArgs,
+    href: "https://example.com",
+    isExternal: true,
+    children: "External Link",
+  },
+};
+
+export const SubmitType: Story = {
+  args: {
+    ...defaultArgs,
+    type: "submit",
+    children: "Submit",
+  },
+};
+
+export const WithAriaLabel: Story = {
+  args: {
+    ...defaultArgs,
+    ariaLabel: "Custom Aria Label",
+    children: "Accessible Button",
+  },
+};

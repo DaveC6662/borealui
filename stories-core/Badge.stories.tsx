@@ -30,6 +30,7 @@ const meta: Meta<typeof Badge> = {
     text: { control: "text" },
     theme: { control: "select", options: themeOptions },
     state: { control: "select", options: [...stateOptions, ""] },
+    className: { control: "text" },
     size: { control: "select", options: sizeOptions },
     outline: { control: "boolean" },
     icon: { control: false },
@@ -117,3 +118,13 @@ export const OutlineVariants = () =>
     },
     [{ propName: "theme", values: [...themeOptions, ...stateOptions] }]
   );
+
+export const WithChildren: Story = {
+  render: () => (
+    <Badge text="With Children">
+      <span role="img" aria-label="star">
+        ⭐
+      </span>
+    </Badge>
+  ),
+};
