@@ -13,6 +13,29 @@ const meta: Meta<DividerProps> = {
     dashed: false,
     theme: "primary",
   },
+  argTypes: {
+    orientation: { control: "select", options: ["horizontal", "vertical"] },
+    theme: {
+      control: "select",
+      options: [
+        "primary",
+        "secondary",
+        "tertiary",
+        "quaternary",
+        "clear",
+        "success",
+        "error",
+        "warning",
+      ],
+    },
+    length: { control: "text" },
+    thickness: { control: "text" },
+    dashed: { control: "boolean" },
+    as: { control: "text" },
+    className: { control: "text" },
+    state: { control: "select", options: ["", "success", "error", "warning"] },
+    "data-testid": { control: "text" },
+  },
 };
 
 export default meta;
@@ -31,7 +54,14 @@ export const Horizontal: Story = {
 
 export const Vertical: Story = {
   render: (args) => (
-    <div style={{ display: "flex", alignItems: "center", gap: "1rem", height: "100px" }}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "1rem",
+        height: "100px",
+      }}
+    >
       <span>Left</span>
       <Divider {...args} orientation="vertical" length="100%" thickness="2px" />
       <span>Right</span>

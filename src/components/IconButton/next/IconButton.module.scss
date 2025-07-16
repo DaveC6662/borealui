@@ -34,10 +34,6 @@
   }
 }
 
-.clear {
-  box-shadow: none;
-}
-
 @each $name, $values in theme.$themes {
   .#{$name} {
     background-color: map.get($values, bg);

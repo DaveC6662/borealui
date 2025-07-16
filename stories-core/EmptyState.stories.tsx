@@ -25,6 +25,21 @@ const meta: Meta<EmptyStateProps> = {
     theme: "primary",
     size: "medium",
   },
+  argTypes: {
+    icon: { control: false },
+    title: { control: "text" },
+    message: { control: "text" },
+    actionLabel: { control: "text" },
+    onActionClick: { action: "action" },
+    theme: { control: "select", options: themeOptions },
+    state: { control: "select", options: stateOptions },
+    size: { control: "select", options: sizeOptions },
+    outline: { control: "boolean" },
+    rounding: { control: "select", options: roundingOptions },
+    shadow: { control: "select", options: shadowOptions },
+    className: { control: "text" },
+    "data-testid": { control: "text" },
+  },
 };
 
 export default meta;

@@ -26,6 +26,26 @@ const meta: Meta<DateTimePickerProps> = {
     theme: "primary",
     size: "medium",
   },
+  argTypes: {
+    value: { control: "text" },
+    onChange: { action: "changed" },
+    theme: { control: "select", options: themeOptions },
+    state: { control: "select", options: ["", ...stateOptions] },
+    rounding: { control: "select", options: roundingOptions },
+    shadow: { control: "select", options: shadowOptions },
+    size: {
+      control: "select",
+      options: ["xs", "small", "medium", "large", "xl"],
+    },
+    outline: { control: "boolean" },
+    required: { control: "boolean" },
+    disabled: { control: "boolean" },
+    label: { control: "text" },
+    min: { control: "text" },
+    max: { control: "text" },
+    className: { control: "text" },
+    "data-testid": { control: "text" },
+  },
 };
 
 export default meta;
@@ -211,3 +231,19 @@ export const ShadowVariants = () => (
     ))}
   </StoryGrid>
 );
+
+export const WithClassName: Story = {
+  args: {
+    className: "storybook-datetime-custom",
+    value: "2025-04-15T15:30",
+    onChange: () => {},
+  },
+};
+
+export const WithDataTestid: Story = {
+  args: {
+    "data-testid": "datetimepicker-storybook",
+    value: "2025-04-15T15:30",
+    onChange: () => {},
+  },
+};

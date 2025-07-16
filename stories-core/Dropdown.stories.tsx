@@ -4,16 +4,6 @@ import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import type { DropdownProps } from "../src/components/Dropdown/Dropdown.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
-const meta: Meta<DropdownProps> = {
-  title: "Components/Dropdown",
-  component: Dropdown,
-  tags: ["autodocs"],
-  args: {
-    theme: "primary",
-    align: "right",
-  },
-};
-
 const themeOptions = [
   "primary",
   "secondary",
@@ -23,6 +13,27 @@ const themeOptions = [
 ];
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
+const meta: Meta<DropdownProps> = {
+  title: "Components/Dropdown",
+  component: Dropdown,
+  tags: ["autodocs"],
+  args: {
+    theme: "primary",
+    align: "right",
+  },
+  argTypes: {
+    theme: { control: "select", options: themeOptions },
+    align: { control: "select", options: ["left", "right"] },
+    toggleRounding: { control: "select", options: roundingOptions },
+    toggleShadow: { control: "select", options: shadowOptions },
+    triggerIcon: { control: false },
+    items: { control: false },
+    className: { control: "text" },
+    menuRounding: { control: "select", options: roundingOptions },
+    menuShadow: { control: "select", options: shadowOptions },
+  },
+};
 
 export default meta;
 
