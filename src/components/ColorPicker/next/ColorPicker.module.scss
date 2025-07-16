@@ -36,6 +36,12 @@ $swatch-sizes: (
   gap: theme.$spacing-xs;
 }
 
+.selected,
+:focus-visible {
+  outline: 2px solid var(--text-color-primary);
+  outline-offset: 2px;
+}
+
 .swatch {
   display: inline-flex;
   justify-content: center;
@@ -45,11 +51,6 @@ $swatch-sizes: (
   outline: 2px solid transparent;
   transition: outline-color 0.2s ease-in-out;
   box-sizing: border-box;
-
-  &.selected,
-  &:focus-visible {
-    outline-color: var(--text-color-primary);
-  }
 
   @each $size, $val in $swatch-sizes {
     &.#{$size} {

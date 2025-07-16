@@ -8,6 +8,30 @@ import {
 } from "@/types/types";
 
 /**
+ * Props for the ChipBase component (low-level, unstyled chip implementation).
+ * Extends ChipProps with additional class and icon customization.
+ */
+export interface ChipBaseProps extends ChipProps {
+  /**
+   * A mapping of BEM-style class names for the component parts.
+   * Example: { root: "chip_root", icon: "chip_icon", ... }
+   */
+  classMap: Record<string, string>;
+
+  /**
+   * The icon button component to use for the close/remove action.
+   * Accepts a React component type (e.g., your custom IconButton).
+   */
+  IconButtonComponent: React.ElementType;
+
+  /**
+   * Optional custom icon component for the close/remove button.
+   * Accepts a React component type (e.g., from react-icons).
+   */
+  closeIcon?: React.ElementType;
+}
+
+/**
  * Props for the Chip component.
  */
 export interface ChipProps {

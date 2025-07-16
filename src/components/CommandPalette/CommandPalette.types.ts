@@ -23,6 +23,9 @@ export interface CommandPaletteProps {
   /** Optional placeholder for the input field. */
   placeholder?: string;
 
+  /** Custom classname for the command palette. */
+  className?: string;
+
   /**
    * Theme style for the palette
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').

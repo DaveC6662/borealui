@@ -63,6 +63,21 @@ const meta: Meta<DataTableProps<SampleRow>> = {
     theme: "primary",
     striped: true,
   },
+  argTypes: {
+    data: { control: false },
+    columns: { control: false },
+    theme: { control: "select", options: themeOptions },
+    state: { control: "select", options: ["", ...stateOptions] },
+    rounding: { control: "select", options: roundingOptions },
+    shadow: { control: "select", options: shadowOptions },
+    outline: { control: "boolean" },
+    striped: { control: "boolean" },
+    onRowClick: { action: "row clicked" },
+    onSortChange: { action: "sort changed" },
+    rowKey: { control: false },
+    className: { control: "text" },
+    "data-testid": { control: "text" },
+  },
 };
 
 export default meta;
@@ -195,3 +210,15 @@ export const ShadowVariants = () => (
     ))}
   </StoryGrid>
 );
+
+export const WithClassName: Story = {
+  args: {
+    className: "storybook-datatable-custom",
+  },
+};
+
+export const WithDataTestid: Story = {
+  args: {
+    "data-testid": "datatable-storybook",
+  },
+};

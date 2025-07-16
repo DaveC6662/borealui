@@ -35,6 +35,12 @@ $swatch-sizes: (
     gap: theme.$spacing-xs;
   }
 
+  &_selected,
+  &:focus-visible {
+    outline: 2px solid var(--text-color-primary);
+    outline-offset: 2px;
+  }
+
   &_swatch {
     display: inline-flex;
     justify-content: center;
@@ -45,9 +51,17 @@ $swatch-sizes: (
     transition: outline-color 0.2s ease-in-out;
     box-sizing: border-box;
 
-    &.color_picker_selected,
-    &:focus-visible {
-      outline-color: var(--text-color-primary);
+    .color_picker_round {
+      border-radius: 50%;
+    }
+
+    .color_picker_square {
+      border-radius: 6px;
+    }
+
+    .color_picker_pill {
+      border-radius: 9999px;
+      height: 50%;
     }
 
     @each $size, $val in $swatch-sizes {
@@ -66,21 +80,7 @@ $swatch-sizes: (
     width: 80%;
     height: 80%;
     display: block;
-    box-shadow: theme.$box-shadow-light;
     box-sizing: border-box;
-
-    .color_picker_circle {
-      border-radius: 50%;
-    }
-
-    .color_picker_square {
-      border-radius: 6px;
-    }
-
-    .color_picker_rounded {
-      border-radius: 9999px;
-      height: 50%;
-    }
   }
 
   &_custom_input {

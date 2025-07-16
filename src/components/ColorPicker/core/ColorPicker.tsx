@@ -25,8 +25,8 @@ const classes = {
   shadowStrong: "color_picker_shadow-Strong",
   shadowIntense: "color_picker_shadow-Intense",
 
-  circle: "color_picker_circle",
-  rounded: "color_picker_rounded",
+  pill: "color_picker_pill",
+  round: "color_picker_round",
   square: "color_picker_square",
 };
 

@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { ChipGroup } from "@/index.core";
+import { ChipGroup } from "../src/index.core";
 import type {
   ChipGroupProps,
   ChipGroupRef,
-} from "@/components/Chip/ChipGroup/ChipGroup.types";
-import { ChipProps } from "@/components/Chip/Chip.types";
+} from "../src/components/Chip/ChipGroup/ChipGroup.types";
+import { ChipProps } from "../src/components/Chip/Chip.types";
 import { FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
@@ -21,6 +21,26 @@ const meta: Meta<ChipGroupProps> = {
       </>
     ),
   ],
+  argTypes: {
+    chips: { control: false },
+    onRemove: { action: "removed" },
+    position: {
+      control: "select",
+      options: [
+        "topLeft",
+        "topCenter",
+        "topRight",
+        "bottomLeft",
+        "bottomCenter",
+        "bottomRight",
+      ],
+    },
+    size: {
+      control: "select",
+      options: ["xs", "small", "medium", "large", "xl"],
+    },
+    className: { control: "text" },
+  },
 };
 
 export default meta;
@@ -147,3 +167,16 @@ export const PositionVariants = () => (
     ))}
   </StoryGrid>
 );
+
+export const WithClassName: Story = {
+  render: () => {
+    return (
+      <ChipGroup
+        chips={[createChip("ClassName Chip", { theme: "secondary" })]}
+        position="topRight"
+        className="storybook-chip-group-custom"
+        onRemove={() => {}}
+      />
+    );
+  },
+};

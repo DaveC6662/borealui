@@ -17,7 +17,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   disabled = false,
   size = defaultSize,
   shadow = defaultShadow,
-  shape = "circle",
+  shape = "round",
   allowCustom = false,
   className = "",
   classMap,
@@ -47,10 +47,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
         {colors.map((color, i) => (
           <label
             key={color.value}
-            className={combineClassNames(
-              labelClass,
-              selected === color.value && classMap.selected
-            )}
+            className={combineClassNames(labelClass)}
             htmlFor={`${testId}-color-${i}`}
             title={color.label}
             data-testid={`${testId}-option-${color.value}`}
@@ -69,6 +66,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
               className={combineClassNames(
                 classMap.preview,
                 classMap[shape],
+                selected === color.value && classMap.selected,
                 shadow && classMap[`shadow${capitalize(shadow)}`]
               )}
               style={{ backgroundColor: color.value }}

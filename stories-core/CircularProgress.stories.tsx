@@ -26,6 +26,19 @@ const meta: Meta<CircularProgressProps> = {
     rating: 85,
     label: "Course Progress",
   },
+  argTypes: {
+    rating: { control: "number" },
+    min: { control: "number" },
+    max: { control: "number" },
+    label: { control: "text" },
+    shadow: { control: "select", options: shadowOptions },
+    showRaw: { control: "boolean" },
+    size: { control: "select", options: sizeOptions },
+    theme: { control: "select", options: themeOptions },
+    state: { control: "select", options: ["", ...stateOptions] },
+    className: { control: "text" },
+    "data-testid": { control: "text" },
+  },
 };
 
 export default meta;
@@ -141,3 +154,21 @@ export const ShadowVariants = () =>
   withVariants(CircularProgress, { ...defaultArgs }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const WithClassName: Story = {
+  args: {
+    ...defaultArgs,
+    className: "storybook-circular-progress",
+    rating: 88,
+    label: "With Custom Class",
+  },
+};
+
+export const WithDataTestid: Story = {
+  args: {
+    ...defaultArgs,
+    "data-testid": "circular-progress-test-id",
+    rating: 55,
+    label: "With Data Testid",
+  },
+};

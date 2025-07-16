@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Chip } from "../src/index.core";
 import { FaCheckCircle } from "react-icons/fa";
-import type { ChipProps } from "../src/components/Chip/Chip.types";
 import {
   PositionType,
   RoundingType,
@@ -12,20 +11,7 @@ import {
   StateType,
   ThemeType,
 } from "../src/types/types";
-
-const meta: Meta<ChipProps> = {
-  title: "Components/Chip",
-  component: Chip,
-  tags: ["autodocs"],
-  decorators: [
-    (Story) => (
-      <>
-        <div id="widget-portal" />
-        <Story />
-      </>
-    ),
-  ],
-};
+import { ChipBaseProps } from "../src/components/Chip/Chip.types";
 
 const themeOptions = [
   "primary",
@@ -49,9 +35,45 @@ const positions: PositionType[] = [
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
+const meta: Meta<ChipBaseProps> = {
+  title: "Components/Chip",
+  component: Chip,
+  tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <>
+        <div id="widget-portal" />
+        <Story />
+      </>
+    ),
+  ],
+  argTypes: {
+    id: { control: "text" },
+    message: { control: "text" },
+    visible: { control: "boolean" },
+    onClose: { action: "closed" },
+    icon: { control: false },
+    closeIcon: { control: false },
+    size: {
+      control: "select",
+      options: ["xs", "small", "medium", "large", "xl"],
+    },
+    theme: { control: "select", options: themeOptions },
+    state: { control: "select", options: ["", ...stateOptions] },
+    rounding: { control: "select", options: roundingOptions },
+    shadow: { control: "select", options: shadowOptions },
+    position: { control: "select", options: positions },
+    usePortal: { control: "boolean" },
+    className: { control: "text" },
+    autoClose: { control: "boolean" },
+    duration: { control: "number" },
+    "data-testid": { control: "text" },
+  },
+};
+
 export default meta;
 
-type Story = StoryObj<ChipProps>;
+type Story = StoryObj<ChipBaseProps>;
 
 export const Default: Story = {
   render: () => {

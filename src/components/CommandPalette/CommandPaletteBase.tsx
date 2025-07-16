@@ -34,6 +34,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   classMap,
   TextInputComponent,
   "data-testid": testId = "command-palette",
+  className,
 }) => {
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -139,7 +140,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           classMap[theme],
           classMap[state],
           shadow && classMap[`shadow${capitalize(shadow)}`],
-          rounding && classMap[`round${capitalize(rounding)}`]
+          rounding && classMap[`round${capitalize(rounding)}`],
+          className
         )}
         onClick={(e) => e.stopPropagation()}
         role="dialog"

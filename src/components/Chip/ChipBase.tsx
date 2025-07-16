@@ -1,12 +1,6 @@
-import {
-  useCallback,
-  useEffect,
-  useState,
-  KeyboardEvent,
-  useMemo,
-} from "react";
+import { useCallback, useEffect, useState, KeyboardEvent } from "react";
 import { createPortal } from "react-dom";
-import { ChipProps } from "./Chip.types";
+import { ChipBaseProps } from "./Chip.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -15,12 +9,6 @@ import {
   defaultSize,
   defaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface ChipBaseProps extends ChipProps {
-  classMap: Record<string, string>;
-  IconButtonComponent: React.ElementType;
-  closeIcon?: React.ElementType;
-}
 
 const ChipBase: React.FC<ChipBaseProps> = ({
   id,

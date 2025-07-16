@@ -30,6 +30,20 @@ const meta: Meta<CommandPaletteProps> = {
       </>
     ),
   ],
+  argTypes: {
+    isOpen: { control: "boolean" },
+    onClose: { action: "closed" },
+    commands: { control: false },
+    placeholder: { control: "text" },
+    theme: { control: "select", options: themeOptions },
+    state: { control: "select", options: ["", ...stateOptions] },
+    rounding: { control: "select", options: roundingOptions },
+    shadow: { control: "select", options: shadowOptions },
+    asyncSearch: { control: false },
+    debounceMs: { control: "number" },
+    className: { control: "text" },
+    "data-testid": { control: "text" },
+  },
 };
 
 export default meta;
@@ -200,6 +214,44 @@ export const AsyncSearch: Story = {
           debounceMs={300}
           placeholder="Search async commands..."
           theme="primary"
+        />
+      </div>
+    );
+  },
+};
+
+export const WithClassName: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <div style={{ padding: "2rem" }}>
+        <button onClick={() => setOpen(true)}>Open Custom Class Palette</button>
+        <CommandPalette
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          commands={sampleCommands}
+          placeholder="Palette with custom className"
+          theme="primary"
+          className="storybook-commandpalette-custom"
+        />
+      </div>
+    );
+  },
+};
+
+export const WithDataTestid: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <div style={{ padding: "2rem" }}>
+        <button onClick={() => setOpen(true)}>Open DataTestid Palette</button>
+        <CommandPalette
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          commands={sampleCommands}
+          placeholder="Palette with data-testid"
+          theme="primary"
+          data-testid="commandpalette-storybook"
         />
       </div>
     );
