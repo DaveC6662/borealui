@@ -31,8 +31,103 @@ const meta: Meta<typeof IconButton> = {
     ariaLabel: "Add",
   },
   argTypes: {
-    icon: { control: false },
-    onClick: { action: "clicked" },
+    icon: {
+      control: false,
+      description:
+        "The icon element to display inside the button (e.g., FaPlus). Required.",
+      table: { category: "Content", type: { summary: "IconType" } },
+    },
+    theme: {
+      control: "select",
+      options: themeOptions,
+      description: "Theme color for the button.",
+      table: { category: "Appearance", defaultValue: { summary: "primary" } },
+    },
+    state: {
+      control: "select",
+      options: stateOptions,
+      description: "State variant (success, warning, error).",
+      table: { category: "State" },
+    },
+    size: {
+      control: "select",
+      options: sizeOptions,
+      description: "Size of the button.",
+      table: { category: "Appearance", defaultValue: { summary: "medium" } },
+    },
+    rounding: {
+      control: "select",
+      options: roundingOptions,
+      description: "Border radius/rounding of the button.",
+      table: { category: "Appearance", defaultValue: { summary: "large" } },
+    },
+    shadow: {
+      control: "select",
+      options: shadowOptions,
+      description: "Shadow effect for the button.",
+      table: { category: "Appearance", defaultValue: { summary: "none" } },
+    },
+    outline: {
+      control: "boolean",
+      description: "Show button as outlined style.",
+      table: { category: "Appearance", defaultValue: { summary: "false" } },
+    },
+    loading: {
+      control: "boolean",
+      description: "Displays a spinner instead of the icon when true.",
+      table: { category: "State", defaultValue: { summary: "false" } },
+    },
+    disabled: {
+      control: "boolean",
+      description: "Disables the button and makes it non-interactive.",
+      table: { category: "State", defaultValue: { summary: "false" } },
+    },
+    href: {
+      control: "text",
+      description: "If set, renders as a link (<a> or custom LinkComponent).",
+      table: { category: "Links", type: { summary: "string" } },
+    },
+    isExternal: {
+      control: "boolean",
+      description: "If true, opens the link in a new tab (for external links).",
+      table: { category: "Links", defaultValue: { summary: "false" } },
+    },
+    ariaLabel: {
+      control: "text",
+      description:
+        "Accessible label for screen readers (required if only icon).",
+      table: { category: "Accessibility" },
+    },
+    title: {
+      control: "text",
+      description: "Native title tooltip (optional, falls back to ariaLabel).",
+      table: { category: "Accessibility" },
+    },
+    tabIndex: {
+      control: "number",
+      description: "Tab order for keyboard navigation.",
+      table: { category: "Accessibility" },
+    },
+    onClick: {
+      action: "clicked",
+      description: "Callback fired on button click.",
+      table: { category: "Events", type: { summary: "(event) => void" } },
+    },
+    onKeyDown: {
+      action: "keydown",
+      description: "Callback fired on keydown events.",
+      table: { category: "Events", type: { summary: "(event) => void" } },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS class(es) to apply.",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Custom data-testid for testing.",
+      table: { category: "Testing" },
+    },
   },
 };
 

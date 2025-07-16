@@ -26,6 +26,78 @@ const meta: Meta<RadioButtonProps> = {
     checked: false,
     theme: "secondary",
   },
+  argTypes: {
+    label: {
+      control: "text",
+      description: "Label displayed next to the radio button.",
+      table: { category: "Main", defaultValue: { summary: "Option A" } },
+      type: { name: "string", required: false },
+    },
+    value: {
+      control: "text",
+      description: "The value for the radio input.",
+      table: { category: "Main", defaultValue: { summary: "" } },
+      type: { name: "string", required: false },
+    },
+    checked: {
+      control: "boolean",
+      description: "Whether the radio button is selected.",
+      table: { category: "Main", defaultValue: { summary: "false" } },
+      type: { name: "boolean", required: false },
+    },
+    onChange: {
+      action: "changed",
+      description: "Callback fired when the checked state changes.",
+      table: { category: "Events" },
+      type: { name: "function" },
+    },
+    theme: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme variant for styling.",
+      table: { category: "Appearance", defaultValue: { summary: "secondary" } },
+      type: { name: "string", required: false },
+    },
+    rounding: {
+      control: { type: "select" },
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for the radio button.",
+      table: { category: "Appearance" },
+      type: { name: "string", required: false },
+    },
+    shadow: {
+      control: { type: "select" },
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow depth of the radio button.",
+      table: { category: "Appearance" },
+      type: { name: "string", required: false },
+    },
+    state: {
+      control: { type: "select" },
+      options: ["", "success", "error", "warning"],
+      description: "Visual state style for success, error, or warning.",
+      table: { category: "Appearance" },
+      type: { name: "string", required: false },
+    },
+    disabled: {
+      control: "boolean",
+      description: "Disables the radio button.",
+      table: { category: "Main", defaultValue: { summary: "false" } },
+      type: { name: "boolean", required: false },
+    },
+    className: {
+      control: "text",
+      description: "Custom class name for the wrapper.",
+      table: { category: "Advanced" },
+      type: { name: "string", required: false },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for querying the component in tests.",
+      type: { name: "string" },
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

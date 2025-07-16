@@ -17,6 +17,7 @@ const TimelineBase: React.FC<
   rounding = defaultRounding,
   shadow = defaultShadow,
   classMap,
+  className,
   "data-testid": testId = "timeline",
 }) => {
   const outerWrapper = useMemo(
@@ -24,7 +25,8 @@ const TimelineBase: React.FC<
       combineClassNames(
         classMap.timeline,
         classMap[orientation],
-        classMap[theme]
+        classMap[theme],
+        className
       ),
     [classMap, orientation, theme, shadow, rounding]
   );

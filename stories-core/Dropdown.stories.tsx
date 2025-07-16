@@ -23,15 +23,57 @@ const meta: Meta<DropdownProps> = {
     align: "right",
   },
   argTypes: {
-    theme: { control: "select", options: themeOptions },
-    align: { control: "select", options: ["left", "right"] },
-    toggleRounding: { control: "select", options: roundingOptions },
-    toggleShadow: { control: "select", options: shadowOptions },
-    triggerIcon: { control: false },
-    items: { control: false },
-    className: { control: "text" },
-    menuRounding: { control: "select", options: roundingOptions },
-    menuShadow: { control: "select", options: shadowOptions },
+    theme: {
+      description: "Sets the visual theme for the dropdown and menu.",
+      control: { type: "select" },
+      options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    align: {
+      description: "Menu alignment relative to the toggle button.",
+      control: { type: "select" },
+      options: ["left", "right"],
+      table: { category: "Appearance" },
+    },
+    toggleRounding: {
+      description: "Rounding style for the dropdown toggle button.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Toggle" },
+    },
+    toggleShadow: {
+      description: "Shadow style for the dropdown toggle button.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Toggle" },
+    },
+    triggerIcon: {
+      description: "Optional icon for the toggle button.",
+      control: false,
+      table: { category: "Toggle" },
+    },
+    items: {
+      description: "Dropdown menu items (array of objects).",
+      control: false,
+      table: { category: "Menu" },
+    },
+    menuRounding: {
+      description: "Rounding style for the dropdown menu.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Menu" },
+    },
+    menuShadow: {
+      description: "Shadow style for the dropdown menu.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Menu" },
+    },
+    className: {
+      description: "Custom CSS class for the dropdown container.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
   },
 };
 

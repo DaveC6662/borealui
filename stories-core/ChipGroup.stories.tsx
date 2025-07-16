@@ -22,10 +22,21 @@ const meta: Meta<ChipGroupProps> = {
     ),
   ],
   argTypes: {
-    chips: { control: false },
-    onRemove: { action: "removed" },
+    chips: {
+      description: "Array of chip objects to display in the group.",
+      control: false,
+      table: { category: "Content" },
+    },
+    onRemove: {
+      description: "Callback fired when a chip's close button is clicked.",
+      action: "removed",
+      control: false,
+      table: { category: "Events" },
+    },
     position: {
-      control: "select",
+      description:
+        "Position of the group on the screen (used for toast/fixed display).",
+      control: { type: "select" },
       options: [
         "topLeft",
         "topCenter",
@@ -34,12 +45,20 @@ const meta: Meta<ChipGroupProps> = {
         "bottomCenter",
         "bottomRight",
       ],
+      table: { category: "Layout" },
     },
     size: {
-      control: "select",
+      description: "Size for all chips in the group.",
+      control: { type: "select" },
       options: ["xs", "small", "medium", "large", "xl"],
+      table: { category: "Appearance" },
     },
-    className: { control: "text" },
+    className: {
+      description:
+        "Additional CSS class names to apply to the group container.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
   },
 };
 

@@ -64,19 +64,76 @@ const meta: Meta<DataTableProps<SampleRow>> = {
     striped: true,
   },
   argTypes: {
-    data: { control: false },
-    columns: { control: false },
-    theme: { control: "select", options: themeOptions },
-    state: { control: "select", options: ["", ...stateOptions] },
-    rounding: { control: "select", options: roundingOptions },
-    shadow: { control: "select", options: shadowOptions },
-    outline: { control: "boolean" },
-    striped: { control: "boolean" },
-    onRowClick: { action: "row clicked" },
-    onSortChange: { action: "sort changed" },
-    rowKey: { control: false },
-    className: { control: "text" },
-    "data-testid": { control: "text" },
+    data: {
+      description: "Array of row data objects to render in the table.",
+      control: false,
+      table: { category: "Main" },
+    },
+    columns: {
+      description:
+        "Column definitions array describing header, field, and cell rendering.",
+      control: false,
+      table: { category: "Main" },
+    },
+    theme: {
+      description: "Visual theme for the DataTable.",
+      control: { type: "select" },
+      options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    state: {
+      description: "State style for the table (success, warning, error, etc.).",
+      control: { type: "select" },
+      options: ["", ...stateOptions],
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      description: "Corner rounding style for the table.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      description: "Box shadow style for the table.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Appearance" },
+    },
+    outline: {
+      description: "Whether the table uses an outlined style.",
+      control: "boolean",
+      table: { category: "Appearance" },
+    },
+    striped: {
+      description: "If true, applies alternating row background stripes.",
+      control: "boolean",
+      table: { category: "Appearance" },
+    },
+    onRowClick: {
+      description: "Callback fired when a row is clicked.",
+      action: "row clicked",
+      table: { category: "Events" },
+    },
+    onSortChange: {
+      description: "Callback fired when sorting changes.",
+      action: "sort changed",
+      table: { category: "Events" },
+    },
+    rowKey: {
+      description: "Custom key for each row (if needed).",
+      control: false,
+      table: { category: "Advanced" },
+    },
+    className: {
+      description: "Additional CSS class for the DataTable container.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      description: "Test id for the DataTable container.",
+      control: "text",
+      table: { category: "Testing" },
+    },
   },
 };
 

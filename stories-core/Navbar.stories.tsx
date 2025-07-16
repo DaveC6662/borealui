@@ -49,19 +49,59 @@ const meta: Meta<NavBarProps> = {
     rounding: "full",
     shadow: "light",
   },
+  argTypes: {
+    items: {
+      control: false,
+      description:
+        "Navigation items to render (each item should have a label, icon, and path).",
+      type: { name: "string", required: true },
+      table: {
+        category: "Content",
+        type: {
+          summary: "Array<{ label: string; icon?: ReactNode; path: string }>",
+        },
+      },
+    },
+    theme: {
+      control: "select",
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme for navigation bar.",
+      type: { name: "string" },
+      table: { category: "Style", defaultValue: { summary: "primary" } },
+    },
+    rounding: {
+      control: "select",
+      options: ["full", "none", "small", "medium", "large"],
+      description: "Border radius for navigation items.",
+      type: { name: "string" },
+      table: { category: "Style", defaultValue: { summary: "full" } },
+    },
+    shadow: {
+      control: "select",
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow depth for navigation items.",
+      type: { name: "string" },
+      table: { category: "Style", defaultValue: { summary: "light" } },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for querying the component in tests.",
+      type: { name: "string" },
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<NavBarProps>;
 
-// Dynamic interactive theme + state story
-export const Themes: Story = {
+export const Default: Story = {
   render: (args) => {
     const [theme, setTheme] = useState<NavBarProps["theme"]>("primary");
     const [rounding, setRounding] = useState<NavBarProps["rounding"]>("full");
     const [shadow, setShadow] = useState<NavBarProps["shadow"]>("light");
 
-    window.history.pushState({}, "", "/"); // Ensure routing for active state
+    window.history.pushState({}, "", "/");
 
     return (
       <div style={{ paddingTop: "5rem", textAlign: "center" }}>

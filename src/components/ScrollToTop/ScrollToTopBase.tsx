@@ -7,6 +7,7 @@ import { capitalize } from "../../utils/capitalize";
 import { combineClassNames } from "../../utils/classNames";
 import React, { useEffect, useState } from "react";
 
+//TODO Add data-test-id for testing purposes
 export interface ScrollToTopBaseProps {
   classMap: Record<string, string>;
   rounding?: RoundingType;

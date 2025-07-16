@@ -47,6 +47,70 @@ const meta: Meta<TabsProps> = {
     defaultIndex: 0,
     tabs: tabsWithIcons,
   },
+  argTypes: {
+    tabs: {
+      control: false,
+      description:
+        "Array of tab objects. Each tab typically includes at least a `label`, `content`, and optionally `icon` or `disabled`.",
+      table: { category: "Data", type: { summary: "Tab[]" } },
+    },
+    defaultIndex: {
+      control: { type: "number", min: 0 },
+      description: "Index of the tab that is active by default.",
+      table: {
+        category: "State",
+        type: { summary: "number" },
+        defaultValue: { summary: "0" },
+      },
+    },
+    onChange: {
+      action: "changed",
+      description:
+        "Callback fired when the active tab changes. Receives the tab index.",
+      table: { category: "Events" },
+    },
+    theme: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme color variant for the tabs.",
+      table: { category: "Appearance" },
+    },
+    state: {
+      control: { type: "select" },
+      options: ["", "success", "error", "warning"],
+      description:
+        "Visual state variant for tabs (applies state color styling).",
+      table: { category: "Appearance" },
+    },
+    size: {
+      control: { type: "select" },
+      options: ["xs", "small", "medium", "large", "xl"],
+      description: "Size of the tabs and their labels.",
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      control: { type: "select" },
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for tab buttons.",
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      control: { type: "select" },
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow style for the tabs container.",
+      table: { category: "Appearance" },
+    },
+    className: {
+      control: "text",
+      description: "Additional class names for the outermost tabs container.",
+      table: { category: "Advanced" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test ID for the root element (for testing utilities).",
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

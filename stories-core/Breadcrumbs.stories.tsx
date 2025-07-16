@@ -37,17 +37,70 @@ const meta: Meta<typeof Breadcrumbs> = {
   component: Breadcrumbs,
   tags: ["autodocs"],
   argTypes: {
-    items: { control: false },
-    theme: { control: "select", options: themeOptions },
-    rounding: { control: "select", options: roundingOptions },
-    shadow: { control: "select", options: shadowOptions },
-    state: { control: "select", options: ["", ...stateOptions] },
-    separator: { control: false },
-    disabled: { control: "boolean" },
-    size: { control: "select", options: sizeOptions },
-    outline: { control: "boolean" },
-    className: { control: "text" },
-    maxVisible: { control: "number" },
+    items: {
+      description:
+        "Array of breadcrumb items, each with label and path. Example: [{ label: 'Home', href: '/' }]",
+      control: false,
+      table: { category: "Content" },
+    },
+    theme: {
+      description: "Theme color of the breadcrumbs.",
+      control: { type: "select" },
+      options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      description: "Rounding of the breadcrumb container/capsules.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      description: "Box shadow intensity for the breadcrumbs.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Appearance" },
+    },
+    state: {
+      description:
+        "Visual state for the breadcrumb (success, error, warning, etc).",
+      control: { type: "select" },
+      options: ["", ...stateOptions],
+      table: { category: "Appearance" },
+    },
+    separator: {
+      description:
+        "Custom separator element between breadcrumbs. Usually an icon or character.",
+      control: false,
+      table: { category: "Content" },
+    },
+    disabled: {
+      description: "If true, disables all breadcrumb links.",
+      control: "boolean",
+      table: { category: "Behavior" },
+    },
+    size: {
+      description: "Size of the breadcrumb (xs, small, medium, large, xl).",
+      control: { type: "select" },
+      options: sizeOptions,
+      table: { category: "Appearance" },
+    },
+    outline: {
+      description: "Display breadcrumbs with outline style.",
+      control: "boolean",
+      table: { category: "Appearance" },
+    },
+    className: {
+      description: "Custom CSS class for the breadcrumb container.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    maxVisible: {
+      description:
+        "Maximum number of breadcrumbs to display before collapsing/ellipsis.",
+      control: "number",
+      table: { category: "Behavior" },
+    },
   },
 };
 

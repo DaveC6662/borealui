@@ -29,6 +29,112 @@ const meta: Meta<TextInputProps> = {
     password: false,
     autocomplete: false,
   },
+  argTypes: {
+    value: {
+      control: "text",
+      description: "The current value of the input (for controlled usage).",
+      table: { category: "Data", type: { summary: "string" } },
+    },
+    defaultValue: {
+      control: "text",
+      description: "Default value of the input (for uncontrolled usage).",
+      table: { category: "Data", type: { summary: "string" } },
+    },
+    placeholder: {
+      control: "text",
+      description: "Placeholder text when input is empty.",
+      table: { category: "Appearance", type: { summary: "string" } },
+    },
+    password: {
+      control: "boolean",
+      description: "If true, renders an input of type 'password' with toggle.",
+      table: { category: "Behavior", defaultValue: { summary: "false" } },
+    },
+    readOnly: {
+      control: "boolean",
+      description: "If true, the input is read-only.",
+      table: { category: "Behavior", defaultValue: { summary: "false" } },
+    },
+    disabled: {
+      control: "boolean",
+      description: "If true, the input is disabled.",
+      table: { category: "Behavior", defaultValue: { summary: "false" } },
+    },
+    autocomplete: {
+      control: "boolean",
+      description: "Enables browser autocomplete if true.",
+      table: { category: "Behavior", defaultValue: { summary: "false" } },
+    },
+    outline: {
+      control: "boolean",
+      description: "Renders an outlined input variant.",
+      table: { category: "Appearance" },
+    },
+    icon: {
+      control: false,
+      description: "Optional icon component rendered in the input.",
+      table: { category: "Appearance", type: { summary: "React.ElementType" } },
+    },
+    theme: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme for input appearance.",
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      control: { type: "select" },
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for the input.",
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      control: { type: "select" },
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Box shadow style for the input.",
+      table: { category: "Appearance" },
+    },
+    state: {
+      control: { type: "select" },
+      options: ["", "success", "error", "warning"],
+      description: "Validation state appearance.",
+      table: { category: "Appearance" },
+    },
+    ariaLabel: {
+      control: "text",
+      description: "ARIA label for accessibility.",
+      table: { category: "Accessibility" },
+    },
+    ariaDescription: {
+      control: "text",
+      description: "ARIA description for screen readers.",
+      table: { category: "Accessibility" },
+    },
+    onChange: {
+      action: "changed",
+      description: "Called when the input value changes. Receives event.",
+      table: { category: "Events" },
+    },
+    onBlur: {
+      action: "blurred",
+      description: "Called when the input loses focus.",
+      table: { category: "Events" },
+    },
+    onFocus: {
+      action: "focused",
+      description: "Called when the input receives focus.",
+      table: { category: "Events" },
+    },
+    className: {
+      control: "text",
+      description: "Custom class name for the input.",
+      table: { category: "Advanced" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test ID for the root element (testing utilities).",
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

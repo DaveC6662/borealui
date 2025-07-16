@@ -26,19 +26,77 @@ const meta: Meta<EmptyStateProps> = {
     size: "medium",
   },
   argTypes: {
-    icon: { control: false },
-    title: { control: "text" },
-    message: { control: "text" },
-    actionLabel: { control: "text" },
-    onActionClick: { action: "action" },
-    theme: { control: "select", options: themeOptions },
-    state: { control: "select", options: stateOptions },
-    size: { control: "select", options: sizeOptions },
-    outline: { control: "boolean" },
-    rounding: { control: "select", options: roundingOptions },
-    shadow: { control: "select", options: shadowOptions },
-    className: { control: "text" },
-    "data-testid": { control: "text" },
+    icon: {
+      description: "Optional icon to display above the empty state message.",
+      control: false,
+      table: { category: "Visuals" },
+    },
+    title: {
+      description: "Main heading text for the empty state.",
+      control: "text",
+      table: { category: "Content" },
+    },
+    message: {
+      description: "Secondary message describing the empty state.",
+      control: "text",
+      table: { category: "Content" },
+    },
+    actionLabel: {
+      description: "Label for the primary action button (optional).",
+      control: "text",
+      table: { category: "Actions" },
+    },
+    onActionClick: {
+      description: "Callback when the action button is clicked.",
+      action: "action",
+      table: { category: "Actions" },
+    },
+    theme: {
+      description: "Visual theme for the empty state card.",
+      control: { type: "select" },
+      options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    state: {
+      description:
+        "State variant for feedback (e.g., success, error, warning).",
+      control: { type: "select" },
+      options: stateOptions,
+      table: { category: "Appearance" },
+    },
+    size: {
+      description: "Size of the card and text.",
+      control: { type: "select" },
+      options: sizeOptions,
+      table: { category: "Appearance" },
+    },
+    outline: {
+      description: "If true, renders with an outline.",
+      control: "boolean",
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      description: "Border radius style.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      description: "Shadow style for the card.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Appearance" },
+    },
+    className: {
+      description: "Custom CSS class for the container.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      description: "Custom test ID for end-to-end or unit testing.",
+      control: "text",
+      table: { category: "Advanced" },
+    },
   },
 };
 

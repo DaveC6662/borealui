@@ -2,16 +2,76 @@ import { Meta, StoryObj } from "@storybook/react";
 import { MarkdownRenderer } from "../src/index.core";
 import type { MarkdownRendererProps } from "../src/components/MarkdownRenderer/MarkdownRenderer.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
+import { BaseMarkdownRendererProps } from "../src/components/MarkdownRenderer/MarkdownRendererBase";
 
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
-const meta: Meta<MarkdownRendererProps> = {
+const meta: Meta<BaseMarkdownRendererProps> = {
   title: "Components/MarkdownRenderer",
   component: MarkdownRenderer,
   tags: ["autodocs"],
   args: {
     content: "# Welcome\n\nThis is a simple **markdown** demo.",
+  },
+  argTypes: {
+    content: {
+      control: "text",
+      description:
+        "Markdown content to render. Accepts any valid Markdown string.",
+      type: { name: "string", required: true },
+      table: {
+        category: "Content",
+        type: { summary: "string" },
+        defaultValue: { summary: "" },
+      },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS class to apply to the renderer container.",
+      type: { name: "string" },
+      table: {
+        category: "Appearance",
+        type: { summary: "string" },
+      },
+    },
+    rounding: {
+      control: "select",
+      options: ["none", "small", "medium", "large"],
+      description: "Sets border-radius of the container.",
+      type: { name: "string" },
+      table: {
+        category: "Appearance",
+        defaultValue: { summary: "none" },
+      },
+    },
+    shadow: {
+      control: "select",
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Sets shadow of the container.",
+      type: { name: "string" },
+      table: {
+        category: "Appearance",
+        defaultValue: { summary: "none" },
+      },
+    },
+    language: {
+      control: "text",
+      description: "Language attribute for accessibility and i18n.",
+      type: { name: "string" },
+      table: {
+        category: "Accessibility",
+        defaultValue: { summary: "en" },
+      },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Testing identifier for querying in tests.",
+      type: { name: "string" },
+      table: {
+        category: "Testing",
+      },
+    },
   },
 };
 
@@ -28,7 +88,7 @@ export const WithLinksAndLists: Story = {
 
 - Item 1
 - Item 2
-- [Visit BorealUI](https://boreal.ui)
+- [Visit BorealUI](https://www.borealui.ca)
 - \`Inline code\`
 
 > Blockquote
@@ -65,7 +125,7 @@ export const RoundingVariants = () =>
 
 - Item 1
 - Item 2
-- [Visit BorealUI](https://boreal.ui)
+- [Visit BorealUI](https://www.borealui.ca)
 - \`Inline code\`
 
 > Blockquote
@@ -84,7 +144,7 @@ export const ShadowVariants = () =>
 
 - Item 1
 - Item 2
-- [Visit BorealUI](https://boreal.ui)
+- [Visit BorealUI](https://www.borealui.ca)
 - \`Inline code\`
 
 > Blockquote

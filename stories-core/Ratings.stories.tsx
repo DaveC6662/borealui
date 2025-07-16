@@ -22,6 +22,73 @@ const meta: Meta<RatingProps> = {
     theme: "primary",
     size: "medium",
   },
+  argTypes: {
+    value: {
+      control: { type: "number" },
+      description: "The current rating value (number of filled stars).",
+      table: { category: "Main", defaultValue: { summary: "0" } },
+      type: { name: "number", required: false },
+    },
+    onChange: {
+      action: "changed",
+      description: "Callback fired when the user selects a new rating.",
+      table: { category: "Events" },
+      type: { name: "function" },
+    },
+    max: {
+      control: { type: "number", min: 1, max: 10, step: 1 },
+      description: "Total number of rating icons to display.",
+      table: { category: "Main", defaultValue: { summary: "5" } },
+      type: { name: "number", required: false },
+    },
+    size: {
+      control: { type: "select" },
+      options: ["xs", "small", "medium", "large", "xl"],
+      description: "Icon size for rating (e.g. small, medium, large).",
+      table: { category: "Appearance", defaultValue: { summary: "medium" } },
+      type: { name: "string", required: false },
+    },
+    interactive: {
+      control: "boolean",
+      description:
+        "If false, disables interaction and makes the rating read-only.",
+      table: { category: "Main", defaultValue: { summary: "true" } },
+      type: { name: "boolean", required: false },
+    },
+    theme: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Color theme for the filled rating icons.",
+      table: { category: "Appearance", defaultValue: { summary: "primary" } },
+      type: { name: "string", required: false },
+    },
+    state: {
+      control: { type: "select" },
+      options: ["", "success", "error", "warning"],
+      description:
+        "Visual state indicator for rating (success, error, warning).",
+      table: { category: "Appearance" },
+      type: { name: "string", required: false },
+    },
+    label: {
+      control: "text",
+      description: "Label for screen readers describing the rating input.",
+      table: { category: "Accessibility" },
+      type: { name: "string", required: false },
+    },
+    className: {
+      control: "text",
+      description: "Custom class name for the rating wrapper.",
+      table: { category: "Advanced" },
+      type: { name: "string", required: false },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for querying the component in tests.",
+      type: { name: "string" },
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

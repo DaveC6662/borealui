@@ -14,9 +14,15 @@ const meta: Meta<DividerProps> = {
     theme: "primary",
   },
   argTypes: {
-    orientation: { control: "select", options: ["horizontal", "vertical"] },
+    orientation: {
+      description: "Orientation of the divider: horizontal or vertical.",
+      control: { type: "select" },
+      options: ["horizontal", "vertical"],
+      table: { category: "Appearance" },
+    },
     theme: {
-      control: "select",
+      description: "Color theme of the divider.",
+      control: { type: "select" },
       options: [
         "primary",
         "secondary",
@@ -27,14 +33,45 @@ const meta: Meta<DividerProps> = {
         "error",
         "warning",
       ],
+      table: { category: "Appearance" },
     },
-    length: { control: "text" },
-    thickness: { control: "text" },
-    dashed: { control: "boolean" },
-    as: { control: "text" },
-    className: { control: "text" },
-    state: { control: "select", options: ["", "success", "error", "warning"] },
-    "data-testid": { control: "text" },
+    state: {
+      description: "Visual state style (success, error, warning).",
+      control: { type: "select" },
+      options: ["", "success", "error", "warning"],
+      table: { category: "Appearance" },
+    },
+    length: {
+      description: "Length of the divider (CSS value: px, %, rem, etc.).",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    thickness: {
+      description: "Thickness of the divider line (CSS value: px, em, etc.).",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    dashed: {
+      description: "Display a dashed line instead of solid.",
+      control: "boolean",
+      table: { category: "Appearance" },
+    },
+    as: {
+      description:
+        "Render as a specific HTML element (e.g., 'hr', 'div', 'span').",
+      control: "text",
+      table: { category: "Advanced" },
+    },
+    className: {
+      description: "Custom CSS class for the divider.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      description: "Test id for the divider element.",
+      control: "text",
+      table: { category: "Testing" },
+    },
   },
 };
 

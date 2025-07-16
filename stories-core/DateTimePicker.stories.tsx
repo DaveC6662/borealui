@@ -27,24 +27,87 @@ const meta: Meta<DateTimePickerProps> = {
     size: "medium",
   },
   argTypes: {
-    value: { control: "text" },
-    onChange: { action: "changed" },
-    theme: { control: "select", options: themeOptions },
-    state: { control: "select", options: ["", ...stateOptions] },
-    rounding: { control: "select", options: roundingOptions },
-    shadow: { control: "select", options: shadowOptions },
-    size: {
-      control: "select",
-      options: ["xs", "small", "medium", "large", "xl"],
+    value: {
+      description:
+        "The current value of the picker (ISO string, Date object, or formatted).",
+      control: "text",
+      table: { category: "Main" },
     },
-    outline: { control: "boolean" },
-    required: { control: "boolean" },
-    disabled: { control: "boolean" },
-    label: { control: "text" },
-    min: { control: "text" },
-    max: { control: "text" },
-    className: { control: "text" },
-    "data-testid": { control: "text" },
+    onChange: {
+      description: "Callback fired when the value changes.",
+      action: "changed",
+      table: { category: "Events" },
+    },
+    theme: {
+      description: "Theme variant for the picker.",
+      control: { type: "select" },
+      options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    state: {
+      description: "Visual state for the picker (success, error, warning).",
+      control: { type: "select" },
+      options: ["", ...stateOptions],
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      description: "Corner rounding style.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      description: "Box shadow style.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Appearance" },
+    },
+    size: {
+      description: "Size of the input and popover (xs-xl).",
+      control: { type: "select" },
+      options: ["xs", "small", "medium", "large", "xl"],
+      table: { category: "Appearance" },
+    },
+    outline: {
+      description: "Display with outline style.",
+      control: "boolean",
+      table: { category: "Appearance" },
+    },
+    required: {
+      description: "Whether selection is required.",
+      control: "boolean",
+      table: { category: "Input" },
+    },
+    disabled: {
+      description: "Disable the input.",
+      control: "boolean",
+      table: { category: "Input" },
+    },
+    label: {
+      description: "Label displayed above or beside the input.",
+      control: "text",
+      table: { category: "Input" },
+    },
+    min: {
+      description: "Minimum selectable date/time (ISO string or Date).",
+      control: "text",
+      table: { category: "Input" },
+    },
+    max: {
+      description: "Maximum selectable date/time (ISO string or Date).",
+      control: "text",
+      table: { category: "Input" },
+    },
+    className: {
+      description: "Custom CSS class for the picker.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      description: "Test id for the component container.",
+      control: "text",
+      table: { category: "Testing" },
+    },
   },
 };
 

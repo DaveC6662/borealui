@@ -29,6 +29,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   theme = defaultTheme,
   rounding = defaultRounding,
   shadow = defaultShadow,
+  "data-testid": testId = "empty-state",
 }) => {
   const wrapperClass = useMemo(
     () => combineClassNames(classMap.container, classMap[theme]),
@@ -50,7 +51,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
       role="navigation"
       aria-label="Main navigation"
       className={wrapperClass}
-      data-testid="nav-bar"
+      data-testid={`${testId}-nav-bar`}
     >
       {items.map((item, index) => {
         const isActive = currentPath === item.path;
@@ -69,13 +70,13 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
               itemClass,
               isActive && classMap["item--active"]
             )}
-            testId={`nav-item-${item.label.toLowerCase()}`}
+            testId={`${testId}-nav-item-${item.label.toLowerCase()}`}
             aria-current={isActive ? "page" : undefined}
           >
             <div
               className={classMap.icon}
               aria-hidden="true"
-              data-testid={`nav-icon-${item.label.toLowerCase()}`}
+              data-testid={`${testId}-nav-icon-${item.label.toLowerCase()}`}
             >
               {item.icon}
             </div>

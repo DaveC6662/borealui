@@ -26,6 +26,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   rounding = defaultRounding,
   "data-testid": testId = "stepper",
   classMap,
+  className,
   IconButtonComponent,
 }) => {
   const stepCount = steps.length;
@@ -38,7 +39,8 @@ const StepperBase: React.FC<StepperBaseProps> = ({
         classMap[orientation],
         classMap[theme],
         classMap[state],
-        classMap[size]
+        classMap[size],
+        className
       )}
       role="list"
       aria-labelledby={groupLabelId}

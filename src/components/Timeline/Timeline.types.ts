@@ -56,4 +56,9 @@ export interface TimelineProps {
    * Optional test ID for testing purposes.
    */
   "data-testid"?: string;
+
+  /**
+   * Additional CSS class names for custom styling.
+   */
+  className?: string;
 }

@@ -31,18 +31,71 @@ const meta: Meta<CommandPaletteProps> = {
     ),
   ],
   argTypes: {
-    isOpen: { control: "boolean" },
-    onClose: { action: "closed" },
-    commands: { control: false },
-    placeholder: { control: "text" },
-    theme: { control: "select", options: themeOptions },
-    state: { control: "select", options: ["", ...stateOptions] },
-    rounding: { control: "select", options: roundingOptions },
-    shadow: { control: "select", options: shadowOptions },
-    asyncSearch: { control: false },
-    debounceMs: { control: "number" },
-    className: { control: "text" },
-    "data-testid": { control: "text" },
+    isOpen: {
+      description: "Controls whether the command palette is open.",
+      control: "boolean",
+      table: { category: "State" },
+    },
+    onClose: {
+      description:
+        "Callback fired when the palette closes (e.g., Escape or click outside).",
+      action: "closed",
+      table: { category: "Events" },
+    },
+    commands: {
+      description: "Array of available commands to show in the palette.",
+      control: false,
+      table: { category: "Main" },
+    },
+    placeholder: {
+      description: "Placeholder text for the search input.",
+      control: "text",
+      table: { category: "Content" },
+    },
+    theme: {
+      description: "Theme variant for the command palette.",
+      control: { type: "select" },
+      options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    state: {
+      description: "Visual state variant (success, warning, error, etc.).",
+      control: { type: "select" },
+      options: ["", ...stateOptions],
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      description: "Corner rounding of the palette dialog.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      description: "Box shadow style for the palette dialog.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Appearance" },
+    },
+    asyncSearch: {
+      description: "Optional async search function for dynamic filtering.",
+      control: false,
+      table: { category: "Advanced" },
+    },
+    debounceMs: {
+      description: "Debounce time (ms) for the search input.",
+      control: "number",
+      table: { category: "Performance" },
+    },
+    className: {
+      description: "Additional CSS class for the palette container.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      description: "Test id for the palette container.",
+      control: "text",
+      table: { category: "Testing" },
+    },
   },
 };
 

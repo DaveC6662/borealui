@@ -1,6 +1,6 @@
 import React, { JSX, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
-import { ToolbarProps } from "./Toolbar.types";
+import { ToolbarBaseProps, ToolbarProps } from "./Toolbar.types";
 import { capitalize } from "../../utils/capitalize";
 import {
   defaultRounding,
@@ -8,14 +8,7 @@ import {
   defaultTheme,
 } from "../../config/boreal-style-config";
 
-export const ToolbarBase: React.FC<
-  ToolbarProps & {
-    AvatarComponent: React.FC<any>;
-    classMap: Record<string, string>;
-    ariaLabel?: string;
-    headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
-  }
-> = ({
+export const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   title,
   left,
   center,

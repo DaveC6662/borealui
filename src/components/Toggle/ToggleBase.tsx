@@ -26,6 +26,7 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       size = defaultSize,
       disabled = false,
       classMap,
+      className,
       "data-testid": testId = "toggle",
     },
     ref
@@ -49,7 +50,8 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
           classMap[state],
           classMap[size],
           rounding && classMap[`round${capitalize(rounding)}`],
-          disabled && classMap.disabled
+          disabled && classMap.disabled,
+          className
         ),
       [classMap, size, disabled, shadow, rounding, theme, state]
     );

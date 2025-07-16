@@ -35,4 +35,7 @@ export interface NavBarProps {
    * One of: "none" | "light" | "medium" | "strong" | "intense"
    */
   shadow?: ShadowType;
+
+  /** Optional test ID for testing frameworks. */
+  "data-testid"?: string;
 }

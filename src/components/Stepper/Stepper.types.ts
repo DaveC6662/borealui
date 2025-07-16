@@ -61,4 +61,8 @@ export interface StepperProps {
   size?: SizeType;
   /** Optional test ID for testing purposes. */
   "data-testid"?: string;
+  /**
+   * Additional class names for styling customization.
+   */
+  className?: string;
 }

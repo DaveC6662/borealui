@@ -13,6 +13,80 @@ const meta: Meta<PaginationProps> = {
     size: "small",
     theme: "primary",
   },
+  argTypes: {
+    totalItems: {
+      control: { type: "number", min: 1 },
+      description: "Total number of items in the full data set.",
+      table: { category: "Data", defaultValue: { summary: "20" } },
+      type: { name: "number", required: true },
+    },
+    itemsPerPage: {
+      control: { type: "number", min: 1 },
+      description: "Number of items to display per page.",
+      table: { category: "Data", defaultValue: { summary: "2" } },
+      type: { name: "number", required: true },
+    },
+    currentPage: {
+      control: { type: "number", min: 1 },
+      description: "Current active page number (1-based).",
+      table: { category: "State" },
+      type: { name: "number", required: true },
+    },
+    onPageChange: {
+      action: "pageChanged",
+      description:
+        "Callback fired with new page number when user changes page.",
+      table: { category: "Actions" },
+      type: { name: "function", required: true },
+    },
+    serverControlled: {
+      control: "boolean",
+      description:
+        "If true, disables client-side page list and only renders prev/next/current. Use for server-side paging.",
+      table: { category: "Advanced", defaultValue: { summary: "false" } },
+    },
+    theme: {
+      control: "select",
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme color variant for Pager buttons.",
+      table: { category: "Appearance", defaultValue: { summary: "primary" } },
+    },
+    state: {
+      control: "select",
+      options: ["", "success", "error", "warning"],
+      description: "Optional state coloring for Pager controls.",
+      table: { category: "Appearance", defaultValue: { summary: "" } },
+    },
+    size: {
+      control: "select",
+      options: ["xs", "small", "medium", "large", "xl"],
+      description: "Size of the Pager buttons and controls.",
+      table: { category: "Appearance", defaultValue: { summary: "small" } },
+    },
+    rounding: {
+      control: "select",
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for Pager buttons.",
+      table: { category: "Appearance", defaultValue: { summary: "none" } },
+    },
+    shadow: {
+      control: "select",
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow for Pager buttons.",
+      table: { category: "Appearance", defaultValue: { summary: "none" } },
+    },
+    className: {
+      control: "text",
+      description: "Additional custom class names for the Pager container.",
+      table: { category: "Advanced" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for querying the component in tests.",
+      type: { name: "string" },
+      table: { category: "Testing" },
+    },
+  },
 };
 
 const roundingOptions = ["none", "small", "medium", "large"] as const;

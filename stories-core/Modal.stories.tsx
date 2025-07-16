@@ -19,6 +19,48 @@ const meta: Meta<ModalProps> = {
       </>
     ),
   ],
+  argTypes: {
+    children: {
+      control: false,
+      description:
+        "Content to display inside the modal (JSX elements or string).",
+      type: { name: "string", required: false },
+      table: { category: "Content", type: { summary: "ReactNode" } },
+    },
+    rounding: {
+      control: "select",
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for modal corners.",
+      type: { name: "string" },
+      table: { category: "Style", defaultValue: { summary: "none" } },
+    },
+    shadow: {
+      control: "select",
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow depth for the modal surface.",
+      type: { name: "string" },
+      table: { category: "Style", defaultValue: { summary: "none" } },
+    },
+    className: {
+      control: "text",
+      description: "Custom CSS class for the modal content container.",
+      type: { name: "string" },
+      table: { category: "Style" },
+    },
+    onClose: {
+      action: "closed",
+      description:
+        "Callback fired when the modal is requested to close (backdrop click, escape key, or close button).",
+      type: { name: "function", required: true },
+      table: { category: "Events", type: { summary: "() => void" } },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for querying the component in tests.",
+      type: { name: "string" },
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

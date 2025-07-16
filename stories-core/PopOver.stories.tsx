@@ -10,6 +10,67 @@ const meta: Meta<PopoverProps> = {
     placement: "bottom",
     theme: "primary",
   },
+  argTypes: {
+    trigger: {
+      control: false,
+      description: "Element that triggers the popover when clicked/focused.",
+      table: { category: "Content", type: { summary: "ReactNode" } },
+      type: { name: "string", required: true },
+    },
+    content: {
+      control: false,
+      description: "Content shown inside the popover.",
+      table: { category: "Content", type: { summary: "ReactNode" } },
+      type: { name: "string", required: true },
+    },
+    placement: {
+      control: { type: "select" },
+      options: ["top", "right", "bottom", "left"],
+      description: "Position of the popover relative to the trigger.",
+      table: { category: "Position", defaultValue: { summary: "bottom" } },
+      type: { name: "string" },
+    },
+    theme: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme color variant.",
+      table: { category: "Appearance", defaultValue: { summary: "primary" } },
+      type: { name: "string" },
+    },
+    state: {
+      control: { type: "select" },
+      options: ["", "success", "error", "warning"],
+      description: "Optional state variant for emphasis.",
+      table: { category: "Appearance" },
+      type: { name: "string" },
+    },
+    rounding: {
+      control: { type: "select" },
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for the popover container.",
+      table: { category: "Appearance", defaultValue: { summary: "none" } },
+      type: { name: "string" },
+    },
+    shadow: {
+      control: { type: "select" },
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Box-shadow for the popover container.",
+      table: { category: "Appearance", defaultValue: { summary: "none" } },
+      type: { name: "string" },
+    },
+    className: {
+      control: "text",
+      description: "Custom class name for the popover container.",
+      table: { category: "Advanced" },
+      type: { name: "string" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for querying the component in tests.",
+      type: { name: "string" },
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

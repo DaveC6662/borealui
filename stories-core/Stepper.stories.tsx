@@ -24,6 +24,91 @@ const meta: Meta<StepperProps> = {
     size: "medium",
     steps,
   },
+  argTypes: {
+    steps: {
+      control: { type: "object" },
+      description:
+        "Array of step objects to display. Each step typically contains a label, optional icon, and completed state.",
+      table: {
+        category: "Data",
+        type: { summary: "Step[]" },
+        defaultValue: { summary: "[]" },
+      },
+    },
+    activeStep: {
+      control: { type: "number", min: 0 },
+      description: "Index of the currently active step (0-based).",
+      table: {
+        category: "State",
+        type: { summary: "number" },
+        defaultValue: { summary: "0" },
+      },
+    },
+    onStepClick: {
+      action: "step-click",
+      description:
+        "Callback fired when a step is clicked. Receives the step index.",
+      table: { category: "Events" },
+    },
+    disableBackNavigation: {
+      control: { type: "boolean" },
+      description: "Disables navigation to previous steps.",
+      table: {
+        category: "Behavior",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    orientation: {
+      control: { type: "radio" },
+      options: ["horizontal", "vertical"],
+      description: "Layout orientation for steps.",
+      table: {
+        category: "Appearance",
+        defaultValue: { summary: "horizontal" },
+      },
+    },
+    theme: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme color variant.",
+      table: { category: "Appearance", defaultValue: { summary: "primary" } },
+    },
+    state: {
+      control: { type: "select" },
+      options: ["", "success", "error", "warning"],
+      description: "Visual state variant for the component.",
+      table: { category: "Appearance" },
+    },
+    size: {
+      control: { type: "select" },
+      options: ["xs", "small", "medium", "large", "xl"],
+      description: "Size of the stepper and step buttons.",
+      table: { category: "Appearance", defaultValue: { summary: "medium" } },
+    },
+    shadow: {
+      control: { type: "select" },
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow intensity for the stepper container.",
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      control: { type: "select" },
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for stepper and steps.",
+      table: { category: "Appearance" },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS class names to apply to the stepper root.",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Custom test ID for the root element.",
+      table: { category: "Testing" },
+    },
+  },
 };
 
 const themeOptions = [
