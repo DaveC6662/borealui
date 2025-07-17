@@ -15,8 +15,6 @@ Offers both Core (framework-agnostic React) and Next.js-optimized variants for s
   WCAG-friendly out of the box. Includes keyboard navigation, ARIA roles, and robust focus states.
 - **Rich Component Set:**  
   Buttons, IconButtons, Cards, Accordions, Modals, Tabs, DataTable, Avatar, Badge, Tooltip, FileUpload, EmptyState, and more.
-- **Live Docs & Playground:**  
-  Explore components interactively with Storybook (`/storybook`).
 - **TypeScript Native:**  
   All components include full prop typing and interfaces for an exceptional developer experience.
 
@@ -52,7 +50,7 @@ import { Card } from "boreal-ui/next/Card";
 
 ---
 
-## 🛠️ Global Configuration
+## Global Configuration
 
 Boreal UI lets you define project-wide style defaults (theme, rounding, shadow, size) in a single config file.
 
@@ -137,7 +135,7 @@ export default function RootLayout({ children }) {
 2. Create a feature branch: `git checkout -b feat/my-component`
 3. Commit your changes: `git commit -m "Add MyComponent"`
 4. Push to your fork: `git push origin feat/my-component`
-5. Open a Pull Request (see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines).
+5. Open a Pull Request.
 
 **Please include tests, Storybook stories, and clear documentation for new components.**
 
