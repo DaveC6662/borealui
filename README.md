@@ -1,88 +1,148 @@
 # Boreal UI
 
-A highly customizable, accessible React and Next.js component library with SCSS-based theming and support for both Core (framework-agnostic) and Next.js-optimized variants.
+A **highly customizable**, **accessible** React and Next.js component library with SCSS-powered theming.  
+Offers both Core (framework-agnostic React) and Next.js-optimized variants for seamless integration in any project.
+
+---
 
 ## Features
 
-- **Core & Next.js Variants**: Use `boreal-ui/core` for plain React or `boreal-ui/next` for Next.js-optimized components (with built‑in `<Image>` support).
-- **Theming**: SCSS variables for colors, typography, spacing, and borders — easily override to match your brand.
-- **Accessibility**: WCAG‑friendly defaults, keyboard navigation, and ARIA roles out of the box.
-- **Comprehensive Components**: Buttons, IconButtons, Cards, Accordions, Modals, Tabs, DataTable, Avatar, Badge, Tooltip, FileUpload, and more.
-- **Testing**: Includes Jest unit tests and Cypress integration tests for confidence in your UI.
-- **Storybook**: Live component playground and documentation at `/storybook`.
-- **TypeScript Ready**: Fully typed props and interfaces.
+- **Dual Build Support:**  
+  Use `boreal-ui/core` for any React project or `boreal-ui/next` for Next.js apps.
+- **SCSS-Based Theming:**  
+  Override color, typography, spacing, border, and shadow variables to perfectly match your brand.
+- **Accessibility First:**  
+  WCAG-friendly out of the box. Includes keyboard navigation, ARIA roles, and robust focus states.
+- **Rich Component Set:**  
+  Buttons, IconButtons, Cards, Accordions, Modals, Tabs, DataTable, Avatar, Badge, Tooltip, FileUpload, EmptyState, and more.
+- **Live Docs & Playground:**  
+  Explore components interactively with Storybook (`/storybook`).
+- **TypeScript Native:**  
+  All components include full prop typing and interfaces for an exceptional developer experience.
+
+---
 
 ## Installation
 
 ```bash
 npm install boreal-ui
-# or with Yarn
+# or
 yarn add boreal-ui
 ```
 
-## Usage
+---
+
+## Quick Usage
 
 ### Importing Components
 
-**React (Core)**
+**For React (Core):**
 
 ```tsx
 import { Button } from "boreal-ui/core/Button";
 import { Card } from "boreal-ui/core/Card";
 ```
 
-**Next.js (Optimized)**
+**For Next.js (Optimized):**
 
 ```tsx
 import { Button } from "boreal-ui/next/Button";
 import { Card } from "boreal-ui/next/Card";
 ```
 
-### Theming
+---
 
-Override default SCSS variables by editing `src/styles/theme.scss`:
+## 🛠️ Global Configuration
 
-```scss
-// theme.scss
-enable-light-mode: true;
-$primary-color: #1c4d3a;
-$secondary-color: #6e502e;
-$text-color: #ffffff;
-$spacing-base: 16px;
-// ...etc.
+Boreal UI lets you define project-wide style defaults (theme, rounding, shadow, size) in a single config file.
+
+**Create your config (e.g. `src/config/boreal-style-config.ts`):**
+
+```ts
+export const defaultTheme = "primary"; // "primary" | "secondary" | "tertiary" |"quaternary"
+export const defaultRounding = "medium"; // "none" | "small" | "medium" | "large" | "full"
+export const defaultShadow = "light"; // "none" | "light" | "medium" | "strong" | "intense"
+export const defaultSize = "medium"; // "xs" | "small" | "medium" | "large" | "xl"
 ```
 
-Then import your theme at the entrypoint:
+These defaults apply globally, but you can override them per component as needed:
 
-```scss
-@use "boreal-ui/styles/theme" as theme;
-@use "boreal-ui/styles/globals";
+```tsx
+<Button theme="secondary" size="large" shadow="strong">
+  Custom Button
+</Button>
 ```
 
-## Running Locally
+---
 
-```bash
-# Install deps
-yarn install
+## Theming & Custom Color Schemes
 
-# Start Storybook
-yarn storybook
+Boreal UI supports custom color schemes through the `ThemeProvider`.
 
-# Run tests
-yarn test      # Jest
-yarn cypress:open # Cypress
+**Wrap your app (typically in `_app.tsx` or a custom provider):**
+
+```tsx
+"use client";
+import { ThemeProvider } from "boreal-ui";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <ThemeProvider
+          customSchemes={[
+            {
+              name: "Cyberpunk Pulse",
+              primaryColor: "#ff006e",
+              secondaryColor: "#8338ec",
+              tertiaryColor: "#3a0ca3",
+              quaternaryColor: "#fb5607",
+              backgroundColor: "#0f0f0f",
+            },
+          ]}
+        >
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
 ```
+
+**Theme property reference:**
+
+| Property          | Description                      |
+| ----------------- | -------------------------------- |
+| `name`            | Unique identifier for the scheme |
+| `primaryColor`    | Main UI color                    |
+| `secondaryColor`  | Accent color                     |
+| `tertiaryColor`   | Additional accent                |
+| `quaternaryColor` | Optional border/highlight        |
+| `backgroundColor` | Background/base color            |
+
+---
+
+## Why Use Boreal UI?
+
+- Enforces consistent styling and branding across your project.
+- Save time: define defaults once, override only when needed.
+- Switch between multiple color schemes easily (great for light/dark mode).
+- Fully accessible and ready for production.
+
+---
 
 ## Contributing
 
-1. Fork this repo
-2. Create a branch: `git checkout -b feat/my-component`
-3. Commit: `git commit -m "Add MyComponent"`
-4. Push: `git push origin feat/my-component`
-5. Open a PR and follow the [Contribution Guidelines](CONTRIBUTING.md).
+1. Fork this repo.
+2. Create a feature branch: `git checkout -b feat/my-component`
+3. Commit your changes: `git commit -m "Add MyComponent"`
+4. Push to your fork: `git push origin feat/my-component`
+5. Open a Pull Request (see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines).
 
-Please include tests, Storybook stories, and documentation for new components.
+**Please include tests, Storybook stories, and clear documentation for new components.**
+
+---
 
 ## License
 
-MIT © Davin Chiupka
+MIT © [Davin Chiupka](https://davinchiupka.com)
