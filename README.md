@@ -52,16 +52,21 @@ import { Card } from "boreal-ui/next/Card";
 
 ## Global Configuration
 
-Boreal UI lets you define project-wide style defaults (theme, rounding, shadow, size) in a single config file.
+Boreal UI lets you define project-wide style defaults (theme, rounding, shadow, size) in a single config API.
 
-**Create your config (e.g. `src/config/boreal-style-config.ts`):**
+**Call the config API**
 
-```ts
-export const defaultTheme = "primary"; // "primary" | "secondary" | "tertiary" |"quaternary"
-export const defaultRounding = "medium"; // "none" | "small" | "medium" | "large" | "full"
-export const defaultShadow = "light"; // "none" | "light" | "medium" | "strong" | "intense"
-export const defaultSize = "medium"; // "xs" | "small" | "medium" | "large" | "xl"
-```
+````ts
+import { setBorealStyleConfig } from "boreal-ui/config/boreal-style-config";
+
+setBorealStyleConfig({
+  defaultTheme: "secondary",     // "primary" | "secondary" | "tertiary" | "quaternary"
+  defaultRounding: "medium",     // "none" | "small" | "medium" | "large" | "full"
+  defaultShadow: "light",        // "none" | "light" | "medium" | "strong" | "intense"
+  defaultSize: "large",          // "xs" | "small" | "medium" | "large" | "xl"
+});
+
+Call this once early in your app before rendering any components.
 
 These defaults apply globally, but you can override them per component as needed:
 
@@ -69,7 +74,7 @@ These defaults apply globally, but you can override them per component as needed
 <Button theme="secondary" size="large" shadow="strong">
   Custom Button
 </Button>
-```
+````
 
 ---
 
