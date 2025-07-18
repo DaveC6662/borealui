@@ -3,9 +3,9 @@ import { TimelineProps } from "./Timeline.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 const TimelineBase: React.FC<
@@ -13,9 +13,9 @@ const TimelineBase: React.FC<
 > = ({
   items,
   orientation = "vertical",
-  theme = defaultTheme,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  theme = getDefaultTheme(),
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   classMap,
   className,
   "data-testid": testId = "timeline",

@@ -5,6 +5,7 @@ export type BorealStyleConfig = {
   defaultRounding: RoundingType;
   defaultShadow: ShadowType;
   defaultSize: SizeType;
+  defaultColorSchemeName: string;
 };
 
 const fallback: BorealStyleConfig = {
@@ -12,17 +13,26 @@ const fallback: BorealStyleConfig = {
   defaultRounding: "medium",
   defaultShadow: "light",
   defaultSize: "medium",
+  defaultColorSchemeName: "Forest Dusk",
 };
 
 let userConfig: Partial<BorealStyleConfig> = {};
 
-if (typeof window !== "undefined" && (window as any).__BOREAL_UI_CONFIG__) {
-  userConfig = (window as any).__BOREAL_UI_CONFIG__;
-}
+export const setBorealStyleConfig = (config: Partial<BorealStyleConfig>) => {
+  userConfig = config;
+};
 
-export const defaultTheme = userConfig.defaultTheme ?? fallback.defaultTheme;
-export const defaultRounding =
+export const getDefaultTheme = (): ThemeType =>
+  userConfig.defaultTheme ?? fallback.defaultTheme;
+
+export const getDefaultRounding = (): RoundingType =>
   userConfig.defaultRounding ?? fallback.defaultRounding;
-export const defaultShadow = userConfig.defaultShadow ?? fallback.defaultShadow;
-export const defaultSize = userConfig.defaultSize ?? fallback.defaultSize;
-export const defaultColorSchemeName = "Forest Dusk";
+
+export const getDefaultShadow = (): ShadowType =>
+  userConfig.defaultShadow ?? fallback.defaultShadow;
+
+export const getDefaultSize = (): SizeType =>
+  userConfig.defaultSize ?? fallback.defaultSize;
+
+export const getDefaultColorSchemeName = (): string =>
+  userConfig.defaultColorSchemeName ?? fallback.defaultColorSchemeName;

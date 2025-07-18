@@ -3,10 +3,10 @@ import { EmptyStateProps } from "./EmptyState.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface BaseEmptyStateProps extends EmptyStateProps {
@@ -18,11 +18,11 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   icon: Icon,
   title = "Nothing Here Yet",
   message = "There’s no content to display.",
-  theme = defaultTheme,
+  theme = getDefaultTheme(),
   state = "",
-  size = defaultSize,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  size = getDefaultSize(),
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   outline = false,
   actionLabel,
   onActionClick,

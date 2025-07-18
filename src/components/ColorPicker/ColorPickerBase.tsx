@@ -2,7 +2,10 @@ import React, { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import type { ColorPickerProps } from "./ColorPicker.types";
 import { capitalize } from "../../utils/capitalize";
-import { defaultShadow, defaultSize } from "../../config/boreal-style-config";
+import {
+  getDefaultShadow,
+  getDefaultSize,
+} from "../../config/boreal-style-config";
 
 export interface ColorPickerBaseProps extends ColorPickerProps {
   classMap: Record<string, string>;
@@ -15,8 +18,8 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   onChange,
   name = "color-picker",
   disabled = false,
-  size = defaultSize,
-  shadow = defaultShadow,
+  size = getDefaultSize(),
+  shadow = getDefaultShadow(),
   shape = "round",
   allowCustom = false,
   className = "",

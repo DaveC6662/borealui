@@ -3,9 +3,9 @@ import { PopoverProps } from "./PopOver.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface BasePopoverProps extends PopoverProps {
@@ -16,9 +16,9 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   trigger,
   content,
   placement = "bottom",
-  theme = defaultTheme,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  theme = getDefaultTheme(),
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   state = "",
   className = "",
   "data-testid": testId = "popover",

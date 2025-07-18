@@ -10,9 +10,9 @@ import { TextInputProps } from "./TextInput.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 const TextInputBase = forwardRef<
@@ -30,9 +30,9 @@ const TextInputBase = forwardRef<
       readOnly = false,
       ariaLabel,
       ariaDescription,
-      theme = defaultTheme,
-      rounding = defaultRounding,
-      shadow = defaultShadow,
+      theme = getDefaultTheme(),
+      rounding = getDefaultRounding(),
+      shadow = getDefaultShadow(),
       state = "",
       disabled = false,
       autocomplete = false,

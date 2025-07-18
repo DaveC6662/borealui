@@ -11,8 +11,8 @@ import { ModalProps } from "./Modal.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
+  getDefaultRounding,
+  getDefaultShadow,
 } from "../../config/boreal-style-config";
 
 export interface BaseModalProps extends ModalProps {
@@ -24,8 +24,8 @@ export interface BaseModalProps extends ModalProps {
 const BaseModal: React.FC<BaseModalProps> = ({
   className = "",
   children,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   onClose,
   "data-testid": testId = "modal",
   IconButton,

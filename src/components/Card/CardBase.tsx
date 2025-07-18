@@ -3,10 +3,10 @@ import { ActionButton, CardProps } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 type ExtendedActionButton = ActionButton & {
@@ -26,13 +26,13 @@ export interface CardBaseProps extends CardProps {
 }
 
 const CardBase: React.FC<CardBaseProps> = ({
-  theme = defaultTheme,
+  theme = getDefaultTheme(),
   state = "",
   cardIcon,
   title = "",
   description = "",
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   imageUrl,
   imageAlt,
   className = "",
@@ -41,7 +41,7 @@ const CardBase: React.FC<CardBaseProps> = ({
   bodyClassName = "",
   footerClassName = "",
   outline = false,
-  size = defaultSize,
+  size = getDefaultSize(),
   align = "center",
   renderHeader,
   renderContent,

@@ -5,7 +5,7 @@ import {
   getAllColorSchemes,
   registerColorScheme,
 } from "../styles/colorSchemeRegistry";
-import { defaultColorSchemeName } from "../config/boreal-style-config";
+import { getDefaultColorSchemeName } from "../config/boreal-style-config";
 import { colorSchemes } from "../styles/Themes";
 import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
 
@@ -14,7 +14,7 @@ export const ThemeContext = createContext<ThemeContextType | undefined>(
 );
 
 const fallbackIndex = colorSchemes.findIndex(
-  (scheme) => scheme.name === defaultColorSchemeName
+  (scheme) => scheme.name === getDefaultColorSchemeName()
 );
 const defaultIndex = fallbackIndex !== -1 ? fallbackIndex : 0;
 
@@ -26,7 +26,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   if (fallbackIndex === -1 && process.env.NODE_ENV === "development") {
     console.warn(
-      `Default color scheme "${defaultColorSchemeName}" not found. Falling back to index 0.`
+      `Default color scheme "${getDefaultColorSchemeName()}" not found. Falling back to index 0.`
     );
   }
 

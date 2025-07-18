@@ -3,9 +3,9 @@ import { combineClassNames } from "../../utils/classNames";
 import { TextAreaProps } from "./TextArea.types";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 const TextAreaBase = forwardRef<
@@ -19,9 +19,9 @@ const TextAreaBase = forwardRef<
       readOnly = false,
       outline = false,
       autoComplete = "off",
-      theme = defaultTheme,
-      rounding = defaultRounding,
-      shadow = defaultShadow,
+      theme = getDefaultTheme(),
+      rounding = getDefaultRounding(),
+      shadow = getDefaultShadow(),
       state = "",
       ariaLabel,
       ariaDescription,

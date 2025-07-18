@@ -2,10 +2,10 @@ import React from "react";
 import { StepperProps } from "./Stepper.types";
 import { combineClassNames } from "../../utils/classNames";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface StepperBaseProps extends StepperProps {
@@ -19,11 +19,11 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   onStepClick,
   disableBackNavigation = false,
   orientation = "horizontal",
-  theme = defaultTheme,
+  theme = getDefaultTheme(),
   state = "",
-  size = defaultSize,
-  shadow = defaultShadow,
-  rounding = defaultRounding,
+  size = getDefaultSize(),
+  shadow = getDefaultShadow(),
+  rounding = getDefaultRounding(),
   "data-testid": testId = "stepper",
   classMap,
   className,

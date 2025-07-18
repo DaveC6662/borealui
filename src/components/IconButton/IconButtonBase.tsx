@@ -3,10 +3,10 @@ import { IconButtonProps } from "./IconButton.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface IconButtonBaseProps extends IconButtonProps {
@@ -21,7 +21,7 @@ const IconButtonBase = forwardRef<
   (
     {
       icon: Icon,
-      theme = defaultTheme,
+      theme = getDefaultTheme(),
       state = "",
       href,
       isExternal = false,
@@ -32,9 +32,9 @@ const IconButtonBase = forwardRef<
       ariaLabel,
       title,
       outline = false,
-      rounding = defaultRounding,
-      shadow = defaultShadow,
-      size = defaultSize,
+      rounding = getDefaultRounding(),
+      shadow = getDefaultShadow(),
+      size = getDefaultSize(),
       loading = false,
       type = "button",
       classMap,

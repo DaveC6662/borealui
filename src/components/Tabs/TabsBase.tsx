@@ -3,22 +3,22 @@ import { TabsProps } from "./Tabs.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
   tabs,
   defaultIndex = 0,
   onChange,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   className = "",
-  theme = defaultTheme,
+  theme = getDefaultTheme(),
   state = "",
-  size = defaultSize,
+  size = getDefaultSize(),
   "data-testid": testId = "tabs",
   classMap,
 }) => {

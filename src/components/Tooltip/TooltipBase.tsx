@@ -3,9 +3,9 @@ import { combineClassNames } from "../../utils/classNames";
 import { TooltipProps } from "./Tooltip.types";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export const TooltipBase = forwardRef<
@@ -16,9 +16,9 @@ export const TooltipBase = forwardRef<
     {
       content,
       position = "top",
-      theme = defaultTheme,
-      rounding = defaultRounding,
-      shadow = defaultShadow,
+      theme = getDefaultTheme(),
+      rounding = getDefaultRounding(),
+      shadow = getDefaultShadow(),
       state = "",
       children,
       className = "",

@@ -2,7 +2,10 @@ import React, { useState, KeyboardEvent, JSX, useMemo } from "react";
 import { StarIcon } from "../../Icons";
 import { RatingProps } from "./Rating.types";
 import { combineClassNames } from "../../utils/classNames";
-import { defaultSize, defaultTheme } from "../../config/boreal-style-config";
+import {
+  getDefaultSize,
+  getDefaultTheme,
+} from "../../config/boreal-style-config";
 
 export interface BaseRatingProps extends RatingProps {
   classMap: Record<string, string>;
@@ -12,9 +15,9 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   value,
   onChange,
   max = 5,
-  size = defaultSize,
+  size = getDefaultSize(),
   interactive = true,
-  theme = defaultTheme,
+  theme = getDefaultTheme(),
   state = "",
   className = "",
   label,

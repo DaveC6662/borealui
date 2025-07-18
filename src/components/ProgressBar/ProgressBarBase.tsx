@@ -3,10 +3,10 @@ import { ProgressBarProps } from "./ProgressBar.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface BaseProgressBarProps extends ProgressBarProps {
@@ -15,11 +15,11 @@ export interface BaseProgressBarProps extends ProgressBarProps {
 
 const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   progress = 0,
-  theme = defaultTheme,
+  theme = getDefaultTheme(),
   state = "",
-  size = defaultSize,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  size = getDefaultSize(),
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   animated = true,
   indeterminate = false,
   className = "",

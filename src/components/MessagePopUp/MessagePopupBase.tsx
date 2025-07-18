@@ -11,8 +11,8 @@ import { MessagePopupProps } from "./MessagePopup.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
+  getDefaultRounding,
+  getDefaultShadow,
 } from "../../config/boreal-style-config";
 
 export interface BaseMessagePopupProps extends MessagePopupProps {
@@ -26,9 +26,9 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   onClose,
   onConfirm,
   onCancel,
-  controlsRounding = defaultRounding,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  controlsRounding = getDefaultRounding(),
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   confirmText = "Confirm",
   cancelText = "Cancel",
   className = "",

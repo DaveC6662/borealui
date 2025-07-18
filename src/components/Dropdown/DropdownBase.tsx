@@ -13,9 +13,9 @@ import { combineClassNames } from "../../utils/classNames";
 import MenuIcon from "../../Icons/MenuIcon";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface BaseDropdownProps extends DropdownProps {
@@ -30,11 +30,11 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   className = "",
   menuClassName = "",
   ariaLabel = "Dropdown menu",
-  theme = defaultTheme,
-  toggleRounding = defaultRounding,
-  menuRounding = defaultRounding,
-  toggleShadow = defaultShadow,
-  menuShadow = defaultShadow,
+  theme = getDefaultTheme(),
+  toggleRounding = getDefaultRounding(),
+  menuRounding = getDefaultRounding(),
+  toggleShadow = getDefaultShadow(),
+  menuShadow = getDefaultShadow(),
   toggleOutline = false,
   state = "",
   "data-testid": testId = "dropdown",

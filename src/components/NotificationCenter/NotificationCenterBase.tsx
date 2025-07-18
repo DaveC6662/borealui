@@ -7,8 +7,8 @@ import {
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
+  getDefaultRounding,
+  getDefaultShadow,
 } from "../../config/boreal-style-config";
 
 export interface BaseNotificationCenterProps extends NotificationCenterProps {
@@ -27,10 +27,10 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   clearOldOnOverflow = true,
   pollInterval = 5000,
   showClearAll = true,
-  controlRounding = defaultRounding,
-  controlShadow = defaultShadow,
-  notificationRounding = defaultRounding,
-  notificationShadow = defaultShadow,
+  controlRounding = getDefaultRounding(),
+  controlShadow = getDefaultShadow(),
+  notificationRounding = getDefaultRounding(),
+  notificationShadow = getDefaultShadow(),
   Button,
   IconButton,
   classMap,

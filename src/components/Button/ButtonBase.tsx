@@ -3,10 +3,10 @@ import { ButtonProps } from "./Button.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface ButtonBaseProps extends ButtonProps {
@@ -21,12 +21,12 @@ const ButtonBase = forwardRef<
   (
     {
       icon: Icon,
-      theme = defaultTheme,
+      theme = getDefaultTheme(),
       state = "",
       onClick,
       type = "button",
-      rounding = defaultRounding,
-      shadow = defaultShadow,
+      rounding = getDefaultRounding(),
+      shadow = getDefaultShadow(),
       children,
       className = "",
       disabled = false,
@@ -34,7 +34,7 @@ const ButtonBase = forwardRef<
       href,
       isExternal = false,
       outline = false,
-      size = defaultSize,
+      size = getDefaultSize(),
       loading = false,
       fullWidth = false,
       "data-testid": testId,

@@ -5,6 +5,7 @@ export * from "./types/index";
 export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
 export { registerColorScheme } from "./styles/colorSchemeRegistry";
 export { colorSchemes } from "./styles/Themes";
+export { setBorealStyleConfig } from "./config/boreal-style-config";
 
 // Buttons
 export { default as Button } from "./components/Button/core/Button";

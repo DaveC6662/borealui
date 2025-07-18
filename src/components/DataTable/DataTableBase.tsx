@@ -3,9 +3,9 @@ import { combineClassNames } from "../../utils/classNames";
 import { DataTableBaseProps } from "./DataTable.types";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 function DataTableBase<T extends object>({
@@ -13,9 +13,9 @@ function DataTableBase<T extends object>({
   data,
   onRowClick,
   classMap,
-  theme = defaultTheme,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  theme = getDefaultTheme(),
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   state = "",
   outline = false,
   className = "",

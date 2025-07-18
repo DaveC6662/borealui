@@ -3,10 +3,10 @@ import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface AccordionBaseProps extends AccordionProps {
@@ -22,11 +22,11 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   iconPosition = "right",
   isToggleable = true,
   asyncContent = false,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   description,
-  size = defaultSize,
-  theme = defaultTheme,
+  size = getDefaultSize(),
+  theme = getDefaultTheme(),
   state = "",
   outline = false,
   expanded,

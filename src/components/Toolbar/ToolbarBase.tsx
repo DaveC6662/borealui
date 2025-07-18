@@ -3,9 +3,9 @@ import { combineClassNames } from "../../utils/classNames";
 import { ToolbarBaseProps, ToolbarProps } from "./Toolbar.types";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export const ToolbarBase: React.FC<ToolbarBaseProps> = ({
@@ -14,9 +14,9 @@ export const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   center,
   right,
   avatar,
-  theme = defaultTheme,
-  shadow = defaultShadow,
-  rounding = defaultRounding,
+  theme = getDefaultTheme(),
+  shadow = getDefaultShadow(),
+  rounding = getDefaultRounding(),
   className = "",
   "data-testid": testId = "toolbar",
   AvatarComponent,

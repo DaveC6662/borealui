@@ -3,9 +3,9 @@ import { NavBarProps } from "./NavBar.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface BaseNavBarProps extends NavBarProps {
@@ -26,9 +26,9 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   currentPath,
   LinkWrapper,
   classMap,
-  theme = defaultTheme,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  theme = getDefaultTheme(),
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   "data-testid": testId = "empty-state",
 }) => {
   const wrapperClass = useMemo(

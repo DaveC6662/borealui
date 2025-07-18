@@ -2,10 +2,10 @@ import React from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../Icons";
 import { PaginationProps } from "./Pager.types";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface BasePagerProps extends PaginationProps {
@@ -21,10 +21,10 @@ const BasePager: React.FC<BasePagerProps> = ({
   serverControlled = false,
   onPageChange,
   className = "",
-  size = defaultSize,
-  theme = defaultTheme,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  size = getDefaultSize(),
+  theme = getDefaultTheme(),
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   state = "",
   "data-testid": testId = "pager",
   Button,

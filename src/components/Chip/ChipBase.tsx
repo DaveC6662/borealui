@@ -4,10 +4,10 @@ import { ChipBaseProps } from "./Chip.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 const ChipBase: React.FC<ChipBaseProps> = ({
@@ -16,10 +16,10 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   visible,
   onClose,
   icon: Icon,
-  size = defaultSize,
-  theme = defaultTheme,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  size = getDefaultSize(),
+  theme = getDefaultTheme(),
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   state = "",
   position = "topCenter",
   usePortal = true,

@@ -3,10 +3,10 @@ import { SliderProps } from "./Slider.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 const SliderBase: React.FC<
@@ -18,10 +18,10 @@ const SliderBase: React.FC<
   max = 100,
   step = 1,
   label,
-  size = defaultSize,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
-  theme = defaultTheme,
+  size = getDefaultSize(),
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
+  theme = getDefaultTheme(),
   state = "",
   showValue = true,
   className = "",

@@ -3,10 +3,10 @@ import { combineClassNames } from "../../utils/classNames";
 import { ToggleProps } from "./Toggle.types";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface ToggleBaseProps extends ToggleProps {
@@ -19,11 +19,11 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       checked,
       onChange,
       label,
-      theme = defaultTheme,
-      rounding = defaultRounding,
-      shadow = defaultShadow,
+      theme = getDefaultTheme(),
+      rounding = getDefaultRounding(),
+      shadow = getDefaultShadow(),
       state = "",
-      size = defaultSize,
+      size = getDefaultSize(),
       disabled = false,
       classMap,
       className,

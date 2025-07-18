@@ -3,9 +3,9 @@ import { RadioButtonProps } from "./RadioButton.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface BaseRadioButtonProps extends RadioButtonProps {
@@ -19,9 +19,9 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       value,
       checked,
       onChange,
-      theme = defaultTheme,
-      rounding = defaultRounding,
-      shadow = defaultShadow,
+      theme = getDefaultTheme(),
+      rounding = getDefaultRounding(),
+      shadow = getDefaultShadow(),
       state = "",
       disabled = false,
       className = "",

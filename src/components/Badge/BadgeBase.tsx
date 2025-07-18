@@ -3,10 +3,10 @@ import { BadgeProps } from "./Badge.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  defaultRounding,
-  defaultShadow,
-  defaultSize,
-  defaultTheme,
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultSize,
+  getDefaultTheme,
 } from "../../config/boreal-style-config";
 
 export interface BadgeBaseProps extends BadgeProps {
@@ -16,13 +16,13 @@ export interface BadgeBaseProps extends BadgeProps {
 export const BadgeBase: React.FC<BadgeBaseProps> = ({
   text,
   children,
-  theme = defaultTheme,
+  theme = getDefaultTheme(),
   state = "",
   disabled = false,
-  rounding = defaultRounding,
-  shadow = defaultShadow,
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
   title,
-  size = defaultSize,
+  size = getDefaultSize(),
   outline = false,
   icon: Icon,
   className = "",

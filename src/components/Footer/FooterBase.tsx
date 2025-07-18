@@ -1,7 +1,7 @@
 import React, { JSX, useMemo } from "react";
 import { FooterProps } from "./Footer.types";
 import { combineClassNames } from "../../utils/classNames";
-import { defaultTheme } from "../../config/boreal-style-config";
+import { getDefaultTheme } from "../../config/boreal-style-config";
 import { capitalize } from "@/utils/capitalize";
 
 export interface BaseFooterProps extends FooterProps {
@@ -16,7 +16,7 @@ export interface BaseFooterProps extends FooterProps {
 }
 
 const FooterBase: React.FC<BaseFooterProps> = ({
-  theme = defaultTheme,
+  theme = getDefaultTheme(),
   attachment = "static",
   shadow = "none",
   rounding = "none",
