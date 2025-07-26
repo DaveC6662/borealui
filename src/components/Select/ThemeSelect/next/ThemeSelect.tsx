@@ -4,16 +4,34 @@ import React, { useContext } from "react";
 import { getAllColorSchemes } from "../../../../styles/colorSchemeRegistry";
 import { Select } from "@/index.next";
 import { ThemeContext } from "../../../../context/ThemeContext";
-import { ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
+import {
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
+} from "@/config/boreal-style-config";
 
 interface ThemeSelectProps {
   theme?: ThemeType;
+  shadow?: ShadowType;
+  rounding?: RoundingType;
+  "data-testid"?: string;
+  state?: StateType;
 }
 
 const UserThemeSettings: React.FC<ThemeSelectProps> = ({
-  theme = "primary",
+  theme = getDefaultTheme(),
+  shadow = getDefaultShadow(),
+  rounding = getDefaultRounding(),
+  state = "",
+  "data-testid": testId = "theme-select",
 }) => {
-  // Retrieve the current theme context.
   const themeContext = useContext(ThemeContext);
 
   if (!themeContext) {
@@ -22,11 +40,9 @@ const UserThemeSettings: React.FC<ThemeSelectProps> = ({
     );
   }
 
-  // Destructure the selectedScheme and the setter function from the context.
   const { selectedScheme, setSelectedScheme } = themeContext;
   const allSchemes = getAllColorSchemes();
 
-  // Map available color schemes to options for the Select component.
   const options = allSchemes.map((scheme, index) => ({
     value: index.toString(),
     label: scheme.name,
@@ -36,8 +52,11 @@ const UserThemeSettings: React.FC<ThemeSelectProps> = ({
     <div className={`control-container`}>
       <Select
         theme={theme}
+        state={state}
+        shadow={shadow}
+        rounding={rounding}
         options={options}
-        // Value is kept as a string since Select expects a string or number.
+        data-testid={`${testId}-select`}
         value={selectedScheme.toString()}
         onChange={(value: string | number) =>
           setSelectedScheme(parseInt(value as string, 10))

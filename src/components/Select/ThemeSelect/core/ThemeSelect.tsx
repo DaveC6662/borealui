@@ -1,14 +1,28 @@
 import React, { useContext } from "react";
 import Select from "../../core/Select";
 import { ThemeContext } from "../../../../context/ThemeContext";
-import { ThemeType } from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import { getAllColorSchemes } from "../../../../styles/colorSchemeRegistry";
+import {
+  getDefaultRounding,
+  getDefaultShadow,
+  getDefaultTheme,
+} from "@/config/boreal-style-config";
 
 interface ThemeSelectProps {
   theme?: ThemeType;
+  shadow?: ShadowType;
+  rounding?: RoundingType;
+  "data-testid"?: string;
+  state?: StateType;
 }
+
 const UserThemeSettings: React.FC<ThemeSelectProps> = ({
-  theme = "primary",
+  theme = getDefaultTheme(),
+  shadow = getDefaultShadow(),
+  rounding = getDefaultRounding(),
+  "data-testid": testId = "theme-select",
+  state = "",
 }) => {
   const allSchemes = getAllColorSchemes();
   const themeContext = useContext(ThemeContext);
@@ -30,13 +44,16 @@ const UserThemeSettings: React.FC<ThemeSelectProps> = ({
     <div className="control-container">
       <Select
         theme={theme}
+        shadow={shadow}
+        rounding={rounding}
+        state={state}
+        data-testid={`${testId}-select`}
         options={options}
         value={selectedScheme.toString()}
         onChange={(value: string | number) =>
           setSelectedScheme(parseInt(value as string, 10))
         }
         ariaLabel="Select Theme"
-        data-testid="theme-select"
       />
     </div>
   );

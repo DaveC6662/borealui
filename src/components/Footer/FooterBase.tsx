@@ -118,7 +118,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
             data-testid={`${testId}-theme-select`}
             aria-label="Theme selector container"
           >
-            <ThemeSelect theme={"clear"} />
+            <ThemeSelect theme={"clear"} shadow={"none"} />
           </div>
         )}
 
@@ -135,12 +135,12 @@ const FooterBase: React.FC<BaseFooterProps> = ({
                 icon={social.icon}
                 href={social.href}
                 isExternal
+                shadow="none"
                 target="_blank"
                 rel="noopener noreferrer"
                 ariaLabel={social.title}
                 title={social.title}
                 theme="clear"
-                shadow="none"
                 data-testid={`${testId}-social-${social.title
                   .toLowerCase()
                   .replace(/\s+/g, "-")}`}
