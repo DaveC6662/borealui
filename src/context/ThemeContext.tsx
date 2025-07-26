@@ -1,3 +1,39 @@
+/**
+ * ---------------------------------------------------------------------
+ * ThemeProvider.tsx
+ * ---------------------------------------------------------------------
+ * Provides a React context for managing and applying color schemes
+ * dynamically across the Boreal UI system.
+ *
+ * Responsibilities:
+ * - Registers any custom color schemes at runtime
+ * - Sets the active color scheme based on `localStorage` or fallback default
+ * - Dynamically updates CSS custom properties (`--*`) on the `:root`
+ *   to reflect the selected theme's color values
+ * - Ensures text color contrast by calculating luminance and WCAG ratios
+ *
+ * Includes:
+ * - Lightness adjustment utilities for generating `*-light` and `*-hover` variants
+ * - Contrast checking and accessible text color fallbacks
+ * - `ThemeContext` with `selectedScheme` index and setter
+ *
+ * Hooks:
+ * - `useEffect` to register schemes and sync saved theme index
+ * - `useEffect` to apply all computed color variables to `document.documentElement`
+ *
+ * Usage:
+ * ```tsx
+ * <ThemeProvider customSchemes={[customTheme]}>
+ *   <App />
+ * </ThemeProvider>
+ * ```
+ *
+ * Access via context:
+ * ```ts
+ * const { selectedScheme, setSelectedScheme } = useContext(ThemeContext);
+ * ```
+ */
+
 "use client";
 
 import React, { createContext, useState, useEffect } from "react";
@@ -126,7 +162,6 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       return contrastRatio(bgColor, "#000000") >= 4.5 ? "#000000" : "#FFFFFF";
     };
 
-    // Compute variants
     const variants = {
       "--primary-color": primaryColor,
       "--primary-color-light": adjustLightness(primaryColor, 10),

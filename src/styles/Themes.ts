@@ -1,3 +1,27 @@
+/**
+ * ---------------------------------------------------------------------
+ * colorSchemes.ts
+ * ---------------------------------------------------------------------
+ * A curated list of predefined color schemes used for theming
+ * in the Boreal UI system. Each scheme follows the `ColorScheme`
+ * interface and defines a unique aesthetic by setting:
+ *
+ * - primaryColor: Main accent color for buttons, links, highlights
+ * - secondaryColor: Complementary accent
+ * - tertiaryColor: Alternative accent
+ * - quaternaryColor: Another alternative accent
+ * - backgroundColor: Default background for surfaces
+ *
+ * These schemes are typically used in theme switchers,
+ * brand customization, or design system previews.
+ *
+ * New schemes can be registered dynamically at runtime using
+ * `registerColorScheme()` from the color scheme registry.
+ *
+ * Example usage:
+ *   const currentTheme = colorSchemes.find(t => t.name === "Ocean Breeze");
+ */
+
 import { ColorScheme } from "@/types/types";
 
 export const colorSchemes: ColorScheme[] = [

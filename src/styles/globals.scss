@@ -1,3 +1,45 @@
+/**
+ * ---------------------------------------------------------------------
+ * globals.scss
+ * ---------------------------------------------------------------------
+ * Global style definitions and base theme setup for Boreal UI.
+ * This file is responsible for setting:
+ * 
+ * 1. CSS Variables (`:root`) — Derived from SCSS theme tokens
+ *    - Automatically syncs SCSS color and font variables to global CSS variables
+ *    - Enables theming and dynamic runtime overrides
+ *
+ * 2. Global Element Styles
+ *    - `body`, headings (`h1–h6`), paragraphs, links, and layout defaults
+ *    - Applies font, color, spacing, and background rules using theme tokens
+ *
+ * 3. Scrollbar Styling
+ *    - Thin scrollbar with custom thumb and track colors
+ *    - Supports hiding scrollbars with `.hideScrollbar` utility
+ *
+ * 4. Focus Outlines
+ *    - Custom `:focus` styles using accessible high-contrast outlines
+ *
+ * 5. Utility Classes
+ *    - `.noScroll`: disables scroll overflow
+ *    - `.errorMessage`: standardized error message styling
+ *    - `.loadingContainer`: centered layout for loading views
+ *    - `.sr_only` and `:global(.sr_only)`: accessibility class for screen-reader-only content
+ *
+ * 6. Mixin: `visually-hidden`
+ *    - Reusable mixin for accessibility-hidden content
+ *    - Applied via `.sr_only` and `:global(.sr_only)`
+ *
+ * Dependencies:
+ * - Resets: `modern-css-reset`
+ * - SCSS Modules: `theme`, `animations`, `breakpoints`
+ * - Sass Color Utilities: `sass:color`
+ *
+ * Note:
+ * All transitions use the theme-defined `$transition-default` for consistency.
+ * CSS variables allow dynamic switching between light/dark/custom themes.
+ */
+
 @use "sass:color";
 @use "./theme" as theme;
 @use "_animations" as animations;

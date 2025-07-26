@@ -1,3 +1,70 @@
+/**
+ * ---------------------------------------------------------------------
+ * theme.scss
+ * ---------------------------------------------------------------------
+ * Global design tokens and theme configuration for the Boreal UI system.
+ * This file defines SCSS variables, maps, and constants for:
+ * - Colors (brand, background, feedback, text)
+ * - Fonts (families, sizes, weights)
+ * - Spacing
+ * - Border radii
+ * - Shadows
+ * - Transitions
+ * - Z-index layers
+ * - Thematic color maps
+ * - UI states (success, error, warning)
+ * - Rounding and shadow presets
+ * 
+ * All variables support the `!default` flag to allow overrides via user-defined themes.
+ * ---------------------------------------------------------------------
+ *
+ * == Color Palette ==
+ * $primary-color           – Brand primary color
+ * $secondary-color         – Secondary accent color
+ * $tertiary-color          – Alternate accent color
+ * $quaternary-color        – Alternate accent color
+ * $background-color        – Main background color (dark)
+ * $background-color-surface – Surface layer background (cards, modals)
+ * $error-color, $success-color, $warning-color – Feedback states
+ * $link-color              – Link default color
+ * $link-hover-color        – Link hover state
+ * $text-color, $text-color-light, $text-color-primary, $text-color-secondary – Text coloring
+ *
+ * == Typography ==
+ * $font-family-primary / secondary – Primary typefaces
+ * $font-size-xxs to $font-size-xxl – Font size scale
+ * $font-weight-light to bolder     – Font weights
+ *
+ * == Spacing ==
+ * $spacing-xxs to $spacing-xl – Margin/padding utility scale
+ *
+ * == Border Radius ==
+ * $border-radius-xs to full  – Border rounding presets
+ *
+ * == Shadows ==
+ * $box-shadow-light to intense – Shadow elevation levels
+ * $inverted-shadows            – Shadows used on dark surfaces (e.g. modals)
+ *
+ * == Transitions ==
+ * $transition-fast / default / slow – Standard easing transitions
+ *
+ * == Z-Index Layers ==
+ * $z-index-drawer   – For slide-out panels
+ * $z-index-modal    – For modals and overlays
+ * $z-index-tooltip  – Highest layer for tooltips and floating labels
+ *
+ * == Theme Map ==
+ * $themes: map of theme names (e.g. "primary", "secondary") to their visual styles
+ *  - Each theme includes: bg, hover, text, border, text-hover
+ *
+ * == State Map ==
+ * $states: visual styles for UI feedback states (success, error, warning)
+ *
+ * == Rounding / Shadow Maps ==
+ * $rounding: key-value pairs for component rounding levels
+ * $shadow: key-value pairs for shadow levels
+ */
+
 @use "sass:color";
 
 $primary-color: #1c4d3a !default;
