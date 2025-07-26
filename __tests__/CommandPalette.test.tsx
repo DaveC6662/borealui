@@ -1,7 +1,9 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import CommandPaletteBase from "@/components/CommandPalette/CommandPaletteBase";
-import "@testing-library/jest-dom";
+
+expect.extend(toHaveNoViolations);
 
 const mockCommands = [
   { label: "Open Settings", action: jest.fn() },
@@ -15,7 +17,7 @@ const DummyInput = React.forwardRef<HTMLInputElement, any>((props, ref) => (
 
 const classMap = {
   overlay: "overlay",
-  palette: "palette",
+  command_palette: "palette",
   primary: "theme-primary",
   input: "input",
   list: "list",
@@ -23,11 +25,20 @@ const classMap = {
   active: "active",
   icon: "icon",
   empty: "empty",
+  shadowLight: "shadowLight",
+  roundMedium: "roundMedium",
 };
 
 describe("CommandPaletteBase", () => {
   beforeEach(() => {
+    const portal = document.createElement("div");
+    portal.id = "widget-portal";
+    document.body.appendChild(portal);
+  });
+
+  afterEach(() => {
     document.body.innerHTML = "";
+    jest.clearAllMocks();
   });
 
   it("renders input and command options when open", () => {
@@ -66,6 +77,7 @@ describe("CommandPaletteBase", () => {
 
   it("calls action and closes on Enter", () => {
     const onClose = jest.fn();
+
     render(
       <CommandPaletteBase
         isOpen={true}
@@ -81,5 +93,58 @@ describe("CommandPaletteBase", () => {
 
     expect(mockCommands[0].action).toHaveBeenCalled();
     expect(onClose).toHaveBeenCalled();
+  });
+
+  it("navigates with arrow keys", () => {
+    render(
+      <CommandPaletteBase
+        isOpen={true}
+        commands={mockCommands}
+        onClose={jest.fn()}
+        TextInputComponent={DummyInput}
+        classMap={classMap}
+      />
+    );
+
+    const input = screen.getByRole("combobox");
+    fireEvent.keyDown(input, { key: "ArrowDown" }); // index 1
+    fireEvent.keyDown(input, { key: "ArrowDown" }); // index 2
+    fireEvent.keyDown(input, { key: "ArrowUp" }); // index 1
+
+    // The second command should now be active
+    const options = screen.getAllByRole("option");
+    expect(options[1]).toHaveAttribute("aria-selected", "true");
+  });
+
+  it("renders empty message if no matches", () => {
+    render(
+      <CommandPaletteBase
+        isOpen={true}
+        commands={mockCommands}
+        onClose={jest.fn()}
+        TextInputComponent={DummyInput}
+        classMap={classMap}
+      />
+    );
+
+    const input = screen.getByRole("combobox");
+    fireEvent.change(input, { target: { value: "Nonexistent" } });
+
+    expect(screen.getByText("No matching results")).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <CommandPaletteBase
+        isOpen={true}
+        commands={mockCommands}
+        onClose={jest.fn()}
+        TextInputComponent={DummyInput}
+        classMap={classMap}
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

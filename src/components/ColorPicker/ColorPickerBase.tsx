@@ -56,7 +56,6 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
             data-testid={`${testId}-option-${color.value}`}
           >
             <input
-              title={color.label}
               type="radio"
               name={name}
               id={`${testId}-color-${i}`}
@@ -65,6 +64,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
               onChange={() => onChange(color.value)}
               className={classMap.radio_input}
             />
+            <span className="sr_only">{color.label}</span>
             <span
               className={combineClassNames(
                 classMap.preview,

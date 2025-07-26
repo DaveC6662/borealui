@@ -1,6 +1,10 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import ColorPickerBase from "@/components/ColorPicker/ColorPickerBase";
 import "@testing-library/jest-dom";
+import React from "react";
+
+expect.extend(toHaveNoViolations);
 
 const colors = [
   { label: "Red", value: "#ff0000" },
@@ -9,16 +13,17 @@ const colors = [
 ];
 
 const classMap = {
-  colorPicker: "colorPicker",
+  color_picker: "colorPicker",
   legend: "legend",
-  colorGrid: "colorGrid",
-  colorSwatch: "colorSwatch",
-  colorPreview: "colorPreview",
-  radioInput: "radioInput",
+  color_picker_grid: "colorGrid",
+  swatch: "colorSwatch",
+  preview: "colorPreview",
+  radio_input: "radioInput",
   selected: "selected",
-  customColorInput: "customColorInput",
+  custom_input: "customColorInput",
   medium: "medium",
   round: "round",
+  shadowLight: "shadowLight",
 };
 
 describe("ColorPickerBase", () => {
@@ -34,9 +39,8 @@ describe("ColorPickerBase", () => {
       />
     );
 
-    expect(
-      screen.getByRole("radiogroup", { name: "Pick a color" })
-    ).toBeInTheDocument();
+    const group = screen.getByRole("radiogroup", { name: "Pick a color" });
+    expect(group).toBeInTheDocument();
     expect(screen.getAllByRole("radio")).toHaveLength(colors.length);
   });
 
@@ -51,11 +55,11 @@ describe("ColorPickerBase", () => {
       />
     );
 
-    const greenInput = screen
+    const input = screen
       .getByTestId("color-picker-option-#00ff00")
       .querySelector("input") as HTMLInputElement;
 
-    expect(greenInput).toBeChecked();
+    expect(input).toBeChecked();
   });
 
   it("triggers onChange when a color is selected", () => {
@@ -67,10 +71,13 @@ describe("ColorPickerBase", () => {
         selected="#ff0000"
         onChange={handleChange}
         classMap={classMap}
+        data-testid="color-picker"
       />
     );
 
-    fireEvent.click(screen.getByTestId("color-picker-option-#0000ff"));
+    fireEvent.click(
+      screen.getByTestId("color-picker-option-#0000ff").querySelector("input")!
+    );
     expect(handleChange).toHaveBeenCalledWith("#0000ff");
   });
 
@@ -82,9 +89,30 @@ describe("ColorPickerBase", () => {
         onChange={jest.fn()}
         allowCustom
         classMap={classMap}
+        data-testid="color-picker"
       />
     );
 
-    expect(screen.getByLabelText("Custom color picker")).toBeInTheDocument();
+    const customInput = screen.getByLabelText("Custom color picker");
+    expect(customInput).toBeInTheDocument();
+    expect(customInput).toHaveAttribute("type", "color");
+    expect(customInput).toHaveValue("#ff0000");
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <ColorPickerBase
+        colors={colors}
+        selected="#00ff00"
+        onChange={jest.fn()}
+        allowCustom
+        label="Choose a color"
+        classMap={classMap}
+        data-testid="color-picker"
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

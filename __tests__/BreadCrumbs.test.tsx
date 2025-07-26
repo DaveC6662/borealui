@@ -1,18 +1,22 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import { BreadcrumbsBase } from "@/components/Breadcrumbs/BreadcrumbsBase";
+
+expect.extend(toHaveNoViolations);
 
 const classMap = {
   breadcrumbs: "breadcrumbs",
   primary: "primary",
   medium: "medium",
   outline: "outline",
+  disabled: "disabled",
   list: "breadcrumb-list",
   item: "breadcrumb-item",
-  itemAnimate: "animate",
-  active: "active",
+  item_animate: "animate",
+  item_active: "active",
   ellipsis: "ellipsis",
   link: "breadcrumb-link",
-  linkLabel: "link-label",
+  link_label: "link-label",
   current: "current-page",
   separator: "separator",
   separatorIcon: "separator-icon",
@@ -35,13 +39,14 @@ describe("BreadcrumbsBase", () => {
     { label: "Current Page" },
   ];
 
-  it("renders all breadcrumbs", () => {
+  it("renders all breadcrumb items", () => {
     render(
       <BreadcrumbsBase
         items={items}
         classMap={classMap}
         LinkComponent={LinkComponent}
         ButtonComponent={ButtonComponent}
+        data-testid="breadcrumbs"
       />
     );
 
@@ -51,22 +56,42 @@ describe("BreadcrumbsBase", () => {
     expect(screen.getByText("Current Page")).toBeInTheDocument();
   });
 
-  it("shows ellipsis when maxVisible is set", () => {
+  it("shows ellipsis and expands when clicked", () => {
     render(
       <BreadcrumbsBase
         items={[
-          { label: "1", href: "/" },
-          { label: "2", href: "/" },
-          { label: "3", href: "/" },
-          { label: "4", href: "/" },
+          { label: "1", href: "/1" },
+          { label: "2", href: "/2" },
+          { label: "3", href: "/3" },
+          { label: "4", href: "/4" },
         ]}
         classMap={classMap}
         LinkComponent={LinkComponent}
         ButtonComponent={ButtonComponent}
         maxVisible={3}
+        data-testid="breadcrumbs"
       />
     );
 
-    expect(screen.getByLabelText("Show more breadcrumbs")).toBeInTheDocument();
+    const ellipsis = screen.getByLabelText("Show more breadcrumbs");
+    expect(ellipsis).toBeInTheDocument();
+    fireEvent.click(ellipsis);
+
+    expect(screen.getByText("2")).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <BreadcrumbsBase
+        items={items}
+        classMap={classMap}
+        LinkComponent={LinkComponent}
+        ButtonComponent={ButtonComponent}
+        data-testid="breadcrumbs"
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

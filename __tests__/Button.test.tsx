@@ -1,6 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import ButtonBase from "../src/components/Button/ButtonBase";
 import { FaStar } from "react-icons/fa";
+
+expect.extend(toHaveNoViolations);
 
 const classMap = {
   button: "btn",
@@ -30,29 +33,77 @@ describe("ButtonBase", () => {
         Click me
       </ButtonBase>
     );
-    expect(
-      screen.getByRole("button", { name: "Favorite" })
-    ).toBeInTheDocument();
-    expect(screen.getByTestId("icon")).toBeInTheDocument();
+
+    const button = screen.getByRole("button", { name: "Favorite" });
+    expect(button).toBeInTheDocument();
+
+    const icon = screen.getByTestId("button-test-icon");
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveAttribute("aria-hidden", "true");
   });
 
   it("handles click events", () => {
-    const onClick = jest.fn();
+    const handleClick = jest.fn();
     render(
-      <ButtonBase classMap={classMap} onClick={onClick} data-testid="clickable">
+      <ButtonBase
+        onClick={handleClick}
+        classMap={classMap}
+        data-testid="clickable"
+      >
         Click
       </ButtonBase>
     );
+
     fireEvent.click(screen.getByTestId("clickable"));
-    expect(onClick).toHaveBeenCalled();
+    expect(handleClick).toHaveBeenCalled();
   });
 
   it("respects disabled state", () => {
+    const handleClick = jest.fn();
     render(
-      <ButtonBase classMap={classMap} disabled data-testid="disabled-btn">
+      <ButtonBase
+        classMap={classMap}
+        disabled
+        onClick={handleClick}
+        data-testid="disabled-btn"
+      >
         Disabled
       </ButtonBase>
     );
-    expect(screen.getByTestId("disabled-btn")).toBeDisabled();
+
+    const button = screen.getByTestId("disabled-btn");
+    expect(button).toBeDisabled();
+    fireEvent.click(button);
+    expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  it("renders loading spinner when loading is true", () => {
+    render(
+      <ButtonBase classMap={classMap} loading data-testid="button-load">
+        Loading
+      </ButtonBase>
+    );
+
+    const loadingContainer = screen.getByTestId("button-load-loading");
+    expect(loadingContainer).toBeInTheDocument();
+    expect(
+      loadingContainer.querySelector(`.${classMap.loader}`)
+    ).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <ButtonBase
+        icon={FaStar}
+        classMap={classMap}
+        ariaLabel="Favorite"
+        data-testid="button-axe"
+      >
+        Accessible Button
+      </ButtonBase>
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

@@ -1,110 +1,127 @@
-import React from "react";
-import { render, screen, fireEvent, act } from "@testing-library/react";
-import ChipBase from "@/components/Chip/ChipBase";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+import CheckboxBase from "@/components/CheckBox/CheckboxBase";
 
-const DummyIcon = () => <svg data-testid="dummy-icon" aria-hidden="true" />;
-
-const DummyIconButton = ({ onClick, "data-testid": testId }: any) => (
-  <button
-    aria-label="Close notification"
-    onClick={onClick}
-    data-testid={testId}
-  >
-    ×
-  </button>
-);
+expect.extend(toHaveNoViolations);
 
 const classMap = {
-  chip: "chip",
-  primary: "primary",
-  medium: "medium",
-  topCenter: "topCenter",
-  fadeOut: "fadeOut",
-  chipIcon: "chipIcon",
-  chipMessage: "chipMessage",
-  chipClose: "chipClose",
-  icon: "icon",
+  checkbox: "checkboxWrapper",
+  input: "checkboxInput",
+  box: "checkboxBox",
+  label: "checkboxLabel",
+  primary: "themePrimary",
+  disabled: "disabled",
+  left: "labelLeft",
+  right: "labelRight",
+  small: "checkboxSmall",
+  roundSmall: "roundSmall",
+  shadowLight: "shadowLight",
+  indeterminate: "indeterminate",
 };
 
-beforeEach(() => {
-  const portal = document.createElement("div");
-  portal.setAttribute("id", "widget-portal");
-  document.body.appendChild(portal);
-});
-
-afterEach(() => {
-  const portal = document.getElementById("widget-portal");
-  if (portal) portal.remove();
-  jest.useRealTimers();
-});
-
-describe("ChipBase", () => {
-  it("renders with message and icon", () => {
+describe("CheckboxBase", () => {
+  it("renders with label on right and checks accessibility attributes", () => {
     render(
-      <ChipBase
-        id="test-chip"
-        message="Test message"
-        visible
-        icon={DummyIcon}
-        IconButtonComponent={DummyIconButton}
+      <CheckboxBase
+        checked={true}
+        onChange={jest.fn()}
+        label="Accept Terms"
+        labelPosition="right"
         classMap={classMap}
+        data-testid="checkbox"
       />
     );
 
-    expect(screen.getByRole("status")).toHaveTextContent("Test message");
-    expect(screen.getByTestId("dummy-icon")).toBeInTheDocument();
-    expect(screen.getByTestId("chip-close")).toHaveAttribute(
-      "aria-label",
-      "Close notification"
+    const input = screen.getByLabelText("Accept Terms");
+    const label = screen.getByTestId("checkbox-label");
+
+    expect(input).toBeInTheDocument();
+    expect(label).toHaveTextContent("Accept Terms");
+    expect(input).toHaveAttribute("type", "checkbox");
+    expect(input).toHaveAttribute(
+      "aria-labelledby",
+      expect.stringContaining("label")
     );
   });
 
-  it("calls onClose when close button is clicked", () => {
-    jest.useFakeTimers();
-    const handleClose = jest.fn();
-
+  it("renders with label on left", () => {
     render(
-      <ChipBase
-        id="click-chip"
-        message="Click me"
-        visible
-        onClose={handleClose}
-        IconButtonComponent={DummyIconButton}
+      <CheckboxBase
+        checked={false}
+        onChange={jest.fn()}
+        label="Enable Notifications"
+        labelPosition="left"
         classMap={classMap}
+        data-testid="checkbox-left"
       />
     );
 
-    fireEvent.click(screen.getByTestId("chip-close"));
-
-    act(() => {
-      jest.advanceTimersByTime(300); // Simulate fade out
-    });
-
-    expect(handleClose).toHaveBeenCalled();
+    const label = screen.getByTestId("checkbox-left-label");
+    expect(label).toHaveTextContent("Enable Notifications");
   });
 
-  it("autocloses after timeout", () => {
-    jest.useFakeTimers();
-    const handleClose = jest.fn();
-
+  it("fires onChange when toggled", () => {
+    const onChange = jest.fn();
     render(
-      <ChipBase
-        id="auto"
-        message="Auto"
-        visible
-        autoClose
-        duration={1000}
-        onClose={handleClose}
-        IconButtonComponent={DummyIconButton}
+      <CheckboxBase
+        label="I agree"
         classMap={classMap}
+        data-testid="checkbox-toggle"
+        onChange={onChange}
+        checked={false}
       />
     );
 
-    act(() => {
-      jest.advanceTimersByTime(1000); // Trigger auto-close
-      jest.advanceTimersByTime(300); // Wait for fade-out delay
-    });
+    fireEvent.click(screen.getByLabelText("I agree"));
+    expect(onChange).toHaveBeenCalledWith(true);
+  });
 
-    expect(handleClose).toHaveBeenCalled();
+  it("does not call onChange when disabled", () => {
+    const onChange = jest.fn();
+    render(
+      <CheckboxBase
+        label="Disabled Check"
+        classMap={classMap}
+        data-testid="checkbox-disabled"
+        onChange={onChange}
+        checked={false}
+        disabled
+      />
+    );
+
+    const checkbox = screen.getByLabelText("Disabled Check");
+    expect(checkbox).toBeDisabled();
+    fireEvent.click(checkbox);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("handles indeterminate state", () => {
+    render(
+      <CheckboxBase
+        label="Indeterminate"
+        classMap={classMap}
+        data-testid="checkbox-indeterminate"
+        indeterminate={true}
+        checked={false}
+        onChange={jest.fn()}
+      />
+    );
+
+    const input = screen.getByLabelText("Indeterminate");
+    expect(input).toHaveAttribute("aria-checked", "mixed");
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <CheckboxBase
+        label="Accessible Checkbox"
+        classMap={classMap}
+        onChange={jest.fn()}
+        checked={false}
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

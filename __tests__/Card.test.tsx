@@ -1,5 +1,8 @@
 import { render, screen } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import CardBase from "@/components/Card/CardBase";
+
+expect.extend(toHaveNoViolations);
 
 const DummySkeleton = ({
   width,
@@ -25,20 +28,21 @@ const classMap = {
   card: "card",
   solid: "solid",
   primary: "primary",
-  cardLoading: "loading",
-  cardContent: "card-content",
+  loading: "loading",
+  content: "card-content",
   fadeIn: "fade-in",
   vertical: "vertical",
-  cardImage: "card-img",
-  cardHeader: "card-header",
-  cardTitle: "card-title",
-  cardIcon: "card-icon",
-  cardBody: "card-body",
-  cardDescription: "card-desc",
-  cardChildren: "card-children",
-  cardFooter: "card-footer",
-  cardActions: "card-actions",
-  actionButton: "action-btn",
+  image: "card-img",
+  header: "card-header",
+  title: "card-title",
+  icon: "card-icon",
+  body: "card-body",
+  description: "card-desc",
+  children: "card-children",
+  footer: "card-footer",
+  actions: "card-actions",
+  action_button: "action-btn",
+  center: "card-center",
 };
 
 describe("CardBase", () => {
@@ -60,7 +64,9 @@ describe("CardBase", () => {
       />
     );
 
-    expect(screen.getByRole("region")).toHaveAttribute("aria-labelledby");
+    const region = screen.getByRole("region");
+    expect(region).toHaveAttribute("aria-labelledby");
+
     expect(screen.getByText("Card Title")).toBeInTheDocument();
     expect(screen.getByText("Card description")).toBeInTheDocument();
     expect(
@@ -68,10 +74,10 @@ describe("CardBase", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders image and loading state", () => {
+  it("renders skeleton when loading is true", () => {
     render(
       <CardBase
-        loading={true}
+        loading
         imageUrl="/img.jpg"
         imageAlt="Example image"
         classMap={classMap}
@@ -81,5 +87,49 @@ describe("CardBase", () => {
     );
 
     expect(screen.getByTestId("skeleton")).toBeInTheDocument();
+    expect(screen.queryByRole("region")).toBeInTheDocument();
+    expect(screen.queryByTestId("card-image")).not.toBeInTheDocument();
+  });
+
+  it("renders image when not loading", () => {
+    render(
+      <CardBase
+        imageUrl="/img.jpg"
+        imageAlt="Example image"
+        classMap={classMap}
+        SkeletonComponent={DummySkeleton}
+        ImageComponent={DummyImage}
+        actionButtons={[]}
+        title="Image Card"
+      />
+    );
+
+    expect(screen.getByTestId("card-image")).toBeInTheDocument();
+    expect(screen.getByAltText("Example image")).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <CardBase
+        title="Accessible Card"
+        description="This card is for accessibility testing"
+        imageUrl="/img.jpg"
+        imageAlt="Accessible image"
+        classMap={classMap}
+        SkeletonComponent={DummySkeleton}
+        ImageComponent={DummyImage}
+        actionButtons={[
+          {
+            label: "Learn More",
+            onClick: jest.fn(),
+            buttonComponent: DummyButton,
+            iconButtonComponent: DummyIconButton,
+          },
+        ]}
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });
