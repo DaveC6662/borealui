@@ -1,12 +1,84 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { FormGroup, TextInput, Button } from "@/index.next";
-import type { FormGroupProps } from "@/components/FormGroup/FormGroup.types";
+import { FormGroup, TextInput, Button } from "../src/index.next";
+import type { FormGroupProps } from "../src/components/FormGroup/FormGroup.types";
 
 const meta: Meta<FormGroupProps> = {
   title: "Components/FormGroup",
   component: FormGroup,
   tags: ["autodocs"],
+  argTypes: {
+    label: {
+      control: "text",
+      description:
+        "Label for the form group. Required unless `hideLabel` is set.",
+      table: { category: "Content" },
+    },
+    description: {
+      control: "text",
+      description:
+        "Additional description or help text displayed below the inputs.",
+      table: { category: "Content" },
+    },
+    error: {
+      control: "text",
+      description:
+        "Error message to show below the inputs. If provided, shows in place of description.",
+      table: { category: "State" },
+    },
+    id: {
+      control: "text",
+      description:
+        "Unique id for accessibility, used for ARIA labelling and test ids.",
+      table: { category: "Accessibility" },
+    },
+    required: {
+      control: "boolean",
+      description:
+        "Marks the field as required, adds a visual indicator and aria-required.",
+      table: { category: "State" },
+    },
+    layout: {
+      control: "select",
+      options: ["vertical", "horizontal"],
+      description:
+        "Layout direction of the label and children: vertical (default) or horizontal.",
+      table: { category: "Appearance" },
+    },
+    spacing: {
+      control: "select",
+      options: ["xs", "small", "medium", "large", "xl"],
+      description: "Spacing (gap) between children inside the group.",
+      table: { category: "Appearance" },
+    },
+    hideLabel: {
+      control: "boolean",
+      description:
+        "Visually hides the label but keeps it accessible for screen readers.",
+      table: { category: "Accessibility" },
+    },
+    controller: {
+      control: false,
+      description:
+        "JSX element rendered beside the first input (e.g., button, icon).",
+      table: { category: "Content", type: { summary: "ReactNode" } },
+    },
+    children: {
+      control: false,
+      description: "Inputs or elements to render inside the form group.",
+      table: { category: "Content", type: { summary: "ReactNode" } },
+    },
+    className: {
+      control: "text",
+      description: "Custom CSS class for the wrapper.",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Custom test id for the root element.",
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

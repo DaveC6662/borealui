@@ -14,6 +14,49 @@ const meta: Meta<SkeletonProps> = {
     width: "100%",
     height: "20px",
   },
+  argTypes: {
+    width: {
+      control: "text",
+      description: "Width of the skeleton placeholder (e.g., '100%', '150px').",
+      table: { category: "Appearance", defaultValue: { summary: "100%" } },
+    },
+    height: {
+      control: "text",
+      description: "Height of the skeleton placeholder (e.g., '20px', '2rem').",
+      table: { category: "Appearance", defaultValue: { summary: "20px" } },
+    },
+    rounding: {
+      control: { type: "select" },
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for the skeleton.",
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      control: { type: "select" },
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow style for the skeleton.",
+      table: { category: "Appearance" },
+    },
+    label: {
+      control: "text",
+      description: "ARIA label for screen readers.",
+      table: {
+        category: "Accessibility",
+        defaultValue: { summary: "Loading content..." },
+      },
+    },
+    className: {
+      control: "text",
+      description: "Additional custom class names.",
+      table: { category: "Advanced" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for querying the component in tests.",
+      type: { name: "string" },
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

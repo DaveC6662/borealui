@@ -172,35 +172,6 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     if (typeof window !== "undefined") {
       localStorage.setItem("selectedScheme", selectedScheme.toString());
     }
-
-    if (process.env.NODE_ENV === "development") {
-      console.log(`Theme "${allSchemes[selectedScheme].name}" loaded`);
-      console.log("Contrast Ratios:");
-      console.log(
-        "  Primary:",
-        contrastRatio(primaryColor, variants["--text-color-primary"]).toFixed(2)
-      );
-      console.log(
-        "  Secondary:",
-        contrastRatio(
-          secondaryColor,
-          variants["--text-color-secondary"]
-        ).toFixed(2)
-      );
-      console.log(
-        "  Tertiary:",
-        contrastRatio(tertiaryColor, variants["--text-color-tertiary"]).toFixed(
-          2
-        )
-      );
-      console.log(
-        "  Quaternary:",
-        contrastRatio(
-          quaternaryColor,
-          variants["--text-color-quaternary"]
-        ).toFixed(2)
-      );
-    }
   }, [selectedScheme]);
 
   return (

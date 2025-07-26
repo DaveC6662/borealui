@@ -23,7 +23,9 @@
 
 .icon {
   position: absolute;
-  bottom: -5%;
+  top: 60%;
+  transform: translateY(-50%);
+  z-index: 1;
   right: 10px;
   pointer-events: none;
   font-size: 12px;
@@ -36,6 +38,8 @@
   width: 100%;
   padding: 5px 30px;
   font-size: theme.$font-size-sm;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   font-weight: 800;
   border: none;
@@ -108,12 +112,12 @@
 }
 
 option {
-  background-color: var(--background-color-dark);
+  background-color: var(--background-color);
+  border: none;
+  color: var(--text-color-primary);
 }
 
 .clear {
-  box-shadow: none;
-
   .select {
     background-color: transparent;
   }

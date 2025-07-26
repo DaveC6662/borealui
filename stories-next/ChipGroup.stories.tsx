@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { ChipGroup } from "@/index.next";
+import { ChipGroup } from "../src/index.next";
 import type {
   ChipGroupProps,
   ChipGroupRef,
-} from "@/components/Chip/ChipGroup/ChipGroup.types";
-import { ChipProps } from "@/components/Chip/Chip.types";
+} from "../src/components/Chip/ChipGroup/ChipGroup.types";
+import { ChipProps } from "../src/components/Chip/Chip.types";
 import { FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
@@ -21,6 +21,45 @@ const meta: Meta<ChipGroupProps> = {
       </>
     ),
   ],
+  argTypes: {
+    chips: {
+      description: "Array of chip objects to display in the group.",
+      control: false,
+      table: { category: "Content" },
+    },
+    onRemove: {
+      description: "Callback fired when a chip's close button is clicked.",
+      action: "removed",
+      control: false,
+      table: { category: "Events" },
+    },
+    position: {
+      description:
+        "Position of the group on the screen (used for toast/fixed display).",
+      control: { type: "select" },
+      options: [
+        "topLeft",
+        "topCenter",
+        "topRight",
+        "bottomLeft",
+        "bottomCenter",
+        "bottomRight",
+      ],
+      table: { category: "Layout" },
+    },
+    size: {
+      description: "Size for all chips in the group.",
+      control: { type: "select" },
+      options: ["xs", "small", "medium", "large", "xl"],
+      table: { category: "Appearance" },
+    },
+    className: {
+      description:
+        "Additional CSS class names to apply to the group container.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+  },
 };
 
 export default meta;
@@ -147,3 +186,16 @@ export const PositionVariants = () => (
     ))}
   </StoryGrid>
 );
+
+export const WithClassName: Story = {
+  render: () => {
+    return (
+      <ChipGroup
+        chips={[createChip("ClassName Chip", { theme: "secondary" })]}
+        position="topRight"
+        className="storybook-chip-group-custom"
+        onRemove={() => {}}
+      />
+    );
+  },
+};

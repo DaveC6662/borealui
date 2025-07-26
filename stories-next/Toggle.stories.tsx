@@ -27,6 +27,71 @@ const meta: Meta<ToggleProps> = {
     size: "medium",
     disabled: false,
   },
+  argTypes: {
+    checked: {
+      control: "boolean",
+      description: "Whether the toggle is checked/on.",
+      table: { category: "State", defaultValue: { summary: "false" } },
+    },
+    onChange: {
+      action: "changed",
+      description: "Callback fired when the toggle is switched.",
+      table: {
+        category: "Events",
+        type: { summary: "(checked: boolean) => void" },
+      },
+    },
+    label: {
+      control: "text",
+      description: "Text label displayed next to the toggle.",
+      table: { category: "Content" },
+    },
+    theme: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Visual theme of the toggle.",
+      table: { category: "Appearance" },
+    },
+    size: {
+      control: { type: "select" },
+      options: ["xs", "small", "medium", "large", "xl"],
+      description: "Size of the toggle.",
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      control: { type: "select" },
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius of the toggle.",
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      control: { type: "select" },
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow style for the toggle.",
+      table: { category: "Appearance" },
+    },
+    state: {
+      control: { type: "select" },
+      options: ["", "success", "warning", "error"],
+      description: "State color (for status or feedback).",
+      table: { category: "Appearance" },
+    },
+    disabled: {
+      control: "boolean",
+      description: "If true, the toggle is disabled and cannot be changed.",
+      table: { category: "State" },
+    },
+    className: {
+      control: "text",
+      description: "Custom class name for the toggle root element.",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for the toggle element.",
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

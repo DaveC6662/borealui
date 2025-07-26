@@ -30,6 +30,89 @@ const meta: Meta<SliderProps> = {
     label: "Volume",
     showValue: true,
   },
+  argTypes: {
+    value: {
+      control: "number",
+      description: "The current value of the slider.",
+      table: { category: "State" },
+    },
+    onChange: {
+      action: "changed",
+      description: "Callback fired when the slider value changes.",
+      table: { category: "Events" },
+    },
+    min: {
+      control: "number",
+      description: "Minimum value for the slider.",
+      table: { category: "Range", defaultValue: { summary: "0" } },
+    },
+    max: {
+      control: "number",
+      description: "Maximum value for the slider.",
+      table: { category: "Range", defaultValue: { summary: "100" } },
+    },
+    step: {
+      control: "number",
+      description: "Step increment for the slider value.",
+      table: { category: "Range", defaultValue: { summary: "1" } },
+    },
+    theme: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme color for the slider.",
+      table: { category: "Appearance" },
+    },
+    state: {
+      control: { type: "select" },
+      options: ["", "success", "error", "warning"],
+      description: "Visual state style for the slider.",
+      table: { category: "Appearance" },
+    },
+    size: {
+      control: { type: "select" },
+      options: ["xs", "small", "medium", "large", "xl"],
+      description: "Size of the slider control.",
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      control: { type: "select" },
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for the slider.",
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      control: { type: "select" },
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Box shadow for the slider.",
+      table: { category: "Appearance" },
+    },
+    label: {
+      control: "text",
+      description: "Label for the slider (for accessibility).",
+      table: { category: "Accessibility" },
+    },
+    showValue: {
+      control: "boolean",
+      description: "Show the numeric value next to the slider.",
+      table: { category: "Appearance" },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS class names.",
+      table: { category: "Advanced" },
+    },
+    "aria-label": {
+      control: "text",
+      description: "ARIA label for screen readers.",
+      table: { category: "Accessibility" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for querying the component in tests.",
+      type: { name: "string" },
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

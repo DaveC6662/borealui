@@ -27,13 +27,55 @@ const meta: Meta<typeof Badge> = {
   component: Badge,
   tags: ["autodocs"],
   argTypes: {
-    text: { control: "text" },
-    theme: { control: "select", options: themeOptions },
-    state: { control: "select", options: [...stateOptions, ""] },
-    size: { control: "select", options: sizeOptions },
-    outline: { control: "boolean" },
-    icon: { control: false },
-    onClick: { action: "clicked" },
+    text: {
+      description: "Text or label displayed inside the badge.",
+      control: "text",
+      table: { category: "Content" },
+    },
+    theme: {
+      description: "Theme color of the badge (primary, secondary, etc).",
+      control: { type: "select" },
+      options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    state: {
+      description: "Semantic state style (success, error, warning).",
+      control: { type: "select" },
+      options: [...stateOptions, ""],
+      table: { category: "Appearance" },
+    },
+    size: {
+      description: "Badge size (xs, small, medium, large, xl).",
+      control: { type: "select" },
+      options: sizeOptions,
+      table: { category: "Appearance" },
+    },
+    outline: {
+      description:
+        "If true, displays badge with outline instead of solid background.",
+      control: "boolean",
+      table: { category: "Appearance" },
+    },
+    icon: {
+      description: "Optional icon displayed at the start of the badge.",
+      control: false,
+      table: { category: "Content" },
+    },
+    onClick: {
+      description: "Callback fired when badge is clicked (if interactive).",
+      action: "clicked",
+      table: { category: "Events" },
+    },
+    className: {
+      description: "Additional CSS class name(s) for custom styling.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      description: "Test ID for test automation.",
+      control: "text",
+      table: { category: "Testing" },
+    },
   },
 };
 
@@ -117,3 +159,13 @@ export const OutlineVariants = () =>
     },
     [{ propName: "theme", values: [...themeOptions, ...stateOptions] }]
   );
+
+export const WithChildren: Story = {
+  render: () => (
+    <Badge text="With Children">
+      <span role="img" aria-label="star">
+        ⭐
+      </span>
+    </Badge>
+  ),
+};

@@ -27,6 +27,83 @@ const meta: Meta<TagInputProps> = {
     size: "medium",
     tags: ["react", "nextjs"],
   },
+  argTypes: {
+    tags: {
+      control: false,
+      description: "Array of strings representing the current tags.",
+      table: { category: "Data", type: { summary: "string[]" } },
+    },
+    onChange: {
+      action: "changed",
+      description:
+        "Callback fired when tags are added or removed. Receives the updated tag array.",
+      table: { category: "Events" },
+    },
+    fetchSuggestions: {
+      control: false,
+      description:
+        "Async function for fetching tag suggestions based on the input. Receives input string and returns Promise<string[]>.",
+      table: {
+        category: "Advanced",
+        type: { summary: "(input: string) => Promise<string[]>" },
+      },
+    },
+    debounceMs: {
+      control: { type: "number", min: 0, step: 50 },
+      description:
+        "Debounce time in milliseconds before triggering fetchSuggestions.",
+      table: {
+        category: "Behavior",
+        type: { summary: "number" },
+        defaultValue: { summary: "300" },
+      },
+    },
+    placeholder: {
+      control: "text",
+      description: "Placeholder text shown in the tag input field.",
+      table: { category: "Appearance", type: { summary: "string" } },
+    },
+    theme: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme color variant for the tag input.",
+      table: { category: "Appearance" },
+    },
+    state: {
+      control: { type: "select" },
+      options: ["", "success", "error", "warning"],
+      description: "State color for validation or status feedback.",
+      table: { category: "Appearance" },
+    },
+    size: {
+      control: { type: "select" },
+      options: ["xs", "small", "medium", "large", "xl"],
+      description: "Size of the tag input and tags.",
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      control: { type: "select" },
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for tags and the input.",
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      control: { type: "select" },
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow style for the container.",
+      table: { category: "Appearance" },
+    },
+    ariaDescription: {
+      control: "text",
+      description: "ARIA description for assistive technologies.",
+      table: { category: "Accessibility" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test ID for the root element (for testing utilities).",
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

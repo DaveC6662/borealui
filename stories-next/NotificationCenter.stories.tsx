@@ -38,6 +38,100 @@ const meta: Meta<NotificationCenterProps> = {
   title: "Components/NotificationCenter",
   component: NotificationCenter,
   tags: ["autodocs"],
+  argTypes: {
+    notifications: {
+      control: false,
+      description:
+        "Array of notifications to show. Each notification should have an `id`, `type`, `message`, `timestamp`, and optionally `duration` (ms).",
+      type: { name: "string", required: true },
+      table: {
+        type: {
+          summary:
+            'Notification[] (e.g. [{ id: string, type: "info" | "success" | "warning" | "error", message: string, timestamp: Date, duration?: number }])',
+        },
+        category: "Content",
+      },
+    },
+    setNotifications: {
+      control: false,
+      description:
+        "Setter function for updating notifications (typically via useState).",
+      type: { name: "function", required: false },
+      table: { disable: true },
+    },
+    onRemove: {
+      action: "removed",
+      description:
+        "Callback fired with the notification id when a notification is dismissed.",
+      type: { name: "function", required: false },
+      table: { category: "Actions" },
+    },
+    onClearAll: {
+      action: "clearAll",
+      description: "Callback fired when all notifications are dismissed.",
+      type: { name: "function", required: false },
+      table: { category: "Actions" },
+    },
+    showClearAll: {
+      control: "boolean",
+      description: "Whether to display the 'Clear All' button.",
+      table: { category: "Controls", defaultValue: { summary: "true" } },
+    },
+    maxNotifications: {
+      control: { type: "number", min: 1 },
+      description: "Maximum number of notifications displayed at once.",
+      table: { category: "Limits", defaultValue: { summary: "10" } },
+    },
+    clearOldOnOverflow: {
+      control: "boolean",
+      description:
+        "Automatically remove oldest notifications when maxNotifications is reached.",
+      table: { category: "Limits", defaultValue: { summary: "true" } },
+    },
+    fetchNotifications: {
+      control: false,
+      description:
+        "Optional async function for polling new notifications. Should return a Promise<Notification[]>.",
+      type: { name: "function", required: false },
+      table: { category: "Polling" },
+    },
+    pollInterval: {
+      control: { type: "number", min: 1000, step: 500 },
+      description:
+        "Polling interval in milliseconds for fetchNotifications. Default: 5000.",
+      table: { category: "Polling", defaultValue: { summary: "5000" } },
+    },
+    notificationRounding: {
+      control: "select",
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for notification items.",
+      table: { category: "Style", defaultValue: { summary: "medium" } },
+    },
+    notificationShadow: {
+      control: "select",
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow for notification items.",
+      table: { category: "Style", defaultValue: { summary: "medium" } },
+    },
+    controlRounding: {
+      control: "select",
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for notification center controls.",
+      table: { category: "Style", defaultValue: { summary: "medium" } },
+    },
+    controlShadow: {
+      control: "select",
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow for notification center controls.",
+      table: { category: "Style", defaultValue: { summary: "medium" } },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for querying the component in tests.",
+      type: { name: "string" },
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

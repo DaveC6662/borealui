@@ -33,6 +33,85 @@ const meta: Meta<typeof Checkbox> = {
     labelPosition: "right",
     disabled: false,
   },
+  argTypes: {
+    checked: {
+      description: "Whether the checkbox is checked.",
+      control: "boolean",
+      table: { category: "Value" },
+    },
+    indeterminate: {
+      description: "Displays the checkbox in an indeterminate state.",
+      control: "boolean",
+      table: { category: "Value" },
+    },
+    theme: {
+      description: "Visual theme for the checkbox.",
+      control: { type: "select" },
+      options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      description: "Border radius style for the checkbox.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Appearance" },
+    },
+    size: {
+      description: "Checkbox size preset.",
+      control: { type: "select" },
+      options: sizeOptions,
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      description: "Shadow style for the checkbox.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Appearance" },
+    },
+    state: {
+      description: "Special state styling (e.g. success, error, warning).",
+      control: { type: "select" },
+      options: ["", ...stateOptions],
+      table: { category: "Appearance" },
+    },
+    disabled: {
+      description: "Disable the checkbox input.",
+      control: "boolean",
+      table: { category: "Behavior" },
+    },
+    label: {
+      description: "The text label shown next to the checkbox.",
+      control: "text",
+      table: { category: "Content" },
+    },
+    labelPosition: {
+      description: "Show the label on the left or right side of the checkbox.",
+      control: { type: "select" },
+      options: ["left", "right"],
+      table: { category: "Content" },
+    },
+    className: {
+      description: "Additional CSS class names.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    id: {
+      description: "HTML id attribute for the checkbox.",
+      control: "text",
+      table: { category: "Advanced" },
+    },
+    "data-testid": {
+      description: "Test ID for end-to-end or unit testing.",
+      control: "text",
+      table: { category: "Testing" },
+    },
+    onChange: {
+      description: "Callback fired when the checked state changes.",
+      action: "changed",
+      table: { category: "Events" },
+      control: false,
+    },
+  },
 };
 
 export default meta;
@@ -152,3 +231,32 @@ export const ShadowVariants = () =>
   withVariants(Checkbox, { ...defaultArgs }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const WithClassName: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return (
+      <Checkbox
+        {...args}
+        className="storybook-checkbox-custom"
+        checked={checked}
+        onChange={setChecked}
+      />
+    );
+  },
+};
+
+export const WithIdAndTestId: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return (
+      <Checkbox
+        {...args}
+        id="custom-checkbox-id"
+        data-testid="storybook-checkbox"
+        checked={checked}
+        onChange={setChecked}
+      />
+    );
+  },
+};

@@ -44,7 +44,7 @@ const meta: Meta<MetricBoxProps> = {
     icon: {
       control: false,
       description: "Optional icon to display at the top of the metric box.",
-      type: { name: "React.ElementType" },
+      type: { name: "string" },
       table: { category: "Content", type: { summary: "React.ElementType" } },
     },
     subtext: {
@@ -85,7 +85,7 @@ const meta: Meta<MetricBoxProps> = {
       control: "boolean",
       description: "If true, renders an outlined variant.",
       type: { name: "boolean" },
-      table: { category: "Style", defaultValue: { summary: false } },
+      table: { category: "Style", defaultValue: { summary: "false" } },
     },
     rounding: {
       control: "select",

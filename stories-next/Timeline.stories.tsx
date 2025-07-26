@@ -50,6 +50,47 @@ const meta: Meta<TimelineProps> = {
     theme: "primary",
     items: sampleEvents,
   },
+  argTypes: {
+    items: {
+      control: "object",
+      description: "Array of timeline event objects to render.",
+      table: { category: "Data", type: { summary: "TimelineItem[]" } },
+    },
+    orientation: {
+      control: { type: "select" },
+      options: ["vertical", "horizontal"],
+      description: "Direction the timeline is laid out.",
+      table: { category: "Layout", defaultValue: { summary: "vertical" } },
+    },
+    theme: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme for coloring timeline elements.",
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      control: { type: "select" },
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius applied to timeline cards/events.",
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      control: { type: "select" },
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Shadow style for timeline events/cards.",
+      table: { category: "Appearance" },
+    },
+    className: {
+      control: "text",
+      description: "Custom class name for the timeline container.",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test id for the timeline element (for testing utilities).",
+      table: { category: "Testing" },
+    },
+  },
 };
 
 export default meta;

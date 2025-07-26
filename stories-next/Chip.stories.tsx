@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Chip } from "../src/index.next";
 import { FaCheckCircle } from "react-icons/fa";
-import type { ChipProps } from "../src/components/Chip/Chip.types";
 import {
   PositionType,
   RoundingType,
@@ -12,20 +11,7 @@ import {
   StateType,
   ThemeType,
 } from "../src/types/types";
-
-const meta: Meta<ChipProps> = {
-  title: "Components/Chip",
-  component: Chip,
-  tags: ["autodocs"],
-  decorators: [
-    (Story) => (
-      <>
-        <div id="widget-portal" />
-        <Story />
-      </>
-    ),
-  ],
-};
+import { ChipBaseProps } from "../src/components/Chip/Chip.types";
 
 const themeOptions = [
   "primary",
@@ -49,9 +35,122 @@ const positions: PositionType[] = [
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
+const meta: Meta<ChipBaseProps> = {
+  title: "Components/Chip",
+  component: Chip,
+  tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <>
+        <div id="widget-portal" />
+        <Story />
+      </>
+    ),
+  ],
+  argTypes: {
+    id: {
+      description: "Unique identifier for the chip.",
+      control: "text",
+      table: { category: "Identification" },
+    },
+    message: {
+      description: "The content/message displayed inside the chip.",
+      control: "text",
+      table: { category: "Content" },
+    },
+    visible: {
+      description: "Controls whether the chip is visible (for controlled use).",
+      control: "boolean",
+      table: { category: "Behavior" },
+    },
+    onClose: {
+      description: "Callback fired when the close icon is clicked.",
+      action: "closed",
+      control: false,
+      table: { category: "Events" },
+    },
+    icon: {
+      description: "Custom icon component displayed at the start of the chip.",
+      control: false,
+      table: { category: "Content" },
+    },
+    closeIcon: {
+      description: "Custom close icon component (if closable).",
+      control: false,
+      table: { category: "Content" },
+    },
+    size: {
+      description: "Size of the chip.",
+      control: { type: "select" },
+      options: ["xs", "small", "medium", "large", "xl"],
+      table: { category: "Appearance" },
+    },
+    theme: {
+      description: "Visual theme of the chip.",
+      control: { type: "select" },
+      options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    state: {
+      description: "State color style (success, error, warning, etc).",
+      control: { type: "select" },
+      options: ["", ...stateOptions],
+      table: { category: "Appearance" },
+    },
+    rounding: {
+      description: "Border radius style.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      description: "Shadow style.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Appearance" },
+    },
+    position: {
+      description: "Fixed position (for toasts, e.g. top-right).",
+      control: { type: "select" },
+      options: positions,
+      table: { category: "Behavior" },
+    },
+    usePortal: {
+      description: "Render chip in a portal (for fixed/floating positioning).",
+      control: "boolean",
+      table: { category: "Behavior" },
+    },
+    autoClose: {
+      description: "Enable auto-close after a specified duration.",
+      control: "boolean",
+      table: { category: "Behavior" },
+    },
+    duration: {
+      description: "Auto-close timeout duration in milliseconds.",
+      control: "number",
+      table: { category: "Behavior" },
+    },
+    stackIndex: {
+      description: "Stack index for the chip (controls z-index).",
+      control: "number",
+      table: { category: "Behavior" },
+    },
+    className: {
+      description: "Additional custom CSS class names.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+    "data-testid": {
+      description: "Test ID for end-to-end or unit testing.",
+      control: "text",
+      table: { category: "Testing" },
+    },
+  },
+};
+
 export default meta;
 
-type Story = StoryObj<ChipProps>;
+type Story = StoryObj<ChipBaseProps>;
 
 export const Default: Story = {
   render: () => {

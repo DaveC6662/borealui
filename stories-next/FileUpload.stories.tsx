@@ -3,17 +3,6 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { FileUpload } from "../src/index.next";
 import type { FileUploadProps } from "../src/components/FileUpload/FileUpload.types";
 
-const meta: Meta<FileUploadProps> = {
-  title: "Components/FileUpload",
-  component: FileUpload,
-  tags: ["autodocs"],
-  args: {
-    label: "Upload your document",
-    theme: "primary",
-    required: false,
-  },
-};
-
 const themeOptions = [
   "primary",
   "secondary",
@@ -26,6 +15,117 @@ const stateOptions = ["success", "error", "warning"];
 
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
+const meta: Meta<FileUploadProps> = {
+  title: "Components/FileUpload",
+  component: FileUpload,
+  tags: ["autodocs"],
+  args: {
+    label: "Upload your document",
+    theme: "primary",
+    required: false,
+  },
+  argTypes: {
+    label: {
+      control: "text",
+      description: "Label for the file upload input.",
+      table: { category: "General" },
+    },
+    description: {
+      control: "text",
+      description: "Short helper text or instructions below the label.",
+      table: { category: "General" },
+    },
+    error: {
+      control: "text",
+      description: "Error message displayed below the input.",
+      table: { category: "General" },
+    },
+    required: {
+      control: "boolean",
+      description: "Marks the field as required.",
+      table: { category: "General" },
+    },
+    disabled: {
+      control: "boolean",
+      description: "Disables the file input.",
+      table: { category: "General" },
+    },
+    multiple: {
+      control: "boolean",
+      description: "Allow multiple files to be selected.",
+      table: { category: "General" },
+    },
+    allowedFileTypes: {
+      control: false,
+      description:
+        "List of allowed file MIME types (e.g. ['image/png', 'application/pdf']).",
+      table: { category: "Validation" },
+    },
+    maxFileSizeBytes: {
+      control: "number",
+      description: "Maximum allowed file size in bytes. Default: Infinity.",
+      table: { category: "Validation" },
+    },
+    theme: {
+      control: "select",
+      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      description: "Theme color for the input.",
+      table: { category: "Appearance" },
+    },
+    state: {
+      control: "select",
+      options: ["", "success", "error", "warning"],
+      description: "State variant for status feedback.",
+      table: { category: "Appearance" },
+    },
+    outline: {
+      control: "boolean",
+      description: "Display the control in outlined style.",
+      table: { category: "Appearance" },
+    },
+    outlineRounding: {
+      control: "select",
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for the outlined box.",
+      table: { category: "Appearance" },
+    },
+    outlineShadow: {
+      control: "select",
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Box shadow for the outlined box.",
+      table: { category: "Appearance" },
+    },
+    controlRounding: {
+      control: "select",
+      options: ["none", "small", "medium", "large"],
+      description: "Border radius for the upload button.",
+      table: { category: "Appearance" },
+    },
+    controlShadow: {
+      control: "select",
+      options: ["none", "light", "medium", "strong", "intense"],
+      description: "Box shadow for the upload button.",
+      table: { category: "Appearance" },
+    },
+    uploadProgress: {
+      control: "number",
+      description:
+        "Current upload progress percentage (0–100) if externally controlled.",
+      table: { category: "Status" },
+    },
+    onSubmit: {
+      action: "submit",
+      description: "Callback fired when the user confirms file upload.",
+      table: { category: "Events" },
+    },
+    "data-testid": {
+      control: "text",
+      description: "Test ID for query selectors in testing.",
+      table: { category: "Testing" },
+    },
+  },
+};
 
 export default meta;
 

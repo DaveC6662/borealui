@@ -4,16 +4,6 @@ import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import type { DropdownProps } from "../src/components/Dropdown/Dropdown.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
-const meta: Meta<DropdownProps> = {
-  title: "Components/Dropdown",
-  component: Dropdown,
-  tags: ["autodocs"],
-  args: {
-    theme: "primary",
-    align: "right",
-  },
-};
-
 const themeOptions = [
   "primary",
   "secondary",
@@ -23,6 +13,69 @@ const themeOptions = [
 ];
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
+const meta: Meta<DropdownProps> = {
+  title: "Components/Dropdown",
+  component: Dropdown,
+  tags: ["autodocs"],
+  args: {
+    theme: "primary",
+    align: "right",
+  },
+  argTypes: {
+    theme: {
+      description: "Sets the visual theme for the dropdown and menu.",
+      control: { type: "select" },
+      options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    align: {
+      description: "Menu alignment relative to the toggle button.",
+      control: { type: "select" },
+      options: ["left", "right"],
+      table: { category: "Appearance" },
+    },
+    toggleRounding: {
+      description: "Rounding style for the dropdown toggle button.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Toggle" },
+    },
+    toggleShadow: {
+      description: "Shadow style for the dropdown toggle button.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Toggle" },
+    },
+    triggerIcon: {
+      description: "Optional icon for the toggle button.",
+      control: false,
+      table: { category: "Toggle" },
+    },
+    items: {
+      description: "Dropdown menu items (array of objects).",
+      control: false,
+      table: { category: "Menu" },
+    },
+    menuRounding: {
+      description: "Rounding style for the dropdown menu.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Menu" },
+    },
+    menuShadow: {
+      description: "Shadow style for the dropdown menu.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Menu" },
+    },
+    className: {
+      description: "Custom CSS class for the dropdown container.",
+      control: "text",
+      table: { category: "Appearance" },
+    },
+  },
+};
 
 export default meta;
 
