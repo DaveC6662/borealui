@@ -63,3 +63,6 @@ export { default as NotificationCenter } from "./components/NotificationCenter/n
 //  Cards & Display Components
 export { default as Card } from "./components/Card/next/Card";
 export { default as Avatar } from "./components/Avatar/next/Avatar";
+
+//Client Wrappers
+export { default as ClientFooterWrapper } from "./components/Footer/next/ClientFooterWrapper";
