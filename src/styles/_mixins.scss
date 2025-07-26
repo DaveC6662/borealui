@@ -1,4 +1,26 @@
-// _mixins.scss
+/**
+ * -----------------------------------------------------
+ * _mixins.scss
+ * -----------------------------------------------------
+ * This file defines global SCSS mixins used for layout
+ * and styling utilities across the project.
+ *
+ * === Mixin: respond ===
+ * A responsive media query mixin for cleaner breakpoint handling.
+ *
+ * Usage:
+ *   @include respond("md") {
+ *     // Styles applied at min-width: 768px and up
+ *   }
+ *
+ * @param {string} $breakpoint - One of the keys defined in the $breakpoints map
+ *                               (e.g., "xs", "sm", "md", "lg", "xl", "2xl").
+ * @content - The styles to apply inside the media query block.
+ *
+ * Requires:
+ *   - A `$breakpoints` map from the `breakpoints` module (alias: `bp`)
+ *   - `sass:map` module to access map values safely
+ */
 
 @use "sass:map";
 @use "breakpoints" as bp;

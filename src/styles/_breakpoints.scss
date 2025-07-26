@@ -1,4 +1,20 @@
-// This file contains all the animations used in the project
+/**
+ * -----------------------------------------------------
+ * _breakpoints.scss
+ * -----------------------------------------------------
+ * These constants define the standard device-width breakpoints
+ * used in responsive media queries throughout the theme.
+ *
+ * - $breakpoint-xs: 320px  (Extra small, portrait phones)
+ * - $breakpoint-sm: 480px  (Small devices, larger phones)
+ * - $breakpoint-md: 768px  (Medium devices, tablets)
+ * - $breakpoint-lg: 1024px (Large devices, desktops)
+ * - $breakpoint-xl: 1280px (Extra large desktops)
+ * - $breakpoint-xxl: 1536px (Widescreens, large monitors)
+ *
+ * $breakpoints map:
+ *  Use this map to loop over breakpoints or access named values.
+ */
 
 $breakpoint-xs: 320px;
 $breakpoint-sm: 480px;
