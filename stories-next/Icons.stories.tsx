@@ -13,22 +13,12 @@ import {
   ChevronDownIcon,
   EyeIcon,
   EyeSlashIcon,
-  BoldIcon,
-  ItalicIcon,
-  StrikethroughIcon,
-  CodeIcon,
-  ListUlIcon,
-  ListOlIcon,
-  UndoIcon,
-  RedoIcon,
-  EraserIcon,
   FolderIcon,
   PlusCircleIcon,
-  BorealLogoIcon,
 } from "../src/Icons";
 
 const meta: Meta = {
-  title: "Icons/All Custom Icons",
+  title: "Icons/All Icons",
 };
 
 export default meta;
@@ -46,18 +36,8 @@ const iconList = [
   { name: "Arrow Down", Component: ChevronDownIcon },
   { name: "Eye", Component: EyeIcon },
   { name: "Eye Closed", Component: EyeSlashIcon },
-  { name: "Bold", Component: BoldIcon },
-  { name: "Italic", Component: ItalicIcon },
-  { name: "Strike through", Component: StrikethroughIcon },
-  { name: "Code", Component: CodeIcon },
-  { name: "List Ul", Component: ListUlIcon },
-  { name: "List Ol", Component: ListOlIcon },
-  { name: "Undo", Component: UndoIcon },
-  { name: "Redon", Component: RedoIcon },
-  { name: "Eraser", Component: EraserIcon },
   { name: "Folder", Component: FolderIcon },
   { name: "Plus Circle", Component: PlusCircleIcon },
-  { name: "Boreal Logo", Component: BorealLogoIcon },
 ];
 
 export const AllIcons = () => (
