@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const testDir = path.resolve(__dirname); // Adjust to your tests root
+const testDir = path.resolve(__dirname);
 
 function importAllTests(dir: string) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });

@@ -1,6 +1,9 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import BaseMessagePopup from "@/components/MessagePopUp/MessagePopupBase";
+
+expect.extend(toHaveNoViolations);
 
 const DummyButton = React.forwardRef<HTMLButtonElement, any>(
   ({ children, ...props }, ref) => (
@@ -20,7 +23,7 @@ const DummyIconButton = React.forwardRef<HTMLButtonElement, any>(
 );
 DummyIconButton.displayName = "DummyIconButton";
 
-const classNames = {
+const classMap = {
   wrapper: "popupWrapper",
   content: "popupContent",
   close: "popupClose",
@@ -35,7 +38,7 @@ describe("BaseMessagePopup", () => {
     document.body.innerHTML = '<div id="popup-portal"></div>';
   });
 
-  it("renders message and buttons", async () => {
+  it("renders message and all buttons", () => {
     render(
       <BaseMessagePopup
         message="Are you sure?"
@@ -44,51 +47,64 @@ describe("BaseMessagePopup", () => {
         onCancel={jest.fn()}
         Button={DummyButton}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classMap}
       />
     );
 
-    const dialog = screen.getByRole("dialog");
-    expect(dialog).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
     expect(screen.getByText("Are you sure?")).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /confirm/i })
-    ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /close popup/i })
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("message-popup-confirm")).toBeInTheDocument();
+    expect(screen.getByTestId("message-popup-cancel")).toBeInTheDocument();
+    expect(screen.getByTestId("message-popup-close")).toBeInTheDocument();
   });
 
-  it("calls onClose when escape is pressed", async () => {
+  it("calls onClose when clicking overlay", () => {
     const onClose = jest.fn();
+
     render(
       <BaseMessagePopup
-        message="Close test"
+        message="Overlay test"
         onClose={onClose}
         Button={DummyButton}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classMap}
+      />
+    );
+
+    fireEvent.click(screen.getByTestId("message-popup"));
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it("calls onClose when Escape key is pressed", () => {
+    const onClose = jest.fn();
+
+    render(
+      <BaseMessagePopup
+        message="Escape test"
+        onClose={onClose}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classMap}
       />
     );
 
     fireEvent.keyDown(document, { key: "Escape" });
-    await waitFor(() => expect(onClose).toHaveBeenCalled());
+    expect(onClose).toHaveBeenCalled();
   });
 
-  it("calls onConfirm and onCancel correctly", () => {
+  it("calls onConfirm and onCancel handlers", () => {
     const onConfirm = jest.fn();
     const onCancel = jest.fn();
 
     render(
       <BaseMessagePopup
-        message="Click test"
+        message="Action test"
         onClose={jest.fn()}
         onConfirm={onConfirm}
         onCancel={onCancel}
         Button={DummyButton}
         IconButton={DummyIconButton}
-        classNames={classNames}
+        classMap={classMap}
       />
     );
 
@@ -97,5 +113,41 @@ describe("BaseMessagePopup", () => {
 
     expect(onConfirm).toHaveBeenCalled();
     expect(onCancel).toHaveBeenCalled();
+  });
+
+  it("focuses the confirm button on mount", async () => {
+    render(
+      <BaseMessagePopup
+        message="Focus test"
+        onClose={jest.fn()}
+        onConfirm={jest.fn()}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+      />
+    );
+
+    const confirmButton = await screen.findByTestId("message-popup-confirm");
+    await waitFor(() => expect(confirmButton).toHaveFocus());
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <BaseMessagePopup
+        message="A11y test"
+        onClose={jest.fn()}
+        onConfirm={jest.fn()}
+        onCancel={jest.fn()}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+      />
+    );
+
+    const dialog = await screen.findByRole("dialog");
+    expect(dialog).toBeInTheDocument();
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import IconButtonBase from "../src/components/IconButton/IconButtonBase";
 import { FaTimes } from "react-icons/fa";
+import { axe, toHaveNoViolations } from "jest-axe";
+expect.extend(toHaveNoViolations);
 
 const classMap = {
   iconButton: "icon-button",
@@ -59,5 +61,19 @@ describe("IconButtonBase", () => {
 
     fireEvent.click(screen.getByTestId("icon-button"));
     expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <IconButtonBase
+        icon={FaTimes}
+        ariaLabel="Close"
+        classMap={classMap}
+        data-testid="icon-button"
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

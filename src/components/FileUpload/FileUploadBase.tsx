@@ -285,7 +285,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           className="sr_only"
           aria-live="polite"
           aria-atomic="true"
-          data-testid={`${testId}-upload-message`}
+          data-testid={testId ? `${testId}-upload-message` : undefined}
         >
           {uploadMessage}
         </div>

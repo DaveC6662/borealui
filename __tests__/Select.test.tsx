@@ -1,7 +1,8 @@
-// __tests__/BaseSelect.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import BaseSelect from "@/components/Select/SelectBase";
+
+expect.extend(toHaveNoViolations);
 
 const classNames = {
   main: "main",

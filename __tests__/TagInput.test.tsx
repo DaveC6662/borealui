@@ -1,8 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import TagInputBase from "@/components/TagInput/TagInputBase";
 
-// Mock styles
+expect.extend(toHaveNoViolations);
+
 const mockStyles = {
   tagInput: "tagInput",
   tagContainer: "tagContainer",
@@ -16,14 +17,13 @@ const mockStyles = {
   medium: "medium",
 };
 
-// Mock TextInput and IconButton
 const MockTextInput = ({ value, onChange, onKeyDown, ...rest }: any) => (
   <input
     value={value}
     onChange={onChange}
     onKeyDown={onKeyDown}
+    data-testid="tag-input-input"
     {...rest}
-    data-testid="text-input"
   />
 );
 
@@ -42,12 +42,11 @@ describe("TagInputBase", () => {
         classMap={mockStyles}
         TextInput={MockTextInput}
         IconButton={MockIconButton}
-        combineClassNames={(...classes) => classes.join(" ")}
         onChange={handleChange}
       />
     );
 
-    const input = screen.getByTestId("text-input");
+    const input = screen.getByTestId("tag-input-input");
     fireEvent.change(input, { target: { value: "React" } });
     fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
 
@@ -63,24 +62,23 @@ describe("TagInputBase", () => {
         classMap={mockStyles}
         TextInput={MockTextInput}
         IconButton={MockIconButton}
-        combineClassNames={(...classes) => classes.join(" ")}
         tags={["JS"]}
         onChange={handleChange}
       />
     );
 
-    fireEvent.click(screen.getByRole("button", { name: /remove tag js/i }));
+    const removeBtn = screen.getByRole("button", { name: /remove tag js/i });
+    fireEvent.click(removeBtn);
     expect(handleChange).toHaveBeenCalledWith([]);
   });
 
-  it("is accessible", async () => {
+  it("has no accessibility violations", async () => {
     const { container } = render(
       <TagInputBase
         classMap={mockStyles}
         TextInput={MockTextInput}
         IconButton={MockIconButton}
-        combineClassNames={(...classes) => classes.join(" ")}
-        ariaDescription="Test tag input accessibility"
+        ariaDescription="Accessible tag input"
       />
     );
 

@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import ToggleBase from "@/components/Toggle/ToggleBase";
+
+expect.extend(toHaveNoViolations);
 
 const mockStyles = {
   toggleContainer: "toggleContainer",

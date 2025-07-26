@@ -1,8 +1,10 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import BaseEmptyState from "@/components/EmptyState/EmptyStateBase";
 import { FaRegSmile } from "react-icons/fa";
 
-// Dummy button
+expect.extend(toHaveNoViolations);
+
 const DummyButton = ({ children, ...props }: any) => (
   <button {...props}>{children}</button>
 );
@@ -60,5 +62,23 @@ describe("BaseEmptyState", () => {
     const button = screen.getByTestId("empty-state-action");
     fireEvent.click(button);
     expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <BaseEmptyState
+        icon={FaRegSmile}
+        title="No Data"
+        message="Please add some data to get started."
+        actionLabel="Try Again"
+        onActionClick={() => {}}
+        Button={DummyButton}
+        classMap={classNames}
+        data-testid="empty-state"
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

@@ -1,5 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import BasePopover from "@/components/PopOver/PopOverBase";
+import { axe, toHaveNoViolations } from "jest-axe";
+
+expect.extend(toHaveNoViolations);
 
 const classNames = {
   container: "popoverContainer",
@@ -22,14 +25,11 @@ describe("BasePopover", () => {
 
     const trigger = screen.getByTestId("popover-trigger");
 
-    // Initially, content should not be visible
     expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
 
-    // Click to open
     fireEvent.click(trigger);
     expect(screen.getByTestId("popover-content")).toBeInTheDocument();
 
-    // Click again to close
     fireEvent.click(trigger);
     expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
   });
@@ -68,5 +68,21 @@ describe("BasePopover", () => {
 
     fireEvent.keyDown(trigger, { key: " " });
     expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
+  });
+
+  it("has no accessibility violations when open", async () => {
+    const { container } = render(
+      <BasePopover
+        trigger={<span>Open Popover</span>}
+        content={<div>Popover Content</div>}
+        classMap={classNames}
+        data-testid="popover"
+      />
+    );
+
+    fireEvent.click(screen.getByTestId("popover-trigger"));
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

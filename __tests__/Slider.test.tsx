@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import SliderBase from "@/components/Slider/SliderBase";
+
+expect.extend(toHaveNoViolations);
 
 const mockStyles = {
   sliderContainer: "sliderContainer",

@@ -1,9 +1,10 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ToolbarBase } from "@/components/Toolbar/ToolbarBase";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import { jest } from "@jest/globals";
 
-// Simple mock Avatar component
+expect.extend(toHaveNoViolations);
+
 const AvatarMock = ({ name }: { name: string }) => <div>{name}</div>;
 
 const mockStyles = {

@@ -1,10 +1,11 @@
-// __tests__/Stepper.test.tsx
 import React, { JSX } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import StepperBase, {
   StepperBaseProps,
 } from "@/components/Stepper/StepperBase";
+
+expect.extend(toHaveNoViolations);
 
 const mockSteps = [
   { label: "Start", icon: () => <span>1</span> },

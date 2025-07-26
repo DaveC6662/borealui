@@ -174,10 +174,13 @@ const BasePopover: React.FC<BasePopoverProps> = ({
           id={`${testId}-content`}
           role="dialog"
           aria-modal="false"
-          aria-labelledby={`${testId}-trigger`}
+          aria-labelledby={`${testId}-label`}
           className={popoverContentClass}
           data-testid={`${testId}-content`}
         >
+          <span id={`${testId}-label`} className="sr-only">
+            Popover Content
+          </span>
           {content}
         </div>
       )}

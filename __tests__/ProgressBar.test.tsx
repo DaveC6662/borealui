@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import BaseProgressBar from "@/components/ProgressBar/ProgressBarBase";
+
+expect.extend(toHaveNoViolations);
 
 const classNames = {
   container: "progressContainer",
@@ -44,6 +46,18 @@ describe("BaseProgressBar", () => {
     const progressbar = screen.getByRole("progressbar");
     expect(progressbar).not.toHaveAttribute("aria-valuenow");
     expect(progressbar).toHaveAttribute("aria-busy", "true");
+  });
+
+  it("is accessible in indeterminate mode", async () => {
+    const { container } = render(
+      <BaseProgressBar
+        indeterminate
+        classMap={classNames}
+        data-testid="progressbar"
+      />
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 
   it("is accessible with jest-axe", async () => {

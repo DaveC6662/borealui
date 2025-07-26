@@ -1,5 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import BasePager from "@/components/Pager/PagerBase";
+import { axe, toHaveNoViolations } from "jest-axe";
+
+expect.extend(toHaveNoViolations);
 
 const DummyButton = ({ children, ...props }: any) => (
   <button {...props}>{children}</button>
@@ -91,5 +94,22 @@ describe("BasePager", () => {
       "aria-current",
       "page"
     );
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <BasePager
+        totalItems={30}
+        itemsPerPage={10}
+        currentPage={1}
+        onPageChange={jest.fn()}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classNames}
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

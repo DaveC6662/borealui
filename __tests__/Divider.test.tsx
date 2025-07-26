@@ -1,5 +1,8 @@
 import { render, screen } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import DividerBase from "@/components/Divider/DividerBase";
+
+expect.extend(toHaveNoViolations);
 
 const styles = {
   divider: "divider",
@@ -12,7 +15,6 @@ const styles = {
 describe("DividerBase", () => {
   it("renders horizontal divider with default props", () => {
     render(<DividerBase classMap={styles} data-testid="divider" />);
-
     const divider = screen.getByTestId("divider");
     expect(divider).toHaveClass("divider");
     expect(divider).toHaveClass("horizontal");
@@ -28,7 +30,6 @@ describe("DividerBase", () => {
         data-testid="divider-vertical"
       />
     );
-
     const divider = screen.getByTestId("divider-vertical");
     expect(divider).toHaveAttribute("role", "separator");
     expect(divider).toHaveAttribute("aria-orientation", "vertical");
@@ -44,7 +45,6 @@ describe("DividerBase", () => {
         data-testid="divider-styled"
       />
     );
-
     const divider = screen.getByTestId("divider-styled");
     expect(divider).toHaveClass("dashed");
     expect(divider).toHaveClass("themePrimary");
@@ -59,7 +59,6 @@ describe("DividerBase", () => {
         data-testid="divider-hr"
       />
     );
-
     const divider = screen.getByTestId("divider-hr");
     expect(divider.tagName).toBe("HR");
     expect(divider).not.toHaveAttribute("role");
@@ -74,8 +73,20 @@ describe("DividerBase", () => {
         data-testid="divider-hidden"
       />
     );
-
     const divider = screen.getByTestId("divider-hidden");
     expect(divider).toHaveAttribute("aria-hidden", "true");
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <DividerBase
+        orientation="horizontal"
+        classMap={styles}
+        data-testid="divider-a11y"
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

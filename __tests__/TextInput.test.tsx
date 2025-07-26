@@ -1,8 +1,10 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import { FaUser } from "react-icons/fa";
 import TextInputBase from "@/components/TextInput/TextInputBase";
 import { IconButton } from "@/index.core";
+
+expect.extend(toHaveNoViolations);
 
 const mockStyles = {
   textBoxContainer: "textBoxContainer",

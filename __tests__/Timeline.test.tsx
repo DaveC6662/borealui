@@ -1,7 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import TimelineBase from "@/components/Timeline/TimelineBase";
 import { FaCheck } from "react-icons/fa";
+
+expect.extend(toHaveNoViolations);
 
 const mockStyles = {
   timeline: "timeline",

@@ -1,5 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import DateTimePickerBase from "@/components/DateTimePicker/DateTimePickerBase";
+
+expect.extend(toHaveNoViolations);
 
 const styles = {
   wrapper: "pickerWrapper",
@@ -12,6 +15,7 @@ const styles = {
   disabled: "disabled",
   primary: "themePrimary",
   medium: "sizeMedium",
+  icon: "iconCalendar",
 };
 
 describe("DateTimePickerBase", () => {
@@ -111,5 +115,21 @@ describe("DateTimePickerBase", () => {
     });
 
     expect(handleChange).toHaveBeenCalledWith("2025-04-30T14:00");
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <DateTimePickerBase
+        label="Meeting Time"
+        value=""
+        onChange={jest.fn()}
+        classMap={styles}
+        description="Choose a time for the meeting"
+        data-testid="datetime"
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

@@ -7,13 +7,13 @@ import { capitalize } from "../../utils/capitalize";
 import { combineClassNames } from "../../utils/classNames";
 import React, { useEffect, useState } from "react";
 
-//TODO Add data-test-id for testing purposes
 export interface ScrollToTopBaseProps {
   classMap: Record<string, string>;
   rounding?: RoundingType;
   shadow?: ShadowType;
   IconComponent: React.ElementType;
   offset?: number;
+  "data-testid"?: string;
 }
 
 const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
@@ -22,6 +22,7 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   shadow = getDefaultShadow(),
   IconComponent,
   offset = 300,
+  "data-testid": testId = "scroll",
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -50,7 +51,7 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
         aria-live="polite"
         className="sr_only"
         role="status"
-        data-testid="scroll-announcement"
+        data-testid={`${testId}-announcement`}
       >
         {isVisible ? "Scroll to top button is now visible" : ""}
       </div>
@@ -62,7 +63,7 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
           title="Scroll to top"
           type="button"
           aria-label="Scroll to top"
-          data-testid="scroll-button"
+          data-testid={`${testId}-button`}
         >
           <IconComponent className={iconClass} />
         </button>

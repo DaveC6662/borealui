@@ -1,6 +1,9 @@
 import { render, screen } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import BaseMetricBox from "@/components/MetricBox/MetricBoxBase";
 import { FaUsers } from "react-icons/fa";
+
+expect.extend(toHaveNoViolations);
 
 const classNames = {
   wrapper: "metricWrapper",
@@ -58,5 +61,21 @@ describe("BaseMetricBox", () => {
     const region = screen.getByTestId("metric-box");
     expect(region).not.toHaveAttribute("aria-describedby");
     expect(screen.queryByTestId("metric-box-subtext")).not.toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <BaseMetricBox
+        title="A11y Metric"
+        value="99"
+        subtext="Accessible"
+        icon={FaUsers}
+        classMap={classNames}
+        data-testid="metric-box"
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

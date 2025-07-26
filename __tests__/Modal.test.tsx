@@ -1,6 +1,9 @@
 import React, { act } from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import BaseModal from "@/components/Modal/ModalBase";
+import { axe, toHaveNoViolations } from "jest-axe";
+
+expect.extend(toHaveNoViolations);
 
 const DummyIconButton = React.forwardRef<HTMLButtonElement, any>(
   ({ icon: Icon, ...props }, ref) => (
@@ -11,7 +14,7 @@ const DummyIconButton = React.forwardRef<HTMLButtonElement, any>(
 );
 DummyIconButton.displayName = "DummyIconButton";
 
-const classNames = {
+const classMap = {
   overlay: "modalOverlay",
   visible: "modalVisible",
   hidden: "modalHidden",
@@ -30,12 +33,12 @@ describe("BaseModal", () => {
     onClose.mockClear();
   });
 
-  it("renders modal and traps focus", () => {
+  it("renders modal with aria attributes and content", () => {
     render(
       <BaseModal
         onClose={onClose}
         IconButton={DummyIconButton}
-        classMap={classNames}
+        classMap={classMap}
       >
         <p>Modal content</p>
       </BaseModal>
@@ -46,6 +49,10 @@ describe("BaseModal", () => {
     expect(modal).toHaveAttribute("aria-modal", "true");
     expect(modal).toHaveAttribute("aria-labelledby");
     expect(modal).toHaveAttribute("aria-describedby");
+
+    const label = screen.getByText("Modal Dialog");
+    expect(label).toHaveClass("sr-only");
+
     expect(screen.getByText("Modal content")).toBeInTheDocument();
   });
 
@@ -54,7 +61,7 @@ describe("BaseModal", () => {
       <BaseModal
         onClose={onClose}
         IconButton={DummyIconButton}
-        classMap={classNames}
+        classMap={classMap}
       >
         <p>Close me</p>
       </BaseModal>
@@ -68,12 +75,12 @@ describe("BaseModal", () => {
     });
   });
 
-  it("closes on Escape key", () => {
+  it("calls onClose when Escape key is pressed", () => {
     render(
       <BaseModal
         onClose={onClose}
         IconButton={DummyIconButton}
-        classMap={classNames}
+        classMap={classMap}
       >
         <p>Press Escape</p>
       </BaseModal>
@@ -88,25 +95,76 @@ describe("BaseModal", () => {
 
     render(
       <BaseModal
-        onClose={jest.fn()}
+        onClose={() => {}}
         IconButton={DummyIconButton}
-        classMap={classNames}
+        classMap={classMap}
       >
-        <button>Focusable Button</button>
+        <button>Focusable</button>
       </BaseModal>
     );
 
-    // Simulate animation frame and timeout
     act(() => {
       jest.runAllTimers();
     });
 
     const modal = screen.getByTestId("modal");
-
-    await waitFor(() => {
-      expect(modal).toHaveFocus();
-    });
+    await waitFor(() => expect(modal).toHaveFocus());
 
     jest.useRealTimers();
+  });
+
+  it("calls onClose when clicking outside the modal", async () => {
+    render(
+      <BaseModal
+        onClose={onClose}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+      >
+        <p>Outside Click Test</p>
+      </BaseModal>
+    );
+
+    const overlay = screen.getByTestId("modal");
+    fireEvent.click(overlay);
+
+    await waitFor(() => {
+      expect(onClose).toHaveBeenCalled();
+    });
+  });
+
+  it("does not call onClose when clicking inside the modal content", () => {
+    render(
+      <BaseModal
+        onClose={onClose}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+      >
+        <p>Inside</p>
+      </BaseModal>
+    );
+
+    const content = screen.getByTestId("modal-content");
+    fireEvent.click(content);
+
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <BaseModal
+        onClose={onClose}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+      >
+        <p>Accessible Modal Content</p>
+      </BaseModal>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole("dialog")).toBeInTheDocument();
+    });
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

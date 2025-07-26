@@ -1,6 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import BaseDropdown from "@/components/Dropdown/DropdownBase";
 import { FaEllipsisV, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { axe, toHaveNoViolations } from "jest-axe";
+
+expect.extend(toHaveNoViolations);
 
 const DummyIconButton = ({ icon: Icon, ...props }: any) => (
   <button {...props} aria-label={props.ariaLabel}>
@@ -70,7 +73,7 @@ describe("BaseDropdown", () => {
     fireEvent.click(screen.getByTestId("dropdown-profile"));
 
     expect(items[0].onClick).toHaveBeenCalled();
-    expect(screen.queryByTestId("dropdown-menu")).not.toBeInTheDocument(); // Closed after click
+    expect(screen.queryByTestId("dropdown-menu")).not.toBeInTheDocument();
   });
 
   it("supports keyboard navigation", () => {
@@ -88,9 +91,27 @@ describe("BaseDropdown", () => {
     fireEvent.click(trigger);
 
     const wrapper = screen.getByTestId("dropdown");
-    fireEvent.keyDown(wrapper, { key: "ArrowDown" }); // Focus first item
-    fireEvent.keyDown(wrapper, { key: "Enter" }); // Activate it
+    fireEvent.keyDown(wrapper, { key: "ArrowDown" });
+    fireEvent.keyDown(wrapper, { key: "Enter" });
 
     expect(items[0].onClick).toHaveBeenCalled();
+  });
+
+  it("has no accessibility violations when open", async () => {
+    const { container } = render(
+      <BaseDropdown
+        triggerIcon={FaEllipsisV}
+        items={items}
+        IconButton={DummyIconButton}
+        classMap={classNames}
+        data-testid="dropdown"
+        ariaLabel="More options"
+      />
+    );
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

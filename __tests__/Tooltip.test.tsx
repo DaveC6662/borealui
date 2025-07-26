@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import { TooltipBase } from "@/components/Tooltip/TooltipBase";
+
+expect.extend(toHaveNoViolations);
 
 const mockStyles = {
   container: "tooltipContainer",
@@ -16,7 +18,7 @@ const mockStyles = {
   error: "error",
   warning: "warning",
   clear: "clear",
-  visible: "visible", // Add this line
+  visible: "visible",
 };
 
 describe("TooltipBase", () => {
@@ -42,16 +44,13 @@ describe("TooltipBase", () => {
     const container = screen.getByTestId("tooltip-container");
     const tooltip = screen.getByTestId("tooltip");
 
-    // Initially hidden
     expect(tooltip).not.toHaveClass("visible");
     expect(tooltip).toHaveAttribute("aria-hidden", "true");
 
-    // Hover shows tooltip
     fireEvent.mouseEnter(container);
     expect(tooltip).toHaveClass("visible");
     expect(tooltip).toHaveAttribute("aria-hidden", "false");
 
-    // Mouse leave hides it again
     fireEvent.mouseLeave(container);
     expect(tooltip).not.toHaveClass("visible");
     expect(tooltip).toHaveAttribute("aria-hidden", "true");
@@ -84,7 +83,7 @@ describe("TooltipBase", () => {
       <TooltipBase
         content="Positioned tooltip"
         position="bottom"
-        theme="error"
+        state="error"
         classMap={mockStyles}
       >
         <button>Check styles</button>

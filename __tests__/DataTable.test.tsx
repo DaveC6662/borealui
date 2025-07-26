@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import DataTableBase from "@/components/DataTable/DataTableBase";
 import { Column } from "@/components/DataTable/DataTable.types";
+import { axe, toHaveNoViolations } from "jest-axe";
+expect.extend(toHaveNoViolations);
 
 const columns: Column<{ name: string; age: number }>[] = [
   { key: "name", label: "Name", sortable: true },
@@ -29,7 +31,22 @@ describe("DataTableBase", () => {
 
     expect(screen.getByRole("table")).toBeInTheDocument();
     expect(screen.getAllByRole("columnheader")).toHaveLength(2);
-    expect(screen.getAllByRole("row")).toHaveLength(3); // 1 header + 2 rows
+    expect(screen.getAllByRole("row")).toHaveLength(3);
+  });
+
+  it("sorts by defaultSortKey and defaultSortOrder on mount", () => {
+    render(
+      <DataTableBase
+        columns={columns}
+        data={data}
+        classMap={classMap}
+        defaultSortKey="age"
+        defaultSortOrder="desc"
+      />
+    );
+
+    const rows = screen.getAllByRole("row");
+    expect(rows[1]).toHaveTextContent("Bob");
   });
 
   it("sorts columns when header is clicked", () => {
@@ -54,6 +71,25 @@ describe("DataTableBase", () => {
     expect(header).toHaveAttribute("aria-sort", "descending");
   });
 
+  it("calls onSortChange when serverSort is enabled", () => {
+    const onSortChange = jest.fn();
+    render(
+      <DataTableBase
+        columns={columns}
+        data={data}
+        classMap={classMap}
+        serverSort
+        onSortChange={onSortChange}
+      />
+    );
+
+    fireEvent.click(screen.getByText("Name"));
+    expect(onSortChange).toHaveBeenCalledWith("name", "asc");
+
+    fireEvent.click(screen.getByText("Name"));
+    expect(onSortChange).toHaveBeenCalledWith("name", "desc");
+  });
+
   it("triggers onRowClick when a row is clicked", () => {
     const handleClick = jest.fn();
     render(
@@ -68,5 +104,28 @@ describe("DataTableBase", () => {
     const row = screen.getAllByRole("row")[1];
     fireEvent.click(row);
     expect(handleClick).toHaveBeenCalledWith(data[0]);
+  });
+
+  it("uses rowKey prop to assign row keys", () => {
+    const rowKey = (row: { name: string }) => row.name;
+    const { container } = render(
+      <DataTableBase
+        columns={columns}
+        data={data}
+        classMap={classMap}
+        rowKey={rowKey}
+      />
+    );
+
+    const rowElements = container.querySelectorAll("tbody tr");
+    expect(rowElements[0].getAttribute("key")).toBe(null);
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <DataTableBase columns={columns} data={data} classMap={classMap} />
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

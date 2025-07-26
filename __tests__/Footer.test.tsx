@@ -2,6 +2,8 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import BaseFooter from "@/components/Footer/FooterBase";
 import { FaGithub, FaTwitter } from "react-icons/fa";
+import { axe, toHaveNoViolations } from "jest-axe";
+expect.extend(toHaveNoViolations);
 
 const classNames = {
   wrapper: "footerWrapper",
@@ -57,19 +59,16 @@ describe("BaseFooter", () => {
       />
     );
 
-    // Landmark
     expect(
       screen.getByRole("contentinfo", { name: /footer/i })
     ).toBeInTheDocument();
 
-    // Navigation
     expect(
       screen.getByRole("navigation", { name: /footer site links/i })
     ).toBeInTheDocument();
     expect(screen.getByText("Home")).toBeInTheDocument();
     expect(screen.getByText("About")).toBeInTheDocument();
 
-    // Social
     expect(
       screen.getByRole("navigation", { name: /social media/i })
     ).toBeInTheDocument();
@@ -82,10 +81,33 @@ describe("BaseFooter", () => {
       "https://twitter.com"
     );
 
-    // Theme selector
     expect(screen.getByLabelText("Theme selector")).toBeInTheDocument();
 
-    // Copyright
     expect(screen.getByText(/© 2025 MyCompany/i)).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <BaseFooter
+        theme="primary"
+        classMap={classNames}
+        IconButton={DummyIconButton}
+        ThemeSelect={DummyThemeSelect}
+        LinkWrapper={DummyLinkWrapper}
+        showThemeSelect
+        links={[
+          { label: "Home", href: "/" },
+          { label: "About", href: "/about" },
+        ]}
+        socialLinks={[
+          { icon: FaGithub, title: "GitHub", href: "https://github.com" },
+          { icon: FaTwitter, title: "Twitter", href: "https://twitter.com" },
+        ]}
+        copyright="© 2025 MyCompany"
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

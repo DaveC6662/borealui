@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import BaseFormGroup from "@/components/FormGroup/FormGroupBase";
+import { axe, toHaveNoViolations } from "jest-axe";
+expect.extend(toHaveNoViolations);
 
 const classNames = {
   wrapper: "formWrapper",
@@ -68,5 +70,37 @@ describe("BaseFormGroup", () => {
       "This field is required"
     );
     expect(screen.getByRole("alert")).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <BaseFormGroup
+        id="signup"
+        label="Signup Info"
+        description="Enter a valid email and password"
+        classMap={classNames}
+        spacing="medium"
+        layout="vertical"
+      >
+        <>
+          <label htmlFor="signup-email">Email</label>
+          <input
+            id="signup-email"
+            type="email"
+            aria-describedby="signup-description"
+          />
+
+          <label htmlFor="signup-password">Password</label>
+          <input
+            id="signup-password"
+            type="password"
+            aria-describedby="signup-description"
+          />
+        </>
+      </BaseFormGroup>
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

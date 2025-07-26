@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe, toHaveNoViolations } from "jest-axe";
 import SpinnerBase from "@/components/Spinner/SpinnerBase";
+
+expect.extend(toHaveNoViolations);
 
 const mockStyles = {
   spinner: "spinner-base",
