@@ -4,13 +4,7 @@ import React, { useContext } from "react";
 import { getAllColorSchemes } from "../../../../styles/colorSchemeRegistry";
 import { Select } from "@/index.next";
 import { ThemeContext } from "../../../../context/ThemeContext";
-import {
-  RoundingType,
-  ShadowType,
-  SizeType,
-  StateType,
-  ThemeType,
-} from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import {
   getDefaultRounding,
   getDefaultShadow,

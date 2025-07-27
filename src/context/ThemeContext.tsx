@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * ---------------------------------------------------------------------
  * ThemeProvider.tsx
@@ -33,8 +35,6 @@
  * const { selectedScheme, setSelectedScheme } = useContext(ThemeContext);
  * ```
  */
-
-"use client";
 
 import React, { createContext, useState, useEffect } from "react";
 import {

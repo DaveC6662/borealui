@@ -120,10 +120,22 @@ export default function RootLayout({ children }) {
 | `primaryColor`    | Main UI color                    |
 | `secondaryColor`  | Accent color                     |
 | `tertiaryColor`   | Additional accent                |
-| `quaternaryColor` | Optional border/highlight        |
+| `quaternaryColor` | Additional accent                |
 | `backgroundColor` | Background/base color            |
 
 ---
+
+## Post-Install Verification
+
+After installation, we recommend testing the following in your app:
+
+- Component renders correctly and styles are applied.
+
+- Custom theme is working when passed via ThemeProvider.
+
+- Global config overrides (theme, size, etc.) are applied.
+
+- No console errors or missing styles on first render.
 
 ## Why Use Boreal UI?
 
@@ -142,7 +154,13 @@ export default function RootLayout({ children }) {
 4. Push to your fork: `git push origin feat/my-component`
 5. Open a Pull Request.
 
-**Please include tests, Storybook stories, and clear documentation for new components.**
+**Include**
+
+- Component logic (TSX)
+- Styles (SCSS)
+- Tests (Jest/Cypress)
+- Storybook stories
+- Docs/comments for props
 
 ---
 
