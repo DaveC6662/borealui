@@ -1,8 +1,28 @@
-# .npmignore
-playground/
+# Ignore configs
+.babelrc
+.hintrc
+.stylelintrc*
+.eslintrc*
+.vite/
+.vscode/
+webpack.config.*
+vite.config.*
+tsconfig*.json
+jest.*
+*.test.ts
+*.test.tsx
+jest-test-results.json
+
+# Ignore setup, tests, stories
+jest.setup.ts
 __tests__/
-.storybook-core/
-.storybook-next/
 stories-core/
 stories-next/
-tsconfig.build.tsbuildinfo
+.storybook-core/
+.storybook-next/
+
+# Ignore unused roots
+scripts/
+playground/
+docs/
+README.dev.md

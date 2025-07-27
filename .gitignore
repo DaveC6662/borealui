@@ -52,3 +52,13 @@ yalc.lock
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+# Build artifacts
+*.tgz
+
+# VS Code workspace config (optional)
+*.code-workspace
+
+# Lint results (if generated)
+eslint-report.json
+stylelint-report.json
