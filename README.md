@@ -32,6 +32,30 @@ yarn add boreal-ui
 
 ## Quick Usage
 
+### Including Global Styles
+
+**For Next.js :**
+
+In your globals.css (or globals.scss), add the following at the top:
+
+```css
+@import "boreal-ui/next/style.css";
+```
+
+Then, make sure this global file is included in your layout or \_app.tsx:
+
+```tsx
+import "./globals.css"; // or "./globals.scss"
+```
+
+**For React (Core):**
+
+If you're using boreal-ui/core, import the base styles in your main entry (e.g., index.tsx or App.tsx):
+
+```tsx
+import "boreal-ui/core/style.css";
+```
+
 ### Importing Components
 
 **For React (Core):**
@@ -56,26 +80,25 @@ Boreal UI lets you define project-wide style defaults (theme, rounding, shadow, 
 
 **Call the config API**
 
-````ts
+```ts
 import { setBorealStyleConfig } from "boreal-ui/config/boreal-style-config";
 
 setBorealStyleConfig({
-  defaultTheme: "secondary",     // "primary" | "secondary" | "tertiary" | "quaternary"
-  defaultRounding: "medium",     // "none" | "small" | "medium" | "large" | "full"
-  defaultShadow: "light",        // "none" | "light" | "medium" | "strong" | "intense"
-  defaultSize: "large",          // "xs" | "small" | "medium" | "large" | "xl"
+  defaultTheme: "secondary", // "primary" | "secondary" | "tertiary" | "quaternary"
+  defaultRounding: "medium", // "none" | "small" | "medium" | "large" | "full"
+  defaultShadow: "light", // "none" | "light" | "medium" | "strong" | "intense"
+  defaultSize: "large", // "xs" | "small" | "medium" | "large" | "xl"
 });
+```
 
 Call this once early in your app before rendering any components.
 
 These defaults apply globally, but you can override them per component as needed:
 
-```tsx
+````tsx
 <Button theme="secondary" size="large" shadow="strong">
   Custom Button
 </Button>
-````
-
 ---
 
 ## Theming & Custom Color Schemes
@@ -110,7 +133,7 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-```
+````
 
 **Theme property reference:**
 
