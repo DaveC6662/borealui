@@ -95,11 +95,11 @@ Call this once early in your app before rendering any components.
 
 These defaults apply globally, but you can override them per component as needed:
 
-````tsx
+```tsx
 <Button theme="secondary" size="large" shadow="strong">
   Custom Button
 </Button>
----
+```
 
 ## Theming & Custom Color Schemes
 
@@ -133,7 +133,7 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-````
+```
 
 **Theme property reference:**
 
