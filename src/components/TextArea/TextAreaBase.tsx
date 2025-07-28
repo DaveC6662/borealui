@@ -23,6 +23,7 @@ const TextAreaBase = forwardRef<
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       state = "",
+      resizable = true,
       ariaLabel,
       ariaDescription,
       disabled = false,
@@ -73,7 +74,10 @@ const TextAreaBase = forwardRef<
           autoComplete={autoComplete}
           readOnly={readOnly}
           disabled={disabled}
-          style={{ height }}
+          style={{
+            height,
+            resize: resizable ? undefined : "none",
+          }}
           className={classMap.textInput}
           data-testid={`${testId}-input`}
           {...props}

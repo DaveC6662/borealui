@@ -76,6 +76,11 @@ export interface TextAreaProps
   disabled?: boolean;
 
   /**
+   * If false, the textarea is not resizable.
+   */
+  resizable?: boolean;
+
+  /**
    * Optional height for the textarea. Can be a CSS value (e.g., "100px") or a number (interpreted as pixels).
    */
   height?: string | number;

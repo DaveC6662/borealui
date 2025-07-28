@@ -100,6 +100,11 @@ const meta: Meta<TextAreaProps> = {
         "Explicit CSS height for the textarea (e.g. '100px', '10rem').",
       table: { category: "Appearance" },
     },
+    resizable: {
+      control: "boolean",
+      description: "If false, the textarea is not resizable.",
+      table: { category: "Behavior" },
+    },
     ariaLabel: {
       control: "text",
       description: "Custom ARIA label for accessibility.",
@@ -248,6 +253,26 @@ export const CustomHeight: Story = {
         onChange={(e) => setValue(e.target.value)}
       />
     );
+  },
+};
+
+export const Unresizable: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextArea
+        {...args}
+        resizable={false}
+        placeholder="Cannot be resized"
+        value={value}
+        rows={1}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
+  },
+  name: "Unresizable",
+  args: {
+    resizable: false,
   },
 };
 
