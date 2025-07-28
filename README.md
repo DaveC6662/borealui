@@ -81,7 +81,7 @@ Boreal UI lets you define project-wide style defaults (theme, rounding, shadow, 
 **Call the config API**
 
 ```ts
-import { setBorealStyleConfig } from "boreal-ui/config/boreal-style-config";
+import { setBorealStyleConfig } from "boreal-ui/config/[next|core]";
 
 setBorealStyleConfig({
   defaultTheme: "secondary", // "primary" | "secondary" | "tertiary" | "quaternary"
