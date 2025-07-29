@@ -1,1 +1,149 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
+@use "sass:color";
+@use "sass:map";
 
+.wrapper {
+  position: relative;
+  width: 240px;
+  height: 100vh;
+  background-color: var(--background-color-light);
+  border-right: 1px solid var(--background-color-lighter);
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  font-family: var(--font-family-primary);
+
+  @each $key, $value in theme.$rounding {
+    &.round#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &.shadow#{$key} {
+      box-shadow: $value;
+    }
+  }
+}
+
+@each $theme, $values in theme.$themes {
+  .#{$theme} .active {
+    background-color: map.get($values, bg);
+    color: map.get($values, color);
+  }
+
+  .#{$theme}.outline .active {
+    background-color: transparent;
+    color: map.get($values, color);
+    border: 2px solid map.get($values, border);
+  }
+
+  .clear.#{$theme} .active {
+    background-color: map.get($values, border);
+  }
+}
+
+@each $state, $values in theme.$states {
+  .#{$state} .active {
+    background-color: map.get($values, bg);
+    color: map.get($values, color);
+
+    &:hover {
+      background-color: map.get($values, hover);
+    }
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-color-secondary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: theme.$transition-default;
+
+  &:hover {
+    text-decoration: none;
+    background-color: var(--background-color-dark);
+    color: var(--text-color-primary);
+    letter-spacing: 0.05em;
+  }
+
+  &:focus {
+    outline: 2px solid var(--text-color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.active {
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+}
+
+.childLink {
+  font-size: 0.9rem;
+}
+
+.chevron {
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.childList {
+  border-left: 3px solid var(--background-color-darker);
+  margin: 0.25rem 0;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  margin-top: auto;
+  width: 100%;
+  padding: 1rem;
+  border-top: 1px solid var(--background-color-darker);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footerLink {
+  font-size: 0.85rem;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--text-color-primary);
+  }
+}
+
+.footerVersion {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-top: 0.5rem;
+}

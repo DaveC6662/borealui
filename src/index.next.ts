@@ -59,6 +59,7 @@ export { default as MetricBox } from "./components/MetricBox/next/MetricBox";
 export { default as EmptyState } from "./components/EmptyState/next/EmptyState";
 export { default as CommandPalette } from "./components/CommandPalette/next/CommandPalette";
 export { default as NotificationCenter } from "./components/NotificationCenter/next/NotificationCenter";
+export { default as Sidebar } from "./components/Sidebar/next/Sidebar";
 
 //  Cards & Display Components
 export { default as Card } from "./components/Card/next/Card";

@@ -1,1 +1,174 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/globals";
+@use "sass:color";
+@use "sass:map";
 
+.sidebar {
+  position: relative;
+  width: 240px;
+  height: 100vh;
+  background-color: var(--background-color-light);
+  border-right: 1px solid var(--background-color-lighter);
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  font-family: var(--font-family-primary);
+
+  @each $key, $value in theme.$rounding {
+    &_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @each $theme, $values in theme.$themes {
+    &_#{$theme} .sidebar_active {
+      background-color: map.get($values, bg);
+      color: map.get($values, color);
+    }
+
+    &_#{$theme}.sidebar_outline .sidebar_active {
+      background-color: transparent;
+      color: map.get($values, color);
+      border: 2px solid map.get($values, border);
+    }
+
+    &_clear.sidebar_#{$theme} .sidebar_active {
+      border: 2px solid map.get($values, border);
+    }
+  }
+
+  @each $state, $values in theme.$states {
+    &_#{$state} .sidebar_active {
+      background-color: map.get($values, bg);
+      color: map.get($values, color);
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+    }
+
+    &_#{$state}.sidebar_outline .sidebar_active {
+      border: 2px solid map.get($values, bg);
+      background-color: transparent;
+      color: map.get($values, color);
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+    }
+  }
+}
+
+.sidebar_nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar_link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-color-secondary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: theme.$transition-default;
+
+  &:hover {
+    text-decoration: none;
+    background-color: var(--background-color-dark);
+    color: var(--text-color-primary);
+    letter-spacing: 0.05em;
+  }
+
+  &:focus {
+    outline: 2px solid var(--text-color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.sidebar_active {
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+}
+
+.sidebar_child-link {
+  font-size: 0.9rem;
+}
+
+.sidebar_chevron {
+  transition: transform 0.2s ease;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 2px;
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+.sidebar_chevronOpen {
+  transform: rotate(180deg);
+}
+
+.sidebar_submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.sidebar_child-list {
+  border-left: 3px solid var(--background-color-darker);
+  margin: 0.25rem 0;
+}
+
+.sidebar_footer {
+  position: absolute;
+  bottom: 0px;
+  margin-top: auto;
+  width: 100%;
+  padding: 1rem;
+  border-top: 1px solid var(--background-color-darker);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar_footer-link {
+  font-size: 0.85rem;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--text-color-primary);
+  }
+
+  &:focus {
+    outline: 2px solid var(--text-color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.sidebar_footer-version {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-top: 0.5rem;
+}
