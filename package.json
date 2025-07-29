@@ -36,6 +36,8 @@
     "playground": "vite --config playground/vite.config.ts",
     "storybook:core": "storybook dev -p 6006 -c .storybook-core",
     "storybook:next": "storybook dev -p 6007 -c .storybook-next",
+    "storybook:build:core": "storybook build  --output-dir ./storybook-core-json -c .storybook-core",
+    "storybook:build:next": "storybook build  --output-dir ./storybook-next-json -c .storybook-next",
     "build-storybook": "storybook build"
   },
   "keywords": [
@@ -158,11 +160,6 @@
       "import": "./dist/core/Card.js",
       "require": "./dist/core/Card.cjs.js",
       "types": "./dist/types/components/Card/core/Card.d.ts"
-    },
-    "./core/CheckBox": {
-      "import": "./dist/core/CheckBox.js",
-      "require": "./dist/core/CheckBox.cjs.js",
-      "types": "./dist/types/components/CheckBox/core/CheckBox.d.ts"
     },
     "./core/Chip": {
       "import": "./dist/core/Chip.js",
@@ -396,11 +393,6 @@
       "require": "./dist/next/Card.cjs.js",
       "types": "./dist/types/components/Card/next/Card.d.ts"
     },
-    "./next/CheckBox": {
-      "import": "./dist/next/CheckBox.js",
-      "require": "./dist/next/CheckBox.cjs.js",
-      "types": "./dist/types/components/CheckBox/next/CheckBox.d.ts"
-    },
     "./next/Chip": {
       "import": "./dist/next/Chip.js",
       "require": "./dist/next/Chip.cjs.js",
@@ -612,6 +604,16 @@
       "import": "./dist/next/Sidebar.js",
       "require": "./dist/next/Sidebar.cjs.js",
       "types": "./dist/types/components/Sidebar/next/Sidebar.d.ts"
+    },
+    "./core/Checkbox": {
+      "import": "./dist/core/Checkbox.js",
+      "require": "./dist/core/Checkbox.cjs.js",
+      "types": "./dist/types/components/Checkbox/core/Checkbox.d.ts"
+    },
+    "./next/Checkbox": {
+      "import": "./dist/next/Checkbox.js",
+      "require": "./dist/next/Checkbox.cjs.js",
+      "types": "./dist/types/components/Checkbox/next/Checkbox.d.ts"
     }
   },
   "typesVersions": {

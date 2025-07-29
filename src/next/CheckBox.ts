@@ -1,2 +1,2 @@
-export { default } from "../components/CheckBox/next/CheckBox";
-export * from "../components/CheckBox/CheckBox.types";
+export { default } from "../components/Checkbox/next/Checkbox";
+export * from "../components/Checkbox/Checkbox.types";

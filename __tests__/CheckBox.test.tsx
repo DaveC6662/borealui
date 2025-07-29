@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import CheckboxBase from "@/components/CheckBox/CheckboxBase";
+import CheckboxBase from "@/components/Checkbox/CheckboxBase";
 
 const classMap = {
   checkboxWrapper: "checkboxWrapper",

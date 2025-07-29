@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import CheckboxBase from "@/components/CheckBox/CheckboxBase";
+import CheckboxBase from "@/components/Checkbox/CheckboxBase";
 
 expect.extend(toHaveNoViolations);
 

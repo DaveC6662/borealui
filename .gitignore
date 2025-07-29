@@ -43,6 +43,8 @@ docs/
 # Optional: Storybook
 .storybook-out/
 .storybook-static/
+storybook-next-json/
+storybook-core-json/
 
 # Optional: Local tooling
 yalc.lock

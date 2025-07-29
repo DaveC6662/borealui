@@ -21,7 +21,7 @@ export { default as FileUpload } from "./components/FileUpload/core/FileUpload";
 export { default as TagInput } from "./components/TagInput/core/Taginput";
 export { default as RadioButton } from "./components/RadioButton/core/RadioButton";
 export { default as Slider } from "./components/Slider/core/Slider";
-export { default as Checkbox } from "./components/CheckBox/core/Checkbox";
+export { default as Checkbox } from "./components/Checkbox/core/Checkbox";
 export { default as ColorPicker } from "./components/ColorPicker/core/ColorPicker";
 export { default as FormGroup } from "./components/FormGroup/core/FormGroup";
 export { default as DataTable } from "./components/DataTable/core/DataTable";
