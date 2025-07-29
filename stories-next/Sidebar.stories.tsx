@@ -125,12 +125,6 @@ const meta: Meta<SidebarProps> = {
       description: "Version label displayed in the footer (e.g. v1.0.0).",
       table: { category: "Content" },
     },
-    classMap: {
-      control: false,
-      description:
-        "Map of CSS class names used to style various sidebar elements.",
-      table: { category: "Advanced" },
-    },
     className: {
       control: "text",
       description: "Custom class names for the sidebar wrapper.",
@@ -164,7 +158,6 @@ export const OutlineVariants = () => (
         key={theme}
         theme={theme}
         outline
-        classMap={classMap}
         links={mockLinks}
         currentPath="/Settings"
       />
@@ -174,7 +167,6 @@ export const OutlineVariants = () => (
         key={theme}
         theme={theme}
         outline
-        classMap={classMap}
         links={mockLinks}
         currentPath="/Settings"
       />
@@ -188,7 +180,6 @@ export const ThemeVariants = () => (
       <Sidebar
         key={theme}
         theme={theme}
-        classMap={classMap}
         links={mockLinks}
         currentPath="/Settings"
       />
@@ -202,7 +193,6 @@ export const StateVariants = () => (
       <Sidebar
         key={state}
         state={state}
-        classMap={classMap}
         links={mockLinks}
         currentPath="/Settings"
       />
@@ -216,7 +206,6 @@ export const RoundingVariants = () => (
       <Sidebar
         key={rounding}
         rounding={rounding}
-        classMap={classMap}
         links={mockLinks}
         currentPath="/Settings"
       />
@@ -230,7 +219,6 @@ export const ShadowVariants = () => (
       <Sidebar
         key={shadow}
         shadow={shadow}
-        classMap={classMap}
         links={mockLinks}
         currentPath="/Settings"
       />
