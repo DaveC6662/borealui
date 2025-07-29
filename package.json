@@ -17,6 +17,7 @@
   "scripts": {
     "dev": "vite",
     "clean": "rimraf dist",
+    "boreal": "ts-node ./scripts/boreal.cjs",
     "build:core": "vite build --config vite.config.core.ts",
     "build:next": "vite build --config vite.config.next.ts",
     "build:types": "tsc -p tsconfig.build.json",
@@ -26,7 +27,6 @@
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
     "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
     "check:sync": "node scripts/checkSync.js",
-    "generate:component": "node scripts/generate-component.js",
     "generate:entrypoints": "node scripts/generateEntryPoints.cjs",
     "generate:exports": "node scripts/generateExports.cjs",
     "test": "jest",

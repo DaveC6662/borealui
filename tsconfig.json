@@ -19,13 +19,7 @@
       "@/*": ["src/*"]
     },
 
-    "types": [
-      "node",
-      "jest",
-      "jest-axe",
-      "@testing-library/jest-dom",
-      "@testing-library/cypress"
-    ],
+    "types": ["node", "jest", "jest-axe", "@testing-library/jest-dom"],
 
     "forceConsistentCasingInFileNames": true,
     "plugins": [{ "name": "next" }]
