@@ -1,5 +1,3 @@
-// src/stories/Chip.stories.tsx
-
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Chip } from "../src/index.core";

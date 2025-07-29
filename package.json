@@ -21,7 +21,8 @@
     "build:core": "vite build --config vite.config.core.ts",
     "build:next": "vite build --config vite.config.next.ts",
     "build:types": "tsc -p tsconfig.build.json",
-    "build": "npm run clean && npm run build:core && npm run build:next && npm run build:types",
+    "build:types:public": "tsc -p tsconfig.build.json && node scripts/generateTypesBarrel.cjs",
+    "build": "npm run clean && npm run build:core && npm run build:next && npm run build:types && npm run build:types:public",
     "lint": "eslint ./src --ext .ts,.tsx",
     "lint:styles": "stylelint '**/*.{css,scss}'",
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
@@ -120,6 +121,10 @@
       "require": "./dist/core/index.cjs.js",
       "types": "./dist/types/index.core.d.ts"
     },
+    "./core/types": {
+      "types": "./dist/types/public.types.d.ts",
+      "default": "./dist/types/public.types.d.ts"
+    },
     "./core/style.css": {
       "default": "./dist/core/style.css"
     },
@@ -127,6 +132,10 @@
       "import": "./dist/next/index.js",
       "require": "./dist/next/index.cjs.js",
       "types": "./dist/types/index.next.d.ts"
+    },
+    "./next/types": {
+      "types": "./dist/types/public.types.d.ts",
+      "default": "./dist/types/public.types.d.ts"
     },
     "./next/style.css": {
       "default": "./dist/next/style.css"
