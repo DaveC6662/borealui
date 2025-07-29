@@ -602,6 +602,16 @@
       "import": "./dist/next/Tooltip.js",
       "require": "./dist/next/Tooltip.cjs.js",
       "types": "./dist/types/components/Tooltip/next/Tooltip.d.ts"
+    },
+    "./core/Sidebar": {
+      "import": "./dist/core/Sidebar.js",
+      "require": "./dist/core/Sidebar.cjs.js",
+      "types": "./dist/types/components/Sidebar/core/Sidebar.d.ts"
+    },
+    "./next/Sidebar": {
+      "import": "./dist/next/Sidebar.js",
+      "require": "./dist/next/Sidebar.cjs.js",
+      "types": "./dist/types/components/Sidebar/next/Sidebar.d.ts"
     }
   },
   "typesVersions": {

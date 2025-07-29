@@ -43,12 +43,6 @@ export interface SidebarProps {
   links: SidebarLink[];
 
   /**
-   * Map of CSS class names used to style various sidebar elements.
-   * Keys should match the expected component structure (e.g., "wrapper", "list", "item").
-   */
-  classMap: Record<string, string>;
-
-  /**
    * The current active path, used to highlight the active link.
    */
   currentPath: string;

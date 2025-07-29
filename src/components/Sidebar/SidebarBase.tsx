@@ -9,7 +9,11 @@ import {
 import { capitalize } from "@/utils/capitalize";
 import { ChevronDownIcon } from "@/Icons";
 
-const SidebarBase: React.FC<SidebarProps> = ({
+export interface BaseSidebarProps extends SidebarProps {
+  classMap: Record<string, string>;
+}
+
+const SidebarBase: React.FC<BaseSidebarProps> = ({
   links,
   classMap,
   currentPath,
