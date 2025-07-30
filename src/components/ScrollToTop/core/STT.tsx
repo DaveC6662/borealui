@@ -20,8 +20,8 @@ const classes = {
   roundLarge: "scrollToTop_round-Large",
 };
 
-const ScrollToTopButton: React.FC = () => (
-  <ScrollToTopBase classMap={classes} IconComponent={ArrowUpIcon} />
+const ScrollToTopButton: React.FC = (props) => (
+  <ScrollToTopBase {...props} classMap={classes} IconComponent={ArrowUpIcon} />
 );
 
 export default ScrollToTopButton;

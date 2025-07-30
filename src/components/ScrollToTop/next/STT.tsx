@@ -5,8 +5,8 @@ import ScrollToTopBase from "../ScrollToTopBase";
 import { ArrowUpIcon } from "@/Icons";
 import styles from "./STT.module.scss";
 
-const ScrollToTopButton: React.FC = () => (
-  <ScrollToTopBase classMap={styles} IconComponent={ArrowUpIcon} />
+const ScrollToTopButton: React.FC = (props) => (
+  <ScrollToTopBase {...props} classMap={styles} IconComponent={ArrowUpIcon} />
 );
 
 export default ScrollToTopButton;
