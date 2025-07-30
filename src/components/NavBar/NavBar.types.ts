@@ -36,6 +36,9 @@ export interface NavBarProps {
    */
   shadow?: ShadowType;
 
+  /** Optional extra class name(s) for custom styling. */
+  className?: string;
+
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }

@@ -83,6 +83,12 @@ const meta: Meta<NavBarProps> = {
       type: { name: "string" },
       table: { category: "Style", defaultValue: { summary: "light" } },
     },
+    className: {
+      control: "text",
+      description: "Custom CSS class for the navbar content container.",
+      type: { name: "string" },
+      table: { category: "Style" },
+    },
     "data-testid": {
       control: "text",
       description: "Test id for querying the component in tests.",

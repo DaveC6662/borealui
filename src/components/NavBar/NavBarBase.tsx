@@ -29,10 +29,11 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
+  className,
   "data-testid": testId = "empty-state",
 }) => {
   const wrapperClass = useMemo(
-    () => combineClassNames(classMap.container, classMap[theme]),
+    () => combineClassNames(classMap.container, classMap[theme], className),
     [classMap, theme]
   );
 
