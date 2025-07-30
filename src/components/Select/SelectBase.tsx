@@ -151,7 +151,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         {ariaDescription && (
           <span
             id={descId}
-            className="sr-only"
+            className="sr_only"
             data-testid={`${testId}-description`}
           >
             {ariaDescription}

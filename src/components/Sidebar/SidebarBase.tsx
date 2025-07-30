@@ -11,6 +11,7 @@ import { ChevronDownIcon } from "@/Icons";
 
 export interface BaseSidebarProps extends SidebarProps {
   classMap: Record<string, string>;
+  LinkComponent?: React.ElementType;
 }
 
 const SidebarBase: React.FC<BaseSidebarProps> = ({

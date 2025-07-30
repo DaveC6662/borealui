@@ -39,7 +39,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
   ImageComponent = "img",
   LinkComponent = "a",
   classMap,
-  "data-testid": testId,
+  "data-testid": testId = "avatar",
 }) => {
   const [imgError, setImgError] = useState(false);
   const computedLabel = label || alt || name || "User avatar";

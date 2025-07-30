@@ -18,7 +18,7 @@ export { default as TextArea } from "./components/TextArea/core/TextArea";
 export { default as Select } from "./components/Select/core/Select";
 export { default as ThemeSelect } from "./components/Select/ThemeSelect/core/ThemeSelect";
 export { default as FileUpload } from "./components/FileUpload/core/FileUpload";
-export { default as TagInput } from "./components/TagInput/core/Taginput";
+export { default as TagInput } from "./components/TagInput/core/TagInput";
 export { default as RadioButton } from "./components/RadioButton/core/RadioButton";
 export { default as Slider } from "./components/Slider/core/Slider";
 export { default as Checkbox } from "./components/Checkbox/core/Checkbox";

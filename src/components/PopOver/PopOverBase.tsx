@@ -178,7 +178,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
           className={popoverContentClass}
           data-testid={`${testId}-content`}
         >
-          <span id={`${testId}-label`} className="sr-only">
+          <span id={`${testId}-label`} className="sr_only">
             Popover Content
           </span>
           {content}

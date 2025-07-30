@@ -13,28 +13,8 @@ const themeOptions = [
 ];
 const stateOptions = ["success", "error", "warning"];
 
-const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
-
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
-
-const classMap = {
-  wrapper: "wrapper",
-  nav: "nav",
-  list: "list",
-  childList: "childList",
-  item: "item",
-  link: "link",
-  childLink: "childLink",
-  active: "active",
-  chevron: "chevron",
-  chevronOpen: "chevronOpen",
-  submenu: "submenu",
-  submenuOpen: "submenuOpen",
-  footer: "footer",
-  footerLink: "footerLink",
-  footerVersion: "footerVersion",
-};
 
 const mockLinks = [
   { label: "Dashboard", href: "/Dashboard", icon: <FaBook /> },
@@ -102,12 +82,6 @@ const meta: Meta<SidebarProps> = {
       options: ["none", "light", "medium", "strong", "intense"],
       description: "Box shadow style for the sidebar container.",
       table: { category: "Appearance", defaultValue: { summary: "light" } },
-    },
-    LinkComponent: {
-      control: false,
-      description:
-        "Custom link component (e.g. Next.js Link or React Router Link).",
-      table: { category: "Advanced" },
     },
     showFooter: {
       control: "boolean",

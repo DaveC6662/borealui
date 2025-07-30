@@ -2,18 +2,13 @@ import {
   getDefaultRounding,
   getDefaultShadow,
 } from "../../config/boreal-style-config";
-import { RoundingType, ShadowType } from "../../types/types";
 import { capitalize } from "../../utils/capitalize";
 import { combineClassNames } from "../../utils/classNames";
 import React, { useEffect, useState } from "react";
+import { ScrollToTopProps } from "./ScrollToTop.types";
 
-export interface ScrollToTopBaseProps {
+export interface ScrollToTopBaseProps extends ScrollToTopProps {
   classMap: Record<string, string>;
-  rounding?: RoundingType;
-  shadow?: ShadowType;
-  IconComponent: React.ElementType;
-  offset?: number;
-  "data-testid"?: string;
 }
 
 const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
@@ -22,6 +17,7 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   shadow = getDefaultShadow(),
   IconComponent,
   offset = 300,
+  className,
   "data-testid": testId = "scroll",
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -46,7 +42,7 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   );
 
   return (
-    <div className={classMap.wrapper}>
+    <div className={combineClassNames(classMap.wrapper, className)}>
       <div
         aria-live="polite"
         className="sr_only"

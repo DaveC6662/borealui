@@ -38,7 +38,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   className = "",
   getUniqueId,
   classMap,
-  "data-testid": testId,
+  "data-testid": testId = "accordion",
   ...rest
 }) => {
   const isControlled = expanded !== undefined;

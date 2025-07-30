@@ -30,7 +30,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   className,
-  "data-testid": testId = "empty-state",
+  "data-testid": testId = "nav-bar",
 }) => {
   const wrapperClass = useMemo(
     () => combineClassNames(classMap.container, classMap[theme], className),

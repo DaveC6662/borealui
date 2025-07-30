@@ -48,13 +48,6 @@ export interface SidebarProps {
   currentPath: string;
 
   /**
-   * Optional custom link component.
-   * Useful for integrating with frameworks like Next.js or React Router.
-   * Defaults to an HTML `<a>` element.
-   */
-  LinkComponent?: React.ElementType;
-
-  /**
    * Whether to display a footer section at the bottom of the sidebar.
    * Defaults to `false`.
    */
