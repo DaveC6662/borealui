@@ -15,18 +15,6 @@ export interface ScrollToTopProps {
   shadow?: ShadowType;
 
   /**
-   * The icon component to display inside the scroll-to-top button.
-   *
-   * @example
-   * ```tsx
-   * import { FaArrowUp } from "react-icons/fa";
-   *
-   * <ScrollToTopBase IconComponent={FaArrowUp} />
-   * ```
-   */
-  IconComponent: React.ElementType;
-
-  /**
    * The scroll offset (in pixels) from the top of the page at which the button becomes visible.
    *
    * @default 300

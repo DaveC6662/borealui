@@ -9,6 +9,7 @@ import { ScrollToTopProps } from "./ScrollToTop.types";
 
 export interface ScrollToTopBaseProps extends ScrollToTopProps {
   classMap: Record<string, string>;
+  IconComponent: React.ElementType;
 }
 
 const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
