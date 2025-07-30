@@ -91,6 +91,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
         aria-controls={`${testId}-message`}
         className={classMap.close}
         onClick={handleClose}
+        shadow="none"
         onKeyDown={(e: KeyboardEvent) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();

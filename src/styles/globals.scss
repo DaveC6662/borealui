@@ -47,14 +47,17 @@
 @use "modern-css-reset";
 
 :root {
+  /* ================================
+     PRIMARY COLOR PALETTE
+  ================================== */
   --primary-color: #{theme.$primary-color};
   --primary-color-light: #{color.adjust(theme.$primary-color, $lightness: 40%)};
   --primary-color-hover: #{color.adjust(theme.$primary-color, $lightness: -10%)};
-  --text-color-primary: #{theme.$text-color-primary};
   --primary-text-color-contrast: #{theme.$text-color-secondary};
-  --success-color: #{theme.$success-color};
-  --warning-color: #{theme.$warning-color};
-  --error-color: #{theme.$error-color};
+
+  /* ================================a
+     SECONDARY COLOR PALETTE
+  ================================== */
   --secondary-color: #{theme.$secondary-color};
   --secondary-color-light: #{color.adjust(
       theme.$secondary-color,
@@ -65,6 +68,10 @@
       $lightness: -10%
     )};
   --secondary-text-color: #{theme.$text-color-secondary};
+
+  /* ================================
+     TERTIARY COLOR PALETTE
+  ================================== */
   --tertiary-color: #{theme.$tertiary-color};
   --tertiary-color-light: #{color.adjust(
       theme.$tertiary-color,
@@ -75,6 +82,10 @@
       $lightness: -10%
     )};
   --tertiary-text-color: #{theme.$text-color-primary};
+
+  /* ================================
+     QUATERNARY COLOR PALETTE
+  ================================== */
   --quaternary-color: #{theme.$quaternary-color};
   --quaternary-color-light: #{color.adjust(
       theme.$quaternary-color,
@@ -85,6 +96,21 @@
       $lightness: -10%
     )};
   --quaternary-text-color: #{theme.$text-color-primary};
+
+  /* ================================
+     FEEDBACK COLORS
+  ================================== */
+  --success-color: #{theme.$success-color};
+  --success-color-hover: #{color.adjust(theme.$success-color, $lightness: -10%)};
+  --warning-color: #{theme.$warning-color};
+  --warning-color-hover: #{color.adjust(theme.$warning-color, $lightness: -10%)};
+  --error-color: #{theme.$error-color};
+  --error-color-hover: #{color.adjust(theme.$error-color, $lightness: -10%)};
+  --disabled-color: #{theme.$disabled-color};
+
+  /* ================================
+     BACKGROUND COLORS
+  ================================== */
   --background-color: #{theme.$background-color};
   --background-color-light: #{color.adjust(
       theme.$background-color,
@@ -102,14 +128,60 @@
       theme.$background-color,
       $lightness: -20%
     )};
+
+  /* ================================
+     TEXT COLORS
+  ================================== */
+  --text-color-primary: #{theme.$text-color-primary};
   --text-color: #{theme.$text-color};
   --text-color-light: #{theme.$text-color-light};
   --text-color-lighter: #{theme.$text-color-lighter};
+
+  /* ================================
+     LINK COLORS
+  ================================== */
   --link-color: #{theme.$link-color};
   --link-hover-color: #{theme.$link-hover-color};
   --link-hover-color-primary: #{theme.$link-hover-color-primary};
   --link-hover-color-secondary: #{theme.$link-hover-color-secondary};
-  --focus-outline-color: theme.$primary-color;
+
+  /* ================================
+     FOCUS & INTERACTION
+  ================================== */
+  --focus-outline-color: #{theme.$primary-color};
+
+  /* ===========================
+     Border Radius (Rounding)
+  =========================== */
+  --border-radius-none: 0;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+  --border-radius-full: 9999px;
+
+  /* ===========================
+     Shadows
+  =========================== */
+  --box-shadow-none: none;
+  --box-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --box-shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --box-shadow-heavy: 0 6px 12px rgba(0, 0, 0, 0.3);
+  --box-shadow-intense: 0 8px 16px rgba(0, 0, 0, 0.4);
+
+  /* ===========================
+     Inverted Shadows (Light UI)
+  =========================== */
+  --box-shadow-inverted-none: none;
+  --box-shadow-inverted-light: 0 2px 4px rgba(255, 255, 255, 0.05);
+  --box-shadow-inverted-medium: 0 4px 8px rgba(255, 255, 255, 0.08);
+  --box-shadow-inverted-strong: 0 6px 12px rgba(255, 255, 255, 0.12);
+  --box-shadow-inverted-intense: 0 8px 16px rgba(255, 255, 255, 0.2);
+
+  /* ===========================
+     Divider & Overlay Colors
+  =========================== */
+  --divider-color: #{color.adjust(theme.$background-color, $lightness: 30%)}; /* subtle dividers */
+  --overlay-color: rgba(0, 0, 0, 0.5); /* for modals or overlays */
 }
 
 body {

@@ -165,50 +165,52 @@ $themes: (
     text: var(--text-color-primary),
     hover: rgb(0 0 0 / 20%),
     border: var(--text-color-primary),
-    text-hover: $disabled-color,
+    text-hover: var(--disabled-color),
   ),
 ) !default;
 $states: (
   "success": (
-    bg: $success-color,
-    hover: color.adjust($success-color, $lightness: -10%),
+    bg: var(--success-color),
+    hover: var(--success-color-hover),
     text: var(--text-color-primary),
-    border: $success-color,
+    border: var(--success-color),
     text-hover: var(--text-color-primary),
   ),
   "error": (
-    bg: $error-color,
-    hover: color.adjust($error-color, $lightness: -10%),
+    bg: var(--error-color),
+    hover: var(--error-color-hover),
     text: var(--text-color-primary),
-    border: $error-color,
+    border: var(--error-color),
     text-hover: var(--text-color-primary),
   ),
   "warning": (
-    bg: $warning-color,
-    hover: color.adjust($warning-color, $lightness: -10%),
+    bg: var(--warning-color),
+    hover: var(--warning-color-hover),
     text: var(--text-color-primary),
-    border: $warning-color,
+    border: var(--warning-color),
     text-hover: var(--text-color-primary),
   ),
 ) !default;
 $rounding: (
-  "None": 0,
-  "Small": $border-radius-sm,
-  "Medium": $border-radius-md,
-  "Large": $border-radius-lg,
-  "Full": $border-radius-full,
+  "None": var(--border-radius-none),
+  "Small": var(--border-radius-sm),
+  "Medium": var(--border-radius-md),
+  "Large": var(--border-radius-lg),
+  "Full": var(--border-radius-full),
 ) !default;
+
 $shadow: (
-  "None": 0,
-  "Light": $box-shadow-light,
-  "Medium": $box-shadow-medium,
-  "Strong": $box-shadow-heavy,
-  "Intense": $box-shadow-intense,
+  "None": var(--box-shadow-none),
+  "Light": var(--box-shadow-light),
+  "Medium": var(--box-shadow-medium),
+  "Strong": var(--box-shadow-heavy),
+  "Intense": var(--box-shadow-intense),
 ) !default;
+
 $inverted-shadows: (
-  "None": none,
-  "Light": 0 2px 4px rgb(255 255 255 / 5%),
-  "Medium": 0 4px 8px rgb(255 255 255 / 8%),
-  "Strong": 0 6px 12px rgb(255 255 255 / 12%),
-  "Intense": 0 8px 16px rgb(255 255 255 / 20%),
+  "None": var(--box-shadow-inverted-none),
+  "Light": var(--box-shadow-inverted-light),
+  "Medium": var(--box-shadow-inverted-medium),
+  "Strong": var(--box-shadow-inverted-strong),
+  "Intense": var(--box-shadow-inverted-intense),
 ) !default;
