@@ -2,6 +2,7 @@ import React from "react";
 import ScrollToTopBase from "../ScrollToTopBase";
 import "./STT.scss";
 import { ArrowUpIcon } from "@/Icons";
+import { ScrollToTopProps } from "../ScrollToTop.types";
 
 const classes = {
   wrapper: "scrollToTop",
@@ -20,7 +21,7 @@ const classes = {
   roundLarge: "scrollToTop_round-Large",
 };
 
-const ScrollToTopButton: React.FC = (props) => (
+const ScrollToTopButton: React.FC<ScrollToTopProps> = (props) => (
   <ScrollToTopBase {...props} classMap={classes} IconComponent={ArrowUpIcon} />
 );
 
