@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import BaseMessagePopup from "@/components/MessagePopUp/MessagePopupBase";
+import BaseMessagePopup from "@/components/MessagePopUp/MessagePopUpBase";
 
 expect.extend(toHaveNoViolations);
 

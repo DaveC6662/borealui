@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import BaseMessagePopup from "../MessagePopupBase";
+import BaseMessagePopUp from "../MessagePopUpBase";
 import { Button, IconButton } from "../../../index.next";
 import styles from "./MessagePopup.module.scss";
-import { MessagePopupProps } from "../MessagePopup.types";
+import { MessagePopUpProps } from "../MessagePopUp.types";
 
-const MessagePopup: React.FC<MessagePopupProps> = (props) => {
+const MessagePopUp: React.FC<MessagePopUpProps> = (props) => {
   return (
-    <BaseMessagePopup
+    <BaseMessagePopUp
       {...props}
       Button={Button}
       IconButton={IconButton}
@@ -17,4 +17,4 @@ const MessagePopup: React.FC<MessagePopupProps> = (props) => {
   );
 };
 
-export default MessagePopup;
+export default MessagePopUp;

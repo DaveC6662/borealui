@@ -3,7 +3,7 @@ import { RoundingType, ShadowType } from "@/types/types";
 /**
  * Props for the MessagePopup component.
  */
-export interface MessagePopupProps {
+export interface MessagePopUpProps {
   /**
    * Message text to be displayed within the popup dialog.
    */

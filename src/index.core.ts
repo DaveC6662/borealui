@@ -38,7 +38,7 @@ export { default as Rating } from "./components/Rating/core/Rating";
 export { default as Skeleton } from "./components/Skeleton/core/Skeleton";
 export { default as Spinner } from "./components/Spinner/core/Spinner";
 export { default as Tooltip } from "./components/Tooltip/core/Tooltip";
-export { default as MessagePopUp } from "./components/MessagePopUp/core/MessagePopup";
+export { default as MessagePopUp } from "./components/MessagePopUp/core/MessagePopUp";
 export { default as PopOver } from "./components/PopOver/core/PopOver";
 
 // Navigation & Layout

@@ -9,6 +9,7 @@ import type { ChipGroupProps, ChipGroupRef } from "./ChipGroup.types";
 import type { ChipProps } from "../Chip.types";
 import { v4 as uuidv4 } from "uuid";
 import { combineClassNames } from "@/utils/classNames";
+import { getDefaultSize } from "@/config/boreal-style-config";
 
 export interface ChipGroupBaseProps extends ChipGroupProps {
   ChipComponent: React.ElementType;
@@ -21,7 +22,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
       chips,
       onRemove,
       position = "topCenter",
-      size = "medium",
+      size = getDefaultSize(),
       className = "",
       ChipComponent,
       classMap,
