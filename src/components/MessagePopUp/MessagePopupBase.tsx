@@ -15,7 +15,7 @@ import {
   getDefaultShadow,
 } from "../../config/boreal-style-config";
 
-export interface BaseMessagePopupProps extends MessagePopupProps {
+export interface BaseMessagePopupProps extends MessagePopUpProps {
   Button: React.ComponentType<any>;
   IconButton: React.ComponentType<any>;
   classMap: Record<string, string>;
