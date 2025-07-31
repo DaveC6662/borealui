@@ -24,7 +24,7 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
           className={className}
           aria-current={isActive ? "page" : undefined}
           data-testid={testId}
-        >
+          legacyBehavior>
           {children}
         </Link>
       )}
