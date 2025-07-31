@@ -67,27 +67,32 @@
     }
   }
 
-  .icon {
+  .linkContent {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.5s ease-in-out;
+    flex-direction: column;
 
-    svg {
-      width: 0.9em;
-      height: 0.9em;
-      object-fit: contain;
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease-in-out;
+
+      svg {
+        width: 0.9em;
+        height: 0.9em;
+        object-fit: contain;
+      }
     }
-  }
 
-  .label {
-    font-size: theme.$font-size-sm;
-    margin-top: 5px;
-    display: none;
-    transition: opacity 0.5s ease-in-out;
+    .label {
+      font-size: theme.$font-size-sm;
+      margin-top: 5px;
+      display: none;
+      transition: opacity 0.5s ease-in-out;
 
-    @media (width >= 800px) {
-      display: block;
+      @media (width >= 800px) {
+        display: block;
+      }
     }
   }
 }

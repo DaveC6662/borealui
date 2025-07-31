@@ -9,6 +9,7 @@ const classes = {
   "item--active": "nav_active",
   icon: "nav_icon_container",
   label: "nav_label",
+  linkContent: "nav_link_container",
 
   primary: "nav_primary",
   secondary: "nav_secondary",

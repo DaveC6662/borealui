@@ -74,14 +74,19 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
             testId={`${testId}-nav-item-${item.label.toLowerCase()}`}
             aria-current={isActive ? "page" : undefined}
           >
-            <div
-              className={classMap.icon}
-              aria-hidden="true"
-              data-testid={`${testId}-nav-icon-${item.label.toLowerCase()}`}
+            <span
+              className={classMap.linkContent}
+              style={{ display: "flex", alignItems: "center" }}
             >
-              {item.icon}
-            </div>
-            <span className={classMap.label}>{item.label}</span>
+              <span
+                className={classMap.icon}
+                aria-hidden="true"
+                data-testid={`${testId}-nav-icon-${item.label.toLowerCase()}`}
+              >
+                {item.icon}
+              </span>
+              <span className={classMap.label}>{item.label}</span>
+            </span>
           </LinkWrapper>
         );
       })}
