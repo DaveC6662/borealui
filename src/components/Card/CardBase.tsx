@@ -35,6 +35,9 @@ const CardBase: React.FC<CardBaseProps> = ({
   shadow = getDefaultShadow(),
   imageUrl,
   imageAlt,
+  imageHeight,
+  imageWidth,
+  imageFill,
   className = "",
   imageClassName = "",
   headerClassName = "",
@@ -70,6 +73,17 @@ const CardBase: React.FC<CardBaseProps> = ({
     <img {...props} />
   );
 
+  const hasImageObj =
+    typeof imageUrl === "object" && imageUrl && "src" in imageUrl;
+  const imgSrc = hasImageObj ? imageUrl.src : (imageUrl as string | undefined);
+
+  const resolvedWidth =
+    (hasImageObj ? (imageUrl as any).width : undefined) ?? imageWidth;
+  const resolvedHeight =
+    (hasImageObj ? (imageUrl as any).height : undefined) ?? imageHeight;
+
+  const imgAlt = imageAlt || `${title || "Card"} image`;
+
   const ImageRenderer = ImageComponent || FallbackImage;
 
   const cardClassName = useMemo(
@@ -102,14 +116,25 @@ const CardBase: React.FC<CardBaseProps> = ({
         <SkeletonComponent width="100%" height="250px" data-testid="skeleton" />
       ) : (
         <div className={classMap.content}>
-          {hasImage && (
-            <ImageRenderer
-              src={imageUrl}
-              alt={imageAlt || `${title || "Card"} image`}
-              className={combineClassNames(classMap.image, imageClassName)}
-              placeholder={showBlur ? "blur" : undefined}
-            />
-          )}
+          {hasImage &&
+            (imageFill ? (
+              <div className={classMap.media}>
+                <ImageRenderer
+                  src={imgSrc as any}
+                  alt={imgAlt}
+                  className={combineClassNames(classMap.image, imageClassName)}
+                  fill
+                />
+              </div>
+            ) : (
+              <ImageRenderer
+                src={imgSrc as any}
+                alt={imgAlt}
+                className={combineClassNames(classMap.image, imageClassName)}
+                width={resolvedWidth ?? 640}
+                height={resolvedHeight ?? 360}
+              />
+            ))}
 
           <div>
             <div

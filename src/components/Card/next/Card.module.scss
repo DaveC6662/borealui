@@ -44,12 +44,18 @@
   animation: fade-in 0.8s ease-in-out;
 }
 
-.image {
+.media {
   width: 100%;
   height: auto;
   position: relative;
+  aspect-ratio: 4 / 4;
   object-fit: cover;
   border-bottom: 1px solid rgb(0 0 0 / 5%);
+}
+
+.image :global(img),
+.image {
+  object-fit: cover;
 }
 
 .vertical {

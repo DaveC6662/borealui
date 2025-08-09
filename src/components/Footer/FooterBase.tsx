@@ -12,6 +12,8 @@ export interface BaseFooterProps extends FooterProps {
   LinkWrapper?: (props: {
     href: string;
     children: React.ReactNode;
+    className?: string;
+    [key: string]: any;
   }) => JSX.Element;
 }
 
@@ -97,15 +99,11 @@ const FooterBase: React.FC<BaseFooterProps> = ({
                 <li key={i}>
                   <LinkWrapper
                     href={link.href}
-                    children={
-                      <span
-                        className={classMap.link}
-                        data-testid={`${testId}-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
-                      >
-                        {link.label}
-                      </span>
-                    }
-                  />
+                    className={classMap.link}
+                    data-testid={`${testId}-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
+                  >
+                    {link.label}
+                  </LinkWrapper>
                 </li>
               ))}
             </ul>

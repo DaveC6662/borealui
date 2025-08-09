@@ -92,6 +92,15 @@ export interface CardProps {
   /** Image alt text */
   imageAlt?: string;
 
+  /** Explicit width for the image (forwarded to next/image or <img>) */
+  imageWidth?: number;
+
+  /** Explicit height for the image (forwarded to next/image or <img>) */
+  imageHeight?: number;
+
+  /** Use fill layout for the image (next/image: fill; core: 100% cover in a ratio box) */
+  imageFill?: boolean;
+
   /** Custom class name for the card container. */
   className?: string;
 

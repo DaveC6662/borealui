@@ -15,7 +15,11 @@ const Footer: React.FC<FooterProps> = (props) => {
       IconButton={IconButton}
       ImageComponent={Image}
       ThemeSelect={ThemeSelect}
-      LinkWrapper={({ href, children }) => <Link href={href}>{children}</Link>}
+      LinkWrapper={({ href, children, className, ...rest }) => (
+        <Link href={href} className={className} {...rest}>
+          {children}
+        </Link>
+      )}
       classMap={styles}
     />
   );
