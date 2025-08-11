@@ -36,7 +36,12 @@
  * ```
  */
 
-import React, { createContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 import {
   getAllColorSchemes,
   registerColorScheme,
@@ -54,33 +59,39 @@ const fallbackIndex = colorSchemes.findIndex(
 );
 const defaultIndex = fallbackIndex !== -1 ? fallbackIndex : 0;
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({
-  children,
-  customSchemes = [],
-}) => {
-  const [selectedScheme, setSelectedScheme] = useState<number>(defaultIndex);
+const STORAGE_KEY = "boreal:selectedScheme";
 
+const ThemeProvider: React.FC<
+  ThemeProviderProps & { initialScheme?: number }
+> = ({ children, customSchemes = [], initialScheme }) => {
   if (fallbackIndex === -1 && process.env.NODE_ENV === "development") {
     console.warn(
       `Default color scheme "${getDefaultColorSchemeName()}" not found. Falling back to index 0.`
     );
   }
 
+  const [selectedScheme, setSelectedScheme] = useState<number>(() => {
+    if (typeof initialScheme === "number") return initialScheme;
+
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved != null) return parseInt(saved, 10);
+      } catch {
+        console.error("Failed to load saved theme index");
+      }
+    }
+    return defaultIndex;
+  });
+
   useEffect(() => {
     registerColorScheme(customSchemes);
   }, [customSchemes]);
 
-  useEffect(() => {
-    const savedScheme = localStorage.getItem("selectedScheme");
-    if (savedScheme) {
-      setSelectedScheme(parseInt(savedScheme, 10));
-    } else {
-      setSelectedScheme(defaultIndex);
-    }
-  }, []);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const allSchemes = getAllColorSchemes();
+    const scheme = allSchemes[selectedScheme] ?? allSchemes[defaultIndex];
+
     const {
       primaryColor,
       secondaryColor,
@@ -88,7 +99,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       quaternaryColor,
       backgroundColor,
       forceTextColor,
-    } = allSchemes[selectedScheme];
+    } = scheme;
 
     const hexToHSL = (hex: string) => {
       const r = parseInt(hex.slice(1, 3), 16) / 255;
@@ -99,7 +110,6 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       let h = 0,
         s = 0;
       const l = (max + min) / 2;
-
       if (max !== min) {
         const d = max - min;
         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -116,7 +126,6 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
         }
         h /= 6;
       }
-
       return {
         h: Math.round(h * 360),
         s: Math.round(s * 100),
@@ -150,19 +159,18 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
     };
 
-    const contrastRatio = (hex1: string, hex2: string): number => {
-      const lum1 = relativeLuminance(hex1);
-      const lum2 = relativeLuminance(hex2);
+    const contrastRatio = (a: string, b: string): number => {
+      const lum1 = relativeLuminance(a);
+      const lum2 = relativeLuminance(b);
       const lighter = Math.max(lum1, lum2);
       const darker = Math.min(lum1, lum2);
       return (lighter + 0.05) / (darker + 0.05);
     };
 
-    const getAccessibleTextColor = (bgColor: string): string => {
-      return contrastRatio(bgColor, "#000000") >= 4.5 ? "#000000" : "#FFFFFF";
-    };
+    const getAccessibleTextColor = (bg: string): string =>
+      contrastRatio(bg, "#000000") >= 4.5 ? "#000000" : "#FFFFFF";
 
-    const variants = {
+    const vars = {
       "--primary-color": primaryColor,
       "--primary-color-light": adjustLightness(primaryColor, 10),
       "--primary-color-hover": adjustLightness(primaryColor, -10),
@@ -197,15 +205,15 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       ),
       "--link-hover-color-primary": adjustLightness(primaryColor, -10),
       "--link-hover-color-secondary": adjustLightness(secondaryColor, -10),
-    };
+    } as const;
 
-    const root = document.documentElement.style;
-    for (const [key, value] of Object.entries(variants)) {
-      root.setProperty(key, value);
-    }
+    const rootStyle = document.documentElement.style;
+    for (const [k, v] of Object.entries(vars)) rootStyle.setProperty(k, v);
 
-    if (typeof window !== "undefined") {
-      localStorage.setItem("selectedScheme", selectedScheme.toString());
+    try {
+      localStorage.setItem(STORAGE_KEY, String(selectedScheme));
+    } catch {
+      console.error("Failed to save theme index");
     }
   }, [selectedScheme]);
 
