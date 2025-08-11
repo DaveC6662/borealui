@@ -30,6 +30,7 @@ export interface ThemeProviderProps {
  * Context value provided by the ThemeProvider.
  *
  * @property {number} selectedScheme - Index of the currently active color scheme.
+ * @property {ColorScheme[]} schemes - Array of available color schemes.
  * @property {Dispatch<SetStateAction<number>>} setSelectedScheme - Function to update the selected scheme index.
  *
  * @example
@@ -37,5 +38,6 @@ export interface ThemeProviderProps {
  */
 export interface ThemeContextType {
   selectedScheme: number;
+  schemes: ColorScheme[];
   setSelectedScheme: React.Dispatch<React.SetStateAction<number>>;
 }

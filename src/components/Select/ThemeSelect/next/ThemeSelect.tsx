@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { getAllColorSchemes } from "../../../../styles/colorSchemeRegistry";
 import { Select } from "@/index.next";
 import { ThemeContext } from "../../../../context/ThemeContext";
@@ -26,21 +26,20 @@ const UserThemeSettings: React.FC<ThemeSelectProps> = ({
   state = "",
   "data-testid": testId = "theme-select",
 }) => {
-  const themeContext = useContext(ThemeContext);
+  const ctx = useContext(ThemeContext);
+  if (!ctx)
+    throw new Error("ThemeContext is undefined. Wrap with ThemeProvider.");
 
-  if (!themeContext) {
-    throw new Error(
-      "ThemeContext is undefined. Make sure to wrap this component with ThemeProvider."
-    );
-  }
+  const { selectedScheme, setSelectedScheme, schemes } = ctx;
 
-  const { selectedScheme, setSelectedScheme } = themeContext;
-  const allSchemes = getAllColorSchemes();
-
-  const options = allSchemes.map((scheme, index) => ({
-    value: index.toString(),
-    label: scheme.name,
-  }));
+  const options = useMemo(
+    () =>
+      schemes.map((scheme, index) => ({
+        value: String(index),
+        label: scheme.name,
+      })),
+    [schemes]
+  );
 
   return (
     <div className={`control-container`}>
@@ -50,12 +49,12 @@ const UserThemeSettings: React.FC<ThemeSelectProps> = ({
         shadow={shadow}
         rounding={rounding}
         options={options}
-        data-testid={`${testId}-select`}
-        value={selectedScheme.toString()}
-        onChange={(value: string | number) =>
-          setSelectedScheme(parseInt(value as string, 10))
-        }
+        data-testid={testId}
+        value={String(selectedScheme)}
         ariaLabel="Select Theme"
+        onChange={(value: string | number) =>
+          setSelectedScheme(parseInt(String(value), 10))
+        }
       />
     </div>
   );

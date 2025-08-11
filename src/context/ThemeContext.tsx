@@ -41,6 +41,7 @@ import React, {
   useState,
   useEffect,
   useLayoutEffect,
+  useMemo,
 } from "react";
 import {
   getAllColorSchemes,
@@ -60,6 +61,15 @@ const fallbackIndex = colorSchemes.findIndex(
 const defaultIndex = fallbackIndex !== -1 ? fallbackIndex : 0;
 
 const STORAGE_KEY = "boreal:selectedScheme";
+
+function shallowEqualByName(a: { name: string }[], b: { name: string }[]) {
+  if (a === b) return true;
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i].name !== b[i].name) return false;
+  }
+  return true;
+}
 
 const ThemeProvider: React.FC<
   ThemeProviderProps & { initialScheme?: number }
@@ -84,9 +94,24 @@ const ThemeProvider: React.FC<
     return defaultIndex;
   });
 
+  const [schemes, setSchemes] = useState(() => getAllColorSchemes());
+
+  const customSchemesKey = useMemo(
+    () => JSON.stringify(customSchemes ?? []),
+    [customSchemes]
+  );
+
   useEffect(() => {
-    registerColorScheme(customSchemes);
-  }, [customSchemes]);
+    try {
+      const parsed = JSON.parse(customSchemesKey);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        registerColorScheme(parsed);
+      }
+    } catch {}
+
+    const next = getAllColorSchemes();
+    setSchemes((prev) => (shallowEqualByName(prev, next) ? prev : next));
+  }, [customSchemesKey]);
 
   useLayoutEffect(() => {
     const allSchemes = getAllColorSchemes();
@@ -218,7 +243,9 @@ const ThemeProvider: React.FC<
   }, [selectedScheme]);
 
   return (
-    <ThemeContext.Provider value={{ selectedScheme, setSelectedScheme }}>
+    <ThemeContext.Provider
+      value={{ selectedScheme, setSelectedScheme, schemes }}
+    >
       {children}
     </ThemeContext.Provider>
   );

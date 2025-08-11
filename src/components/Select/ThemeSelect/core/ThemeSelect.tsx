@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import Select from "../../core/Select";
 import { ThemeContext } from "../../../../context/ThemeContext";
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
-import { getAllColorSchemes } from "../../../../styles/colorSchemeRegistry";
 import {
   getDefaultRounding,
   getDefaultShadow,
@@ -24,36 +23,35 @@ const UserThemeSettings: React.FC<ThemeSelectProps> = ({
   "data-testid": testId = "theme-select",
   state = "",
 }) => {
-  const allSchemes = getAllColorSchemes();
-  const themeContext = useContext(ThemeContext);
+  const ctx = useContext(ThemeContext);
+  if (!ctx)
+    throw new Error("ThemeContext is undefined. Wrap with ThemeProvider.");
 
-  if (!themeContext) {
-    throw new Error(
-      "ThemeContext is undefined. Make sure to wrap this component with ThemeProvider."
-    );
-  }
+  const { selectedScheme, setSelectedScheme, schemes } = ctx;
 
-  const { selectedScheme, setSelectedScheme } = themeContext;
-
-  const options = allSchemes.map((scheme, index) => ({
-    value: index.toString(),
-    label: scheme.name,
-  }));
+  const options = useMemo(
+    () =>
+      schemes.map((scheme, index) => ({
+        value: String(index),
+        label: scheme.name,
+      })),
+    [schemes]
+  );
 
   return (
     <div className="control-container">
       <Select
         theme={theme}
+        state={state}
         shadow={shadow}
         rounding={rounding}
-        state={state}
-        data-testid={`${testId}-select`}
         options={options}
-        value={selectedScheme.toString()}
-        onChange={(value: string | number) =>
-          setSelectedScheme(parseInt(value as string, 10))
-        }
+        data-testid={testId}
+        value={String(selectedScheme)}
         ariaLabel="Select Theme"
+        onChange={(value: string | number) =>
+          setSelectedScheme(parseInt(String(value), 10))
+        }
       />
     </div>
   );

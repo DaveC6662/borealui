@@ -530,11 +530,6 @@
       "import": "./dist/next/registerColorSheme.js",
       "require": "./dist/next/registerColorSheme.cjs.js"
     },
-    "./next/ThemeInitScript": {
-      "import": "./dist/next/ThemeInitScript.js",
-      "require": "./dist/next/ThemeInitScript.cjs.js",
-      "types": "./dist/types/context/ThemeInitScript.d.ts"
-    },
     "./next/ScrollToTop": {
       "import": "./dist/next/ScrollToTop.js",
       "require": "./dist/next/ScrollToTop.cjs.js"
