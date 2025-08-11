@@ -39,10 +39,3 @@ export interface ThemeContextType {
   selectedScheme: number;
   setSelectedScheme: React.Dispatch<React.SetStateAction<number>>;
 }
-
-export type ThemeInitScriptProps = {
-  storageKeyScheme?: string;
-  storageKeyVars?: string;
-  dataAttr?: string;
-  readyAttr?: string;
-};

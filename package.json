@@ -532,8 +532,7 @@
     },
     "./next/ThemeInitScript": {
       "import": "./dist/next/ThemeInitScript.js",
-      "require": "./dist/next/ThemeInitScript.cjs.js",
-      "types": "./dist/types/context/ThemeContext.types.d.ts"
+      "require": "./dist/next/ThemeInitScript.cjs.js"
     },
     "./next/ScrollToTop": {
       "import": "./dist/next/ScrollToTop.js",
