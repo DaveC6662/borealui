@@ -39,7 +39,7 @@ const IconButtonBase = forwardRef<
       type = "button",
       classMap,
       LinkComponent = "a",
-      "data-testid": testId,
+      "data-testid": testId = "icon-button",
       tabIndex,
       ...rest
     },

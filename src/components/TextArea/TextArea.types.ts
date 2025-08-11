@@ -29,7 +29,7 @@ export interface TextAreaProps
   /**
    * Enables or disables autocomplete on the textarea ("on" or "off").
    */
-  autoComplete?: "on" | "off";
+  autocomplete?: boolean;
 
   /**
    * Accessible label for the textarea. Defaults to the placeholder text if not provided.

@@ -37,7 +37,7 @@ const ButtonBase = forwardRef<
       size = getDefaultSize(),
       loading = false,
       fullWidth = false,
-      "data-testid": testId,
+      "data-testid": testId = "button",
       classMap,
       LinkComponent = "a",
       ...rest

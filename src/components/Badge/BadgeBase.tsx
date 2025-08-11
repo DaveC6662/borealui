@@ -27,7 +27,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   icon: Icon,
   className = "",
   classMap,
-  "data-testid": testId,
+  "data-testid": testId = "badge",
   onClick,
 }) => {
   const combinedClassName = useMemo(

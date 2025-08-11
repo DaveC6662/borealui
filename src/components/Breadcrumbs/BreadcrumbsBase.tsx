@@ -35,7 +35,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   maxVisible,
   LinkComponent = "a",
   ButtonComponent,
-  "data-testid": testId,
+  "data-testid": testId = "breadcrumbs",
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleExpand = () => setIsExpanded(true);

@@ -36,7 +36,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
       labelPosition = "right",
       className = "",
       id,
-      "data-testid": testId,
+      "data-testid": testId = "checkbox",
       classMap,
       ...props
     },
