@@ -1,9 +1,4 @@
-export type Props = {
-  storageKeyScheme?: string;
-  storageKeyVars?: string;
-  dataAttr?: string;
-  readyAttr?: string;
-};
+import { Props } from "./ThemeInitScript.types";
 
 export default function ThemeInit({
   storageKeyScheme = "boreal:selectedScheme",
