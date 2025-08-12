@@ -1,8 +1,32 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 @use "sass:list";
+
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    transition: none;
+  }
+
+  .content {
+    transition: none;
+  }
+}
+
+@media (hover: none) {
+  .header:hover {
+    background: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .header {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
+}
 
 $sizes: (
   "xs": (
@@ -62,11 +86,7 @@ $sizes: (
       border-radius: $value;
     }
 
-    .content {
-      border-bottom-left-radius: $value;
-      border-bottom-right-radius: $value;
-    }
-
+    .content,
     .expanded .content {
       border-bottom-left-radius: $value;
       border-bottom-right-radius: $value;
@@ -93,9 +113,10 @@ $sizes: (
   align-items: center;
   min-width: 250px;
   width: 100%;
+  min-height: 44px;
   color: var(--text-color-primary);
   padding: theme.$spacing-sm;
-  font-size: theme.$font-size-base;
+  font-size: clamp(theme.$font-size-sm, 0.9rem + 0.2vw, theme.$font-size-base);
   font-weight: theme.$font-weight-bold;
   cursor: pointer;
   background-color: transparent;
@@ -107,8 +128,20 @@ $sizes: (
     border-radius theme.$transition-default;
 
   &:focus-visible {
-    outline: 2px solid var(--text-color-primary);
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
+  }
+
+  @include bp.down(sm) {
+    padding: theme.$spacing-xs theme.$spacing-sm;
+  }
+
+  @include bp.between(sm, md) {
+    padding: theme.$spacing-sm theme.$spacing-md;
+  }
+
+  @include bp.up(lg) {
+    padding: theme.$spacing-sm theme.$spacing-lg;
   }
 }
 
@@ -125,6 +158,10 @@ $sizes: (
       background-color: transparent;
       border: 2px solid map.get($values, border);
       color: map.get($values, text-color);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
 
       &:hover {
         background-color: map.get($values, hover);
@@ -147,6 +184,10 @@ $sizes: (
       background-color: transparent;
       border: 2px solid map.get($values, border);
       color: map.get($values, text-color);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
 
       &:hover {
         background-color: map.get($values, hover);
@@ -171,34 +212,67 @@ $sizes: (
   overflow: hidden;
   background-color: var(--background-color-lighter);
   color: var(--text-color-primary);
-  transition:
-    max-height 0.3s ease,
-    padding theme.$transition-default,
-    border-radius theme.$transition-default,
-    opacity theme.$transition-default;
+  transition: theme.$transition-default;
+
+  @include bp.down(sm) {
+    padding: 0 theme.$spacing-sm;
+  }
+
+  @include bp.up(lg) {
+    padding: 0 theme.$spacing-lg;
+  }
 }
 
-.expanded .content {
+.content.loaded {
+  opacity: 1;
+}
+
+.content.loading {
+  opacity: 0.5;
+}
+
+.expanded.content {
   max-height: none;
   opacity: 1;
   padding: theme.$spacing-xl theme.$spacing-xl;
   border-bottom-left-radius: theme.$border-radius-md;
   border-bottom-right-radius: theme.$border-radius-md;
+
+  @include bp.down(sm) {
+    padding: theme.$spacing-md theme.$spacing-md;
+  }
+
+  @include bp.up(lg) {
+    padding: theme.$spacing-xl calc(theme.$spacing-xl * 1.1);
+  }
 }
 
 .content_clear {
   background-color: transparent;
   border: 1px solid var(--text-color-primary);
+
+  @include bp.down(sm) {
+    border-width: 1px;
+  }
 }
 
 .title {
   flex-grow: 1;
+  font-size: clamp(theme.$font-size-sm, 0.9rem + 0.2vw, theme.$font-size-base);
 }
 
 .icon {
   font-size: 1.5rem;
   margin-right: 10px;
   transition: transform theme.$transition-default;
+
+  @include bp.down(sm) {
+    margin-right: theme.$spacing-xs;
+  }
+
+  @include bp.up(lg) {
+    margin-right: theme.$spacing-sm;
+  }
 }
 
 .expanded .icon {
@@ -210,11 +284,28 @@ $sizes: (
     .header {
       padding: list.nth(map.get($config, header-padding), 1)
         list.nth(map.get($config, header-padding), 2);
-      font-size: map.get($config, header-font-size);
+
+      $fs: map.get($config, header-font-size);
+
+      font-size: clamp(
+        max(theme.$font-size-sm, $fs - 2px),
+        0.9rem + 0.25vw,
+        $fs
+      );
+
+      @include bp.up(lg) {
+        font-size: calc(#{$fs} * 1.05);
+      }
     }
 
     .icon {
-      font-size: map.get($config, icon-size);
+      $is: map.get($config, icon-size);
+
+      font-size: $is;
+
+      @include bp.up(lg) {
+        font-size: calc(#{$is} * 1.05);
+      }
     }
   }
 }

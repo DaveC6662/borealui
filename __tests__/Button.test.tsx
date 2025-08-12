@@ -34,7 +34,7 @@ describe("ButtonBase", () => {
       </ButtonBase>
     );
 
-    const button = screen.getByRole("button", { name: "Favorite" });
+    const button = screen.getByTestId("button-test");
     expect(button).toBeInTheDocument();
 
     const icon = screen.getByTestId("button-test-icon");

@@ -1,6 +1,7 @@
 import React from "react";
 import type { MouseEvent } from "react";
 import {
+  InteractiveProps,
   RoundingType,
   ShadowType,
   SizeType,
@@ -11,12 +12,16 @@ import {
 /**
  * Props for the IconButton component.
  */
-export interface IconButtonProps {
+export interface IconButtonProps extends InteractiveProps {
   /**
    * Icon component to render inside the button.
    * Should be a React component, e.g., from `react-icons`.
    */
-  icon: React.ComponentType;
+  icon?: React.ComponentType<{
+    className?: string;
+    "aria-hidden"?: boolean;
+    focusable?: boolean;
+  }>;
 
   /**
    * Theme style of the button.
@@ -47,15 +52,6 @@ export interface IconButtonProps {
 
   /** If true, opens the link in a new tab (used with `href`). */
   isExternal?: boolean;
-
-  /** Click event handler. */
-  onClick?: (event: MouseEvent<HTMLElement>) => void;
-
-  /** Keyboard event handler (e.g., for accessibility). */
-  onKeyDown?: (event: React.KeyboardEvent<HTMLElement>) => void;
-
-  /** Optional tab index override. */
-  tabIndex?: number;
 
   /** Custom class name for additional styling. */
   className?: string;

@@ -109,3 +109,14 @@ export type StatusPositionType =
  * How a component should attach to the viewport or page layout.
  */
 export type AttachmentType = "static" | "fixed" | "sticky";
+
+/**
+ * Props for interactive components that require user input or actions.
+ */
+export type InteractiveProps = {
+  onClick?: React.MouseEventHandler;
+  onKeyDown?: React.KeyboardEventHandler;
+  onKeyUp?: React.KeyboardEventHandler;
+  tabIndex?: number;
+  role?: string;
+};

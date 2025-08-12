@@ -60,25 +60,35 @@ const IconButtonBase = forwardRef<
           disabled && classMap.disabled,
           className
         ),
-      [theme, size, outline, disabled, className]
+      [theme, state, outline, size, shadow, rounding, disabled, className]
     );
 
     const sharedAria = {
       "aria-label": label,
-      "aria-disabled": disabled || undefined,
       "aria-busy": loading || undefined,
       title,
-      tabIndex: typeof tabIndex === "number" ? tabIndex : disabled ? -1 : 0,
       "data-testid": testId,
     };
 
     const iconContent = (
-      <span className={classMap.buttonLabel}>
+      <span
+        className={classMap.buttonLabel}
+        aria-live="polite"
+        aria-atomic="true"
+      >
         {loading ? (
-          <div className={classMap.loader} aria-hidden="true" />
-        ) : (
-          <Icon data-testid="icon-button-icon" aria-hidden="true" />
-        )}
+          <>
+            <div
+              className={classMap.loader}
+              aria-hidden="true"
+              aria-live="polite"
+              aria-atomic="true"
+            />
+            <span className="sr_only">Loading</span>
+          </>
+        ) : Icon ? (
+          <Icon data-testid="icon-button-icon" />
+        ) : null}
       </span>
     );
 
@@ -86,11 +96,13 @@ const IconButtonBase = forwardRef<
       return (
         <a
           href={href}
-          role="button"
           target="_blank"
           rel="noopener noreferrer"
-          className={classNames}
+          className={combineClassNames(classNames, classMap.link)}
           ref={ref as React.Ref<HTMLAnchorElement>}
+          aria-disabled={disabled || undefined}
+          tabIndex={disabled ? -1 : undefined}
+          onClick={disabled ? (e) => e.preventDefault() : onClick}
           {...sharedAria}
           {...rest}
         >
@@ -103,9 +115,15 @@ const IconButtonBase = forwardRef<
       return (
         <LinkComponent
           href={href}
-          role="button"
-          className={classNames}
+          className={combineClassNames(classNames, classMap.link)}
           ref={ref as React.Ref<HTMLAnchorElement>}
+          aria-disabled={disabled || undefined}
+          tabIndex={disabled ? -1 : undefined}
+          onClick={
+            disabled
+              ? (e: { preventDefault: () => any }) => e.preventDefault()
+              : onClick
+          }
           {...sharedAria}
           {...rest}
         >
@@ -119,20 +137,11 @@ const IconButtonBase = forwardRef<
         type={type}
         disabled={disabled}
         className={classNames}
-        onClick={(e) => {
-          if (!disabled) onClick?.(e);
-        }}
-        onKeyDown={(e) => {
-          if (!disabled && (e.key === "Enter" || e.key === " ")) {
-            e.preventDefault();
-            onClick?.(
-              new MouseEvent("click", {
-                bubbles: true,
-              }) as unknown as React.MouseEvent<HTMLElement>
-            );
-          }
-          onKeyDown?.(e);
-        }}
+        onClick={
+          disabled
+            ? (e: { preventDefault: () => any }) => e.preventDefault()
+            : onClick
+        }
         ref={ref as React.Ref<HTMLButtonElement>}
         {...sharedAria}
         {...rest}

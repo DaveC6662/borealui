@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "../../Icons";
-import { MessagePopUpProps } from "./MessagePopUp.types";
+import { MessagePopUpProps } from "./MessagePopup.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {

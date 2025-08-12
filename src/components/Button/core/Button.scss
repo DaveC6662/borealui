@@ -1,12 +1,44 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
+@use "sass:list";
+
+// -------------------------------------------
+// Accessibility: motion & hover environments
+// -------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .button_loader {
+    animation-duration: 2s;
+  }
+}
+
+@media (hover: none) {
+  .button:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .button {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
+}
 
 .button {
+  min-height: 44px;
+  min-width: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: theme.$spacing-xs;
+  flex-wrap: nowrap;
   width: fit-content;
   padding: 10px 20px;
   border: none;
@@ -27,6 +59,21 @@
     outline-offset: 2px;
   }
 
+  @include bp.down(sm) {
+    gap: theme.$spacing-xs;
+    padding: 8px 14px;
+  }
+
+  @include bp.between(sm, md) {
+    gap: theme.$spacing-sm;
+    padding: 10px 16px;
+  }
+
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+    padding: 12px 20px;
+  }
+
   @each $key, $value in theme.$rounding {
     &_round-#{$key} {
       border-radius: $value;
@@ -43,6 +90,17 @@
     width: 100%;
     max-width: none;
     display: flex;
+
+    @include bp.up(xl) {
+      max-width: 640px;
+    }
+  }
+
+  &_auto-full {
+    @include bp.down(sm) {
+      width: 100%;
+      display: flex;
+    }
   }
 
   &_loader {
@@ -59,10 +117,22 @@
     display: flex;
     align-items: center;
     margin-top: -0.1em;
+
+    @include bp.down(sm) {
+      margin-right: theme.$spacing-xs;
+    }
+
+    @include bp.up(lg) {
+      margin-right: theme.$spacing-sm;
+    }
   }
 
   &_label {
-    font-size: theme.$font-size-base;
+    font-size: clamp(
+      theme.$font-size-sm,
+      0.9rem + 0.2vw,
+      theme.$font-size-base
+    );
   }
 
   &_clear {
@@ -75,6 +145,14 @@
     background-color: transparent;
     border: 2px solid currentcolor;
     box-shadow: none;
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
+
+    @include bp.up(lg) {
+      border-width: 2px;
+    }
   }
 
   @each $name, $values in theme.$themes {
@@ -82,21 +160,21 @@
       background-color: map.get($values, bg);
       color: map.get($values, text);
 
-      &_#{$name}:hover {
+      &:hover {
         background-color: map.get($values, hover);
       }
+    }
 
-      &_#{$name} .loader {
-        border-top-color: map.get($values, text);
-      }
+    &_#{$name} .button_loader {
+      border-top-color: map.get($values, text);
+    }
 
-      &.button_outline {
-        background-color: transparent;
-        color: map.get($values, text);
-        border-color: map.get($values, border);
-      }
+    &_outline.button_#{$name} {
+      background-color: transparent;
+      color: map.get($values, text);
+      border-color: map.get($values, border);
 
-      &.button_outline:hover {
+      &:hover {
         border-color: map.get($values, hover);
         color: map.get($values, text);
         background-color: map.get($values, bg);
@@ -109,21 +187,21 @@
       background-color: map.get($values, bg);
       color: map.get($values, text);
 
-      &_#{$name}:hover {
+      &:hover {
         background-color: map.get($values, hover);
       }
+    }
 
-      &_#{$name} .loader {
-        border-top-color: map.get($values, text);
-      }
+    &_#{$name} .button_loader {
+      border-top-color: map.get($values, text);
+    }
 
-      &.button_outline {
-        background-color: transparent;
-        color: map.get($values, text);
-        border-color: map.get($values, bg);
-      }
+    &_outline.button_#{$name} {
+      background-color: transparent;
+      color: map.get($values, text);
+      border-color: map.get($values, border);
 
-      &.button_outline:hover {
+      &:hover {
         border-color: map.get($values, hover);
         color: map.get($values, text);
         background-color: map.get($values, bg);
@@ -139,7 +217,7 @@
     opacity: 0.6;
     box-shadow: none;
 
-    &_outline {
+    &.button_outline {
       border-color: theme.$disabled-color;
       color: theme.$disabled-color;
     }
@@ -177,13 +255,39 @@
     &_#{$size} {
       padding: map.get($values, padding);
 
-      .button_label {
-        font-size: map.get($values, label);
+      @include bp.down(sm) {
+        padding: max(8px, 0.6em) 10px;
       }
 
-      .button_icon {
-        width: map.get($values, icon);
-        height: map.get($values, icon);
+      @include bp.up(xl) {
+        $vpad: list.nth(map.get($values, padding), 1);
+        $hpad: list.nth(map.get($values, padding), 2);
+
+        padding: $vpad ($hpad * 1.1) $vpad ($hpad * 1.1);
+      }
+    }
+
+    &_#{$size} .button_label {
+      $base: map.get($values, label);
+
+      font-size: clamp(
+        max(theme.$font-size-sm, $base - 2px),
+        0.9rem + 0.25vw,
+        $base
+      );
+
+      @include bp.up(lg) {
+        font-size: calc(#{$base} * 1.05);
+      }
+    }
+
+    &_#{$size} .button_icon {
+      width: map.get($values, icon);
+      height: map.get($values, icon);
+
+      @include bp.up(lg) {
+        width: calc(map.get($values, icon) * 1.05);
+        height: calc(map.get($values, icon) * 1.05);
       }
     }
   }

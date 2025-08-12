@@ -14,7 +14,11 @@ export interface ButtonProps {
   /**
    * Optional icon component to render inside the button.
    */
-  icon?: React.ElementType;
+  icon?: React.ComponentType<{
+    className?: string;
+    "aria-hidden"?: boolean;
+    focusable?: boolean;
+  }>;
 
   /**
    * Theme style of the button

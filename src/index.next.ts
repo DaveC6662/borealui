@@ -39,7 +39,7 @@ export { default as Rating } from "./components/Rating/next/Rating";
 export { default as Skeleton } from "./components/Skeleton/next/Skeleton";
 export { default as Spinner } from "./components/Spinner/next/Spinner";
 export { default as Tooltip } from "./components/Tooltip/next/Tooltip";
-export { default as MessagePopUp } from "./components/MessagePopUp/next/MessagePopUp";
+export { default as MessagePopUp } from "./components/MessagePopUp/next/MessagePopup";
 export { default as PopOver } from "./components/PopOver/next/PopOver";
 
 // Navigation & Layout

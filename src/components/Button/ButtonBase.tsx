@@ -44,8 +44,15 @@ const ButtonBase = forwardRef<
     },
     ref
   ) => {
-    const computedAriaLabel =
-      ariaLabel || (typeof children === "string" ? children : "Button");
+    const needsAriaLabel = !children || typeof children !== "string";
+    const computedAriaLabel = needsAriaLabel ? ariaLabel : undefined;
+    if (
+      process.env.NODE_ENV === "development" &&
+      needsAriaLabel &&
+      !ariaLabel
+    ) {
+      console.warn("ButtonBase: icon-only buttons must provide `ariaLabel`.");
+    }
 
     const combinedClassName = useMemo(
       () =>
@@ -61,16 +68,25 @@ const ButtonBase = forwardRef<
           disabled && classMap.disabled,
           className
         ),
-      [theme, outline, size, fullWidth, disabled, className]
+      [
+        theme,
+        state,
+        outline,
+        size,
+        shadow,
+        rounding,
+        fullWidth,
+        disabled,
+        className,
+      ]
     );
 
     const sharedProps = {
-      "aria-label": computedAriaLabel,
       "aria-busy": loading || undefined,
       "aria-disabled": disabled || undefined,
       "data-testid": testId,
-      tabIndex: disabled ? -1 : 0,
       onClick: disabled ? undefined : onClick,
+      ...(computedAriaLabel ? { "aria-label": computedAriaLabel } : {}),
     };
 
     const content = (
@@ -86,12 +102,22 @@ const ButtonBase = forwardRef<
         )}
         <span
           className={classMap.buttonLabel}
+          aria-live="polite"
+          aria-atomic="true"
           data-testid={testId ? `${testId}-loading` : undefined}
         >
           {loading ? (
-            <div className={classMap.loader} aria-hidden="true" />
+            <>
+              <div className={classMap.loader} aria-hidden="true" />
+              <span className="sr_only">Loading</span>
+            </>
           ) : (
-            children
+            <>
+              {children}
+              {href && isExternal && (
+                <span className="sr_only"> (opens in a new tab)</span>
+              )}
+            </>
           )}
         </span>
       </>
@@ -103,10 +129,11 @@ const ButtonBase = forwardRef<
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          role="button"
           className={combineClassNames(combinedClassName, classMap.link)}
           ref={ref as React.Ref<HTMLAnchorElement>}
-          {...sharedProps}
+          aria-disabled={disabled || undefined}
+          tabIndex={disabled ? -1 : undefined}
+          onClick={disabled ? (e) => e.preventDefault() : onClick}
           {...rest}
         >
           {content}
@@ -118,10 +145,17 @@ const ButtonBase = forwardRef<
       return (
         <LinkComponent
           href={href}
-          role="button"
+          target="_blank"
+          rel="noopener noreferrer"
           className={combineClassNames(combinedClassName, classMap.link)}
           ref={ref as React.Ref<HTMLAnchorElement>}
-          {...sharedProps}
+          aria-disabled={disabled || undefined}
+          tabIndex={disabled ? -1 : undefined}
+          onClick={
+            disabled
+              ? (e: { preventDefault: () => any }) => e.preventDefault()
+              : onClick
+          }
           {...rest}
         >
           {content}

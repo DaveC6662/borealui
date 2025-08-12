@@ -163,26 +163,25 @@
      Shadows
   =========================== */
   --box-shadow-none: none;
-  --box-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --box-shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.2);
-  --box-shadow-heavy: 0 6px 12px rgba(0, 0, 0, 0.3);
-  --box-shadow-intense: 0 8px 16px rgba(0, 0, 0, 0.4);
+  --box-shadow-light: 0 2px 4px rgb(0 0 0 / 10%);
+  --box-shadow-medium: 0 4px 8px rgb(0 0 0 / 20%);
+  --box-shadow-heavy: 0 6px 12px rgb(0 0 0 / 30%);
+  --box-shadow-intense: 0 8px 16px rgb(0 0 0 / 40%);
 
   /* ===========================
      Inverted Shadows (Light UI)
   =========================== */
   --box-shadow-inverted-none: none;
-  --box-shadow-inverted-light: 0 2px 4px rgba(255, 255, 255, 0.05);
-  --box-shadow-inverted-medium: 0 4px 8px rgba(255, 255, 255, 0.08);
-  --box-shadow-inverted-strong: 0 6px 12px rgba(255, 255, 255, 0.12);
-  --box-shadow-inverted-intense: 0 8px 16px rgba(255, 255, 255, 0.2);
+  --box-shadow-inverted-light: 0 2px 4px rgb(255 255 255 / 5%);
+  --box-shadow-inverted-medium: 0 4px 8px rgb(255 255 255 / 8%);
+  --box-shadow-inverted-strong: 0 6px 12px rgb(255 255 255 / 12%);
+  --box-shadow-inverted-intense: 0 8px 16px rgb(255 255 255 / 20%);
 
   /* ===========================
      Divider & Overlay Colors
   =========================== */
   --divider-color: #{color.adjust(theme.$background-color, $lightness: 30%)}; /* subtle dividers */
-  --overlay-color: rgba(0, 0, 0, 0.5); /* for modals or overlays */
-
+  --overlay-color: rgb(0 0 0 / 50%); /* for modals or overlays */
   --font-family-primary: #{theme.$font-family-primary};
 }
 

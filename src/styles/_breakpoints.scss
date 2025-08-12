@@ -16,6 +16,8 @@
  *  Use this map to loop over breakpoints or access named values.
  */
 
+@use "sass:map";
+
 $breakpoint-xs: 320px;
 $breakpoint-sm: 480px;
 $breakpoint-md: 768px;
@@ -30,3 +32,24 @@ $breakpoints: (
   "xl": $breakpoint-xl,
   "2xl": $breakpoint-xxl,
 );
+
+// -----------------------------
+// Breakpoint helpers
+// -----------------------------
+@mixin up($key) {
+  @media (min-width: map.get($breakpoints, $key)) {
+    @content;
+  }
+}
+
+@mixin down($key) {
+  @media (width <= calc(map.get($breakpoints, $key) - 0.02px)) {
+    @content;
+  }
+}
+
+@mixin between($min, $max) {
+  @media (min-width: map.get($breakpoints, $min)) and (width <= calc(map.get($breakpoints, $max) - 0.02px)) {
+    @content;
+  }
+}

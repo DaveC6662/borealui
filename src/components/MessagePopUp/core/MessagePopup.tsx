@@ -1,8 +1,8 @@
 import React from "react";
-import BaseMessagePopUp from "../MessagePopUpBase";
+import BaseMessagePopUp from "../MessagePopupBase";
 import { Button, IconButton } from "../../../index.core";
 import "./MessagePopup.scss";
-import { MessagePopUpProps } from "../MessagePopUp.types";
+import { MessagePopUpProps } from "../MessagePopup.types";
 
 const classes = {
   wrapper: "messagePopup",

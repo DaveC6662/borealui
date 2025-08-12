@@ -1,13 +1,44 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
+@use "sass:list";
+
+// -------------------------------------------
+// Accessibility: motion & hover environments
+// -------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .loader {
+    animation-duration: 2s;
+  }
+}
+
+@media (hover: none) {
+  .button:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .button {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
+}
 
 .button {
+  min-height: 44px;
+  min-width: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: theme.$spacing-xs;
+  flex-wrap: nowrap;
   padding: 10px 20px;
   width: fit-content;
   border: none;
@@ -27,6 +58,28 @@
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
   }
+
+  @include bp.down(sm) {
+    gap: theme.$spacing-xs;
+    padding: 8px 14px;
+  }
+
+  @include bp.between(sm, md) {
+    gap: theme.$spacing-sm;
+    padding: 10px 16px;
+  }
+
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+    padding: 12px 20px;
+  }
+}
+
+.autoFull {
+  @include bp.down(sm) {
+    width: 100%;
+    display: flex;
+  }
 }
 
 @each $key, $value in theme.$rounding {
@@ -45,6 +98,10 @@
   width: 100%;
   max-width: none;
   display: flex;
+
+  @include bp.up(xl) {
+    max-width: 640px;
+  }
 }
 
 .loader {
@@ -61,10 +118,18 @@
   display: flex;
   align-items: center;
   margin-top: -0.1em;
+
+  @include bp.down(sm) {
+    margin-right: theme.$spacing-xs;
+  }
+
+  @include bp.up(lg) {
+    margin-right: theme.$spacing-sm;
+  }
 }
 
 .buttonLabel {
-  font-size: theme.$font-size-base;
+  font-size: clamp(theme.$font-size-sm, 0.9rem + 0.2vw, theme.$font-size-base);
 }
 
 .clear {
@@ -77,6 +142,14 @@
   background-color: transparent;
   border: 2px solid currentcolor;
   box-shadow: none;
+
+  @include bp.down(sm) {
+    border-width: 1.5px;
+  }
+
+  @include bp.up(lg) {
+    border-width: 2px;
+  }
 }
 
 @each $name, $values in theme.$themes {
@@ -180,12 +253,38 @@ $sizes: (
     padding: map.get($values, padding);
 
     .buttonLabel {
-      font-size: map.get($values, label);
+      $base: map.get($values, label);
+
+      font-size: clamp(
+        max(theme.$font-size-sm, $base - 2px),
+        0.9rem + 0.25vw,
+        $base
+      );
+
+      @include bp.up(lg) {
+        font-size: calc(#{$base} * 1.05);
+      }
     }
 
     .icon {
       width: map.get($values, icon);
       height: map.get($values, icon);
+
+      @include bp.up(lg) {
+        width: calc(map.get($values, icon) * 1.05);
+        height: calc(map.get($values, icon) * 1.05);
+      }
+    }
+
+    @include bp.down(sm) {
+      padding: max(8px, 0.6em) 10px;
+    }
+
+    @include bp.up(xl) {
+      $vpad: list.nth(map.get($values, padding), 1);
+      $hpad: list.nth(map.get($values, padding), 2);
+
+      padding: $vpad $hpad * 1.1 $vpad $hpad * 1.1;
     }
   }
 }
