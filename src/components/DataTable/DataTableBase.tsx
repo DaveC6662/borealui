@@ -21,6 +21,7 @@ function DataTableBase<T extends object>({
   className = "",
   striped = true,
   defaultSortKey,
+  ariaLabel,
   defaultSortOrder = "asc",
   serverSort = false,
   onSortChange,
@@ -81,6 +82,7 @@ function DataTableBase<T extends object>({
           classMap[state],
           outline && classMap.outline
         )}
+        aria-label={ariaLabel}
         role="table"
       >
         <caption className="sr_only">Sortable data table</caption>

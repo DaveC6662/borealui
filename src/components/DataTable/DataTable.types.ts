@@ -70,6 +70,11 @@ export interface DataTableProps<T> {
    */
   defaultSortOrder?: "asc" | "desc";
 
+  /**
+   * Accessible label for screen readers.
+   */
+  ariaLabel?: string;
+
   /** Whether to enable server-side sorting. */
   serverSort?: boolean;
 
