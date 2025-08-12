@@ -65,6 +65,3 @@ export { default as Sidebar } from "./components/Sidebar/next/Sidebar";
 //  Cards & Display Components
 export { default as Card } from "./components/Card/next/Card";
 export { default as Avatar } from "./components/Avatar/next/Avatar";
-
-// Graphs
-export { default as LineGraph } from "./components/Graphs/next/LineGraph/LineGraph";
