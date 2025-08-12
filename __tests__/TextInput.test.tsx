@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { FaUser } from "react-icons/fa";
 import TextInputBase from "@/components/TextInput/TextInputBase";
-import { IconButton } from "@/index.core";
+import IconButton from "@/components/IconButton/core/IconButton";
 
 expect.extend(toHaveNoViolations);
 
