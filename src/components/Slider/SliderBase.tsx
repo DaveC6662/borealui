@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useId } from "react";
 import { SliderProps } from "./Slider.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -14,6 +14,7 @@ const SliderBase: React.FC<
 > = ({
   value,
   onChange,
+  onValueChange,
   min = 0,
   max = 100,
   step = 1,
@@ -26,12 +27,20 @@ const SliderBase: React.FC<
   showValue = true,
   className = "",
   "aria-label": ariaLabel,
+  disabled = false,
   "data-testid": testId = "slider",
   classMap,
+  ...rest
 }) => {
-  const inputId = `${testId}-input`;
-  const labelId = `${testId}-label`;
-  const valueText = `${value}`;
+  const uid = useId();
+  const inputId = `${testId}-input-${uid}`;
+  const labelId = label ? `${testId}-label-${uid}` : undefined;
+  const valueId = showValue ? `${testId}-value-${uid}` : undefined;
+
+  const safeMin = Number.isFinite(min) ? Number(min) : 0;
+  const safeMax = Number.isFinite(max) ? Number(max) : 100;
+  const safeStep = step > 0 ? step : 1;
+  const clamped = Math.min(safeMax, Math.max(safeMin, Number(value)));
 
   const containerClasses = useMemo(
     () =>
@@ -44,8 +53,14 @@ const SliderBase: React.FC<
         rounding && classMap[`round${capitalize(rounding)}`],
         className
       ),
-    [classMap, size, theme, state, className]
+    [classMap, size, theme, state, className, shadow, rounding]
   );
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const numeric = Number(e.target.value);
+    onChange?.(e);
+    onValueChange?.(numeric);
+  };
 
   return (
     <div className={containerClasses} data-testid={`${testId}-container`}>
@@ -60,32 +75,32 @@ const SliderBase: React.FC<
           id={inputId}
           type="range"
           className={classMap.slider}
-          value={value}
-          onChange={onChange}
-          min={min}
-          max={max}
-          step={step}
-          aria-valuemin={min}
-          aria-valuemax={max}
-          aria-valuenow={value}
-          aria-valuetext={valueText}
+          value={clamped}
+          onChange={handleChange}
+          min={safeMin}
+          max={safeMax}
+          step={safeStep}
           aria-labelledby={label ? labelId : undefined}
           aria-label={label ? undefined : ariaLabel || "Slider"}
+          aria-describedby={valueId}
+          disabled={disabled}
           data-testid={testId}
+          {...rest}
         />
         {showValue && (
-          <span
+          <output
+            id={valueId}
             className={classMap.value}
-            id={`${testId}-value`}
-            aria-live="polite"
+            htmlFor={inputId}
             data-testid={`${testId}-value`}
           >
-            {value}
-          </span>
+            {clamped}
+          </output>
         )}
       </div>
     </div>
   );
 };
 
+SliderBase.displayName = "SliderBase";
 export default SliderBase;

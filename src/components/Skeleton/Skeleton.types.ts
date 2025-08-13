@@ -1,4 +1,5 @@
 import { RoundingType, ShadowType } from "@/types/types";
+import { JSX } from "react";
 
 /**
  * Props for the SkeletonLoader component.
@@ -41,3 +42,13 @@ export interface SkeletonProps {
    */
   label?: string;
 }
+
+export interface SkeletonBaseProps extends SkeletonProps {
+  classMap: Record<string, string>;
+}
+
+export type ExtraProps = {
+  as?: keyof JSX.IntrinsicElements;
+  announce?: boolean;
+  animate?: boolean;
+};

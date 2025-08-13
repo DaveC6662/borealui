@@ -19,6 +19,11 @@ export interface SliderProps {
    */
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
+  /**
+   * Callback invoked when the slider value changes.
+   */
+  onValueChange?: (value: number) => void;
+
   /** The minimum value of the slider. */
   min?: number;
 
@@ -57,6 +62,11 @@ export interface SliderProps {
    * One of: "none" | "small" | "medium" | "large" | "full"
    */
   rounding?: RoundingType;
+
+  /**
+   * If true, the slider is disabled and cannot be interacted with.
+   */
+  disabled?: boolean;
 
   /**
    * Controls the shadow of the component.

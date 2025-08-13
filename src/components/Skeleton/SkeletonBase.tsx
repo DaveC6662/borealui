@@ -1,56 +1,70 @@
-import React from "react";
-import { SkeletonProps } from "./Skeleton.types";
+import React, { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultRounding,
   getDefaultShadow,
 } from "../../config/boreal-style-config";
+import { ExtraProps, SkeletonBaseProps } from "./Skeleton.types";
 
-export interface SkeletonBaseProps extends SkeletonProps {
-  classMap: Record<string, string>;
-}
-
-const SkeletonBase: React.FC<SkeletonBaseProps> = ({
+const SkeletonBase: React.FC<SkeletonBaseProps & ExtraProps> = ({
   width = "100%",
   height = "100%",
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   className = "",
-  label = "Loading content...",
+  label = "Loading content…",
+  announce = true,
+  animate = true,
+  as: Tag = "div",
   "data-testid": testId = "skeleton-loader",
   classMap,
   ...rest
 }) => {
   const descriptionId = `${testId}-desc`;
 
-  const skeletonClasses = combineClassNames(
-    shadow && classMap[`shadow${capitalize(shadow)}`],
-    rounding && classMap[`round${capitalize(rounding)}`],
-    className
+  const skeletonClasses = useMemo(
+    () =>
+      combineClassNames(
+        classMap.skeleton,
+        animate && classMap.animated,
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`],
+        className
+      ),
+    [classMap, animate, shadow, rounding, className, announce]
   );
 
+  const ariaProps = announce
+    ? {
+        role: "status" as const,
+        "aria-busy": true,
+        "aria-live": "polite" as const,
+        "aria-relevant": "additions text" as const,
+        "aria-describedby": descriptionId,
+      }
+    : { "aria-hidden": true as const };
+
   return (
-    <div
+    <Tag
       className={skeletonClasses}
       style={{ width, height }}
-      role="status"
-      aria-busy="true"
-      aria-live="polite"
-      aria-describedby={descriptionId}
       data-testid={testId}
-      aria-label={label}
+      {...ariaProps}
       {...rest}
     >
-      <span
-        id={descriptionId}
-        className="sr_only"
-        data-testid={`${testId}-description`}
-      >
-        {label}
-      </span>
-    </div>
+      {announce && (
+        <span
+          id={descriptionId}
+          className="sr_only"
+          data-testid={`${testId}-description`}
+        >
+          {label}
+        </span>
+      )}
+    </Tag>
   );
 };
 
+SkeletonBase.displayName = "SkeletonBase";
 export default SkeletonBase;

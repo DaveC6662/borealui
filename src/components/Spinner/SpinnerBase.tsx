@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useId } from "react";
 import { SpinnerProps } from "./Spinner.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -19,31 +19,48 @@ const SpinnerBase: React.FC<
   label,
   classMap,
 }) => {
-  const strokeWidth = `${Math.max(2, Math.floor(size / 12))}px`;
+  const uid = useId();
   const spinnerSize = `${size}px`;
+  const strokeWidth = `${Math.max(2, Math.floor(size / 12))}px`;
 
-  const labelId = `${testId}`;
+  const visibleLabelId = label ? `${testId}-label-${uid}` : undefined;
+
+  const wrapperClass = useMemo(
+    () => combineClassNames(classMap.wrapper, className),
+    [classMap, className]
+  );
 
   const spinnerClasses = useMemo(
     () => combineClassNames(classMap.spinner, classMap[theme], classMap[state]),
     [classMap, theme, state]
   );
 
+  const shadowClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.shadowElement,
+        shadow && classMap[`shadow${capitalize(shadow)}`]
+      ),
+    [classMap, shadow]
+  );
+
   return (
     <div
-      className={`${classMap.wrapper} ${className}`}
+      className={wrapperClass}
       role="status"
       aria-live="polite"
-      aria-busy="true"
-      aria-label={label || "Loading"}
+      aria-busy={true}
+      {...(visibleLabelId
+        ? { "aria-labelledby": visibleLabelId }
+        : { "aria-label": "Loading" })}
+      data-testid={testId}
     >
       <div
-        className={combineClassNames(
-          classMap.shadowElement,
-          shadow && classMap[`shadow${capitalize(shadow)}`]
-        )}
+        className={shadowClass}
         style={{ width: spinnerSize, height: spinnerSize }}
+        aria-hidden="true"
       />
+
       <div
         className={spinnerClasses}
         style={{
@@ -51,25 +68,22 @@ const SpinnerBase: React.FC<
           height: spinnerSize,
           borderWidth: strokeWidth,
         }}
-        data-testid={testId}
         aria-hidden="true"
+        data-testid={`${testId}-ring`}
       />
-      <span
-        id={labelId}
-        className={"sr_only"}
-        data-testid={`${testId}-sr-label`}
-      >
-        {label}
-      </span>
-      <span
-        id={labelId}
-        className={classMap.label}
-        data-testid={`${testId}-label`}
-      >
-        {label}
-      </span>
+
+      {label && (
+        <span
+          id={visibleLabelId}
+          className={classMap.label}
+          data-testid={`${testId}-label`}
+        >
+          {label}
+        </span>
+      )}
     </div>
   );
 };
 
+SpinnerBase.displayName = "SpinnerBase";
 export default SpinnerBase;
