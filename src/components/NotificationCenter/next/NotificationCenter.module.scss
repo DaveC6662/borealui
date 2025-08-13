@@ -70,7 +70,7 @@ $notification-colors: (
 
     .timestamp {
       font-size: theme.$font-size-sm;
-      color: theme.$disabled-color;
+      color: var(--text-color-primary);
     }
   }
 

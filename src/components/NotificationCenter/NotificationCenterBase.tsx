@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { CloseIcon } from "../../Icons";
 import {
-  NotificationCenterProps,
+  BaseNotificationCenterProps,
   themeIcons,
 } from "./NotificationCenter.types";
 import { combineClassNames } from "../../utils/classNames";
@@ -10,12 +10,6 @@ import {
   getDefaultRounding,
   getDefaultShadow,
 } from "../../config/boreal-style-config";
-
-export interface BaseNotificationCenterProps extends NotificationCenterProps {
-  Button: React.ComponentType<any>;
-  IconButton: React.ComponentType<any>;
-  classMap: Record<string, string>;
-}
 
 const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   notifications,
@@ -36,7 +30,8 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   classMap,
   "data-testid": testId = "notification-center",
 }) => {
-  const timeouts = useRef<Record<string, NodeJS.Timeout>>({});
+  const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+  const prevIds = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     if (
@@ -52,6 +47,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
 
   useEffect(() => {
     if (!fetchNotifications) return;
+    let alive = true;
 
     const load = () => {
       fetchNotifications().catch((err) => {
@@ -60,27 +56,43 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
     };
 
     load();
-    const intervalId = setInterval(load, pollInterval);
-
-    return () => clearInterval(intervalId);
+    const id = setInterval(() => alive && load(), pollInterval);
+    return () => {
+      clearInterval(id);
+      alive = false;
+    };
   }, [fetchNotifications, pollInterval]);
 
   useEffect(() => {
-    notifications.forEach((note) => {
-      if (note.duration && !timeouts.current[note.id]) {
-        timeouts.current[note.id] = setTimeout(() => {
-          onRemove(note.id);
-          delete timeouts.current[note.id];
-        }, note.duration);
+    const currentIds = new Set<string>(notifications.map((n) => n.id));
+
+    for (const n of notifications) {
+      if (n.duration && !timers.current[n.id]) {
+        timers.current[n.id] = setTimeout(() => {
+          onRemove(n.id);
+          delete timers.current[n.id];
+        }, n.duration);
       }
-    });
+    }
+
+    for (const oldId of prevIds.current) {
+      if (!currentIds.has(oldId) && timers.current[oldId]) {
+        clearTimeout(timers.current[oldId]);
+        delete timers.current[oldId];
+      }
+    }
+
+    prevIds.current = currentIds;
 
     return () => {
-      Object.values(timeouts.current).forEach(clearTimeout);
+      if (prevIds.current === currentIds) {
+        Object.values(timers.current).forEach(clearTimeout);
+        timers.current = {};
+      }
     };
   }, [notifications, onRemove]);
 
-  const notifcationClass = useMemo(
+  const notificationClass = useMemo(
     () =>
       combineClassNames(
         classMap.notification,
@@ -89,7 +101,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
         notificationRounding &&
           classMap[`round${capitalize(notificationRounding)}`]
       ),
-    []
+    [classMap, notificationShadow, notificationRounding]
   );
 
   return (
@@ -101,6 +113,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
     >
       <div className={classMap.header} data-testid={`${testId}-header`}>
         <h3 id={`${testId}-title`}>Notifications</h3>
+
         {showClearAll && notifications.length > 0 && onClearAll && (
           <Button
             state="error"
@@ -111,6 +124,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
             onClick={onClearAll}
             aria-label="Clear all notifications"
             data-testid={`${testId}-clear-all`}
+            type="button"
           >
             Clear All
           </Button>
@@ -131,13 +145,16 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
               <li
                 key={note.id}
                 className={combineClassNames(
-                  notifcationClass,
+                  notificationClass,
                   classMap[note.type || "info"]
                 )}
                 data-testid={noteTestId}
-                aria-label={`Notification ${index + 1}: ${note.message}${timestampStr ? ` at ${timestampStr}` : ""}`}
               >
-                <Icon className={classMap.icon} aria-hidden="true" />
+                <Icon
+                  className={classMap.icon}
+                  aria-hidden="true"
+                  focusable={false}
+                />
                 <div className={classMap.content}>
                   <span
                     className={classMap.message}
@@ -161,9 +178,10 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                   outline
                   icon={CloseIcon}
                   onClick={() => onRemove(note.id)}
-                  aria-label={`Dismiss notification ${index + 1}`}
+                  ariaLabel={`Dismiss notification ${index + 1}`}
                   title="Dismiss"
                   data-testid={`${noteTestId}-dismiss`}
+                  type="button"
                 />
               </li>
             );
@@ -174,4 +192,5 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   );
 };
 
+BaseNotificationCenter.displayName = "BaseNotificationCenter";
 export default BaseNotificationCenter;

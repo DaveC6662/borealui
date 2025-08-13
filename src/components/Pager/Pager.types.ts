@@ -50,3 +50,9 @@ export interface PaginationProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface BasePagerProps extends PaginationProps {
+  Button: React.ComponentType<any>;
+  IconButton: React.ComponentType<any>;
+  classMap: Record<string, string>;
+}

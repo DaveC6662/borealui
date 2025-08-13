@@ -81,3 +81,9 @@ export const themeIcons: Record<NotificationType, IconType> = {
   warning: FaExclamationCircle,
   info: FaInfoCircle,
 };
+
+export interface BaseNotificationCenterProps extends NotificationCenterProps {
+  Button: React.ComponentType<any>;
+  IconButton: React.ComponentType<any>;
+  classMap: Record<string, string>;
+}

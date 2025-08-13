@@ -38,3 +38,8 @@ export interface PopoverProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface BasePopoverProps extends PopoverProps {
+  classMap: Record<string, string>;
+  role?: "dialog" | "tooltip" | "menu";
+}
