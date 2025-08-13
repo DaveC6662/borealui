@@ -4,6 +4,7 @@ import {
   ShadowType,
   ThemeType,
 } from "@/types/types";
+import { JSX } from "react";
 
 /**
  * Represents a navigational link in the footer.
@@ -75,4 +76,17 @@ export interface FooterProps {
 
   /** Whether to show the theme selector dropdown. */
   showThemeSelect?: boolean;
+}
+
+export interface BaseFooterProps extends FooterProps {
+  IconButton: React.ComponentType<any>;
+  ThemeSelect: React.ComponentType<any>;
+  ImageComponent?: React.ElementType;
+  classMap: Record<string, string>;
+  LinkWrapper?: (props: {
+    href: string;
+    children: React.ReactNode;
+    className?: string;
+    [key: string]: any;
+  }) => JSX.Element;
 }

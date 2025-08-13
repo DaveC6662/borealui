@@ -91,3 +91,8 @@ export interface IconButtonProps extends InteractiveProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface IconButtonBaseProps extends IconButtonProps {
+  classMap: Record<string, string>;
+  LinkComponent?: React.ElementType;
+}

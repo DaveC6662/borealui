@@ -47,3 +47,7 @@ export interface FormGroupProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface BaseFormGroupProps extends FormGroupProps {
+  classMap: Record<string, string>;
+}

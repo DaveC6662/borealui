@@ -1,10 +1,6 @@
-import React from "react";
-import { FormGroupProps } from "./FormGroup.types";
+import React, { useMemo, useId } from "react";
+import { BaseFormGroupProps } from "./FormGroup.types";
 import { combineClassNames } from "../../utils/classNames";
-
-export interface BaseFormGroupProps extends FormGroupProps {
-  classMap: Record<string, string>;
-}
 
 const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   label,
@@ -21,32 +17,44 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   "data-testid": testId = "form-group",
   classMap,
 }) => {
-  const labelId = id ? `${id}-label` : undefined;
-  const descriptionId = description ? `${id}-description` : undefined;
-  const errorId = error ? `${id}-error` : undefined;
+  const auto = useId();
+  const baseId = id ?? `${testId}-${auto}`;
+  const labelId = label ? `${baseId}-label` : undefined;
+  const descriptionId = description ? `${baseId}-description` : undefined;
+  const errorId = error ? `${baseId}-error` : undefined;
 
   const describedBy =
     [errorId, descriptionId].filter(Boolean).join(" ") || undefined;
 
   const childrenArray = React.Children.toArray(children);
+  const isGroup = childrenArray.length > 1;
 
-  return (
-    <div
-      className={combineClassNames(
+  const wrapperClass = useMemo(
+    () =>
+      combineClassNames(
         classMap.wrapper,
         classMap[layout],
         classMap[spacing],
         error && classMap.error,
         className
-      )}
-      role="group"
-      aria-labelledby={labelId}
-      aria-describedby={describedBy}
+      ),
+    [classMap, layout, spacing, error, className]
+  );
+
+  return (
+    <div
+      className={wrapperClass}
+      {...(isGroup && {
+        role: "group",
+        "aria-labelledby": labelId,
+        "aria-describedby": describedBy,
+      })}
       data-testid={testId}
     >
       {label && (
         <label
           id={labelId}
+          {...(!isGroup && id ? { htmlFor: id } : {})}
           className={combineClassNames(classMap.label, hideLabel && "sr_only")}
           data-testid={`${testId}-label`}
         >
@@ -90,7 +98,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
       {description && !error && (
         <p
           id={descriptionId}
-          className={`${classMap.description}`}
+          className={classMap.description}
           data-testid={`${testId}-description`}
         >
           {description}
@@ -111,4 +119,5 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   );
 };
 
+BaseFormGroup.displayName = "BaseFormGroup";
 export default BaseFormGroup;

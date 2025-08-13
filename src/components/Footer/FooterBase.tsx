@@ -1,21 +1,8 @@
-import React, { JSX, useMemo } from "react";
-import { FooterProps } from "./Footer.types";
+import React, { useMemo } from "react";
+import { BaseFooterProps } from "./Footer.types";
 import { combineClassNames } from "../../utils/classNames";
 import { getDefaultTheme } from "../../config/boreal-style-config";
 import { capitalize } from "@/utils/capitalize";
-
-export interface BaseFooterProps extends FooterProps {
-  IconButton: React.ComponentType<any>;
-  ThemeSelect: React.ComponentType<any>;
-  ImageComponent?: React.ElementType;
-  classMap: Record<string, string>;
-  LinkWrapper?: (props: {
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-    [key: string]: any;
-  }) => JSX.Element;
-}
 
 const FooterBase: React.FC<BaseFooterProps> = ({
   theme = getDefaultTheme(),
@@ -33,48 +20,55 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   ImageComponent = "img",
   ThemeSelect,
   classMap,
-  LinkWrapper = ({ href, children }) => <a href={href}>{children}</a>,
+  LinkWrapper = ({ href, children, ...rest }) => (
+    <a href={href} {...rest}>
+      {children}
+    </a>
+  ),
 }) => {
   const footerClass = useMemo(
     () =>
       combineClassNames(
         classMap.footer,
         classMap[theme],
-        classMap[`shadow${capitalize(shadow)}`],
-        classMap[`round${capitalize(rounding)}`],
+        shadow !== "none" && classMap[`shadow${capitalize(shadow)}`],
+        rounding !== "none" && classMap[`round${capitalize(rounding)}`],
         classMap[`attachment${capitalize(attachment)}`],
         className
       ),
-    [classMap, theme, className]
+    [classMap, theme, shadow, rounding, attachment, className]
   );
+
+  const isImgLike =
+    typeof logo === "string" ||
+    (typeof logo === "object" && logo && "src" in logo);
+  const logoSrc = isImgLike
+    ? typeof logo === "string"
+      ? logo
+      : (logo as any).src
+    : undefined;
+  const logoW = isImgLike ? ((logo as any)?.width ?? 20) : undefined;
+  const logoH = isImgLike ? ((logo as any)?.height ?? 20) : undefined;
+
   return (
-    <footer
-      className={footerClass}
-      role="contentinfo"
-      aria-label="Footer"
-      data-testid={testId}
-    >
+    <footer className={footerClass} data-testid={testId}>
       <div className={classMap.content}>
         <div className={classMap.left} data-testid={`${testId}-left`}>
-          {logo &&
-          (typeof logo === "string" ||
-            (typeof logo === "object" && "src" in logo)) ? (
+          {isImgLike ? (
             <ImageComponent
               className={classMap.logo}
-              aria-label="Logo"
-              role="img"
               data-testid={`${testId}-logo`}
               loading="lazy"
-              src={logo}
+              src={logoSrc}
               alt="Logo"
-              height={20}
-              width={20}
+              height={logoH}
+              width={logoW}
             />
           ) : (
             <span
               className={classMap.logo}
-              aria-label="Logo"
               role="img"
+              aria-label="Logo"
               data-testid={`${testId}-logo`}
             >
               {logo}
@@ -82,7 +76,10 @@ const FooterBase: React.FC<BaseFooterProps> = ({
           )}
 
           {copyright && (
-            <div className={classMap.left} data-testid={`${testId}-copyright`}>
+            <div
+              className={classMap.copyright ?? classMap.left}
+              data-testid={`${testId}-copyright`}
+            >
               <p>{copyright}</p>
             </div>
           )}
@@ -94,18 +91,23 @@ const FooterBase: React.FC<BaseFooterProps> = ({
             aria-label="Footer site links"
             data-testid={`${testId}-nav`}
           >
-            <ul role="list">
-              {links.map((link, i) => (
-                <li key={i}>
-                  <LinkWrapper
-                    href={link.href}
-                    className={classMap.link}
-                    data-testid={`${testId}-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
-                  >
-                    {link.label}
-                  </LinkWrapper>
-                </li>
-              ))}
+            <ul>
+              {links.map((link, i) => {
+                const slug = (link.label || link.href || `link-${i}`)
+                  .toLowerCase()
+                  .replace(/\s+/g, "-");
+                return (
+                  <li key={`${link.href ?? slug}-${i}`}>
+                    <LinkWrapper
+                      href={link.href}
+                      className={classMap.link}
+                      data-testid={`${testId}-link-${slug}`}
+                    >
+                      {link.label}
+                    </LinkWrapper>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
         )}
@@ -114,41 +116,36 @@ const FooterBase: React.FC<BaseFooterProps> = ({
           <div
             className={classMap.themeToggle}
             data-testid={`${testId}-theme-select`}
-            aria-label="Theme selector container"
           >
-            <ThemeSelect theme={"clear"} shadow={"none"} />
+            <ThemeSelect theme="clear" shadow="none" aria-label="Theme" />
           </div>
         )}
 
         {socialLinks.length > 0 && (
-          <div
+          <nav
             className={classMap.social}
             aria-label="Social media"
-            role="navigation"
             data-testid={`${testId}-social`}
           >
             {socialLinks.map((social, index) => (
               <IconButton
-                key={index}
+                key={`${social.href ?? social.title}-${index}`}
                 icon={social.icon}
                 href={social.href}
                 isExternal
                 shadow="none"
-                target="_blank"
-                rel="noopener noreferrer"
                 ariaLabel={social.title}
                 title={social.title}
                 theme="clear"
-                data-testid={`${testId}-social-${social.title
-                  .toLowerCase()
-                  .replace(/\s+/g, "-")}`}
+                data-testid={`${testId}-social-${social.title.toLowerCase().replace(/\s+/g, "-")}`}
               />
             ))}
-          </div>
+          </nav>
         )}
       </div>
     </footer>
   );
 };
 
+FooterBase.displayName = "FooterBase";
 export default FooterBase;
