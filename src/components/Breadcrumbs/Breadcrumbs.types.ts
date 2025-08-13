@@ -98,3 +98,9 @@ export interface BreadcrumbsProps {
  * Label used to represent collapsed breadcrumb items.
  */
 export const ELLIPSIS_LABEL = "…";
+
+export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
+  classMap: Record<string, string>;
+  LinkComponent?: React.ElementType;
+  ButtonComponent: React.ElementType;
+}

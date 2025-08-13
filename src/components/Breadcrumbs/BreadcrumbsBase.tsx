@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import {
   Breadcrumb,
+  BreadcrumbsBaseProps,
   BreadcrumbsProps,
   ELLIPSIS_LABEL,
 } from "./Breadcrumbs.types";
@@ -13,12 +14,6 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
-  classMap: Record<string, string>;
-  LinkComponent?: React.ElementType;
-  ButtonComponent: React.ElementType;
-}
 
 export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   items,
@@ -34,11 +29,13 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   className = "",
   maxVisible,
   LinkComponent = "a",
-  ButtonComponent,
+  ButtonComponent = "button",
   "data-testid": testId = "breadcrumbs",
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleExpand = () => setIsExpanded(true);
+
+  if (!items || items.length === 0) return null;
 
   const visibleItems: Breadcrumb[] = useMemo(() => {
     if (isExpanded || !maxVisible || items.length <= maxVisible) return items;
@@ -60,7 +57,17 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
         outline && classMap.outline,
         className
       ),
-    [theme, size, outline, className]
+    [
+      theme,
+      state,
+      size,
+      shadow,
+      rounding,
+      disabled,
+      outline,
+      className,
+      classMap,
+    ]
   );
 
   return (
@@ -68,13 +75,12 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
       aria-label="Breadcrumb"
       data-testid={testId ? `${testId}-nav-container` : undefined}
       className={breadcrumbsClass}
-      itemScope
-      role="navigation"
-      itemType="https://schema.org/BreadcrumbList"
     >
       <ol
         className={classMap.list}
         data-testid={testId ? `${testId}-nav-list` : undefined}
+        itemScope
+        itemType="https://schema.org/BreadcrumbList"
       >
         {visibleItems.map((item, index) => {
           const isLast = index === visibleItems.length - 1;
@@ -94,32 +100,49 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
               itemProp="itemListElement"
               itemScope
               itemType="https://schema.org/ListItem"
-              aria-current={isLast ? "page" : undefined}
             >
               {isEllipsis ? (
                 <ButtonComponent
                   theme="clear"
-                  size="small"
+                  size="xs"
                   className={classMap.ellipsis}
-                  aria-label="Show more breadcrumbs"
-                  onClick={handleExpand}
-                  tabIndex={0}
+                  aria-label="Show all breadcrumbs"
+                  aria-expanded={isExpanded}
+                  onClick={disabled ? undefined : handleExpand}
+                  disabled={disabled}
+                  tabIndex={disabled ? -1 : 0}
                   data-testid={testId ? `${testId}-ellipsis` : undefined}
                 >
                   {item.label}
                 </ButtonComponent>
               ) : item.href && !isLast ? (
-                <LinkComponent
-                  href={item.href}
-                  itemProp="item"
-                  className={classMap.link}
-                  title={item.label}
-                  data-testid={testId ? `${testId}-nav-item-label` : undefined}
-                >
-                  <span itemProp="name" className={classMap.link_label}>
+                disabled ? (
+                  // Disabled: render non-interactive label for links
+                  <span
+                    className={classMap.link_disabled}
+                    title={item.label}
+                    itemProp="name"
+                    data-testid={
+                      testId ? `${testId}-nav-item-label` : undefined
+                    }
+                  >
                     {item.label}
                   </span>
-                </LinkComponent>
+                ) : (
+                  <LinkComponent
+                    href={item.href}
+                    className={classMap.link}
+                    title={item.label}
+                    itemProp="item"
+                    data-testid={
+                      testId ? `${testId}-nav-item-label` : undefined
+                    }
+                  >
+                    <span itemProp="name" className={classMap.link_label}>
+                      {item.label}
+                    </span>
+                  </LinkComponent>
+                )
               ) : (
                 <span
                   className={classMap.current}

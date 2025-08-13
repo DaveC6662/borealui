@@ -1,6 +1,5 @@
 import { MouseEvent } from "react";
 import {
-  RoundingType,
   ShadowType,
   ShapeType,
   SizeType,
@@ -9,6 +8,32 @@ import {
   StatusType,
   ThemeType,
 } from "../../types/types";
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ElementType,
+} from "react";
+
+export type AnchorInteractiveProps = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  "href" | "children" | "className" | "onClick"
+>;
+
+export type ButtonInteractiveProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "type" | "children" | "className" | "onClick"
+>;
+
+type AvatarBaseCommon = {
+  ImageComponent?: ElementType;
+  LinkComponent?: ElementType;
+  classMap: Record<string, string>;
+};
+
+export type AvatarBaseProps =
+  | (AvatarProps & { href: string } & AnchorInteractiveProps & AvatarBaseCommon)
+  | (AvatarProps & { href?: undefined } & ButtonInteractiveProps &
+      AvatarBaseCommon);
 
 /**
  * Props for the Avatar component.

@@ -1,5 +1,5 @@
 import React, { useMemo, MouseEvent } from "react";
-import { BadgeProps } from "./Badge.types";
+import { BadgeBaseProps, BadgeProps } from "./Badge.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -8,10 +8,6 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface BadgeBaseProps extends BadgeProps {
-  classMap: Record<string, string>;
-}
 
 export const BadgeBase: React.FC<BadgeBaseProps> = ({
   text,
@@ -29,7 +25,14 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   classMap,
   "data-testid": testId = "badge",
   onClick,
-}) => {
+  href,
+  ...rest
+}: BadgeBaseProps) => {
+  if (!text && !children) return null;
+
+  const content = children ?? text;
+  const label = typeof content === "string" ? content : text;
+
   const combinedClassName = useMemo(
     () =>
       combineClassNames(
@@ -44,39 +47,92 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
         onClick && classMap.clickable,
         className
       ),
-    [theme, size, outline, className]
+    [
+      size,
+      theme,
+      state,
+      shadow,
+      rounding,
+      disabled,
+      outline,
+      onClick,
+      href,
+      className,
+      classMap,
+    ]
   );
 
-  if (!text && !children) return null;
-
-  const content = children ?? text;
-  const label = typeof content === "string" ? content : text;
-
   const handleClick = (e: MouseEvent<HTMLElement>) => {
-    if (disabled) return;
+    if (disabled) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     onClick?.(e as MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
-    if (!title && !onClick) e.preventDefault();
   };
 
-  return (
-    <span
-      className={combinedClassName}
-      aria-label={label}
-      title={title || label}
-      data-testid={testId ? `${testId}-main` : undefined}
-      role="status"
-      onClick={handleClick}
-      aria-live="polite"
-    >
+  const needsAriaLabel = typeof content !== "string";
+
+  const inner = (
+    <>
       {Icon && (
         <Icon
-          className={classMap["badge_icon"]}
+          className={classMap.badge_icon}
           aria-hidden="true"
           focusable="false"
           data-testid={testId ? `${testId}-icon` : undefined}
         />
       )}
       {content}
+    </>
+  );
+
+  if (href) {
+    const isHttp = /^https?:\/\//i.test(href);
+    return (
+      <a
+        href={disabled ? undefined : href}
+        className={combinedClassName}
+        onClick={handleClick}
+        data-testid={testId ? `${testId}-main` : undefined}
+        title={title ?? (typeof label === "string" ? label : undefined)}
+        {...(needsAriaLabel ? { "aria-label": label } : {})}
+        aria-disabled={disabled || undefined}
+        tabIndex={disabled ? -1 : 0}
+        target={isHttp && !disabled ? "_blank" : undefined}
+        rel={isHttp && !disabled ? "noopener noreferrer" : undefined}
+        {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        className={combinedClassName}
+        onClick={handleClick}
+        disabled={disabled}
+        data-testid={testId ? `${testId}-main` : undefined}
+        title={title ?? (typeof label === "string" ? label : undefined)}
+        {...(needsAriaLabel ? { "aria-label": label } : {})}
+        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+      >
+        {inner}
+      </button>
+    );
+  }
+
+  return (
+    <span
+      className={combinedClassName}
+      data-testid={testId ? `${testId}-main` : undefined}
+      title={title ?? (typeof label === "string" ? label : undefined)}
+      {...(needsAriaLabel ? { "aria-label": label } : {})}
+    >
+      {inner}
     </span>
   );
 };

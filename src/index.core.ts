@@ -18,7 +18,7 @@ export { default as TextArea } from "./components/TextArea/core/TextArea";
 export { default as Select } from "./components/Select/core/Select";
 export { default as ThemeSelect } from "./components/Select/ThemeSelect/core/ThemeSelect";
 export { default as FileUpload } from "./components/FileUpload/core/FileUpload";
-export { default as TagInput } from "./components/TagInput/core/TagInput";
+export { default as TagInput } from "./components/TagInput/core/Taginput";
 export { default as RadioButton } from "./components/RadioButton/core/RadioButton";
 export { default as Slider } from "./components/Slider/core/Slider";
 export { default as Checkbox } from "./components/Checkbox/core/Checkbox";
@@ -38,7 +38,7 @@ export { default as Rating } from "./components/Rating/core/Rating";
 export { default as Skeleton } from "./components/Skeleton/core/Skeleton";
 export { default as Spinner } from "./components/Spinner/core/Spinner";
 export { default as Tooltip } from "./components/Tooltip/core/Tooltip";
-export { default as MessagePopUp } from "./components/MessagePopUp/core/MessagePopUp";
+export { default as MessagePopUp } from "./components/MessagePopUp/core/MessagePopup";
 export { default as PopOver } from "./components/PopOver/core/PopOver";
 
 // Navigation & Layout

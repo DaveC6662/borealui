@@ -6,7 +6,7 @@ import {
   StateType,
   ThemeType,
 } from "../../types/types";
-import { MouseEvent } from "react";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes, MouseEvent } from "react";
 
 /**
  * Props for the Badge component.
@@ -87,3 +87,18 @@ export interface BadgeProps {
    */
   "data-testid"?: string;
 }
+
+type AnchorExtras = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  "href" | "children" | "className" | "onClick" | "title"
+>;
+type ButtonExtras = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "type" | "children" | "className" | "onClick" | "title"
+>;
+
+type BadgeBaseCommon = { classMap: Record<string, string> };
+
+export type BadgeBaseProps =
+  | (BadgeProps & BadgeBaseCommon & { href: string } & AnchorExtras)
+  | (BadgeProps & BadgeBaseCommon & { href?: undefined } & ButtonExtras);

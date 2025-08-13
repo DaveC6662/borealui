@@ -1,5 +1,12 @@
-import React, { useMemo, useState, MouseEvent } from "react";
-import { AvatarProps } from "./Avatar.types";
+import React, {
+  useMemo,
+  useState,
+  MouseEvent,
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  forwardRef,
+} from "react";
+import { AvatarBaseProps } from "./Avatar.types";
 import { getInitials } from "../../utils/getInitials";
 import { combineClassNames } from "../../utils/classNames";
 import { FallbackUserIcon } from "../../Icons/index";
@@ -9,40 +16,50 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-export interface AvatarBaseProps extends AvatarProps {
-  ImageComponent?: React.ElementType;
-  LinkComponent?: React.ElementType;
-  classMap: Record<string, string>;
-}
 
-export const AvatarBase: React.FC<AvatarBaseProps> = ({
-  src,
-  alt,
-  name = "",
-  label,
-  onClick,
-  disabled = false,
-  href,
-  status,
-  statusIcon,
-  statusPosition = "bottomRight",
-  fallback,
-  children,
-  size = getDefaultSize(),
-  shadow = getDefaultShadow(),
-  shape = "circle",
-  outline = false,
-  theme = getDefaultTheme(),
-  state = "",
-  className = "",
-  priority = false,
-  ImageComponent = "img",
-  LinkComponent = "a",
-  classMap,
-  "data-testid": testId = "avatar",
-}) => {
+export const AvatarBase = forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  AvatarBaseProps
+>(function AvatarBase(
+  {
+    src,
+    alt,
+    name = "",
+    label,
+    onClick,
+    disabled = false,
+    href,
+    status,
+    statusIcon,
+    statusPosition = "bottomRight",
+    fallback,
+    children,
+    size = getDefaultSize(),
+    shadow = getDefaultShadow(),
+    shape = "circle",
+    outline = false,
+    theme = getDefaultTheme(),
+    state = "",
+    className = "",
+    priority = false,
+    ImageComponent = "img",
+    LinkComponent = "a",
+    classMap,
+    "data-testid": testId = "avatar",
+    ...rest
+  },
+  ref
+) {
   const [imgError, setImgError] = useState(false);
+
   const computedLabel = label || alt || name || "User avatar";
+
+  const linkAria = {
+    "aria-label": computedLabel,
+    "aria-disabled": disabled || undefined,
+  } as const;
+  const buttonAria = { "aria-label": computedLabel } as const;
+
   const fallbackContent =
     fallback ??
     (name ? (
@@ -65,8 +82,21 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
         onClick && classMap.clickable,
         className
       ),
-    [theme, shape, size, outline, className]
+    [
+      theme,
+      state,
+      shape,
+      size,
+      shadow,
+      disabled,
+      outline,
+      onClick,
+      className,
+      classMap,
+    ]
   );
+
+  const isNextImage = typeof ImageComponent !== "string";
 
   const avatarContent =
     !imgError && src ? (
@@ -75,11 +105,11 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
         alt={computedLabel}
         className={classMap.image}
         onError={() => setImgError(true)}
-        loading={priority ? "eager" : "lazy"}
-        aria-hidden="false"
-        role="img"
+        {...(priority
+          ? { loading: "eager" as const }
+          : { loading: "lazy" as const })}
+        {...(isNextImage ? { fill: true } : {})}
         data-testid={testId ? `${testId}-image` : undefined}
-        fill={true}
       />
     ) : (
       <span
@@ -98,7 +128,7 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
       className={combineClassNames(
         classMap.status,
         status && classMap[status],
-        statusIcon ? "icon_only" : undefined,
+        statusIcon ? classMap.icon_only : undefined,
         classMap[statusPosition]
       )}
       aria-hidden="true"
@@ -116,39 +146,41 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
   );
 
   const handleClick = (e: MouseEvent<HTMLElement>) => {
+    if (disabled) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     onClick?.(e as MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
-    if (!href) e.preventDefault();
-  };
-
-  const ariaAttrs = {
-    "aria-label": computedLabel,
-    "aria-disabled": false,
   };
 
   if (href) {
-    if (LinkComponent === "a") {
-      return (
-        <a
-          href={href}
-          className={combinedClassName}
-          onClick={handleClick}
-          data-testid="avatar"
-          target={href.startsWith("http") ? "_blank" : undefined}
-          rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-          {...ariaAttrs}
-        >
-          {content}
-        </a>
-      );
-    }
-
-    return (
+    const isHttp = /^https?:\/\//i.test(href);
+    return LinkComponent === "a" ? (
+      <a
+        ref={ref as React.Ref<HTMLAnchorElement>}
+        href={disabled ? undefined : href}
+        className={combinedClassName}
+        onClick={handleClick}
+        data-testid={testId ? `${testId}-main` : undefined}
+        target={isHttp && !disabled ? "_blank" : undefined}
+        rel={isHttp && !disabled ? "noopener noreferrer" : undefined}
+        tabIndex={disabled ? -1 : 0}
+        {...linkAria}
+        {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
+      >
+        {content}
+      </a>
+    ) : (
       <LinkComponent
+        ref={ref}
         href={href}
         className={combinedClassName}
         onClick={handleClick}
         data-testid={testId ? `${testId}-main` : undefined}
-        {...ariaAttrs}
+        tabIndex={disabled ? -1 : 0}
+        {...linkAria}
+        {...(rest as Record<string, unknown>)}
       >
         {content}
       </LinkComponent>
@@ -157,15 +189,18 @@ export const AvatarBase: React.FC<AvatarBaseProps> = ({
 
   return (
     <button
+      ref={ref as React.Ref<HTMLButtonElement>}
       type="button"
       className={combinedClassName}
       onClick={handleClick}
+      disabled={disabled}
       data-testid={testId ? `${testId}-main` : undefined}
-      {...ariaAttrs}
+      {...buttonAria}
+      {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {content}
     </button>
   );
-};
+});
 
 AvatarBase.displayName = "AvatarBase";
