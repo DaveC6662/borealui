@@ -84,3 +84,8 @@ export interface DropdownProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface BaseDropdownProps extends DropdownProps {
+  IconButton: ComponentType<any>;
+  classMap: Record<string, string>;
+}

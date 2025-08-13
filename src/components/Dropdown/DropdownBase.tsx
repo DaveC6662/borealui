@@ -9,7 +9,7 @@ import React, {
   ComponentType,
   useMemo,
 } from "react";
-import { DropdownProps } from "./Dropdown.types";
+import { BaseDropdownProps, DropdownProps } from "./Dropdown.types";
 import { combineClassNames } from "../../utils/classNames";
 import MenuIcon from "../../Icons/MenuIcon";
 import { capitalize } from "../../utils/capitalize";
@@ -18,11 +18,6 @@ import {
   getDefaultShadow,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface BaseDropdownProps extends DropdownProps {
-  IconButton: ComponentType<any>;
-  classMap: Record<string, string>;
-}
 
 const BaseDropdown: React.FC<BaseDropdownProps> = ({
   triggerIcon,

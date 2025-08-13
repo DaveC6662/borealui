@@ -76,3 +76,11 @@ export interface FileUploadProps {
   /** Allowed file MIME types (e.g., ["image/png", "application/pdf"]). */
   allowedFileTypes?: string[];
 }
+
+export interface BaseFileUploadProps extends FileUploadProps {
+  FormGroup: React.ComponentType<any>;
+  Button: React.ComponentType<any>;
+  IconButton: React.ComponentType<any>;
+  ProgressBar: React.ComponentType<any>;
+  classMap: Record<string, string>;
+}

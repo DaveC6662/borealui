@@ -1,5 +1,5 @@
-import React, { useMemo, useRef, useState } from "react";
-import { FileUploadProps } from "./FileUpload.types";
+import React, { useMemo, useRef, useState, useEffect } from "react";
+import { BaseFileUploadProps } from "./FileUpload.types";
 import { FileIcon, TrashIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -8,14 +8,6 @@ import {
   getDefaultShadow,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface BaseFileUploadProps extends FileUploadProps {
-  FormGroup: React.ComponentType<any>;
-  Button: React.ComponentType<any>;
-  IconButton: React.ComponentType<any>;
-  ProgressBar: React.ComponentType<any>;
-  classMap: Record<string, string>;
-}
 
 const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   label = "Upload File",
@@ -52,6 +44,12 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [uploadMessage, setUploadMessage] = useState<string | null>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const accept = useMemo(() => {
+    if (!allowedFileTypes || allowedFileTypes.length === 0) return undefined;
+    return allowedFileTypes.join(",");
+  }, [allowedFileTypes]);
 
   const validateFiles = (newFiles: File[]) => {
     const valid: File[] = [];
@@ -59,23 +57,30 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
     newFiles.forEach((file) => {
       const isSizeOk = file.size <= maxFileSizeBytes;
-      const isTypeOk =
-        allowedFileTypes.length === 0 || allowedFileTypes.includes(file.type);
+      const ext = file.name.includes(".")
+        ? "." + file.name.split(".").pop()!.toLowerCase()
+        : "";
+      const typeAllowed =
+        allowedFileTypes.length === 0 ||
+        allowedFileTypes.includes(file.type) ||
+        (ext && allowedFileTypes.map((t) => t.toLowerCase()).includes(ext));
 
-      if (isSizeOk && isTypeOk) {
+      if (isSizeOk && typeAllowed) {
         valid.push(file);
       } else {
         rejected.push({
           name: file.name,
           reason: !isSizeOk
             ? `Exceeds size limit (${(file.size / 1024 / 1024).toFixed(2)}MB)`
-            : `Invalid type (${file.type || "unknown"})`,
+            : `Invalid type (${file.type || ext || "unknown"})`,
         });
       }
     });
 
     return { valid, rejected };
   };
+
+  const truncate = (s: string) => (s.length > 30 ? s.slice(0, 27) + "..." : s);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files;
@@ -85,22 +90,16 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     const updatedFiles = multiple ? [...files, ...valid] : valid;
 
     setFiles(updatedFiles);
-    setFileNames(
-      updatedFiles.map((file) =>
-        file.name.length > 30 ? file.name.slice(0, 27) + "..." : file.name
-      )
-    );
+    setFileNames(updatedFiles.map((f) => truncate(f.name)));
     setRejectedFiles(rejected);
+
+    if (fileInput.current) fileInput.current.value = "";
   };
 
   const removeFile = (index: number) => {
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
-    setFileNames(
-      updatedFiles.map((file) =>
-        file.name.length > 30 ? file.name.slice(0, 27) + "..." : file.name
-      )
-    );
+    setFileNames(updatedFiles.map((f) => truncate(f.name)));
   };
 
   const getButtonLabel = () => {
@@ -128,31 +127,44 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     }
   };
 
-  const handleUpload = () => {
-    if (!files || uploading) return;
+  const handleUpload = async () => {
+    if (!files.length || uploading) return;
     setUploading(true);
     setInternalProgress(0);
     setUploadMessage(null);
 
-    const interval = setInterval(() => {
-      setInternalProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => {
-            setUploading(false);
-            try {
-              onSubmit(files);
-              setUploadMessage("Upload successful.");
-            } catch {
-              setUploadMessage("Upload failed. Please try again.");
+    try {
+      if (uploadProgress === undefined) {
+        intervalRef.current = setInterval(() => {
+          setInternalProgress((prev) => {
+            if (prev >= 100) {
+              if (intervalRef.current) clearInterval(intervalRef.current);
+              return 100;
             }
-          }, 500);
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 100);
+            return prev + 10;
+          });
+        }, 100);
+      }
+
+      await Promise.resolve(onSubmit?.(files));
+      setUploadMessage("Upload successful.");
+    } catch {
+      setUploadMessage("Upload failed. Please try again.");
+    } finally {
+      if (intervalRef.current) {
+        if (uploadProgress === undefined) setInternalProgress(100);
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      setTimeout(() => setUploading(false), 300);
+    }
   };
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
 
   const containerClassName = useMemo(
     () =>
@@ -163,11 +175,28 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         outlineShadow && classMap[`shadow${capitalize(outlineShadow)}`],
         outlineRounding && classMap[`round${capitalize(outlineRounding)}`],
         error && classMap.error,
-        isDragging ? "dragging" : "",
+        isDragging && classMap.dragging,
         disabled && classMap.disabled
       ),
-    [classMap, isDragging, theme, state, disabled]
+    [
+      classMap,
+      theme,
+      state,
+      outlineShadow,
+      outlineRounding,
+      error,
+      isDragging,
+      disabled,
+    ]
   );
+
+  const describedBy =
+    [
+      description ? `${testId}-description` : undefined,
+      error ? `${testId}-error` : undefined,
+    ]
+      .filter(Boolean)
+      .join(" ") || undefined;
 
   return (
     <FormGroup
@@ -182,6 +211,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
+        aria-busy={uploading || undefined}
         data-testid={testId ? `${testId}-wrapper` : undefined}
       >
         <input
@@ -189,11 +219,12 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           id={`${testId}-input`}
           type="file"
           multiple={multiple}
+          accept={accept}
           onChange={handleFileChange}
           className={classMap.hiddenInput}
-          aria-required={required}
+          required={required}
           aria-label={label}
-          aria-describedby={`${testId}-description ${testId}-error`}
+          aria-describedby={describedBy}
           data-testid={testId ? `${testId}-input` : undefined}
         />
 
@@ -202,7 +233,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             icon={FileIcon}
             size="small"
             theme={theme}
-            state={error && classMap.error}
+            state={error ? "error" : state}
             className={classMap.fileInput}
             disabled={uploading || disabled}
             outline={outline}
@@ -248,6 +279,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
                     icon={TrashIcon}
                     theme="error"
                     size="xsmall"
+                    type="button"
                     outline
                     aria-label={`Remove ${name}`}
                     onClick={() => removeFile(index)}
@@ -268,8 +300,8 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             {!uploading && (
               <Button
                 theme={theme}
-                state={(error && classMap.error) || state}
-                disabled={uploading}
+                state={error ? "error" : state}
+                disabled={disabled || files.length === 0}
                 onClick={handleUpload}
                 loading={uploading}
                 size="small"
@@ -293,5 +325,5 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     </FormGroup>
   );
 };
-
+BaseFileUpload.displayName = "BaseFileUpload";
 export default BaseFileUpload;

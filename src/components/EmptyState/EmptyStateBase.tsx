@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { EmptyStateProps } from "./EmptyState.types";
+import React, { useMemo, useId } from "react";
+import type { BaseEmptyStateProps } from "./EmptyState.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -8,11 +8,6 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface BaseEmptyStateProps extends EmptyStateProps {
-  Button: React.ComponentType<any>;
-  classMap: Record<string, string>;
-}
 
 const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   icon: Icon,
@@ -31,8 +26,9 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   Button,
   classMap,
 }) => {
-  const titleId = `${testId}-title`;
-  const descId = `${testId}-message`;
+  const uid = useId();
+  const titleId = `${testId}-title-${uid}`;
+  const descId = message ? `${testId}-message-${uid}` : undefined;
 
   const sectionClassNames = useMemo(
     () =>
@@ -49,7 +45,10 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
     [classMap, rounding, shadow, size, state, theme, outline, className]
   );
 
-  return (
+  const buttonAriaLabel =
+    typeof actionLabel === "string" ? undefined : "Perform action";
+
+  return title ? (
     <section
       className={sectionClassNames}
       role="region"
@@ -59,7 +58,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
     >
       {Icon && (
         <div className={classMap.icon} data-testid={`${testId}-icon`}>
-          <Icon aria-hidden="true" />
+          <Icon aria-hidden="true" focusable={false} />
         </div>
       )}
 
@@ -71,22 +70,56 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
         {title}
       </h2>
 
-      <p
-        id={descId}
-        className={classMap.message}
-        data-testid={`${testId}-message`}
-      >
-        {message}
-      </p>
+      {message && (
+        <p
+          id={descId}
+          className={classMap.message}
+          data-testid={`${testId}-message`}
+        >
+          {message}
+        </p>
+      )}
 
       {actionLabel && onActionClick && (
         <Button
           theme="clear"
           outline={outline}
           onClick={onActionClick}
-          aria-label={
-            typeof actionLabel === "string" ? actionLabel : "Perform action"
-          }
+          aria-label={buttonAriaLabel}
+          data-testid={`${testId}-action`}
+        >
+          {actionLabel}
+        </Button>
+      )}
+    </section>
+  ) : (
+    <section
+      className={sectionClassNames}
+      aria-describedby={descId}
+      data-testid={testId}
+    >
+      {Icon && (
+        <div className={classMap.icon} data-testid={`${testId}-icon`}>
+          <Icon aria-hidden="true" focusable={false} />
+        </div>
+      )}
+
+      {message && (
+        <p
+          id={descId}
+          className={classMap.message}
+          data-testid={`${testId}-message`}
+        >
+          {message}
+        </p>
+      )}
+
+      {actionLabel && onActionClick && (
+        <Button
+          theme="clear"
+          outline={outline}
+          onClick={onActionClick}
+          aria-label={buttonAriaLabel}
           data-testid={`${testId}-action`}
         >
           {actionLabel}
@@ -96,4 +129,5 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   );
 };
 
+BaseEmptyState.displayName = "BaseEmptyState";
 export default BaseEmptyState;

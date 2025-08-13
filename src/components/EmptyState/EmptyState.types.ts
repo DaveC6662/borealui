@@ -65,3 +65,8 @@ export interface EmptyStateProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface BaseEmptyStateProps extends EmptyStateProps {
+  Button: React.ComponentType<any>;
+  classMap: Record<string, string>;
+}
