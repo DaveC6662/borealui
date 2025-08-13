@@ -4,11 +4,12 @@
 
 .container {
   position: fixed;
+  left: 50%;
+  transform: translateX(-45%);
+  flex-direction: column;
+  justify-content: center;
   top: 10px;
   left: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 10px;
   background-color: transparent;
   transition: theme.$transition-default;
@@ -44,6 +45,24 @@
       background-color: map.get($values, bg-light);
       color: var(--secondary-color-darker);
       font-weight: bold;
+    }
+  }
+
+  .list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    top: 10px;
+    left: 10px;
+    gap: 1em;
+    list-style: none;
+
+    @media (width <= 1250px) {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      flex-direction: row;
+      justify-content: center;
     }
   }
 

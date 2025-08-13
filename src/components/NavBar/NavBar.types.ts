@@ -1,4 +1,5 @@
 import { RoundingType, ShadowType, ThemeType } from "@/types/types";
+import { JSX } from "react";
 
 /**
  * Describes a single navigation item for the NavBar component.
@@ -41,4 +42,17 @@ export interface NavBarProps {
 
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
+}
+
+export interface BaseNavBarProps extends NavBarProps {
+  currentPath: string;
+  LinkWrapper: (props: {
+    href: string;
+    children: React.ReactNode;
+    className: string;
+    isActive: boolean;
+    "data-testid"?: string;
+    "aria-current"?: "page";
+  }) => JSX.Element;
+  classMap: Record<string, string>;
 }

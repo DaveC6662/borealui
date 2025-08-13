@@ -6,6 +6,7 @@ import { NavBarProps } from "../NavBar.types";
 const classes = {
   container: "nav",
   item: "nav_item",
+  list: "nav_list",
   "item--active": "nav_active",
   icon: "nav_icon_container",
   label: "nav_label",
@@ -41,7 +42,13 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     <BaseNavBar
       {...props}
       currentPath={pathname}
-      LinkWrapper={({ href, children, className, isActive, testId }) => (
+      LinkWrapper={({
+        href,
+        children,
+        className,
+        isActive,
+        "data-testid": testId,
+      }) => (
         <a
           href={href}
           className={className}

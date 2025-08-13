@@ -18,7 +18,13 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
     <BaseNavBar
       {...props}
       currentPath={resolvedPath || "/"}
-      LinkWrapper={({ href, children, className, isActive, testId }) => (
+      LinkWrapper={({
+        href,
+        children,
+        className,
+        isActive,
+        "data-testid": testId,
+      }) => (
         <Link
           href={href}
           className={className}

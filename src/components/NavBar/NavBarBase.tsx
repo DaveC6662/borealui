@@ -1,5 +1,4 @@
-import React, { JSX, useMemo } from "react";
-import { NavBarProps } from "./NavBar.types";
+import React, { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -7,19 +6,16 @@ import {
   getDefaultShadow,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
+import { BaseNavBarProps } from "./NavBar.types";
 
-export interface BaseNavBarProps extends NavBarProps {
-  currentPath: string;
-  LinkWrapper: (props: {
-    href: string;
-    children: React.ReactNode;
-    className: string;
-    isActive: boolean;
-    testId: string;
-    "aria-current"?: "page";
-  }) => JSX.Element;
-  classMap: Record<string, string>;
-}
+const normalizePath = (p: string) =>
+  p.endsWith("/") && p.length > 1 ? p.slice(0, -1) : p;
+const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9\-]/g, "");
 
 const BaseNavBar: React.FC<BaseNavBarProps> = ({
   items,
@@ -29,12 +25,12 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
-  className,
+  className = "",
   "data-testid": testId = "nav-bar",
 }) => {
   const wrapperClass = useMemo(
     () => combineClassNames(classMap.container, classMap[theme], className),
-    [classMap, theme]
+    [classMap, theme, className]
   );
 
   const itemClass = useMemo(
@@ -47,51 +43,51 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
     [classMap, shadow, rounding]
   );
 
+  const current = normalizePath(currentPath ?? "/");
+
   return (
     <nav
-      role="navigation"
       aria-label="Main navigation"
       className={wrapperClass}
       data-testid={`${testId}-nav-bar`}
     >
-      {items.map((item, index) => {
-        const isActive = currentPath === item.path;
+      <ul className={classMap.list}>
+        {items.map((item) => {
+          const isActive = normalizePath(item.path) === current;
+          const slug = slugify(item.label || item.path);
 
-        console.log(
-          "Nav item className:",
-          combineClassNames(classMap.item, isActive && classMap.active)
-        );
-
-        return (
-          <LinkWrapper
-            key={`${item.label}-${index}`}
-            href={item.path}
-            isActive={isActive}
-            className={combineClassNames(
-              itemClass,
-              isActive && classMap["item--active"]
-            )}
-            testId={`${testId}-nav-item-${item.label.toLowerCase()}`}
-            aria-current={isActive ? "page" : undefined}
-          >
-            <span
-              className={classMap.linkContent}
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <span
-                className={classMap.icon}
-                aria-hidden="true"
-                data-testid={`${testId}-nav-icon-${item.label.toLowerCase()}`}
+          return (
+            <li key={`${item.path}-${slug}`} className={classMap.listItem}>
+              <LinkWrapper
+                href={item.path}
+                isActive={isActive}
+                className={combineClassNames(
+                  itemClass,
+                  isActive && classMap.active
+                )}
+                data-testid={`${testId}-nav-item-${slug}`}
+                aria-current={isActive ? "page" : undefined}
               >
-                {item.icon}
-              </span>
-              <span className={classMap.label}>{item.label}</span>
-            </span>
-          </LinkWrapper>
-        );
-      })}
+                <span className={classMap.linkContent}>
+                  {item.icon && (
+                    <span
+                      className={classMap.icon}
+                      aria-hidden="true"
+                      data-testid={`${testId}-nav-icon-${slug}`}
+                    >
+                      {item.icon}
+                    </span>
+                  )}
+                  <span className={classMap.label}>{item.label}</span>
+                </span>
+              </LinkWrapper>
+            </li>
+          );
+        })}
+      </ul>
     </nav>
   );
 };
 
+BaseNavBar.displayName = "BaseNavBar";
 export default BaseNavBar;
