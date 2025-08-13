@@ -67,3 +67,7 @@ export interface ColorPickerProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface ColorPickerBaseProps extends ColorPickerProps {
+  classMap: Record<string, string>;
+}

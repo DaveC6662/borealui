@@ -60,6 +60,18 @@ $swatch-sizes: (
   }
 }
 
+.circle {
+  border-radius: 50%;
+}
+
+.square {
+  border-radius: 6px;
+}
+
+.round {
+  border-radius: 50%;
+}
+
 .radio_input {
   display: none;
 }
@@ -70,19 +82,6 @@ $swatch-sizes: (
   display: block;
   box-shadow: theme.$box-shadow-light;
   box-sizing: border-box;
-
-  .circle {
-    border-radius: 50%;
-  }
-
-  .square {
-    border-radius: 6px;
-  }
-
-  .rounded {
-    border-radius: 9999px;
-    height: 50%;
-  }
 }
 
 .custom_input {

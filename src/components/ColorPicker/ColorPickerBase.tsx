@@ -1,15 +1,11 @@
 import React, { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
-import type { ColorPickerProps } from "./ColorPicker.types";
+import type { ColorPickerBaseProps } from "./ColorPicker.types";
 import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultShadow,
   getDefaultSize,
 } from "../../config/boreal-style-config";
-
-export interface ColorPickerBaseProps extends ColorPickerProps {
-  classMap: Record<string, string>;
-}
 
 const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   label = "Choose a color",
@@ -37,9 +33,6 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
     <fieldset
       className={combineClassNames(classMap.color_picker, className)}
       disabled={disabled}
-      aria-disabled={disabled}
-      aria-labelledby={legendId}
-      role="radiogroup"
       data-testid={testId}
     >
       <legend id={legendId} className={classMap.legend}>
@@ -47,36 +40,40 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
       </legend>
 
       <div className={classMap.color_picker_grid}>
-        {colors.map((color, i) => (
-          <label
-            key={color.value}
-            className={combineClassNames(labelClass)}
-            htmlFor={`${testId}-color-${i}`}
-            title={color.label}
-            data-testid={`${testId}-option-${color.value}`}
-          >
-            <input
-              type="radio"
-              name={name}
-              id={`${testId}-color-${i}`}
-              value={color.value}
-              checked={selected === color.value}
-              onChange={() => onChange(color.value)}
-              className={classMap.radio_input}
-            />
-            <span className="sr_only">{color.label}</span>
-            <span
-              className={combineClassNames(
-                classMap.preview,
-                classMap[shape],
-                selected === color.value && classMap.selected,
-                shadow && classMap[`shadow${capitalize(shadow)}`]
-              )}
-              style={{ backgroundColor: color.value }}
-              aria-hidden="true"
-            />
-          </label>
-        ))}
+        {colors.map((color, i) => {
+          const id = `${testId}-color-${i}`;
+          const isSelected = selected === color.value;
+          return (
+            <label
+              key={`${color.value}-${i}`}
+              className={labelClass}
+              htmlFor={id}
+              title={color.label}
+              data-testid={`${testId}-option-${color.value}`}
+            >
+              <input
+                type="radio"
+                name={name}
+                id={id}
+                value={color.value}
+                checked={isSelected}
+                onChange={() => onChange(color.value)}
+                className={classMap.radio_input}
+              />
+              <span className="sr_only">{color.label}</span>
+              <span
+                className={combineClassNames(
+                  classMap.preview,
+                  classMap[shape],
+                  isSelected && classMap.selected,
+                  shadow && classMap[`shadow${capitalize(shadow)}`]
+                )}
+                style={{ backgroundColor: color.value }}
+                aria-hidden="true"
+              />
+            </label>
+          );
+        })}
       </div>
 
       {allowCustom && (

@@ -19,7 +19,7 @@ const stateOptions = ["success", "error", "warning"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<CircularProgressProps> = {
-  title: "CircularProgress",
+  title: "Components/CircularProgress",
   component: CircularProgress,
   tags: ["autodocs"],
   args: {
