@@ -1,5 +1,5 @@
-import React, { forwardRef, useMemo } from "react";
-import { RadioButtonProps } from "./RadioButton.types";
+import React, { forwardRef, useMemo, useId } from "react";
+import { BaseRadioButtonProps } from "./RadioButton.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -8,10 +8,6 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-export interface BaseRadioButtonProps extends RadioButtonProps {
-  classMap: Record<string, string>;
-}
-
 const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
   (
     {
@@ -19,22 +15,27 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       value,
       checked,
       onChange,
+      name,
       theme = getDefaultTheme(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       state = "",
       disabled = false,
       className = "",
+      id,
       "data-testid": testId = "radio-button",
       classMap,
       ...props
     },
     ref
   ) => {
+    const uid = useId();
+    const inputId = id ?? `${testId}-input-${uid}`;
+    const labelId = `${testId}-label-${uid}`;
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!disabled) {
-        onChange(e.target.value);
-      }
+      if (disabled) return;
+      if (e.target.checked) onChange(e.target.value);
     };
 
     const wrapperClasses = useMemo(
@@ -43,7 +44,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
           classMap.wrapper,
           classMap[theme],
           classMap[state],
-          disabled ? classMap.disabled : "",
+          disabled && classMap.disabled,
           className
         ),
       [classMap, theme, state, disabled, className]
@@ -59,20 +60,23 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       [classMap, rounding, shadow]
     );
 
-    const labelId = `${testId}-label`;
-
     return (
-      <label className={wrapperClasses} data-testid={`${testId}-wrapper`}>
+      <label
+        className={wrapperClasses}
+        data-testid={`${testId}-wrapper`}
+        htmlFor={inputId}
+      >
         <input
           ref={ref}
           type="radio"
-          id={`${testId}-input`}
+          id={inputId}
+          name={name}
           className={classMap.input}
           value={value}
           checked={checked}
           onChange={handleChange}
           disabled={disabled}
-          aria-labelledby={labelId}
+          aria-labelledby={label ? labelId : undefined}
           data-testid={testId}
           {...props}
         />
@@ -81,13 +85,15 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
           aria-hidden="true"
           data-testid={`${testId}-circle`}
         />
-        <span
-          id={labelId}
-          className={classMap.label}
-          data-testid={`${testId}-label`}
-        >
-          {label}
-        </span>
+        {label && (
+          <span
+            id={labelId}
+            className={classMap.label}
+            data-testid={`${testId}-label`}
+          >
+            {label}
+          </span>
+        )}
       </label>
     );
   }

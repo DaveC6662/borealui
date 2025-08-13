@@ -1,15 +1,11 @@
-import React, { useState, KeyboardEvent, JSX, useMemo } from "react";
+import React, { useState, KeyboardEvent, useMemo, useId } from "react";
 import { StarIcon } from "../../Icons";
-import { RatingProps } from "./Rating.types";
 import { combineClassNames } from "../../utils/classNames";
 import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface BaseRatingProps extends RatingProps {
-  classMap: Record<string, string>;
-}
+import { BaseRatingProps } from "./Rating.types";
 
 const BaseRating: React.FC<BaseRatingProps> = ({
   value,
@@ -23,14 +19,19 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   label,
   "data-testid": testId = "rating",
   classMap,
-}: BaseRatingProps): JSX.Element => {
+}) => {
+  const uid = useId();
+  const safeMax = Math.max(1, Math.floor(max || 1));
+  const clampedValue = Math.min(safeMax, Math.max(0, Math.floor(value || 0)));
   const [hover, setHover] = useState<number | null>(null);
-  const labelId = label ? `${testId}-label` : undefined;
+
+  const labelId = label ? `${uid}-label` : undefined;
+  const groupProps = label
+    ? { "aria-labelledby": labelId }
+    : { "aria-label": "Rating" };
 
   const handleClick = (index: number) => {
-    if (interactive && onChange) {
-      onChange(index + 1);
-    }
+    if (interactive && onChange) onChange(index + 1);
   };
 
   const handleKeyDown = (
@@ -39,17 +40,36 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   ) => {
     if (!interactive) return;
 
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleClick(index);
-    } else if (event.key === "ArrowRight") {
-      event.preventDefault();
-      const next = (index + 1) % max;
-      onChange?.(next + 1);
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      const prev = (index - 1 + max) % max;
-      onChange?.(prev + 1);
+    const commit = (v: number) => onChange?.(v);
+
+    switch (event.key) {
+      case "Enter":
+      case " ":
+        event.preventDefault();
+        commit(index + 1);
+        break;
+      case "ArrowRight":
+      case "ArrowUp": {
+        event.preventDefault();
+        const next = Math.min(safeMax, clampedValue + 1) || 1;
+        commit(next);
+        break;
+      }
+      case "ArrowLeft":
+      case "ArrowDown": {
+        event.preventDefault();
+        const prev = Math.max(1, clampedValue - 1);
+        commit(prev);
+        break;
+      }
+      case "Home":
+        event.preventDefault();
+        commit(1);
+        break;
+      case "End":
+        event.preventDefault();
+        commit(safeMax);
+        break;
     }
   };
 
@@ -60,7 +80,7 @@ const BaseRating: React.FC<BaseRatingProps> = ({
         classMap[theme],
         classMap[state],
         classMap[size],
-        interactive ? classMap.interactive : "",
+        interactive && classMap.interactive,
         className
       ),
     [classMap, theme, state, size, interactive, className]
@@ -69,35 +89,43 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   return (
     <div className={classMap.container || ""}>
       {label && (
-        <label id={labelId} className={classMap.label} htmlFor={undefined}>
+        <span
+          id={labelId}
+          className={classMap.label}
+          data-testid={`${testId}-label`}
+        >
           {label}
-        </label>
+        </span>
       )}
+
       <div
         className={wrapperClass}
         role="radiogroup"
-        aria-label="Rating"
+        {...groupProps}
+        aria-disabled={!interactive || undefined}
         data-testid={testId}
       >
-        {Array.from({ length: max }).map((_, index) => {
-          const active = index < (hover ?? value);
-          const isChecked = value === index + 1;
+        {Array.from({ length: safeMax }).map((_, index) => {
+          const active = index < (hover ?? clampedValue);
+          const isChecked = clampedValue === index + 1;
+          const isTabbable =
+            interactive && (isChecked || (clampedValue === 0 && index === 0));
 
           return (
             <span
               key={index}
               className={combineClassNames(
                 classMap.star,
-                active ? classMap.active : ""
+                active && classMap.active
               )}
               onClick={() => handleClick(index)}
               onMouseEnter={() => interactive && setHover(index)}
               onMouseLeave={() => interactive && setHover(null)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               role="radio"
-              aria-checked={isChecked}
-              tabIndex={interactive && (isChecked || index === 0) ? 0 : -1}
-              aria-label={`${index + 1} out of ${max} stars`}
+              aria-checked={!!isChecked}
+              tabIndex={isTabbable ? 0 : -1}
+              aria-label={`${index + 1} out of ${safeMax} stars`}
               data-testid={`${testId}-star-${index + 1}`}
             >
               <StarIcon aria-hidden="true" />
@@ -109,4 +137,5 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   );
 };
 
+BaseRating.displayName = "BaseRating";
 export default BaseRating;

@@ -71,3 +71,7 @@ export interface ProgressBarProps {
    */
   "data-testid"?: string;
 }
+
+export interface BaseProgressBarProps extends ProgressBarProps {
+  classMap: Record<string, string>;
+}

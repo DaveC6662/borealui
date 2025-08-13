@@ -1,5 +1,4 @@
-import React, { JSX, useMemo } from "react";
-import { ProgressBarProps } from "./ProgressBar.types";
+import React, { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -8,10 +7,7 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface BaseProgressBarProps extends ProgressBarProps {
-  classMap: Record<string, string>;
-}
+import { BaseProgressBarProps } from "./ProgressBar.types";
 
 const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   progress = 0,
@@ -26,8 +22,12 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   ariaLabel = "Progress",
   "data-testid": testId = "progressbar",
   classMap,
-}: BaseProgressBarProps): JSX.Element => {
-  const value = Math.round(progress);
+}) => {
+  const numeric = Number(progress);
+  const clamped = Number.isFinite(numeric)
+    ? Math.min(100, Math.max(0, numeric))
+    : 0;
+  const value = Math.round(clamped);
 
   const wrapperClass = useMemo(
     () =>
@@ -47,11 +47,11 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
         classMap.bar,
         classMap[theme],
         classMap[state],
-        animated ? classMap.animated : "",
+        animated && classMap.animated,
         rounding && classMap[`round${capitalize(rounding)}`],
-        indeterminate ? classMap.indeterminate : ""
+        indeterminate && classMap.indeterminate
       ),
-    [classMap, theme, state, rounding, indeterminate]
+    [classMap, theme, state, rounding, indeterminate, animated]
   );
 
   return (
@@ -61,18 +61,19 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
       aria-label={ariaLabel}
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-valuenow={!indeterminate ? value : undefined}
-      aria-valuetext={!indeterminate ? `${value}% complete` : "Loading"}
+      aria-valuenow={indeterminate ? undefined : value}
+      aria-valuetext={indeterminate ? "Loading" : `${value}% complete`}
       aria-busy={indeterminate || undefined}
       data-testid={testId}
     >
       <div
         className={barClass}
-        style={{ width: indeterminate ? "100%" : `${value}%` }}
+        style={{ width: indeterminate ? undefined : `${value}%` }}
         data-testid={`${testId}-bar`}
       />
     </div>
   );
 };
 
+BaseProgressBar.displayName = "BaseProgressBar";
 export default BaseProgressBar;

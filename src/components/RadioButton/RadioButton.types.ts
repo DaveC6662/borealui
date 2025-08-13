@@ -64,3 +64,7 @@ export interface RadioButtonProps
    */
   "data-testid"?: string;
 }
+
+export interface BaseRadioButtonProps extends RadioButtonProps {
+  classMap: Record<string, string>;
+}

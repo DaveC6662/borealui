@@ -58,3 +58,7 @@ export interface RatingProps {
    */
   "data-testid"?: string;
 }
+
+export interface BaseRatingProps extends RatingProps {
+  classMap: Record<string, string>;
+}
