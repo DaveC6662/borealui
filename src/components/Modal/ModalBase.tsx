@@ -7,19 +7,13 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "../../Icons";
-import { ModalProps } from "./Modal.types";
+import { BaseModalProps } from "./Modal.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultRounding,
   getDefaultShadow,
 } from "../../config/boreal-style-config";
-
-export interface BaseModalProps extends ModalProps {
-  IconButton: React.ComponentType<any>;
-  classMap: Record<string, string>;
-  portalId?: string;
-}
 
 const BaseModal: React.FC<BaseModalProps> = ({
   className = "",
@@ -36,15 +30,19 @@ const BaseModal: React.FC<BaseModalProps> = ({
   const [isVisible, setIsVisible] = useState(false);
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
 
-  const modalRef = useRef<HTMLDivElement>(null);
-  const firstFocusable = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+  const focusablesRef = useRef<HTMLElement[]>([]);
 
-  const id = useId();
-  const labelId = `${id}-label`;
-  const descId = `${id}-desc`;
+  const uid = useId();
+  const labelId = `${uid}-label`;
 
   useEffect(() => {
     setIsMounted(true);
+    openerRef.current = (document.activeElement as HTMLElement) ?? null;
+
     let portal = document.getElementById(portalId);
     if (!portal) {
       portal = document.createElement("div");
@@ -54,46 +52,63 @@ const BaseModal: React.FC<BaseModalProps> = ({
     setPortalElement(portal);
     document.body.classList.add("noScroll");
 
+    const siblings = Array.from(document.body.children) as HTMLElement[];
+    const hidden: HTMLElement[] = [];
+    siblings.forEach((el) => {
+      if (el !== portal && !el.hasAttribute("aria-hidden")) {
+        el.setAttribute("aria-hidden", "true");
+        hidden.push(el);
+      }
+    });
+
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleEsc as any);
+
     return () => {
       document.body.classList.remove("noScroll");
+      document.removeEventListener("keydown", handleEsc as any);
+      hidden.forEach((el) => el.removeAttribute("aria-hidden"));
+      openerRef.current?.focus?.();
     };
-  }, [portalId]);
+  }, [portalId, onClose]);
 
   useEffect(() => {
-    if (isMounted) {
-      requestAnimationFrame(() => {
-        setIsVisible(true);
-        setTimeout(() => {
-          modalRef.current?.focus();
-        }, 10);
-      });
-    }
+    if (!isMounted) return;
+    requestAnimationFrame(() => {
+      setIsVisible(true);
+
+      if (dialogRef.current) {
+        focusablesRef.current = Array.from(
+          dialogRef.current.querySelectorAll<HTMLElement>(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
+      }
+
+      (
+        focusablesRef.current[0] ??
+        closeBtnRef.current ??
+        dialogRef.current
+      )?.focus?.();
+    });
   }, [isMounted]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Escape") onClose();
-    if (e.key === "Tab") trapFocus(e);
-  };
+    if (e.key !== "Tab") return;
+    const list = focusablesRef.current;
+    if (!list.length) return;
 
-  const trapFocus = (e: KeyboardEvent) => {
-    const focusableEls = modalRef.current?.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (!focusableEls || focusableEls.length === 0) return;
+    const first = list[0];
+    const last = list[list.length - 1];
 
-    const first = focusableEls[0];
-    const last = focusableEls[focusableEls.length - 1];
-
-    if (e.shiftKey) {
-      if (document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      }
-    } else {
-      if (document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
     }
   };
 
@@ -113,43 +128,44 @@ const BaseModal: React.FC<BaseModalProps> = ({
 
   return ReactDOM.createPortal(
     <div
+      ref={overlayRef}
       className={combineClassNames(
         classMap.overlay,
         isVisible ? classMap.visible : classMap.hidden
       )}
       onClick={handleClose}
-      onKeyDown={handleKeyDown}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={labelId}
-      aria-describedby={descId}
-      tabIndex={-1}
-      ref={modalRef}
+      role="presentation"
       data-testid={testId}
     >
       <div
+        ref={dialogRef}
         className={contentClassName}
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={labelId}
+        tabIndex={-1}
+        onKeyDown={handleKeyDown}
         data-testid={`${testId}-content`}
-        id={descId}
       >
-        <h2 id={labelId} className="sr-only">
+        <h2 id={labelId} className={classMap.srOnly ?? "sr_only"}>
           Modal Dialog
         </h2>
 
         <IconButton
-          ref={firstFocusable}
+          ref={closeBtnRef as any}
           className={classMap.closeButton}
           state="error"
           size="small"
           icon={CloseIcon}
-          aria-label="Close modal"
+          ariaLabel="Close modal"
           onClick={(e: React.MouseEvent) => {
             e.stopPropagation();
             handleClose();
           }}
           title="Close"
           data-testid={`${testId}-close`}
+          type="button"
         />
 
         {children}
@@ -159,4 +175,5 @@ const BaseModal: React.FC<BaseModalProps> = ({
   );
 };
 
+BaseModal.displayName = "BaseModal";
 export default BaseModal;

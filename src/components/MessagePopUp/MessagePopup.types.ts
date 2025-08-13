@@ -62,3 +62,9 @@ export interface MessagePopUpProps {
    */
   "data-testid"?: string;
 }
+
+export interface BaseMessagePopupProps extends MessagePopUpProps {
+  Button: React.ComponentType<any>;
+  IconButton: React.ComponentType<any>;
+  classMap: Record<string, string>;
+}

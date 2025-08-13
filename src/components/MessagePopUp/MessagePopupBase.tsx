@@ -7,19 +7,13 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "../../Icons";
-import { MessagePopUpProps } from "./MessagePopup.types";
+import { BaseMessagePopupProps } from "./MessagePopup.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultRounding,
   getDefaultShadow,
 } from "../../config/boreal-style-config";
-
-export interface BaseMessagePopupProps extends MessagePopUpProps {
-  Button: React.ComponentType<any>;
-  IconButton: React.ComponentType<any>;
-  classMap: Record<string, string>;
-}
 
 const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   message,
@@ -41,10 +35,16 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const firstButtonRef = useRef<HTMLButtonElement>(null);
+  const cancelButtonRef = useRef<HTMLButtonElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+  const focusablesRef = useRef<HTMLElement[]>([]);
   const messageId = useId();
 
   useEffect(() => {
     setIsMounted(true);
+    openerRef.current = (document.activeElement as HTMLElement) ?? null;
+
     let portal = document.getElementById("popup-portal");
     if (!portal) {
       portal = document.createElement("div");
@@ -54,33 +54,51 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
     setPortalElement(portal);
     document.body.classList.add("no-scroll");
 
+    const roots = Array.from(document.body.children);
+    const restored: Array<HTMLElement> = [];
+    roots.forEach((el) => {
+      if (el !== portal && !el.hasAttribute("aria-hidden")) {
+        el.setAttribute("aria-hidden", "true");
+        restored.push(el as HTMLElement);
+      }
+    });
+
     const handleEscape = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
-
     document.addEventListener("keydown", handleEscape);
+
     return () => {
       document.body.classList.remove("no-scroll");
       document.removeEventListener("keydown", handleEscape);
+      restored.forEach((el) => el.removeAttribute("aria-hidden"));
+      openerRef.current?.focus?.();
     };
   }, [onClose]);
 
   useEffect(() => {
-    setTimeout(() => {
-      firstButtonRef.current?.focus();
-    }, 10);
+    if (!dialogRef.current) return;
+    focusablesRef.current = Array.from(
+      dialogRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
+
+    const target =
+      firstButtonRef.current ||
+      cancelButtonRef.current ||
+      (closeBtnRef.current as HTMLElement | null) ||
+      focusablesRef.current[0];
+    target?.focus?.();
   }, [isMounted]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== "Tab") return;
+    const list = focusablesRef.current;
+    if (!list.length) return;
 
-    const focusableEls = dialogRef.current?.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (!focusableEls || focusableEls.length === 0) return;
-
-    const first = focusableEls[0];
-    const last = focusableEls[focusableEls.length - 1];
+    const first = list[0];
+    const last = list[list.length - 1];
 
     if (e.shiftKey && document.activeElement === first) {
       e.preventDefault();
@@ -119,12 +137,14 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
         data-testid={`${testId}-dialog`}
       >
         <IconButton
+          ref={closeBtnRef as any}
           className={classMap.close}
           onClick={onClose}
           aria-label="Close popup"
           icon={CloseIcon}
           state="error"
           size="small"
+          type="button"
           data-testid={`${testId}-close`}
         />
         <h2
@@ -150,6 +170,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           )}
           {onCancel && (
             <Button
+              ref={cancelButtonRef}
               className={classMap.cancel}
               state="warning"
               onClick={onCancel}
@@ -166,4 +187,5 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   );
 };
 
+BaseMessagePopup.displayName = "BaseMessagePopup";
 export default BaseMessagePopup;

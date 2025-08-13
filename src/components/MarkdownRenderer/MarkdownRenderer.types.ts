@@ -31,3 +31,9 @@ export interface MarkdownRendererProps {
    */
   "data-testid"?: string;
 }
+
+export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
+  classMap: Record<string, string>;
+  language?: string;
+  sanitizeHtml?: (html: string) => string;
+}

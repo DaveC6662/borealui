@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { marked } from "marked";
-import { MarkdownRendererProps } from "./MarkdownRenderer.types";
+import { BaseMarkdownRendererProps } from "./MarkdownRenderer.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -8,16 +8,45 @@ import {
   getDefaultShadow,
 } from "../../config/boreal-style-config";
 
-export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
-  classMap: Record<string, string>;
-  language?: string;
+function safeSanitize(html: string): string {
+  try {
+    if (typeof window !== "undefined" && "DOMParser" in window) {
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      doc
+        .querySelectorAll("script, iframe, object, embed, link, meta")
+        .forEach((el) => el.remove());
+
+      doc.body.querySelectorAll<HTMLElement>("*").forEach((el) => {
+        [...el.attributes].forEach((attr) => {
+          const name = attr.name.toLowerCase();
+          const val = attr.value;
+          if (name.startsWith("on")) el.removeAttribute(attr.name);
+          if (
+            (name === "href" || name === "src") &&
+            /^\s*javascript:/i.test(val)
+          ) {
+            el.removeAttribute(attr.name);
+          }
+        });
+      });
+
+      return doc.body.innerHTML;
+    }
+  } catch {}
+
+  return html
+    .replace(/<\/?(script|iframe|object|embed|meta|link)[^>]*>/gi, "")
+    .replace(/\son[a-z]+="[^"]*"/gi, "")
+    .replace(/\s(href|src)\s*=\s*"(?:\s*javascript:[^"]*)"/gi, "");
 }
 
-function sanitizeWithDOMParser(html: string): string {
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  doc.querySelectorAll("script").forEach((el) => el.remove());
-  return doc.body.innerHTML;
-}
+const escapeHtml = (s: string) =>
+  s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 
 const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   content,
@@ -27,13 +56,42 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   shadow = getDefaultShadow(),
   "data-testid": testId = "markdown-renderer",
   classMap,
+  sanitizeHtml,
 }) => {
+  const renderer = useMemo(() => {
+    const r = new marked.Renderer();
+
+    r.link = ({ href, title, text }) => {
+      const url = href ?? "#";
+      const isExternal = /^https?:\/\//i.test(url);
+      const t = title ? ` title="${escapeHtml(title)}"` : "";
+      const target = isExternal ? ` target="_blank"` : "";
+      const rel = isExternal ? ` rel="noopener noreferrer"` : "";
+      return `<a href="${escapeHtml(url)}"${t}${target}${rel}>${text}</a>`;
+    };
+
+    r.image = ({ href, title, text }) => {
+      const url = href ?? "";
+      const t = title ? ` title="${escapeHtml(title)}"` : "";
+      const alt = escapeHtml(text || "");
+      return `<img src="${escapeHtml(url)}"${t} alt="${alt}" loading="lazy" decoding="async" />`;
+    };
+
+    return r;
+  }, []);
+
   const html = useMemo(() => {
-    const trimmed = content.trim();
+    const trimmed = (content ?? "").trim();
     if (!trimmed) return "";
-    const raw = marked.parse(trimmed, { async: false }) as string;
-    return sanitizeWithDOMParser(raw);
-  }, [content]);
+
+    const raw = marked.parse(trimmed, {
+      async: false,
+      renderer,
+    }) as string;
+
+    const sanitize = sanitizeHtml ?? safeSanitize;
+    return sanitize(raw);
+  }, [content, renderer, sanitizeHtml]);
 
   const wrapperClass = useMemo(
     () =>
@@ -48,12 +106,7 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
 
   if (!html) {
     return (
-      <div
-        className={classMap.empty}
-        data-testid={testId}
-        role="region"
-        aria-label="No markdown content"
-      >
+      <div className={classMap.empty} data-testid={testId}>
         <p>No content available.</p>
       </div>
     );
@@ -63,12 +116,11 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
     <div
       className={wrapperClass}
       data-testid={testId}
-      role="region"
-      aria-label="Markdown content"
       lang={language}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
 };
 
+BaseMarkdownRenderer.displayName = "BaseMarkdownRenderer";
 export default BaseMarkdownRenderer;

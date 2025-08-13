@@ -24,3 +24,9 @@ export interface ModalProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface BaseModalProps extends ModalProps {
+  IconButton: React.ComponentType<any>;
+  classMap: Record<string, string>;
+  portalId?: string;
+}

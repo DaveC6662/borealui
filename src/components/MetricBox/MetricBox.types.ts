@@ -56,3 +56,7 @@ export interface MetricBoxProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface BaseMetricBoxProps extends MetricBoxProps {
+  classMap: Record<string, string>;
+}
