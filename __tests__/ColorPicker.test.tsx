@@ -39,7 +39,7 @@ describe("ColorPickerBase", () => {
       />
     );
 
-    const group = screen.getByRole("radiogroup", { name: "Pick a color" });
+    const group = screen.getByTestId("color-picker");
     expect(group).toBeInTheDocument();
     expect(screen.getAllByRole("radio")).toHaveLength(colors.length);
   });

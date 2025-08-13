@@ -1,4 +1,5 @@
 import { ThemeType, OrientationType, StateType } from "@/types/types";
+import { JSX } from "react";
 
 /**
  * Props for the Divider component.
@@ -39,4 +40,8 @@ export interface DividerProps extends React.HTMLAttributes<HTMLElement> {
 
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
+}
+
+export interface DividerBaseProps extends DividerProps {
+  classMap: Record<string, string>;
 }

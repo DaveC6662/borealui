@@ -65,3 +65,8 @@ export interface CommandPaletteProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface CommandPaletteBaseProps extends CommandPaletteProps {
+  classMap: Record<string, string>;
+  TextInputComponent: React.ElementType;
+}

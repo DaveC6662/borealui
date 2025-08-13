@@ -1,5 +1,8 @@
 import React, { useId, useMemo, useRef } from "react";
-import { DateTimePickerProps } from "./DateTimePicker.types";
+import {
+  DateTimePickerBaseProps,
+  DateTimePickerProps,
+} from "./DateTimePicker.types";
 import { combineClassNames } from "../../utils/classNames";
 import { CalendarIcon } from "../../Icons";
 import { capitalize } from "../../utils/capitalize";
@@ -9,13 +12,6 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface DateTimePickerBaseProps extends DateTimePickerProps {
-  classMap: Record<string, string>;
-  error?: string;
-  description?: string;
-  id?: string;
-}
 
 const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   label,
@@ -46,8 +42,16 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   const descriptionId = description ? `${inputId}-description` : undefined;
   const errorId = error ? `${inputId}-error` : undefined;
 
+  const invalidRange = min && max ? min > max : false;
+  const outOfBounds = value
+    ? (min ? value < min : false) || (max ? value > max : false)
+    : false;
+
   const openPicker = () => {
-    inputRef.current?.showPicker?.();
+    const el = inputRef.current;
+    if (!el) return;
+    if (typeof el.showPicker === "function") el.showPicker();
+    else el.focus();
   };
 
   const pickerClass = useMemo(
@@ -63,8 +67,21 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
         disabled && classMap.disabled,
         className
       ),
-    [classMap, theme, state, size, outline, disabled, className]
+    [
+      classMap,
+      theme,
+      state,
+      size,
+      shadow,
+      rounding,
+      outline,
+      disabled,
+      className,
+    ]
   );
+
+  const describedBy =
+    [descriptionId, errorId].filter(Boolean).join(" ") || undefined;
 
   return (
     <div className={pickerClass} data-testid={testId}>
@@ -87,28 +104,26 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
           ref={inputRef}
           required={required}
           disabled={disabled}
-          aria-required={required}
-          aria-disabled={disabled}
-          aria-invalid={!!error}
-          aria-describedby={
-            [descriptionId, errorId].filter(Boolean).join(" ") || undefined
+          aria-invalid={
+            Boolean(error) || invalidRange || outOfBounds || undefined
           }
-          aria-errormessage={errorId || undefined}
+          aria-describedby={describedBy}
+          aria-errormessage={error ? errorId : undefined}
           aria-label={label || "Date and time"}
           data-testid={`${testId}-input`}
+          autoComplete="off"
         />
-        <span
+
+        <button
+          type="button"
           className={classMap.icon}
           onClick={openPicker}
-          onKeyDown={(e) =>
-            (e.key === "Enter" || e.key === " ") && openPicker()
-          }
-          aria-hidden="true"
-          role="button"
-          tabIndex={0}
+          disabled={disabled}
+          aria-label="Open date and time picker"
+          data-testid={`${testId}-button`}
         >
           <CalendarIcon />
-        </span>
+        </button>
       </div>
 
       {description && !error && (
@@ -125,5 +140,5 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
     </div>
   );
 };
-
+DateTimePickerBase.displayName = "DateTimePickerBase";
 export default DateTimePickerBase;

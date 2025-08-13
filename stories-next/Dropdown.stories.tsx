@@ -198,6 +198,7 @@ export const MenuRoundingVariants = () => (
         <Dropdown
           key={rounding}
           menuRounding={rounding}
+          toggleRounding={rounding}
           triggerIcon={FaEllipsisV}
           items={[{ label: `Item (${rounding})`, onClick: () => {} }]}
         />
@@ -216,6 +217,7 @@ export const MenuShadowVariants = () => (
         <Dropdown
           key={shadow}
           menuShadow={shadow}
+          toggleShadow={shadow}
           triggerIcon={FaEllipsisV}
           items={[{ label: `Item (${shadow})`, onClick: () => {} }]}
         />

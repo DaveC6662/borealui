@@ -55,6 +55,10 @@
 .icon {
   font-size: theme.$font-size-base;
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 0px;
+  margin: 0px;
   z-index: 2;
   pointer-events: auto;
   transition: color 0.2s ease-in-out;

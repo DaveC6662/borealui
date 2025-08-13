@@ -89,5 +89,5 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
     </fieldset>
   );
 };
-
+ColorPickerBase.displayName = "ColorPickerBase";
 export default ColorPickerBase;

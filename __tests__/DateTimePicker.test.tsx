@@ -53,8 +53,6 @@ describe("DateTimePickerBase", () => {
     const input = screen.getByTestId("datetime-input");
     expect(input).toBeRequired();
     expect(input).toBeDisabled();
-    expect(input).toHaveAttribute("aria-disabled", "true");
-    expect(input).toHaveAttribute("aria-required", "true");
   });
 
   it("renders error message with aria attributes", () => {

@@ -64,6 +64,10 @@
     transition: color 0.2s ease-in-out;
     color: var(--text-color-primary);
     line-height: 1em;
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    margin: 0px;
   }
 
   @each $theme, $values in theme.$themes {

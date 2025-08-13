@@ -38,6 +38,10 @@
 
   .data_table .data_table_header_sortable {
     cursor: pointer;
+
+    &:focus {
+      outline-offset: 0.2px;
+    }
   }
 
   .data_table_sort_icon {
@@ -55,6 +59,10 @@
 
     &:hover:nth-child(even) {
       background-color: var(--background-color);
+    }
+
+    &:focus {
+      outline-offset: 0.2px;
     }
   }
 

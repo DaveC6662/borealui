@@ -37,13 +37,14 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   className,
 }) => {
   const [query, setQuery] = useState("");
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
   const [asyncResults, setAsyncResults] = useState<typeof commands>([]);
   const [isLoading, setIsLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prevFocusRef = useRef<HTMLElement | null>(null);
 
   const filtered = asyncSearch
     ? asyncResults
@@ -52,11 +53,20 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
       );
 
   useEffect(() => {
+    if (filtered.length === 0) {
+      setActiveIndex(-1);
+    } else if (activeIndex < 0 || activeIndex >= filtered.length) {
+      setActiveIndex(0);
+    }
+  }, [filtered, activeIndex]);
+
+  useEffect(() => {
     if (!asyncSearch) return;
 
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
-    if (!query.trim()) {
+    const q = query.trim();
+    if (!q) {
       setAsyncResults([]);
       setIsLoading(false);
       return;
@@ -64,7 +74,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
     setIsLoading(true);
     debounceRef.current = setTimeout(() => {
-      asyncSearch(query)
+      asyncSearch(q)
         .then((results) => {
           setAsyncResults(results);
           setIsLoading(false);
@@ -84,6 +94,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     if (!isOpen) return;
 
     setMounted(true);
+    prevFocusRef.current = (document.activeElement as HTMLElement) ?? null;
+
     const portal =
       document.getElementById("widget-portal") ||
       (() => {
@@ -99,8 +111,9 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     return () => {
       document.body.classList.remove("noScroll");
       setQuery("");
-      setActiveIndex(0);
+      setActiveIndex(-1);
       setMounted(false);
+      prevFocusRef.current?.focus?.();
     };
   }, [isOpen]);
 
@@ -111,14 +124,20 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "ArrowDown") {
+        if (filtered.length === 0) return;
+        e.preventDefault();
         setActiveIndex((prev) => (prev + 1) % filtered.length);
       } else if (e.key === "ArrowUp") {
+        if (filtered.length === 0) return;
+        e.preventDefault();
         setActiveIndex(
           (prev) => (prev - 1 + filtered.length) % filtered.length
         );
-      } else if (e.key === "Enter" && filtered[activeIndex]) {
-        filtered[activeIndex].action();
-        onClose();
+      } else if (e.key === "Enter") {
+        if (activeIndex >= 0 && filtered[activeIndex]) {
+          filtered[activeIndex].action();
+          onClose();
+        }
       } else if (e.key === "Escape") {
         onClose();
       }
@@ -126,7 +145,16 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     [filtered, activeIndex, onClose]
   );
 
+  const handleContainerKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Escape") onClose();
+    },
+    [onClose]
+  );
+
   if (!isOpen || !mounted || !portalElement) return null;
+
+  const listId = `${testId}-list`;
 
   return ReactDOM.createPortal(
     <div
@@ -144,6 +172,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           className
         )}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={handleContainerKeyDown}
         role="dialog"
         aria-modal="true"
         aria-label="Command palette"
@@ -165,28 +194,35 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           className={classMap.input}
           data-testid={`${testId}-input`}
           role="combobox"
+          aria-autocomplete="list"
           aria-haspopup="listbox"
-          aria-expanded="true"
-          aria-controls="command-list"
+          aria-expanded={filtered.length > 0}
+          aria-controls={listId}
           aria-activedescendant={
-            filtered.length > 0 ? `cmd-${activeIndex}` : undefined
+            activeIndex >= 0 ? `cmd-${activeIndex}` : undefined
           }
         />
 
         <ul
-          id="command-list"
+          id={listId}
           className={classMap.list}
           role="listbox"
           aria-label="Command suggestions"
+          aria-busy={isLoading || undefined}
         >
           {isLoading ? (
-            <div className={combineClassNames(classMap.item, classMap.empty)}>
-              Searching...
-            </div>
+            <li
+              className={combineClassNames(classMap.item, classMap.empty)}
+              role="option"
+              aria-disabled="true"
+              aria-selected="false"
+            >
+              Searching…
+            </li>
           ) : filtered.length > 0 ? (
             filtered.map((cmd, index) => (
               <li
-                key={cmd.label}
+                key={`${cmd.label}-${index}`}
                 id={`cmd-${index}`}
                 role="option"
                 aria-selected={index === activeIndex}
@@ -224,5 +260,5 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     portalElement
   );
 };
-
+CommandPaletteBase.displayName = "CommandPaletteBase";
 export default CommandPaletteBase;

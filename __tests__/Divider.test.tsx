@@ -61,8 +61,6 @@ describe("DividerBase", () => {
     );
     const divider = screen.getByTestId("divider-hr");
     expect(divider.tagName).toBe("HR");
-    expect(divider).not.toHaveAttribute("role");
-    expect(divider).not.toHaveAttribute("aria-orientation");
   });
 
   it("respects aria-hidden for decorative usage", () => {

@@ -2,6 +2,7 @@ import React, {
   useState,
   useRef,
   useEffect,
+  useCallback,
   KeyboardEvent,
   useId,
   JSX,
@@ -45,6 +46,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
   const menuId = useId();
 
   const Icon = triggerIcon ?? MenuIcon;
@@ -53,28 +55,26 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   const closeDropdown = () => {
     setOpen(false);
     setActiveIndex(-1);
+    triggerRef.current?.focus?.();
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+  useEffect(() => {
     if (!open) return;
-
-    if (e.key === "Escape") {
-      e.preventDefault();
-      closeDropdown();
-    } else if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setActiveIndex((prev) => (prev + 1) % items.length);
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
-    } else if (e.key === "Enter" || e.key === " ") {
-      const item = items[activeIndex];
-      if (item) {
-        item.onClick?.();
-        closeDropdown();
-      }
+    const menuItems =
+      menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]');
+    if (menuItems && menuItems.length > 0) {
+      setActiveIndex(0);
+    } else {
+      setActiveIndex(-1);
     }
-  };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open || activeIndex < 0) return;
+    const menuItems =
+      menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]');
+    menuItems?.[activeIndex]?.focus();
+  }, [activeIndex, open]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -85,18 +85,16 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         closeDropdown();
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
 
     if (open && menuRef.current) {
       const rect = menuRef.current.getBoundingClientRect();
-      const isOverflowingRight = rect.right > window.innerWidth;
-      const isOverflowingLeft = rect.left < 0;
-
-      if (isOverflowingRight) {
+      const right = rect.right > window.innerWidth;
+      const left = rect.left < 0;
+      if (right) {
         menuRef.current.setAttribute("data-overflow-right", "true");
         menuRef.current.removeAttribute("data-overflow-left");
-      } else if (isOverflowingLeft) {
+      } else if (left) {
         menuRef.current.setAttribute("data-overflow-left", "true");
         menuRef.current.removeAttribute("data-overflow-right");
       } else {
@@ -106,15 +104,49 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     }
 
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [open, menuRef]);
+  }, [open]);
 
-  useEffect(() => {
-    const menuItems =
-      menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]');
-    if (open && menuItems && activeIndex >= 0) {
-      menuItems[activeIndex]?.focus();
-    }
-  }, [activeIndex, open]);
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLDivElement>) => {
+      if (!open) return;
+
+      const len = items.length;
+      const hasItems = len > 0;
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeDropdown();
+        return;
+      }
+      if (e.key === "Tab") {
+        closeDropdown();
+        return;
+      }
+
+      if (!hasItems) return;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((prev) => (prev < 0 ? 0 : (prev + 1) % len));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((prev) => (prev < 0 ? len - 1 : (prev - 1 + len) % len));
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        setActiveIndex(0);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        setActiveIndex(len - 1);
+      } else if ((e.key === "Enter" || e.key === " ") && activeIndex >= 0) {
+        const item = items[activeIndex];
+        if (item) {
+          item.onClick?.();
+          closeDropdown();
+        }
+      }
+    },
+    [open, items, activeIndex]
+  );
 
   const menuClassNames = useMemo(
     () =>
@@ -136,6 +168,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       data-testid={testId}
     >
       <IconButton
+        ref={triggerRef as any}
         icon={Icon}
         ariaLabel={ariaLabel}
         aria-haspopup="menu"
@@ -156,6 +189,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           ref={menuRef}
           role="menu"
           aria-label={ariaLabel}
+          aria-orientation="vertical"
           className={menuClassNames}
           data-testid={`${testId}-menu`}
         >
@@ -167,10 +201,16 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
                 className={classMap.item}
                 role="menuitem"
                 tabIndex={-1}
+                onClick={() => {
+                  item.onClick?.();
+                  closeDropdown();
+                }}
                 data-testid={item["data-testid"]}
               >
                 {item.icon && (
-                  <span className={classMap.icon}>{item.icon}</span>
+                  <span className={classMap.icon} aria-hidden="true">
+                    {item.icon}
+                  </span>
                 )}
                 {item.label}
               </a>
@@ -188,7 +228,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
                 data-testid={item["data-testid"]}
               >
                 {item.icon && (
-                  <span className={classMap.icon}>{item.icon}</span>
+                  <span className={classMap.icon} aria-hidden="true">
+                    {item.icon}
+                  </span>
                 )}
                 {item.label}
               </button>
@@ -199,5 +241,5 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     </div>
   );
 };
-
+BaseDropdown.displayName = "BaseDropdown";
 export default BaseDropdown;

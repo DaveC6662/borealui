@@ -148,7 +148,7 @@
   /* ================================
      FOCUS & INTERACTION
   ================================== */
-  --focus-outline-color: #{theme.$primary-color};
+  --focus-outline-color: var(--text-color-primary);
 
   /* ===========================
      Border Radius (Rounding)

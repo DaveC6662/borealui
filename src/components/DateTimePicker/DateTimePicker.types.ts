@@ -73,3 +73,10 @@ export interface DateTimePickerProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface DateTimePickerBaseProps extends DateTimePickerProps {
+  classMap: Record<string, string>;
+  error?: string;
+  description?: string;
+  id?: string;
+}

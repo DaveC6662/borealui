@@ -33,22 +33,27 @@ function DataTableBase<T extends object>({
 
   const sortedData = useMemo(() => {
     if (serverSort || !sortKey) return data;
-    if (!sortKey) return data;
+
     return [...data].sort((a, b) => {
       const valA = a[sortKey];
       const valB = b[sortKey];
       if (valA === valB) return 0;
       if (valA == null) return 1;
       if (valB == null) return -1;
-      const isNumA = !isNaN(Number(valA));
-      const isNumB = !isNaN(Number(valB));
-      if (isNumA && isNumB)
-        return sortOrder === "asc" ? +valA - +valB : +valB - +valA;
-      return sortOrder === "asc"
-        ? String(valA).localeCompare(String(valB))
-        : String(valB).localeCompare(String(valA));
+
+      const numA = Number(valA);
+      const numB = Number(valB);
+      const bothNumeric = !Number.isNaN(numA) && !Number.isNaN(numB);
+
+      if (bothNumeric) {
+        return sortOrder === "asc" ? numA - numB : numB - numA;
+      }
+      const cmp = String(valA).localeCompare(String(valB), undefined, {
+        numeric: true,
+      });
+      return sortOrder === "asc" ? cmp : -cmp;
     });
-  }, [data, sortKey, sortOrder]);
+  }, [data, sortKey, sortOrder, serverSort]);
 
   const handleSort = (key: keyof T) => {
     const newOrder = key === sortKey && sortOrder === "asc" ? "desc" : "asc";
@@ -63,6 +68,17 @@ function DataTableBase<T extends object>({
       handleSort(key);
     }
   };
+
+  const handleRowKeyDown =
+    (row: T) => (e: KeyboardEvent<HTMLTableRowElement>) => {
+      if (!onRowClick) return;
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        onRowClick(row);
+      }
+    };
+
+  const captionId = `${testId}-caption`;
 
   return (
     <div
@@ -83,18 +99,20 @@ function DataTableBase<T extends object>({
           outline && classMap.outline
         )}
         aria-label={ariaLabel}
-        role="table"
+        aria-describedby={captionId}
       >
-        <caption className="sr_only">Sortable data table</caption>
+        <caption id={captionId} className={classMap.srOnly ?? "sr_only"}>
+          Sortable data table
+        </caption>
+
         <thead>
-          <tr role="row">
+          <tr>
             {columns.map((col) => {
               const isActive = sortKey === col.key;
               return (
                 <th
                   key={String(col.key)}
                   scope="col"
-                  role="columnheader"
                   tabIndex={col.sortable ? 0 : undefined}
                   aria-sort={
                     col.sortable
@@ -125,42 +143,54 @@ function DataTableBase<T extends object>({
             })}
           </tr>
         </thead>
+
         <tbody>
-          {sortedData.map((row, idx) => {
-            const key = rowKey ? rowKey(row) : idx;
-            return (
-              <tr
-                key={key}
-                role="row"
-                className={combineClassNames(
-                  onRowClick && classMap.clickable,
-                  striped && idx % 2 === 1 && classMap.striped
-                )}
-                onClick={() => onRowClick?.(row)}
-                tabIndex={onRowClick ? 0 : undefined}
-                aria-label={onRowClick ? "Selectable row" : undefined}
+          {sortedData.length === 0 ? (
+            <tr>
+              <td
+                className={classMap.emptyCell}
+                colSpan={columns.length}
+                // announce emptiness politely
+                aria-live="polite"
               >
-                {columns.map((col) => (
-                  <td
-                    key={String(col.key)}
-                    role="cell"
-                    data-label={col.label}
-                    className={classMap.cell}
-                  >
-                    {col.render
-                      ? col.render(row[col.key], row)
-                      : typeof row[col.key] === "object"
-                        ? JSON.stringify(row[col.key])
-                        : String(row[col.key] ?? "")}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
+                No data available
+              </td>
+            </tr>
+          ) : (
+            sortedData.map((row, idx) => {
+              const key = rowKey ? rowKey(row) : idx;
+              return (
+                <tr
+                  key={key}
+                  className={combineClassNames(
+                    onRowClick && classMap.clickable,
+                    striped && idx % 2 === 1 && classMap.striped
+                  )}
+                  onClick={() => onRowClick?.(row)}
+                  onKeyDown={handleRowKeyDown(row)}
+                  tabIndex={onRowClick ? 0 : undefined}
+                >
+                  {columns.map((col) => (
+                    <td
+                      key={String(col.key)}
+                      data-label={col.label}
+                      className={classMap.cell}
+                    >
+                      {col.render
+                        ? col.render(row[col.key], row)
+                        : typeof row[col.key] === "object"
+                          ? JSON.stringify(row[col.key])
+                          : String(row[col.key] ?? "")}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })
+          )}
         </tbody>
       </table>
     </div>
   );
 }
-
+DataTableBase.displayName = "DataTableBase";
 export default DataTableBase;
