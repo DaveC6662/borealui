@@ -38,7 +38,7 @@
     }
 
     &_clear.sidebar_#{$theme} .sidebar_active {
-      border: 2px solid map.get($values, border);
+      background-color: transparent;
     }
   }
 
@@ -133,6 +133,10 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.25s ease;
+}
+
+.sidebar_submenu_open {
+  max-height: max-content;
 }
 
 .sidebar_child_list {

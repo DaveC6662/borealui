@@ -1,5 +1,4 @@
-import React, { useState, useMemo, useRef } from "react";
-import { SidebarProps } from "./Sidebar.types";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import {
   getDefaultRounding,
@@ -8,11 +7,7 @@ import {
 } from "@/config/boreal-style-config";
 import { capitalize } from "@/utils/capitalize";
 import { ChevronDownIcon } from "@/Icons";
-
-export interface BaseSidebarProps extends SidebarProps {
-  classMap: Record<string, string>;
-  LinkComponent?: React.ElementType;
-}
+import { BaseSidebarProps } from "./Sidebar.types";
 
 const SidebarBase: React.FC<BaseSidebarProps> = ({
   links,
@@ -34,16 +29,50 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
 }) => {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
 
-  const toggleItem = (key: string) => {
-    setOpenItems((prev) => ({ ...prev, [key]: !prev[key] }));
+  const idsRef = useRef<Record<string, string>>({});
+  const seqRef = useRef(0);
+  const idFor = (label: string) => {
+    if (!idsRef.current[label]) {
+      const slug = label
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9_-]/g, "");
+      idsRef.current[label] = `${testId}-section-${slug}-${seqRef.current++}`;
+    }
+    return idsRef.current[label];
   };
 
-  const submenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  useEffect(() => {
+    const next: Record<string, boolean> = {};
 
+    const walk = (nodes: typeof links) => {
+      for (const n of nodes) {
+        if (n.children?.length) {
+          const anyChildActive =
+            n.children.some((c) => c.href && c.href === currentPath) ||
+            (n.children && walk(n.children));
+          if (anyChildActive) next[n.label] = true;
+        }
+      }
+      return nodes.some(
+        (n) =>
+          (n.href && n.href === currentPath) ||
+          (!!n.children?.length &&
+            n.children!.some((c) => c.href === currentPath))
+      );
+    };
+
+    walk(links);
+    setOpenItems((prev) => ({ ...prev, ...next }));
+  }, [currentPath, links]);
+
+  const toggleItem = (key: string) =>
+    setOpenItems((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  const submenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const setSubmenuRef = (key: string, el: HTMLDivElement | null) => {
     submenuRefs.current[key] = el;
   };
-
   const getSubmenuHeight = (key: string) => {
     const el = submenuRefs.current[key];
     return el ? `${el.scrollHeight}px` : "0px";
@@ -58,60 +87,70 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
         classMap[state],
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
-        outline ? classMap.outline : ""
+        outline && classMap.outline
       ),
-    [className, theme, state, outline, rounding, shadow]
+    [classMap, className, theme, state, outline, rounding, shadow]
   );
 
   const renderLinks = (items: typeof links, isChild = false) => (
     <ul
       className={combineClassNames(
         classMap.list,
-        isChild ? classMap.childList : ""
+        isChild && classMap.childList
       )}
       data-testid={`${testId}-list`}
     >
-      {items.map(({ label, href, children, icon }) => {
-        const isActive = href && currentPath === href;
-        const isOpen = openItems[label] || false;
+      {items.map(({ label, href, children, icon }, idx) => {
+        const key = `${label}-${idx}`;
+        const isActive = !!href && currentPath === href;
+        const isOpen = !!openItems[label];
+        const sectionId = idFor(label);
+        const buttonId = `${sectionId}-button`;
+        const panelId = `${sectionId}-panel`;
 
         return (
           <li
-            key={label}
+            key={key}
             className={classMap.item}
-            data-testid={`${testId}-listItems`}
+            data-testid={`${testId}-listItem`}
           >
             {children && children.length > 0 ? (
               <>
                 <button
                   type="button"
+                  id={buttonId}
                   className={combineClassNames(
                     classMap.link,
-                    isOpen ? classMap.active : ""
+                    isOpen && classMap.active
                   )}
                   onClick={() => toggleItem(label)}
                   aria-expanded={isOpen}
-                  data-testid={`${testId}-exapndItemButton`}
+                  aria-controls={panelId}
+                  data-testid={`${testId}-expandItemButton`}
                 >
                   {icon && <span className={classMap.icon}>{icon}</span>}
-                  <span data-testid={`${testId}-exapndItemLabel`}>{label}</span>
+                  <span data-testid={`${testId}-expandItemLabel`}>{label}</span>
                   <ChevronDownIcon
                     className={combineClassNames(
                       classMap.chevron,
-                      isOpen ? classMap.chevronOpen : ""
+                      isOpen && classMap.chevronOpen
                     )}
-                    data-testid={`${testId}-exapndIcon`}
+                    aria-hidden="true"
+                    focusable={false}
+                    data-testid={`${testId}-expandIcon`}
                   />
                 </button>
+
                 <div
+                  id={panelId}
                   ref={(el) => setSubmenuRef(label, el)}
                   className={combineClassNames(
                     classMap.submenu,
-                    isOpen ? classMap.submenuOpen : ""
+                    isOpen && classMap.submenuOpen
                   )}
-                  style={{
-                    maxHeight: isOpen ? getSubmenuHeight(label) : "0px",
-                  }}
+                  role="group"
+                  aria-labelledby={buttonId}
+                  hidden={!isOpen}
                   data-testid={`${testId}-subMenu`}
                 >
                   {renderLinks(children, true)}
@@ -122,8 +161,8 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                 href={href}
                 className={combineClassNames(
                   classMap.link,
-                  isChild ? classMap.childLink : "",
-                  isActive ? classMap.active : ""
+                  isChild && classMap.childLink,
+                  isActive && classMap.active
                 )}
                 aria-current={isActive ? "page" : undefined}
                 data-testid={`${testId}-sidebarLink`}
@@ -135,7 +174,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
               <span
                 className={combineClassNames(
                   classMap.link,
-                  isChild ? classMap.childLink : ""
+                  isChild && classMap.childLink
                 )}
                 data-testid={`${testId}-sidebarLabel`}
               >
@@ -153,15 +192,16 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
     <nav
       className={containerClasses}
       aria-label={ariaLabel}
-      {...rest}
       data-testid={testId}
+      {...rest}
     >
-      <nav className={classMap.nav}>{renderLinks(links)}</nav>
+      <div className={classMap.nav}>{renderLinks(links)}</div>
+
       {showFooter && (
         <footer className={classMap.footer} data-testid={`${testId}-footer`}>
-          {footerLinks?.map(({ label, href }) => (
+          {footerLinks?.map(({ label, href }, i) => (
             <LinkComponent
-              key={label}
+              key={`${label}-${i}`}
               href={href}
               className={classMap.footerLink}
               data-testid={`${testId}-footerLink`}
@@ -169,7 +209,6 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
               {label}
             </LinkComponent>
           ))}
-
           {footerVersion && (
             <span
               className={classMap.footerVersion}
@@ -185,5 +224,4 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
 };
 
 SidebarBase.displayName = "SidebarBase";
-
 export default SidebarBase;

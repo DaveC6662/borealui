@@ -1,16 +1,11 @@
+import React, { useEffect, useState, useMemo } from "react";
+import { capitalize } from "../../utils/capitalize";
+import { combineClassNames } from "../../utils/classNames";
 import {
   getDefaultRounding,
   getDefaultShadow,
 } from "../../config/boreal-style-config";
-import { capitalize } from "../../utils/capitalize";
-import { combineClassNames } from "../../utils/classNames";
-import React, { useEffect, useState } from "react";
-import { ScrollToTopProps } from "./ScrollToTop.types";
-
-export interface ScrollToTopBaseProps extends ScrollToTopProps {
-  classMap: Record<string, string>;
-  IconComponent: React.ElementType;
-}
+import { ScrollToTopBaseProps } from "./ScrollToTop.types";
 
 const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   classMap,
@@ -18,55 +13,78 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   shadow = getDefaultShadow(),
   IconComponent,
   offset = 300,
-  className,
+  className = "",
   "data-testid": testId = "scroll",
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
-  const toggleVisibility = () => {
-    setIsVisible(window.pageYOffset > offset);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   useEffect(() => {
-    window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
+    if (typeof window === "undefined") return;
+
+    let ticking = false;
+
+    const update = () => {
+      setIsVisible(window.scrollY > offset);
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    update();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [offset]);
 
-  const iconClass = combineClassNames(
-    classMap.icon,
-    shadow && classMap[`shadow${capitalize(shadow)}`],
-    rounding && classMap[`round${capitalize(rounding)}`]
+  const scrollToTop = () => {
+    if (typeof window === "undefined") return;
+    const prefersReduced = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    window.scrollTo({ top: 0, behavior: prefersReduced ? "auto" : "smooth" });
+  };
+
+  const buttonClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.button,
+        shadow && classMap[`shadow${capitalize(shadow)}`],
+        rounding && classMap[`round${capitalize(rounding)}`]
+      ),
+    [classMap, shadow, rounding]
   );
 
-  return (
-    <div className={combineClassNames(classMap.wrapper, className)}>
-      <div
-        aria-live="polite"
-        className="sr_only"
-        role="status"
-        data-testid={`${testId}-announcement`}
-      >
-        {isVisible ? "Scroll to top button is now visible" : ""}
-      </div>
+  const iconClass = useMemo(() => combineClassNames(classMap.icon), [classMap]);
 
+  return (
+    <div
+      className={combineClassNames(classMap.wrapper, className)}
+      data-testid={testId}
+    >
       {isVisible && (
         <button
-          onClick={scrollToTop}
-          className={classMap.button}
-          title="Scroll to top"
           type="button"
+          onClick={scrollToTop}
+          className={buttonClass}
           aria-label="Scroll to top"
+          title="Scroll to top"
           data-testid={`${testId}-button`}
         >
-          <IconComponent className={iconClass} />
+          <IconComponent
+            className={iconClass}
+            aria-hidden="true"
+            focusable={false}
+          />
         </button>
       )}
     </div>
   );
 };
 
+ScrollToTopBase.displayName = "ScrollToTopBase";
 export default ScrollToTopBase;

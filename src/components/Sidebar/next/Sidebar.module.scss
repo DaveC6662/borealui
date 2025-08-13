@@ -39,7 +39,7 @@
   }
 
   .clear.#{$theme} .active {
-    background-color: map.get($values, border);
+    background-color: transparent;
   }
 }
 
@@ -113,6 +113,10 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.25s ease;
+}
+
+.submenuOpen {
+  max-height: max-content;
 }
 
 .childList {

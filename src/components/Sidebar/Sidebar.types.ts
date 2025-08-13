@@ -113,3 +113,8 @@ export interface SidebarProps {
    */
   ariaLabel?: string;
 }
+
+export interface BaseSidebarProps extends SidebarProps {
+  classMap: Record<string, string>;
+  LinkComponent?: React.ElementType;
+}

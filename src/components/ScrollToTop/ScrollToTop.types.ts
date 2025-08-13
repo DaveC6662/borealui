@@ -31,3 +31,8 @@ export interface ScrollToTopProps {
    */
   "data-testid"?: string;
 }
+
+export interface ScrollToTopBaseProps extends ScrollToTopProps {
+  classMap: Record<string, string>;
+  IconComponent: React.ElementType;
+}

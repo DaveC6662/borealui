@@ -22,6 +22,8 @@
     background-color: transparent;
     box-shadow: none;
     border: none;
+    padding: 0px;
+    margin: 0px;
   }
 
   .icon {
@@ -35,13 +37,17 @@
 
   @each $key, $value in theme.$rounding {
     .round#{$key} {
-      border-radius: $value;
+      .icon {
+        border-radius: $value;
+      }
     }
   }
 
   @each $key, $value in theme.$shadow {
     .shadow#{$key} {
-      box-shadow: $value;
+      .icon {
+        box-shadow: $value;
+      }
     }
   }
 

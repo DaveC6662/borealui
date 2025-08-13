@@ -6,7 +6,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { SelectProps } from "./Select.types";
 import { ChevronDownIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -15,10 +14,7 @@ import {
   getDefaultShadow,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-interface BaseSelectProps extends SelectProps {
-  classMap: Record<string, string>;
-}
+import { BaseSelectProps } from "./Select.types";
 
 const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
   (
@@ -39,6 +35,8 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       classMap,
       asyncOptions,
       pollInterval = 0,
+      required,
+      name,
       "data-testid": testId = "select",
     },
     ref
@@ -48,6 +46,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     const descId = ariaDescription ? `${id}-desc` : undefined;
 
     const [internalOptions, setInternalOptions] = useState(options);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
       if (!asyncOptions) return;
@@ -56,10 +55,13 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
       const load = async () => {
         try {
+          setLoading(true);
           const fetched = await asyncOptions("");
           if (isMounted) setInternalOptions(fetched);
         } catch (err) {
           console.error("Failed to load options:", err);
+        } finally {
+          if (isMounted) setLoading(false);
         }
       };
 
@@ -91,8 +93,8 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           className,
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
-          outline ? classMap.outline : "",
-          disabled ? classMap.disabled : ""
+          outline && classMap.outline,
+          disabled && classMap.disabled
         ),
       [classMap, theme, state, className, shadow, rounding, outline, disabled]
     );
@@ -105,29 +107,45 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           classMap[state],
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
-          outline ? classMap.outline : ""
+          outline && classMap.outline
         ),
-      [classMap, theme, state, outline]
+      [classMap, theme, state, shadow, rounding, outline]
     );
+
+    const iconClasses = useMemo(
+      () =>
+        combineClassNames(
+          classMap.icon,
+          classMap[theme],
+          disabled && classMap.disabled
+        ),
+      [classMap, theme, disabled]
+    );
+
+    const opts = asyncOptions ? internalOptions : options;
 
     return (
       <div className={wrapperClasses} data-testid={testId}>
         <select
           ref={ref}
           id={selectId}
-          value={value}
+          name={name}
+          value={value ?? ""}
           onChange={handleChange}
           className={selectClasses}
           aria-label={ariaLabel || placeholder}
           aria-describedby={descId}
-          aria-disabled={disabled}
+          aria-disabled={disabled || undefined}
+          aria-invalid={state === "error" || undefined}
           disabled={disabled}
+          required={required}
           data-testid={`${testId}-input`}
         >
           <option value="" disabled hidden>
             {placeholder}
           </option>
-          {(asyncOptions ? internalOptions : options).map((option) => (
+
+          {opts.map((option) => (
             <option
               key={option.value}
               value={option.value}
@@ -139,13 +157,11 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         </select>
 
         <div
-          className={`${classMap.icon} ${classMap[theme]} ${
-            disabled && classMap.disabled ? classMap.disabled : ""
-          }`}
+          className={iconClasses}
           aria-hidden="true"
           data-testid={`${testId}-icon`}
         >
-          <ChevronDownIcon />
+          <ChevronDownIcon aria-hidden="true" focusable={false} />
         </div>
 
         {ariaDescription && (
@@ -155,6 +171,12 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
             data-testid={`${testId}-description`}
           >
             {ariaDescription}
+          </span>
+        )}
+
+        {loading && (
+          <span className={classMap.loading} aria-live="polite">
+            Loading options…
           </span>
         )}
       </div>

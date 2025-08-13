@@ -75,6 +75,9 @@ export interface SelectProps {
    */
   shadow?: ShadowType;
 
+  /** Whether the select element is required. */
+  required?: boolean;
+
   /**
    * Accessible label for the select element.
    */
@@ -91,6 +94,11 @@ export interface SelectProps {
   disabled?: boolean;
 
   /**
+   * Name for the select element.
+   */
+  name?: string;
+
+  /**
    * Additional class name(s) for custom styling.
    */
   className?: string;
@@ -99,4 +107,8 @@ export interface SelectProps {
    * Optional test ID for testing frameworks.
    */
   "data-testid"?: string;
+}
+
+export interface BaseSelectProps extends SelectProps {
+  classMap: Record<string, string>;
 }
