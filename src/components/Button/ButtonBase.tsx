@@ -1,5 +1,5 @@
 import React, { forwardRef, useMemo } from "react";
-import { ButtonProps } from "./Button.types";
+import { ButtonBaseProps, ButtonProps } from "./Button.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -8,11 +8,6 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface ButtonBaseProps extends ButtonProps {
-  classMap: Record<string, string>;
-  LinkComponent?: React.ElementType;
-}
 
 const ButtonBase = forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
@@ -44,13 +39,12 @@ const ButtonBase = forwardRef<
     },
     ref
   ) => {
-    const needsAriaLabel = !children || typeof children !== "string";
-    const computedAriaLabel = needsAriaLabel ? ariaLabel : undefined;
-    if (
-      process.env.NODE_ENV === "development" &&
-      needsAriaLabel &&
-      !ariaLabel
-    ) {
+    const iconOnly =
+      !children ||
+      (typeof children !== "string" && React.Children.count(children) === 0);
+    const computedAriaLabel = iconOnly ? ariaLabel : undefined;
+
+    if (process.env.NODE_ENV === "development" && iconOnly && !ariaLabel) {
       console.warn("ButtonBase: icon-only buttons must provide `ariaLabel`.");
     }
 
@@ -78,16 +72,9 @@ const ButtonBase = forwardRef<
         fullWidth,
         disabled,
         className,
+        classMap,
       ]
     );
-
-    const sharedProps = {
-      "aria-busy": loading || undefined,
-      "aria-disabled": disabled || undefined,
-      "data-testid": testId,
-      onClick: disabled ? undefined : onClick,
-      ...(computedAriaLabel ? { "aria-label": computedAriaLabel } : {}),
-    };
 
     const content = (
       <>
@@ -102,8 +89,8 @@ const ButtonBase = forwardRef<
         )}
         <span
           className={classMap.buttonLabel}
-          aria-live="polite"
-          aria-atomic="true"
+          aria-live={loading ? "polite" : undefined}
+          aria-atomic={loading || undefined}
           data-testid={testId ? `${testId}-loading` : undefined}
         >
           {loading ? (
@@ -114,7 +101,7 @@ const ButtonBase = forwardRef<
           ) : (
             <>
               {children}
-              {href && isExternal && (
+              {href && (isExternal ?? /^https?:\/\//i.test(href)) && (
                 <span className="sr_only"> (opens in a new tab)</span>
               )}
             </>
@@ -123,40 +110,36 @@ const ButtonBase = forwardRef<
       </>
     );
 
-    if (href && isExternal) {
-      return (
+    if (href) {
+      const external = (isExternal ?? /^https?:\/\//i.test(href)) && !disabled;
+
+      const linkCommon = {
+        ref: ref as React.Ref<HTMLAnchorElement>,
+        className: combineClassNames(combinedClassName, classMap.link),
+        onClick: disabled
+          ? (e: React.MouseEvent) => e.preventDefault()
+          : onClick,
+        "aria-disabled": disabled || undefined,
+        tabIndex: disabled ? -1 : undefined,
+        ...(computedAriaLabel ? { "aria-label": computedAriaLabel } : {}),
+        "data-testid": testId,
+      } as const;
+
+      return LinkComponent === "a" ? (
         <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={combineClassNames(combinedClassName, classMap.link)}
-          ref={ref as React.Ref<HTMLAnchorElement>}
-          aria-disabled={disabled || undefined}
-          tabIndex={disabled ? -1 : undefined}
-          onClick={disabled ? (e) => e.preventDefault() : onClick}
-          {...rest}
+          {...linkCommon}
+          href={disabled ? undefined : href}
+          target={external ? "_blank" : undefined}
+          rel={external ? "noopener noreferrer" : undefined}
+          {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
         >
           {content}
         </a>
-      );
-    }
-
-    if (href && !isExternal) {
-      return (
+      ) : (
         <LinkComponent
+          {...(linkCommon as any)}
           href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={combineClassNames(combinedClassName, classMap.link)}
-          ref={ref as React.Ref<HTMLAnchorElement>}
-          aria-disabled={disabled || undefined}
-          tabIndex={disabled ? -1 : undefined}
-          onClick={
-            disabled
-              ? (e: { preventDefault: () => any }) => e.preventDefault()
-              : onClick
-          }
-          {...rest}
+          {...(rest as Record<string, unknown>)}
         >
           {content}
         </LinkComponent>
@@ -168,9 +151,12 @@ const ButtonBase = forwardRef<
         ref={ref as React.Ref<HTMLButtonElement>}
         type={type}
         className={combinedClassName}
-        disabled={disabled}
-        {...sharedProps}
-        {...rest}
+        disabled={disabled || loading}
+        aria-busy={loading || undefined}
+        {...(computedAriaLabel ? { "aria-label": computedAriaLabel } : {})}
+        data-testid={testId}
+        onClick={disabled ? undefined : onClick}
+        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
       >
         {content}
       </button>

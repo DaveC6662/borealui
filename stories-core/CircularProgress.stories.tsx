@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { CircularProgress } from "../src/index.core";
+import CircularProgress from "../src/components/CircularProgress/core/CircularProgress";
 import type { CircularProgressProps } from "../src/components/CircularProgress/CircularProgress.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
@@ -19,6 +19,22 @@ const stateOptions = ["success", "error", "warning"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<CircularProgressProps> = {
+  title: "CircularProgress",
+  component: CircularProgress,
+  tags: ["autodocs"],
+  args: {
+    rating: 75,
+    min: 0,
+    max: 100,
+    label: "Progress",
+    shadow: "none",
+    showRaw: false,
+    size: "medium",
+    theme: "primary",
+    state: "",
+    className: "",
+    "data-testid": "circular-progress",
+  },
   argTypes: {
     rating: {
       description:

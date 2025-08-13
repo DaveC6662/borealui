@@ -146,9 +146,6 @@ export interface CardProps {
   /** Whether to render action buttons as icon buttons. */
   useIconButtons?: boolean;
 
-  /** Whether to apply a blur effect on the image placeholder. */
-  blur?: boolean;
-
   /**
    * Layout orientation of the card
    * ('horizontal' | 'vertical').
@@ -172,4 +169,20 @@ export interface CardProps {
 
   /** Optional ARIA label for the card. */
   "aria-label"?: string;
+}
+
+export type ExtendedActionButton = ActionButton & {
+  buttonComponent: React.ElementType;
+  iconButtonComponent: React.ElementType;
+};
+
+export interface CardBaseProps extends CardProps {
+  classMap: Record<string, string>;
+  SkeletonComponent: React.FC<{
+    width: string;
+    height: string;
+    ["data-testid"]?: string;
+  }>;
+  ImageComponent?: React.ElementType;
+  actionButtons: ExtendedActionButton[];
 }

@@ -133,11 +133,6 @@ const meta: Meta<CardProps> = {
       options: layoutOptions,
       table: { category: "Layout" },
     },
-    blur: {
-      description: "If true, applies a blur background effect to the card.",
-      control: "boolean",
-      table: { category: "Appearance" },
-    },
     loading: {
       description: "If true, displays a loading skeleton instead of content.",
       control: "boolean",
@@ -446,14 +441,6 @@ export const WithCustomSectionClassNames: Story = {
     bodyClassName: "storybook-card-body",
     footerClassName: "storybook-card-footer",
     renderFooter: () => <div>Footer with custom class</div>,
-  },
-};
-
-export const WithBlur: Story = {
-  args: {
-    ...defaultArgs,
-    imageUrl: testImage,
-    blur: true,
   },
 };
 

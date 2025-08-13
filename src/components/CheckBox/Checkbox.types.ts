@@ -69,3 +69,7 @@ export interface CheckBoxProps
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface CheckboxBaseProps extends CheckBoxProps {
+  classMap: Record<string, string>;
+}

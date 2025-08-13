@@ -5,7 +5,7 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
-import React from "react";
+import React, { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
 
 /**
  * Props for the reusable Button component.
@@ -111,3 +111,24 @@ export interface ButtonProps {
    */
   "data-testid"?: string;
 }
+
+type AnchorExtras = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  "href" | "children" | "className" | "onClick" | "target" | "rel"
+>;
+type ButtonExtras = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "children" | "className" | "onClick"
+>;
+
+export type ButtonBaseProps =
+  | (ButtonProps & {
+      classMap: Record<string, string>;
+      LinkComponent?: React.ElementType;
+      href: string;
+    } & AnchorExtras)
+  | (ButtonProps & {
+      classMap: Record<string, string>;
+      LinkComponent?: React.ElementType;
+      href?: undefined;
+    } & ButtonExtras);

@@ -54,3 +54,7 @@ export interface CircularProgressProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export interface CircularProgressBaseProps extends CircularProgressProps {
+  classMap: Record<string, string>;
+}

@@ -1,5 +1,5 @@
 import React, { useId, useMemo } from "react";
-import { ActionButton, CardProps } from "./Card.types";
+import { CardBaseProps } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -8,22 +8,6 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-type ExtendedActionButton = ActionButton & {
-  buttonComponent: React.ElementType;
-  iconButtonComponent: React.ElementType;
-};
-
-export interface CardBaseProps extends CardProps {
-  classMap: Record<string, string>;
-  SkeletonComponent: React.FC<{
-    width: string;
-    height: string;
-    ["data-testid"]?: string;
-  }>;
-  ImageComponent?: React.ElementType;
-  actionButtons: ExtendedActionButton[];
-}
 
 const CardBase: React.FC<CardBaseProps> = ({
   theme = getDefaultTheme(),
@@ -52,7 +36,6 @@ const CardBase: React.FC<CardBaseProps> = ({
   actionButtons = [],
   useIconButtons = false,
   layout = "vertical",
-  blur = false,
   loading = false,
   children,
   "data-testid": testId = "card",
@@ -66,7 +49,6 @@ const CardBase: React.FC<CardBaseProps> = ({
   const headerId = ariaLabelledBy || `${autoId}-header`;
   const descriptionId = `${autoId}-description`;
   const hasImage = !!imageUrl;
-  const showBlur = blur && typeof imageUrl !== "string";
   const derivedAriaLabel = ariaLabel || title || description || "Content card";
 
   const FallbackImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
@@ -85,6 +67,7 @@ const CardBase: React.FC<CardBaseProps> = ({
   const imgAlt = imageAlt || `${title || "Card"} image`;
 
   const ImageRenderer = ImageComponent || FallbackImage;
+  const isNextImage = typeof ImageRenderer !== "string";
 
   const cardClassName = useMemo(
     () =>
@@ -101,7 +84,19 @@ const CardBase: React.FC<CardBaseProps> = ({
         loading && classMap.loading,
         className
       ),
-    [classMap, size, outline, align, className]
+    [
+      classMap,
+      layout,
+      align,
+      theme,
+      state,
+      size,
+      shadow,
+      rounding,
+      outline,
+      loading,
+      className,
+    ]
   );
 
   return (
@@ -111,9 +106,14 @@ const CardBase: React.FC<CardBaseProps> = ({
       role="region"
       aria-labelledby={title ? headerId : undefined}
       aria-label={!title ? derivedAriaLabel : undefined}
+      aria-busy={loading || undefined}
     >
       {loading ? (
-        <SkeletonComponent width="100%" height="250px" data-testid="skeleton" />
+        <SkeletonComponent
+          width="250px"
+          height="250px"
+          data-testid={`${testId}-skeleton`}
+        />
       ) : (
         <div className={classMap.content}>
           {hasImage &&
@@ -123,7 +123,8 @@ const CardBase: React.FC<CardBaseProps> = ({
                   src={imgSrc as any}
                   alt={imgAlt}
                   className={combineClassNames(classMap.image, imageClassName)}
-                  fill
+                  {...(isNextImage ? { fill: true } : {})}
+                  {...(!isNextImage ? { loading: "lazy" as const } : {})}
                 />
               </div>
             ) : (
@@ -133,6 +134,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                 className={combineClassNames(classMap.image, imageClassName)}
                 width={resolvedWidth ?? 640}
                 height={resolvedHeight ?? 360}
+                {...(!isNextImage ? { loading: "lazy" as const } : {})}
               />
             ))}
 
@@ -149,7 +151,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                     <span
                       className={classMap.icon}
                       aria-hidden="true"
-                      data-testid="card-icon"
+                      data-testid={`${testId}-icon`}
                     >
                       {React.createElement(cardIcon)}
                     </span>
@@ -210,7 +212,6 @@ const CardBase: React.FC<CardBaseProps> = ({
                           href={button.href}
                           loading={button.loading}
                           size={button.size || size}
-                          aria-label={button.label}
                         >
                           {button.label}
                         </button.buttonComponent>
@@ -227,5 +228,7 @@ const CardBase: React.FC<CardBaseProps> = ({
     </div>
   );
 };
+
+CardBase.displayName = "CardBase";
 
 export default CardBase;

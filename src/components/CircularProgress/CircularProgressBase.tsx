@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import type { CircularProgressProps } from "./CircularProgress.types";
+import type { CircularProgressBaseProps } from "./CircularProgress.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -7,10 +7,6 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface CircularProgressBaseProps extends CircularProgressProps {
-  classMap: Record<string, string>;
-}
 
 const getColor = (percent: number): string => {
   if (percent <= 0) return "var(--background-color)";
@@ -33,19 +29,19 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   classMap,
   "data-testid": testId = "circular-progress",
 }) => {
+  const range = Math.max(0, max - min);
   const clamped = Math.min(max, Math.max(min, rating));
-  const percent = ((clamped - min) / (max - min)) * 100;
+  const percent = range === 0 ? 0 : ((clamped - min) / range) * 100;
 
   const [displayPercent, setDisplayPercent] = useState(0);
-  const [angle, setAngle] = useState(0);
-
   useEffect(() => {
-    const newAngle = Math.min(360, (percent / 100) * 360);
-    setAngle(newAngle);
     setDisplayPercent(Math.round(percent));
   }, [percent]);
 
-  const progressColor = getColor(percent);
+  const progressColor =
+    state && classMap[state] ? undefined : getColor(percent);
+
+  const angle = Math.min(360, (percent / 100) * 360);
 
   const combinedClassName = useMemo(
     () =>
@@ -57,8 +53,10 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
         shadow && classMap[`shadow${capitalize(shadow)}`],
         className
       ),
-    [shadow, className, classMap]
+    [classMap, theme, size, state, shadow, className]
   );
+
+  const valueText = showRaw ? `${clamped}/${max}` : `${displayPercent}%`;
 
   return (
     <div
@@ -67,28 +65,34 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
       aria-valuemin={min}
       aria-valuemax={max}
       aria-valuenow={clamped}
+      aria-valuetext={valueText}
       aria-label={label}
-      aria-describedby={`${testId}-desc`}
       data-testid={testId}
     >
       <div
-        className={classMap.circle_border}
-        style={{
-          background: `conic-gradient(
-            ${progressColor} 0deg,
-            ${progressColor} ${angle}deg,
-            transparent ${angle}deg 360deg
-          )`,
-        }}
+        className={combineClassNames(
+          classMap.circle_border,
+          state && classMap[`state_${state}`]
+        )}
+        style={
+          progressColor
+            ? {
+                background: `conic-gradient(
+                  ${progressColor} 0deg,
+                  ${progressColor} ${angle}deg,
+                  transparent ${angle}deg 360deg
+                )`,
+              }
+            : undefined
+        }
       >
         <div className={classMap.inner_circle}>
           <span
-            id={`${testId}-desc`}
             className={classMap.rating_text}
             aria-live="polite"
             aria-atomic="true"
           >
-            {showRaw ? `${clamped}/${max}` : `${displayPercent}%`}
+            {valueText}
           </span>
         </div>
       </div>
@@ -96,4 +100,5 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   );
 };
 
+CircularProgressBase.displayName = "CircularProgressBase";
 export default CircularProgressBase;

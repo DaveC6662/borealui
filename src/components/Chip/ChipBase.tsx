@@ -29,6 +29,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   closeIcon: CloseIcon,
   IconButtonComponent,
   classMap,
+  stackIndex,
   "data-testid": testId = "chip",
 }) => {
   const [closing, setClosing] = useState(false);
@@ -45,6 +46,19 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     }
   }, [autoClose, duration, visible, handleClose]);
 
+  useEffect(() => {
+    if (visible) setClosing(false);
+  }, [visible]);
+
+  useEffect(() => {
+    if (!visible) return;
+    const onKey = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape") handleClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [visible, handleClose]);
+
   if (!visible && !closing) return null;
 
   const chipClassName = combineClassNames(
@@ -60,6 +74,8 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     className
   );
 
+  const isAssertive = state === "error" || state === "warning";
+
   const portalEl =
     typeof window !== "undefined"
       ? document.getElementById("widget-portal")
@@ -69,13 +85,18 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     <div
       key={id}
       className={chipClassName}
-      role="status"
-      aria-live="polite"
+      role="alert"
+      aria-live="assertive"
       aria-atomic="true"
       data-testid={testId}
+      style={stackIndex != null ? { zIndex: stackIndex } : undefined}
     >
       {Icon && (
-        <span className={classMap.icon} aria-hidden="true" data-testid="icon">
+        <span
+          className={classMap.icon}
+          aria-hidden="true"
+          data-testid={`${testId}-icon`}
+        >
           <Icon className={classMap.inner_icon} />
         </span>
       )}
@@ -92,15 +113,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
         className={classMap.close}
         onClick={handleClose}
         shadow="none"
-        onKeyDown={(e: KeyboardEvent) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            handleClose();
-          }
-        }}
-        role="button"
-        tabIndex={0}
-        data-testid="chip-close"
+        data-testid={`${testId}-chip-close`}
       />
     </div>
   );
@@ -112,4 +125,5 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   return chipElement;
 };
 
+ChipBase.displayName = "ChipBase";
 export default ChipBase;

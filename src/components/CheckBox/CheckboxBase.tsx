@@ -6,7 +6,7 @@ import {
   useImperativeHandle,
   useMemo,
 } from "react";
-import type { CheckBoxProps } from "./Checkbox.types";
+import type { CheckboxBaseProps } from "./Checkbox.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -15,10 +15,6 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface CheckboxBaseProps extends CheckBoxProps {
-  classMap: Record<string, string>;
-}
 
 const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
   (
@@ -47,7 +43,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
     const labelId = label ? `${checkboxId}-label` : undefined;
 
     const inputRef = useRef<HTMLInputElement>(null);
-    useImperativeHandle(ref, () => inputRef.current!);
+    useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     useEffect(() => {
       if (inputRef.current) {
@@ -68,7 +64,17 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
           disabled && classMap.disabled,
           className
         ),
-      [theme, labelPosition, disabled, className]
+      [
+        classMap,
+        theme,
+        state,
+        labelPosition,
+        size,
+        shadow,
+        rounding,
+        disabled,
+        className,
+      ]
     );
 
     return (
@@ -93,7 +99,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
           type="checkbox"
           className={classMap.input}
           checked={checked}
-          onChange={(e) => !disabled && onChange(e.target.checked)}
+          onChange={(e) => onChange(e.target.checked)}
           disabled={disabled}
           aria-labelledby={labelId}
           aria-checked={indeterminate ? "mixed" : undefined}
