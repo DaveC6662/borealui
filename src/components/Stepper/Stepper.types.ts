@@ -66,3 +66,8 @@ export interface StepperProps {
    */
   className?: string;
 }
+
+export interface StepperBaseProps extends StepperProps {
+  classMap: Record<string, string>;
+  IconButtonComponent: React.FC<any>;
+}

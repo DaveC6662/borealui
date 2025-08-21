@@ -1,5 +1,4 @@
 import React from "react";
-import { StepperProps } from "./Stepper.types";
 import { combineClassNames } from "../../utils/classNames";
 import {
   getDefaultRounding,
@@ -7,11 +6,7 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-export interface StepperBaseProps extends StepperProps {
-  classMap: Record<string, string>;
-  IconButtonComponent: React.FC<any>;
-}
+import { StepperBaseProps } from "./Stepper.types";
 
 const StepperBase: React.FC<StepperBaseProps> = ({
   steps,
@@ -122,4 +117,5 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   );
 };
 
+StepperBase.displayName = "StepperBase";
 export default StepperBase;

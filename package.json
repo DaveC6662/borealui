@@ -626,19 +626,6 @@
       "types": "./dist/types/components/Checkbox/next/Checkbox.d.ts"
     }
   },
-  "typesVersions": {
-    "*": {
-      "core": [
-        "dist/types/index.core.d.ts"
-      ],
-      "next": [
-        "dist/types/index.next.d.ts"
-      ],
-      "*": [
-        "dist/types/index.core.d.ts"
-      ]
-    }
-  },
   "overrides": {
     "storybook": "$storybook"
   }
