@@ -113,12 +113,12 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/core/index.esm.js",
+      "import": "./dist/core/index.js",
       "require": "./dist/core/index.cjs.js",
       "types": "./dist/types/index.core.d.ts"
     },
     "./core": {
-      "import": "./dist/core/index.esm.js",
+      "import": "./dist/core/index.js",
       "require": "./dist/core/index.cjs.js",
       "types": "./dist/types/index.core.d.ts"
     },
