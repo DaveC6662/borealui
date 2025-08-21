@@ -109,7 +109,7 @@ $label-font-sizes: (
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--background-color-lighter);
+  background-color: white;
   position: relative;
   transition: all theme.$transition-default;
 }
