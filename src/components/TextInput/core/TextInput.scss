@@ -8,8 +8,6 @@
   justify-content: space-between;
   align-items: center;
   width: fit-content;
-  padding-left: theme.$spacing-sm;
-  padding-right: theme.$spacing-xs;
   margin: theme.$spacing-sm;
   transition: theme.$transition-default;
   max-width: 400px;
@@ -24,7 +22,6 @@
     width: 100%;
     padding: theme.$spacing-xs;
     border: none;
-    border-radius: theme.$border-radius-lg;
     background-color: transparent;
     color: var(--text-color-primary);
   }
@@ -34,7 +31,6 @@
   outline: none;
   flex: 1;
   margin: theme.$spacing-sm;
-  margin-left: 1em;
   font-size: theme.$font-size-base;
   border: none;
   border-radius: theme.$border-radius-lg;
@@ -129,6 +125,10 @@
 @each $key, $value in theme.$rounding {
   .textInput_round-#{$key} {
     border-radius: $value;
+
+    input {
+      border-radius: $value;
+    }
   }
 }
 

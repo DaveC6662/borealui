@@ -15,8 +15,6 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-//TODO Fix margin with non-icon rendered text inputs
-
 const TextInputBase = forwardRef<
   HTMLInputElement,
   TextInputProps & {
@@ -126,6 +124,7 @@ const TextInputBase = forwardRef<
             className={classMap.togglePassword}
             onClick={togglePasswordVisibility}
             theme="clear"
+            shadow="none"
             aria-label={showPassword ? "Hide password" : "Show password"}
             aria-pressed={showPassword}
             data-testid={`${testId}-password-toggle`}
