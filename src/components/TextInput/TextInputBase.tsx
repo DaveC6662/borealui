@@ -15,6 +15,8 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
+//TODO Fix margin with non-icon rendered text inputs
+
 const TextInputBase = forwardRef<
   HTMLInputElement,
   TextInputProps & {
@@ -46,8 +48,22 @@ const TextInputBase = forwardRef<
     ref
   ) => {
     const [showPassword, setShowPassword] = useState(false);
-    const inputId = useId();
-    const descId = `${inputId}-description`;
+
+    const autoId = useId();
+    const {
+      id: idProp,
+      required,
+      autoComplete: autoCompleteProp,
+      ...restInput
+    } = rest as InputHTMLAttributes<HTMLInputElement>;
+    const inputId = idProp || autoId;
+
+    const descId = ariaDescription ? `${inputId}-description` : undefined;
+    const isError = state === "error";
+
+    const computedAutoComplete =
+      autoCompleteProp ??
+      (autocomplete ? (password ? "current-password" : "on") : "off");
 
     const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
@@ -63,14 +79,16 @@ const TextInputBase = forwardRef<
           rounding && classMap[`round${capitalize(rounding)}`],
           className
         ),
-      [classMap, theme, state, outline, disabled]
+      [classMap, theme, state, outline, disabled, shadow, rounding, className]
     );
+
+    const computedLabel = ariaLabel || placeholder;
 
     return (
       <div
         className={wrapperClass}
         data-testid={`${testId}-wrapper`}
-        aria-disabled={disabled}
+        aria-disabled={disabled || undefined}
       >
         {Icon && (
           <div
@@ -78,7 +96,7 @@ const TextInputBase = forwardRef<
             aria-hidden="true"
             data-testid={`${testId}-icon`}
           >
-            <Icon />
+            <Icon aria-hidden="true" />
           </div>
         )}
 
@@ -88,13 +106,18 @@ const TextInputBase = forwardRef<
           type={password && !showPassword ? "password" : "text"}
           className={`${classMap.textInput} ${classMap[theme]}`}
           placeholder={placeholder}
-          aria-label={ariaLabel || placeholder}
-          aria-describedby={ariaDescription ? descId : undefined}
-          autoComplete={autocomplete ? "on" : "off"}
+          aria-label={computedLabel}
+          aria-describedby={descId}
+          aria-invalid={isError || undefined}
+          aria-required={required || undefined}
+          aria-readonly={readOnly || undefined}
+          aria-disabled={disabled || undefined}
+          autoComplete={computedAutoComplete}
           readOnly={readOnly}
           disabled={disabled}
+          required={required}
           data-testid={testId}
-          {...(rest as InputHTMLAttributes<HTMLInputElement>)}
+          {...restInput}
         />
 
         {password && (
@@ -104,6 +127,7 @@ const TextInputBase = forwardRef<
             onClick={togglePasswordVisibility}
             theme="clear"
             aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
             data-testid={`${testId}-password-toggle`}
             icon={showPassword ? EyeIcon : EyeSlashIcon}
           />
@@ -112,7 +136,7 @@ const TextInputBase = forwardRef<
         {ariaDescription && (
           <span
             id={descId}
-            className={"sr_only"}
+            className="sr_only"
             data-testid={`${testId}-input-description`}
           >
             {ariaDescription}
