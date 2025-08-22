@@ -1,6 +1,6 @@
 import React, { JSX, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
-import { ToolbarBaseProps, ToolbarProps } from "./Toolbar.types";
+import { ToolbarBaseProps } from "./Toolbar.types";
 import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultRounding,
@@ -8,7 +8,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-export const ToolbarBase: React.FC<ToolbarBaseProps> = ({
+const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   title,
   left,
   center,
@@ -24,9 +24,10 @@ export const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   ariaLabel = "Toolbar",
   headingLevel = 1,
 }): JSX.Element => {
-  const TitleTag = `h${headingLevel}` as keyof JSX.IntrinsicElements;
+  const safeHeading = Math.min(6, Math.max(1, headingLevel));
+  const TitleTag = `h${safeHeading}` as keyof JSX.IntrinsicElements;
 
-  const headerClass = useMemo(
+  const toolbarClass = useMemo(
     () =>
       combineClassNames(
         classMap.toolbar,
@@ -35,19 +36,23 @@ export const ToolbarBase: React.FC<ToolbarBaseProps> = ({
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`]
       ),
-    [classMap, theme, className]
+    [classMap, theme, className, shadow, rounding]
   );
 
+  const avatarAriaHidden =
+    avatar && !avatar.name && !avatar.onClick ? true : undefined;
+
   return (
-    <header
-      className={headerClass}
-      role="banner"
+    <div
+      className={toolbarClass}
+      role="toolbar"
+      aria-orientation="horizontal"
       aria-label={ariaLabel}
       data-testid={testId}
     >
       <div
         className={classMap.section}
-        role="navigation"
+        role="group"
         aria-label="Toolbar left section"
         data-testid={`${testId}-left`}
       >
@@ -56,7 +61,7 @@ export const ToolbarBase: React.FC<ToolbarBaseProps> = ({
 
       <div
         className={classMap.section}
-        role="navigation"
+        role="group"
         aria-label="Toolbar center section"
         data-testid={`${testId}-center`}
       >
@@ -70,7 +75,7 @@ export const ToolbarBase: React.FC<ToolbarBaseProps> = ({
 
       <div
         className={classMap.section}
-        role="navigation"
+        role="group"
         aria-label="Toolbar right section"
         data-testid={`${testId}-right`}
       >
@@ -88,11 +93,14 @@ export const ToolbarBase: React.FC<ToolbarBaseProps> = ({
               theme={avatar.theme}
               outline={avatar.outline}
               onClick={avatar.onClick}
-              aria-hidden={!avatar.name}
+              aria-hidden={avatarAriaHidden}
             />
           </div>
         )}
       </div>
-    </header>
+    </div>
   );
 };
+
+ToolbarBase.displayName = "ToolbarBase";
+export default ToolbarBase;

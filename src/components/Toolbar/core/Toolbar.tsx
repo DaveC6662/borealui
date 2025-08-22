@@ -1,7 +1,7 @@
 import React from "react";
 import "./Toolbar.scss";
 import Avatar from "../../Avatar/core/Avatar";
-import { ToolbarBase } from "../ToolbarBase";
+import ToolbarBase from "../ToolbarBase";
 import { ToolbarProps } from "../Toolbar.types";
 
 const classes = {
