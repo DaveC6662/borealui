@@ -58,3 +58,9 @@ export interface TabsProps {
   /** Test ID for testing purposes. */
   "data-testid"?: string;
 }
+
+export type BaseTabsProps = TabsProps & {
+  orientation?: "horizontal" | "vertical";
+  activationMode?: "auto" | "manual";
+  classMap: Record<string, string>;
+};

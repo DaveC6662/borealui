@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
-import { TabsProps } from "./Tabs.types";
+import React, { useEffect, useMemo, useRef, useState, useId } from "react";
+import { BaseTabsProps } from "./Tabs.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -9,7 +9,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
+const TabsBase: React.FC<BaseTabsProps> = ({
   tabs,
   defaultIndex = 0,
   onChange,
@@ -19,43 +19,27 @@ const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
   theme = getDefaultTheme(),
   state = "",
   size = getDefaultSize(),
+  orientation = "horizontal",
+  activationMode = "auto",
   "data-testid": testId = "tabs",
   classMap,
 }) => {
+  const uid = useId();
+  const baseId = `${testId}-${uid}`;
+
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
+  const [focusIndex, setFocusIndex] = useState(defaultIndex);
+
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
-    tabRefs.current[activeIndex]?.focus();
-  }, [activeIndex]);
-
-  const handleTabClick = (index: number) => {
-    setActiveIndex(index);
-    onChange?.(index);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { key } = event;
-
-    const lastIndex = tabs.length - 1;
-    let newIndex = activeIndex;
-
-    if (key === "ArrowRight") {
-      newIndex = activeIndex === lastIndex ? 0 : activeIndex + 1;
-    } else if (key === "ArrowLeft") {
-      newIndex = activeIndex === 0 ? lastIndex : activeIndex - 1;
-    } else if (key === "Home") {
-      newIndex = 0;
-    } else if (key === "End") {
-      newIndex = lastIndex;
-    }
-
-    if (newIndex !== activeIndex) {
-      event.preventDefault();
-      setActiveIndex(newIndex);
-      onChange?.(newIndex);
-    }
-  };
+    const current = activationMode === "manual" ? focusIndex : activeIndex;
+    tabRefs.current.forEach((el, i) => {
+      if (!el) return;
+      el.setAttribute("tabindex", i === current ? "0" : "-1");
+    });
+    tabRefs.current[current]?.focus();
+  }, [activeIndex, focusIndex, activationMode]);
 
   const containerClassNames = useMemo(
     () =>
@@ -76,8 +60,67 @@ const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`]
       ),
-    [classMap]
+    [classMap, shadow, rounding]
   );
+
+  const activate = (index: number) => {
+    setActiveIndex(index);
+    onChange?.(index);
+  };
+
+  const isDisabled = (index: number) => !!(tabs[index] as any)?.disabled;
+
+  const nextEnabled = (start: number, dir: 1 | -1) => {
+    const len = tabs.length;
+    let i = start;
+    for (let n = 0; n < len; n++) {
+      i = (i + dir + len) % len;
+      if (!isDisabled(i)) return i;
+    }
+    return start;
+  };
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const horiz = orientation === "horizontal";
+    const { key } = event;
+
+    let newFocus = focusIndex;
+
+    if (horiz && key === "ArrowRight") {
+      event.preventDefault();
+      newFocus = nextEnabled(focusIndex, 1);
+    } else if (horiz && key === "ArrowLeft") {
+      event.preventDefault();
+      newFocus = nextEnabled(focusIndex, -1);
+    } else if (!horiz && key === "ArrowDown") {
+      event.preventDefault();
+      newFocus = nextEnabled(focusIndex, 1);
+    } else if (!horiz && key === "ArrowUp") {
+      event.preventDefault();
+      newFocus = nextEnabled(focusIndex, -1);
+    } else if (key === "Home") {
+      event.preventDefault();
+      newFocus = nextEnabled(-1, 1);
+    } else if (key === "End") {
+      event.preventDefault();
+      newFocus = nextEnabled(0, -1);
+    } else if (
+      activationMode === "manual" &&
+      (key === "Enter" || key === " ")
+    ) {
+      event.preventDefault();
+      if (!isDisabled(focusIndex)) activate(focusIndex);
+      return;
+    } else {
+      return;
+    }
+
+    setFocusIndex(newFocus);
+    if (activationMode === "auto") activate(newFocus);
+  };
+
+  const currentPanelId = `${baseId}-panel-${activeIndex}`;
+  const currentTabId = `${baseId}-tab-${activeIndex}`;
 
   return (
     <div className={containerClassNames} data-testid={testId}>
@@ -85,30 +128,39 @@ const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
         className={classMap.tabs}
         role="tablist"
         aria-label="Tabs"
-        onKeyDown={handleKeyDown}
+        aria-orientation={orientation}
+        onKeyDown={onKeyDown}
         data-testid={`${testId}-tablist`}
       >
         {tabs.map((tab, index) => {
           const Icon = tab.icon;
           const isActive = index === activeIndex;
+          const disabled = isDisabled(index);
+          const tabId = `${baseId}-tab-${index}`;
+          const panelId = `${baseId}-panel-${index}`;
 
           return (
             <button
               key={index}
-              ref={(el): void => {
+              ref={(el) => {
                 tabRefs.current[index] = el;
               }}
               className={combineClassNames(
                 tabClassNames,
-                isActive ? classMap.active : ""
+                isActive && classMap.active,
+                disabled && classMap.disabled
               )}
-              onClick={() => handleTabClick(index)}
               role="tab"
               type="button"
-              tabIndex={isActive ? 0 : -1}
               aria-selected={isActive}
-              aria-controls={`${testId}-panel-${index}`}
-              id={`${testId}-tab-${index}`}
+              aria-controls={panelId}
+              id={tabId}
+              aria-disabled={disabled || undefined}
+              onClick={() => {
+                if (disabled) return;
+                setFocusIndex(index);
+                activate(index);
+              }}
               data-testid={`${testId}-tab-${index}`}
             >
               {Icon && (
@@ -129,8 +181,8 @@ const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
       <div
         className={classMap.content}
         role="tabpanel"
-        id={`${testId}-panel-${activeIndex}`}
-        aria-labelledby={`${testId}-tab-${activeIndex}`}
+        id={currentPanelId}
+        aria-labelledby={currentTabId}
         tabIndex={0}
         data-testid={`${testId}-panel`}
       >
@@ -140,4 +192,5 @@ const TabsBase: React.FC<TabsProps & { classMap: Record<string, string> }> = ({
   );
 };
 
+TabsBase.displayName = "TabsBase";
 export default TabsBase;
