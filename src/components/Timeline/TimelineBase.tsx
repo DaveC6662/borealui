@@ -28,7 +28,7 @@ const TimelineBase: React.FC<
         classMap[theme],
         className
       ),
-    [classMap, orientation, theme, shadow, rounding]
+    [classMap, orientation, theme, className]
   );
 
   const itemClassName = useMemo(
@@ -45,7 +45,7 @@ const TimelineBase: React.FC<
         classMap[orientation],
         shadow && classMap[`shadow${capitalize(shadow)}`]
       ),
-    [classMap, orientation, theme, shadow]
+    [classMap, theme, orientation, shadow]
   );
 
   const contentClassName = useMemo(
@@ -59,31 +59,46 @@ const TimelineBase: React.FC<
     [classMap, orientation, shadow, rounding]
   );
 
+  const setSize = items.length;
+
   return (
     <ul className={outerWrapper} data-testid={testId} aria-label="Timeline">
       {items.map((item, index) => {
         const IconComponent = item.icon;
         const itemTestId = `${testId}-item-${index}`;
         const labelId = `${itemTestId}-title`;
+        const hasTitle = Boolean(item.title);
+
+        let dateTimeAttr: string | undefined;
+        if (item.date) {
+          const dateObj = new Date(item.date);
+          if (!isNaN(dateObj.getTime())) {
+            dateTimeAttr = dateObj.toISOString();
+          }
+        }
 
         return (
           <li
             key={index}
             className={itemClassName}
             data-testid={itemTestId}
-            aria-labelledby={labelId}
+            aria-labelledby={hasTitle ? labelId : undefined}
+            aria-label={!hasTitle ? `Timeline item ${index + 1}` : undefined}
+            aria-posinset={index + 1}
+            aria-setsize={setSize}
           >
             <div
               className={markerClassName}
               data-testid={`${itemTestId}-marker`}
-              aria-hidden={IconComponent ? "true" : undefined}
+              aria-hidden={true}
             >
               {IconComponent ? (
                 <div
                   className={classMap.icon}
                   data-testid={`${itemTestId}-icon`}
+                  aria-hidden={true}
                 >
-                  <IconComponent />
+                  <IconComponent aria-hidden="true" />
                 </div>
               ) : (
                 <div
@@ -98,18 +113,18 @@ const TimelineBase: React.FC<
               className={contentClassName}
               data-testid={`${itemTestId}-content`}
             >
-              <h3 id={labelId} className={classMap.title}>
-                {item.title}
-              </h3>
+              {hasTitle && (
+                <h3 id={labelId} className={classMap.title}>
+                  {item.title}
+                </h3>
+              )}
+
               {item.date && (
-                <p
-                  className={classMap.date}
-                  data-testid={`${itemTestId}-date`}
-                  aria-label={`Date: ${item.date}`}
-                >
-                  {item.date}
+                <p className={classMap.date} data-testid={`${itemTestId}-date`}>
+                  <time dateTime={dateTimeAttr}>{item.date}</time>
                 </p>
               )}
+
               {item.description && (
                 <p
                   className={classMap.description}
@@ -126,4 +141,5 @@ const TimelineBase: React.FC<
   );
 };
 
+TimelineBase.displayName = "TimelineBase";
 export default TimelineBase;
