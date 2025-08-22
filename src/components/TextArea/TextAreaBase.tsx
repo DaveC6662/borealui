@@ -31,11 +31,15 @@ const TextAreaBase = forwardRef<
       classMap,
       className = "",
       "data-testid": testId = "text-area",
+      id: idProp,
+      required,
       ...props
     },
     ref
   ) => {
-    const id = useId();
+    const autoId = useId();
+    const id = idProp || autoId;
+
     const descriptionId = ariaDescription ? `${id}-description` : undefined;
 
     const wrapperClass = useMemo(
@@ -50,8 +54,14 @@ const TextAreaBase = forwardRef<
           rounding && classMap[`round${capitalize(rounding)}`],
           className
         ),
-      [classMap, outline, disabled, rounding, shadow, className]
+      [classMap, theme, state, outline, disabled, shadow, rounding, className]
     );
+
+    const computedLabel = ariaLabel || placeholder;
+
+    const describedBy = descriptionId || undefined;
+
+    const isError = state === "error";
 
     return (
       <div className={wrapperClass} data-testid={testId}>
@@ -61,7 +71,7 @@ const TextAreaBase = forwardRef<
             aria-hidden="true"
             data-testid={`${testId}-icon`}
           >
-            <Icon />
+            <Icon aria-hidden="true" />
           </div>
         )}
 
@@ -69,11 +79,16 @@ const TextAreaBase = forwardRef<
           ref={ref}
           id={id}
           placeholder={placeholder}
-          aria-label={ariaLabel || placeholder}
-          aria-describedby={descriptionId}
+          aria-label={computedLabel}
+          aria-describedby={describedBy}
+          aria-invalid={isError || undefined}
+          aria-required={required || undefined}
+          aria-readonly={readOnly || undefined}
+          aria-disabled={disabled || undefined}
           autoComplete={autocomplete ? "on" : "off"}
           readOnly={readOnly}
           disabled={disabled}
+          required={required}
           style={{
             height,
             resize: resizable ? undefined : "none",
@@ -92,7 +107,7 @@ const TextAreaBase = forwardRef<
         {ariaDescription && (
           <span
             id={descriptionId}
-            className={"sr_only"}
+            className="sr_only"
             data-testid={`${testId}-description`}
           >
             {ariaDescription}
