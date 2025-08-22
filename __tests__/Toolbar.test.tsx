@@ -1,11 +1,17 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { ToolbarBase } from "@/components/Toolbar/ToolbarBase";
+import ToolbarBase from "@/components/Toolbar/ToolbarBase";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { jest } from "@jest/globals";
 
 expect.extend(toHaveNoViolations);
 
-const AvatarMock = ({ name }: { name: string }) => <div>{name}</div>;
+const AvatarMock = ({
+  name,
+  onClick,
+}: {
+  name?: string;
+  onClick?: () => void;
+}) => <button onClick={onClick}>{name}</button>;
 
 const mockStyles = {
   toolbar: "toolbar",
@@ -13,16 +19,20 @@ const mockStyles = {
   title: "title",
   avatarWrapper: "avatarWrapper",
   avatarButton: "avatarButton",
+
   primary: "primary",
   secondary: "secondary",
   success: "success",
   error: "error",
   warning: "warning",
   clear: "clear",
+
+  roundMedium: "roundMedium",
+  shadowLight: "shadowLight",
 };
 
 describe("ToolbarBase", () => {
-  it("renders the left, center, and right sections", () => {
+  it("renders left, center, and right sections with correct roles", () => {
     render(
       <ToolbarBase
         title="Toolbar Title"
@@ -34,17 +44,23 @@ describe("ToolbarBase", () => {
       />
     );
 
-    expect(screen.getByRole("banner")).toBeInTheDocument();
-    expect(screen.getByText("Toolbar Title")).toBeInTheDocument();
-    expect(screen.getByTestId("toolbar-left")).toHaveTextContent(
-      "Left Section"
-    );
-    expect(screen.getByTestId("toolbar-center")).toHaveTextContent(
-      "Center Content"
-    );
-    expect(screen.getByTestId("toolbar-right")).toHaveTextContent(
-      "Right Section"
-    );
+    const toolbar = screen.getByRole("toolbar", { name: "Toolbar" });
+    expect(toolbar).toBeInTheDocument();
+    expect(toolbar).toHaveAttribute("aria-orientation", "horizontal");
+
+    expect(
+      screen.getByRole("group", { name: "Toolbar left section" })
+    ).toHaveTextContent("Left Section");
+    expect(
+      screen.getByRole("group", { name: "Toolbar center section" })
+    ).toHaveTextContent("Center Content");
+    expect(
+      screen.getByRole("group", { name: "Toolbar right section" })
+    ).toHaveTextContent("Right Section");
+
+    expect(
+      screen.getByRole("heading", { name: "Toolbar Title" })
+    ).toBeInTheDocument();
   });
 
   it("renders avatar when provided", () => {
@@ -57,28 +73,25 @@ describe("ToolbarBase", () => {
     );
 
     expect(screen.getByTestId("toolbar-avatar")).toBeInTheDocument();
-    expect(screen.getByText("JD")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "JD" })).toBeInTheDocument();
   });
 
-  it("renders avatar and calls onClick", () => {
+  it("invokes avatar onClick handler", () => {
     const handleClick = jest.fn();
 
     render(
       <ToolbarBase
         avatar={{ name: "JD", onClick: handleClick }}
-        AvatarComponent={({ name, onClick }) => (
-          <button onClick={onClick}>{name}</button>
-        )}
+        AvatarComponent={AvatarMock}
         classMap={mockStyles}
       />
     );
 
-    const avatarButton = screen.getByRole("button", { name: /jd/i });
-    fireEvent.click(avatarButton);
+    fireEvent.click(screen.getByRole("button", { name: "JD" }));
     expect(handleClick).toHaveBeenCalled();
   });
 
-  it("respects headingLevel prop for title", () => {
+  it("respects headingLevel prop for title element", () => {
     render(
       <ToolbarBase
         title="Custom Heading"
@@ -90,9 +103,10 @@ describe("ToolbarBase", () => {
 
     const heading = screen.getByRole("heading", { name: "Custom Heading" });
     expect(heading.tagName).toBe("H2");
+    expect(heading).toHaveClass("title");
   });
 
-  it("sets correct aria-label for banner", () => {
+  it("sets correct aria-label for the toolbar container", () => {
     render(
       <ToolbarBase
         title="Toolbar"
@@ -103,8 +117,22 @@ describe("ToolbarBase", () => {
     );
 
     expect(
-      screen.getByRole("banner", { name: "Main toolbar" })
+      screen.getByRole("toolbar", { name: "Main toolbar" })
     ).toBeInTheDocument();
+  });
+
+  it("applies theme and default round/shadow classes", () => {
+    render(
+      <ToolbarBase
+        title="Styled"
+        AvatarComponent={AvatarMock}
+        classMap={mockStyles}
+      />
+    );
+
+    const toolbar = screen.getByTestId("toolbar");
+    expect(toolbar.className).toContain("roundMedium");
+    expect(toolbar.className).toContain("shadowLight");
   });
 
   it("has no accessibility violations", async () => {
