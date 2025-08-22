@@ -1,6 +1,6 @@
 import React from "react";
 import "./Taginput.scss";
-import IconButton from "../../Button/core/Button";
+import IconButton from "../../IconButton/core/IconButton";
 import TextInput from "../../TextInput/core/TextInput";
 import TagInputBase from "../TagInputBase";
 import { TagInputProps } from "../Taginput.types";
@@ -11,6 +11,7 @@ const classes = {
   tag: "tag_input_tag",
   tagLabel: "tag_input_tag_label",
   removeButton: "tag_input_remove_button",
+  removeButtonIcon: "tag_input_remove_button_icon",
   inputWrapper: "tag_input_input_wrapper",
   input: "tag_input_input",
   suggestionList: "tag_input_suggestion_list",

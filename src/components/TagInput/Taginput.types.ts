@@ -56,3 +56,9 @@ export interface TagInputProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
+
+export type TagInputBaseProps = TagInputProps & {
+  classMap: Record<string, string>;
+  IconButton: React.FC<any>;
+  TextInput: React.FC<any>;
+};

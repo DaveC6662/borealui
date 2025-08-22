@@ -22,6 +22,7 @@ const IconButtonBase = forwardRef<
     onClick,
     onKeyDown,
     className = "",
+    iconClassName = "",
     disabled = false,
     ariaLabel,
     title,
@@ -97,6 +98,7 @@ const IconButtonBase = forwardRef<
           data-testid="icon-button-icon"
           aria-hidden={true}
           focusable={false}
+          className={iconClassName}
         />
       ) : null}
     </span>

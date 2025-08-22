@@ -53,6 +53,9 @@ export interface IconButtonProps extends InteractiveProps {
   /** If true, opens the link in a new tab (used with `href`). */
   isExternal?: boolean;
 
+  /** Custom class name for the icon. */
+  iconClassName?: string;
+
   /** Custom class name for additional styling. */
   className?: string;
 
