@@ -71,3 +71,7 @@ export interface ToggleProps {
    */
   "data-testid"?: string;
 }
+
+export interface ToggleBaseProps extends ToggleProps {
+  classMap: Record<string, string>;
+}
