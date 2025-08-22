@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import "./Tooltip.scss";
-import { TooltipBase } from "../TooltipBase";
+import TooltipBase from "../TooltipBase";
 import { TooltipProps } from "../Tooltip.types";
 
 const classes = {
