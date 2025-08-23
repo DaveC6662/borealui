@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -15,8 +16,31 @@
   transition: theme.$transition-default;
   max-width: 300px;
 
+  @include bp.down(md) {
+    padding: theme.$spacing-md;
+    max-width: 100%;
+  }
+  @include bp.down(xs) {
+    padding: theme.$spacing-sm;
+  }
+  @include bp.up(lg) {
+    max-width: 420px;
+  }
+
   &:hover {
     background-color: var(--background-color-lighter);
+  }
+
+  &:focus-visible,
+  &:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+  }
+
+  &.file_upload_dragover,
+  &[data-drag-active="true"] {
+    background-color: var(--background-color-lighter);
+    border-color: var(--focus-outline-color, var(--primary-color));
   }
 
   @each $key, $value in theme.$rounding {
@@ -41,7 +65,6 @@
     &_#{$state} {
       border-color: map.get($values, border);
     }
-
     &_#{$state}:hover {
       border-color: map.get($values, hover);
     }
@@ -52,14 +75,7 @@
     border-color: var(--background-color-darker);
     cursor: not-allowed;
     pointer-events: none;
-  }
-
-  @media (width <=768px) {
-    padding: theme.$spacing-md;
-  }
-
-  @media (width <=480px) {
-    padding: theme.$spacing-sm;
+    opacity: 0.6;
   }
 
   &_upload_actions {
@@ -75,6 +91,10 @@
     gap: theme.$spacing-sm;
     align-items: center;
     width: 100%;
+
+    @include bp.up(lg) {
+      gap: theme.$spacing-md;
+    }
   }
 
   &_upload_progress {
@@ -101,6 +121,13 @@
     list-style: none;
     font-size: theme.$font-size-sm;
     color: var(--text-color-secondary);
+
+    @include bp.down(xs) {
+      font-size: theme.$font-size-xs;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-base;
+    }
   }
 
   &_file_list_item {
@@ -111,12 +138,32 @@
     padding: 2px 0;
     font-size: theme.$font-size-sm;
     text-overflow: ellipsis;
+
+    > :first-child {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      @include bp.down(xs) {
+        white-space: normal;
+      }
+    }
+
+    @include bp.down(xs) {
+      gap: theme.$spacing-xxs;
+    }
   }
 
   &_rejected_files {
     margin-top: theme.$spacing-sm;
     color: var(--error-color);
     font-size: theme.$font-size-sm;
+
+    @include bp.down(xs) {
+      font-size: theme.$font-size-xs;
+    }
   }
 
   &_rejected_label {
@@ -128,8 +175,46 @@
     list-style: disc;
     padding-left: theme.$spacing-md;
   }
-
   &_rejected_item {
     margin-bottom: 2px;
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .file_upload_round-#{$key} {
+    border-radius: $value;
+  }
+}
+@each $key, $value in theme.$shadow {
+  .file_upload_shadow-#{$key} {
+    box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .file_upload,
+  .file_upload * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .file_upload:hover {
+    background-color: var(--background-color-light);
+  }
+}
+
+@media (forced-colors: active) {
+  .file_upload {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px dashed ButtonText;
+    outline-color: Highlight;
+  }
+  .file_upload:focus-visible,
+  .file_upload:focus-within {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
   }
 }

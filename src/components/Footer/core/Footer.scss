@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -37,6 +38,7 @@
     left: 0;
     width: 100%;
     z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   &_attachment-fixed {
@@ -45,6 +47,7 @@
     left: 0;
     width: 100%;
     z-index: 200;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 }
 
@@ -56,8 +59,9 @@
   align-items: center;
   flex-wrap: wrap;
   padding: theme.$spacing-md;
+  gap: theme.$spacing-sm;
 
-  @media (width <= 1170px) {
+  @include bp.down(lg) {
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -73,9 +77,13 @@
       font-size: theme.$font-size-sm;
       color: var(--text-color-primary);
       margin: 0;
+
+      @include bp.up(lg) {
+        font-size: theme.$font-size-base;
+      }
     }
 
-    @media (width <= 1170px) {
+    @include bp.down(lg) {
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -111,9 +119,15 @@
       &:hover {
         text-decoration: underline;
       }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
     }
 
-    @media (width <= 1170px) {
+    @include bp.down(lg) {
       padding-left: 0;
 
       ul {
@@ -131,13 +145,12 @@
     img {
       max-height: 100%;
     }
-
     svg {
       height: 1em;
       width: 1em;
     }
 
-    @media (width <= 1170px) {
+    @include bp.down(lg) {
       margin: auto;
     }
   }
@@ -148,12 +161,12 @@
     gap: theme.$spacing-xs;
     margin-left: auto;
 
-    @media (width <= 1170px) {
+    @include bp.down(lg) {
       margin-left: 0;
       justify-content: center;
     }
 
-    @media (width <= 500px) {
+    @include bp.down(xs) {
       flex-wrap: wrap;
     }
   }
@@ -164,9 +177,49 @@
     justify-content: center;
     margin-left: auto;
 
-    @media (width <= 1170px) {
+    @include bp.down(lg) {
       margin-left: 0;
       margin-top: theme.$spacing-xs;
     }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .footer_round-#{$key} {
+    border-top-left-radius: $value;
+    border-top-right-radius: $value;
+  }
+}
+@each $key, $value in theme.$shadow {
+  .footer_shadow-#{$key} {
+    box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer,
+  .footer * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .footer {
+    background: Canvas;
+    color: CanvasText;
+    outline-color: Highlight;
+    border-top: 1px solid ButtonText;
+  }
+
+  .footer_links a {
+    color: LinkText;
+    text-decoration-color: LinkText;
   }
 }

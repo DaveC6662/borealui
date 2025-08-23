@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 
 .dropdown {
@@ -10,6 +11,12 @@
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
   }
 
   &_menu {
@@ -20,41 +27,46 @@
     background-color: var(--background-color-lighter);
     z-index: theme.$z-index-drawer;
     padding: theme.$spacing-xs 0;
-    min-width: 200px;
+    width: fit-content;
     animation: fade-in 0.2s ease-in-out;
 
     &_right {
       right: 0;
       transform: translateX(0);
     }
-
     &_left {
       left: 0;
       transform: translateX(0);
     }
 
-    @media (width >= 481px) {
+    @include bp.up(sm) {
       &[data-overflow-right="true"] {
         left: auto;
         right: 0;
       }
-
       &[data-overflow-left="true"] {
         right: auto;
         left: 0;
       }
     }
 
-    @media (width <= 480px) {
-      position: fixed;
-      inset: auto 0 0;
-      margin: 0;
-      border-radius: 0;
+    @include bp.down(sm) {
       min-width: 100%;
       max-height: 50vh;
       overflow-y: auto;
-      padding: theme.$spacing-sm 0;
       animation: slide-up 0.3s ease-in-out;
+      padding-bottom: calc(
+        env(safe-area-inset-bottom, 0px) + theme.$spacing-sm
+      );
+    }
+
+    @include bp.up(lg) {
+      min-width: 100%;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
     }
   }
 
@@ -70,10 +82,13 @@
     padding: theme.$spacing-sm theme.$spacing-md;
     font-weight: theme.$font-weight-bold;
     color: var(--text-color-primary);
-    font-size: theme.$font-size-md;
+    font-size: theme.$font-size-sm;
     cursor: pointer;
     text-align: left;
-    transition: background-color 0.2s ease-in-out;
+    transition:
+      background-color theme.$transition-default,
+      transform theme.$transition-default,
+      box-shadow theme.$transition-default;
 
     &:hover,
     &:focus {
@@ -82,15 +97,41 @@
       outline: none;
     }
 
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-xs;
+      padding: theme.$spacing-md;
+      gap: theme.$spacing-xs;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-sm;
+      padding: theme.$spacing-md theme.$spacing-lg;
+      gap: theme.$spacing-sm;
+    }
+
     &_icon {
       margin-right: theme.$spacing-xs;
       display: flex;
       align-items: center;
+
+      @include bp.down(sm) {
+        margin-right: theme.$spacing-xxs;
+      }
+      @include bp.up(lg) {
+        margin-right: theme.$spacing-sm;
+      }
     }
 
-    @media (width <= 480px) {
-      font-size: theme.$font-size-base;
-      padding: theme.$spacing-md;
+    &[aria-disabled="true"],
+    &.is-disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
     }
   }
 
@@ -104,9 +145,40 @@
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .menu_shadow-#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown_menu,
+  .dropdown_item {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .dropdown_item:hover {
+    background-color: transparent;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .dropdown_menu {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
+  .dropdown_item {
+    border: 1px solid ButtonText;
+  }
+  .dropdown_item:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }
