@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -7,17 +8,34 @@
   overflow-x: auto;
   margin: theme.$spacing-md;
 
+  @include bp.down(sm) {
+    margin: theme.$spacing-sm;
+  }
+
+  @include bp.up(lg) {
+    margin: theme.$spacing-lg;
+  }
+
   .data_table {
     width: 100%;
     border-collapse: collapse;
     font-size: theme.$font-size-base;
     min-width: 600px;
 
+    @include bp.down(md) {
+      min-width: 520px;
+    }
+
+    @include bp.up(lg) {
+      min-width: 720px;
+    }
+
     th {
       text-align: left;
       padding: theme.$spacing-sm;
       font-weight: theme.$font-weight-bold;
       white-space: nowrap;
+      color: var(--text-color-primary);
     }
 
     td {
@@ -25,6 +43,7 @@
       border-bottom: 1px solid var(--text-color-primary);
       text-align: left;
       white-space: nowrap;
+      color: var(--text-color-primary);
     }
 
     th:hover {
@@ -39,14 +58,23 @@
   .data_table .data_table_header_sortable {
     cursor: pointer;
 
-    &:focus {
-      outline-offset: 0.2px;
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
     }
   }
 
   .data_table_sort_icon {
     margin-left: theme.$spacing-xxs;
     font-size: 0.9em;
+
+    @include bp.down(sm) {
+      font-size: 0.85em;
+    }
+
+    @include bp.up(lg) {
+      font-size: 1em;
+    }
   }
 
   .data_table_row_clickable {
@@ -61,8 +89,9 @@
       background-color: var(--background-color);
     }
 
-    &:focus {
-      outline-offset: 0.2px;
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
     }
   }
 
@@ -87,6 +116,10 @@
         border: 2px solid map.get($values, border);
         background-color: transparent;
         color: map.get($values, text-color);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
       }
     }
   }
@@ -104,6 +137,10 @@
         border: 2px solid map.get($values, border);
         background-color: transparent;
         color: map.get($values, text-color);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
       }
     }
   }
@@ -116,7 +153,7 @@
     }
   }
 
-  @media (width <= 768px) {
+  @include bp.down(md) {
     .data_table {
       font-size: theme.$font-size-sm;
 
@@ -127,7 +164,7 @@
     }
   }
 
-  @media (width <= 480px) {
+  @include bp.down(xs) {
     .data_table {
       font-size: theme.$font-size-xs;
 
@@ -139,11 +176,13 @@
         text-align: left;
         padding: theme.$spacing-xs;
         border-bottom: 1px solid var(--text-color-primary);
+        white-space: normal;
       }
 
       tbody tr {
         display: block;
         margin-bottom: theme.$spacing-sm;
+        background-color: var(--background-color-dark);
       }
 
       thead {
@@ -170,5 +209,42 @@
 @each $key, $value in theme.$shadow {
   .data_table_shadow-#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .data_table_wrapper,
+  .data_table_wrapper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .data_table_row_clickable:hover {
+    background-color: transparent;
+  }
+}
+
+@media (forced-colors: active) {
+  .data_table_wrapper .data_table {
+    color: CanvasText;
+    background: Canvas;
+  }
+
+  .data_table_wrapper .data_table th,
+  .data_table_wrapper .data_table td {
+    border-bottom: 1px solid ButtonText;
+  }
+
+  .data_table_wrapper .data_table thead th {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+  }
+
+  .data_table_wrapper .data_table_row_clickable:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

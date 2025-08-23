@@ -26,6 +26,7 @@
     min-width: 150px;
     max-width: 96vw;
   }
+
   @include bp.up(lg) {
     min-width: 220px;
     max-width: 70vw;
@@ -36,6 +37,7 @@
       border-radius: $value;
     }
   }
+
   @each $key, $value in theme.$shadow {
     &_shadow-#{$key} {
       box-shadow: $value;
@@ -53,6 +55,7 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
 .chip_fadeout {
   opacity: 0;
   transform: translate(-50%, -10px);
@@ -63,25 +66,30 @@ $chip-offset: 20px;
 .chip_top_center {
   top: $chip-offset;
 }
+
 .chip_bottom_center {
   bottom: $chip-offset;
 }
+
 .chip_top_left {
   top: $chip-offset;
   left: $chip-offset;
   transform: none;
 }
+
 .chip_top_right {
   top: $chip-offset;
   right: $chip-offset;
   left: auto;
   transform: none;
 }
+
 .chip_bottom_left {
   bottom: $chip-offset;
   left: $chip-offset;
   transform: none;
 }
+
 .chip_bottom_right {
   bottom: $chip-offset;
   right: $chip-offset;
@@ -124,6 +132,7 @@ $chip-offset: 20px;
   @include bp.down(sm) {
     margin-right: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     margin-right: theme.$spacing-md;
   }
@@ -136,6 +145,7 @@ $chip-offset: 20px;
   @include bp.down(sm) {
     margin-right: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     margin-right: theme.$spacing-sm;
   }
@@ -201,6 +211,7 @@ $chip-sizes: (
           map.get($props, font)
         );
       }
+
       padding: 5px 10px;
     }
 
@@ -212,6 +223,7 @@ $chip-sizes: (
           theme.$font-size-xl
         );
       }
+
       padding: 8px 14px;
 
       @if $size == "xl" {
@@ -227,6 +239,7 @@ $chip-sizes: (
     animation: none !important;
     transition: none !important;
   }
+
   .chip:hover {
     transform: none !important;
     box-shadow: none !important;

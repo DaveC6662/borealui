@@ -28,6 +28,7 @@ $swatch-sizes: (
     padding: theme.$spacing-xs;
     gap: theme.$spacing-xxs;
   }
+
   @include bp.up(lg) {
     padding: theme.$spacing-md;
     gap: theme.$spacing-sm;
@@ -41,6 +42,7 @@ $swatch-sizes: (
     @include bp.down(sm) {
       font-size: theme.$font-size-xs;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-md;
     }
@@ -54,6 +56,7 @@ $swatch-sizes: (
     @include bp.down(sm) {
       gap: theme.$spacing-xxs;
     }
+
     @include bp.up(lg) {
       gap: theme.$spacing-sm;
     }
@@ -78,6 +81,7 @@ $swatch-sizes: (
     &:hover {
       outline-color: var(--focus-outline-color, var(--primary-color));
     }
+
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
@@ -86,9 +90,11 @@ $swatch-sizes: (
     .color_picker_round {
       border-radius: 50%;
     }
+
     .color_picker_square {
       border-radius: 6px;
     }
+
     .color_picker_pill {
       border-radius: 9999px;
       height: 50%;
@@ -103,6 +109,7 @@ $swatch-sizes: (
           width: calc(#{$val} * 0.85);
           height: calc(#{$val} * 0.85);
         }
+
         @include bp.up(lg) {
           width: calc(#{$val} * 1.1);
           height: calc(#{$val} * 1.1);
@@ -130,6 +137,7 @@ $swatch-sizes: (
     @include bp.down(sm) {
       margin-top: theme.$spacing-xxs;
     }
+
     @include bp.up(lg) {
       margin-top: theme.$spacing-sm;
     }
@@ -139,9 +147,11 @@ $swatch-sizes: (
 .color_picker_circle {
   border-radius: 50%;
 }
+
 .color_picker_square {
   border-radius: 6px;
 }
+
 .color_picker_rounded {
   border-radius: 9999px;
 }
@@ -174,6 +184,7 @@ $swatch-sizes: (
     outline-color: Highlight;
     box-shadow: none !important;
   }
+
   .color_picker_preview {
     background: CanvasText;
   }

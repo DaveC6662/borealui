@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
@@ -9,6 +10,14 @@
     flex-direction: column;
     justify-content: space-evenly;
     gap: theme.$spacing-xs;
+
+    @include bp.down(sm) {
+      gap: theme.$spacing-xxs;
+    }
+
+    @include bp.up(lg) {
+      gap: theme.$spacing-sm;
+    }
   }
 
   &_input[type="datetime-local"]::-webkit-calendar-picker-indicator {
@@ -24,28 +33,53 @@
     font-size: theme.$font-size-sm;
     font-weight: theme.$font-weight-bold;
     margin-bottom: theme.$spacing-xs;
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-xs;
+    }
+
+    @include bp.up(lg) {
+      font-size: theme.$font-size-md;
+    }
   }
 
-  &_inputWrapper {
+  &_input_wrapper {
     position: relative;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    width: 100%;
+    justify-content: space-evenly;
+    width: fit-content;
   }
 
   &_input {
     z-index: 1;
-    width: 100%;
-    padding: theme.$spacing-sm;
+    width: fit-content;
+    padding: 0;
     border: 2px solid transparent;
     font-size: theme.$font-size-base;
     background-color: transparent;
     color: var(--text-color-primary);
-    transition: border-color 0.2s ease-in-out;
+    transition:
+      border-color theme.$transition-default,
+      background-color theme.$transition-default;
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-sm;
+      border-width: 1.2px;
+    }
+
+    @include bp.up(lg) {
+      font-size: theme.$font-size-lg;
+    }
 
     &:focus {
       outline: none;
-      border-color: var(--text-color-primary);
+      border-color: var(--focus-outline-color, var(--primary-color));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
     }
 
     &::-webkit-calendar-picker-indicator {
@@ -61,17 +95,36 @@
     cursor: pointer;
     z-index: 2;
     pointer-events: auto;
-    transition: color 0.2s ease-in-out;
+    transition:
+      color theme.$transition-default,
+      transform theme.$transition-default;
     color: var(--text-color-primary);
     line-height: 1em;
     background-color: transparent;
     border: none;
-    padding: 0;
     margin: 0;
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-sm;
+    }
+
+    @include bp.up(lg) {
+      font-size: theme.$font-size-lg;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
   }
 
   @each $theme, $values in theme.$themes {
-    &_#{$theme} &_input {
+    &_#{$theme} &_input_wrapper {
       background-color: map.get($values, bg);
       color: map.get($values, text);
 
@@ -80,8 +133,12 @@
       }
     }
 
-    &_#{$theme}.datetime_picker_outline &_input {
+    &_#{$theme}.datetime_picker_outline &_input_wrapper {
       border: 2px solid map.get($values, bg);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
 
       &:focus {
         border-color: map.get($values, focus);
@@ -94,7 +151,7 @@
   }
 
   @each $state, $values in theme.$states {
-    &_#{$state} &_input {
+    &_#{$state} &_input_wrapper {
       background-color: map.get($values, bg);
       color: map.get($values, text);
 
@@ -103,8 +160,12 @@
       }
     }
 
-    &_#{$state}.datetime_picker_outline &_input {
+    &_#{$state}.datetime_picker_outline &_input_wrapper {
       border: 2px solid map.get($values, bg);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
 
       &:focus {
         border-color: map.get($values, focus);
@@ -116,17 +177,21 @@
     }
   }
 
-  &_outline .datetime_picker_input {
+  &_outline .datetime_picker_input_wrapper {
     background-color: transparent;
     box-shadow: none;
   }
 
-  &_clear.datetime_picker_outline .datetime_picker_input {
+  &_clear.datetime_picker_outline .datetime_picker_input_wrapper {
     color: var(--text-color-primary);
     border: 2px solid var(--text-color-primary);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
   }
 
-  &_disabled .datetime_picker_input {
+  &_disabled .datetime_picker_input_wrapper {
     opacity: 0.6;
     pointer-events: none;
     background-color: theme.$disabled-color;
@@ -145,8 +210,8 @@
     "xs": (
       padding: 4px 3px,
       font-size: theme.$font-size-xs,
-      max-width: 160px,
-      icon-margin: -22px,
+      max-width: 170px,
+      icon-margin: -27px,
       icon-size: 15px,
     ),
     "small": (
@@ -173,22 +238,22 @@
     "xl": (
       padding: 10px 20px,
       font-size: theme.$font-size-lg,
-      max-width: 320px,
+      max-width: 330px,
       icon-margin: -50px,
       icon-size: 30px,
     ),
   );
 
   @each $size, $props in $input-sizes {
-    &_#{$size} .datetime_picker_input {
+    &_#{$size} .datetime_picker_input_wrapper {
       padding: map.get($props, padding);
+    }
+
+    &_#{$size} .datetime_picker_input {
       font-size: map.get($props, font-size);
-      max-width: map.get($props, max-width);
     }
 
     &_#{$size} .datetime_picker_icon {
-      margin-left: map.get($props, icon-margin);
-
       svg {
         height: map.get($props, icon-size);
         width: map.get($props, icon-size);
@@ -199,17 +264,54 @@
   &_description {
     font-size: theme.$font-size-sm;
     color: var(--text-color-primary);
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-xs;
+    }
+
+    @include bp.up(lg) {
+      font-size: theme.$font-size-md;
+    }
   }
 }
 
 @each $key, $value in theme.$rounding {
-  .datetime_picker_round-#{$key} .datetime_picker_input {
+  .datetime_picker_round-#{$key} .datetime_picker_input_wrapper {
     border-radius: $value;
   }
 }
 
 @each $key, $value in theme.$shadow {
-  .datetime_picker_shadow-#{$key} .datetime_picker_input {
+  .datetime_picker_shadow-#{$key} .datetime_picker_input_wrapper {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .datetime_picker,
+  .datetime_picker * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .datetime_picker_icon:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .datetime_picker_input_wrapper {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText !important;
+    outline-color: Highlight;
+  }
+
+  .datetime_picker_icon {
+    color: ButtonText;
+    border: 1px solid ButtonText;
+    border-radius: 4px;
   }
 }

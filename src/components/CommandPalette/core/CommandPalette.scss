@@ -16,6 +16,7 @@
   @include bp.down(sm) {
     padding-top: 6vh;
   }
+
   @include bp.up(lg) {
     padding-top: 12vh;
   }
@@ -76,6 +77,7 @@
     width: 96%;
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     width: 100%;
     font-size: theme.$font-size-lg;
@@ -97,6 +99,7 @@
   @include bp.down(sm) {
     max-height: 50vh;
   }
+
   @include bp.up(lg) {
     max-height: 60vh;
   }
@@ -156,6 +159,7 @@
   @include bp.down(sm) {
     padding: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     padding: theme.$spacing-md;
   }
@@ -225,6 +229,7 @@
   .command_palette * {
     transition: none !important;
   }
+
   .command_palette_item:hover {
     transform: none !important;
     box-shadow: none !important;

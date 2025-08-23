@@ -6,7 +6,7 @@ import type { DateTimePickerProps } from "../DateTimePicker.types";
 const classes = {
   wrapper: "datetime_picker_wrapper",
   label: "datetime_picker_label",
-  inputWrapper: "datetime_picker_inputWrapper",
+  inputWrapper: "datetime_picker_input_wrapper",
   input: "datetime_picker_input",
 
   primary: "datetime_picker_primary",
