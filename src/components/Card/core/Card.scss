@@ -52,6 +52,7 @@
     @include bp.down(sm) {
       min-height: 180px;
     }
+
     @include bp.up(lg) {
       min-height: 300px;
     }
@@ -72,6 +73,7 @@
     @include bp.down(sm) {
       aspect-ratio: 1 / 1;
     }
+
     @include bp.up(lg) {
       aspect-ratio: 16 / 9;
     }
@@ -98,6 +100,7 @@
       @include bp.down(sm) {
         max-height: 150px;
       }
+
       @include bp.up(lg) {
         max-height: 300px;
       }
@@ -188,6 +191,7 @@
     @include bp.down(sm) {
       padding: theme.$spacing-sm;
     }
+
     @include bp.up(lg) {
       padding: theme.$spacing-lg;
     }
@@ -219,6 +223,7 @@
     @include bp.down(sm) {
       font-size: theme.$font-size-sm;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-lg;
     }
@@ -232,6 +237,7 @@
     @include bp.down(sm) {
       font-size: 1em;
     }
+
     @include bp.up(lg) {
       font-size: 1.4em;
     }
@@ -245,6 +251,7 @@
     @include bp.down(sm) {
       font-size: theme.$font-size-sm;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-lg;
     }
@@ -258,6 +265,7 @@
       padding: theme.$spacing-sm;
       border-width: 1px;
     }
+
     @include bp.up(lg) {
       padding: theme.$spacing-lg;
     }
@@ -272,6 +280,7 @@
     @include bp.down(sm) {
       gap: theme.$spacing-xs;
     }
+
     @include bp.up(lg) {
       gap: theme.$spacing-md;
     }
@@ -281,13 +290,16 @@
     .card_description {
       font-size: theme.$font-size-xs;
     }
+
     .card_icon {
       font-size: 0.9em;
     }
+
     .card_title {
       font-size: theme.$font-size-sm;
       line-height: 0.9em;
     }
+
     .card_children {
       font-size: theme.$font-size-xs;
     }
@@ -297,12 +309,15 @@
     .card_description {
       font-size: theme.$font-size-sm;
     }
+
     .card_icon {
       font-size: 1em;
     }
+
     .card_title {
       font-size: theme.$font-size-md;
     }
+
     .card_children {
       font-size: theme.$font-size-sm;
     }
@@ -312,12 +327,15 @@
     .card_description {
       font-size: theme.$font-size-md;
     }
+
     .card_icon {
       font-size: 1.2em;
     }
+
     .card_title {
       font-size: theme.$font-size-base;
     }
+
     .card_children {
       font-size: theme.$font-size-md;
     }
@@ -327,12 +345,15 @@
     .card_description {
       font-size: theme.$font-size-lg;
     }
+
     .card_icon {
       font-size: 1.4em;
     }
+
     .card_title {
       font-size: 1.4em;
     }
+
     .card_children {
       font-size: theme.$font-size-lg;
     }
@@ -342,12 +363,15 @@
     .card_description {
       font-size: theme.$font-size-xl;
     }
+
     .card_icon {
       font-size: 1.2em;
     }
+
     .card_title {
       font-size: 1.6em;
     }
+
     .card_children {
       font-size: theme.$font-size-xl;
     }
@@ -372,9 +396,11 @@
 .card_left {
   text-align: left;
 }
+
 .card_center {
   text-align: center;
 }
+
 .card_right {
   text-align: right;
 }
@@ -422,6 +448,7 @@
       width: 100%;
       aspect-ratio: 1 / 1;
     }
+
     @include bp.up(lg) {
       aspect-ratio: 16 / 10;
     }
@@ -437,6 +464,7 @@
     @include bp.down(sm) {
       padding: theme.$spacing-sm;
     }
+
     @include bp.up(lg) {
       padding: theme.$spacing-lg;
     }
@@ -448,6 +476,7 @@
     @include bp.down(sm) {
       padding: theme.$spacing-sm;
     }
+
     @include bp.up(lg) {
       padding: theme.$spacing-lg;
     }

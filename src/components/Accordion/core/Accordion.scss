@@ -27,6 +27,7 @@
       height: 32px;
       font-size: 0.45rem;
     }
+
     @include bp.up(lg) {
       width: 40px;
       height: 40px;
@@ -44,6 +45,7 @@
       height: 38px;
       font-size: 0.52rem;
     }
+
     @include bp.up(lg) {
       width: 48px;
       height: 48px;
@@ -61,6 +63,7 @@
       height: 50px;
       font-size: 0.62rem;
     }
+
     @include bp.up(lg) {
       width: 62px;
       height: 62px;
@@ -78,6 +81,7 @@
       height: 64px;
       font-size: 0.7rem;
     }
+
     @include bp.up(lg) {
       width: 80px;
       height: 80px;
@@ -95,6 +99,7 @@
       height: 74px;
       font-size: 0.8rem;
     }
+
     @include bp.up(lg) {
       width: 96px;
       height: 96px;
@@ -105,9 +110,11 @@
   &_circle {
     border-radius: 50%;
   }
+
   &_rounded {
     border-radius: theme.$border-radius-sm;
   }
+
   &_square {
     border-radius: 0;
   }
@@ -118,6 +125,7 @@
     @include bp.down(sm) {
       border-width: 1.5px;
     }
+
     @include bp.up(lg) {
       border-width: 2px;
     }
@@ -269,6 +277,7 @@
     font-weight: bold;
     z-index: 1;
     position: relative;
+
     @include bp.up(lg) {
       letter-spacing: 0.02em;
     }
@@ -285,6 +294,7 @@
       width: 65%;
       height: 65%;
     }
+
     @include bp.up(lg) {
       width: 75%;
       height: 75%;
@@ -306,6 +316,7 @@
       width: 10px;
       height: 10px;
     }
+
     @include bp.up(lg) {
       width: 14px;
       height: 14px;
@@ -315,14 +326,17 @@
       top: 12%;
       left: 15%;
     }
+
     &_topRight {
       top: 12%;
       right: 15%;
     }
+
     &_bottomLeft {
       bottom: 12%;
       left: 15%;
     }
+
     &_bottomRight {
       bottom: 12%;
       right: 15%;
@@ -333,14 +347,17 @@
         top: 14%;
         left: 16%;
       }
+
       &_topRight {
         top: 14%;
         right: 16%;
       }
+
       &_bottomLeft {
         bottom: 14%;
         left: 16%;
       }
+
       &_bottomRight {
         bottom: 14%;
         right: 16%;
@@ -362,14 +379,17 @@
       background-color: theme.$success-color;
       border: 1px solid color.adjust(theme.$success-color, $lightness: 20%);
     }
+
     &_away {
       background-color: theme.$warning-color;
       border: 1px solid color.adjust(theme.$warning-color, $lightness: 20%);
     }
+
     &_offline {
       background-color: theme.$disabled-color;
       border: 1px solid color.adjust(theme.$disabled-color, $lightness: 20%);
     }
+
     &_busy {
       background-color: theme.$error-color;
       border: 1px solid color.adjust(theme.$error-color, $lightness: 20%);
@@ -387,6 +407,7 @@
   .avatar {
     transition: none;
   }
+
   .avatar .avatar_clickable:hover {
     transform: none;
   }

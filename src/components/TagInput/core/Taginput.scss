@@ -54,8 +54,7 @@ $sizes: (
     max-width: 350px;
     max-height: 80px;
     flex-wrap: wrap;
-    justify-items: space-between;
-    align-items: center;
+    place-items: center space-between;
     gap: theme.$spacing-xs;
     width: fit-content;
     overflow-y: auto;
