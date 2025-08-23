@@ -1,309 +1,407 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "sass:color";
 @use "sass:map";
-@use "sass:list";
 
-$sizes: (
-  "xs": (
-    header-padding: (
-      theme.$spacing-xs,
-      theme.$spacing-sm,
-    ),
-    header-font-size: theme.$font-size-xs,
-    icon-size: 1rem,
-  ),
-  "small": (
-    header-padding: (
-      theme.$spacing-xs,
-      theme.$spacing-md,
-    ),
-    header-font-size: theme.$font-size-sm,
-    icon-size: 1.2rem,
-  ),
-  "medium": (
-    header-padding: (
-      theme.$spacing-sm,
-      theme.$spacing-lg,
-    ),
-    header-font-size: theme.$font-size-md,
-    icon-size: 1.5rem,
-  ),
-  "large": (
-    header-padding: (
-      theme.$spacing-sm,
-      theme.$spacing-xl,
-    ),
-    header-font-size: theme.$font-size-md,
-    icon-size: 1.8rem,
-  ),
-  "xl": (
-    header-padding: (
-      theme.$spacing-sm,
-      theme.$spacing-xl,
-    ),
-    header-font-size: theme.$font-size-lg,
-    icon-size: 2rem,
-  ),
-);
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  font-weight: theme.$font-weight-bold;
+  text-transform: uppercase;
+  color: var(--text-color-primary);
+  border: 2px solid transparent;
+  overflow: hidden;
+  transition: all theme.$transition-default;
+  z-index: 0;
 
-@media (prefers-reduced-motion: reduce) {
-  .accordion_header {
-    transition: none;
+  &_xs {
+    width: 36px;
+    height: 36px;
+    font-size: 0.5rem;
+
+    @include bp.down(sm) {
+      width: 32px;
+      height: 32px;
+      font-size: 0.45rem;
+    }
+    @include bp.up(lg) {
+      width: 40px;
+      height: 40px;
+      font-size: 0.55rem;
+    }
   }
 
-  .accordion_content {
+  &_small {
+    width: 42px;
+    height: 42px;
+    font-size: 0.6rem;
+
+    @include bp.down(sm) {
+      width: 38px;
+      height: 38px;
+      font-size: 0.52rem;
+    }
+    @include bp.up(lg) {
+      width: 48px;
+      height: 48px;
+      font-size: 0.66rem;
+    }
+  }
+
+  &_medium {
+    width: 56px;
+    height: 56px;
+    font-size: 0.7rem;
+
+    @include bp.down(sm) {
+      width: 50px;
+      height: 50px;
+      font-size: 0.62rem;
+    }
+    @include bp.up(lg) {
+      width: 62px;
+      height: 62px;
+      font-size: 0.78rem;
+    }
+  }
+
+  &_large {
+    width: 72px;
+    height: 72px;
+    font-size: 0.8rem;
+
+    @include bp.down(sm) {
+      width: 64px;
+      height: 64px;
+      font-size: 0.7rem;
+    }
+    @include bp.up(lg) {
+      width: 80px;
+      height: 80px;
+      font-size: 0.9rem;
+    }
+  }
+
+  &_xl {
+    width: 84px;
+    height: 84px;
+    font-size: 0.9rem;
+
+    @include bp.down(sm) {
+      width: 74px;
+      height: 74px;
+      font-size: 0.8rem;
+    }
+    @include bp.up(lg) {
+      width: 96px;
+      height: 96px;
+      font-size: 1rem;
+    }
+  }
+
+  &_circle {
+    border-radius: 50%;
+  }
+  &_rounded {
+    border-radius: theme.$border-radius-sm;
+  }
+  &_square {
+    border-radius: 0;
+  }
+
+  &_outline {
+    border-style: solid;
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
+    @include bp.up(lg) {
+      border-width: 2px;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    &_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  .avatar_clickable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:focus {
+      outline: 2px solid var(--focus-outline-color);
+      outline-offset: 2px;
+    }
+
+    @include bp.down(sm) {
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  &_clear {
+    background-color: transparent;
+
+    &.avatar_clickable:hover {
+      background-color: color.adjust(#000, $lightness: -10%);
+      transform: translateY(-2px);
+
+      @include bp.down(sm) {
+        transform: translateY(-1px);
+      }
+    }
+
+    &.avatar_clickable:focus {
+      outline: 2px solid var(--text-color-primary);
+      outline-offset: 1px;
+    }
+
+    &.avatar_outline {
+      color: var(--text-color-primary);
+      border-color: var(--text-color-primary);
+
+      &.avatar_clickable:hover {
+        background-color: transparent;
+        border-color: color.adjust(#000, $lightness: 10%);
+      }
+    }
+  }
+
+  @each $name, $props in theme.$themes {
+    &_#{$name} {
+      background-color: map.get($props, bg);
+      color: var(--text-color-primary);
+
+      &.avatar_clickable:hover {
+        background-color: map.get($props, hover);
+        transform: translateY(-2px);
+
+        @include bp.down(sm) {
+          transform: translateY(-1px);
+        }
+      }
+
+      &.avatar_clickable:focus {
+        outline: 2px solid map.get($props, border);
+        outline-offset: 2px;
+      }
+    }
+
+    &_#{$name}.avatar_outline {
+      background-color: transparent;
+      color: map.get($props, text-color);
+      border-color: map.get($props, border);
+
+      &.avatar_clickable:hover {
+        background-color: map.get($props, hover);
+        border-color: map.get($props, hover);
+        color: map.get($props, text-hover);
+      }
+    }
+  }
+
+  @each $name, $props in theme.$states {
+    &_#{$name} {
+      background-color: map.get($props, bg);
+      color: var(--text-color-primary);
+
+      &.avatar_clickable:hover {
+        background-color: map.get($props, hover);
+        transform: translateY(-2px);
+
+        @include bp.down(sm) {
+          transform: translateY(-1px);
+        }
+      }
+
+      &.avatar_clickable:focus {
+        outline: 2px solid map.get($props, border);
+        outline-offset: 2px;
+      }
+    }
+
+    &_#{$name}.avatar_outline {
+      background-color: transparent;
+      color: map.get($props, text-color);
+      border-color: map.get($props, border);
+
+      &.avatar_clickable:hover {
+        background-color: map.get($props, hover);
+        border-color: map.get($props, hover);
+        color: map.get($props, text-hover);
+      }
+    }
+  }
+
+  &_disabled {
+    background-color: theme.$disabled-color;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  &_disabled.avatar_outline {
+    color: theme.$disabled-color;
+    border-color: theme.$disabled-color;
+  }
+
+  &_image {
+    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  &_initials {
+    font-size: inherit;
+    font-weight: bold;
+    z-index: 1;
+    position: relative;
+    @include bp.up(lg) {
+      letter-spacing: 0.02em;
+    }
+  }
+
+  &_fallback_icon {
+    width: 70%;
+    height: 70%;
+    margin: auto;
+    display: block;
+    color: var(--text-color-primary);
+
+    @include bp.down(sm) {
+      width: 65%;
+      height: 65%;
+    }
+    @include bp.up(lg) {
+      width: 75%;
+      height: 75%;
+    }
+  }
+
+  &_status {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 2;
+
+    @include bp.down(sm) {
+      width: 10px;
+      height: 10px;
+    }
+    @include bp.up(lg) {
+      width: 14px;
+      height: 14px;
+    }
+
+    &_topLeft {
+      top: 12%;
+      left: 15%;
+    }
+    &_topRight {
+      top: 12%;
+      right: 15%;
+    }
+    &_bottomLeft {
+      bottom: 12%;
+      left: 15%;
+    }
+    &_bottomRight {
+      bottom: 12%;
+      right: 15%;
+    }
+
+    @include bp.down(sm) {
+      &_topLeft {
+        top: 14%;
+        left: 16%;
+      }
+      &_topRight {
+        top: 14%;
+        right: 16%;
+      }
+      &_bottomLeft {
+        bottom: 14%;
+        left: 16%;
+      }
+      &_bottomRight {
+        bottom: 14%;
+        right: 16%;
+      }
+    }
+
+    &_icon_only {
+      background-color: transparent;
+      border: none;
+      font-size: 1em;
+
+      svg {
+        width: 1em;
+        height: 1em;
+      }
+    }
+
+    &_online {
+      background-color: theme.$success-color;
+      border: 1px solid color.adjust(theme.$success-color, $lightness: 20%);
+    }
+    &_away {
+      background-color: theme.$warning-color;
+      border: 1px solid color.adjust(theme.$warning-color, $lightness: 20%);
+    }
+    &_offline {
+      background-color: theme.$disabled-color;
+      border: 1px solid color.adjust(theme.$disabled-color, $lightness: 20%);
+    }
+    &_busy {
+      background-color: theme.$error-color;
+      border: 1px solid color.adjust(theme.$error-color, $lightness: 20%);
+    }
+  }
+
+  &_dot {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar {
     transition: none;
+  }
+  .avatar .avatar_clickable:hover {
+    transform: none;
   }
 }
 
 @media (hover: none) {
-  .accordion_header:hover {
+  .avatar .avatar_clickable:hover {
     background: none;
+    transform: none;
   }
 }
 
 @media (forced-colors: active) {
-  .accordion_header {
+  .avatar {
     border: 1px solid ButtonText;
     outline-color: Highlight;
-  }
-}
-
-.accordion {
-  border-radius: theme.$border-radius-md;
-  margin-bottom: theme.$spacing-sm;
-  background-color: transparent !important;
-  transition: box-shadow theme.$transition-default;
-}
-
-@each $key, $value in theme.$rounding {
-  .accordion_round-#{$key} {
-    border-radius: $value;
-  }
-  .accordion_round-#{$key} .accordion_header {
-    border-radius: $value;
-  }
-  .accordion_round-#{$key} .accordion_content,
-  .accordion_round-#{$key}.accordion_expanded .accordion_content {
-    border-bottom-left-radius: $value;
-    border-bottom-right-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .accordion_shadow-#{$key} .accordion_header {
-    box-shadow: $value;
-  }
-}
-
-.accordion_expanded .accordion_header {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.accordion_header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-width: 250px;
-  width: 100%;
-  min-height: 44px;
-  color: var(--text-color-primary);
-  padding: theme.$spacing-sm;
-  font-size: clamp(theme.$font-size-sm, 0.9rem + 0.2vw, theme.$font-size-base);
-  font-weight: theme.$font-weight-bold;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  border-radius: theme.$border-radius-md;
-  outline: none;
-  transition:
-    background-color theme.$transition-default,
-    border-radius theme.$transition-default;
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-  }
-
-  @include bp.down(sm) {
-    padding: theme.$spacing-xs theme.$spacing-sm;
-  }
-
-  @include bp.between(sm, md) {
-    padding: theme.$spacing-sm theme.$spacing-md;
-  }
-
-  @include bp.up(lg) {
-    padding: theme.$spacing-sm theme.$spacing-lg;
-  }
-}
-
-@each $name, $values in theme.$themes {
-  .accordion_#{$name} {
-    background-color: map.get($values, bg);
-    color: var(--text-color-primary);
-  }
-  .accordion_#{$name}:hover {
-    background-color: map.get($values, hover);
-  }
-
-  .accordion_outline.accordion_#{$name} {
-    background-color: transparent;
-    border: 2px solid map.get($values, border);
-    color: map.get($values, text-color);
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-
-    &:hover {
-      background-color: map.get($values, hover);
-      color: map.get($values, text-hover);
-    }
-  }
-}
-
-@each $name, $values in theme.$states {
-  .accordion_#{$name} {
-    background-color: map.get($values, bg);
-    color: var(--text-color-primary);
-  }
-  .accordion_#{$name}:hover {
-    background-color: map.get($values, hover);
-  }
-
-  .accordion_outline.accordion_#{$name} {
-    background-color: transparent;
-    border: 2px solid map.get($values, border);
-    color: map.get($values, text-color);
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-
-    &:hover {
-      background-color: map.get($values, hover);
-      color: map.get($values, text-hover);
-    }
-  }
-}
-
-.accordion_disabled {
-  background-color: theme.$disabled-color;
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-.accordion_content {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition:
-    grid-template-rows 300ms ease,
-    padding theme.$transition-default,
-    border-radius theme.$transition-default,
-    opacity theme.$transition-default,
-    transform theme.$transition-default;
-  overflow: hidden;
-  box-sizing: border-box;
-  padding: 0 theme.$spacing-md;
-  background-color: var(--background-color-lighter);
-  color: var(--text-color-primary);
-  opacity: 0;
-
-  @include bp.down(sm) {
-    padding: 0 theme.$spacing-sm;
-  }
-
-  @include bp.up(lg) {
-    padding: 0 theme.$spacing-lg;
-  }
-}
-
-.accordion_content_inner {
-  min-height: 0;
-  overflow: hidden;
-}
-
-.accordion_expanded .accordion_content {
-  grid-template-rows: 1fr;
-  opacity: 1;
-  padding: theme.$spacing-xl theme.$spacing-xl;
-  border-bottom-left-radius: theme.$border-radius-md;
-  border-bottom-right-radius: theme.$border-radius-md;
-
-  @include bp.down(sm) {
-    padding: theme.$spacing-md theme.$spacing-md;
-  }
-
-  @include bp.up(lg) {
-    padding: theme.$spacing-xl calc(theme.$spacing-xl * 1.1);
-  }
-}
-
-.accordion_content.loaded {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.accordion_content.loading {
-  opacity: 0.5;
-}
-
-.accordion_content_clear {
-  background-color: transparent;
-  border: 1px solid var(--text-color-primary);
-
-  @include bp.down(sm) {
-    border-width: 1px;
-  }
-}
-
-.accordion_title {
-  flex-grow: 1;
-  font-size: clamp(theme.$font-size-sm, 0.9rem + 0.2vw, theme.$font-size-base);
-}
-
-.accordion_icon {
-  font-size: 1.5rem;
-  margin-right: 10px;
-  transition: transform theme.$transition-default;
-
-  @include bp.down(sm) {
-    margin-right: theme.$spacing-xs;
-  }
-
-  @include bp.up(lg) {
-    margin-right: theme.$spacing-sm;
-  }
-}
-
-.accordion_expanded .accordion_icon {
-  transform: rotate(180deg);
-}
-
-@each $size, $config in $sizes {
-  .accordion_#{$size} .accordion_header {
-    padding: list.nth(map.get($config, header-padding), 1)
-      list.nth(map.get($config, header-padding), 2);
-
-    $fs: map.get($config, header-font-size);
-
-    font-size: clamp(max(theme.$font-size-sm, $fs - 2px), 0.9rem + 0.25vw, $fs);
-
-    @include bp.up(lg) {
-      font-size: calc(#{$fs} * 1.05);
-    }
-  }
-
-  .accordion_#{$size} .accordion_icon {
-    $is: map.get($config, icon-size);
-
-    font-size: $is;
-
-    @include bp.up(lg) {
-      font-size: calc(#{$is} * 1.05);
-    }
   }
 }
