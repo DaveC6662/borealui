@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -81,12 +82,24 @@ $positions: (
     opacity 0.3s ease-in-out,
     transform 0.2s ease-in-out;
 
+  @include bp.down(xs) {
+    font-size: theme.$font-size-xs;
+    padding: theme.$spacing-xxs theme.$spacing-xs;
+    white-space: normal;
+  }
+
   &::after {
     content: "";
     position: absolute;
     border-style: solid;
     border-width: 6px;
     border-color: var(--primary-color) transparent transparent transparent;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: theme.$border-radius-sm;
   }
 }
 
@@ -171,5 +184,40 @@ $positions: (
 @each $key, $value in theme.$shadow {
   .tooltip_shadow-#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip,
+  .tooltip_container * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .tooltip_container:hover .tooltip {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (forced-colors: active) {
+  .tooltip {
+    background: CanvasText !important;
+    color: Canvas !important;
+    border: 1px solid ButtonText;
+  }
+  .tooltip::after {
+    border-color: CanvasText transparent transparent transparent !important;
+  }
+  .tooltip_bottom::after {
+    border-color: transparent transparent CanvasText transparent !important;
+  }
+  .tooltip_left::after {
+    border-color: transparent CanvasText transparent transparent !important;
+  }
+  .tooltip_right::after {
+    border-color: transparent transparent transparent CanvasText !important;
   }
 }

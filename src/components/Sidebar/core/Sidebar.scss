@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
-@use "sass:color";
 @use "sass:map";
 
 .sidebar {
@@ -12,6 +12,22 @@
   top: 0;
   overflow-y: auto;
   font-family: var(--font-family-primary);
+  overscroll-behavior: contain;
+
+  @include bp.down(md) {
+    width: 200px;
+  }
+  @include bp.up(lg) {
+    width: 260px;
+  }
+
+  @include bp.down(xs) {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid var(--background-color-lighter);
+  }
 
   @each $key, $value in theme.$rounding {
     &_round-#{$key} {
@@ -35,6 +51,10 @@
       background-color: transparent;
       color: map.get($values, color);
       border: 2px solid map.get($values, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
     }
 
     &_clear.sidebar_#{$theme} .sidebar_active {
@@ -60,6 +80,10 @@
       &:hover {
         background-color: map.get($values, hover);
       }
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
     }
   }
 }
@@ -73,6 +97,10 @@
   list-style: none;
   padding: 0;
   margin: 0;
+
+  @include bp.down(xs) {
+    display: contents;
+  }
 }
 
 .sidebar_link {
@@ -95,9 +123,19 @@
     letter-spacing: 0.05em;
   }
 
-  &:focus {
-    outline: 2px solid var(--text-color-primary);
-    outline-offset: 0.2px;
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  @include bp.down(xs) {
+    padding: theme.$spacing-xs theme.$spacing-sm;
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    padding: theme.$spacing-sm theme.$spacing-md;
+    font-size: theme.$font-size-base;
   }
 }
 
@@ -108,6 +146,10 @@
 
 .sidebar_child_link {
   font-size: 0.9rem;
+
+  @include bp.down(xs) {
+    font-size: theme.$font-size-sm;
+  }
 }
 
 .sidebar_chevron {
@@ -122,6 +164,20 @@
   svg {
     width: 1em;
     height: 1em;
+  }
+
+  @include bp.down(xs) {
+    margin-right: theme.$spacing-xxs;
+    svg {
+      width: 0.95em;
+      height: 0.95em;
+    }
+  }
+  @include bp.up(lg) {
+    svg {
+      width: 1.05em;
+      height: 1.05em;
+    }
   }
 }
 
@@ -142,6 +198,10 @@
 .sidebar_child_list {
   border-left: 3px solid var(--background-color-darker);
   margin: 0.25rem 0;
+
+  @include bp.down(xs) {
+    border-left-width: 2px;
+  }
 }
 
 .sidebar_footer {
@@ -154,6 +214,14 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+
+  @include bp.down(xs) {
+    position: static;
+    border-top: none;
+    padding: theme.$spacing-sm;
+    gap: theme.$spacing-xs;
+  }
 }
 
 .sidebar_footer_link {
@@ -164,9 +232,10 @@
     color: var(--text-color-primary);
   }
 
-  &:focus {
-    outline: 2px solid var(--text-color-primary);
-    outline-offset: 1.2px;
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
@@ -174,4 +243,37 @@
   font-size: 0.75rem;
   opacity: 0.7;
   margin-top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .sidebar_link:hover {
+    background-color: transparent;
+    letter-spacing: normal;
+  }
+}
+
+@media (forced-colors: active) {
+  .sidebar {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonFace;
+  }
+  .sidebar_link {
+    color: ButtonText;
+  }
+  .sidebar_link:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+  .sidebar_child_list {
+    border-left-color: ButtonText;
+  }
 }

@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -6,12 +7,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   width: 100%;
+  min-width: 200px;
   padding: theme.$spacing-sm theme.$spacing-md;
   background-color: var(--background-light-color);
   color: var(--text-color-primary);
   gap: theme.$spacing-sm;
+
+  @include bp.down(xs) {
+    padding: theme.$spacing-xs theme.$spacing-sm;
+    gap: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    padding: theme.$spacing-md theme.$spacing-lg;
+  }
 
   @each $theme, $color in theme.$themes {
     &_#{$theme} {
@@ -34,12 +44,11 @@
     &:first-child {
       justify-content: flex-start;
     }
-
     &:last-child {
       justify-content: flex-end;
     }
 
-    @media (width <=600px) {
+    @include bp.down(sm) {
       width: 100%;
       justify-content: space-between;
       margin-bottom: theme.$spacing-xs;
@@ -48,6 +57,12 @@
         margin-bottom: 0;
       }
     }
+
+    > *:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
   }
 
   &_title {
@@ -55,7 +70,7 @@
     font-weight: theme.$font-weight-bold;
     margin: 0;
 
-    @media (width <=600px) {
+    @include bp.down(sm) {
       font-size: theme.$font-size-md;
       margin-bottom: theme.$spacing-xs;
     }
@@ -64,7 +79,7 @@
   &_avatarWrapper {
     margin-left: theme.$spacing-sm;
 
-    @media (width <=600px) {
+    @include bp.down(sm) {
       margin-left: 0;
       margin-top: theme.$spacing-xs;
     }
@@ -81,5 +96,24 @@
 @each $key, $value in theme.$shadow {
   .toolbar_shadow-#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toolbar,
+  .toolbar * {
+    transition: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .toolbar {
+    background: Canvas;
+    color: CanvasText;
+    border-bottom: 1px solid ButtonText;
+  }
+  .toolbar_section > *:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

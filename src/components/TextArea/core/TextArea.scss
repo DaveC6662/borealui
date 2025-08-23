@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "sass:color";
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 
 .textArea {
@@ -8,13 +8,23 @@
   justify-content: center;
   align-items: center;
   transition: theme.$transition-default;
+  background: transparent;
+
+  @include bp.down(sm) {
+    width: 100%;
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: theme.$border-radius-sm;
+  }
 
   @each $key, $value in theme.$rounding {
     &_round-#{$key} {
       border-radius: $value;
     }
   }
-
   @each $key, $value in theme.$shadow {
     &_shadow-#{$key} {
       box-shadow: $value;
@@ -32,16 +42,31 @@
     font-family: theme.$font-family-primary;
     padding: theme.$spacing-sm;
     margin: theme.$spacing-sm;
-    font-size: theme.$font-size-base;
+    font-size: theme.$font-size-md;
     border-radius: theme.$border-radius-xs;
+    min-height: 2.5em;
+    line-height: 1.4;
 
     &::placeholder {
       color: var(--text-color-primary);
       opacity: 0.7;
     }
 
-    @media (width <= 480px) {
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: theme.$border-radius-xs;
+    }
+
+    @include bp.down(xs) {
       font-size: calc(theme.$font-size-base * 0.9);
+      padding: theme.$spacing-xs;
+      margin: theme.$spacing-xs;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-base;
+      padding: theme.$spacing-md;
+      margin: theme.$spacing-sm;
     }
   }
 
@@ -58,25 +83,41 @@
       height: 1em;
       color: var(--text-color-primary);
 
-      @media (width <= 480px) {
+      @include bp.down(xs) {
         width: 15px;
         height: 15px;
+      }
+      @include bp.up(lg) {
+        width: 1.1em;
+        height: 1.1em;
       }
     }
   }
 
-  @each $theme, $props in theme.$themes {
-    &_#{$theme} {
+  @each $themeName, $props in theme.$themes {
+    &_#{$themeName} {
       background-color: map.get($props, bg);
       color: map.get($props, text, inherit);
-      box-shadow: map.get($props, shadow, theme.$box-shadow-medium);
+      box-shadow: if(
+        map.has-key($props, shadow),
+        map.get($props, shadow),
+        theme.$box-shadow-medium
+      );
 
       &:hover {
-        background-color: map.get($props, hover, map.get($props, bg));
+        background-color: if(
+          map.has-key($props, hover),
+          map.get($props, hover),
+          map.get($props, bg)
+        );
       }
 
-      .textInput::placeholder {
-        color: map.get($props, placeholder, var(--text-color-primary));
+      .textArea_textInput::placeholder {
+        color: if(
+          map.has-key($props, placeholder),
+          map.get($props, placeholder),
+          var(--text-color-primary)
+        );
       }
 
       &.textArea_outline {
@@ -85,14 +126,23 @@
         box-shadow: none;
         border: 2px solid map.get($props, border);
       }
+
+      .textArea_textInput:focus-visible {
+        outline: 2px solid map.get($props, border);
+        outline-offset: 2px;
+      }
     }
   }
 
-  @each $state, $props in theme.$states {
-    &_#{$state} {
+  @each $stateName, $props in theme.$states {
+    &_#{$stateName} {
       border: 2px solid map.get($props, border);
       color: map.get($props, text, inherit);
-      box-shadow: map.get($props, shadow, theme.$box-shadow-medium);
+      box-shadow: if(
+        map.has-key($props, shadow),
+        map.get($props, shadow),
+        theme.$box-shadow-medium
+      );
     }
   }
 
@@ -106,8 +156,38 @@
     cursor: not-allowed;
     background-color: theme.$disabled-color;
 
-    .textInput {
+    .textArea_textInput {
       background-color: transparent;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textArea,
+  .textArea * {
+    transition: none !important;
+  }
+}
+
+@media (hover: none) {
+  .textArea[class*="textArea_"]:hover {
+    background-color: inherit;
+  }
+}
+
+@media (forced-colors: active) {
+  .textArea {
+    background: Canvas !important;
+    color: CanvasText !important;
+    border: 1px solid ButtonText !important;
+  }
+  .textArea_textInput {
+    background: Canvas;
+    color: CanvasText;
+  }
+  .textArea_textInput:focus-visible,
+  .textArea:focus-within {
+    outline: 2px solid Highlight !important;
+    outline-offset: 2px !important;
   }
 }

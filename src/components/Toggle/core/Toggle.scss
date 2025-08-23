@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 @use "sass:list";
 
@@ -64,17 +65,29 @@ $sizes: (
   display: flex;
   align-items: center;
   gap: theme.$spacing-sm;
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+  }
 }
 
 .toggle_label {
   font-size: theme.$font-size-md;
   color: var(--text-color-primary);
+
+  @include bp.down(xs) {
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
 }
 
 .toggle {
   background-color: theme.$disabled-color;
-
-  // border-radius: 50px;
   position: relative;
   cursor: pointer;
   border: none;
@@ -83,10 +96,14 @@ $sizes: (
   transition: background 0.3s ease-in-out;
   outline: none;
 
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 9999px;
+  }
+
   &_slider {
     background-color: var(--text-color-primary);
-
-    // border-radius: 50%;
     position: absolute;
     left: 4px;
     transition: transform 0.3s ease-in-out;
@@ -106,7 +123,6 @@ $sizes: (
     background-color: map.get($color, bg);
   }
 }
-
 @each $state, $color in theme.$states {
   .toggle_#{$state} .toggle_active {
     outline: 2px solid map.get($color, border);
@@ -114,17 +130,51 @@ $sizes: (
 }
 
 @each $name, $vals in $sizes {
+  $tw: list.nth(map.get($vals, toggle), 1);
+  $th: list.nth(map.get($vals, toggle), 2);
+  $sw: list.nth(map.get($vals, slider), 1);
+  $sh: list.nth(map.get($vals, slider), 2);
+  $tx: map.get($vals, translate);
+
   .toggle_#{$name} .toggle {
-    width: list.nth(map.get($vals, toggle), 1);
-    height: list.nth(map.get($vals, toggle), 2);
+    width: $tw;
+    height: $th;
 
     &_slider {
-      width: list.nth(map.get($vals, slider), 1);
-      height: list.nth(map.get($vals, slider), 2);
+      width: $sw;
+      height: $sh;
     }
 
     &_active .toggle_slider {
-      transform: translateX(map.get($vals, translate));
+      transform: translateX($tx);
+    }
+
+    @include bp.down(xs) {
+      width: $tw * 0.9;
+      height: $th * 0.9;
+
+      &_slider {
+        width: $sw * 0.9;
+        height: $sh * 0.9;
+      }
+
+      &_active .toggle_slider {
+        transform: translateX($tx * 0.85);
+      }
+    }
+
+    @include bp.up(lg) {
+      width: $tw * 1.05;
+      height: $th * 1.05;
+
+      &_slider {
+        width: $sw * 1.05;
+        height: $sh * 1.05;
+      }
+
+      &_active .toggle_slider {
+        transform: translateX($tx * 1.05);
+      }
     }
   }
 }
@@ -149,9 +199,40 @@ $sizes: (
     }
   }
 }
-
 @each $key, $value in theme.$shadow {
   .toggle_shadow-#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle,
+  .toggle * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .toggle {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .toggle {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+  }
+  .toggle_active {
+    background: Highlight;
+  }
+  .toggle_slider {
+    background: ButtonText;
+  }
+  .toggle:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

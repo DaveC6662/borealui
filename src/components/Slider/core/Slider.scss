@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 @use "sass:color";
@@ -30,11 +31,25 @@ $slider-sizes: (
   display: flex;
   flex-direction: column;
   gap: theme.$spacing-xs;
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-sm;
+  }
 }
 
 .slider_label {
   font-size: theme.$font-size-sm;
   color: var(--text-color-primary);
+
+  @include bp.down(xs) {
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
 }
 
 .slider_wrapper {
@@ -42,6 +57,13 @@ $slider-sizes: (
   align-items: center;
   gap: theme.$spacing-sm;
   width: 100%;
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+  }
 }
 
 .slider {
@@ -50,14 +72,44 @@ $slider-sizes: (
   outline: none;
   background-color: var(--background-color-light);
   transition: background 0.3s ease;
+  accent-color: var(--text-color-primary);
+
+  &::-webkit-slider-runnable-track {
+    background: transparent;
+    border-radius: inherit;
+  }
+  &::-moz-range-track {
+    background: transparent;
+    border-radius: inherit;
+  }
 
   &::-webkit-slider-thumb,
   &::-moz-range-thumb {
     appearance: none;
     border-radius: 50%;
-    background: currentcolor;
+    background-color: var(--text-color-primary) !important;
     cursor: pointer;
     box-shadow: 0 0 2px rgb(0 0 0 / 20%);
+    border: none;
+    transition: transform 0.15s ease;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: 9999px;
+  }
+  &:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px var(--focus-outline-color, var(--primary-color));
+  }
+  &:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 3px var(--focus-outline-color, var(--primary-color));
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 }
 
@@ -77,26 +129,34 @@ $slider-sizes: (
   font-size: theme.$font-size-sm;
   color: var(--text-color-primary);
   min-width: 2ch;
+  text-align: right;
+
+  @include bp.down(xs) {
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
 }
 
-@each $name, $color in theme.$themes {
+@each $name, $vals in theme.$themes {
   .slider_#{$name} .slider {
-    background-color: map.get($color, bg);
+    background-color: map.get($vals, bg);
+    color: map.get($vals, bg);
 
-    &::-webkit-slider-thumb,
-    &::-moz-range-thumb {
-      color: map.get($color, bg);
+    &:hover {
+      background-color: map.get($vals, hover);
     }
   }
 }
 
-@each $name, $color in theme.$states {
+@each $name, $vals in theme.$states {
   .slider_#{$name} .slider {
-    background-color: map.get($color, bg);
+    background-color: map.get($vals, bg);
+    color: map.get($vals, bg);
 
-    &::-webkit-slider-thumb,
-    &::-moz-range-thumb {
-      color: map.get($color, bg);
+    &:hover {
+      background-color: map.get($vals, hover);
     }
   }
 }
@@ -109,10 +169,78 @@ $slider-sizes: (
   .slider_#{$size} .slider {
     height: map.get($props, track);
 
+    &::-webkit-slider-runnable-track,
+    &::-moz-range-track {
+      height: map.get($props, track);
+    }
+
     &::-webkit-slider-thumb,
     &::-moz-range-thumb {
       width: map.get($props, thumb);
       height: map.get($props, thumb);
     }
+
+    @include bp.down(xs) {
+      height: calc(#{map.get($props, track)} * 0.9);
+
+      &::-webkit-slider-runnable-track,
+      &::-moz-range-track {
+        height: calc(#{map.get($props, track)} * 0.9);
+      }
+
+      &::-webkit-slider-thumb,
+      &::-moz-range-thumb {
+        width: calc(#{map.get($props, thumb)} * 0.9);
+        height: calc(#{map.get($props, thumb)} * 0.9);
+      }
+    }
+
+    @include bp.up(lg) {
+      height: calc(#{map.get($props, track)} * 1.1);
+
+      &::-webkit-slider-runnable-track,
+      &::-moz-range-track {
+        height: calc(#{map.get($props, track)} * 1.1);
+      }
+
+      &::-webkit-slider-thumb,
+      &::-moz-range-thumb {
+        width: calc(#{map.get($props, thumb)} * 1.05);
+        height: calc(#{map.get($props, thumb)} * 1.05);
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider,
+  .slider * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .slider::-webkit-slider-thumb,
+  .slider::-moz-range-thumb {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .slider {
+    forced-color-adjust: none;
+    background: Canvas;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+  }
+  .slider::-webkit-slider-runnable-track,
+  .slider::-moz-range-track {
+    background: ButtonFace;
+    border: 1px solid ButtonText;
+  }
+  .slider:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
   }
 }

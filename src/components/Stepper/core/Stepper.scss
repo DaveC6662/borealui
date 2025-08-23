@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -17,12 +18,27 @@ $stepper-sizes: (
   align-items: center;
   justify-content: space-between;
   position: relative;
+  gap: theme.$spacing-sm;
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+  }
 
   &_vertical {
     flex-direction: column;
     align-items: flex-start;
     height: fit-content;
     gap: theme.$spacing-md;
+
+    .stepper_connector {
+      width: 2px;
+      height: auto;
+      align-self: stretch;
+      margin: theme.$spacing-xs 0;
+    }
   }
 
   @each $size, $font in $stepper-sizes {
@@ -42,7 +58,6 @@ $stepper-sizes: (
   &_clickable {
     cursor: pointer;
   }
-
   &_clickable:not(.stepper_disabled) .stepper_step_button:hover {
     transform: scale(1.1);
   }
@@ -58,7 +73,6 @@ $stepper-sizes: (
       transform: none;
       opacity: 0.5;
     }
-
     .stepper_step_label {
       color: var(--text-color-secondary);
       opacity: 0.5;
@@ -82,6 +96,14 @@ $stepper-sizes: (
   &_step_label {
     margin-left: theme.$spacing-sm;
     font-weight: theme.$font-weight-bold;
+    color: var(--text-color-primary);
+
+    @include bp.down(xs) {
+      margin-left: theme.$spacing-xs;
+    }
+    @include bp.up(lg) {
+      margin-left: theme.$spacing-md;
+    }
   }
 
   &_connector {
@@ -89,19 +111,25 @@ $stepper-sizes: (
     height: 2px;
     background-color: var(--text-color-primary);
     margin: 0 theme.$spacing-xs;
+
+    @include bp.down(xs) {
+      margin: 0 theme.$spacing-xxs;
+    }
+    @include bp.up(lg) {
+      margin: 0 theme.$spacing-sm;
+    }
   }
 
-  @each $name, $color in theme.$themes {
-  .stepper_#{$name} &_active .stepper_step_button {
-    background-color: map.get($color, bg);
+  @each $name, $vals in theme.$themes {
+    &.stepper_#{$name} &_active .stepper_step_button {
+      background-color: map.get($vals, bg);
+    }
   }
-}
-
-@each $name, $color in theme.$states {
-  .stepper_#{$name} &_active .stepper_step_button {
-    background-color: map.get($color, bg);
+  @each $name, $vals in theme.$states {
+    &.stepper_#{$name} &_active .stepper_step_button {
+      background-color: map.get($vals, bg);
+    }
   }
-}
 
   &_active .stepper_step_button {
     color: var(--text-color-primary);
@@ -114,7 +142,6 @@ $stepper-sizes: (
       color: theme.$disabled-color;
       border: 2px solid var(--background-color-light);
     }
-
     .stepper_step_label {
       color: theme.$disabled-color;
     }
@@ -123,4 +150,39 @@ $stepper-sizes: (
 
 .stepper_clear .stepper_active .stepper_step_button {
   background-color: var(--background-color-darker);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stepper,
+  .stepper * {
+    transition: none !important;
+    animation: none !important;
+  }
+  .stepper_clickable:not(.stepper_disabled) .stepper_step_button:hover {
+    transform: none !important;
+  }
+}
+
+@media (hover: none) {
+  .stepper_clickable:not(.stepper_disabled) .stepper_step_button:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .stepper {
+    color: CanvasText;
+  }
+  .stepper .stepper_step_button {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+  }
+  .stepper_active .stepper_step_button {
+    background: Highlight;
+    color: HighlightText;
+  }
+  .stepper_connector {
+    background: ButtonText;
+  }
 }

@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
-@use "sass:color";
 @use "sass:map";
 
 .textInput_container {
@@ -11,11 +11,19 @@
   margin: theme.$spacing-sm;
   transition: theme.$transition-default;
   max-width: 400px;
+  background: transparent;
 
-  @media (width <=480px) {
+  &:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: theme.$border-radius-md;
+  }
+
+  @include bp.down(xs) {
     padding: 0.3rem 0.5rem;
     height: 35px;
     width: 95%;
+    max-width: none;
   }
 
   input {
@@ -36,15 +44,24 @@
   border-radius: theme.$border-radius-lg;
   background-color: transparent;
   color: var(--text-color-primary);
+  font-family: theme.$font-family-primary;
+  min-height: 2.5rem;
 
   &::placeholder {
     color: var(--text-color-primary);
     opacity: 0.8;
   }
 
-  @media (width <=480px) {
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: theme.$border-radius-lg;
+  }
+
+  @include bp.down(xs) {
     width: 100%;
     font-size: calc(theme.$font-size-base * 0.9);
+    margin: theme.$spacing-xs;
   }
 
   &_icon_container {
@@ -57,7 +74,7 @@
       height: 1em;
       color: var(--text-color-primary);
 
-      @media (width <=480px) {
+      @include bp.down(xs) {
         width: 15px;
         height: 15px;
       }
@@ -67,8 +84,18 @@
   &_togglePassword {
     padding: theme.$spacing-xs;
     box-sizing: border-box;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
 
-    @media (width <=480px) {
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    @include bp.down(xs) {
       margin-top: theme.$spacing-xs;
     }
   }
@@ -88,8 +115,8 @@
   }
 }
 
-@each $theme, $vals in theme.$themes {
-  .textInput_#{$theme} {
+@each $themeName, $vals in theme.$themes {
+  .textInput_#{$themeName} {
     background-color: map.get($vals, bg);
     color: map.get($vals, text);
     box-shadow: map.get($vals, shadow, theme.$box-shadow-medium);
@@ -131,9 +158,36 @@
     }
   }
 }
-
 @each $key, $value in theme.$shadow {
   .textInput_shadow-#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textInput_container,
+  .textInput_container * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .textInput_container {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+  }
+  .textInput {
+    color: CanvasText;
+    background: Canvas;
+  }
+  .textInput::placeholder {
+    color: CanvasText;
+  }
+  .textInput:focus-visible,
+  .textInput_container:focus-within {
+    outline: 2px solid Highlight !important;
+    outline-offset: 2px !important;
   }
 }

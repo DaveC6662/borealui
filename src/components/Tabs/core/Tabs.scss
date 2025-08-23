@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -28,6 +29,10 @@ $sizes: (
 .tabs_container {
   width: 100%;
   background-color: transparent;
+
+  &:focus-within {
+    outline: none;
+  }
 }
 
 .tabs {
@@ -39,7 +44,7 @@ $sizes: (
   gap: theme.$spacing-xxs;
   background-color: transparent;
 
-  @media (width <= 480px) {
+  @include bp.down(xs) {
     flex-direction: column;
   }
 
@@ -71,16 +76,17 @@ $sizes: (
       transform: translateY(-2px);
     }
 
-    &:focus {
-      outline: 2px solid var(--focus-outline-color);
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
+      border-radius: 6px;
     }
 
     &:last-child {
       border-right: none;
     }
 
-    @media (width <= 480px) {
+    @include bp.down(xs) {
       border-right: none;
       border-bottom: 0.5px solid var(--text-color-primary);
 
@@ -103,6 +109,10 @@ $sizes: (
     &_#{$size} .tabs_tab {
       font-size: map.get($props, font);
       padding: map.get($props, padding);
+
+      @include bp.up(lg) {
+        font-size: calc(#{map.get($props, font)} * 1.05);
+      }
     }
   }
 
@@ -116,37 +126,37 @@ $sizes: (
     align-items: center;
     justify-content: center;
 
-    @media (width <= 768px) {
+    @include bp.down(sm) {
       padding: theme.$spacing-sm;
     }
 
-    @media (width <= 480px) {
+    @include bp.down(xs) {
       padding: 0;
     }
   }
 
-  @each $theme, $color in theme.$themes {
-    &_#{$theme} {
+  @each $themeName, $color in theme.$themes {
+    &_#{$themeName} {
       .tabs_tab.tabs_active {
         background-color: map.get($color, bg);
         border-bottom-color: map.get($color, border);
       }
 
-      .tabs_tab:focus {
+      .tabs_tab:focus-visible {
         outline: 2px solid map.get($color, border);
         outline-offset: 2px;
       }
     }
   }
 
-  @each $state, $color in theme.$states {
-    &_#{$state} {
+  @each $stateName, $color in theme.$states {
+    &_#{$stateName} {
       .tabs_tab.tabs_active {
         background-color: map.get($color, bg);
         border-bottom-color: map.get($color, border);
       }
 
-      .tabs_tab:focus {
+      .tabs_tab:focus-visible {
         outline: 2px solid map.get($color, border);
         outline-offset: 2px;
       }
@@ -173,5 +183,40 @@ $sizes: (
 @each $key, $value in theme.$shadow {
   .tabs_shadow-#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabs_tab {
+    transition: none !important;
+  }
+  .tabs_tab:hover {
+    transform: none !important;
+  }
+}
+
+@media (hover: none) {
+  .tabs_tab:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .tabs {
+    border-bottom-color: ButtonText;
+  }
+  .tabs_tab {
+    background: ButtonFace;
+    color: ButtonText;
+    border-right: 1px solid ButtonText;
+  }
+  .tabs_tab.tabs_active {
+    background: Highlight;
+    color: HighlightText;
+    border-bottom-color: Highlight;
+  }
+  .tabs_tab:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }
