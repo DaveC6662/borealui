@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:color";
 @use "sass:map";
 
@@ -12,6 +13,18 @@
   padding: theme.$spacing-xs theme.$spacing-sm;
   list-style: none;
   overflow-x: auto;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-sm;
+    gap: theme.$spacing-xs * 0.5;
+    padding: theme.$spacing-xs;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-lg;
+    gap: theme.$spacing-sm;
+    padding: theme.$spacing-sm theme.$spacing-md;
+  }
 }
 
 @each $key, $value in theme.$rounding {
@@ -35,6 +48,11 @@
       background-color: map.get($values, hover);
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-heavy;
+
+      @include bp.down(sm) {
+        transform: translateY(-1px);
+        box-shadow: theme.$box-shadow-medium;
+      }
     }
 
     &:focus {
@@ -47,6 +65,10 @@
     color: map.get($values, text-color);
     background-color: transparent;
     border: 2px solid map.get($values, border);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
 
     &:hover {
       color: map.get($values, text-hover);
@@ -69,6 +91,11 @@
       background-color: map.get($values, hover);
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-heavy;
+
+      @include bp.down(sm) {
+        transform: translateY(-1px);
+        box-shadow: theme.$box-shadow-medium;
+      }
     }
 
     &:focus {
@@ -81,6 +108,10 @@
     color: map.get($values, text-color);
     background-color: transparent;
     border: 2px solid map.get($values, border);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
 
     &:hover {
       color: map.get($values, text-hover);
@@ -96,22 +127,57 @@
 
 .breadcrumbs_xs {
   font-size: theme.$font-size-xs;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-xxs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-sm;
+  }
 }
 
 .breadcrumbs_small {
   font-size: theme.$font-size-sm;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
 }
 
 .breadcrumbs_medium {
   font-size: theme.$font-size-base;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-lg;
+  }
 }
 
 .breadcrumbs_large {
   font-size: theme.$font-size-lg;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-base;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-xl;
+  }
 }
 
 .breadcrumbs_xl {
   font-size: theme.$font-size-xl;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-lg;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-xl;
+  }
 }
 
 .breadcrumbs_list {
@@ -121,6 +187,13 @@
   margin: 0;
   list-style: none;
   flex-wrap: nowrap;
+
+  @include bp.down(sm) {
+    gap: theme.$spacing-xs * 0.5;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-sm;
+  }
 }
 
 .breadcrumbs_item {
@@ -171,4 +244,38 @@
   margin-top: -1px;
   display: flex;
   align-items: center;
+
+  @include bp.down(sm) {
+    padding: 0 theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    padding: 0 theme.$spacing-sm;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breadcrumbs,
+  .breadcrumbs_item {
+    transition: none;
+  }
+  .breadcrumbs:hover,
+  .breadcrumbs_item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (hover: none) {
+  .breadcrumbs:hover,
+  .breadcrumbs_item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .breadcrumbs {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
 }
