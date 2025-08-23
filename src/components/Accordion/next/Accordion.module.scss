@@ -1,32 +1,8 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
-@use "sass:color";
 @use "sass:map";
 @use "sass:list";
-
-@media (prefers-reduced-motion: reduce) {
-  .header {
-    transition: none;
-  }
-
-  .content {
-    transition: none;
-  }
-}
-
-@media (hover: none) {
-  .header:hover {
-    background: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .header {
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
-  }
-}
 
 $sizes: (
   "xs": (
@@ -87,7 +63,7 @@ $sizes: (
     }
 
     .content,
-    .expanded .content {
+    &.expanded .content {
       border-bottom-left-radius: $value;
       border-bottom-right-radius: $value;
     }
@@ -205,34 +181,36 @@ $sizes: (
 }
 
 .content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 300ms ease,
+    padding theme.$transition-default,
+    border-radius theme.$transition-default,
+    opacity theme.$transition-default,
+    transform theme.$transition-default;
+  overflow: hidden;
   box-sizing: border-box;
   padding: 0 theme.$spacing-md;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
   background-color: var(--background-color-lighter);
   color: var(--text-color-primary);
-  transition: theme.$transition-default;
+  opacity: 0;
 
   @include bp.down(sm) {
     padding: 0 theme.$spacing-sm;
   }
-
   @include bp.up(lg) {
     padding: 0 theme.$spacing-lg;
   }
 }
 
-.content.loaded {
-  opacity: 1;
+.content_inner {
+  min-height: 0;
+  overflow: hidden;
 }
 
-.content.loading {
-  opacity: 0.5;
-}
-
-.expanded.content {
-  max-height: none;
+.expanded .content {
+  grid-template-rows: 1fr;
   opacity: 1;
   padding: theme.$spacing-xl theme.$spacing-xl;
   border-bottom-left-radius: theme.$border-radius-md;
@@ -241,10 +219,17 @@ $sizes: (
   @include bp.down(sm) {
     padding: theme.$spacing-md theme.$spacing-md;
   }
-
   @include bp.up(lg) {
     padding: theme.$spacing-xl calc(theme.$spacing-xl * 1.1);
   }
+}
+
+.content.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+.content.loading {
+  opacity: 0.5;
 }
 
 .content_clear {
@@ -269,7 +254,6 @@ $sizes: (
   @include bp.down(sm) {
     margin-right: theme.$spacing-xs;
   }
-
   @include bp.up(lg) {
     margin-right: theme.$spacing-sm;
   }
@@ -300,12 +284,33 @@ $sizes: (
 
     .icon {
       $is: map.get($config, icon-size);
-
       font-size: $is;
 
       @include bp.up(lg) {
         font-size: calc(#{$is} * 1.05);
       }
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    transition: none;
+  }
+  .content {
+    transition: none;
+  }
+}
+
+@media (hover: none) {
+  .header:hover {
+    background: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .header {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
   }
 }

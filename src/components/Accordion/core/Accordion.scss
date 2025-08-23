@@ -46,29 +46,6 @@ $sizes: (
   ),
 );
 
-@media (prefers-reduced-motion: reduce) {
-  .accordion_header {
-    transition: none;
-  }
-
-  .accordion_content {
-    transition: none;
-  }
-}
-
-@media (hover: none) {
-  .accordion_header:hover {
-    background: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .accordion_header {
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
-  }
-}
-
 .accordion {
   border-radius: theme.$border-radius-md;
   margin-bottom: theme.$spacing-sm;
@@ -305,5 +282,28 @@ $sizes: (
     @include bp.up(lg) {
       font-size: calc(#{$is} * 1.05);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion_header {
+    transition: none;
+  }
+
+  .accordion_content {
+    transition: none;
+  }
+}
+
+@media (hover: none) {
+  .accordion_header:hover {
+    background: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .accordion_header {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
   }
 }
