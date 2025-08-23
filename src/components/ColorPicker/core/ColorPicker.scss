@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -23,21 +24,44 @@ $swatch-sizes: (
     pointer-events: none;
   }
 
+  @include bp.down(sm) {
+    padding: theme.$spacing-xs;
+    gap: theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    padding: theme.$spacing-md;
+    gap: theme.$spacing-sm;
+  }
+
   &_legend {
     font-size: theme.$font-size-sm;
     font-weight: theme.$font-weight-bold;
     margin-bottom: theme.$spacing-xs;
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-xs;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-md;
+    }
   }
 
   &_grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
     gap: theme.$spacing-xs;
+
+    @include bp.down(sm) {
+      gap: theme.$spacing-xxs;
+    }
+    @include bp.up(lg) {
+      gap: theme.$spacing-sm;
+    }
   }
 
   &_selected,
   &:focus-visible {
-    outline: 2px solid var(--text-color-primary);
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
   }
 
@@ -51,14 +75,20 @@ $swatch-sizes: (
     transition: outline-color 0.2s ease-in-out;
     box-sizing: border-box;
 
+    &:hover {
+      outline-color: var(--focus-outline-color, var(--primary-color));
+    }
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+    }
+
     .color_picker_round {
       border-radius: 50%;
     }
-
     .color_picker_square {
       border-radius: 6px;
     }
-
     .color_picker_pill {
       border-radius: 9999px;
       height: 50%;
@@ -68,6 +98,15 @@ $swatch-sizes: (
       &.color_picker_#{$size} {
         width: $val;
         height: $val;
+
+        @include bp.down(sm) {
+          width: calc(#{$val} * 0.85);
+          height: calc(#{$val} * 0.85);
+        }
+        @include bp.up(lg) {
+          width: calc(#{$val} * 1.1);
+          height: calc(#{$val} * 1.1);
+        }
       }
     }
   }
@@ -81,22 +120,28 @@ $swatch-sizes: (
     height: 80%;
     display: block;
     box-sizing: border-box;
+    border-radius: inherit;
   }
 
   &_custom_input {
     margin-top: theme.$spacing-xs;
     width: 100%;
+
+    @include bp.down(sm) {
+      margin-top: theme.$spacing-xxs;
+    }
+    @include bp.up(lg) {
+      margin-top: theme.$spacing-sm;
+    }
   }
 }
 
 .color_picker_circle {
   border-radius: 50%;
 }
-
 .color_picker_square {
   border-radius: 6px;
 }
-
 .color_picker_rounded {
   border-radius: 9999px;
 }
@@ -104,5 +149,32 @@ $swatch-sizes: (
 @each $key, $value in theme.$shadow {
   .color_picker_shadow-#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .color_picker,
+  .color_picker * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .color_picker_swatch:hover {
+    outline-color: transparent;
+  }
+}
+
+@media (forced-colors: active) {
+  .color_picker_swatch {
+    border: 1px solid ButtonText;
+    background: Canvas;
+    color: CanvasText;
+    outline-color: Highlight;
+    box-shadow: none !important;
+  }
+  .color_picker_preview {
+    background: CanvasText;
   }
 }
