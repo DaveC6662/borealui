@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
@@ -13,20 +14,57 @@ $notification-colors: (
 
 .notification_center {
   position: relative;
-  width: 100%;
+  width: fit-content;
   max-width: 400px;
   padding: theme.$spacing-sm;
   overflow: hidden;
 
+  @include bp.down(sm) {
+    max-width: 100%;
+    padding: theme.$spacing-xs;
+  }
+
+  @include bp.up(lg) {
+    max-width: 520px;
+    padding: theme.$spacing-md;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
   &_header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-weight: theme.$font-weight-bold;
     margin-bottom: theme.$spacing-sm;
+    gap: theme.$spacing-xs;
+
+    @include bp.down(sm) {
+      margin-bottom: theme.$spacing-xs;
+    }
+    @include bp.up(lg) {
+      margin-bottom: theme.$spacing-md;
+    }
 
     &_clearAll {
+      background: transparent;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      padding: theme.$spacing-xxs;
+
       &:hover {
         opacity: 0.8;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: 4px;
       }
     }
   }
@@ -42,6 +80,17 @@ $notification-colors: (
     list-style: none;
     max-height: 340px;
     overflow-y: auto;
+
+    @include bp.down(sm) {
+      max-height: 50vh;
+      gap: theme.$spacing-xxs;
+      padding: 2px;
+    }
+
+    @include bp.up(lg) {
+      max-height: 60vh;
+      gap: theme.$spacing-sm;
+    }
   }
 
   &_notification {
@@ -51,11 +100,40 @@ $notification-colors: (
     background-color: var(--background-color-dark);
     border-left: 4px solid transparent;
     animation: fade-in-up 0.3s ease;
+    transition:
+      background-color theme.$transition-default,
+      transform theme.$transition-default,
+      box-shadow theme.$transition-default;
+
+    &:hover {
+      background-color: var(--background-color);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    @include bp.down(sm) {
+      padding: theme.$spacing-xxs;
+    }
+    @include bp.up(lg) {
+      padding: theme.$spacing-sm;
+    }
   }
 
   &_icon {
     margin-right: theme.$spacing-sm;
     font-size: 1.2rem;
+
+    @include bp.down(sm) {
+      margin-right: theme.$spacing-xs;
+      font-size: 1rem;
+    }
+    @include bp.up(lg) {
+      font-size: 1.3rem;
+    }
   }
 
   .notification_center_content {
@@ -64,21 +142,47 @@ $notification-colors: (
     .notification_center_message {
       display: block;
       font-size: theme.$font-size-base;
+
+      @include bp.down(sm) {
+        font-size: theme.$font-size-sm;
+      }
+      @include bp.up(lg) {
+        font-size: theme.$font-size-md;
+      }
     }
 
     .notification_center_timestamp {
       font-size: theme.$font-size-sm;
       color: var(--text-color-secondary);
+
+      @include bp.down(sm) {
+        font-size: theme.$font-size-xs;
+      }
     }
   }
 
   .notification_center_close {
     margin-left: theme.$spacing-sm;
+    background: transparent;
+    color: inherit;
     border: none;
     box-shadow: none;
+    cursor: pointer;
+    padding: theme.$spacing-xxs;
+    line-height: 1;
 
     &:hover {
       opacity: 0.7;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    @include bp.down(sm) {
+      margin-left: theme.$spacing-xs;
     }
   }
 
@@ -94,9 +198,41 @@ $notification-colors: (
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .notification_center_shadow-#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notification_center,
+  .notification_center * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .notification_center_notification:hover {
+    background-color: var(--background-color-dark);
+  }
+  .notification_center_header_clearAll:hover,
+  .notification_center_close:hover {
+    opacity: 1;
+  }
+}
+
+@media (forced-colors: active) {
+  .notification_center_notification {
+    background: Canvas;
+    color: CanvasText;
+    border-left: 3px solid Highlight;
+  }
+
+  .notification_center_close,
+  .notification_center_header_clearAll {
+    color: ButtonText;
+    border: 1px solid ButtonText;
+    border-radius: 4px;
   }
 }

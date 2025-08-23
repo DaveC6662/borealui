@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 
 .form_group {
@@ -7,10 +8,21 @@
   margin-bottom: theme.$spacing-md;
   width: fit-content;
 
+  @include bp.down(sm) {
+    width: 100%;
+  }
+
   &_label {
     color: var(--text-color-primary);
     font-size: theme.$font-size-base;
     margin-bottom: theme.$spacing-xxs;
+
+    @include bp.down(xs) {
+      font-size: theme.$font-size-sm;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-lg;
+    }
   }
 
   &_required {
@@ -22,7 +34,7 @@
     display: flex;
     flex-direction: column;
 
-    @media (width >= 600px) {
+    @include bp.up(sm) {
       flex-direction: row;
       gap: theme.$spacing-sm;
       align-items: center;
@@ -31,6 +43,10 @@
 
   &_input_field {
     width: fit-content;
+
+    @include bp.down(sm) {
+      width: 100%;
+    }
   }
 
   &_controller {
@@ -39,7 +55,7 @@
     align-items: center;
     margin-top: theme.$spacing-xs;
 
-    @media (width >= 480px) {
+    @include bp.up(xs) {
       margin-top: 0;
     }
   }
@@ -48,12 +64,18 @@
   &_error_message {
     font-size: theme.$font-size-sm;
     margin-top: 4px;
+
+    @include bp.down(xs) {
+      font-size: theme.$font-size-xxs;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-base;
+    }
   }
 
   &_description {
     color: var(--text-color-primary);
   }
-
   &_error_message {
     color: theme.$error-color;
   }
@@ -69,7 +91,7 @@
       width: auto;
       text-align: left;
 
-      @media (width >= 600px) {
+      @include bp.up(sm) {
         width: 150px;
         text-align: right;
       }
@@ -82,7 +104,7 @@
       align-items: center;
       justify-content: center;
 
-      @media (width >= 600px) {
+      @include bp.up(sm) {
         align-items: flex-start;
         gap: theme.$spacing-xxs;
       }
@@ -124,6 +146,35 @@
       .form_group_input_wrapper {
         margin-bottom: $spacing;
       }
+
+      @include bp.down(xs) {
+        .form_group_input_wrapper {
+          margin-bottom: max(#{$spacing} - 4px, theme.$spacing-xs);
+        }
+      }
     }
+  }
+}
+
+.form_group :focus-visible {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form_group,
+  .form_group * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .form_group {
+    color: CanvasText;
+  }
+  .form_group_horizontal_input_field_form-error {
+    border-color: Highlight !important;
   }
 }

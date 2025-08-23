@@ -1,10 +1,10 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 
 .messagePopup {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
   background: rgb(0 0 0 / 50%);
@@ -13,6 +13,14 @@
   align-items: center;
   z-index: 1000;
   transition: opacity 0.3s ease-in-out;
+
+  &.isHidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
 
   @each $key, $value in theme.$rounding {
     &_round-#{$key} &_popupContent {
@@ -28,11 +36,35 @@
 
   &_popupContent {
     background: var(--background-color-light);
+    color: var(--text-color-primary);
+    position: relative;
+    text-align: center;
+
+    width: 92%;
+    max-width: 400px;
     padding: theme.$spacing-lg theme.$spacing-lg;
     padding-top: 50px;
-    max-width: 400px;
-    text-align: center;
-    position: relative;
+    max-height: 80vh;
+    overflow: auto;
+
+    @include bp.down(sm) {
+      width: 94%;
+      max-width: 360px;
+      padding: theme.$spacing-md;
+      padding-top: calc(theme.$spacing-lg * 1.2);
+    }
+
+    @include bp.up(lg) {
+      max-width: 520px;
+      padding: theme.$spacing-xl;
+      padding-top: calc(theme.$spacing-xl * 1.1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 4px;
+      border-radius: 8px;
+    }
   }
 
   &_closeButton {
@@ -40,6 +72,22 @@
     top: theme.$spacing-xs;
     right: theme.$spacing-xs;
     cursor: pointer;
+    border: none;
+    line-height: 1;
+
+    @include bp.down(sm) {
+      padding: theme.$spacing-xs;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
   }
 
   &_popupMessage {
@@ -47,6 +95,13 @@
     font-weight: theme.$font-weight-bold;
     color: var(--text-color-primary);
     margin-bottom: theme.$spacing-sm;
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-base;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-lg;
+    }
   }
 
   &_popupActions {
@@ -54,5 +109,43 @@
     justify-content: center;
     gap: theme.$spacing-sm;
     margin-top: theme.$spacing-sm;
+
+    @include bp.down(sm) {
+      gap: theme.$spacing-xs;
+    }
+    @include bp.up(lg) {
+      gap: theme.$spacing-md;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .messagePopup,
+  .messagePopup * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .messagePopup_closeButton:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .messagePopup {
+    background: transparent;
+  }
+  .messagePopup_popupContent {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
+  .messagePopup_closeButton {
+    color: ButtonText;
+    border: 1px solid ButtonText;
+    border-radius: 4px;
   }
 }

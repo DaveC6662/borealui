@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:color";
 @use "sass:map";
 
@@ -17,10 +18,14 @@
     text-decoration: none;
     transform: scale(1.05);
     cursor: pointer;
+
+    @include bp.down(sm) {
+      transform: scale(1.03);
+    }
   }
 
-  &:focus {
-    outline: 2px solid theme.$disabled-color;
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
   }
 
@@ -39,6 +44,15 @@
   .svg {
     height: 20px;
     width: 20px;
+
+    @include bp.down(sm) {
+      height: 18px;
+      width: 18px;
+    }
+    @include bp.up(lg) {
+      height: 22px;
+      width: 22px;
+    }
   }
 
   @each $name, $values in theme.$themes {
@@ -50,10 +64,19 @@
         background-color: map.get($values, hover);
       }
 
+      &:focus-visible {
+        outline: 2px solid map.get($values, border);
+        outline-offset: 2px;
+      }
+
       &.icon_button_outline {
         background-color: transparent;
         color: map.get($values, border);
         border: 2px solid map.get($values, border);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
       }
 
       &.icon_button_outline:hover {
@@ -72,10 +95,19 @@
         background-color: map.get($values, hover);
       }
 
+      &:focus-visible {
+        outline: 2px solid map.get($values, border);
+        outline-offset: 2px;
+      }
+
       &.icon_button_outline {
         background-color: transparent;
         color: map.get($values, border);
         border: 2px solid map.get($values, border);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
       }
 
       &.icon_button_outline:hover {
@@ -113,14 +145,37 @@
     ),
   );
 
-  @each $size, $values in $sizes {
+  @each $size, $vals in $sizes {
     &_#{$size} {
-      width: map.get($values, size);
-      height: map.get($values, size);
+      $dim: map.get($vals, size);
+      $ico: map.get($vals, icon);
+
+      width: $dim;
+      height: $dim;
 
       svg {
-        width: map.get($values, icon);
-        height: map.get($values, icon);
+        width: $ico;
+        height: $ico;
+      }
+
+      @include bp.down(sm) {
+        width: calc(#{$dim} * 0.9);
+        height: calc(#{$dim} * 0.9);
+
+        svg {
+          width: calc(#{$ico} * 0.9);
+          height: calc(#{$ico} * 0.9);
+        }
+      }
+
+      @include bp.up(lg) {
+        width: calc(#{$dim} * 1.1);
+        height: calc(#{$dim} * 1.1);
+
+        svg {
+          width: calc(#{$ico} * 1.05);
+          height: calc(#{$ico} * 1.05);
+        }
       }
     }
   }
@@ -140,5 +195,37 @@
     border-top-color: var(--text-color-primary);
     border-radius: 50%;
     animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon_button,
+  .icon_button * {
+    transition: none !important;
+  }
+  .icon_button:hover {
+    transform: none !important;
+  }
+  .icon_button_loader {
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .icon_button:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .icon_button {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonText;
+    outline-color: Highlight;
+  }
+
+  .icon_button.icon_button_outline {
+    border: 1px solid ButtonText;
   }
 }

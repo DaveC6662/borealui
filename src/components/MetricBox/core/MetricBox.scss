@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
@@ -11,20 +12,46 @@
   background: var(--background-primary-light-color);
   min-width: 120px;
   width: fit-content;
+  max-width: 100%;
   height: fit-content;
   text-align: center;
   margin: theme.$spacing-sm;
   transition: theme.$transition-default;
   gap: theme.$spacing-sm;
 
-  @media (width >=480px) {
+  @include bp.up(xs) {
     padding: theme.$spacing-sm;
+  }
+
+  @include bp.down(sm) {
+    gap: theme.$spacing-xs;
+    margin: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+    margin: theme.$spacing-md;
+    min-width: 140px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: 8px;
   }
 
   &_icon {
     font-size: 2rem;
     color: inherit;
     padding: theme.$spacing-sm;
+
+    @include bp.down(sm) {
+      font-size: 1.8rem;
+      padding: theme.$spacing-xs;
+    }
+    @include bp.up(lg) {
+      font-size: 2.2rem;
+      padding: theme.$spacing-md;
+    }
   }
 
   @each $key, $value in theme.$rounding {
@@ -47,7 +74,6 @@
       .metricBox_title {
         color: map.get($properties, color);
       }
-
       .metricBox_subtext {
         color: map.get($properties, color);
       }
@@ -55,6 +81,10 @@
       &.metricBox_outline {
         border: 2px solid map.get($properties, border);
         background-color: transparent;
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
       }
     }
 
@@ -71,7 +101,6 @@
       .metricBox_title {
         color: map.get($properties, color);
       }
-
       .metricBox_subtext {
         color: map.get($properties, color);
       }
@@ -79,6 +108,10 @@
       &.metricBox_outline {
         border: 2px solid map.get($properties, border);
         background-color: transparent;
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
       }
     }
 
@@ -96,23 +129,43 @@
     flex-direction: column;
     align-items: inherit;
     padding: theme.$spacing-sm;
+
+    @include bp.down(sm) {
+      padding: theme.$spacing-xs;
+    }
+    @include bp.up(lg) {
+      padding: theme.$spacing-md;
+    }
   }
 
   &_title {
     font-size: theme.$font-size-sm;
     color: var(--text-color-primary);
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-xs;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-base;
+    }
   }
 
   &_value {
     font-size: theme.$font-size-lg;
     font-weight: theme.$font-weight-bold;
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-md;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-xl;
+    }
   }
 
   &_left {
     align-items: flex-start;
     text-align: left;
   }
-
   &_right {
     align-items: flex-end;
     text-align: right;
@@ -163,17 +216,21 @@
       .metricBox_icon {
         font-size: map.get($properties, icon-size);
       }
-
       .metricBox_title {
         font-size: map.get($properties, title-size);
       }
-
       .metricBox_value {
         font-size: map.get($properties, value-size);
       }
-
       .metricBox_subtext {
         font-size: map.get($properties, subtext-size);
+      }
+
+      @include bp.down(sm) {
+        width: max(calc(#{map.get($properties, width)} * 0.9), 80px);
+      }
+      @include bp.up(lg) {
+        width: calc(#{map.get($properties, width)} * 1.05);
       }
     }
   }
@@ -182,5 +239,31 @@
     font-size: theme.$font-size-sm !important;
     color: var(--text-color-primary);
     opacity: 0.7;
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-xs !important;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-base !important;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metricBox,
+  .metricBox * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .metricBox {
+    background: Canvas;
+    color: CanvasText;
+    outline-color: Highlight;
+  }
+  .metricBox.metricBox_outline {
+    border: 1px solid ButtonText;
   }
 }
