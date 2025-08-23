@@ -38,7 +38,7 @@
     left: 0;
     width: 100%;
     z-index: 100;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 
   &_attachment-fixed {
@@ -47,7 +47,7 @@
     left: 0;
     width: 100%;
     z-index: 200;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
 
@@ -145,6 +145,7 @@
     img {
       max-height: 100%;
     }
+
     svg {
       height: 1em;
       width: 1em;
@@ -196,6 +197,7 @@
     border-top-right-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .footer_shadow-#{$key} {
     box-shadow: $value;

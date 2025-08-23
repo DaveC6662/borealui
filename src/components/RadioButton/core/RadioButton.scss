@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -11,6 +12,23 @@
   user-select: none;
   transition: all theme.$transition-default;
   position: relative;
+  color: var(--text-color-primary);
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xs;
+    font-size: theme.$font-size-sm;
+  }
+
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+    font-size: theme.$font-size-lg;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
 }
 
 .radio_input {
@@ -28,6 +46,7 @@
   justify-content: center;
   position: relative;
   transition: all theme.$transition-default;
+  background: transparent;
 
   &::after {
     content: "";
@@ -38,44 +57,41 @@
     transform: scale(0.6);
     transition: all theme.$transition-default;
   }
-}
 
-@each $name, $color in theme.$themes {
-  .radio_#{$name} {
-    color: map.get($color, bg);
+  @include bp.down(xs) {
+    width: 16px;
+    height: 16px;
 
-    .radio_circle {
-      border-color: map.get($color, border);
+    &::after {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  @include bp.up(lg) {
+    width: 20px;
+    height: 20px;
+
+    &::after {
+      width: 12px;
+      height: 12px;
     }
   }
 }
 
-@each $name, $color in theme.$states {
-  .radio_#{$name} {
-    color: map.get($color, bg);
-
-    .radio_circle {
-      border-color: map.get($color, border);
-    }
-  }
-}
-
-.radio_disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-
-  .radio_circle {
-    border-color: theme.$disabled-color;
-  }
-}
-
-.radio_clear .radio_circle {
-  border-color: var(--text-color-primary);
+.radio_input:focus-visible + .radio_circle {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 2px;
+  border-radius: 50%;
 }
 
 .radio_input:checked + .radio_circle::after {
   opacity: 1;
   transform: scale(1);
+}
+
+.radio_clear .radio_circle {
+  border-color: var(--text-color-primary);
 }
 
 .radio_clear .radio_circle::after {
@@ -90,6 +106,43 @@
     cursor: not-allowed;
     opacity: 0.6;
   }
+
+  @include bp.down(xs) {
+    font-size: theme.$font-size-sm;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
+}
+
+@each $name, $vals in theme.$themes {
+  .radio_#{$name} {
+    color: map.get($vals, bg);
+
+    .radio_circle {
+      border-color: map.get($vals, border);
+    }
+  }
+}
+
+@each $name, $vals in theme.$states {
+  .radio_#{$name} {
+    color: map.get($vals, bg);
+
+    .radio_circle {
+      border-color: map.get($vals, border);
+    }
+  }
+}
+
+.radio_disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  .radio_circle {
+    border-color: theme.$disabled-color;
+  }
 }
 
 @each $key, $value in theme.$rounding {
@@ -102,5 +155,26 @@
 @each $key, $value in theme.$shadow {
   .radio_shadow-#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radio_wrapper,
+  .radio_wrapper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .radio_circle {
+    background: Canvas;
+    border-color: ButtonText !important;
+  }
+
+  .radio_input:checked + .radio_circle::after {
+    background: Highlight !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

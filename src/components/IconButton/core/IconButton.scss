@@ -49,6 +49,7 @@
       height: 18px;
       width: 18px;
     }
+
     @include bp.up(lg) {
       height: 22px;
       width: 22px;
@@ -203,9 +204,11 @@
   .icon_button * {
     transition: none !important;
   }
+
   .icon_button:hover {
     transform: none !important;
   }
+
   .icon_button_loader {
     animation: none !important;
   }

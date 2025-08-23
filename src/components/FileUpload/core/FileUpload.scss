@@ -20,9 +20,11 @@
     padding: theme.$spacing-md;
     max-width: 100%;
   }
+
   @include bp.down(xs) {
     padding: theme.$spacing-sm;
   }
+
   @include bp.up(lg) {
     max-width: 420px;
   }
@@ -125,6 +127,7 @@
     @include bp.down(xs) {
       font-size: theme.$font-size-xs;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-base;
     }
@@ -175,6 +178,7 @@
     list-style: disc;
     padding-left: theme.$spacing-md;
   }
+
   &_rejected_item {
     margin-bottom: 2px;
   }
@@ -185,6 +189,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .file_upload_shadow-#{$key} {
     box-shadow: $value;
@@ -212,6 +217,7 @@
     border: 1px dashed ButtonText;
     outline-color: Highlight;
   }
+
   .file_upload:focus-visible,
   .file_upload:focus-within {
     outline: 2px solid Highlight;

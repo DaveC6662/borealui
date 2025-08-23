@@ -1,14 +1,20 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
-@use "sass:color";
 @use "sass:map";
 
 .select_wrapper {
   position: relative;
   display: inline-flex;
-  width: 300px;
+  justify-content: space-evenly;
+  align-items: center;
+  width: fit-content;
   margin: theme.$spacing-xs 0;
   transition: theme.$transition-default;
+
+  @include bp.down(sm) {
+    width: 100%;
+  }
 
   &:hover {
     box-shadow: theme.$box-shadow-heavy;
@@ -18,6 +24,59 @@
     opacity: 0.6;
     pointer-events: none;
     cursor: not-allowed;
+    background-color: theme.$disabled-color !important;
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  @each $themeName, $values in theme.$themes {
+    &.select_#{$themeName} {
+      background-color: map.get($values, bg);
+      color: map.get($values, color);
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+    }
+
+    &.select_#{$themeName}.select_outline {
+      background-color: transparent;
+      color: map.get($values, color);
+      border: 1px solid map.get($values, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+
+    &_clear.select_#{$themeName} {
+      background-color: transparent;
+    }
+  }
+
+  @each $stateName, $values in theme.$states {
+    &.select_#{$stateName} {
+      background-color: map.get($values, bg);
+      color: map.get($values, color);
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+    }
+
+    &.select_#{$stateName}.select_outline {
+      background-color: transparent;
+      color: map.get($values, color);
+      border: 1px solid map.get($values, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
   }
 }
 
@@ -26,7 +85,6 @@
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .select_shadow-#{$key} {
     box-shadow: $value;
@@ -34,73 +92,50 @@
 }
 
 .select_icon {
-  position: absolute;
-  top: 60%;
-  transform: translateY(-50%);
+  position: relative;
   z-index: 1;
-  right: 10px;
   pointer-events: none;
   font-size: 12px;
+  top: 4px;
   color: var(--text-color-primary);
   transform-origin: center;
   background-color: transparent !important;
+  right: theme.$spacing-sm;
+
+  @include bp.down(xs) {
+    font-size: 11px;
+  }
+  @include bp.up(lg) {
+    font-size: 14px;
+  }
 }
 
 .select {
   width: 100%;
+  min-height: 40px;
   padding: 5px 30px;
   font-size: theme.$font-size-sm;
   appearance: none;
   font-weight: 800;
   border: none;
   color: var(--text-color-primary);
+  background: transparent;
   cursor: pointer;
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
 
-  &:focus {
-    border-color: var(--primary-color);
-    outline: 2px solid var(--text-color-primary);
-    outline-offset: 5px;
+  @include bp.down(xs) {
+    min-height: 38px;
+    padding: 4px 28px 4px theme.$spacing-sm;
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-sm;
   }
 
-  @each $theme, $values in theme.$themes {
-    &_#{$theme} {
-      background-color: map.get($values, bg);
-      color: map.get($values, color);
-
-      &:hover {
-        background-color: map.get($values, hover);
-      }
-    }
-
-    &_#{$theme}.select_outline {
-      background-color: transparent;
-      color: map.get($values, color);
-      border: 1px solid map.get($values, border);
-    }
-
-    &_clear.select_#{$theme} {
-      background-color: transparent;
-    }
-  }
-
-  @each $state, $values in theme.$states {
-    &_#{$state} {
-      background-color: map.get($values, bg);
-      color: map.get($values, color);
-
-      &:hover {
-        background-color: map.get($values, hover);
-      }
-    }
-
-    &_#{$state}.select_outline {
-      background-color: transparent;
-      color: map.get($values, color);
-      border: 1px solid map.get($values, border);
-    }
+  &:focus-visible {
+    outline: 0px;
   }
 
   option {
@@ -113,5 +148,34 @@
     .select {
       background-color: transparent;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .select_wrapper,
+  .select_wrapper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .select_wrapper:hover {
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .select {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+  }
+  .select_icon {
+    color: ButtonText;
+  }
+  .select:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
   }
 }

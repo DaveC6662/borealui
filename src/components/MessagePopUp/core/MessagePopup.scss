@@ -19,8 +19,8 @@
     pointer-events: none;
   }
 
-  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
-    env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
 
   @each $key, $value in theme.$rounding {
     &_round-#{$key} &_popupContent {
@@ -39,7 +39,6 @@
     color: var(--text-color-primary);
     position: relative;
     text-align: center;
-
     width: 92%;
     max-width: 400px;
     padding: theme.$spacing-lg theme.$spacing-lg;
@@ -99,6 +98,7 @@
     @include bp.down(sm) {
       font-size: theme.$font-size-base;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-lg;
     }
@@ -113,6 +113,7 @@
     @include bp.down(sm) {
       gap: theme.$spacing-xs;
     }
+
     @include bp.up(lg) {
       gap: theme.$spacing-md;
     }
@@ -137,12 +138,14 @@
   .messagePopup {
     background: transparent;
   }
+
   .messagePopup_popupContent {
     background: Canvas;
     color: CanvasText;
     border: 1px solid ButtonText;
     outline-color: Highlight;
   }
+
   .messagePopup_closeButton {
     color: ButtonText;
     border: 1px solid ButtonText;

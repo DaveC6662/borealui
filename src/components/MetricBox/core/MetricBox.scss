@@ -27,6 +27,7 @@
     gap: theme.$spacing-xs;
     margin: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-md;
     margin: theme.$spacing-md;
@@ -48,6 +49,7 @@
       font-size: 1.8rem;
       padding: theme.$spacing-xs;
     }
+
     @include bp.up(lg) {
       font-size: 2.2rem;
       padding: theme.$spacing-md;
@@ -74,6 +76,7 @@
       .metricBox_title {
         color: map.get($properties, color);
       }
+
       .metricBox_subtext {
         color: map.get($properties, color);
       }
@@ -101,6 +104,7 @@
       .metricBox_title {
         color: map.get($properties, color);
       }
+
       .metricBox_subtext {
         color: map.get($properties, color);
       }
@@ -133,6 +137,7 @@
     @include bp.down(sm) {
       padding: theme.$spacing-xs;
     }
+
     @include bp.up(lg) {
       padding: theme.$spacing-md;
     }
@@ -145,6 +150,7 @@
     @include bp.down(sm) {
       font-size: theme.$font-size-xs;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-base;
     }
@@ -157,6 +163,7 @@
     @include bp.down(sm) {
       font-size: theme.$font-size-md;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-xl;
     }
@@ -166,6 +173,7 @@
     align-items: flex-start;
     text-align: left;
   }
+
   &_right {
     align-items: flex-end;
     text-align: right;
@@ -216,12 +224,15 @@
       .metricBox_icon {
         font-size: map.get($properties, icon-size);
       }
+
       .metricBox_title {
         font-size: map.get($properties, title-size);
       }
+
       .metricBox_value {
         font-size: map.get($properties, value-size);
       }
+
       .metricBox_subtext {
         font-size: map.get($properties, subtext-size);
       }
@@ -229,6 +240,7 @@
       @include bp.down(sm) {
         width: max(calc(#{map.get($properties, width)} * 0.9), 80px);
       }
+
       @include bp.up(lg) {
         width: calc(#{map.get($properties, width)} * 1.05);
       }
@@ -243,6 +255,7 @@
     @include bp.down(sm) {
       font-size: theme.$font-size-xs !important;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-base !important;
     }
@@ -263,6 +276,7 @@
     color: CanvasText;
     outline-color: Highlight;
   }
+
   .metricBox.metricBox_outline {
     border: 1px solid ButtonText;
   }

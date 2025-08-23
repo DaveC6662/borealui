@@ -100,15 +100,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     );
 
     const selectClasses = useMemo(
-      () =>
-        combineClassNames(
-          classMap.select,
-          classMap[theme],
-          classMap[state],
-          shadow && classMap[`shadow${capitalize(shadow)}`],
-          rounding && classMap[`round${capitalize(rounding)}`],
-          outline && classMap.outline
-        ),
+      () => combineClassNames(classMap.select, outline && classMap.outline),
       [classMap, theme, state, shadow, rounding, outline]
     );
 

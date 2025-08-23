@@ -21,6 +21,7 @@
     @include bp.down(sm) {
       margin: theme.$spacing-xs 0;
     }
+
     @include bp.up(lg) {
       height: 2px;
       margin: theme.$spacing-md 0;
@@ -35,6 +36,7 @@
     @include bp.down(sm) {
       margin: 0 theme.$spacing-xs;
     }
+
     @include bp.up(lg) {
       width: 2px;
       margin: 0 theme.$spacing-md;
@@ -110,6 +112,7 @@
   .divider.divider_dashed.divider_horizontal {
     border-top: 1px dashed ButtonText;
   }
+
   .divider.divider_dashed.divider_vertical {
     border-left: 1px dashed ButtonText;
   }

@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 
 $small-gap: 4px;
@@ -7,14 +8,18 @@ $large-gap: 20px;
 
 .pagination {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: $medium-gap;
   width: fit-content;
   margin: auto;
   justify-content: center;
   align-items: center;
 
-  @media (width <=480px) {
+  @include bp.down(sm) {
+    flex-wrap: wrap;
+  }
+
+  @include bp.down(xs) {
     flex-direction: row;
     gap: $medium-gap;
   }
@@ -27,13 +32,9 @@ $large-gap: 20px;
     margin: auto;
     padding: 0;
 
-    @media (width <=480px) {
-      gap: 5px;
-    }
-
-    @media (width <=400px) {
+    @include bp.down(xs) {
+      gap: clamp(5px, 4vw, $large-gap);
       order: -1;
-      gap: $large-gap;
     }
   }
 
@@ -44,7 +45,7 @@ $large-gap: 20px;
     justify-content: center;
     list-style-type: none;
 
-    @media (width <=480px) {
+    @include bp.down(xs) {
       flex-grow: 1;
       flex-direction: row;
       gap: $small-gap;
@@ -55,8 +56,35 @@ $large-gap: 20px;
   &_button {
     margin: 2px;
 
-    @media (width <=480px) {
+    @include bp.down(xs) {
       font-size: 12px;
     }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pagination,
+  .pagination * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .pagination_button {
+    color: ButtonText;
+    border: 1px solid ButtonText;
+    background: Canvas;
+  }
+
+  .pagination_button:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

@@ -34,9 +34,11 @@
     @include bp.down(md) {
       font-size: 2.5em;
     }
+
     @include bp.down(xs) {
       font-size: 2em;
     }
+
     @include bp.up(lg) {
       font-size: 3.25em;
     }
@@ -54,9 +56,11 @@
     @include bp.down(md) {
       font-size: theme.$font-size-base;
     }
+
     @include bp.down(xs) {
       font-size: theme.$font-size-sm;
     }
+
     @include bp.up(lg) {
       font-size: calc(theme.$font-size-lg * 1.05);
     }
@@ -70,9 +74,11 @@
     @include bp.down(md) {
       font-size: theme.$font-size-sm;
     }
+
     @include bp.down(xs) {
       font-size: theme.$font-size-xs;
     }
+
     @include bp.up(lg) {
       font-size: calc(theme.$font-size-base * 1.05);
     }
@@ -180,6 +186,7 @@
             map.get($font-sizes, $size)
           );
         }
+
         .empty_state_message {
           font-size: clamp(
             theme.$font-size-xxs,
@@ -188,6 +195,7 @@
           );
         }
       }
+
       @include bp.up(lg) {
         .empty_state_title {
           font-size: clamp(
@@ -196,6 +204,7 @@
             theme.$font-size-xl
           );
         }
+
         .empty_state_message {
           font-size: clamp(
             map.get($font-sizes, $size),
@@ -213,6 +222,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .empty_state_shadow-#{$key} {
     box-shadow: $value;
@@ -245,6 +255,7 @@
     color: CanvasText;
     outline-color: Highlight;
   }
+
   .empty_state.empty_state_outline {
     border: 1px solid ButtonText;
   }

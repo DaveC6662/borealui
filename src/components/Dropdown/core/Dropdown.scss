@@ -34,6 +34,7 @@
       right: 0;
       transform: translateX(0);
     }
+
     &_left {
       left: 0;
       transform: translateX(0);
@@ -44,6 +45,7 @@
         left: auto;
         right: 0;
       }
+
       &[data-overflow-left="true"] {
         right: auto;
         left: 0;
@@ -108,6 +110,7 @@
       padding: theme.$spacing-md;
       gap: theme.$spacing-xs;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-sm;
       padding: theme.$spacing-md theme.$spacing-lg;
@@ -122,6 +125,7 @@
       @include bp.down(sm) {
         margin-right: theme.$spacing-xxs;
       }
+
       @include bp.up(lg) {
         margin-right: theme.$spacing-sm;
       }
@@ -145,6 +149,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .menu_shadow-#{$key} {
     box-shadow: $value;
@@ -174,9 +179,11 @@
     border: 1px solid ButtonText;
     outline-color: Highlight;
   }
+
   .dropdown_item {
     border: 1px solid ButtonText;
   }
+
   .dropdown_item:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;

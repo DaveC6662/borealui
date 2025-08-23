@@ -72,7 +72,6 @@
 
     @include bp.down(lg) {
       position: absolute;
-      left: 50%;
       transform: translateX(-50%);
       flex-direction: row;
       justify-content: center;
@@ -127,6 +126,7 @@
 
     @include bp.down(md) {
       transition: none;
+
       svg {
         width: 1em;
         height: 1em;
@@ -151,6 +151,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .nav_shadow-#{$key} {
     box-shadow: $value;
@@ -177,6 +178,7 @@
     color: CanvasText;
     border: 1px solid ButtonText;
   }
+
   .nav_item:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;

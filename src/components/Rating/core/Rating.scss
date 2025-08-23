@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -14,6 +15,14 @@ $sizes: (
   display: flex;
   align-items: center;
   gap: theme.$spacing-sm;
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xs;
+  }
+
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+  }
 }
 
 .rating {
@@ -21,9 +30,21 @@ $sizes: (
   align-items: center;
   gap: theme.$spacing-xs;
 
+  @include bp.down(xs) {
+    gap: theme.$spacing-xxs;
+  }
+
+  @include bp.up(lg) {
+    gap: theme.$spacing-sm;
+  }
+
   @each $size, $font-size in $sizes {
     &_#{$size} {
       font-size: $font-size;
+
+      @include bp.up(lg) {
+        font-size: calc(#{$font-size} * 1.05);
+      }
     }
   }
 
@@ -34,9 +55,22 @@ $sizes: (
     margin: 0;
     display: inline-flex;
     align-items: center;
+
+    @include bp.down(xs) {
+      font-size: theme.$font-size-sm;
+    }
+
+    @include bp.up(lg) {
+      font-size: theme.$font-size-lg;
+    }
   }
 
   &_star {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border-radius: 4px;
     transition:
       color 0.3s ease-in-out,
       transform 0.2s ease;
@@ -46,6 +80,11 @@ $sizes: (
       width: 1em;
       height: 1em;
       display: block;
+
+      @include bp.up(lg) {
+        width: 1.05em;
+        height: 1.05em;
+      }
     }
   }
 
@@ -53,18 +92,18 @@ $sizes: (
     color: var(--primary-color);
   }
 
-  @each $theme, $color in theme.$themes {
-    &_#{$theme} {
+  @each $themeName, $vals in theme.$themes {
+    &_#{$themeName} {
       .rating_active {
-        color: map.get($color, bg);
+        color: map.get($vals, bg);
       }
     }
   }
 
-  @each $state, $color in theme.$states {
-    &_#{$state} {
+  @each $stateName, $vals in theme.$states {
+    &_#{$stateName} {
       .rating_active {
-        color: map.get($color, bg);
+        color: map.get($vals, bg);
       }
     }
   }
@@ -79,4 +118,51 @@ $sizes: (
 .rating_interactive .rating_star:hover {
   cursor: pointer;
   transform: scale(1.2);
+
+  @include bp.down(xs) {
+    transform: scale(1.1);
+  }
+}
+
+.rating_interactive .rating_star:focus-visible {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 2px;
+}
+
+.rating:focus-within {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rating_star,
+  .rating {
+    transition: none !important;
+  }
+
+  .rating_interactive .rating_star:hover {
+    transform: none !important;
+  }
+}
+
+@media (hover: none) {
+  .rating_interactive .rating_star:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .rating_star {
+    color: ButtonText;
+  }
+
+  .rating_active {
+    color: Highlight;
+  }
+
+  .rating_interactive .rating_star:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
 }

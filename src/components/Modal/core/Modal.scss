@@ -13,9 +13,8 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
-
-  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
-    env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
 }
 
 .modal_content {
@@ -58,6 +57,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .modal_shadow-#{$key} {
     box-shadow: $value;
