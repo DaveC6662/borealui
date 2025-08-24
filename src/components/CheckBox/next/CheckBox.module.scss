@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
@@ -40,9 +41,9 @@ $checkmark-sizes: (
 $label-font-sizes: (
   xs: theme.$font-size-xs,
   small: theme.$font-size-sm,
-  medium: theme.$font-size-base,
-  large: theme.$font-size-lg,
-  xl: theme.$font-size-xl,
+  medium: theme.$font-size-md,
+  large: theme.$font-size-base,
+  xl: theme.$font-size-lg,
 );
 
 .checkbox {
@@ -51,11 +52,20 @@ $label-font-sizes: (
   justify-content: center;
   cursor: pointer;
   gap: theme.$spacing-sm;
-  font-size: theme.$font-size-base;
+  font-size: theme.$font-size-md;
   user-select: none;
   position: relative;
   transition: all theme.$transition-default;
   background-color: transparent;
+
+  @include bp.down(sm) {
+    gap: theme.$spacing-xs;
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+    font-size: theme.$font-size-base;
+  }
 }
 
 .input {
@@ -70,7 +80,6 @@ $label-font-sizes: (
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .shadow#{$key} .box {
     box-shadow: $value;
@@ -81,32 +90,62 @@ $label-font-sizes: (
   .#{$size} .box {
     width: $dimension;
     height: $dimension;
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
+    @include bp.up(lg) {
+      border-width: 2px;
+    }
   }
 
   .#{$size} .box::after {
     $checkmark: map.get($checkmark-sizes, $size);
-
     width: map.get($checkmark, width);
     height: map.get($checkmark, height);
     border-left: map.get($checkmark, border-width) solid currentcolor;
     border-bottom: map.get($checkmark, border-width) solid currentcolor;
+
+    @include bp.up(lg) {
+      width: calc(#{map.get($checkmark, width)} * 1.05);
+      height: calc(#{map.get($checkmark, height)} * 1.05);
+      border-left-width: calc(#{map.get($checkmark, border-width)} * 1.05);
+      border-bottom-width: calc(#{map.get($checkmark, border-width)} * 1.05);
+    }
   }
 
   .#{$size} .box.indeterminate::after {
     $checkmark: map.get($checkmark-sizes, $size);
-
     width: map.get($checkmark, width);
     height: map.get($checkmark, border-width);
+
+    @include bp.up(lg) {
+      width: calc(#{map.get($checkmark, width)} * 1.05);
+      height: calc(#{map.get($checkmark, border-width)} * 1.05);
+    }
   }
 
   .#{$size} .label {
     font-size: map.get($label-font-sizes, $size);
+
+    @include bp.down(sm) {
+      font-size: clamp(
+        theme.$font-size-sm,
+        0.9rem + 0.1vw,
+        map.get($label-font-sizes, $size)
+      );
+    }
+    @include bp.up(lg) {
+      font-size: clamp(
+        map.get($label-font-sizes, $size),
+        0.95rem + 0.2vw,
+        theme.$font-size-lg
+      );
+    }
   }
 }
 
 .box {
-  width: 1em;
-  height: 1em;
   border: 2px solid currentcolor;
   display: flex;
   align-items: center;
@@ -114,6 +153,21 @@ $label-font-sizes: (
   background-color: #fff;
   position: relative;
   transition: all theme.$transition-default;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+
+    @include bp.up(lg) {
+      inset: -4px;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+  }
 }
 
 .box::after {
@@ -138,33 +192,41 @@ $label-font-sizes: (
 .label {
   color: var(--text-color-primary);
   margin-bottom: -1px;
+  line-height: 1.2;
+
+  @include bp.down(sm) {
+    line-height: 1.15;
+  }
+  @include bp.up(lg) {
+    line-height: 1.25;
+  }
 }
 
-@each $theme, $props in theme.$themes {
-  .#{$theme} {
+@each $name, $props in theme.$themes {
+  .#{$name} {
     color: map.get($props, border);
   }
 
-  .box.#{$theme} {
+  .box.#{$name} {
+    border-color: map.get($props, border);
+  }
+
+  .input:checked + .box.#{$name}::after {
+    border-color: map.get($props, border);
+  }
+}
+
+@each $state, $props in theme.$states {
+  .#{$state} {
+    color: map.get($props, bg);
+  }
+
+  .box.#{$state} {
+    border-color: map.get($props, bg);
+  }
+
+  .input:checked + .box.#{$state}::after {
     border-color: map.get($props, text);
-  }
-
-  .input:checked .box.#{$theme}::after {
-    border-color: map.get($props, border);
-  }
-}
-
-@each $theme, $props in theme.$states {
-  .#{$theme} {
-    color: map.get($props, border);
-  }
-
-  .box.#{$theme} {
-    border-color: map.get($props, border);
-  }
-
-  .input:checked .box.#{$theme}::after {
-    border-color: map.get($props, border);
   }
 }
 
@@ -172,4 +234,35 @@ $label-font-sizes: (
   opacity: 0.6;
   cursor: not-allowed;
   color: theme.$disabled-color;
+
+  .box {
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkbox,
+  .checkbox * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@media (hover: none) {
+  .checkbox:hover .box {
+    transform: none;
+    box-shadow: none;
+  }
+}
+@media (forced-colors: active) {
+  .box {
+    border-color: ButtonText;
+    background: Canvas;
+    color: CanvasText;
+    outline-color: Highlight;
+    box-shadow: none !important;
+  }
+  .box::after {
+    border-color: ButtonText;
+    background: ButtonText;
+  }
 }

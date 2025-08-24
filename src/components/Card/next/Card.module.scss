@@ -453,12 +453,41 @@
 
 .left {
   text-align: left;
+
+  .header,
+  .body,
+  .footer,
+  .actions {
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
 }
+
 .center {
   text-align: center;
+
+  .card_header,
+  .body,
+  .footer,
+  .actions {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 }
+
 .right {
   text-align: right;
+
+  .header,
+  .body,
+  .footer,
+  .actions {
+    align-items: flex-end;
+    justify-content: flex-end;
+    text-align: right;
+  }
 }
 
 .clickable {

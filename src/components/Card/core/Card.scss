@@ -386,14 +386,41 @@
 
 .card_left {
   text-align: left;
+
+  .card_header,
+  .card_body,
+  .card_footer,
+  .card_actions {
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
 }
 
 .card_center {
   text-align: center;
+
+  .card_header,
+  .card_body,
+  .card_footer,
+  .card_actions {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 }
 
 .card_right {
   text-align: right;
+
+  .card_header,
+  .card_body,
+  .card_footer,
+  .card_actions {
+    align-items: flex-end;
+    justify-content: flex-end;
+    text-align: right;
+  }
 }
 
 .card_horizontal {

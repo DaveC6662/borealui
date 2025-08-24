@@ -41,9 +41,9 @@ $checkmark-sizes: (
 $label-font-sizes: (
   xs: theme.$font-size-xs,
   small: theme.$font-size-sm,
-  medium: theme.$font-size-base,
-  large: theme.$font-size-lg,
-  xl: theme.$font-size-xl,
+  medium: theme.$font-size-md,
+  large: theme.$font-size-base,
+  xl: theme.$font-size-lg,
 );
 
 .checkbox {
@@ -52,7 +52,7 @@ $label-font-sizes: (
   justify-content: center;
   cursor: pointer;
   gap: theme.$spacing-sm;
-  font-size: theme.$font-size-base;
+  font-size: theme.$font-size-md;
   user-select: none;
   position: relative;
   transition: all theme.$transition-default;
@@ -65,7 +65,7 @@ $label-font-sizes: (
 
   @include bp.up(lg) {
     gap: theme.$spacing-md;
-    font-size: theme.$font-size-lg;
+    font-size: theme.$font-size-base;
   }
 }
 
@@ -135,7 +135,7 @@ $label-font-sizes: (
 
     @include bp.down(sm) {
       font-size: clamp(
-        theme.$font-size-xs,
+        theme.$font-size-sm,
         0.9rem + 0.1vw,
         map.get($label-font-sizes, $size)
       );
@@ -145,7 +145,7 @@ $label-font-sizes: (
       font-size: clamp(
         map.get($label-font-sizes, $size),
         0.95rem + 0.2vw,
-        theme.$font-size-xl
+        theme.$font-size-base
       );
     }
   }
