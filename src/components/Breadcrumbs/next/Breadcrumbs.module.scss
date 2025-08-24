@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:color";
 @use "sass:map";
 
@@ -12,6 +13,18 @@
   padding: theme.$spacing-xs theme.$spacing-sm;
   list-style: none;
   overflow-x: auto;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-sm;
+    gap: theme.$spacing-xs * 0.5;
+    padding: theme.$spacing-xs;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-lg;
+    gap: theme.$spacing-sm;
+    padding: theme.$spacing-sm theme.$spacing-md;
+  }
 }
 
 .ellipsis {
@@ -23,7 +36,6 @@
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -39,6 +51,11 @@
       background-color: map.get($values, hover);
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-heavy;
+
+      @include bp.down(sm) {
+        transform: translateY(-1px);
+        box-shadow: theme.$box-shadow-medium;
+      }
     }
 
     &:focus {
@@ -51,6 +68,10 @@
     color: map.get($values, text-color);
     background-color: transparent;
     border: 2px solid map.get($values, border);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
 
     &:hover {
       color: map.get($values, text-hover);
@@ -73,6 +94,11 @@
       background-color: map.get($values, hover);
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-heavy;
+
+      @include bp.down(sm) {
+        transform: translateY(-1px);
+        box-shadow: theme.$box-shadow-medium;
+      }
     }
 
     &:focus {
@@ -85,6 +111,10 @@
     color: map.get($values, text-color);
     background-color: transparent;
     border: 2px solid map.get($values, border);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
 
     &:hover {
       color: map.get($values, text-hover);
@@ -100,22 +130,53 @@
 
 .xs {
   font-size: theme.$font-size-xs;
-}
 
+  @include bp.down(sm) {
+    font-size: theme.$font-size-xxs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-sm;
+  }
+}
 .small {
   font-size: theme.$font-size-sm;
-}
 
+  @include bp.down(sm) {
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-md;
+  }
+}
 .medium {
-  font-size: theme.$font-size-base;
-}
+  font-size: theme.$font-size-md;
 
+  @include bp.down(sm) {
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
+}
 .large {
-  font-size: theme.$font-size-lg;
-}
+  font-size: theme.$font-size-base;
 
+  @include bp.down(sm) {
+    font-size: theme.$font-size-md;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-lg;
+  }
+}
 .xl {
   font-size: theme.$font-size-xl;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-lg;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-xxl;
+  }
 }
 
 .list {
@@ -125,6 +186,13 @@
   margin: 0;
   list-style: none;
   flex-wrap: nowrap;
+
+  @include bp.down(sm) {
+    gap: theme.$spacing-xs * 0.5;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-sm;
+  }
 }
 
 .item {
@@ -134,11 +202,9 @@
   color: inherit;
   transition: all theme.$transition-default;
 }
-
 .item_animate {
   animation: fade-in 0.3s ease-in-out;
 }
-
 .item_active {
   font-weight: theme.$font-weight-bolder;
   color: theme.$disabled-color;
@@ -155,7 +221,6 @@
   text-decoration: none;
   color: inherit;
 }
-
 .link_label {
   display: inline-block;
 
@@ -170,9 +235,56 @@
 }
 
 .separator {
-  margin: 0 theme.$spacing-xs;
-  margin-top: -1px;
+  padding: 0 theme.$spacing-xs;
   color: var(--text-color-primary);
+  margin-top: -1px;
   display: flex;
   align-items: center;
+
+  svg {
+    height: 1.2rem;
+    width: 1.2rem;
+
+    @include bp.down(sm) {
+      height: 1rem;
+      width: 1rem;
+    }
+
+    @include bp.up(lg) {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+  }
+
+  @include bp.down(sm) {
+    padding: 0 theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    padding: 0 theme.$spacing-sm;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breadcrumbs,
+  .item {
+    transition: none;
+  }
+  .breadcrumbs:hover,
+  .item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+@media (hover: none) {
+  .breadcrumbs:hover,
+  .item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+@media (forced-colors: active) {
+  .breadcrumbs {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
 }

@@ -83,7 +83,7 @@
     }
   }
 
-  &_full-width {
+  &_full_width {
     width: 100%;
     max-width: none;
     display: flex;
@@ -109,7 +109,7 @@
     animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 
-  &_button-icon {
+  &_button_icon {
     margin-right: theme.$spacing-sm;
     display: flex;
     align-items: center;
@@ -278,7 +278,7 @@
       }
     }
 
-    &_#{$size} .button_icon {
+    &_#{$size} .button_button_icon {
       width: map.get($values, icon);
       height: map.get($values, icon);
 

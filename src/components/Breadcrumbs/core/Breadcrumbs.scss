@@ -145,31 +145,31 @@
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-base;
+    font-size: theme.$font-size-md;
   }
 }
 
 .breadcrumbs_medium {
-  font-size: theme.$font-size-base;
+  font-size: theme.$font-size-md;
 
   @include bp.down(sm) {
     font-size: theme.$font-size-sm;
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-lg;
+    font-size: theme.$font-size-base;
   }
 }
 
 .breadcrumbs_large {
-  font-size: theme.$font-size-lg;
+  font-size: theme.$font-size-base;
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-base;
+    font-size: theme.$font-size-md;
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-xl;
+    font-size: theme.$font-size-lg;
   }
 }
 
@@ -181,7 +181,7 @@
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-xl;
+    font-size: theme.$font-size-xxl;
   }
 }
 
@@ -250,6 +250,21 @@
   margin-top: -1px;
   display: flex;
   align-items: center;
+
+  svg {
+    height: 1.2rem;
+    width: 1.2rem;
+
+    @include bp.down(sm) {
+      height: 1rem;
+      width: 1rem;
+    }
+
+    @include bp.up(lg) {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+  }
 
   @include bp.down(sm) {
     padding: 0 theme.$spacing-xxs;

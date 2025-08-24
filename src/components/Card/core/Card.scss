@@ -11,6 +11,8 @@
   background-color: theme.$background-color-surface;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   max-width: 450px;
   width: fit-content;
   height: fit-content;
@@ -186,6 +188,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: theme.$spacing-md;
 
     @include bp.down(sm) {
@@ -201,6 +204,8 @@
   &_body {
     padding: theme.$spacing-md;
     display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &_body {
@@ -215,7 +220,6 @@
 
   &_title {
     font-weight: theme.$font-weight-bold;
-    margin: 0;
     flex: 1;
     display: flex;
     gap: theme.$spacing-sm;
@@ -273,6 +277,8 @@
 
   &_actions {
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     flex-wrap: wrap;
     padding: theme.$spacing-sm;
     gap: theme.$spacing-sm;
@@ -375,21 +381,6 @@
     .card_children {
       font-size: theme.$font-size-xl;
     }
-  }
-}
-
-.card_left,
-.card_center,
-.card_right {
-  text-align: inherit;
-
-  .card_header,
-  .card_body,
-  .card_footer,
-  .card_actions {
-    align-items: inherit;
-    justify-content: inherit;
-    text-align: inherit;
   }
 }
 

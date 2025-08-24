@@ -6,12 +6,12 @@ import { ButtonProps } from "../Button.types";
 const classes = {
   button: "button",
   icon: "button_icon",
-  buttonIcon: "button_button-icon",
+  buttonIcon: "button_button_icon",
   buttonLabel: "button_label",
   loader: "button_loader",
   link: "button_link",
 
-  fullWidth: "button_full-width",
+  fullWidth: "button_full_width",
   disabled: "button_disabled",
   outline: "button_outline",
 

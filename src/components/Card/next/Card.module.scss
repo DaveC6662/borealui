@@ -1,7 +1,30 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
+
+@media (forced-colors: active) {
+  .card {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+    box-shadow: none !important;
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  .outline {
+    border: 1px solid ButtonText;
+  }
+  .footer {
+    border-top: 1px solid ButtonText;
+  }
+
+  .clickable:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
+  }
+}
 
 .card {
   overflow: hidden;
@@ -15,6 +38,16 @@
   height: fit-content;
   color: var(--text-color-primary);
   transition: transform 0.3s ease;
+
+  @include bp.down(sm) {
+    max-width: 100%;
+    margin: theme.$spacing-xs;
+  }
+
+  @include bp.up(lg) {
+    max-width: 600px;
+    margin: theme.$spacing-md;
+  }
 }
 
 @each $key, $value in theme.$rounding {
@@ -22,7 +55,6 @@
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -38,8 +70,14 @@
   justify-content: center;
   align-items: center;
   min-height: 250px;
-}
 
+  @include bp.down(sm) {
+    min-height: 180px;
+  }
+  @include bp.up(lg) {
+    min-height: 300px;
+  }
+}
 .fade_in {
   animation: fade-in 0.8s ease-in-out;
 }
@@ -51,11 +89,26 @@
   aspect-ratio: 4 / 4;
   object-fit: cover;
   border-bottom: 1px solid rgb(0 0 0 / 5%);
+
+  @include bp.down(sm) {
+    aspect-ratio: 1 / 1;
+  }
+  @include bp.up(lg) {
+    aspect-ratio: 16 / 9;
+  }
 }
 
-.image :global(img),
 .image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  display: block;
+
+  :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .vertical {
@@ -68,10 +121,18 @@
   .image {
     width: 100%;
     max-height: 200px;
+
+    @include bp.down(sm) {
+      max-height: 150px;
+    }
+    @include bp.up(lg) {
+      max-height: 300px;
+    }
   }
 }
 
 .horizontal {
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -80,12 +141,25 @@
   height: auto;
   max-width: 900px;
 
+  @include bp.down(sm) {
+    flex-direction: column;
+    max-width: 100%;
+    min-height: 150px;
+  }
+  @include bp.up(lg) {
+    min-height: 250px;
+    max-width: 1100px;
+  }
+
   .content {
-    display: flex;
     flex-direction: row;
     flex: 1;
     width: 100%;
     height: 100%;
+
+    @include bp.down(sm) {
+      flex-direction: column;
+    }
   }
 
   .image {
@@ -94,6 +168,14 @@
     aspect-ratio: 1.5;
     object-fit: cover;
     display: block;
+
+    @include bp.down(sm) {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
+    @include bp.up(lg) {
+      aspect-ratio: 16 / 10;
+    }
   }
 
   .body {
@@ -102,10 +184,24 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    @include bp.down(sm) {
+      padding: theme.$spacing-sm;
+    }
+    @include bp.up(lg) {
+      padding: theme.$spacing-lg;
+    }
   }
 
   .footer {
     padding: theme.$spacing-md;
+
+    @include bp.down(sm) {
+      padding: theme.$spacing-sm;
+    }
+    @include bp.up(lg) {
+      padding: theme.$spacing-lg;
+    }
   }
 }
 
@@ -117,11 +213,14 @@
   opacity: 0.6;
   box-shadow: none;
 }
-
 .outline {
   background: transparent;
   border: 2px solid currentcolor;
   box-shadow: none;
+
+  @include bp.down(sm) {
+    border-width: 1.5px;
+  }
 }
 
 @each $name, $props in theme.$themes {
@@ -133,19 +232,21 @@
     .description {
       color: var(--text-color-primary);
     }
-
     .loading {
       background-color: transparent;
     }
-  }
 
-  .#{$name}.outline {
-    background: transparent;
-    border: 2px solid map.get($props, border);
-    box-shadow: none;
+    &.outline {
+      background: transparent;
+      border: 2px solid map.get($props, border);
+      box-shadow: none;
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
   }
 }
-
 @each $name, $props in theme.$states {
   .#{$name} {
     background: map.get($props, bg);
@@ -155,15 +256,18 @@
     .description {
       color: var(--text-color-primary);
     }
-
     .loading {
       background-color: transparent;
     }
-  }
 
-  .#{$name}.outline {
-    background: transparent;
-    border: 2px solid map.get($props, border);
+    &.outline {
+      background: transparent;
+      border: 2px solid map.get($props, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
   }
 }
 
@@ -176,7 +280,16 @@
 .header {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: theme.$spacing-md;
+
+  @include bp.down(sm) {
+    padding: theme.$spacing-sm;
+  }
+  @include bp.up(lg) {
+    padding: theme.$spacing-lg;
+  }
 }
 
 .header,
@@ -186,10 +299,13 @@
 }
 
 .body {
-  display: flex;
   flex-direction: column;
   gap: theme.$spacing-sm;
-  padding: theme.$spacing-md;
+  padding: theme.$spacing-sm;
+
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+  }
 }
 
 .title {
@@ -198,118 +314,138 @@
   flex: 1;
   display: flex;
   gap: theme.$spacing-sm;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-lg;
+  }
 }
 
 .icon {
   font-size: 1.2em;
   display: flex;
   color: var(--text-color-primary);
+
+  @include bp.down(sm) {
+    font-size: 1em;
+  }
+  @include bp.up(lg) {
+    font-size: 1.4em;
+  }
 }
 
 .description {
   color: var(--text-color-primary);
   width: 95%;
   margin: theme.$spacing-xxs auto;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-lg;
+  }
 }
 
 .footer {
   padding: theme.$spacing-md;
   border-top: 2px solid rgb(0 0 0 / 10%);
+
+  @include bp.down(sm) {
+    padding: theme.$spacing-sm;
+    border-width: 1px;
+  }
+
+  @include bp.up(lg) {
+    padding: theme.$spacing-lg;
+  }
 }
 
 .actions {
   display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   flex-wrap: wrap;
   padding: theme.$spacing-sm;
   gap: theme.$spacing-sm;
+
+  @include bp.down(sm) {
+    gap: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+  }
 }
 
 .xs {
   .description {
     font-size: theme.$font-size-xs;
   }
-
   .icon {
     font-size: 0.9em;
   }
-
   .title {
     font-size: theme.$font-size-sm;
     line-height: 0.9em;
   }
-
   .children {
     font-size: theme.$font-size-xs;
   }
 }
-
 .small {
   .description {
     font-size: theme.$font-size-sm;
   }
-
   .icon {
     font-size: 1em;
   }
-
   .title {
     font-size: theme.$font-size-md;
   }
-
   .children {
     font-size: theme.$font-size-sm;
   }
 }
-
 .medium {
   .description {
     font-size: theme.$font-size-md;
   }
-
   .icon {
     font-size: 1.2em;
   }
-
   .title {
     font-size: theme.$font-size-base;
   }
-
   .children {
     font-size: theme.$font-size-md;
   }
 }
-
 .large {
   .description {
     font-size: theme.$font-size-lg;
   }
-
   .icon {
     font-size: 1.4em;
   }
-
   .title {
     font-size: 1.4em;
   }
-
   .children {
     font-size: theme.$font-size-lg;
   }
 }
-
 .xl {
   .description {
     font-size: theme.$font-size-xl;
   }
-
   .icon {
     font-size: 1.2em;
   }
-
   .title {
     font-size: 1.6em;
   }
-
   .children {
     font-size: theme.$font-size-xl;
   }
@@ -317,39 +453,61 @@
 
 .left {
   text-align: left;
-
-  .header,
-  .body,
-  .footer,
-  .actions {
-    align-items: flex-start;
-    justify-content: flex-start;
-    text-align: left;
-  }
 }
-
 .center {
   text-align: center;
+}
+.right {
+  text-align: right;
+}
 
-  .header,
-  .body,
-  .footer,
-  .actions {
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+.clickable {
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow theme.$transition-default;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: theme.$box-shadow-medium;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px color.adjust(#000, $lightness: 20%, $alpha: -0.8);
+  }
+
+  @include bp.down(sm) {
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: theme.$box-shadow-light;
+    }
   }
 }
 
-.right {
-  text-align: right;
+.card :focus-visible {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
 
-  .header,
-  .body,
-  .footer,
-  .actions {
-    align-items: flex-end;
-    justify-content: flex-end;
-    text-align: right;
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .clickable:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (hover: none) {
+  .clickable:hover {
+    transform: none;
+    box-shadow: none;
   }
 }
