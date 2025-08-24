@@ -7,6 +7,7 @@ import { NotificationCenterProps } from "../NotificationCenter.types";
 const classes = {
   wrapper: "notification_center",
   header: "notification_center_header",
+  body: "notification_center_body",
   list: "notification_center_list",
   notification: "notification_center_notification",
   icon: "notification_center_icon",

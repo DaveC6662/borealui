@@ -131,7 +131,12 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
         )}
       </div>
 
-      <div role="status" aria-live="polite" aria-relevant="additions text">
+      <div
+        role="status"
+        aria-live="polite"
+        aria-relevant="additions text"
+        className={classMap.body}
+      >
         <ul className={classMap.list} aria-labelledby={`${testId}-title`}>
           {notifications.map((note, index) => {
             const Icon = themeIcons[note.type || "info"];

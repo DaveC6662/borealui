@@ -98,20 +98,6 @@
   right: theme.$spacing-sm;
   z-index: 2;
   border: none;
-
-  @include bp.down(sm) {
-    padding: theme.$spacing-xs;
-  }
-
-  &:hover {
-    transform: translateY(-1px);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -16,102 +17,136 @@
 
   a {
     text-decoration: none;
+    color: inherit;
 
     &:hover {
       text-decoration: none;
     }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
   }
 
-  @media (width <= 1250px) {
+  @include bp.down(lg) {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     flex-direction: row;
     justify-content: center;
+    gap: theme.$spacing-sm;
   }
 
   @each $name, $values in theme.$themes {
-    &.#{$name} .item {
-      background-color: map.get($values, bg);
+    &.#{$name} {
+      .item {
+        background-color: map.get($values, bg);
+        color: var(--text-color-primary);
+        transition: theme.$transition-default;
 
-      &:hover {
-        background-color: map.get($values, hover);
-        transform: scale(1.1);
+        &:hover {
+          background-color: map.get($values, hover);
+          transform: scale(1.1);
+
+          @include bp.down(md) {
+            transform: scale(1.05);
+          }
+        }
+      }
+
+      .item--active,
+      .item[aria-current="page"] {
+        background-color: map.get($values, bg-light);
+        color: var(--secondary-color-darker);
+        font-weight: theme.$font-weight-bold;
       }
     }
-
-    &.#{$name} .item--active {
-      background-color: map.get($values, bg-light);
-      color: var(--secondary-color-darker);
-      font-weight: bold;
-    }
   }
+}
 
-  .list {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    top: 10px;
-    left: 10px;
-    gap: 1em;
-    list-style: none;
+.list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  top: 10px;
+  left: 10px;
+  gap: 1em;
+  list-style: none;
 
-    @media (width <= 1250px) {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      flex-direction: row;
-      justify-content: center;
-    }
-  }
-
-  .item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  @include bp.down(lg) {
+    position: absolute;
+    transform: translateX(-50%);
+    flex-direction: row;
     justify-content: center;
-    width: 80px;
-    height: 80px;
-    padding: 15px;
-    color: var(--text-color-primary);
-    text-decoration: none;
-    cursor: pointer;
-    transition: theme.$transition-default;
+    gap: theme.$spacing-sm;
+    top: 0;
+    left: 50%;
+  }
+}
 
-    @media (width <= 800px) {
-      width: 35px;
-      height: 35px;
-      padding: 5px;
-    }
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  padding: 15px;
+  color: var(--text-color-primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: theme.$transition-default;
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 8px;
   }
 
-  .linkContent {
-    display: flex;
-    flex-direction: column;
+  @include bp.down(md) {
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+  }
+}
 
-    .icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.5s ease-in-out;
+.linkContent {
+  display: flex;
+  flex-direction: column;
+}
 
-      svg {
-        width: 0.9em;
-        height: 0.9em;
-        object-fit: contain;
-      }
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+
+  svg {
+    width: 0.9em;
+    height: 0.9em;
+    object-fit: contain;
+  }
+
+  @include bp.down(md) {
+    transition: none;
+
+    svg {
+      width: 1em;
+      height: 1em;
     }
+  }
+}
 
-    .label {
-      font-size: theme.$font-size-sm;
-      margin-top: 5px;
-      display: none;
-      transition: opacity 0.5s ease-in-out;
+.label {
+  font-size: theme.$font-size-sm;
+  margin-top: 5px;
+  display: none;
+  transition: opacity 0.5s ease-in-out;
 
-      @media (width >= 800px) {
-        display: block;
-      }
-    }
+  @include bp.up(md) {
+    display: block;
   }
 }
 
@@ -120,9 +155,35 @@
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .container * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .item:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .item {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+  }
+
+  .item:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

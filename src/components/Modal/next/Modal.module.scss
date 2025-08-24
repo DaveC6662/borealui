@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 
 .overlay {
   position: fixed;
@@ -11,16 +12,45 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
+
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
 }
 
 .content {
   background: var(--background-color-light);
+  color: var(--text-color-primary);
+  position: relative;
   padding: theme.$spacing-xl;
   transform: scale(0.95);
   opacity: 0;
   transition:
     transform 0.2s ease,
     opacity 0.2s ease;
+
+  width: 92%;
+  max-width: 560px;
+  max-height: 85vh;
+  overflow: hidden;
+
+  @include bp.down(sm) {
+    width: 90%;
+    max-width: 100%;
+    border-top-left-radius: theme.$border-radius-lg;
+    border-top-right-radius: theme.$border-radius-lg;
+    padding: theme.$spacing-lg;
+  }
+
+  @include bp.up(lg) {
+    max-width: 720px;
+    padding: theme.$spacing-xl;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 4px;
+    border-radius: 8px;
+  }
 }
 
 @each $key, $value in theme.$rounding {
@@ -28,7 +58,6 @@
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -42,6 +71,10 @@
   .content {
     opacity: 1;
     transform: scale(1);
+
+    @include bp.down(sm) {
+      transform: translateY(0);
+    }
   }
 }
 
@@ -52,6 +85,10 @@
   .content {
     opacity: 0;
     transform: scale(0.95);
+
+    @include bp.down(sm) {
+      transform: translateY(12px);
+    }
   }
 }
 
@@ -60,4 +97,38 @@
   top: theme.$spacing-sm;
   right: theme.$spacing-sm;
   z-index: 2;
+  border: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .content,
+  .closeButton {
+    transition: none !important;
+  }
+}
+
+@media (hover: none) {
+  .closeButton:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .overlay {
+    background: transparent;
+  }
+
+  .content {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
+
+  .closeButton {
+    color: ButtonText;
+    border: 1px solid ButtonText;
+    border-radius: 4px;
+  }
 }
