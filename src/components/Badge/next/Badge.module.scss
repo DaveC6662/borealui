@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:color";
 @use "sass:map";
 
@@ -14,22 +15,45 @@
   border-radius: theme.$border-radius-sm;
   white-space: nowrap;
   transition: all theme.$transition-default;
+  cursor: default;
 
   &.clickable:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgb(0 0 0 / 15%);
     cursor: pointer;
+
+    @include bp.down(sm) {
+      transform: scale(1.03);
+      box-shadow: 0 4px 8px rgb(0 0 0 / 12%);
+    }
   }
 
-  &:focus {
+  &.clickable:focus {
     outline: 2px solid var(--focus-outline-color);
     outline-offset: 2px;
+  }
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-xs;
+    padding: 4px 8px;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-md;
+    padding: 6px 14px;
   }
 }
 
 .icon {
   font-size: 1.2em;
   margin-top: -0.1em;
+
+  @include bp.down(sm) {
+    font-size: 1em;
+  }
+  @include bp.up(lg) {
+    font-size: 1.3em;
+  }
 }
 
 .clear {
@@ -39,9 +63,14 @@
   &.clickable:hover {
     transform: translateY(-2px);
     box-shadow: theme.$box-shadow-heavy;
+
+    @include bp.down(sm) {
+      transform: translateY(-1px);
+      box-shadow: theme.$box-shadow-medium;
+    }
   }
 
-  &:focus {
+  &.clickable:focus {
     outline: 2px solid var(--text-color-primary);
     outline-offset: 2px;
   }
@@ -51,12 +80,21 @@
     color: var(--text-color-primary);
     border: 2px solid var(--text-color-primary);
 
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
+
     &.clickable:hover {
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-heavy;
+
+      @include bp.down(sm) {
+        transform: translateY(-1px);
+        box-shadow: theme.$box-shadow-medium;
+      }
     }
 
-    &:focus {
+    &.clickable:focus {
       outline: 2px solid var(--text-color-primary);
       outline-offset: 2px;
     }
@@ -84,9 +122,14 @@
       background-color: map.get($values, hover);
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-heavy;
+
+      @include bp.down(sm) {
+        transform: translateY(-1px);
+        box-shadow: theme.$box-shadow-medium;
+      }
     }
 
-    &:focus {
+    &.clickable:focus {
       outline: 2px solid map.get($values, border);
       outline-offset: 2px;
     }
@@ -101,6 +144,10 @@
     color: map.get($values, text-color);
     border: 2px solid map.get($values, border);
     box-shadow: none;
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
 
     &.clickable:hover {
       border-color: map.get($values, hover);
@@ -118,9 +165,14 @@
       background-color: map.get($values, hover);
       transform: translateY(-2px);
       box-shadow: theme.$box-shadow-heavy;
+
+      @include bp.down(sm) {
+        transform: translateY(-1px);
+        box-shadow: theme.$box-shadow-medium;
+      }
     }
 
-    &:focus {
+    &.clickable:focus {
       outline: 2px solid map.get($values, border);
       outline-offset: 2px;
     }
@@ -135,6 +187,10 @@
     color: map.get($values, text-color);
     border: 2px solid map.get($values, border);
     box-shadow: none;
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
 
     &.clickable:hover {
       border-color: map.get($values, hover);
@@ -153,24 +209,88 @@
 .xs {
   font-size: theme.$font-size-xxs;
   padding: 2px 8px;
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-xs;
+    padding: 3px 10px;
+  }
 }
 
 .small {
   font-size: theme.$font-size-xs;
   padding: 4px 8px;
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-sm;
+    padding: 4px 10px;
+  }
 }
 
 .medium {
   font-size: theme.$font-size-sm;
   padding: 4px 10px;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-xs;
+    padding: 3px 8px;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-md;
+    padding: 5px 12px;
+  }
 }
 
 .large {
   font-size: theme.$font-size-md;
   padding: 4px 12px;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-sm;
+    padding: 4px 10px;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-lg;
+    padding: 6px 14px;
+  }
 }
 
 .xl {
   font-size: theme.$font-size-lg;
   padding: 4px 14px;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-md;
+    padding: 4px 12px;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-xl;
+    padding: 6px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge {
+    transition: none;
+  }
+  .badge.clickable:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (hover: none) {
+  .badge.clickable:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .badge {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
 }

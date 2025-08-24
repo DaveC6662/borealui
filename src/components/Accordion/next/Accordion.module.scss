@@ -199,6 +199,7 @@ $sizes: (
   @include bp.down(sm) {
     padding: 0 theme.$spacing-sm;
   }
+
   @include bp.up(lg) {
     padding: 0 theme.$spacing-lg;
   }
@@ -219,6 +220,7 @@ $sizes: (
   @include bp.down(sm) {
     padding: theme.$spacing-md theme.$spacing-md;
   }
+
   @include bp.up(lg) {
     padding: theme.$spacing-xl calc(theme.$spacing-xl * 1.1);
   }
@@ -228,6 +230,7 @@ $sizes: (
   opacity: 1;
   transform: translateY(0);
 }
+
 .content.loading {
   opacity: 0.5;
 }
@@ -254,6 +257,7 @@ $sizes: (
   @include bp.down(sm) {
     margin-right: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     margin-right: theme.$spacing-sm;
   }
@@ -284,6 +288,7 @@ $sizes: (
 
     .icon {
       $is: map.get($config, icon-size);
+
       font-size: $is;
 
       @include bp.up(lg) {
@@ -297,6 +302,7 @@ $sizes: (
   .header {
     transition: none;
   }
+
   .content {
     transition: none;
   }

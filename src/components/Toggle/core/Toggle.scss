@@ -69,6 +69,7 @@ $sizes: (
   @include bp.down(xs) {
     gap: theme.$spacing-xxs;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-md;
   }
@@ -81,6 +82,7 @@ $sizes: (
   @include bp.down(xs) {
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-base;
   }
@@ -123,6 +125,7 @@ $sizes: (
     background-color: map.get($color, bg);
   }
 }
+
 @each $state, $color in theme.$states {
   .toggle_#{$state} .toggle_active {
     outline: 2px solid map.get($color, border);
@@ -199,6 +202,7 @@ $sizes: (
     }
   }
 }
+
 @each $key, $value in theme.$shadow {
   .toggle_shadow-#{$key} {
     box-shadow: $value;
@@ -225,12 +229,15 @@ $sizes: (
     color: ButtonText;
     border: 1px solid ButtonText;
   }
+
   .toggle_active {
     background: Highlight;
   }
+
   .toggle_slider {
     background: ButtonText;
   }
+
   .toggle:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;

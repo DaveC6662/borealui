@@ -23,6 +23,7 @@ $stepper-sizes: (
   @include bp.down(xs) {
     gap: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-md;
   }
@@ -58,6 +59,7 @@ $stepper-sizes: (
   &_clickable {
     cursor: pointer;
   }
+
   &_clickable:not(.stepper_disabled) .stepper_step_button:hover {
     transform: scale(1.1);
   }
@@ -73,6 +75,7 @@ $stepper-sizes: (
       transform: none;
       opacity: 0.5;
     }
+
     .stepper_step_label {
       color: var(--text-color-secondary);
       opacity: 0.5;
@@ -101,6 +104,7 @@ $stepper-sizes: (
     @include bp.down(xs) {
       margin-left: theme.$spacing-xs;
     }
+
     @include bp.up(lg) {
       margin-left: theme.$spacing-md;
     }
@@ -115,6 +119,7 @@ $stepper-sizes: (
     @include bp.down(xs) {
       margin: 0 theme.$spacing-xxs;
     }
+
     @include bp.up(lg) {
       margin: 0 theme.$spacing-sm;
     }
@@ -125,6 +130,7 @@ $stepper-sizes: (
       background-color: map.get($vals, bg);
     }
   }
+
   @each $name, $vals in theme.$states {
     &.stepper_#{$name} &_active .stepper_step_button {
       background-color: map.get($vals, bg);
@@ -142,6 +148,7 @@ $stepper-sizes: (
       color: theme.$disabled-color;
       border: 2px solid var(--background-color-light);
     }
+
     .stepper_step_label {
       color: theme.$disabled-color;
     }
@@ -158,6 +165,7 @@ $stepper-sizes: (
     transition: none !important;
     animation: none !important;
   }
+
   .stepper_clickable:not(.stepper_disabled) .stepper_step_button:hover {
     transform: none !important;
   }
@@ -173,15 +181,18 @@ $stepper-sizes: (
   .stepper {
     color: CanvasText;
   }
+
   .stepper .stepper_step_button {
     background: ButtonFace;
     color: ButtonText;
     border: 1px solid ButtonText;
   }
+
   .stepper_active .stepper_step_button {
     background: Highlight;
     color: HighlightText;
   }
+
   .stepper_connector {
     background: ButtonText;
   }

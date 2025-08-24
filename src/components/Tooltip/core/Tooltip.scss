@@ -208,15 +208,19 @@ $positions: (
     color: Canvas !important;
     border: 1px solid ButtonText;
   }
+
   .tooltip::after {
-    border-color: CanvasText transparent transparent transparent !important;
+    border-color: CanvasText transparent transparent !important;
   }
+
   .tooltip_bottom::after {
-    border-color: transparent transparent CanvasText transparent !important;
+    border-color: transparent transparent CanvasText !important;
   }
+
   .tooltip_left::after {
     border-color: transparent CanvasText transparent transparent !important;
   }
+
   .tooltip_right::after {
     border-color: transparent transparent transparent CanvasText !important;
   }

@@ -12,6 +12,7 @@
   @include bp.down(xs) {
     min-height: 0.85rem;
   }
+
   @include bp.up(lg) {
     min-height: 1.2rem;
   }
@@ -40,6 +41,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .skeleton_shadow-#{$key} {
     box-shadow: $value;
@@ -59,6 +61,7 @@
     color: CanvasText;
     border: 1px solid ButtonText;
   }
+
   .skeleton_loader::after {
     content: none !important;
   }

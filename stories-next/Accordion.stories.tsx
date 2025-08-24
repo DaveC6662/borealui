@@ -18,7 +18,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["", "success", "error", "warning"];
+const stateOptions = ["success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"];
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];

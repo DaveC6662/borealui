@@ -269,3 +269,16 @@
     border-radius: 50%;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .avatar {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
+}

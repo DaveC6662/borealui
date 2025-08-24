@@ -68,6 +68,7 @@
       left: 12px;
       height: 4em;
     }
+
     @include bp.up(lg) {
       left: 14px;
       height: 5.5em;
@@ -83,6 +84,7 @@
     @include bp.down(xs) {
       width: 14px;
     }
+
     @include bp.up(lg) {
       width: 24px;
     }
@@ -124,6 +126,7 @@
     min-width: 24px;
     min-height: 24px;
   }
+
   @include bp.up(lg) {
     width: 28px;
     height: 28px;
@@ -142,6 +145,7 @@
     width: 7px;
     height: 7px;
   }
+
   @include bp.up(lg) {
     width: 9px;
     height: 9px;
@@ -162,6 +166,7 @@
     min-width: 12rem;
     padding: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     min-width: 18rem;
     padding: theme.$spacing-md;
@@ -192,6 +197,7 @@
     .timeline_item:not(:last-child)::after {
       background-color: map.get($vals, border);
     }
+
     .timeline_marker {
       background-color: map.get($vals, bg);
       color: map.get($vals, text);
@@ -204,6 +210,7 @@
     .timeline_item:not(:last-child)::after {
       background-color: map.get($vals, border);
     }
+
     .timeline_marker {
       background-color: map.get($vals, bg);
       color: map.get($vals, text);
@@ -216,6 +223,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .timeline_shadow-#{$key} {
     box-shadow: $value;
@@ -228,6 +236,7 @@
     transition: none !important;
     animation: none !important;
   }
+
   .timeline_marker:hover {
     transform: none !important;
   }
@@ -245,9 +254,11 @@
     color: CanvasText;
     border: 1px solid ButtonText;
   }
+
   .timeline_item:not(:last-child)::after {
     background: ButtonText !important;
   }
+
   .timeline_marker {
     background: ButtonFace !important;
     color: ButtonText !important;

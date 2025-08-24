@@ -25,6 +25,7 @@
       border-radius: $value;
     }
   }
+
   @each $key, $value in theme.$shadow {
     &_shadow-#{$key} {
       box-shadow: $value;
@@ -63,6 +64,7 @@
       padding: theme.$spacing-xs;
       margin: theme.$spacing-xs;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-base;
       padding: theme.$spacing-md;
@@ -87,6 +89,7 @@
         width: 15px;
         height: 15px;
       }
+
       @include bp.up(lg) {
         width: 1.1em;
         height: 1.1em;
@@ -181,10 +184,12 @@
     color: CanvasText !important;
     border: 1px solid ButtonText !important;
   }
+
   .textArea_textInput {
     background: Canvas;
     color: CanvasText;
   }
+
   .textArea_textInput:focus-visible,
   .textArea:focus-within {
     outline: 2px solid Highlight !important;

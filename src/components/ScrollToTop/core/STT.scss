@@ -25,6 +25,7 @@
     bottom: calc(56px + env(safe-area-inset-bottom, 0px));
     right: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     bottom: calc(72px + env(safe-area-inset-bottom, 0px));
     right: theme.$spacing-md;
@@ -59,6 +60,7 @@
       font-size: 2em;
       padding: 1px;
     }
+
     @include bp.up(lg) {
       font-size: 3.25em;
       padding: theme.$spacing-md;
@@ -89,6 +91,7 @@
   .scrollToTop * {
     transition: none !important;
   }
+
   .scrollToTop:hover {
     transform: none !important;
   }
@@ -106,6 +109,7 @@
     color: ButtonText;
     border: 1px solid ButtonText;
   }
+
   .scrollToTop_button:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 3px;

@@ -19,6 +19,7 @@
     padding: theme.$spacing-xs theme.$spacing-sm;
     gap: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     padding: theme.$spacing-md theme.$spacing-lg;
   }
@@ -44,6 +45,7 @@
     &:first-child {
       justify-content: flex-start;
     }
+
     &:last-child {
       justify-content: flex-end;
     }
@@ -112,6 +114,7 @@
     color: CanvasText;
     border-bottom: 1px solid ButtonText;
   }
+
   .toolbar_section > *:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;

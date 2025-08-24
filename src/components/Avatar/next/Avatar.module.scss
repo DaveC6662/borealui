@@ -2,18 +2,6 @@
 @use "sass:color";
 @use "sass:map";
 
-@media (prefers-reduced-motion: reduce) {
-  .avatar {
-    transition: none;
-  }
-}
-@media (forced-colors: active) {
-  .avatar {
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
-  }
-}
-
 .avatar {
   display: flex;
   align-items: center;
@@ -33,21 +21,25 @@
     height: 36px;
     font-size: 0.5rem;
   }
+
   &.small {
     width: 42px;
     height: 42px;
     font-size: 0.6rem;
   }
+
   &.medium {
     width: 56px;
     height: 56px;
     font-size: 0.7rem;
   }
+
   &.large {
     width: 72px;
     height: 72px;
     font-size: 0.8rem;
   }
+
   &.xl {
     width: 84px;
     height: 84px;
@@ -57,9 +49,11 @@
   &.circle {
     border-radius: 50%;
   }
+
   &.rounded {
     border-radius: theme.$border-radius-sm;
   }
+
   &.square {
     border-radius: 0;
   }
@@ -69,7 +63,7 @@
   }
 
   @each $key, $value in theme.$shadow {
-    &.shadow-#{$key} {
+    &.shadow#{$key} {
       box-shadow: $value;
     }
   }
@@ -175,6 +169,7 @@
     pointer-events: none;
     opacity: 0.6;
   }
+
   &.disabled.outline {
     color: theme.$disabled-color;
     border-color: theme.$disabled-color;
@@ -189,12 +184,14 @@
     left: 0;
     z-index: 1;
   }
+
   &.initials {
     font-size: inherit;
     font-weight: bold;
     z-index: 1;
     position: relative;
   }
+
   .fallback_icon {
     width: 70%;
     height: 70%;
@@ -218,14 +215,17 @@
       top: 12%;
       left: 15%;
     }
+
     &.topRight {
       top: 12%;
       right: 15%;
     }
+
     &.bottomLeft {
       bottom: 12%;
       left: 15%;
     }
+
     &.bottomRight {
       bottom: 12%;
       right: 15%;
@@ -246,14 +246,17 @@
       background-color: theme.$success-color;
       border: 1px solid color.adjust(theme.$success-color, $lightness: 20%);
     }
+
     &.away {
       background-color: theme.$warning-color;
       border: 1px solid color.adjust(theme.$warning-color, $lightness: 20%);
     }
+
     &.offline {
       background-color: theme.$disabled-color;
       border: 1px solid color.adjust(theme.$disabled-color, $lightness: 20%);
     }
+
     &.busy {
       background-color: theme.$error-color;
       border: 1px solid color.adjust(theme.$error-color, $lightness: 20%);
@@ -264,5 +267,18 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .avatar {
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
   }
 }

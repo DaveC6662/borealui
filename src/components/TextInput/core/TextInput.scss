@@ -158,6 +158,7 @@
     }
   }
 }
+
 @each $key, $value in theme.$shadow {
   .textInput_shadow-#{$key} {
     box-shadow: $value;
@@ -178,13 +179,16 @@
     color: CanvasText;
     border: 1px solid ButtonText;
   }
+
   .textInput {
     color: CanvasText;
     background: Canvas;
   }
+
   .textInput::placeholder {
     color: CanvasText;
   }
+
   .textInput:focus-visible,
   .textInput_container:focus-within {
     outline: 2px solid Highlight !important;

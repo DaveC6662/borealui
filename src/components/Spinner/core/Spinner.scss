@@ -19,6 +19,7 @@
     gap: theme.$spacing-xs;
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-md;
     font-size: theme.$font-size-lg;
@@ -53,6 +54,7 @@
     height: 40px;
     border-width: 3px;
   }
+
   @include bp.up(lg) {
     width: 56px;
     height: 56px;
@@ -107,6 +109,7 @@
     @include bp.down(xs) {
       font-size: theme.$font-size-xs;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-base;
     }
@@ -118,6 +121,7 @@
   .spinner:hover {
     animation: none !important;
   }
+
   .spinner_wrapper {
     transition: none !important;
   }
@@ -134,6 +138,7 @@
     border-color: transparent;
     border-top-color: Highlight;
   }
+
   .spinner_label {
     color: CanvasText;
   }

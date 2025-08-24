@@ -85,6 +85,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .select_shadow-#{$key} {
     box-shadow: $value;
@@ -105,6 +106,7 @@
   @include bp.down(xs) {
     font-size: 11px;
   }
+
   @include bp.up(lg) {
     font-size: 14px;
   }
@@ -130,12 +132,13 @@
     padding: 4px 28px 4px theme.$spacing-sm;
     font-size: theme.$font-size-xs;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-sm;
   }
 
   &:focus-visible {
-    outline: 0px;
+    outline: 0;
   }
 
   option {
@@ -171,9 +174,11 @@
     color: CanvasText;
     border: 1px solid ButtonText;
   }
+
   .select_icon {
     color: ButtonText;
   }
+
   .select:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 3px;

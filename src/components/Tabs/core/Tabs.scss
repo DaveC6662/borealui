@@ -190,6 +190,7 @@ $sizes: (
   .tabs_tab {
     transition: none !important;
   }
+
   .tabs_tab:hover {
     transform: none !important;
   }
@@ -205,16 +206,19 @@ $sizes: (
   .tabs {
     border-bottom-color: ButtonText;
   }
+
   .tabs_tab {
     background: ButtonFace;
     color: ButtonText;
     border-right: 1px solid ButtonText;
   }
+
   .tabs_tab.tabs_active {
     background: Highlight;
     color: HighlightText;
     border-bottom-color: Highlight;
   }
+
   .tabs_tab:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
