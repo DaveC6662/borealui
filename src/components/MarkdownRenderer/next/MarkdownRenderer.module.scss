@@ -1,4 +1,6 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "sass:map";
 
 .wrapper {
   font-family: Inter, sans-serif;
@@ -6,6 +8,16 @@
   color: var(--text-color-primary);
   border: 1px solid var(--text-color-primary);
   padding: theme.$spacing-md;
+  overflow-x: auto;
+
+  @include bp.down(sm) {
+    padding: theme.$spacing-sm;
+    border-width: 1.5px;
+  }
+
+  @include bp.up(lg) {
+    padding: theme.$spacing-lg;
+  }
 
   h1,
   h2,
@@ -14,10 +26,35 @@
     margin-top: theme.$spacing-lg;
     margin-bottom: theme.$spacing-sm;
     color: var(--text-color-primary);
+    line-height: 1.25;
+  }
+
+  h1 {
+    font-size: clamp(theme.$font-size-xl, 1.1rem + 1.5vw, theme.$font-size-xxl);
+  }
+  h2 {
+    font-size: clamp(theme.$font-size-lg, 1.05rem + 1vw, theme.$font-size-xl);
+  }
+  h3 {
+    font-size: clamp(theme.$font-size-base, 1rem + 0.6vw, theme.$font-size-lg);
+  }
+  h4 {
+    font-size: clamp(
+      theme.$font-size-sm,
+      0.95rem + 0.3vw,
+      theme.$font-size-base
+    );
   }
 
   p {
     margin: theme.$spacing-xs 0;
+
+    @include bp.down(sm) {
+      font-size: theme.$font-size-sm;
+    }
+    @include bp.up(lg) {
+      font-size: theme.$font-size-base;
+    }
   }
 
   em,
@@ -29,6 +66,13 @@
   ol {
     margin: theme.$spacing-md 0;
     padding-left: theme.$spacing-lg;
+
+    @include bp.down(sm) {
+      padding-left: theme.$spacing-md;
+    }
+    @include bp.up(lg) {
+      padding-left: calc(theme.$spacing-lg * 1.1);
+    }
   }
 
   code {
@@ -36,7 +80,9 @@
     color: var(--text-color-primary);
     padding: 0.2rem 0.4rem;
     border-radius: theme.$border-radius-xs;
-    font-family: monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.95em;
+    word-break: break-word;
   }
 
   pre {
@@ -46,6 +92,21 @@
     overflow-x: auto;
     border-radius: theme.$border-radius-sm;
     margin: theme.$spacing-md 0;
+    line-height: 1.45;
+
+    @include bp.down(sm) {
+      padding: theme.$spacing-sm;
+    }
+    @include bp.up(lg) {
+      padding: theme.$spacing-lg;
+    }
+
+    code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      font-size: 0.95em;
+    }
   }
 
   blockquote {
@@ -54,26 +115,107 @@
     border-left: 4px solid var(--primary-color);
     color: var(--text-color-primary-light);
     font-style: italic;
+
+    @include bp.down(sm) {
+      border-left-width: 3px;
+      padding-left: theme.$spacing-sm;
+    }
+    @include bp.up(lg) {
+      border-left-width: 6px;
+    }
   }
 
   a {
     color: var(--link-color);
     text-decoration: underline;
+    text-underline-offset: 2px;
 
     &:hover {
       color: var(--link-hover-color-primary);
     }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 2px;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: theme.$spacing-md 0;
+    overflow: hidden;
+
+    th,
+    td {
+      padding: theme.$spacing-xs theme.$spacing-sm;
+      border-bottom: 1px solid var(--text-color-primary);
+      text-align: left;
+      color: var(--text-color-primary);
+    }
+
+    thead th {
+      font-weight: theme.$font-weight-bold;
+      background: var(--background-color);
+    }
+
+    @include bp.down(sm) {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 }
 
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
+@each $k, $v in theme.$rounding {
+  .round#{$k} {
+    border-radius: $v;
+  }
+}
+@each $k, $v in theme.$shadow {
+  .shadow#{$k} {
+    box-shadow: $v;
   }
 }
 
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
+@media (prefers-reduced-motion: reduce) {
+  .wrapper,
+  .wrapper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .wrapper {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonText;
+    outline-color: Highlight;
+  }
+
+  .wrapper blockquote {
+    border-left-color: Highlight;
+  }
+
+  .wrapper table th,
+  .wrapper table td {
+    border-color: ButtonText;
+  }
+
+  .wrapper a:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

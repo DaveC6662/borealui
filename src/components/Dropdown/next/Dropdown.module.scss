@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 
 .wrapper {
   position: relative;
@@ -10,14 +11,21 @@
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
 }
 
 .alignRight {
   right: 0;
+  transform: translateX(0);
 }
-
 .alignLeft {
   left: 0;
+  transform: translateX(0);
 }
 
 .menu {
@@ -28,10 +36,10 @@
   background-color: var(--background-color-lighter);
   z-index: theme.$z-index-drawer;
   padding: theme.$spacing-xs 0;
-  min-width: 200px;
+  width: max-content;
   animation: fade-in 0.2s ease-in-out;
 
-  @media (width >= 481px) {
+  @include bp.up(sm) {
     &[data-overflow-right="true"] {
       left: auto;
       right: 0;
@@ -43,34 +51,43 @@
     }
   }
 
-  @media (width <= 480px) {
-    position: fixed;
-    inset: auto 0 0;
-    margin: 0;
-    border-radius: 0;
+  @include bp.down(sm) {
     min-width: 100%;
     max-height: 50vh;
     overflow-y: auto;
-    padding: theme.$spacing-sm 0;
     animation: slide-up 0.3s ease-in-out;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + theme.$spacing-sm);
+  }
+
+  @include bp.up(lg) {
+    min-width: 200px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
   }
 }
 
 .item {
   display: flex;
   align-items: center;
-  width: 100%;
-  background: none;
+  justify-content: flex-start;
   gap: theme.$spacing-sm;
   line-height: 1em;
+  width: 100%;
+  background: none;
   border: none;
   padding: theme.$spacing-sm theme.$spacing-md;
   font-weight: theme.$font-weight-bold;
   color: var(--text-color-primary);
-  font-size: theme.$font-size-md;
+  font-size: theme.$font-size-sm;
   cursor: pointer;
   text-align: left;
-  transition: background-color 0.2s ease-in-out;
+  transition:
+    background-color theme.$transition-default,
+    transform theme.$transition-default,
+    box-shadow theme.$transition-default;
 
   &:hover,
   &:focus {
@@ -79,24 +96,55 @@
     outline: none;
   }
 
-  .icon {
-    margin-right: theme.$spacing-xs;
-    display: flex;
-    align-items: center;
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 6px;
   }
 
-  a {
-    text-decoration: none;
-  }
-
-  @media (width <= 480px) {
-    font-size: theme.$font-size-base;
+  @include bp.down(sm) {
+    font-size: theme.$font-size-xs;
     padding: theme.$spacing-md;
+    gap: theme.$spacing-xs;
   }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-sm;
+    padding: theme.$spacing-md theme.$spacing-lg;
+    gap: theme.$spacing-sm;
+  }
+}
+
+.icon {
+  margin-right: theme.$spacing-xs;
+  display: flex;
+  align-items: center;
+
+  @include bp.down(sm) {
+    margin-right: theme.$spacing-xxs;
+  }
+
+  @include bp.up(lg) {
+    margin-right: theme.$spacing-sm;
+  }
+}
+
+.item[aria-disabled="true"],
+.item.isDisabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+a.item {
+  text-decoration: none;
 }
 
 @each $key, $value in theme.$rounding {
   .round#{$key} {
+    border-radius: $value;
+  }
+  .round#{$key} .item {
     border-radius: $value;
   }
 }
@@ -104,5 +152,39 @@
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu,
+  .item {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .item:hover {
+    background-color: transparent;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .menu {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+    outline-color: Highlight;
+  }
+
+  .item {
+    border: 1px solid ButtonText;
+  }
+
+  .item:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

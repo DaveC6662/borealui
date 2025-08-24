@@ -14,7 +14,7 @@
 
   &_label {
     color: var(--text-color-primary);
-    font-size: theme.$font-size-base;
+    font-size: theme.$font-size-md;
     margin-bottom: theme.$spacing-xxs;
 
     @include bp.down(xs) {
@@ -22,7 +22,7 @@
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-lg;
+      font-size: theme.$font-size-base;
     }
   }
 

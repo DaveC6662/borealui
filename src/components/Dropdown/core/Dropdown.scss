@@ -27,7 +27,7 @@
     background-color: var(--background-color-lighter);
     z-index: theme.$z-index-drawer;
     padding: theme.$spacing-xs 0;
-    width: fit-content;
+    width: max-content;
     animation: fade-in 0.2s ease-in-out;
 
     &_right {

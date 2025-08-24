@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "sass:color";
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 
 .empty_state {
@@ -8,58 +8,36 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: theme.$spacing-lg;
-  background-color: var(--background-color-light);
   gap: theme.$spacing-xs;
+  padding: theme.$spacing-sm;
+  background-color: var(--background-color-light);
   transition: theme.$transition-default;
   width: 400px;
   max-width: 100%;
+  min-width: 100px;
 
-  @media (width <= 768px) {
+  @include bp.down(md) {
     width: 100%;
     padding: theme.$spacing-md;
-
-    .title {
-      font-size: theme.$font-size-base;
-    }
-
-    .message {
-      font-size: theme.$font-size-sm;
-    }
-
-    .icon {
-      font-size: 2.5em;
-    }
   }
 
-  @media (width <= 480px) {
-    .title {
-      font-size: theme.$font-size-sm;
-    }
-
-    .message {
-      font-size: theme.$font-size-xs;
-    }
-
-    .icon {
-      font-size: 2em;
-    }
+  @include bp.up(lg) {
+    width: 420px;
   }
-}
-
-.outline {
-  background-color: transparent;
-  border: 2px dashed var(--text-color-primary);
-  box-shadow: none;
-}
-
-.disabled {
-  opacity: 0.6;
-  pointer-events: none;
 }
 
 .icon {
   font-size: 3em;
+
+  @include bp.down(md) {
+    font-size: 2.5em;
+  }
+  @include bp.down(xs) {
+    font-size: 2em;
+  }
+  @include bp.up(lg) {
+    font-size: 3.25em;
+  }
 }
 
 .title,
@@ -68,39 +46,43 @@
 }
 
 .title {
-  font-size: theme.$font-size-lg;
+  font-size: theme.$font-size-base;
   font-weight: theme.$font-weight-bold;
+
+  @include bp.down(md) {
+    font-size: theme.$font-size-md;
+  }
+  @include bp.down(xs) {
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    font-size: calc(theme.$font-size-base * 1.05);
+  }
 }
 
 .message {
-  font-size: theme.$font-size-base;
+  font-size: theme.$font-size-md;
   opacity: 0.8;
   width: 90%;
-}
 
-@each $theme, $values in theme.$themes {
-  .#{$theme} {
-    background-color: map.get($values, bg);
-    color: map.get($values, color);
+  @include bp.down(md) {
+    font-size: theme.$font-size-sm;
   }
-
-  .#{$theme}.outline {
-    background-color: transparent;
-    border: 2px dashed map.get($values, bg);
-    color: map.get($values, text-color);
+  @include bp.down(xs) {
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: calc(theme.$font-size-md * 1.05);
   }
 }
 
-@each $state, $values in theme.$states {
-  .#{$state} {
-    background-color: map.get($values, bg);
-    color: map.get($values, color);
-  }
+.outline {
+  background-color: transparent;
+  box-shadow: none;
+  border: 2px solid var(--text-color-primary);
 
-  .#{$state}.outline {
-    background-color: transparent;
-    border: 2px dashed map.get($values, bg);
-    color: map.get($values, text-color);
+  @include bp.down(sm) {
+    border-width: 1.5px;
   }
 }
 
@@ -111,15 +93,24 @@
 .clear.outline {
   color: var(--text-color-primary);
   border-color: var(--text-color-primary);
+  @include bp.down(sm) {
+    border-width: 1.5px;
+  }
 }
 
-$input-sizes: (
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+$pad-sizes: (
   "xs": theme.$spacing-xs,
   "small": theme.$spacing-sm,
   "medium": theme.$spacing-md,
   "large": theme.$spacing-lg,
   "xl": theme.$spacing-xl,
 );
+
 $font-sizes: (
   "xs": theme.$font-size-xs,
   "small": theme.$font-size-sm,
@@ -127,6 +118,7 @@ $font-sizes: (
   "large": theme.$font-size-base,
   "xl": theme.$font-size-lg,
 );
+
 $icon-sizes: (
   "xs": 2em,
   "small": 3em,
@@ -135,31 +127,122 @@ $icon-sizes: (
   "xl": 4.5em,
 );
 
-@each $size, $spacing in $input-sizes {
+@each $size, $pad in $pad-sizes {
   .#{$size} {
     .title {
-      padding: $spacing;
+      padding: $pad;
       font-size: map.get($font-sizes, $size);
     }
-
     .message {
       font-size: map.get($font-sizes, $size);
     }
-
     .icon {
       font-size: map.get($icon-sizes, $size);
+    }
+
+    @include bp.down(sm) {
+      .title {
+        font-size: clamp(
+          theme.$font-size-xs,
+          0.9rem + 0.2vw,
+          map.get($font-sizes, $size)
+        );
+      }
+      .message {
+        font-size: clamp(
+          theme.$font-size-xxs,
+          0.85rem + 0.15vw,
+          map.get($font-sizes, $size)
+        );
+      }
+    }
+
+    @include bp.up(lg) {
+      .title {
+        font-size: clamp(
+          map.get($font-sizes, $size),
+          1rem + 0.4vw,
+          theme.$font-size-xl
+        );
+      }
+      .message {
+        font-size: clamp(
+          map.get($font-sizes, $size),
+          0.95rem + 0.25vw,
+          theme.$font-size-lg
+        );
+      }
     }
   }
 }
 
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
+@each $name, $vals in theme.$themes {
+  .#{$name} {
+    background-color: map.get($vals, bg);
+    color: map.get($vals, color);
+  }
+  .#{$name}.outline {
+    background-color: transparent;
+    border: 2px solid map.get($vals, border);
+    color: map.get($vals, text-color);
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
   }
 }
 
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
+@each $name, $vals in theme.$states {
+  .#{$name} {
+    background-color: map.get($vals, bg);
+    color: map.get($vals, color);
+  }
+  .#{$name}.outline {
+    background-color: transparent;
+    border: 2px solid map.get($vals, bg);
+    color: map.get($vals, text-color);
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
+  }
+}
+
+@each $k, $v in theme.$rounding {
+  .round#{$k} {
+    border-radius: $v;
+  }
+}
+@each $k, $v in theme.$shadow {
+  .shadow#{$k} {
+    box-shadow: $v;
+  }
+}
+
+.empty_state :focus-visible {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .empty_state,
+  .empty_state * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@media (hover: none) {
+  .empty_state * {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .empty_state {
+    background: Canvas;
+    color: CanvasText;
+    outline-color: Highlight;
+  }
+  .outline {
+    border: 1px solid ButtonText;
   }
 }

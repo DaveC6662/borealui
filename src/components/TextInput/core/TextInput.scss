@@ -20,7 +20,7 @@
   }
 
   @include bp.down(xs) {
-    padding: 0.3rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     height: 35px;
     width: 95%;
     max-width: none;
@@ -30,8 +30,18 @@
     width: 100%;
     padding: theme.$spacing-xs;
     border: none;
+    height: 100%;
     background-color: transparent;
     color: var(--text-color-primary);
+
+    &:hover {
+      background-color: transparent;
+    }
+
+    &:focus-within,
+    &:focus {
+      outline: none;
+    }
   }
 }
 

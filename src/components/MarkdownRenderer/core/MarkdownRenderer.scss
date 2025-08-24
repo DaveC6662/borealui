@@ -9,6 +9,7 @@
   color: var(--text-color-primary);
   border: 1px solid var(--text-color-primary);
   padding: theme.$spacing-md;
+  overflow-x: auto;
 
   @include bp.down(sm) {
     padding: theme.$spacing-sm;

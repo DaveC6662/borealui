@@ -55,8 +55,8 @@
 
     @include bp.up(lg) {
       max-width: 520px;
-      padding: theme.$spacing-xl;
-      padding-top: calc(theme.$spacing-xl * 1.1);
+      padding: theme.$spacing-lg;
+      padding-top: calc(theme.$spacing-lg * 1.1);
     }
 
     &:focus-visible {
@@ -73,10 +73,6 @@
     cursor: pointer;
     border: none;
     line-height: 1;
-
-    @include bp.down(sm) {
-      padding: theme.$spacing-xs;
-    }
 
     &:hover {
       transform: translateY(-1px);
@@ -96,11 +92,11 @@
     margin-bottom: theme.$spacing-sm;
 
     @include bp.down(sm) {
-      font-size: theme.$font-size-base;
+      font-size: theme.$font-size-sm;
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-lg;
+      font-size: theme.$font-size-base;
     }
   }
 
@@ -111,7 +107,7 @@
     margin-top: theme.$spacing-sm;
 
     @include bp.down(sm) {
-      gap: theme.$spacing-xs;
+      gap: theme.$spacing-sm;
     }
 
     @include bp.up(lg) {

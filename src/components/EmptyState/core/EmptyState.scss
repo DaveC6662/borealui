@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: theme.$spacing-lg;
+  padding: theme.$spacing-sm;
   background-color: var(--background-color-light);
   gap: theme.$spacing-xs;
   transition: theme.$transition-default;
@@ -24,8 +24,7 @@
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-xl;
-    width: 460px;
+    width: 420px;
   }
 
   &_icon {
@@ -50,11 +49,11 @@
   }
 
   &_title {
-    font-size: theme.$font-size-lg;
+    font-size: theme.$font-size-base;
     font-weight: theme.$font-weight-bold;
 
     @include bp.down(md) {
-      font-size: theme.$font-size-base;
+      font-size: theme.$font-size-md;
     }
 
     @include bp.down(xs) {
@@ -62,12 +61,12 @@
     }
 
     @include bp.up(lg) {
-      font-size: calc(theme.$font-size-lg * 1.05);
+      font-size: calc(theme.$font-size-base * 1.05);
     }
   }
 
   &_message {
-    font-size: theme.$font-size-base;
+    font-size: theme.$font-size-md;
     opacity: 0.8;
     width: 90%;
 
@@ -80,7 +79,7 @@
     }
 
     @include bp.up(lg) {
-      font-size: calc(theme.$font-size-base * 1.05);
+      font-size: calc(theme.$font-size-md * 1.05);
     }
   }
 

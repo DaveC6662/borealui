@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -15,23 +16,42 @@
   transition: theme.$transition-default;
   max-width: 300px;
 
+  @include bp.down(md) {
+    padding: theme.$spacing-md;
+    max-width: 100%;
+  }
+
+  @include bp.down(xs) {
+    padding: theme.$spacing-sm;
+  }
+
+  @include bp.up(lg) {
+    max-width: 420px;
+  }
+
   &:hover {
     background-color: var(--background-color-lighter);
   }
 
-  .disabled {
+  &:focus-visible,
+  &:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+  }
+
+  &.dragOver,
+  &[data-drag-active="true"] {
+    background-color: var(--background-color-lighter);
+    border-color: var(--focus-outline-color, var(--primary-color));
+  }
+
+  &.disabled,
+  &[aria-disabled="true"] {
     background-color: var(--background-color-light);
     border-color: var(--background-color-darker);
     cursor: not-allowed;
     pointer-events: none;
-  }
-
-  @media (width <=768px) {
-    padding: theme.$spacing-md;
-  }
-
-  @media (width <=480px) {
-    padding: theme.$spacing-sm;
+    opacity: 0.6;
   }
 
   .uploadActions {
@@ -47,6 +67,10 @@
     gap: theme.$spacing-sm;
     align-items: center;
     width: 100%;
+
+    @include bp.up(lg) {
+      gap: theme.$spacing-md;
+    }
   }
 
   .uploadProgress {
@@ -73,6 +97,14 @@
     list-style: none;
     font-size: theme.$font-size-sm;
     color: var(--text-color-secondary);
+
+    @include bp.down(xs) {
+      font-size: theme.$font-size-xs;
+    }
+
+    @include bp.up(lg) {
+      font-size: theme.$font-size-base;
+    }
   }
 
   .fileListItem {
@@ -83,12 +115,32 @@
     padding: 2px 0;
     font-size: theme.$font-size-sm;
     text-overflow: ellipsis;
+
+    > :first-child {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      @include bp.down(xs) {
+        white-space: normal;
+      }
+    }
+
+    @include bp.down(xs) {
+      gap: theme.$spacing-xxs;
+    }
   }
 
   .rejectedFiles {
     margin-top: theme.$spacing-sm;
     color: var(--error-color);
     font-size: theme.$font-size-sm;
+
+    @include bp.down(xs) {
+      font-size: theme.$font-size-xs;
+    }
   }
 
   .rejectedLabel {
@@ -111,25 +163,52 @@
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
   }
 }
 
-@each $theme, $values in theme.$themes {
+@each $theme, $vals in theme.$themes {
   .#{$theme}:hover {
-    border-color: map.get($values, border);
+    border-color: map.get($vals, border);
   }
 }
 
-@each $state, $values in theme.$states {
+@each $state, $vals in theme.$states {
   .#{$state} {
-    border-color: map.get($values, border);
+    border-color: map.get($vals, border);
+  }
+  .#{$state}:hover {
+    border-color: map.get($vals, hover);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fileUpload,
+  .fileUpload * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .fileUpload:hover {
+    background-color: var(--background-color-light);
+  }
+}
+
+@media (forced-colors: active) {
+  .fileUpload {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px dashed ButtonText;
+    outline-color: Highlight;
   }
 
-  .#{$state}:hover {
-    border-color: map.get($values, hover);
+  .fileUpload:focus-visible,
+  .fileUpload:focus-within {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
   }
 }

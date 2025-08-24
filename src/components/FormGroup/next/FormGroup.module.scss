@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 
 .wrapper {
@@ -6,14 +7,25 @@
   flex-direction: column;
   margin-bottom: theme.$spacing-md;
   width: fit-content;
+
+  @include bp.down(sm) {
+    width: 100%;
+  }
 }
 
 .label {
   color: var(--text-color-primary);
-  font-size: theme.$font-size-base;
+  font-size: theme.$font-size-md;
   margin-bottom: theme.$spacing-xxs;
-}
 
+  @include bp.down(xs) {
+    font-size: theme.$font-size-sm;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
+}
 .required {
   color: theme.$error-color;
   margin-left: 4px;
@@ -21,10 +33,9 @@
 
 .inputWrapper {
   display: flex;
-  width: fit-content;
   flex-direction: column;
 
-  @media (width >= 600px) {
+  @include bp.up(sm) {
     flex-direction: row;
     gap: theme.$spacing-sm;
     align-items: center;
@@ -33,6 +44,10 @@
 
 .inputField {
   width: fit-content;
+
+  @include bp.down(sm) {
+    width: 100%;
+  }
 }
 
 .controller {
@@ -41,7 +56,7 @@
   align-items: center;
   margin-top: theme.$spacing-xs;
 
-  @media (width >= 480px) {
+  @include bp.up(xs) {
     margin-top: 0;
   }
 }
@@ -50,12 +65,18 @@
 .errorMessage {
   font-size: theme.$font-size-sm;
   margin-top: 4px;
-}
 
+  @include bp.down(xs) {
+    font-size: theme.$font-size-xxs;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
+}
 .description {
   color: var(--text-color-primary);
 }
-
 .errorMessage {
   color: theme.$error-color;
 }
@@ -67,11 +88,11 @@
 
   .label {
     margin-bottom: 0;
-    margin-right: theme.$spacing-xs;
+    margin-right: theme.$spacing-sm;
     width: auto;
     text-align: left;
 
-    @media (width >= 600px) {
+    @include bp.up(sm) {
       width: 150px;
       text-align: right;
     }
@@ -84,7 +105,7 @@
     align-items: center;
     justify-content: center;
 
-    @media (width >= 600px) {
+    @include bp.up(sm) {
       align-items: flex-start;
       gap: theme.$spacing-xxs;
     }
@@ -94,7 +115,7 @@
     width: fit-content;
     flex: 1;
 
-    .error {
+    &.formError {
       border: 1px solid theme.$error-color;
     }
   }
@@ -126,5 +147,35 @@ $size-margins: (
     .inputWrapper {
       margin-bottom: $spacing;
     }
+
+    @include bp.down(xs) {
+      .form_group_input_wrapper {
+        margin-bottom: max(#{$spacing} - 4px, theme.$spacing-xs);
+      }
+    }
+  }
+}
+
+.wrapper :focus-visible {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapper,
+  .wrapper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .wrapper {
+    color: CanvasText;
+  }
+
+  .horizontal .inputField.formError {
+    border-color: Highlight !important;
   }
 }

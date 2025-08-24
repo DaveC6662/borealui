@@ -1,6 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/animations";
-@use "sass:color";
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 
 .iconButton {
@@ -8,70 +7,112 @@
   align-items: center;
   justify-content: center;
   line-height: 0.8rem;
-  border-radius: 50%;
   border: none;
-  transition: theme.$transition-default;
   text-decoration: none;
   color: inherit;
+  transition: theme.$transition-default;
   transform-origin: center;
+  background: transparent;
 
   &:hover {
     text-decoration: none;
     transform: scale(1.05);
-    box-shadow: theme.$box-shadow-heavy;
     cursor: pointer;
+
+    @include bp.down(sm) {
+      transform: scale(1.03);
+    }
   }
 
-  &:focus {
-    outline: 2px solid theme.$disabled-color;
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
   }
 
   svg {
-    height: 20px;
     width: 20px;
+    height: 20px;
+
+    @include bp.down(sm) {
+      width: 18px;
+      height: 18px;
+    }
+
+    @include bp.up(lg) {
+      width: 22px;
+      height: 22px;
+    }
   }
 }
 
-@each $name, $values in theme.$themes {
+@each $k, $v in theme.$rounding {
+  .round#{$k} {
+    border-radius: $v;
+  }
+}
+@each $k, $v in theme.$shadow {
+  .shadow#{$k} {
+    box-shadow: $v;
+  }
+}
+
+@each $name, $vals in theme.$themes {
   .#{$name} {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
+    background-color: map.get($vals, bg);
+    color: map.get($vals, text);
 
     &:hover {
-      background-color: map.get($values, hover);
+      background-color: map.get($vals, hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid map.get($vals, border);
+      outline-offset: 2px;
     }
 
     &.outline {
       background-color: transparent;
-      color: map.get($values, border);
-      border: 2px solid map.get($values, border);
+      color: map.get($vals, border);
+      border: 2px solid map.get($vals, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
 
       &:hover {
-        border-color: map.get($values, hover);
-        color: map.get($values, text);
+        border-color: map.get($vals, hover);
+        color: map.get($vals, text);
       }
     }
   }
 }
 
-@each $name, $values in theme.$states {
+@each $name, $vals in theme.$states {
   .#{$name} {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
+    background-color: map.get($vals, bg);
+    color: map.get($vals, text);
 
     &:hover {
-      background-color: map.get($values, hover);
+      background-color: map.get($vals, hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid map.get($vals, border);
+      outline-offset: 2px;
     }
 
     &.outline {
       background-color: transparent;
-      color: map.get($values, border);
-      border: 2px solid map.get($values, border);
+      color: map.get($vals, border);
+      border: 2px solid map.get($vals, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
 
       &:hover {
-        border-color: map.get($values, hover);
-        color: map.get($values, text);
+        border-color: map.get($vals, hover);
+        color: map.get($vals, text);
       }
     }
   }
@@ -80,39 +121,57 @@
 $sizes: (
   "xs": (
     size: 25px,
-    label: theme.$font-size-xs,
     icon: 0.7rem,
   ),
   "small": (
     size: 30px,
-    label: theme.$font-size-sm,
     icon: 1rem,
   ),
   "medium": (
     size: 40px,
-    label: theme.$font-size-md,
     icon: 1.2rem,
   ),
   "large": (
     size: 50px,
-    label: theme.$font-size-lg,
     icon: 1.3rem,
   ),
   "xl": (
     size: 60px,
-    label: theme.$font-size-lg,
     icon: 1.5rem,
   ),
 );
 
-@each $size, $values in $sizes {
-  .#{$size} {
-    width: map.get($values, size);
-    height: map.get($values, size);
+@each $sz, $vals in $sizes {
+  .#{$sz} {
+    $dim: map.get($vals, size);
+    $ico: map.get($vals, icon);
+
+    width: $dim;
+    height: $dim;
 
     svg {
-      width: map.get($values, icon);
-      height: map.get($values, icon);
+      width: $ico;
+      height: $ico;
+    }
+
+    @include bp.down(sm) {
+      width: calc(#{$dim} * 0.9);
+      height: calc(#{$dim} * 0.9);
+
+      svg {
+        width: calc(#{$ico} * 0.9);
+        height: calc(#{$ico} * 0.9);
+      }
+    }
+
+    @include bp.up(lg) {
+      width: calc(#{$dim} * 1.1);
+      height: calc(#{$dim} * 1.1);
+
+      svg {
+        width: calc(#{$ico} * 1.05);
+        height: calc(#{$ico} * 1.05);
+      }
     }
   }
 }
@@ -134,14 +193,35 @@ $sizes: (
   animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
+@media (prefers-reduced-motion: reduce) {
+  .iconButton,
+  .iconButton * {
+    transition: none !important;
+  }
+
+  .iconButton:hover {
+    transform: none !important;
+  }
+  .loader {
+    animation: none !important;
   }
 }
 
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
+@media (hover: none) {
+  .iconButton:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .iconButton {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonText;
+    outline-color: Highlight;
+  }
+
+  .outline {
+    border: 1px solid ButtonText;
   }
 }

@@ -6,7 +6,6 @@ import React, {
   KeyboardEvent,
   useId,
   JSX,
-  ComponentType,
   useMemo,
 } from "react";
 import { BaseDropdownProps, DropdownProps } from "./Dropdown.types";
