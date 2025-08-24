@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -38,13 +39,36 @@ $progress-sizes: (
 
   @each $size, $props in $progress-sizes {
     &.#{$size} {
-      width: map.get($props, dimensions);
-      height: map.get($props, dimensions);
+      $dim: map.get($props, dimensions);
+      $fs: map.get($props, font-size);
+
+      width: $dim;
+      height: $dim;
+
+      @include bp.down(sm) {
+        width: calc(#{$dim} * 0.9);
+        height: calc(#{$dim} * 0.9);
+      }
+      @include bp.up(lg) {
+        width: calc(#{$dim} * 1.1);
+        height: calc(#{$dim} * 1.1);
+      }
 
       .rating_text {
-        font-size: map.get($props, font-size);
+        font-size: $fs;
         font-weight: theme.$font-weight-bold;
         color: var(--text-color-primary);
+      }
+
+      .inner_circle {
+        padding: theme.$spacing-xxs;
+
+        @include bp.down(sm) {
+          padding: calc(theme.$spacing-xxs * 0.75);
+        }
+        @include bp.up(lg) {
+          padding: calc(theme.$spacing-xxs * 1.25);
+        }
       }
     }
   }
@@ -57,6 +81,11 @@ $progress-sizes: (
     justify-content: center;
     align-items: center;
     transition: background 0.5s ease-in-out;
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+    }
   }
 
   .inner_circle {
@@ -68,6 +97,15 @@ $progress-sizes: (
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @include bp.down(sm) {
+      width: 82%;
+      height: 82%;
+    }
+    @include bp.up(lg) {
+      width: 78%;
+      height: 78%;
+    }
   }
 
   @each $name, $values in theme.$themes {
@@ -77,12 +115,40 @@ $progress-sizes: (
       }
     }
   }
-
   @each $name, $values in theme.$states {
     &.#{$name} {
       .inner_circle {
         background-color: map.get($values, bg);
       }
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circular_progress,
+  .circular_progress * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .circular_progress .circle_border:hover {
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .circular_progress .circle_border,
+  .circular_progress .inner_circle {
+    background: Canvas;
+    color: CanvasText;
+    outline-color: Highlight;
+    box-shadow: none !important;
+  }
+
+  .circular_progress .circle_border {
+    border: 1px solid ButtonText;
   }
 }

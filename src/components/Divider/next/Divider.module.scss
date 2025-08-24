@@ -1,4 +1,6 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 
@@ -9,29 +11,36 @@
   transition: all theme.$transition-default;
   background-color: var(--text-color-primary);
   border-color: var(--text-color-primary);
+  border: none;
 }
 
 .horizontal {
   width: 100%;
   height: 1px;
+  margin: theme.$spacing-sm 0;
+
+  @include bp.down(sm) {
+    margin: theme.$spacing-xs 0;
+  }
+
+  @include bp.up(lg) {
+    height: 2px;
+    margin: theme.$spacing-md 0;
+  }
 }
 
 .vertical {
   width: 1px;
   height: 100%;
-}
+  margin: 0 theme.$spacing-sm;
 
-@each $theme, $values in theme.$themes {
-  .#{$theme} {
-    background-color: map.get($values, border);
-    border-color: map.get($values, border);
+  @include bp.down(sm) {
+    margin: 0 theme.$spacing-xs;
   }
-}
 
-@each $state, $values in theme.$states {
-  .#{$state} {
-    background-color: map.get($values, border);
-    border-color: map.get($values, border);
+  @include bp.up(lg) {
+    width: 2px;
+    margin: 0 theme.$spacing-md;
   }
 }
 
@@ -42,21 +51,69 @@
   &.horizontal {
     height: 0;
     border-top: 1px dashed currentcolor;
+
+    @include bp.up(lg) {
+      border-top-width: 2px;
+    }
   }
 
   &.vertical {
-    border-left: 1px dashed currentcolor;
     width: 0;
-  }
-}
+    border-left: 1px dashed currentcolor;
 
-@each $theme, $values in theme.$themes {
-  .#{$theme}.dashed {
-    color: map.get($values, border);
+    @include bp.up(lg) {
+      border-left-width: 2px;
+    }
   }
 }
 
 .disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+@each $themeName, $values in theme.$themes {
+  .#{$themeName} {
+    background-color: map.get($values, border);
+    border-color: map.get($values, border);
+  }
+  .#{$themeName}.dashed {
+    color: map.get($values, border);
+  }
+}
+
+@each $stateName, $values in theme.$states {
+  .#{$stateName} {
+    background-color: map.get($values, border);
+    border-color: map.get($values, border);
+  }
+  .#{$stateName}.dashed {
+    color: map.get($values, border);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .divider {
+    transition: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .divider {
+    background: ButtonText;
+    border-color: ButtonText;
+  }
+
+  .divider.dashed {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .divider.dashed.horizontal {
+    border-top: 1px dashed ButtonText;
+  }
+
+  .divider.dashed.vertical {
+    border-left: 1px dashed ButtonText;
+  }
 }

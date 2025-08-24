@@ -1,19 +1,27 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
 
 .wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   gap: theme.$spacing-xs;
-  width: 100%;
+
+  @include bp.down(sm) {
+    gap: theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-sm;
+  }
 }
 
 .input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   display: none;
   appearance: none;
 }
-
 .input[type="datetime-local"] {
   border: 0;
 }
@@ -22,32 +30,62 @@
   font-size: theme.$font-size-sm;
   font-weight: theme.$font-weight-bold;
   margin-bottom: theme.$spacing-xs;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-md;
+  }
 }
 
 .inputWrapper {
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: space-evenly;
+  width: fit-content;
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+  }
 }
 
 .input {
-  width: 100%;
-  padding: theme.$spacing-sm;
-  border-radius: theme.$border-radius-lg;
+  z-index: 1;
+  width: fit-content;
+  padding: 0;
   border: 2px solid transparent;
   font-size: theme.$font-size-base;
   background-color: transparent;
-  transition: border-color 0.2s ease-in-out;
+  color: var(--text-color-primary);
+  transition:
+    border-color theme.$transition-default,
+    background-color theme.$transition-default;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-sm;
+    border-width: 1.2px;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-lg;
+  }
 
   &:focus {
     outline: none;
-    border-color: var(--text-color-primary);
+    border-color: var(--focus-outline-color, var(--primary-color));
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
   }
 
   &::-webkit-calendar-picker-indicator {
     opacity: 1;
-    z-index: 2;
     filter: invert(1);
+    z-index: 2;
     cursor: pointer;
   }
 }
@@ -55,156 +93,217 @@
 .icon {
   font-size: theme.$font-size-base;
   cursor: pointer;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  margin: 0;
   z-index: 2;
   pointer-events: auto;
-  transition: color 0.2s ease-in-out;
+  transition:
+    color theme.$transition-default,
+    transform theme.$transition-default;
   color: var(--text-color-primary);
   line-height: 1em;
-}
+  background-color: transparent;
+  border: none;
+  margin: 0;
 
-@each $theme, $values in theme.$themes {
-  .#{$theme} .input {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
-
-    &:focus {
-      border-color: map.get($values, focus);
-    }
+  @include bp.down(sm) {
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-lg;
   }
 
-  .#{$theme}.outline .input {
-    border: 2px solid map.get($values, bg);
+  &:hover {
+    transform: translateY(-1px);
+  }
 
-    &:focus {
-      border-color: map.get($values, focus);
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@each $themeName, $values in theme.$themes {
+  .#{$themeName} {
+    .inputWrapper {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
     }
 
-    &:hover {
-      border-color: map.get($values, color);
+    &.outline {
+      .inputWrapper {
+        border: 2px solid map.get($values, bg);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+    }
+  }
+}
+
+@each $stateName, $values in theme.$states {
+  .#{$stateName} {
+    .inputWrapper {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+    }
+
+    &.outline {
+      .inputWrapper {
+        border: 2px solid map.get($values, bg);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
     }
   }
 }
 
 @each $state, $values in theme.$states {
-  .#{$state} .input {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
-
-    &:focus {
+  .#{$state}.outline {
+    .inputWrapper:focus {
       border-color: map.get($values, focus);
     }
-  }
-
-  .#{$state}.outline .input {
-    border: 2px solid map.get($values, bg);
-
-    &:focus {
-      border-color: map.get($values, focus);
-    }
-
-    &:hover {
+    .inputWrapper:hover {
       border-color: map.get($values, color);
     }
   }
+
+  .#{$state} .input:focus {
+    border-color: map.get($values, focus);
+  }
 }
 
-.outline .input {
+.outline .inputWrapper {
   background-color: transparent;
   box-shadow: none;
 }
-
-.clear.outline .input {
+.clear.outline .inputWrapper {
   color: var(--text-color-primary);
   border: 2px solid var(--text-color-primary);
+
+  @include bp.down(sm) {
+    border-width: 1.5px;
+  }
 }
 
-.disabled .input {
-  opacity: 0.6;
-  pointer-events: none;
-  background-color: theme.$disabled-color;
-  color: var(--text-color-secondary);
-  cursor: not-allowed;
-}
+.disabled {
+  .inputWrapper {
+    opacity: 0.6;
+    pointer-events: none;
+    background-color: theme.$disabled-color;
+    color: var(--text-color-secondary);
+    cursor: not-allowed;
+  }
 
-.disabled .icon {
-  opacity: 0.6;
-  pointer-events: none;
-  color: var(--text-color-secondary);
-  cursor: not-allowed;
+  .icon {
+    opacity: 0.6;
+    pointer-events: none;
+    color: var(--text-color-secondary);
+    cursor: not-allowed;
+  }
 }
 
 $input-sizes: (
   "xs": (
     padding: 4px 3px,
     font-size: theme.$font-size-xs,
-    max-width: 160px,
-    icon-margin: -22px,
+    max-width: 170px,
     icon-size: 15px,
   ),
   "small": (
     padding: 6px 10px,
     font-size: theme.$font-size-sm,
     max-width: 190px,
-    icon-margin: -30px,
     icon-size: 20px,
   ),
   "medium": (
     padding: 6px 10px,
     font-size: theme.$font-size-md,
     max-width: 215px,
-    icon-margin: -32px,
     icon-size: 22px,
   ),
   "large": (
     padding: 8px 16px,
     font-size: theme.$font-size-base,
     max-width: 250px,
-    icon-margin: -42px,
     icon-size: 25px,
   ),
   "xl": (
     padding: 10px 20px,
     font-size: theme.$font-size-lg,
-    max-width: 320px,
-    icon-margin: -50px,
+    max-width: 330px,
     icon-size: 30px,
   ),
 );
 
 @each $size, $props in $input-sizes {
-  .#{$size} .input {
-    padding: map.get($props, padding);
-    font-size: map.get($props, font-size);
-    max-width: map.get($props, max-width);
-  }
+  .#{$size} {
+    .inputWrapper {
+      padding: map.get($props, padding);
+    }
+    .input {
+      font-size: map.get($props, font-size);
+      max-width: map.get($props, max-width);
+    }
 
-  .#{$size} .icon {
-    margin-left: map.get($props, icon-margin);
-
-    svg {
-      height: map.get($props, icon-size);
-      width: map.get($props, icon-size);
+    .icon {
+      svg {
+        width: map.get($props, icon-size);
+        height: map.get($props, icon-size);
+      }
     }
   }
 }
 
 .description {
   font-size: theme.$font-size-sm;
-  color: var(--text-color-secondary);
-}
+  color: var(--text-color-primary);
 
-@each $key, $value in theme.$rounding {
-  .round#{$key} .input {
-    border-radius: $value;
+  @include bp.down(sm) {
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-md;
   }
 }
 
+@each $key, $value in theme.$rounding {
+  .round#{$key} .inputWrapper {
+    border-radius: $value;
+  }
+}
 @each $key, $value in theme.$shadow {
-  .shadow#{$key} .input {
+  .shadow#{$key} .inputWrapper {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapper,
+  .wrapper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@media (hover: none) {
+  .icon:hover {
+    transform: none;
+  }
+}
+@media (forced-colors: active) {
+  .inputWrapper {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText !important;
+    outline-color: Highlight;
+    box-shadow: none !important;
+  }
+
+  .icon {
+    color: ButtonText;
+    border: 1px solid ButtonText;
+    border-radius: 4px;
   }
 }

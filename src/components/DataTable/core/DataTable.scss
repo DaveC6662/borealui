@@ -58,9 +58,10 @@
   .data_table .data_table_header_sortable {
     cursor: pointer;
 
-    &:focus-visible {
+    &:focus-visible,
+    &:focus {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
+      outline-offset: 0.5px;
     }
   }
 
@@ -89,9 +90,10 @@
       background-color: var(--background-color);
     }
 
-    &:focus-visible {
+    &:focus-visible,
+    &:focus {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
+      outline-offset: 0px;
     }
   }
 

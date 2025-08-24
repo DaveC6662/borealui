@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:color";
 @use "sass:map";
@@ -15,22 +16,36 @@
   min-width: 180px;
   opacity: 1;
   text-align: center;
-  cursor: pointer;
   animation: fade-in 0.3s ease-out;
   transition:
     transform 0.3s ease-in-out,
-    opacity 0.3s ease-in-out;
+    opacity 0.3s ease-in-out,
+    box-shadow theme.$transition-default;
+
+  @include bp.down(sm) {
+    min-width: 150px;
+    max-width: 96vw;
+  }
+
+  @include bp.up(lg) {
+    min-width: 220px;
+    max-width: 70vw;
+  }
 
   @each $key, $value in theme.$rounding {
     &.round#{$key} {
       border-radius: $value;
     }
   }
-
   @each $key, $value in theme.$shadow {
     &.shadow#{$key} {
       box-shadow: $value;
     }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
   }
 }
 
@@ -39,42 +54,37 @@
   left: 50%;
   transform: translateX(-50%);
 }
-
 .fadeout {
   opacity: 0;
   transform: translate(-50%, -10px);
 }
 
+$chip-offset: 20px;
 .topCenter {
-  top: 20px;
+  top: $chip-offset;
 }
-
 .bottomCenter {
-  bottom: 20px;
+  bottom: $chip-offset;
 }
-
 .topLeft {
-  top: 20px;
-  left: 20px;
+  top: $chip-offset;
+  left: $chip-offset;
   transform: none;
 }
-
 .topRight {
-  top: 20px;
-  right: 20px;
+  top: $chip-offset;
+  right: $chip-offset;
   left: auto;
   transform: none;
 }
-
 .bottomLeft {
-  bottom: 20px;
-  left: 20px;
+  bottom: $chip-offset;
+  left: $chip-offset;
   transform: none;
 }
-
 .bottomRight {
-  bottom: 20px;
-  right: 20px;
+  bottom: $chip-offset;
+  right: $chip-offset;
   left: auto;
   transform: none;
 }
@@ -83,20 +93,23 @@
   .#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
+    border: map.get($values, border);
 
-    @if map.get($values, border) {
-      border: map.get($values, border);
+    &:focus-visible {
+      outline: 2px solid map.get($values, border);
+      outline-offset: 3px;
     }
   }
 }
-
 @each $name, $values in theme.$states {
   .#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
+    border: map.get($values, border);
 
-    @if map.get($values, border) {
-      border: map.get($values, border);
+    &:focus-visible {
+      outline: 2px solid map.get($values, border);
+      outline-offset: 3px;
     }
   }
 }
@@ -106,11 +119,25 @@
   display: flex;
   align-items: center;
   margin-top: -0.1em;
+
+  @include bp.down(sm) {
+    margin-right: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    margin-right: theme.$spacing-md;
+  }
 }
 
 .message {
   flex-grow: 1;
   margin-right: 12px;
+
+  @include bp.down(sm) {
+    margin-right: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    margin-right: theme.$spacing-sm;
+  }
 }
 
 .icon_inner {
@@ -159,10 +186,65 @@ $chip-sizes: (
     .message {
       font-size: map.get($props, font);
     }
-
     .icon_inner {
       height: map.get($props, icon);
       width: map.get($props, icon);
     }
+
+    @include bp.down(sm) {
+      .message {
+        font-size: clamp(
+          theme.$font-size-xs,
+          0.9rem + 0.1vw,
+          map.get($props, font)
+        );
+      }
+      padding: 5px 10px;
+    }
+
+    @include bp.up(lg) {
+      .message {
+        font-size: clamp(
+          map.get($props, font),
+          0.95rem + 0.25vw,
+          theme.$font-size-xl
+        );
+      }
+      padding: 8px 14px;
+
+      @if $size == "xl" {
+        padding: 12px 20px;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip,
+  .chip * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .chip:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (hover: none) {
+  .chip:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .chip {
+    border: 1px solid ButtonText;
+    background: Canvas;
+    color: CanvasText;
+    outline-color: Highlight;
+    box-shadow: none !important;
   }
 }

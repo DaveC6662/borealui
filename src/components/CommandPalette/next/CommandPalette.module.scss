@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -11,31 +12,52 @@
   justify-content: center;
   align-items: flex-start;
   padding-top: 10vh;
+
+  @include bp.down(sm) {
+    padding-top: 6vh;
+  }
+  @include bp.up(lg) {
+    padding-top: 12vh;
+  }
 }
 
 .command_palette {
   background: var(--background-color-light);
-  border-radius: theme.$border-radius-lg;
-  box-shadow: theme.$box-shadow-heavy;
   width: 90%;
   max-width: 500px;
   padding: theme.$spacing-md;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: theme.$spacing-sm;
+
+  @include bp.down(sm) {
+    width: 94%;
+    max-width: 560px;
+    padding: theme.$spacing-sm;
+    gap: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    max-width: 720px;
+    padding: theme.$spacing-lg;
+    gap: theme.$spacing-md;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 4px;
+  }
 }
 
 @each $key, $value in theme.$rounding {
   .round#{$key} {
     border-radius: $value;
   }
-
   .round#{$key} .item {
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -44,8 +66,25 @@
 
 .input {
   width: 90% !important;
+  max-width: unset !important;
   padding: 0;
-  margin: 0 auto !important;
+  margin: 0 auto;
+  line-height: 1.3;
+  font-size: theme.$font-size-base;
+
+  @include bp.down(sm) {
+    width: 96%;
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    width: 100%;
+    font-size: theme.$font-size-lg;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+  }
 }
 
 .list {
@@ -53,18 +92,57 @@
   padding: 0;
   margin: 0;
   max-height: 300px;
+  width: 100%;
   overflow-y: auto;
+
+  @include bp.down(sm) {
+    max-height: 50vh;
+  }
+  @include bp.up(lg) {
+    max-height: 60vh;
+  }
 }
 
 .item {
   padding: theme.$spacing-sm;
   cursor: pointer;
-  border-radius: theme.$border-radius-sm;
   display: flex;
   margin: theme.$spacing-xs;
   align-items: center;
   gap: theme.$spacing-xs;
   line-height: 0.8em;
+  color: var(--text-color-primary);
+  transition:
+    background-color theme.$transition-default,
+    transform theme.$transition-default,
+    box-shadow theme.$transition-default;
+
+  @include bp.down(sm) {
+    padding: theme.$spacing-xs;
+    margin: theme.$spacing-xxs;
+    gap: theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    padding: theme.$spacing-md;
+    margin: theme.$spacing-sm;
+    gap: theme.$spacing-sm;
+  }
+
+  &:hover {
+    background-color: var(--background-color);
+    transform: translateY(-1px);
+    box-shadow: theme.$box-shadow-light;
+
+    @include bp.down(sm) {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+  }
 }
 
 .icon {
@@ -74,15 +152,27 @@
 .empty {
   padding: theme.$spacing-sm;
   color: theme.$disabled-color;
+
+  @include bp.down(sm) {
+    padding: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    padding: theme.$spacing-md;
+  }
 }
 
 .active {
   font-weight: theme.$font-weight-bold;
+  background-color: var(--background-color);
 }
 
 @each $name, $values in theme.$themes {
   .#{$name} {
     border: 2px solid map.get($values, border);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
   }
 
   .item.#{$name}.active {
@@ -102,6 +192,10 @@
 @each $name, $values in theme.$states {
   .#{$name} {
     border: 2px solid map.get($values, border);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
   }
 
   .item.#{$name}.active {
@@ -120,4 +214,40 @@
 
 .clear {
   box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .command_palette,
+  .command_palette * {
+    transition: none !important;
+  }
+  .item:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (hover: none) {
+  .item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .command_palette {
+    background: Canvas;
+    color: CanvasText;
+    outline-color: Highlight;
+  }
+
+  .item {
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+  }
+
+  .active {
+    background: SelectedItem;
+    color: SelectedItemText;
+  }
 }

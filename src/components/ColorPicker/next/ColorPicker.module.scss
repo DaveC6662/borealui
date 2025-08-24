@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -22,23 +23,47 @@ $swatch-sizes: (
     opacity: 0.5;
     pointer-events: none;
   }
+
+  @include bp.down(sm) {
+    padding: theme.$spacing-xs;
+    gap: theme.$spacing-xxs;
+  }
+
+  @include bp.up(lg) {
+    padding: theme.$spacing-md;
+    gap: theme.$spacing-sm;
+  }
 }
 
 .legend {
   font-size: theme.$font-size-sm;
   font-weight: theme.$font-weight-bold;
   margin-bottom: theme.$spacing-xs;
+
+  @include bp.down(sm) {
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-md;
+  }
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
   gap: theme.$spacing-xs;
+
+  @include bp.down(sm) {
+    gap: theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-sm;
+  }
 }
 
 .selected,
 :focus-visible {
-  outline: 2px solid var(--text-color-primary);
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
   outline-offset: 2px;
 }
 
@@ -52,24 +77,41 @@ $swatch-sizes: (
   transition: outline-color 0.2s ease-in-out;
   box-sizing: border-box;
 
+  &:hover {
+    outline-color: var(--focus-outline-color, var(--primary-color));
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+  }
+
+  .round {
+    border-radius: 50%;
+  }
+  .square {
+    border-radius: 6px;
+  }
+  .pill {
+    border-radius: 9999px;
+    height: 50%;
+  }
+
   @each $size, $val in $swatch-sizes {
     &.#{$size} {
       width: $val;
       height: $val;
+
+      @include bp.down(sm) {
+        width: calc(#{$val} * 0.85);
+        height: calc(#{$val} * 0.85);
+      }
+      @include bp.up(lg) {
+        width: calc(#{$val} * 1.1);
+        height: calc(#{$val} * 1.1);
+      }
     }
   }
-}
-
-.circle {
-  border-radius: 50%;
-}
-
-.square {
-  border-radius: 6px;
-}
-
-.round {
-  border-radius: 50%;
 }
 
 .radio_input {
@@ -80,30 +122,62 @@ $swatch-sizes: (
   width: 80%;
   height: 80%;
   display: block;
-  box-shadow: theme.$box-shadow-light;
   box-sizing: border-box;
+  border-radius: inherit;
 }
 
 .custom_input {
   margin-top: theme.$spacing-xs;
   width: 100%;
+
+  @include bp.down(sm) {
+    margin-top: theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    margin-top: theme.$spacing-sm;
+  }
 }
 
 .circle {
   border-radius: 50%;
 }
-
 .square {
   border-radius: 6px;
 }
-
 .rounded {
   border-radius: 9999px;
-  height: 50%;
 }
 
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .color_picker,
+  .color_picker * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .swatch:hover {
+    outline-color: transparent;
+  }
+}
+
+@media (forced-colors: active) {
+  .swatch {
+    border: 1px solid ButtonText;
+    background: Canvas;
+    color: CanvasText;
+    outline-color: Highlight;
+    box-shadow: none !important;
+  }
+
+  .preview {
+    background: CanvasText;
   }
 }

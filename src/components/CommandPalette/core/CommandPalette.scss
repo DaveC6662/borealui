@@ -67,7 +67,8 @@
 }
 
 .command_palette_input {
-  width: 90%;
+  width: 90% !important;
+  max-width: unset !important;
   padding: 0;
   margin: 0 auto;
   line-height: 1.3;
