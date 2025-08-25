@@ -136,9 +136,11 @@ $positions: (
     &.bottom::after {
       border-color: transparent transparent map.get($vals, bg) transparent;
     }
+
     &.left::after {
       border-color: transparent map.get($vals, bg) transparent transparent;
     }
+
     &.right::after {
       border-color: transparent transparent transparent map.get($vals, bg);
     }
@@ -161,9 +163,11 @@ $positions: (
     &.bottom::after {
       border-color: transparent transparent map.get($vals, border) transparent;
     }
+
     &.left::after {
       border-color: transparent map.get($vals, border) transparent transparent;
     }
+
     &.right::after {
       border-color: transparent transparent transparent map.get($vals, border);
     }
@@ -190,6 +194,7 @@ $positions: (
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -221,12 +226,15 @@ $positions: (
   .top::after {
     border-color: CanvasText transparent transparent !important;
   }
+
   .bottom::after {
     border-color: transparent transparent CanvasText !important;
   }
+
   .left::after {
     border-color: transparent CanvasText transparent transparent !important;
   }
+
   .right::after {
     border-color: transparent transparent transparent CanvasText !important;
   }

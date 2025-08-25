@@ -36,6 +36,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -134,46 +135,55 @@
   @include bp.down(sm) {
     font-size: theme.$font-size-xxs;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-sm;
   }
 }
+
 .small {
   font-size: theme.$font-size-sm;
 
   @include bp.down(sm) {
     font-size: theme.$font-size-xs;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-md;
   }
 }
+
 .medium {
   font-size: theme.$font-size-md;
 
   @include bp.down(sm) {
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-base;
   }
 }
+
 .large {
   font-size: theme.$font-size-base;
 
   @include bp.down(sm) {
     font-size: theme.$font-size-md;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-lg;
   }
 }
+
 .xl {
   font-size: theme.$font-size-xl;
 
   @include bp.down(sm) {
     font-size: theme.$font-size-lg;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-xxl;
   }
@@ -190,6 +200,7 @@
   @include bp.down(sm) {
     gap: theme.$spacing-xs * 0.5;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-sm;
   }
@@ -202,9 +213,11 @@
   color: inherit;
   transition: all theme.$transition-default;
 }
+
 .item_animate {
   animation: fade-in 0.3s ease-in-out;
 }
+
 .item_active {
   font-weight: theme.$font-weight-bolder;
   color: theme.$disabled-color;
@@ -221,6 +234,7 @@
   text-decoration: none;
   color: inherit;
 }
+
 .link_label {
   display: inline-block;
 
@@ -259,6 +273,7 @@
   @include bp.down(sm) {
     padding: 0 theme.$spacing-xxs;
   }
+
   @include bp.up(lg) {
     padding: 0 theme.$spacing-sm;
   }
@@ -269,12 +284,14 @@
   .item {
     transition: none;
   }
+
   .breadcrumbs:hover,
   .item:hover {
     transform: none;
     box-shadow: none;
   }
 }
+
 @media (hover: none) {
   .breadcrumbs:hover,
   .item:hover {
@@ -282,6 +299,7 @@
     box-shadow: none;
   }
 }
+
 @media (forced-colors: active) {
   .breadcrumbs {
     border: 1px solid ButtonText;

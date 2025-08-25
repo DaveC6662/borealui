@@ -28,6 +28,7 @@ $progress-sizes: (
   @include bp.down(xs) {
     min-width: 80px;
   }
+
   @include bp.up(lg) {
     min-width: 160px;
   }
@@ -39,6 +40,7 @@ $progress-sizes: (
       @include bp.down(xs) {
         height: calc(#{$height} * 0.85);
       }
+
       @include bp.up(lg) {
         height: calc(#{$height} * 1.1);
       }
@@ -50,6 +52,7 @@ $progress-sizes: (
       background-color: map.get($vals, bg);
     }
   }
+
   @each $name, $vals in theme.$states {
     &.#{$name} {
       background-color: map.get($vals, bg);
@@ -72,6 +75,7 @@ $progress-sizes: (
       background-color: map.get($vals, bg);
     }
   }
+
   @each $name, $vals in theme.$states {
     &.#{$name} {
       background-color: map.get($vals, bg);
@@ -86,6 +90,7 @@ $progress-sizes: (
 .animated {
   animation: progress-grow 0.8s ease-out;
 }
+
 .indeterminate {
   width: 100%;
   animation: indeterminate-move 1.5s infinite ease-in-out;
@@ -96,6 +101,7 @@ $progress-sizes: (
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -106,6 +112,7 @@ $progress-sizes: (
   .bar {
     transition: none !important;
   }
+
   .animated,
   .indeterminate {
     animation: none !important;
@@ -118,6 +125,7 @@ $progress-sizes: (
     color: CanvasText;
     border: 1px solid ButtonText;
   }
+
   .bar {
     background: Highlight;
   }

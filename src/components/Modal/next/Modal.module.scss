@@ -12,7 +12,6 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
-
   padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
     env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
 }
@@ -27,7 +26,6 @@
   transition:
     transform 0.2s ease,
     opacity 0.2s ease;
-
   width: 92%;
   max-width: 560px;
   max-height: 85vh;
@@ -58,6 +56,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;

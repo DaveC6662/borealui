@@ -137,6 +137,7 @@ $sizes: (
   @include bp.down(sm) {
     padding: theme.$spacing-sm;
   }
+
   @include bp.down(xs) {
     padding: 0;
   }
@@ -148,6 +149,7 @@ $sizes: (
       background-color: map.get($vals, bg);
       border-bottom-color: map.get($vals, border);
     }
+
     .tab:focus-visible {
       outline: 2px solid map.get($vals, border);
       outline-offset: 2px;
@@ -161,6 +163,7 @@ $sizes: (
       background-color: map.get($vals, bg);
       border-bottom-color: map.get($vals, border);
     }
+
     .tab:focus-visible {
       outline: 2px solid map.get($vals, border);
       outline-offset: 2px;
@@ -193,6 +196,7 @@ $sizes: (
   .tab {
     transition: none !important;
   }
+
   .tab:hover {
     transform: none !important;
   }

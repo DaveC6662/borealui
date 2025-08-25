@@ -37,6 +37,7 @@
       border-radius: $v;
     }
   }
+
   @each $k, $v in theme.$shadow {
     &.shadow#{$k} {
       box-shadow: $v;
@@ -92,6 +93,7 @@
   &:focus {
     outline: 0;
   }
+
   &:focus-visible {
     outline: 0;
   }
@@ -166,20 +168,24 @@
     animation: none !important;
   }
 }
+
 @media (hover: none) {
   .wrapper:hover {
     box-shadow: none;
   }
 }
+
 @media (forced-colors: active) {
   .select {
     background: Canvas;
     color: CanvasText;
     border: 1px solid ButtonText;
   }
+
   .icon {
     color: ButtonText;
   }
+
   .wrapper:focus-within {
     outline: 2px solid Highlight;
     outline-offset: 3px;

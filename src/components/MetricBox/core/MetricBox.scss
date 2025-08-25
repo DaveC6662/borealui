@@ -43,7 +43,7 @@
   &_icon {
     font-size: 2rem;
     color: inherit;
-    padding: 0px;
+    padding: 0;
 
     @include bp.down(sm) {
       font-size: 1.8rem;

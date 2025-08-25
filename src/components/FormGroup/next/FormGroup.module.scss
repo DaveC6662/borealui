@@ -26,6 +26,7 @@
     font-size: theme.$font-size-base;
   }
 }
+
 .required {
   color: theme.$error-color;
   margin-left: 4px;
@@ -74,9 +75,11 @@
     font-size: theme.$font-size-base;
   }
 }
+
 .description {
   color: var(--text-color-primary);
 }
+
 .errorMessage {
   color: theme.$error-color;
 }

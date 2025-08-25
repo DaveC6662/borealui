@@ -19,7 +19,7 @@
   }
 
   @include bp.down(xs) {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
     height: 35px;
     width: 95%;
     max-width: none;
@@ -36,6 +36,7 @@
     &:hover {
       background-color: transparent;
     }
+
     &:focus,
     &:focus-within {
       outline: none;
@@ -46,11 +47,13 @@
 @each $k, $v in theme.$rounding {
   .round#{$k} {
     border-radius: $v;
+
     input {
       border-radius: $v;
     }
   }
 }
+
 @each $k, $v in theme.$shadow {
   .shadow#{$k} {
     box-shadow: $v;
@@ -96,6 +99,7 @@
     width: 1em;
     height: 1em;
     color: var(--text-color-primary);
+
     @include bp.down(xs) {
       width: 15px;
       height: 15px;
@@ -141,6 +145,7 @@
     .textInput::placeholder {
       color: map.get($vals, text);
     }
+
     .iconContainer svg {
       color: map.get($vals, text);
     }
@@ -185,13 +190,16 @@
     color: CanvasText;
     border: 1px solid ButtonText;
   }
+
   .textInput {
     color: CanvasText;
     background: Canvas;
+
     &::placeholder {
       color: CanvasText;
     }
   }
+
   .textInput:focus-visible,
   .container:focus-within {
     outline: 2px solid Highlight !important;

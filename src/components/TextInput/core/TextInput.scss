@@ -20,7 +20,7 @@
   }
 
   @include bp.down(xs) {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
     height: 35px;
     width: 95%;
     max-width: none;

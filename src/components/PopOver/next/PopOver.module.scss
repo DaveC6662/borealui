@@ -58,6 +58,7 @@
       right: 0 !important;
       transform: translateY(10px);
     }
+
     &[data-overflow-left="true"] {
       right: auto !important;
       left: 0 !important;
@@ -134,6 +135,7 @@
     left: 50%;
     transform: translateX(-50%) translateY(8px);
   }
+
   .left,
   .right {
     top: 50%;
@@ -146,6 +148,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;

@@ -69,6 +69,7 @@ $sizes: (
   @include bp.down(xs) {
     gap: theme.$spacing-xxs;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-md;
   }
@@ -81,6 +82,7 @@ $sizes: (
   @include bp.down(xs) {
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-base;
   }
@@ -129,6 +131,7 @@ $sizes: (
       width: $sw;
       height: $sh;
     }
+
     &.active .slider {
       transform: translateX($tx);
     }
@@ -136,10 +139,12 @@ $sizes: (
     @include bp.down(xs) {
       width: $tw * 0.9;
       height: $th * 0.9;
+
       .slider {
         width: $sw * 0.9;
         height: $sh * 0.9;
       }
+
       &.active .slider {
         transform: translateX($tx * 0.85);
       }
@@ -148,10 +153,12 @@ $sizes: (
     @include bp.up(lg) {
       width: $tw * 1.05;
       height: $th * 1.05;
+
       .slider {
         width: $sw * 1.05;
         height: $sh * 1.05;
       }
+
       &.active .slider {
         transform: translateX($tx * 1.05);
       }
@@ -164,6 +171,7 @@ $sizes: (
     background-color: map.get($vals, bg);
   }
 }
+
 @each $stateName, $vals in theme.$states {
   .#{$stateName} .toggle.active {
     outline: 2px solid map.get($vals, border);
@@ -188,11 +196,13 @@ $sizes: (
 @each $key, $value in theme.$rounding {
   .round#{$key} {
     border-radius: $value;
+
     .slider {
       border-radius: $value;
     }
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -206,23 +216,28 @@ $sizes: (
     animation: none !important;
   }
 }
+
 @media (hover: none) {
   .toggle {
     transition: none;
   }
 }
+
 @media (forced-colors: active) {
   .toggle {
     background: ButtonFace;
     color: ButtonText;
     border: 1px solid ButtonText;
   }
+
   .toggle.active {
     background: Highlight;
   }
+
   .toggle .slider {
     background: ButtonText;
   }
+
   .toggle:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;

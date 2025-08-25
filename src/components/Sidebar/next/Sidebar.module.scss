@@ -16,6 +16,7 @@
   @include bp.down(md) {
     width: 200px;
   }
+
   @include bp.up(lg) {
     width: 260px;
   }
@@ -33,6 +34,7 @@
       border-radius: $v;
     }
   }
+
   @each $k, $v in theme.$shadow {
     &.shadow#{$k} {
       box-shadow: $v;
@@ -50,6 +52,7 @@
     background-color: transparent;
     color: map.get($vals, color);
     border: 2px solid map.get($vals, border);
+
     @include bp.down(sm) {
       border-width: 1.5px;
     }
@@ -74,9 +77,11 @@
     border: 2px solid map.get($vals, bg);
     background-color: transparent;
     color: map.get($vals, color);
+
     &:hover {
       background-color: map.get($vals, hover);
     }
+
     @include bp.down(sm) {
       border-width: 1.5px;
     }
@@ -128,6 +133,7 @@
     padding: theme.$spacing-xs theme.$spacing-sm;
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     padding: theme.$spacing-sm theme.$spacing-md;
     font-size: theme.$font-size-base;
@@ -141,6 +147,7 @@
 
 .childLink {
   font-size: 0.9rem;
+
   @include bp.down(xs) {
     font-size: theme.$font-size-sm;
   }
@@ -155,13 +162,16 @@
     width: 1em;
     height: 1em;
   }
+
   @include bp.down(xs) {
     margin-right: theme.$spacing-xxs;
+
     svg {
       width: 0.95em;
       height: 0.95em;
     }
   }
+
   @include bp.up(lg) {
     svg {
       width: 1.05em;
@@ -173,6 +183,7 @@
 .chevron {
   transition: transform 0.2s ease;
 }
+
 .chevronOpen {
   transform: rotate(180deg);
 }
@@ -182,6 +193,7 @@
   overflow: hidden;
   transition: max-height 0.25s ease;
 }
+
 .submenuOpen {
   max-height: max-content;
 }
@@ -189,6 +201,7 @@
 .childList {
   border-left: 3px solid var(--background-color-darker);
   margin: 0.25rem 0;
+
   @include bp.down(xs) {
     border-left-width: 2px;
   }
@@ -213,18 +226,22 @@
     gap: theme.$spacing-xs;
   }
 }
+
 .footerLink {
   font-size: 0.85rem;
   text-decoration: none;
+
   &:hover {
     color: var(--text-color-primary);
   }
+
   &:focus-visible {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
     border-radius: 4px;
   }
 }
+
 .footerVersion {
   font-size: 0.75rem;
   opacity: 0.7;
@@ -238,25 +255,30 @@
     animation: none !important;
   }
 }
+
 @media (hover: none) {
   .link:hover {
     background-color: transparent;
     letter-spacing: normal;
   }
 }
+
 @media (forced-colors: active) {
   .wrapper {
     background: Canvas;
     color: CanvasText;
     border-color: ButtonFace;
   }
+
   .link {
     color: ButtonText;
   }
+
   .link:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
   }
+
   .childList {
     border-left-color: ButtonText;
   }

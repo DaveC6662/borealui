@@ -19,6 +19,7 @@ $sizes: (
   @include bp.down(xs) {
     gap: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-md;
   }
@@ -32,6 +33,7 @@ $sizes: (
   @include bp.down(xs) {
     gap: theme.$spacing-xxs;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-sm;
   }
@@ -58,6 +60,7 @@ $sizes: (
   @include bp.down(xs) {
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-lg;
   }
@@ -98,10 +101,12 @@ $sizes: (
     transform: scale(1.1);
   }
 }
+
 .interactive .star:focus-visible {
   outline: 2px solid var(--focus-outline-color, var(--primary-color));
   outline-offset: 2px;
 }
+
 .wrapper:focus-within {
   outline: 2px solid var(--focus-outline-color, var(--primary-color));
   outline-offset: 4px;
@@ -115,6 +120,7 @@ $sizes: (
     }
   }
 }
+
 @each $stateName, $vals in theme.$states {
   .#{$stateName} {
     .active {
@@ -134,6 +140,7 @@ $sizes: (
   .wrapper {
     transition: none !important;
   }
+
   .interactive .star:hover {
     transform: none !important;
   }
@@ -149,9 +156,11 @@ $sizes: (
   .star {
     color: ButtonText;
   }
+
   .active {
     color: Highlight;
   }
+
   .interactive .star:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;

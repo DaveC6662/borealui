@@ -13,6 +13,7 @@
   @include bp.down(sm) {
     gap: theme.$spacing-xxs;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-sm;
   }
@@ -22,6 +23,7 @@
   display: none;
   appearance: none;
 }
+
 .input[type="datetime-local"] {
   border: 0;
 }
@@ -34,6 +36,7 @@
   @include bp.down(sm) {
     font-size: theme.$font-size-xs;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-md;
   }
@@ -68,6 +71,7 @@
     font-size: theme.$font-size-sm;
     border-width: 1.2px;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-lg;
   }
@@ -107,6 +111,7 @@
   @include bp.down(sm) {
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-lg;
   }
@@ -165,6 +170,7 @@
     .inputWrapper:focus {
       border-color: map.get($values, focus);
     }
+
     .inputWrapper:hover {
       border-color: map.get($values, color);
     }
@@ -179,6 +185,7 @@
   background-color: transparent;
   box-shadow: none;
 }
+
 .clear.outline .inputWrapper {
   color: var(--text-color-primary);
   border: 2px solid var(--text-color-primary);
@@ -243,6 +250,7 @@ $input-sizes: (
     .inputWrapper {
       padding: map.get($props, padding);
     }
+
     .input {
       font-size: map.get($props, font-size);
       max-width: map.get($props, max-width);
@@ -264,6 +272,7 @@ $input-sizes: (
   @include bp.down(sm) {
     font-size: theme.$font-size-xs;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-md;
   }
@@ -274,6 +283,7 @@ $input-sizes: (
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} .inputWrapper {
     box-shadow: $value;
@@ -287,11 +297,13 @@ $input-sizes: (
     animation: none !important;
   }
 }
+
 @media (hover: none) {
   .icon:hover {
     transform: none;
   }
 }
+
 @media (forced-colors: active) {
   .inputWrapper {
     background: Canvas;

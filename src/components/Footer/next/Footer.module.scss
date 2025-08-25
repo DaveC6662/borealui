@@ -21,6 +21,7 @@
       border-top-right-radius: $value;
     }
   }
+
   @each $key, $value in theme.$shadow {
     &.shadow#{$key} {
       box-shadow: $value;
@@ -144,6 +145,7 @@
     img {
       max-height: 100%;
     }
+
     svg {
       height: 1em;
       width: 1em;
@@ -195,6 +197,7 @@
     border-top-right-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;

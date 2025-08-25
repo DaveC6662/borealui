@@ -66,6 +66,7 @@
       border-top-color: map.get($vals, border);
     }
   }
+
   @each $name, $vals in theme.$states {
     &.#{$name} {
       border-top-color: map.get($vals, border);
@@ -97,6 +98,7 @@
   @include bp.down(xs) {
     font-size: theme.$font-size-xs;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-base;
   }
@@ -107,6 +109,7 @@
     border-radius: $val;
   }
 }
+
 @each $key, $val in theme.$shadow {
   .shadow#{$key} .spinner {
     box-shadow: $val;
@@ -118,10 +121,12 @@
   .spinner:hover {
     animation: none !important;
   }
+
   .wrapper {
     transition: none !important;
   }
 }
+
 @media (hover: none) {
   .spinner:hover {
     animation: inherit;
@@ -133,6 +138,7 @@
     border-color: transparent;
     border-top-color: Highlight;
   }
+
   .label {
     color: CanvasText;
   }

@@ -51,6 +51,7 @@
   @include bp.down(sm) {
     font-size: 1em;
   }
+
   @include bp.up(lg) {
     font-size: 1.3em;
   }
@@ -275,6 +276,7 @@
   .badge {
     transition: none;
   }
+
   .badge.clickable:hover {
     transform: none;
     box-shadow: none;

@@ -16,6 +16,7 @@
   .outline {
     border: 1px solid ButtonText;
   }
+
   .footer {
     border-top: 1px solid ButtonText;
   }
@@ -55,6 +56,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -74,10 +76,12 @@
   @include bp.down(sm) {
     min-height: 180px;
   }
+
   @include bp.up(lg) {
     min-height: 300px;
   }
 }
+
 .fade_in {
   animation: fade-in 0.8s ease-in-out;
 }
@@ -93,6 +97,7 @@
   @include bp.down(sm) {
     aspect-ratio: 1 / 1;
   }
+
   @include bp.up(lg) {
     aspect-ratio: 16 / 9;
   }
@@ -125,6 +130,7 @@
     @include bp.down(sm) {
       max-height: 150px;
     }
+
     @include bp.up(lg) {
       max-height: 300px;
     }
@@ -146,6 +152,7 @@
     max-width: 100%;
     min-height: 150px;
   }
+
   @include bp.up(lg) {
     min-height: 250px;
     max-width: 1100px;
@@ -173,6 +180,7 @@
       width: 100%;
       aspect-ratio: 1 / 1;
     }
+
     @include bp.up(lg) {
       aspect-ratio: 16 / 10;
     }
@@ -188,6 +196,7 @@
     @include bp.down(sm) {
       padding: theme.$spacing-sm;
     }
+
     @include bp.up(lg) {
       padding: theme.$spacing-lg;
     }
@@ -199,6 +208,7 @@
     @include bp.down(sm) {
       padding: theme.$spacing-sm;
     }
+
     @include bp.up(lg) {
       padding: theme.$spacing-lg;
     }
@@ -213,6 +223,7 @@
   opacity: 0.6;
   box-shadow: none;
 }
+
 .outline {
   background: transparent;
   border: 2px solid currentcolor;
@@ -232,6 +243,7 @@
     .description {
       color: var(--text-color-primary);
     }
+
     .loading {
       background-color: transparent;
     }
@@ -247,6 +259,7 @@
     }
   }
 }
+
 @each $name, $props in theme.$states {
   .#{$name} {
     background: map.get($props, bg);
@@ -256,6 +269,7 @@
     .description {
       color: var(--text-color-primary);
     }
+
     .loading {
       background-color: transparent;
     }
@@ -287,6 +301,7 @@
   @include bp.down(sm) {
     padding: theme.$spacing-sm;
   }
+
   @include bp.up(lg) {
     padding: theme.$spacing-lg;
   }
@@ -318,6 +333,7 @@
   @include bp.down(sm) {
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-lg;
   }
@@ -331,6 +347,7 @@
   @include bp.down(sm) {
     font-size: 1em;
   }
+
   @include bp.up(lg) {
     font-size: 1.4em;
   }
@@ -344,6 +361,7 @@
   @include bp.down(sm) {
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-lg;
   }
@@ -374,6 +392,7 @@
   @include bp.down(sm) {
     gap: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-md;
   }
@@ -383,69 +402,88 @@
   .description {
     font-size: theme.$font-size-xs;
   }
+
   .icon {
     font-size: 0.9em;
   }
+
   .title {
     font-size: theme.$font-size-sm;
     line-height: 0.9em;
   }
+
   .children {
     font-size: theme.$font-size-xs;
   }
 }
+
 .small {
   .description {
     font-size: theme.$font-size-sm;
   }
+
   .icon {
     font-size: 1em;
   }
+
   .title {
     font-size: theme.$font-size-md;
   }
+
   .children {
     font-size: theme.$font-size-sm;
   }
 }
+
 .medium {
   .description {
     font-size: theme.$font-size-md;
   }
+
   .icon {
     font-size: 1.2em;
   }
+
   .title {
     font-size: theme.$font-size-base;
   }
+
   .children {
     font-size: theme.$font-size-md;
   }
 }
+
 .large {
   .description {
     font-size: theme.$font-size-lg;
   }
+
   .icon {
     font-size: 1.4em;
   }
+
   .title {
     font-size: 1.4em;
   }
+
   .children {
     font-size: theme.$font-size-lg;
   }
 }
+
 .xl {
   .description {
     font-size: theme.$font-size-xl;
   }
+
   .icon {
     font-size: 1.2em;
   }
+
   .title {
     font-size: 1.6em;
   }
+
   .children {
     font-size: theme.$font-size-xl;
   }

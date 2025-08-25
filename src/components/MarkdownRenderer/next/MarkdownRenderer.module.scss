@@ -32,12 +32,15 @@
   h1 {
     font-size: clamp(theme.$font-size-xl, 1.1rem + 1.5vw, theme.$font-size-xxl);
   }
+
   h2 {
     font-size: clamp(theme.$font-size-lg, 1.05rem + 1vw, theme.$font-size-xl);
   }
+
   h3 {
     font-size: clamp(theme.$font-size-base, 1rem + 0.6vw, theme.$font-size-lg);
   }
+
   h4 {
     font-size: clamp(
       theme.$font-size-sm,
@@ -52,6 +55,7 @@
     @include bp.down(sm) {
       font-size: theme.$font-size-sm;
     }
+
     @include bp.up(lg) {
       font-size: theme.$font-size-base;
     }
@@ -70,6 +74,7 @@
     @include bp.down(sm) {
       padding-left: theme.$spacing-md;
     }
+
     @include bp.up(lg) {
       padding-left: calc(theme.$spacing-lg * 1.1);
     }
@@ -97,6 +102,7 @@
     @include bp.down(sm) {
       padding: theme.$spacing-sm;
     }
+
     @include bp.up(lg) {
       padding: theme.$spacing-lg;
     }
@@ -120,6 +126,7 @@
       border-left-width: 3px;
       padding-left: theme.$spacing-sm;
     }
+
     @include bp.up(lg) {
       border-left-width: 6px;
     }
@@ -183,6 +190,7 @@
     border-radius: $v;
   }
 }
+
 @each $k, $v in theme.$shadow {
   .shadow#{$k} {
     box-shadow: $v;

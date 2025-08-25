@@ -43,6 +43,7 @@ $swatch-sizes: (
   @include bp.down(sm) {
     font-size: theme.$font-size-xs;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-md;
   }
@@ -56,6 +57,7 @@ $swatch-sizes: (
   @include bp.down(sm) {
     gap: theme.$spacing-xxs;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-sm;
   }
@@ -89,9 +91,11 @@ $swatch-sizes: (
   .round {
     border-radius: 50%;
   }
+
   .square {
     border-radius: 6px;
   }
+
   .pill {
     border-radius: 9999px;
     height: 50%;
@@ -106,6 +110,7 @@ $swatch-sizes: (
         width: calc(#{$val} * 0.85);
         height: calc(#{$val} * 0.85);
       }
+
       @include bp.up(lg) {
         width: calc(#{$val} * 1.1);
         height: calc(#{$val} * 1.1);
@@ -133,6 +138,7 @@ $swatch-sizes: (
   @include bp.down(sm) {
     margin-top: theme.$spacing-xxs;
   }
+
   @include bp.up(lg) {
     margin-top: theme.$spacing-sm;
   }
@@ -141,9 +147,11 @@ $swatch-sizes: (
 .circle {
   border-radius: 50%;
 }
+
 .square {
   border-radius: 6px;
 }
+
 .rounded {
   border-radius: 9999px;
 }

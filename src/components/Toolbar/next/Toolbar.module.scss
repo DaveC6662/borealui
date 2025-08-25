@@ -46,6 +46,7 @@
   &:first-child {
     justify-content: flex-start;
   }
+
   &:last-child {
     justify-content: flex-end;
   }
@@ -93,6 +94,7 @@
     border-bottom-left-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;

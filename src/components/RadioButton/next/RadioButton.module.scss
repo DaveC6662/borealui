@@ -61,6 +61,7 @@
   @include bp.down(xs) {
     width: 16px;
     height: 16px;
+
     &::after {
       width: 8px;
       height: 8px;
@@ -70,6 +71,7 @@
   @include bp.up(lg) {
     width: 20px;
     height: 20px;
+
     &::after {
       width: 12px;
       height: 12px;
@@ -91,6 +93,7 @@
 .clear .circle {
   border-color: var(--text-color-primary);
 }
+
 .clear .circle::after {
   background-color: var(--text-color-primary);
 }
@@ -108,6 +111,7 @@
   @include bp.down(xs) {
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     font-size: theme.$font-size-base;
   }
@@ -148,6 +152,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -167,6 +172,7 @@
     background: Canvas;
     border-color: ButtonText !important;
   }
+
   .input:checked + .circle::after {
     background: Highlight !important;
     opacity: 1 !important;

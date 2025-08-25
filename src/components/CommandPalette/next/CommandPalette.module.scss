@@ -16,6 +16,7 @@
   @include bp.down(sm) {
     padding-top: 6vh;
   }
+
   @include bp.up(lg) {
     padding-top: 12vh;
   }
@@ -38,6 +39,7 @@
     padding: theme.$spacing-sm;
     gap: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     max-width: 720px;
     padding: theme.$spacing-lg;
@@ -58,6 +60,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -76,6 +79,7 @@
     width: 96%;
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     width: 100%;
     font-size: theme.$font-size-lg;
@@ -98,6 +102,7 @@
   @include bp.down(sm) {
     max-height: 50vh;
   }
+
   @include bp.up(lg) {
     max-height: 60vh;
   }
@@ -122,6 +127,7 @@
     margin: theme.$spacing-xxs;
     gap: theme.$spacing-xxs;
   }
+
   @include bp.up(lg) {
     padding: theme.$spacing-md;
     margin: theme.$spacing-sm;
@@ -156,6 +162,7 @@
   @include bp.down(sm) {
     padding: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     padding: theme.$spacing-md;
   }
@@ -221,6 +228,7 @@
   .command_palette * {
     transition: none !important;
   }
+
   .item:hover {
     transform: none !important;
     box-shadow: none !important;

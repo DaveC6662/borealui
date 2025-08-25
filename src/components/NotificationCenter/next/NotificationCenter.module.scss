@@ -47,6 +47,7 @@ $notification-colors: (
     margin-bottom: theme.$spacing-xs;
     flex-direction: column;
   }
+
   @include bp.up(lg) {
     margin-bottom: theme.$spacing-md;
   }
@@ -58,7 +59,6 @@ $notification-colors: (
 }
 
 .list {
-  width: 95%;
   display: flex;
   width: fit-content;
   height: fit-content;
@@ -108,6 +108,7 @@ $notification-colors: (
   @include bp.down(sm) {
     padding: theme.$spacing-xxs;
   }
+
   @include bp.up(lg) {
     padding: theme.$spacing-sm;
   }
@@ -142,6 +143,7 @@ $notification-colors: (
       @include bp.down(sm) {
         font-size: theme.$font-size-sm;
       }
+
       @include bp.up(lg) {
         font-size: theme.$font-size-md;
       }
@@ -189,6 +191,7 @@ $notification-colors: (
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -202,10 +205,12 @@ $notification-colors: (
     animation: none !important;
   }
 }
+
 @media (hover: none) {
   .notification:hover {
     background-color: var(--background-color-dark);
   }
+
   .header .clearAll:hover,
   .notification .close:hover {
     opacity: 1;

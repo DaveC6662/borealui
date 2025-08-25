@@ -32,9 +32,11 @@
   @include bp.down(md) {
     font-size: 2.5em;
   }
+
   @include bp.down(xs) {
     font-size: 2em;
   }
+
   @include bp.up(lg) {
     font-size: 3.25em;
   }
@@ -52,9 +54,11 @@
   @include bp.down(md) {
     font-size: theme.$font-size-md;
   }
+
   @include bp.down(xs) {
     font-size: theme.$font-size-sm;
   }
+
   @include bp.up(lg) {
     font-size: calc(theme.$font-size-base * 1.05);
   }
@@ -68,9 +72,11 @@
   @include bp.down(md) {
     font-size: theme.$font-size-sm;
   }
+
   @include bp.down(xs) {
     font-size: theme.$font-size-xs;
   }
+
   @include bp.up(lg) {
     font-size: calc(theme.$font-size-md * 1.05);
   }
@@ -93,6 +99,7 @@
 .clear.outline {
   color: var(--text-color-primary);
   border-color: var(--text-color-primary);
+
   @include bp.down(sm) {
     border-width: 1.5px;
   }
@@ -110,7 +117,6 @@ $pad-sizes: (
   "large": theme.$spacing-lg,
   "xl": theme.$spacing-xl,
 );
-
 $font-sizes: (
   "xs": theme.$font-size-xs,
   "small": theme.$font-size-sm,
@@ -118,7 +124,6 @@ $font-sizes: (
   "large": theme.$font-size-base,
   "xl": theme.$font-size-lg,
 );
-
 $icon-sizes: (
   "xs": 2em,
   "small": 3em,
@@ -133,9 +138,11 @@ $icon-sizes: (
       padding: $pad;
       font-size: map.get($font-sizes, $size);
     }
+
     .message {
       font-size: map.get($font-sizes, $size);
     }
+
     .icon {
       font-size: map.get($icon-sizes, $size);
     }
@@ -148,6 +155,7 @@ $icon-sizes: (
           map.get($font-sizes, $size)
         );
       }
+
       .message {
         font-size: clamp(
           theme.$font-size-xxs,
@@ -165,6 +173,7 @@ $icon-sizes: (
           theme.$font-size-xl
         );
       }
+
       .message {
         font-size: clamp(
           map.get($font-sizes, $size),
@@ -185,6 +194,7 @@ $icon-sizes: (
     background-color: transparent;
     border: 2px solid map.get($vals, border);
     color: map.get($vals, text-color);
+
     @include bp.down(sm) {
       border-width: 1.5px;
     }
@@ -200,6 +210,7 @@ $icon-sizes: (
     background-color: transparent;
     border: 2px solid map.get($vals, bg);
     color: map.get($vals, text-color);
+
     @include bp.down(sm) {
       border-width: 1.5px;
     }
@@ -211,6 +222,7 @@ $icon-sizes: (
     border-radius: $v;
   }
 }
+
 @each $k, $v in theme.$shadow {
   .shadow#{$k} {
     box-shadow: $v;
@@ -230,6 +242,7 @@ $icon-sizes: (
     animation: none !important;
   }
 }
+
 @media (hover: none) {
   .empty_state * {
     transition: none;
@@ -242,6 +255,7 @@ $icon-sizes: (
     color: CanvasText;
     outline-color: Highlight;
   }
+
   .outline {
     border: 1px solid ButtonText;
   }

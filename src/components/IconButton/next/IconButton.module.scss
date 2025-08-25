@@ -50,6 +50,7 @@
     border-radius: $v;
   }
 }
+
 @each $k, $v in theme.$shadow {
   .shadow#{$k} {
     box-shadow: $v;
@@ -202,6 +203,7 @@ $sizes: (
   .iconButton:hover {
     transform: none !important;
   }
+
   .loader {
     animation: none !important;
   }

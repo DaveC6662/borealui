@@ -9,15 +9,18 @@
   .button {
     transition: none;
   }
+
   .loader {
     animation-duration: 2s;
   }
 }
+
 @media (hover: none) {
   .button:hover {
     transform: none;
   }
 }
+
 @media (forced-colors: active) {
   .button {
     border: 1px solid ButtonText;
@@ -57,10 +60,12 @@
     gap: theme.$spacing-xs;
     padding: 8px 14px;
   }
+
   @include bp.between(sm, md) {
     gap: theme.$spacing-sm;
     padding: 10px 16px;
   }
+
   @include bp.up(lg) {
     gap: theme.$spacing-md;
     padding: 12px 20px;
@@ -76,6 +81,7 @@
     max-width: 640px;
   }
 }
+
 .button.autoFull {
   @include bp.down(sm) {
     width: 100%;
@@ -88,6 +94,7 @@
     border-radius: $value;
   }
 }
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -102,6 +109,7 @@
   border-radius: 50%;
   animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
+
 .buttonIcon {
   margin-right: theme.$spacing-sm;
   display: flex;
@@ -111,10 +119,12 @@
   @include bp.down(sm) {
     margin-right: theme.$spacing-xs;
   }
+
   @include bp.up(lg) {
     margin-right: theme.$spacing-sm;
   }
 }
+
 .buttonLabel {
   font-size: clamp(theme.$font-size-sm, 0.9rem + 0.2vw, theme.$font-size-base);
 }
@@ -124,6 +134,7 @@
   box-shadow: none;
   color: var(--text-color-primary);
 }
+
 .outline {
   background-color: transparent;
   border: 2px solid currentcolor;
@@ -132,6 +143,7 @@
   @include bp.down(sm) {
     border-width: 1.5px;
   }
+
   @include bp.up(lg) {
     border-width: 2px;
   }
@@ -163,6 +175,7 @@
     }
   }
 }
+
 @each $name, $values in theme.$states {
   .#{$name} {
     background-color: map.get($values, bg);
@@ -238,6 +251,7 @@ $sizes: (
 
     .buttonLabel {
       $base: map.get($values, label);
+
       font-size: clamp(
         max(theme.$font-size-sm, $base - 2px),
         0.9rem + 0.25vw,
@@ -251,6 +265,7 @@ $sizes: (
 
     .buttonIcon {
       $ic: map.get($values, icon);
+
       width: $ic;
       height: $ic;
 
@@ -263,9 +278,11 @@ $sizes: (
     @include bp.down(sm) {
       padding: max(8px, 0.6em) 10px;
     }
+
     @include bp.up(xl) {
       $vpad: list.nth(map.get($values, padding), 1);
       $hpad: list.nth(map.get($values, padding), 2);
+
       padding: $vpad ($hpad * 1.1) $vpad ($hpad * 1.1);
     }
   }
