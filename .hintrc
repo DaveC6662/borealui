@@ -35,7 +35,8 @@
           "forced-color-adjust",
           "forced-color-adjust: none",
           "overscroll-behavior-x",
-          "overscroll-behavior-x: contain"
+          "overscroll-behavior-x: contain",
+          "color: map.get($vals, color)"
         ]
       }
     ],

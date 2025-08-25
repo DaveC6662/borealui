@@ -1,6 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals";
-@use "sass:color";
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 
 .wrapper {
@@ -12,44 +11,74 @@
   top: 0;
   overflow-y: auto;
   font-family: var(--font-family-primary);
+  overscroll-behavior: contain;
 
-  @each $key, $value in theme.$rounding {
-    &.round#{$key} {
-      border-radius: $value;
-    }
+  @include bp.down(md) {
+    width: 200px;
+  }
+  @include bp.up(lg) {
+    width: 260px;
   }
 
-  @each $key, $value in theme.$shadow {
-    &.shadow#{$key} {
-      box-shadow: $value;
+  @include bp.down(xs) {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid var(--background-color-lighter);
+  }
+
+  @each $k, $v in theme.$rounding {
+    &.round#{$k} {
+      border-radius: $v;
+    }
+  }
+  @each $k, $v in theme.$shadow {
+    &.shadow#{$k} {
+      box-shadow: $v;
     }
   }
 }
 
-@each $theme, $values in theme.$themes {
-  .#{$theme} .active {
-    background-color: map.get($values, bg);
-    color: map.get($values, color);
+@each $name, $vals in theme.$themes {
+  .wrapper.sidebar_#{$name} .active {
+    background-color: map.get($vals, bg);
+    color: map.get($vals, color);
   }
 
-  .#{$theme}.outline .active {
+  .wrapper.sidebar_#{$name}.sidebar_outline .active {
     background-color: transparent;
-    color: map.get($values, color);
-    border: 2px solid map.get($values, border);
+    color: map.get($vals, color);
+    border: 2px solid map.get($vals, border);
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
   }
 
-  .clear.#{$theme} .active {
+  .wrapper.sidebar_clear.sidebar_#{$name} .active {
     background-color: transparent;
   }
 }
 
-@each $state, $values in theme.$states {
-  .#{$state} .active {
-    background-color: map.get($values, bg);
-    color: map.get($values, color);
+@each $name, $vals in theme.$states {
+  .wrapper.sidebar_#{$name} .active {
+    background-color: map.get($vals, bg);
+    color: map.get($vals, color);
 
     &:hover {
-      background-color: map.get($values, hover);
+      background-color: map.get($vals, hover);
+    }
+  }
+
+  .wrapper.sidebar_#{$name}.sidebar_outline .active {
+    border: 2px solid map.get($vals, bg);
+    background-color: transparent;
+    color: map.get($vals, color);
+    &:hover {
+      background-color: map.get($vals, hover);
+    }
+    @include bp.down(sm) {
+      border-width: 1.5px;
     }
   }
 }
@@ -63,6 +92,10 @@
   list-style: none;
   padding: 0;
   margin: 0;
+
+  @include bp.down(xs) {
+    display: contents;
+  }
 }
 
 .link {
@@ -71,7 +104,6 @@
   align-items: center;
   width: 100%;
   padding: 0.5rem 0.75rem;
-  border-radius: var(--border-radius-sm);
   color: var(--text-color-secondary);
   text-decoration: none;
   background: none;
@@ -86,9 +118,19 @@
     letter-spacing: 0.05em;
   }
 
-  &:focus {
-    outline: 2px solid var(--text-color-primary);
-    outline-offset: 0.2px;
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  @include bp.down(xs) {
+    padding: theme.$spacing-xs theme.$spacing-sm;
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    padding: theme.$spacing-sm theme.$spacing-md;
+    font-size: theme.$font-size-base;
   }
 }
 
@@ -99,12 +141,38 @@
 
 .childLink {
   font-size: 0.9rem;
+  @include bp.down(xs) {
+    font-size: theme.$font-size-sm;
+  }
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 2px;
+
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+  @include bp.down(xs) {
+    margin-right: theme.$spacing-xxs;
+    svg {
+      width: 0.95em;
+      height: 0.95em;
+    }
+  }
+  @include bp.up(lg) {
+    svg {
+      width: 1.05em;
+      height: 1.05em;
+    }
+  }
 }
 
 .chevron {
   transition: transform 0.2s ease;
 }
-
 .chevronOpen {
   transform: rotate(180deg);
 }
@@ -114,7 +182,6 @@
   overflow: hidden;
   transition: max-height 0.25s ease;
 }
-
 .submenuOpen {
   max-height: max-content;
 }
@@ -122,6 +189,9 @@
 .childList {
   border-left: 3px solid var(--background-color-darker);
   margin: 0.25rem 0;
+  @include bp.down(xs) {
+    border-left-width: 2px;
+  }
 }
 
 .footer {
@@ -130,23 +200,64 @@
   margin-top: auto;
   width: 100%;
   padding: 1rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--background-color-darker);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-}
 
+  @include bp.down(xs) {
+    position: static;
+    border-top: none;
+    padding: theme.$spacing-sm;
+    gap: theme.$spacing-xs;
+  }
+}
 .footerLink {
   font-size: 0.85rem;
   text-decoration: none;
-
   &:hover {
     color: var(--text-color-primary);
   }
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
 }
-
 .footerVersion {
   font-size: 0.75rem;
   opacity: 0.7;
   margin-top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapper,
+  .wrapper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@media (hover: none) {
+  .link:hover {
+    background-color: transparent;
+    letter-spacing: normal;
+  }
+}
+@media (forced-colors: active) {
+  .wrapper {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonFace;
+  }
+  .link {
+    color: ButtonText;
+  }
+  .link:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+  .childList {
+    border-left-color: ButtonText;
+  }
 }

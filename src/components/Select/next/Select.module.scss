@@ -1,14 +1,19 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals";
-@use "sass:color";
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 
 .wrapper {
   position: relative;
   display: inline-flex;
-  width: 300px;
+  justify-content: space-evenly;
+  align-items: center;
+  width: fit-content;
   margin: theme.$spacing-xs 0;
   transition: theme.$transition-default;
+
+  @include bp.down(sm) {
+    width: 100%;
+  }
 
   &:hover {
     box-shadow: theme.$box-shadow-heavy;
@@ -18,105 +23,165 @@
     opacity: 0.6;
     pointer-events: none;
     cursor: not-allowed;
+    background-color: theme.$disabled-color !important;
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  @each $k, $v in theme.$rounding {
+    &.round#{$k} {
+      border-radius: $v;
+    }
+  }
+  @each $k, $v in theme.$shadow {
+    &.shadow#{$k} {
+      box-shadow: $v;
+    }
   }
 }
 
 .icon {
-  position: absolute;
-  top: 60%;
-  transform: translateY(-50%);
+  position: relative;
   z-index: 1;
-  right: 10px;
   pointer-events: none;
   font-size: 12px;
+  top: 4px;
   color: var(--text-color-primary);
   transform-origin: center;
   background-color: transparent !important;
+  right: theme.$spacing-sm;
+
+  @include bp.down(xs) {
+    font-size: 11px;
+  }
+
+  @include bp.up(lg) {
+    font-size: 14px;
+  }
 }
 
 .select {
   width: 100%;
+  min-height: 40px;
   padding: 5px 30px;
   font-size: theme.$font-size-sm;
-  appearance: none;
   font-weight: 800;
+  appearance: none;
   border: none;
-  background-color: var(--background-light-color);
   color: var(--text-color-primary);
+  background: transparent;
   cursor: pointer;
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
 
+  @include bp.down(xs) {
+    min-height: 38px;
+    padding: 4px 28px 4px theme.$spacing-sm;
+    font-size: theme.$font-size-xs;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-sm;
+  }
+
   &:focus {
-    border-color: var(--primary-color);
-    outline: 2px solid var(--text-color-primary);
-    outline-offset: 5px;
+    outline: 0;
+  }
+  &:focus-visible {
+    outline: 0;
+  }
+
+  option {
+    background-color: var(--background-color);
+    border: none;
+    color: var(--text-color-primary);
   }
 }
 
-@each $theme, $values in theme.$themes {
-  .#{$theme} {
-    background-color: map.get($values, bg);
-    color: map.get($values, color);
+@each $name, $vals in theme.$themes {
+  .#{$name} {
+    background-color: map.get($vals, bg);
+    color: map.get($vals, color);
 
     &:hover {
-      background-color: map.get($values, hover);
+      background-color: map.get($vals, hover);
     }
   }
 
-  .#{$theme}.outline {
+  .#{$name}.outline {
     background-color: transparent;
-    color: map.get($values, color);
-    border: 2px solid map.get($values, border);
-  }
+    color: map.get($vals, color);
+    border: 1px solid map.get($vals, border);
 
-  .clear.#{$theme} {
-    background-color: transparent;
-  }
-}
-
-@each $state, $values in theme.$states {
-  .#{$state} {
-    background-color: map.get($values, bg);
-    color: map.get($values, color);
-
-    &:hover {
-      background-color: map.get($values, hover);
+    @include bp.down(sm) {
+      border-width: 1.5px;
     }
   }
 
-  .#{$state}.outline {
-    background-color: transparent;
-    color: map.get($values, color);
-    border: 2px solid map.get($values, border);
-  }
-
-  .clear.#{$state} {
+  .clear.select_#{$name} {
     background-color: transparent;
   }
 }
 
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-  }
-}
+@each $name, $vals in theme.$states {
+  .#{$name} {
+    background-color: map.get($vals, bg);
+    color: map.get($vals, color);
 
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
+    &:hover {
+      background-color: map.get($vals, hover);
+    }
   }
-}
 
-option {
-  background-color: var(--background-color);
-  border: none;
-  color: var(--text-color-primary);
+  .#{$name}.outline {
+    background-color: transparent;
+    color: map.get($vals, color);
+    border: 1px solid map.get($vals, border);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
+  }
+
+  .clear.select_#{$name} {
+    background-color: transparent;
+  }
 }
 
 .clear {
   .select {
     background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapper,
+  .wrapper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@media (hover: none) {
+  .wrapper:hover {
+    box-shadow: none;
+  }
+}
+@media (forced-colors: active) {
+  .select {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+  }
+  .icon {
+    color: ButtonText;
+  }
+  .wrapper:focus-within {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
   }
 }
