@@ -1,7 +1,7 @@
-import React from "react";
 import IconButtonBase from "../IconButtonBase";
 import "./IconButton.scss";
 import { IconButtonProps } from "../IconButton.types";
+import { forwardRef } from "react";
 
 const classes = {
   iconButton: "icon_button",
@@ -41,8 +41,9 @@ const classes = {
   roundFull: "icon_button_round-Full",
 };
 
-const IconButton: React.FC<IconButtonProps> = (props) => (
-  <IconButtonBase {...props} classMap={classes} />
-);
+const IconButton = forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  IconButtonProps
+>((props, ref) => <IconButtonBase ref={ref} {...props} classMap={classes} />);
 
 export default IconButton;

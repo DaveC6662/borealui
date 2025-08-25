@@ -277,8 +277,8 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
                   <span>{name}</span>
                   <IconButton
                     icon={TrashIcon}
-                    theme="error"
-                    size="xsmall"
+                    state="error"
+                    size="small"
                     type="button"
                     outline
                     aria-label={`Remove ${name}`}

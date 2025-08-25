@@ -3,6 +3,9 @@
 @use "../../../styles/globals";
 
 .skeleton_loader {
+  --skeleton-sheen: #{theme.$disabled-color};
+  --skeleton-duration: 1.5s;
+
   background-color: var(--background-color-light);
   position: relative;
   overflow: hidden;
@@ -18,9 +21,6 @@
   }
 
   &::after {
-    --skeleton-sheen: #{theme.$disabled-color};
-    --skeleton-duration: 1.5s;
-
     content: "";
     position: absolute;
     inset: 0;

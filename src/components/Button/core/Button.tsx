@@ -1,4 +1,4 @@
-import React from "react";
+import { forwardRef } from "react";
 import ButtonBase from "../ButtonBase";
 import "./Button.scss";
 import { ButtonProps } from "../Button.types";
@@ -43,8 +43,8 @@ const classes = {
   roundLarge: "button_round-Large",
 };
 
-const Button: React.FC<ButtonProps> = (props) => (
-  <ButtonBase {...props} classMap={classes} />
-);
+const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
+  <ButtonBase {...props} classMap={classes} ref={ref} />
+));
 
 export default Button;

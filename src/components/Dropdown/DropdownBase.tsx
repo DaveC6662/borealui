@@ -8,7 +8,7 @@ import React, {
   JSX,
   useMemo,
 } from "react";
-import { BaseDropdownProps, DropdownProps } from "./Dropdown.types";
+import { BaseDropdownProps, IconButtonLikeRef } from "./Dropdown.types";
 import { combineClassNames } from "../../utils/classNames";
 import MenuIcon from "../../Icons/MenuIcon";
 import { capitalize } from "../../utils/capitalize";
@@ -40,7 +40,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLElement | null>(null);
+  const triggerRef = useRef<IconButtonLikeRef | null>(null);
   const menuId = useId();
 
   const Icon = triggerIcon ?? MenuIcon;
@@ -162,7 +162,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       data-testid={testId}
     >
       <IconButton
-        ref={triggerRef as any}
+        ref={triggerRef}
         icon={Icon}
         ariaLabel={ariaLabel}
         aria-haspopup="menu"

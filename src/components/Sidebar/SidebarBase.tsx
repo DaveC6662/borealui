@@ -73,10 +73,6 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
   const setSubmenuRef = (key: string, el: HTMLDivElement | null) => {
     submenuRefs.current[key] = el;
   };
-  const getSubmenuHeight = (key: string) => {
-    const el = submenuRefs.current[key];
-    return el ? `${el.scrollHeight}px` : "0px";
-  };
 
   const containerClasses = useMemo(
     () =>

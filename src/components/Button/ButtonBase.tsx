@@ -1,5 +1,5 @@
 import React, { forwardRef, useMemo } from "react";
-import { ButtonBaseProps, ButtonProps } from "./Button.types";
+import { ButtonBaseProps } from "./Button.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -111,6 +111,7 @@ const ButtonBase = forwardRef<
     );
 
     if (href) {
+      const Comp = (LinkComponent ?? "a") as React.ElementType;
       const external = (isExternal ?? /^https?:\/\//i.test(href)) && !disabled;
 
       const linkCommon = {
@@ -125,24 +126,31 @@ const ButtonBase = forwardRef<
         "data-testid": testId,
       } as const;
 
-      return LinkComponent === "a" ? (
-        <a
-          {...linkCommon}
-          href={disabled ? undefined : href}
-          target={external ? "_blank" : undefined}
-          rel={external ? "noopener noreferrer" : undefined}
-          {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+      if (Comp === "a") {
+        return (
+          <a
+            {...linkCommon}
+            href={disabled ? undefined : href}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
+            {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+          >
+            {content}
+          </a>
+        );
+      }
+
+      return (
+        <Comp
+          {...(linkCommon as Omit<
+            React.ComponentPropsWithoutRef<typeof Comp>,
+            "children"
+          >)}
+          href={href as never}
+          {...(rest as React.ComponentPropsWithoutRef<typeof Comp>)}
         >
           {content}
-        </a>
-      ) : (
-        <LinkComponent
-          {...(linkCommon as any)}
-          href={href}
-          {...(rest as Record<string, unknown>)}
-        >
-          {content}
-        </LinkComponent>
+        </Comp>
       );
     }
 

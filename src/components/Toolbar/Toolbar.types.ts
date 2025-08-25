@@ -1,5 +1,6 @@
 import { RoundingType, ShadowType, SizeType, ThemeType } from "@/types/types";
 import React, { MouseEvent } from "react";
+import { AvatarProps } from "../Avatar/Avatar.types";
 
 /**
  * Props for the ToolbarBase component (unstyled, internal implementation).
@@ -10,7 +11,7 @@ export interface ToolbarBaseProps extends ToolbarProps {
    * The Avatar component to use for rendering the toolbar avatar (should accept props for avatar display).
    * Accepts a React functional component.
    */
-  AvatarComponent: React.FC<any>;
+  AvatarComponent: React.FC<AvatarProps>;
 
   /**
    * A mapping of BEM-style class names for the toolbar component parts.

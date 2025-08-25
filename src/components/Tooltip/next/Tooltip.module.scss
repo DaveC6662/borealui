@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -26,7 +27,7 @@ $positions: (
     arrow: (
       bottom: 100%,
       left: 50%,
-      transform: translateX(-50%) rotate(180deg),
+      transform: translateX(-50%),
     ),
   ),
   "left": (
@@ -39,7 +40,7 @@ $positions: (
     arrow: (
       left: 98%,
       top: 50%,
-      transform: translateY(-50%) rotate(-90deg),
+      transform: translateY(-50%) rotate(-180deg),
     ),
   ),
   "right": (
@@ -52,7 +53,7 @@ $positions: (
     arrow: (
       right: 99%,
       top: 50%,
-      transform: translateY(-50%) rotate(90deg),
+      transform: translateY(-50%) rotate(180deg),
     ),
   ),
 );
@@ -64,6 +65,12 @@ $positions: (
   &:hover .tooltip {
     opacity: 1;
     visibility: visible;
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: theme.$border-radius-sm;
   }
 }
 
@@ -81,12 +88,25 @@ $positions: (
     opacity 0.3s ease-in-out,
     transform 0.2s ease-in-out;
 
+  @include bp.down(xs) {
+    font-size: theme.$font-size-xs;
+    padding: theme.$spacing-xxs theme.$spacing-xs;
+    white-space: normal;
+  }
+
   &::after {
     content: "";
     position: absolute;
     border-style: solid;
+    transform-origin: 50% 50%;
     border-width: 6px;
     border-color: var(--primary-color) transparent transparent transparent;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: theme.$border-radius-sm;
   }
 }
 
@@ -104,61 +124,65 @@ $positions: (
   }
 }
 
-@each $name, $color in theme.$themes {
+@each $name, $vals in theme.$themes {
   .#{$name} {
-    background-color: map.get($color, bg);
-  }
+    background-color: map.get($vals, bg);
+    color: map.get($vals, text, var(--text-color-primary));
 
-  .#{$name}::after {
-    border-color: map.get($color, bg) transparent transparent transparent;
-  }
+    &::after {
+      border-color: map.get($vals, bg) transparent transparent transparent;
+    }
 
-  .bottom ::after {
-    border-color: transparent transparent map.get($color, bg);
-  }
+    &.bottom::after {
+      border-color: transparent transparent map.get($vals, bg) transparent;
+    }
+    &.left::after {
+      border-color: transparent map.get($vals, bg) transparent transparent;
+    }
+    &.right::after {
+      border-color: transparent transparent transparent map.get($vals, bg);
+    }
 
-  .left ::after {
-    border-color: transparent map.get($color, bg) transparent transparent;
-  }
-
-  .right ::after {
-    border-color: transparent transparent transparent map.get($color, bg);
-  }
-
-  .secondary {
-    color: var(--text-color-secondary);
+    &.secondary {
+      color: var(--text-color-secondary);
+    }
   }
 }
 
-@each $name, $color in theme.$states {
+@each $name, $vals in theme.$states {
   .#{$name} {
-    background-color: map.get($color, bg);
-  }
+    background-color: map.get($vals, bg);
+    color: map.get($vals, text, var(--text-color-primary));
 
-  .#{$name}::after {
-    border-color: map.get($color, bg) transparent transparent transparent;
-  }
+    &::after {
+      border-color: map.get($vals, border) transparent transparent transparent;
+    }
 
-  .bottom ::after {
-    border-color: transparent transparent map.get($color, bg);
-  }
+    &.bottom::after {
+      border-color: transparent transparent map.get($vals, border) transparent;
+    }
+    &.left::after {
+      border-color: transparent map.get($vals, border) transparent transparent;
+    }
+    &.right::after {
+      border-color: transparent transparent transparent map.get($vals, border);
+    }
 
-  .left ::after {
-    border-color: transparent map.get($color, bg) transparent transparent;
-  }
-
-  .right ::after {
-    border-color: transparent transparent transparent map.get($color, bg);
-  }
-
-  .secondary {
-    color: var(--text-color-secondary);
+    &.secondary {
+      color: var(--text-color-secondary);
+    }
   }
 }
 
 .clear {
+  box-shadow: none;
   border: 2px solid var(--text-color-primary);
   background-color: map.get(theme.$themes, clear, hover);
+
+  &::after {
+    border-color: map.get(theme.$themes, clear, hover) transparent transparent
+      transparent;
+  }
 }
 
 @each $key, $value in theme.$rounding {
@@ -166,9 +190,44 @@ $positions: (
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip,
+  .container * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .container:hover .tooltip {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (forced-colors: active) {
+  .tooltip {
+    background: CanvasText !important;
+    color: Canvas !important;
+    border: 1px solid ButtonText;
+  }
+
+  .top::after {
+    border-color: CanvasText transparent transparent !important;
+  }
+  .bottom::after {
+    border-color: transparent transparent CanvasText !important;
+  }
+  .left::after {
+    border-color: transparent CanvasText transparent transparent !important;
+  }
+  .right::after {
+    border-color: transparent transparent transparent CanvasText !important;
   }
 }

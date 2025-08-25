@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 @use "sass:list";
 
@@ -64,11 +65,25 @@ $sizes: (
   display: flex;
   align-items: center;
   gap: theme.$spacing-sm;
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+  }
 }
 
 .label {
   font-size: theme.$font-size-md;
   color: var(--text-color-primary);
+
+  @include bp.down(xs) {
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
 }
 
 .toggle {
@@ -80,6 +95,12 @@ $sizes: (
   align-items: center;
   transition: background 0.3s ease-in-out;
   outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 9999px;
+  }
 
   .slider {
     background-color: var(--text-color-primary);
@@ -94,48 +115,58 @@ $sizes: (
 }
 
 @each $name, $vals in $sizes {
-  .#{$name} {
-    .toggle {
-      width: list.nth(map.get($vals, toggle), 1);
-      height: list.nth(map.get($vals, toggle), 2);
+  $tw: list.nth(map.get($vals, toggle), 1);
+  $th: list.nth(map.get($vals, toggle), 2);
+  $sw: list.nth(map.get($vals, slider), 1);
+  $sh: list.nth(map.get($vals, slider), 2);
+  $tx: map.get($vals, translate);
 
-      .slider {
-        width: list.nth(map.get($vals, slider), 1);
-        height: list.nth(map.get($vals, slider), 2);
-      }
-
-      &.active .slider {
-        transform: translateX(map.get($vals, translate));
-      }
-    }
-  }
-}
-
-@each $theme, $color in theme.$themes {
-  .#{$theme} .toggle.active {
-    background-color: map.get($color, bg);
-  }
-}
-
-@each $state, $color in theme.$states {
-  .#{$state} .toggle.active {
-    outline: 2px solid map.get($color, border);
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
+  .#{$name} .toggle {
+    width: $tw;
+    height: $th;
 
     .slider {
-      border-radius: $value;
+      width: $sw;
+      height: $sh;
+    }
+    &.active .slider {
+      transform: translateX($tx);
+    }
+
+    @include bp.down(xs) {
+      width: $tw * 0.9;
+      height: $th * 0.9;
+      .slider {
+        width: $sw * 0.9;
+        height: $sh * 0.9;
+      }
+      &.active .slider {
+        transform: translateX($tx * 0.85);
+      }
+    }
+
+    @include bp.up(lg) {
+      width: $tw * 1.05;
+      height: $th * 1.05;
+      .slider {
+        width: $sw * 1.05;
+        height: $sh * 1.05;
+      }
+      &.active .slider {
+        transform: translateX($tx * 1.05);
+      }
     }
   }
 }
 
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
+@each $themeName, $vals in theme.$themes {
+  .#{$themeName} .toggle.active {
+    background-color: map.get($vals, bg);
+  }
+}
+@each $stateName, $vals in theme.$states {
+  .#{$stateName} .toggle.active {
+    outline: 2px solid map.get($vals, border);
   }
 }
 
@@ -149,7 +180,51 @@ $sizes: (
   opacity: 0.6;
   box-shadow: none;
 
-  .toggle.active {
+  .toggle {
     background-color: theme.$disabled-color;
+  }
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+    .slider {
+      border-radius: $value;
+    }
+  }
+}
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle,
+  .toggle * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@media (hover: none) {
+  .toggle {
+    transition: none;
+  }
+}
+@media (forced-colors: active) {
+  .toggle {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+  }
+  .toggle.active {
+    background: Highlight;
+  }
+  .toggle .slider {
+    background: ButtonText;
+  }
+  .toggle:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

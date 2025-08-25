@@ -1,5 +1,4 @@
 import { ThemeType, OrientationType, StateType } from "@/types/types";
-import { JSX } from "react";
 
 /**
  * Props for the Divider component.

@@ -1,4 +1,8 @@
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
+import { FormGroupProps } from "../FormGroup/FormGroup.types";
+import { ButtonProps } from "../Button/Button.types";
+import { IconButtonProps } from "../IconButton/IconButton.types";
+import { ProgressBarProps } from "../ProgressBar/ProgressBar.types";
 
 /**
  * Props for the FileUpload component.
@@ -78,9 +82,9 @@ export interface FileUploadProps {
 }
 
 export interface BaseFileUploadProps extends FileUploadProps {
-  FormGroup: React.ComponentType<any>;
-  Button: React.ComponentType<any>;
-  IconButton: React.ComponentType<any>;
-  ProgressBar: React.ComponentType<any>;
+  FormGroup: React.ComponentType<FormGroupProps>;
+  Button: React.ComponentType<ButtonProps>;
+  IconButton: React.ComponentType<IconButtonProps>;
+  ProgressBar: React.ComponentType<ProgressBarProps>;
   classMap: Record<string, string>;
 }

@@ -137,7 +137,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
         data-testid={`${testId}-dialog`}
       >
         <IconButton
-          ref={closeBtnRef as any}
+          ref={closeBtnRef}
           className={classMap.close}
           onClick={onClose}
           aria-label="Close popup"

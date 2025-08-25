@@ -15,7 +15,7 @@ const slugify = (s: string) =>
     .toLowerCase()
     .trim()
     .replace(/\s+/g, "-")
-    .replace(/[^a-z0-9\-]/g, "");
+    .replace(/[^a-z0-9]/g, "");
 
 const BaseNavBar: React.FC<BaseNavBarProps> = ({
   items,

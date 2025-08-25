@@ -5,6 +5,8 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
+import { ButtonProps } from "../Button/Button.types";
+import { IconButtonProps } from "../IconButton/IconButton.types";
 
 /**
  * Props for the Pager (pagination) component.
@@ -52,7 +54,7 @@ export interface PaginationProps {
 }
 
 export interface BasePagerProps extends PaginationProps {
-  Button: React.ComponentType<any>;
-  IconButton: React.ComponentType<any>;
+  Button: React.ComponentType<ButtonProps>;
+  IconButton: React.ComponentType<IconButtonProps>;
   classMap: Record<string, string>;
 }

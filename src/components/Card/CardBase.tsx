@@ -1,5 +1,5 @@
 import React, { useId, useMemo } from "react";
-import { CardBaseProps } from "./Card.types";
+import { CardBaseProps, CardImageSource } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -55,14 +55,24 @@ const CardBase: React.FC<CardBaseProps> = ({
     <img {...props} />
   );
 
-  const hasImageObj =
-    typeof imageUrl === "object" && imageUrl && "src" in imageUrl;
-  const imgSrc = hasImageObj ? imageUrl.src : (imageUrl as string | undefined);
+  const isObjSrc =
+    typeof imageUrl === "object" &&
+    imageUrl !== null &&
+    "src" in (imageUrl as object);
+
+  const imgSrc: string | undefined = isObjSrc
+    ? (imageUrl as Extract<CardImageSource, { src: string }>).src
+    : (imageUrl as string | undefined);
 
   const resolvedWidth =
-    (hasImageObj ? (imageUrl as any).width : undefined) ?? imageWidth;
+    (isObjSrc
+      ? (imageUrl as Extract<CardImageSource, { width?: number }>).width
+      : undefined) ?? imageWidth;
+
   const resolvedHeight =
-    (hasImageObj ? (imageUrl as any).height : undefined) ?? imageHeight;
+    (isObjSrc
+      ? (imageUrl as Extract<CardImageSource, { height?: number }>).height
+      : undefined) ?? imageHeight;
 
   const imgAlt = imageAlt || `${title || "Card"} image`;
 
@@ -120,7 +130,7 @@ const CardBase: React.FC<CardBaseProps> = ({
             (imageFill ? (
               <div className={classMap.media}>
                 <ImageRenderer
-                  src={imgSrc as any}
+                  src={imgSrc!}
                   alt={imgAlt}
                   className={combineClassNames(classMap.image, imageClassName)}
                   {...(isNextImage ? { fill: true } : {})}
@@ -129,7 +139,7 @@ const CardBase: React.FC<CardBaseProps> = ({
               </div>
             ) : (
               <ImageRenderer
-                src={imgSrc as any}
+                src={imgSrc!}
                 alt={imgAlt}
                 className={combineClassNames(classMap.image, imageClassName)}
                 width={resolvedWidth ?? 640}

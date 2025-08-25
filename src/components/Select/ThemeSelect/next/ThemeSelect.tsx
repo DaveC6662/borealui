@@ -1,23 +1,14 @@
 "use client";
 
 import React, { useContext, useMemo } from "react";
-import { getAllColorSchemes } from "../../../../styles/colorSchemeRegistry";
 import { Select } from "@/index.next";
 import { ThemeContext } from "../../../../context/ThemeContext";
-import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import {
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
 } from "@/config/boreal-style-config";
-
-interface ThemeSelectProps {
-  theme?: ThemeType;
-  shadow?: ShadowType;
-  rounding?: RoundingType;
-  "data-testid"?: string;
-  state?: StateType;
-}
+import { ThemeSelectProps } from "../../Select.types";
 
 const UserThemeSettings: React.FC<ThemeSelectProps> = ({
   theme = getDefaultTheme(),

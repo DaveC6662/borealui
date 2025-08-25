@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, KeyboardEvent } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { ChipBaseProps } from "./Chip.types";
 import { combineClassNames } from "../../utils/classNames";
@@ -73,8 +73,6 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     usePortal && classMap.fixed,
     className
   );
-
-  const isAssertive = state === "error" || state === "warning";
 
   const portalEl =
     typeof window !== "undefined"

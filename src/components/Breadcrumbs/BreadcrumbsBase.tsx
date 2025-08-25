@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbsBaseProps,
-  BreadcrumbsProps,
   ELLIPSIS_LABEL,
 } from "./Breadcrumbs.types";
 import { combineClassNames } from "../../utils/classNames";

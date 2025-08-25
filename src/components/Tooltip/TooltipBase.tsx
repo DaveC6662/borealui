@@ -77,12 +77,13 @@ const TooltipBase = forwardRef<
 
   if (isValidElement(children)) {
     const isNaturallyFocusable =
-      typeof (children as any).type === "string" &&
-      ["a", "button", "input", "textarea", "select"].includes(
-        (children as any).type
-      );
+      React.isValidElement(children) &&
+      typeof children.type === "string" &&
+      ["a", "button", "input", "textarea", "select"].includes(children.type);
 
-    const existingTabIndex = (children.props as any).tabIndex;
+    const existingTabIndex = (
+      children.props as React.HTMLAttributes<HTMLElement>
+    ).tabIndex;
     const maybeTabIndex =
       isNaturallyFocusable || existingTabIndex !== undefined
         ? {}

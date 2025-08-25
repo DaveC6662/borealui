@@ -1,5 +1,6 @@
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import { ComponentType } from "react";
+import { IconButtonProps } from "../IconButton/IconButton.types";
 
 /**
  * Defines a single item in the dropdown menu.
@@ -85,7 +86,13 @@ export interface DropdownProps {
   "data-testid"?: string;
 }
 
+export type IconButtonLikeRef = HTMLButtonElement | HTMLAnchorElement;
+
+export type IconButtonComponent = React.ForwardRefExoticComponent<
+  IconButtonProps & React.RefAttributes<IconButtonLikeRef>
+>;
+
 export interface BaseDropdownProps extends DropdownProps {
-  IconButton: ComponentType<any>;
+  IconButton: IconButtonComponent;
   classMap: Record<string, string>;
 }

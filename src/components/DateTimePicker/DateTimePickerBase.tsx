@@ -1,8 +1,5 @@
 import React, { useId, useMemo, useRef } from "react";
-import {
-  DateTimePickerBaseProps,
-  DateTimePickerProps,
-} from "./DateTimePicker.types";
+import { DateTimePickerBaseProps } from "./DateTimePicker.types";
 import { combineClassNames } from "../../utils/classNames";
 import { CalendarIcon } from "../../Icons";
 import { capitalize } from "../../utils/capitalize";

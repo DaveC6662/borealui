@@ -68,7 +68,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
     onChange?.(index);
   };
 
-  const isDisabled = (index: number) => !!(tabs[index] as any)?.disabled;
+  const isDisabled = (index: number) => !!tabs[index]?.disabled;
 
   const nextEnabled = (start: number, dir: 1 | -1) => {
     const len = tabs.length;

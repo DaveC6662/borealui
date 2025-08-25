@@ -5,6 +5,8 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
+import { IconButtonProps } from "../IconButton/IconButton.types";
+import { TextInputProps } from "../TextInput/TextInput.types";
 
 /**
  * Props for the TagInput component.
@@ -59,6 +61,6 @@ export interface TagInputProps {
 
 export type TagInputBaseProps = TagInputProps & {
   classMap: Record<string, string>;
-  IconButton: React.FC<any>;
-  TextInput: React.FC<any>;
+  IconButton: React.FC<IconButtonProps>;
+  TextInput: React.FC<TextInputProps>;
 };

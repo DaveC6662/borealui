@@ -1,5 +1,6 @@
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import { ComponentType, InputHTMLAttributes } from "react";
+import { IconButtonProps } from "../IconButton/IconButton.types";
 
 /**
  * Props for the TextInput component.
@@ -75,4 +76,9 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
    * Optional test ID for testing frameworks.
    */
   "data-testid"?: string;
+}
+
+export interface TextInputBaseProps extends TextInputProps {
+  classMap: Record<string, string>;
+  IconButton: React.FC<IconButtonProps>;
 }

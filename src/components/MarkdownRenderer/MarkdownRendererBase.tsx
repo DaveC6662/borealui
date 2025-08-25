@@ -32,7 +32,9 @@ function safeSanitize(html: string): string {
 
       return doc.body.innerHTML;
     }
-  } catch {}
+  } catch {
+    return "";
+  }
 
   return html
     .replace(/<\/?(script|iframe|object|embed|meta|link)[^>]*>/gi, "")

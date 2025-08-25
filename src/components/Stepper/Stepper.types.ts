@@ -6,6 +6,7 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
+import { IconButtonProps } from "../IconButton/IconButton.types";
 
 /**
  * Represents a step in the Stepper.
@@ -69,5 +70,5 @@ export interface StepperProps {
 
 export interface StepperBaseProps extends StepperProps {
   classMap: Record<string, string>;
-  IconButtonComponent: React.FC<any>;
+  IconButtonComponent: React.FC<IconButtonProps>;
 }

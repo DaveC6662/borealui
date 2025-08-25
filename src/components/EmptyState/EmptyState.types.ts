@@ -6,6 +6,7 @@ import {
   RoundingType,
   ShadowType,
 } from "@/types/types";
+import { ButtonProps } from "../Button/Button.types";
 
 /**
  * Props for the EmptyState component.
@@ -67,6 +68,6 @@ export interface EmptyStateProps {
 }
 
 export interface BaseEmptyStateProps extends EmptyStateProps {
-  Button: React.ComponentType<any>;
+  Button: React.ComponentType<ButtonProps>;
   classMap: Record<string, string>;
 }

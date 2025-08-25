@@ -107,7 +107,9 @@ const ThemeProvider: React.FC<
       if (Array.isArray(parsed) && parsed.length > 0) {
         registerColorScheme(parsed);
       }
-    } catch {}
+    } catch {
+      console.error("Failed to parse custom schemes");
+    }
 
     const next = getAllColorSchemes();
     setSchemes((prev) => (shallowEqualByName(prev, next) ? prev : next));

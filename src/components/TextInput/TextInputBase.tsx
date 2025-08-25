@@ -6,7 +6,7 @@ import {
   useMemo,
 } from "react";
 import { EyeIcon, EyeSlashIcon } from "../../Icons";
-import { TextInputProps } from "./TextInput.types";
+import { TextInputBaseProps } from "./TextInput.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -15,13 +15,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-const TextInputBase = forwardRef<
-  HTMLInputElement,
-  TextInputProps & {
-    classMap: Record<string, string>;
-    IconButton: React.FC<any>;
-  }
->(
+const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
   (
     {
       icon: Icon,

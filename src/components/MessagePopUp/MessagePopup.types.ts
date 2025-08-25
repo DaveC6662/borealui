@@ -1,4 +1,6 @@
 import { RoundingType, ShadowType } from "@/types/types";
+import { ButtonProps } from "../Button/Button.types";
+import { IconButtonProps } from "../IconButton/IconButton.types";
 
 /**
  * Props for the MessagePopup component.
@@ -63,8 +65,19 @@ export interface MessagePopUpProps {
   "data-testid"?: string;
 }
 
+export type ButtonRef = HTMLButtonElement;
+export type IconButtonRef = HTMLButtonElement | HTMLAnchorElement;
+
+export type ButtonComponent = React.ForwardRefExoticComponent<
+  ButtonProps & React.RefAttributes<ButtonRef>
+>;
+
+export type IconButtonComponent = React.ForwardRefExoticComponent<
+  IconButtonProps & React.RefAttributes<IconButtonRef>
+>;
+
 export interface BaseMessagePopupProps extends MessagePopUpProps {
-  Button: React.ComponentType<any>;
-  IconButton: React.ComponentType<any>;
+  Button: ButtonComponent;
+  IconButton: IconButtonComponent;
   classMap: Record<string, string>;
 }

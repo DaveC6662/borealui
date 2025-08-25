@@ -61,14 +61,14 @@ const BaseModal: React.FC<BaseModalProps> = ({
       }
     });
 
-    const handleEsc = (e: KeyboardEvent) => {
+    const handleEsc = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
-    document.addEventListener("keydown", handleEsc as any);
+    document.addEventListener("keydown", handleEsc);
 
     return () => {
       document.body.classList.remove("noScroll");
-      document.removeEventListener("keydown", handleEsc as any);
+      document.removeEventListener("keydown", handleEsc);
       hidden.forEach((el) => el.removeAttribute("aria-hidden"));
       openerRef.current?.focus?.();
     };
@@ -153,7 +153,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
         </h2>
 
         <IconButton
-          ref={closeBtnRef as any}
+          ref={closeBtnRef}
           className={classMap.closeButton}
           state="error"
           size="small"

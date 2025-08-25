@@ -4,7 +4,8 @@ import {
   ShadowType,
   ThemeType,
 } from "@/types/types";
-import { JSX } from "react";
+import { IconButtonProps } from "../IconButton/IconButton.types";
+import { ThemeSelectProps } from "../Select/Select.types";
 
 /**
  * Represents a navigational link in the footer.
@@ -27,6 +28,13 @@ interface SocialLink {
   /** URL to open when clicked. */
   href: string;
 }
+
+export type LogoSource =
+  | React.ReactNode
+  | string
+  | { src: string; width?: number; height?: number };
+
+export type LogoImage = { src: string; width?: number; height?: number };
 
 /**
  * Props for the Footer component.
@@ -66,7 +74,7 @@ export interface FooterProps {
   copyright?: string;
 
   /** Optional logo element (e.g., <img>, <Logo />) */
-  logo?: React.ReactNode;
+  logo?: LogoSource;
 
   /** Array of footer navigation links. */
   links?: FooterLink[];
@@ -78,15 +86,33 @@ export interface FooterProps {
   showThemeSelect?: boolean;
 }
 
+export type LinkWrapperProps = Omit<
+  React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  "href" | "children" | "className"
+> & {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+};
+
+export type LinkWrapperComponent = React.ComponentType<LinkWrapperProps>;
+
+export type ImageLikeProps = {
+  src: string;
+  alt: string;
+  className?: string;
+  width?: number;
+  height?: number;
+  fill?: boolean;
+  "data-testid"?: string;
+};
+
+export type ImageComponent = React.ComponentType<ImageLikeProps>;
+
 export interface BaseFooterProps extends FooterProps {
-  IconButton: React.ComponentType<any>;
-  ThemeSelect: React.ComponentType<any>;
-  ImageComponent?: React.ElementType;
+  IconButton: React.ComponentType<IconButtonProps>;
+  ThemeSelect: React.ComponentType<ThemeSelectProps>;
+  ImageComponent?: ImageComponent | "img";
   classMap: Record<string, string>;
-  LinkWrapper?: (props: {
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-    [key: string]: any;
-  }) => JSX.Element;
+  LinkWrapper?: LinkWrapperComponent;
 }

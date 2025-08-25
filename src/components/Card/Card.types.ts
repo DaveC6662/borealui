@@ -8,6 +8,37 @@ import {
   ThemeType,
 } from "../../types/types";
 
+export type CardImageSource =
+  | string
+  | {
+      src: string;
+      width?: number;
+      height?: number;
+    };
+
+export type HtmlImgLikeProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+  src: string;
+  alt: string;
+};
+
+export type NextLikeImageProps = {
+  src: string;
+  alt: string;
+  className?: string;
+  fill?: boolean;
+  sizes?: string;
+  priority?: boolean;
+};
+
+export type CardImageComponentProps = {
+  src: string;
+  alt: string;
+  className?: string;
+  width?: number;
+  height?: number;
+  fill?: boolean;
+};
+
 /**
  * Defines an action button rendered in the card footer.
  */
@@ -87,7 +118,7 @@ export interface CardProps {
    * Image URL or static asset used as the card's visual.
    * Can be a string or an object with { src, width, height }.
    */
-  imageUrl?: string | { src: string; width: number; height: number };
+  imageUrl?: CardImageSource;
 
   /** Image alt text */
   imageAlt?: string;
@@ -183,6 +214,6 @@ export interface CardBaseProps extends CardProps {
     height: string;
     ["data-testid"]?: string;
   }>;
-  ImageComponent?: React.ElementType;
+  ImageComponent?: React.ComponentType<CardImageComponentProps>;
   actionButtons: ExtendedActionButton[];
 }

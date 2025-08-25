@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { BaseFooterProps } from "./Footer.types";
+import { BaseFooterProps, LogoSource } from "./Footer.types";
 import { combineClassNames } from "../../utils/classNames";
 import { getDefaultTheme } from "../../config/boreal-style-config";
 import { capitalize } from "@/utils/capitalize";
@@ -39,31 +39,50 @@ const FooterBase: React.FC<BaseFooterProps> = ({
     [classMap, theme, shadow, rounding, attachment, className]
   );
 
-  const isImgLike =
-    typeof logo === "string" ||
-    (typeof logo === "object" && logo && "src" in logo);
-  const logoSrc = isImgLike
+  const isLogoImage = (
+    v: unknown
+  ): v is { src: string; width?: number; height?: number } =>
+    typeof v === "object" &&
+    v !== null &&
+    "src" in (v as Record<string, unknown>);
+
+  const isImgLike = typeof logo === "string" || isLogoImage(logo);
+
+  const imgLogo = isImgLike
     ? typeof logo === "string"
-      ? logo
-      : (logo as any).src
+      ? { src: logo }
+      : logo
     : undefined;
-  const logoW = isImgLike ? ((logo as any)?.width ?? 20) : undefined;
-  const logoH = isImgLike ? ((logo as any)?.height ?? 20) : undefined;
+
+  const logoSrc = imgLogo?.src;
+  const logoW = imgLogo?.width ?? 20;
+  const logoH = imgLogo?.height ?? 20;
 
   return (
     <footer className={footerClass} data-testid={testId}>
       <div className={classMap.content}>
         <div className={classMap.left} data-testid={`${testId}-left`}>
-          {isImgLike ? (
-            <ImageComponent
-              className={classMap.logo}
-              data-testid={`${testId}-logo`}
-              loading="lazy"
-              src={logoSrc}
-              alt="Logo"
-              height={logoH}
-              width={logoW}
-            />
+          {isImgLike && logoSrc ? (
+            typeof ImageComponent === "string" ? (
+              <img
+                className={classMap.logo}
+                data-testid={`${testId}-logo`}
+                loading="lazy"
+                src={logoSrc}
+                alt="Logo"
+                height={logoH}
+                width={logoW}
+              />
+            ) : (
+              <ImageComponent
+                className={classMap.logo}
+                data-testid={`${testId}-logo`}
+                src={logoSrc}
+                alt="Logo"
+                height={logoH}
+                width={logoW}
+              />
+            )
           ) : (
             <span
               className={classMap.logo}
@@ -71,7 +90,12 @@ const FooterBase: React.FC<BaseFooterProps> = ({
               aria-label="Logo"
               data-testid={`${testId}-logo`}
             >
-              {logo}
+              {
+                logo as Exclude<
+                  LogoSource,
+                  string | { src: string; width?: number; height?: number }
+                >
+              }
             </span>
           )}
 

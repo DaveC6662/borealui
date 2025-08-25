@@ -1,5 +1,4 @@
 import React from "react";
-import type { MouseEvent } from "react";
 import {
   InteractiveProps,
   RoundingType,

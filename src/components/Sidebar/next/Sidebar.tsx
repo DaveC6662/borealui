@@ -10,13 +10,12 @@ import { SidebarProps } from "../Sidebar.types";
 const Sidebar: React.FC<SidebarProps> = ({ links, ...rest }) => {
   const currentPath = usePathname();
 
-  const { currentPath: _ignored, ...safeRest } = rest;
+  const safeRest = rest;
 
   return (
     <SidebarBase
       links={links}
       classMap={styles}
-      currentPath={currentPath}
       LinkComponent={Link}
       key={currentPath}
       {...safeRest}

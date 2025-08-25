@@ -16,6 +16,8 @@ interface Tab {
   icon?: React.ComponentType;
   /** The content to display when the tab is active. */
   content: React.ReactNode;
+  /** Whether the tab is disabled. */
+  disabled?: boolean;
 }
 
 /**

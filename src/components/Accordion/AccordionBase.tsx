@@ -55,7 +55,12 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   const toggleAccordion = () => {
     if (disabled) return;
     if (!isToggleable && isExpanded) return;
-    isControlled ? onToggle?.(!expanded) : setInternalExpanded((prev) => !prev);
+
+    if (isControlled) {
+      onToggle?.(!expanded);
+    } else {
+      setInternalExpanded((prev) => !prev);
+    }
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {

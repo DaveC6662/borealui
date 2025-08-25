@@ -112,3 +112,11 @@ export interface SelectProps {
 export interface BaseSelectProps extends SelectProps {
   classMap: Record<string, string>;
 }
+
+export interface ThemeSelectProps {
+  theme?: ThemeType;
+  shadow?: ShadowType;
+  rounding?: RoundingType;
+  "data-testid"?: string;
+  state?: StateType;
+}

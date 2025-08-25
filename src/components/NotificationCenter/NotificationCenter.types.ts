@@ -5,6 +5,8 @@ import {
 } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { NotificationType, RoundingType, ShadowType } from "@/types/types";
+import { ButtonProps } from "../Button/Button.types";
+import { IconButtonProps } from "../IconButton/IconButton.types";
 
 /**
  * Represents an individual notification to be displayed in the NotificationCenter.
@@ -83,7 +85,7 @@ export const themeIcons: Record<NotificationType, IconType> = {
 };
 
 export interface BaseNotificationCenterProps extends NotificationCenterProps {
-  Button: React.ComponentType<any>;
-  IconButton: React.ComponentType<any>;
+  Button: React.ComponentType<ButtonProps>;
+  IconButton: React.ComponentType<IconButtonProps>;
   classMap: Record<string, string>;
 }

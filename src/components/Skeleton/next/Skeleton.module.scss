@@ -3,6 +3,9 @@
 @use "../../../styles/globals";
 
 .skeletonLoader {
+  --skeleton-sheen: #{theme.$disabled-color};
+  --skeleton-duration: 1.5s;
+
   background-color: var(--background-color-light);
   position: relative;
   overflow: hidden;
@@ -15,9 +18,6 @@
   @include bp.up(lg) {
     min-height: 1.2rem;
   }
-
-  --skeleton-sheen: #{theme.$disabled-color};
-  --skeleton-duration: 1.5s;
 
   &::after {
     content: "";

@@ -1,5 +1,5 @@
 import React, { useMemo, MouseEvent } from "react";
-import { BadgeBaseProps, BadgeProps } from "./Badge.types";
+import { BadgeBaseProps } from "./Badge.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {

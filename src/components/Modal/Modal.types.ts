@@ -1,5 +1,6 @@
 import { RoundingType, ShadowType } from "@/types/types";
 import { ReactElement } from "react";
+import { IconButtonProps } from "../IconButton/IconButton.types";
 
 /**
  * Props for the Modal component.
@@ -25,8 +26,14 @@ export interface ModalProps {
   "data-testid"?: string;
 }
 
+export type IconButtonRef = HTMLButtonElement | HTMLAnchorElement;
+
+export type IconButtonComponent = React.ForwardRefExoticComponent<
+  IconButtonProps & React.RefAttributes<IconButtonRef>
+>;
+
 export interface BaseModalProps extends ModalProps {
-  IconButton: React.ComponentType<any>;
+  IconButton: IconButtonComponent;
   classMap: Record<string, string>;
   portalId?: string;
 }
