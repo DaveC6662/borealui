@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -18,10 +19,45 @@ $progress-sizes: (
   overflow: hidden;
   position: relative;
 
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @include bp.down(xs) {
+    min-width: 80px;
+  }
+  @include bp.up(lg) {
+    min-width: 160px;
+  }
+
   @each $size, $height in $progress-sizes {
     &.#{$size} {
       height: $height;
+
+      @include bp.down(xs) {
+        height: calc(#{$height} * 0.85);
+      }
+      @include bp.up(lg) {
+        height: calc(#{$height} * 1.1);
+      }
     }
+  }
+
+  @each $name, $vals in theme.$themes {
+    &.#{$name} {
+      background-color: map.get($vals, bg);
+    }
+  }
+  @each $name, $vals in theme.$states {
+    &.#{$name} {
+      background-color: map.get($vals, bg);
+    }
+  }
+
+  &.clear {
+    background-color: var(--text-color-primary);
   }
 }
 
@@ -29,16 +65,16 @@ $progress-sizes: (
   height: 100%;
   width: 0;
   transition: width 0.4s ease-in-out;
+  border-radius: inherit;
 
-  @each $theme, $color in theme.$themes {
-    &.#{$theme} {
-      background-color: map.get($color, bg);
+  @each $name, $vals in theme.$themes {
+    &.#{$name} {
+      background-color: map.get($vals, bg);
     }
   }
-
-  @each $state, $color in theme.$states {
-    &.#{$state} {
-      background-color: map.get($color, bg);
+  @each $name, $vals in theme.$states {
+    &.#{$name} {
+      background-color: map.get($vals, bg);
     }
   }
 
@@ -50,7 +86,6 @@ $progress-sizes: (
 .animated {
   animation: progress-grow 0.8s ease-out;
 }
-
 .indeterminate {
   width: 100%;
   animation: indeterminate-move 1.5s infinite ease-in-out;
@@ -61,9 +96,29 @@ $progress-sizes: (
     border-radius: $value;
   }
 }
-
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    transition: none !important;
+  }
+  .animated,
+  .indeterminate {
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .container {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+  }
+  .bar {
+    background: Highlight;
   }
 }

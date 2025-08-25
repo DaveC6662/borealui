@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -13,7 +14,14 @@ $sizes: (
 .container {
   display: flex;
   align-items: center;
-  gap: theme.$spacing-xs;
+  gap: theme.$spacing-sm;
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+  }
 }
 
 .wrapper {
@@ -21,65 +29,131 @@ $sizes: (
   align-items: center;
   gap: theme.$spacing-xs;
 
+  @include bp.down(xs) {
+    gap: theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-sm;
+  }
+
   @each $size, $font-size in $sizes {
     &.#{$size} {
       font-size: $font-size;
-    }
-  }
 
-  &.label {
-    font-size: theme.$font-size-md;
-    line-height: 1;
-    color: var(--text-color-primary);
-    margin: 0;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  &.interactive {
-    cursor: pointer;
-
-    .star:hover {
-      transform: scale(1.2);
-    }
-  }
-
-  .star {
-    transition:
-      color 0.3s ease-in-out,
-      transform 0.2s ease;
-    color: var(--background-color-dark);
-
-    svg {
-      width: 1em;
-      height: 1em;
-      display: block;
-    }
-  }
-
-  .active {
-    color: var(--primary-color);
-  }
-
-  @each $theme, $color in theme.$themes {
-    &.#{$theme} {
-      .active {
-        color: map.get($color, bg);
+      @include bp.up(lg) {
+        font-size: calc(#{$font-size} * 1.05);
       }
     }
   }
+}
 
-  @each $state, $color in theme.$states {
-    &.#{$state} {
-      .active {
-        color: map.get($color, bg);
-      }
+.label {
+  font-size: theme.$font-size-md;
+  line-height: 1;
+  color: var(--text-color-primary);
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+
+  @include bp.down(xs) {
+    font-size: theme.$font-size-sm;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-lg;
+  }
+}
+
+.star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 4px;
+  transition:
+    color 0.3s ease-in-out,
+    transform 0.2s ease;
+  color: var(--background-color-dark);
+
+  svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+
+    @include bp.up(lg) {
+      width: 1.05em;
+      height: 1.05em;
     }
   }
+}
 
-  &.clear {
+.active {
+  color: var(--primary-color);
+}
+
+.interactive .star:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+
+  @include bp.down(xs) {
+    transform: scale(1.1);
+  }
+}
+.interactive .star:focus-visible {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 2px;
+}
+.wrapper:focus-within {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+@each $themeName, $vals in theme.$themes {
+  .#{$themeName} {
     .active {
-      color: var(--text-color-primary);
+      color: map.get($vals, bg);
     }
+  }
+}
+@each $stateName, $vals in theme.$states {
+  .#{$stateName} {
+    .active {
+      color: map.get($vals, bg);
+    }
+  }
+}
+
+.clear {
+  .active {
+    color: var(--text-color-primary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star,
+  .wrapper {
+    transition: none !important;
+  }
+  .interactive .star:hover {
+    transform: none !important;
+  }
+}
+
+@media (hover: none) {
+  .interactive .star:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .star {
+    color: ButtonText;
+  }
+  .active {
+    color: Highlight;
+  }
+  .interactive .star:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

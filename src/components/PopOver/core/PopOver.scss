@@ -29,20 +29,17 @@
   max-width: 90vw;
   min-width: 100%;
   width: max-content;
-  padding: theme.$spacing-sm;
   background-color: var(--background-light-color);
   color: var(--text-color-secondary);
   border: 1px solid var(--text-color-secondary);
   animation: fade-in 0.25s ease-in-out forwards;
 
   @include bp.down(sm) {
-    padding: theme.$spacing-xs;
     max-width: 96vw;
     min-width: 75%;
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-md;
     max-width: 520px;
   }
 
@@ -153,10 +150,6 @@
     top: 50%;
     transform: translateX(0) translateY(-50%);
   }
-}
-
-.popover_bottom {
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + theme.$spacing-xs);
 }
 
 @media (prefers-reduced-motion: reduce) {

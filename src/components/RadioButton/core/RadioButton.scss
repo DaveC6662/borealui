@@ -7,7 +7,7 @@
   display: inline-flex;
   align-items: center;
   gap: theme.$spacing-sm;
-  font-size: theme.$font-size-base;
+  font-size: theme.$font-size-md;
   cursor: pointer;
   user-select: none;
   transition: all theme.$transition-default;
@@ -21,7 +21,7 @@
 
   @include bp.up(lg) {
     gap: theme.$spacing-md;
-    font-size: theme.$font-size-lg;
+    font-size: theme.$font-size-base;
   }
 
   &:focus-visible {
@@ -101,6 +101,7 @@
 .radio_label {
   color: var(--text-color-primary);
   transition: all theme.$transition-default;
+  width: max-content;
 
   &.radio_disabled {
     cursor: not-allowed;
