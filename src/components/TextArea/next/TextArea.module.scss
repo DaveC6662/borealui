@@ -1,5 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "sass:color";
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 
 .textArea {
@@ -8,17 +8,78 @@
   justify-content: center;
   align-items: center;
   transition: theme.$transition-default;
-}
+  background: transparent;
 
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
+  @include bp.down(sm) {
+    width: 100%;
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: theme.$border-radius-sm;
+  }
+
+  @each $name, $props in theme.$themes {
+    &.#{$name} {
+      background-color: map.get($props, bg);
+      color: map.get($props, text, inherit);
+      box-shadow: map.get($props, shadow, theme.$box-shadow-medium);
+
+      &:hover {
+        background-color: map.get($props, hover, map.get($props, bg));
+      }
+
+      .textInput::placeholder {
+        color: map.get($props, placeholder, var(--text-color-primary));
+      }
+
+      .iconContainer svg {
+        color: map.get($props, icon, var(--text-color-primary));
+      }
+
+      &.outline {
+        background-color: transparent;
+        color: map.get($props, text);
+        box-shadow: none;
+        border: 2px solid map.get($props, border);
+      }
+    }
+  }
+
+  @each $state, $props in theme.$states {
+    &.#{$state} {
+      border: 2px solid map.get($props, border);
+      color: map.get($props, text, inherit);
+      box-shadow: map.get($props, shadow, theme.$box-shadow-medium);
+    }
+  }
+
+  &.clear {
+    box-shadow: none;
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: theme.$disabled-color;
+
+    .textInput {
+      background-color: transparent;
+      color: var(--text-color-primary);
+    }
   }
 }
 
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
+@each $k, $v in theme.$rounding {
+  .round#{$k} {
+    border-radius: $v;
+  }
+}
+@each $k, $v in theme.$shadow {
+  .shadow#{$k} {
+    box-shadow: $v;
   }
 }
 
@@ -28,20 +89,37 @@
   resize: vertical;
   border: none;
   outline: none;
+  color: var(--text-color-primary);
   background-color: transparent;
   font-family: theme.$font-family-primary;
   padding: theme.$spacing-sm;
   margin: theme.$spacing-sm;
-  font-size: theme.$font-size-base;
+  font-size: theme.$font-size-md;
   border-radius: theme.$border-radius-xs;
+  min-height: 2.5em;
+  line-height: 1.4;
 
   &::placeholder {
     color: var(--text-color-primary);
     opacity: 0.7;
   }
 
-  @media (width <= 480px) {
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: theme.$border-radius-xs;
+  }
+
+  @include bp.down(xs) {
     font-size: calc(theme.$font-size-base * 0.9);
+    padding: theme.$spacing-xs;
+    margin: theme.$spacing-xs;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+    padding: theme.$spacing-md;
+    margin: theme.$spacing-sm;
   }
 }
 
@@ -58,9 +136,13 @@
     height: 1em;
     color: var(--text-color-primary);
 
-    @media (width <= 480px) {
+    @include bp.down(xs) {
       width: 15px;
       height: 15px;
+    }
+    @include bp.up(lg) {
+      width: 1.1em;
+      height: 1.1em;
     }
   }
 }
@@ -75,77 +157,54 @@
   margin-right: 0.5em;
   color: inherit;
 
-  &:focus {
-    outline: 2px solid rgb(255 255 255);
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
-  }
-
-  &:hover {
-    color: rgb(0 0 0);
   }
 
   svg {
     width: 1.5em;
     height: 1.5em;
 
-    @media (width <= 480px) {
+    @include bp.down(xs) {
       width: 18px;
       height: 18px;
     }
   }
 
-  @media (width <= 480px) {
+  @include bp.down(xs) {
     margin-top: theme.$spacing-xs;
   }
 }
 
-@each $theme, $props in theme.$themes {
-  .#{$theme} {
-    background-color: map.get($props, bg);
-    color: map.get($props, text, inherit);
-    box-shadow: map.get($props, shadow, theme.$box-shadow-medium);
-
-    &:hover {
-      background-color: map.get($props, hover, map.get($props, bg));
-    }
-
-    .textInput::placeholder {
-      color: map.get($props, placeholder, var(--text-color-primary));
-    }
-
-    .iconContainer svg {
-      color: map.get($props, icon, var(--text-color-primary));
-    }
-
-    &.outline {
-      background-color: transparent;
-      color: map.get($props, text);
-      box-shadow: none;
-      border: 2px solid map.get($props, border);
-    }
+@media (prefers-reduced-motion: reduce) {
+  .textArea,
+  .textArea * {
+    transition: none !important;
   }
 }
 
-@each $state, $props in theme.$states {
-  .#{$state} {
-    border: 2px solid map.get($props, border);
-    color: map.get($props, text, inherit);
-    box-shadow: map.get($props, shadow, theme.$box-shadow-medium);
+@media (hover: none) {
+  .textArea[class*="outline"]:hover {
+    background-color: inherit;
   }
 }
 
-.clear {
-  box-shadow: none;
-}
-
-.disabled {
-  opacity: 0.6;
-  pointer-events: none;
-  cursor: not-allowed;
-  background-color: theme.$disabled-color;
+@media (forced-colors: active) {
+  .textArea {
+    background: Canvas !important;
+    color: CanvasText !important;
+    border: 1px solid ButtonText !important;
+  }
 
   .textInput {
-    background-color: transparent;
-    color: var(--text-color-primary);
+    background: Canvas !important;
+    color: CanvasText !important;
+  }
+
+  .textInput:focus-visible,
+  .textArea:focus-within {
+    outline: 2px solid Highlight !important;
+    outline-offset: 2px !important;
   }
 }

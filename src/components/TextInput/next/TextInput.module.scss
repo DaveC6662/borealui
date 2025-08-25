@@ -1,6 +1,5 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/globals";
-@use "sass:color";
+@use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 
 .container {
@@ -11,19 +10,50 @@
   margin: theme.$spacing-sm;
   transition: theme.$transition-default;
   max-width: 400px;
+  background: transparent;
 
-  @media (width <=480px) {
-    padding: 0.3rem 0.5rem;
+  &:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: theme.$border-radius-md;
+  }
+
+  @include bp.down(xs) {
+    padding: 0.5rem 0.5rem;
     height: 35px;
     width: 95%;
+    max-width: none;
   }
 
   input {
     width: 100%;
+    padding: theme.$spacing-xs;
     border: none;
-    border-radius: theme.$border-radius-lg;
+    height: 100%;
     background-color: transparent;
     color: var(--text-color-primary);
+
+    &:hover {
+      background-color: transparent;
+    }
+    &:focus,
+    &:focus-within {
+      outline: none;
+    }
+  }
+}
+
+@each $k, $v in theme.$rounding {
+  .round#{$k} {
+    border-radius: $v;
+    input {
+      border-radius: $v;
+    }
+  }
+}
+@each $k, $v in theme.$shadow {
+  .shadow#{$k} {
+    box-shadow: $v;
   }
 }
 
@@ -33,17 +63,27 @@
   margin: theme.$spacing-sm;
   font-size: theme.$font-size-base;
   border: none;
+  border-radius: theme.$border-radius-lg;
   background-color: transparent;
   color: var(--text-color-primary);
+  font-family: theme.$font-family-primary;
+  min-height: 2.5rem;
 
   &::placeholder {
     color: var(--text-color-primary);
     opacity: 0.8;
   }
 
-  @media (width <=480px) {
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: theme.$border-radius-lg;
+  }
+
+  @include bp.down(xs) {
     width: 100%;
     font-size: calc(theme.$font-size-base * 0.9);
+    margin: theme.$spacing-xs;
   }
 }
 
@@ -56,8 +96,7 @@
     width: 1em;
     height: 1em;
     color: var(--text-color-primary);
-
-    @media (width <=480px) {
+    @include bp.down(xs) {
       width: 15px;
       height: 15px;
     }
@@ -67,8 +106,18 @@
 .togglePassword {
   padding: theme.$spacing-xs;
   box-sizing: border-box;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
 
-  @media (width <=480px) {
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  @include bp.down(xs) {
     margin-top: theme.$spacing-xs;
   }
 }
@@ -79,19 +128,19 @@
   }
 }
 
-@each $theme, $vals in theme.$themes {
-  .#{$theme} {
+@each $themeName, $vals in theme.$themes {
+  .#{$themeName} {
     background-color: map.get($vals, bg);
     color: map.get($vals, text);
+    box-shadow: map.get($vals, shadow, theme.$box-shadow-medium);
 
     &:hover {
-      background-color: map.get($vals, hover);
+      background-color: map.get($vals, hover, map.get($vals, bg));
     }
 
     .textInput::placeholder {
       color: map.get($vals, text);
     }
-
     .iconContainer svg {
       color: map.get($vals, text);
     }
@@ -99,8 +148,15 @@
     &.outline {
       background-color: transparent;
       color: map.get($vals, text);
+      box-shadow: none;
       border: 2px solid map.get($vals, border);
     }
+  }
+}
+
+.clear {
+  .textInput {
+    border: none;
   }
 }
 
@@ -115,24 +171,30 @@
   }
 }
 
-.clear {
-  .textInput {
-    border: none;
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .container * {
+    transition: none !important;
+    animation: none !important;
   }
 }
 
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-
-    input {
-      border-radius: $value;
+@media (forced-colors: active) {
+  .container {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+  }
+  .textInput {
+    color: CanvasText;
+    background: Canvas;
+    &::placeholder {
+      color: CanvasText;
     }
   }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
+  .textInput:focus-visible,
+  .container:focus-within {
+    outline: 2px solid Highlight !important;
+    outline-offset: 2px !important;
   }
 }

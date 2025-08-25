@@ -16,9 +16,9 @@ $stepper-sizes: (
   display: flex;
   width: fit-content;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   position: relative;
-  gap: theme.$spacing-sm;
+  gap: theme.$spacing-md;
 
   @include bp.down(xs) {
     gap: theme.$spacing-xs;
@@ -107,21 +107,6 @@ $stepper-sizes: (
 
     @include bp.up(lg) {
       margin-left: theme.$spacing-md;
-    }
-  }
-
-  &_connector {
-    flex-grow: 1;
-    height: 2px;
-    background-color: var(--text-color-primary);
-    margin: 0 theme.$spacing-xs;
-
-    @include bp.down(xs) {
-      margin: 0 theme.$spacing-xxs;
-    }
-
-    @include bp.up(lg) {
-      margin: 0 theme.$spacing-sm;
     }
   }
 

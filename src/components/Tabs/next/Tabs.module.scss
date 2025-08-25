@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -28,6 +29,10 @@ $sizes: (
 .tabs_container {
   width: 100%;
   background-color: transparent;
+
+  &:focus-within {
+    outline: none;
+  }
 }
 
 .tabs {
@@ -39,7 +44,7 @@ $sizes: (
   gap: theme.$spacing-xxs;
   background-color: transparent;
 
-  @media (width <= 480px) {
+  @include bp.down(xs) {
     flex-direction: column;
   }
 }
@@ -72,9 +77,10 @@ $sizes: (
     transform: translateY(-2px);
   }
 
-  &:focus {
-    outline: 2px solid var(--focus-outline-color);
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
+    border-radius: 6px;
   }
 
   &:first-child {
@@ -88,16 +94,20 @@ $sizes: (
     border-right: none;
   }
 
-  @media (width <= 480px) {
+  @include bp.down(xs) {
     border-right: none;
     border-bottom: 0.5px solid var(--text-color-primary);
 
     &:first-child {
       border-radius: 0;
+      border-top-left-radius: theme.$border-radius-md;
+      border-top-right-radius: theme.$border-radius-md;
     }
 
     &:last-child {
       border-radius: 0;
+      border-bottom-left-radius: theme.$border-radius-md;
+      border-bottom-right-radius: theme.$border-radius-md;
       border-bottom: none;
     }
   }
@@ -107,6 +117,10 @@ $sizes: (
   .#{$size} .tab {
     font-size: map.get($props, font);
     padding: map.get($props, padding);
+
+    @include bp.up(lg) {
+      font-size: calc(#{map.get($props, font)} * 1.05);
+    }
   }
 }
 
@@ -120,38 +134,35 @@ $sizes: (
   align-items: center;
   justify-content: center;
 
-  @media (width <= 768px) {
+  @include bp.down(sm) {
     padding: theme.$spacing-sm;
   }
-
-  @media (width <= 480px) {
+  @include bp.down(xs) {
     padding: 0;
   }
 }
 
-@each $theme, $color in theme.$themes {
-  .#{$theme} {
+@each $themeName, $vals in theme.$themes {
+  .#{$themeName} {
     .tab.active {
-      background-color: map.get($color, bg);
-      border-bottom-color: map.get($color, border);
+      background-color: map.get($vals, bg);
+      border-bottom-color: map.get($vals, border);
     }
-
-    .tab:focus {
-      outline: 2px solid map.get($color, border);
+    .tab:focus-visible {
+      outline: 2px solid map.get($vals, border);
       outline-offset: 2px;
     }
   }
 }
 
-@each $state, $color in theme.$states {
-  .#{$state} {
+@each $stateName, $vals in theme.$states {
+  .#{$stateName} {
     .tab.active {
-      background-color: map.get($color, bg);
-      border-bottom-color: map.get($color, border);
+      background-color: map.get($vals, bg);
+      border-bottom-color: map.get($vals, border);
     }
-
-    .tab:focus {
-      outline: 2px solid map.get($color, border);
+    .tab:focus-visible {
+      outline: 2px solid map.get($vals, border);
       outline-offset: 2px;
     }
   }
@@ -166,7 +177,6 @@ $sizes: (
     border-top-left-radius: $value;
     border-bottom-left-radius: $value;
   }
-
   .round#{$key}:last-child {
     border-top-right-radius: $value;
     border-bottom-right-radius: $value;
@@ -176,5 +186,43 @@ $sizes: (
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab {
+    transition: none !important;
+  }
+  .tab:hover {
+    transform: none !important;
+  }
+}
+
+@media (hover: none) {
+  .tab:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .tabs {
+    border-bottom-color: ButtonText;
+  }
+
+  .tab {
+    background: ButtonFace;
+    color: ButtonText;
+    border-right: 1px solid ButtonText;
+  }
+
+  .tab.active {
+    background: Highlight;
+    color: HighlightText;
+    border-bottom-color: Highlight;
+  }
+
+  .tab:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

@@ -102,14 +102,6 @@ const StepperBase: React.FC<StepperBaseProps> = ({
             >
               {step.label}
             </span>
-
-            {index < steps.length - 1 && (
-              <div
-                className={classMap.connector}
-                aria-hidden="true"
-                data-testid={`${stepId}-connector`}
-              />
-            )}
           </div>
         );
       })}

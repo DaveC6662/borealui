@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 
@@ -37,13 +38,31 @@ $sizes: (
   padding: theme.$spacing-xxs theme.$spacing-xs;
   transition: border-color theme.$transition-default;
 
+  @include bp.down(sm) {
+    width: 100%;
+    gap: theme.$spacing-xxs;
+    padding: theme.$spacing-xxs theme.$spacing-xs;
+  }
+
+  @include bp.up(lg) {
+    gap: theme.$spacing-xs;
+    padding: theme.$spacing-xs theme.$spacing-sm;
+  }
+
   &:focus-within {
     border-color: var(--primary-color);
+  }
+
+  &:focus-within .tag,
+  &:focus-within .suggestionItem {
+    outline: none;
   }
 }
 
 .inputWrapper {
   list-style: none;
+  margin: 0;
+  padding: 0;
 
   li {
     list-style: none;
@@ -52,29 +71,66 @@ $sizes: (
 
 .tagContainer {
   display: flex;
-  max-width: 400px;
+  max-width: 350px;
   max-height: 80px;
   flex-wrap: wrap;
   align-items: center;
   gap: theme.$spacing-xs;
   width: fit-content;
   overflow-y: auto;
+
+  @include bp.down(xs) {
+    max-width: 100%;
+    max-height: 120px;
+    gap: theme.$spacing-xxs;
+  }
+
+  @include bp.up(lg) {
+    max-width: 480px;
+  }
 }
 
-.removeButton svg {
+.removeButton {
+  background: transparent;
+  border: none;
+  padding: 0;
   color: theme.$error-color;
+  cursor: pointer;
+  line-height: 1;
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  svg {
+    color: currentColor;
+  }
 }
 
 .tag {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: fit-content;
   gap: theme.$spacing-xs;
   background-color: var(--primary-color);
   color: var(--text-color-primary);
   font-size: theme.$font-size-sm;
   padding: theme.$spacing-xxs theme.$spacing-xs;
+  transition: background-color theme.$transition-default;
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xxs;
+    font-size: theme.$font-size-xs;
+    padding: theme.$spacing-xxs;
+  }
+
+  @include bp.up(lg) {
+    font-size: theme.$font-size-sm;
+    padding: theme.$spacing-xxs theme.$spacing-xs;
+  }
 }
 
 .tagLabel {
@@ -82,20 +138,22 @@ $sizes: (
 }
 
 .suggestionList {
-  position: absolute;
-  place-self: flex-end flex-end;
+  position: relative;
   inset: 80% 0 auto;
+  z-index: 10;
   width: fit-content;
   max-width: 300px;
   max-height: 200px;
-  z-index: 10;
   display: flex;
-  justify-content: right;
+  justify-content: flex-end;
   flex-wrap: wrap;
   padding: 0;
+  margin: 0;
   list-style: none;
-  height: fit-content;
   overflow-y: auto;
+  background: var(--background-color);
+  border: 1px solid var(--background-color-darker);
+  border-radius: theme.$border-radius-md;
 }
 
 .suggestionItem {
@@ -105,26 +163,21 @@ $sizes: (
   color: var(--text-color-primary);
   cursor: pointer;
   transition: background-color theme.$transition-default;
+  border-radius: 4px;
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: var(--background-secondary-light-color);
   }
-}
 
-@each $theme, $color in theme.$themes {
-  .#{$theme} {
-    .tag {
-      background-color: map.get($color, bg);
-    }
+  &:focus-visible {
+    background-color: var(--background-secondary-light-color);
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
   }
-}
 
-@each $state, $color in theme.$states {
-  .#{$state} {
-    .tag {
-      outline: 2px solid map.get($color, border);
-    }
+  @include bp.down(xs) {
+    font-size: theme.$font-size-xs;
+    padding: theme.$spacing-xxs theme.$spacing-xs;
   }
 }
 
@@ -133,6 +186,27 @@ $sizes: (
     .tag {
       font-size: map.get($props, font-size);
       padding: map.get($props, padding);
+
+      @include bp.up(lg) {
+        font-size: calc(#{map.get($props, font-size)} * 1.05);
+      }
+    }
+  }
+}
+
+@each $themeName, $vals in theme.$themes {
+  .#{$themeName} {
+    .tag {
+      background-color: map.get($vals, bg);
+    }
+  }
+}
+
+@each $stateName, $vals in theme.$states {
+  .#{$stateName} {
+    .tag {
+      background-color: var(--primary-color);
+      border: 2px solid map.get($vals, bg);
     }
   }
 }
@@ -146,5 +220,43 @@ $sizes: (
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tagInput,
+  .tagInput * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .suggestionItem:hover {
+    background-color: transparent;
+  }
+}
+
+@media (forced-colors: active) {
+  .tagInput {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+  }
+
+  .tag {
+    background: ButtonFace !important;
+    color: ButtonText !important;
+    border: 1px solid ButtonText !important;
+  }
+
+  .suggestionList {
+    background: Canvas;
+    border: 1px solid ButtonText;
+  }
+
+  .suggestionItem:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

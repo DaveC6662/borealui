@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 @use "sass:map";
 @use "sass:color";
@@ -30,11 +31,25 @@ $slider-sizes: (
   display: flex;
   flex-direction: column;
   gap: theme.$spacing-xs;
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xxs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-sm;
+  }
 }
 
 .label {
   font-size: theme.$font-size-sm;
   color: var(--text-color-primary);
+
+  @include bp.down(xs) {
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
 }
 
 .wrapper {
@@ -42,6 +57,13 @@ $slider-sizes: (
   align-items: center;
   gap: theme.$spacing-sm;
   width: 100%;
+
+  @include bp.down(xs) {
+    gap: theme.$spacing-xs;
+  }
+  @include bp.up(lg) {
+    gap: theme.$spacing-md;
+  }
 }
 
 .slider {
@@ -50,26 +72,54 @@ $slider-sizes: (
   outline: none;
   background-color: var(--background-color-light);
   transition: background 0.3s ease;
+  accent-color: var(--text-color-primary);
+  cursor: pointer;
+
+  &::-webkit-slider-runnable-track {
+    background: transparent;
+    border-radius: inherit;
+  }
+  &::-moz-range-track {
+    background: transparent;
+    border-radius: inherit;
+  }
 
   &::-webkit-slider-thumb,
   &::-moz-range-thumb {
     appearance: none;
     border-radius: 50%;
-    background: currentcolor;
-    cursor: pointer;
+    background-color: var(--text-color-primary) !important;
+    border: none;
     box-shadow: 0 0 2px rgb(0 0 0 / 20%);
+    transition: transform 0.15s ease;
+    cursor: pointer;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: 9999px;
+  }
+  &:focus-visible::-webkit-slider-thumb,
+  &:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 3px var(--focus-outline-color, var(--primary-color));
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 }
 
-@each $key, $value in theme.$rounding {
+@each $key, $val in theme.$rounding {
   .round#{$key} .slider {
-    border-radius: $value;
+    border-radius: $val;
   }
 }
-
-@each $key, $value in theme.$shadow {
+@each $key, $val in theme.$shadow {
   .shadow#{$key} .slider {
-    box-shadow: $value;
+    box-shadow: $val;
   }
 }
 
@@ -77,26 +127,42 @@ $slider-sizes: (
   font-size: theme.$font-size-sm;
   color: var(--text-color-primary);
   min-width: 2ch;
+  text-align: right;
+
+  @include bp.down(xs) {
+    font-size: theme.$font-size-xs;
+  }
+  @include bp.up(lg) {
+    font-size: theme.$font-size-base;
+  }
 }
 
-@each $name, $color in theme.$themes {
+@each $name, $vals in theme.$themes {
   .#{$name} .slider {
-    background-color: map.get($color, bg);
+    background-color: map.get($vals, bg);
+
+    &:hover {
+      background-color: map.get($vals, hover);
+    }
 
     &::-webkit-slider-thumb,
     &::-moz-range-thumb {
-      color: map.get($color, bg);
+      background-color: var(--text-color-primary) !important;
     }
   }
 }
 
-@each $name, $color in theme.$states {
+@each $name, $vals in theme.$states {
   .#{$name} .slider {
-    background-color: map.get($color, bg);
+    background-color: map.get($vals, bg);
+
+    &:hover {
+      background-color: map.get($vals, hover);
+    }
 
     &::-webkit-slider-thumb,
     &::-moz-range-thumb {
-      color: map.get($color, bg);
+      background-color: var(--text-color-primary) !important;
     }
   }
 }
@@ -107,12 +173,84 @@ $slider-sizes: (
 
 @each $size, $props in $slider-sizes {
   .#{$size} .slider {
-    height: map.get($props, track);
+    $track: map.get($props, track);
+    $thumb: map.get($props, thumb);
+
+    height: $track;
+
+    &::-webkit-slider-runnable-track,
+    &::-moz-range-track {
+      height: $track;
+    }
 
     &::-webkit-slider-thumb,
     &::-moz-range-thumb {
-      width: map.get($props, thumb);
-      height: map.get($props, thumb);
+      width: $thumb;
+      height: $thumb;
+    }
+
+    @include bp.down(xs) {
+      height: calc(#{$track} * 0.9);
+
+      &::-webkit-slider-runnable-track,
+      &::-moz-range-track {
+        height: calc(#{$track} * 0.9);
+      }
+
+      &::-webkit-slider-thumb,
+      &::-moz-range-thumb {
+        width: calc(#{$thumb} * 0.9);
+        height: calc(#{$thumb} * 0.9);
+      }
+    }
+
+    @include bp.up(lg) {
+      height: calc(#{$track} * 1.1);
+
+      &::-webkit-slider-runnable-track,
+      &::-moz-range-track {
+        height: calc(#{$track} * 1.1);
+      }
+
+      &::-webkit-slider-thumb,
+      &::-moz-range-thumb {
+        width: calc(#{$thumb} * 1.05);
+        height: calc(#{$thumb} * 1.05);
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider,
+  .slider * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@media (hover: none) {
+  .slider::-webkit-slider-thumb,
+  .slider::-moz-range-thumb {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .slider {
+    forced-color-adjust: none;
+    background: Canvas;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+
+    &::-webkit-slider-runnable-track,
+    &::-moz-range-track {
+      background: ButtonFace;
+      border: 1px solid ButtonText;
+    }
+
+    &:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 3px;
     }
   }
 }
