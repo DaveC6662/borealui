@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
+import { forwardRef } from "react";
 import BaseRadioButton from "../RadioButtonBase";
 import styles from "./RadioButton.module.scss";
 import { RadioButtonProps } from "../RadioButton.types";
 
-const RadioButton = React.forwardRef<HTMLInputElement, RadioButtonProps>(
+const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
   (props, ref) => <BaseRadioButton {...props} ref={ref} classMap={styles} />
 );
 

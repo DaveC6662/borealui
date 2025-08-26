@@ -1,4 +1,4 @@
-import React from "react";
+import { forwardRef } from "react";
 import "./Avatar.scss";
 import { AvatarProps } from "../Avatar.types";
 import { AvatarBase } from "../AvatarBase";
@@ -51,8 +51,8 @@ const classes = {
   dot: "avatar_dot",
 };
 
-const Avatar: React.FC<AvatarProps> = (props) => (
-  <AvatarBase {...props} classMap={classes} />
+const Avatar = forwardRef<HTMLButtonElement | HTMLAnchorElement, AvatarProps>(
+  (props, ref) => <AvatarBase {...props} classMap={classes} ref={ref} />
 );
 
 export default Avatar;

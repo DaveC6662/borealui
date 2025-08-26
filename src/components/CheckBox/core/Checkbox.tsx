@@ -1,4 +1,4 @@
-import React from "react";
+import { forwardRef } from "react";
 import CheckboxBase from "../CheckboxBase";
 import "./CheckBox.scss";
 import { CheckBoxProps } from "../Checkbox.types";
@@ -45,8 +45,8 @@ const classes = {
   box: "checkbox_box",
 };
 
-const Checkbox: React.FC<CheckBoxProps> = (props) => {
-  return <CheckboxBase {...props} classMap={classes} />;
-};
+const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => (
+  <CheckboxBase {...props} classMap={classes} ref={ref} />
+));
 
 export default Checkbox;

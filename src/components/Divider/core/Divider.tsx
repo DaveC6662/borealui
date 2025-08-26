@@ -1,4 +1,4 @@
-import React from "react";
+import { forwardRef } from "react";
 import DividerBase from "../DividerBase";
 import "./Divider.scss";
 import { DividerProps } from "../Divider.types";
@@ -18,8 +18,8 @@ const classes = {
   error: "divider_error",
 };
 
-const Divider: React.FC<DividerProps> = (props) => (
-  <DividerBase {...props} classMap={classes} />
-);
+const Divider = forwardRef<HTMLDivElement, DividerProps>((props, ref) => (
+  <DividerBase {...props} classMap={classes} ref={ref} />
+));
 
 export default Divider;
