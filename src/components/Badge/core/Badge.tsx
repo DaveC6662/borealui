@@ -42,5 +42,5 @@ const classes = {
 const Badge: React.FC<BadgeProps> = (props) => {
   return <BadgeBase {...props} classMap={classes} />;
 };
-
+Badge.displayName = "Badge";
 export default Badge;

@@ -54,5 +54,5 @@ const classes = {
 const Avatar = forwardRef<HTMLButtonElement | HTMLAnchorElement, AvatarProps>(
   (props, ref) => <AvatarBase {...props} classMap={classes} ref={ref} />
 );
-
+Avatar.displayName = "Avatar";
 export default Avatar;

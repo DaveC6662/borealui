@@ -55,5 +55,5 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = (props) => {
     <BreadcrumbsBase {...props} classMap={classes} ButtonComponent={Button} />
   );
 };
-
+Breadcrumbs.displayName = "Breadcrumbs";
 export default Breadcrumbs;

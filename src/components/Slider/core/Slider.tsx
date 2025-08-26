@@ -49,5 +49,5 @@ const Slider: React.FC<SliderProps> = (props) => {
     />
   );
 };
-
+Slider.displayName = "Slider";
 export default Slider;

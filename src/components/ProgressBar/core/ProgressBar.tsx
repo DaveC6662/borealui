@@ -42,5 +42,5 @@ const classes = {
 const ProgressBar: React.FC<ProgressBarProps> = (props) => {
   return <BaseProgressBar {...props} classMap={classes} />;
 };
-
+ProgressBar.displayName = "ProgressBar";
 export default ProgressBar;

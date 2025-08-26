@@ -9,5 +9,5 @@ import { ToolbarProps } from "../Toolbar.types";
 const Toolbar: React.FC<ToolbarProps> = (props) => (
   <ToolbarBase {...props} AvatarComponent={Avatar} classMap={styles} />
 );
-
+Toolbar.displayName = "Toolbar";
 export default Toolbar;

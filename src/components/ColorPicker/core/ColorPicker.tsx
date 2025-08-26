@@ -33,5 +33,5 @@ const classes = {
 const ColorPicker: React.FC<ColorPickerProps> = (props) => (
   <ColorPickerBase {...props} classMap={classes} />
 );
-
+ColorPicker.displayName = "ColorPicker";
 export default ColorPicker;

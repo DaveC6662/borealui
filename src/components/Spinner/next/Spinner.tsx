@@ -8,5 +8,5 @@ import { SpinnerProps } from "../Spinner.types";
 const Spinner: React.FC<SpinnerProps> = (props) => {
   return <SpinnerBase {...props} classMap={styles} />;
 };
-
+Spinner.displayName = "Spinner";
 export default Spinner;

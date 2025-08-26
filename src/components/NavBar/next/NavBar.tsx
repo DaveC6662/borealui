@@ -38,5 +38,5 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
     />
   );
 };
-
+NavBar.displayName = "NavBar";
 export default NavBar;

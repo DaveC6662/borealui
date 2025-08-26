@@ -24,5 +24,5 @@ const Footer: React.FC<FooterProps> = (props) => {
     />
   );
 };
-
+Footer.displayName = "Footer";
 export default Footer;

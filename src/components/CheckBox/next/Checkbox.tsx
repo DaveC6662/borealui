@@ -8,5 +8,5 @@ import { CheckBoxProps } from "../Checkbox.types";
 const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => (
   <CheckboxBase {...props} classMap={styles} ref={ref} />
 ));
-
+Checkbox.displayName = "Checkbox";
 export default Checkbox;

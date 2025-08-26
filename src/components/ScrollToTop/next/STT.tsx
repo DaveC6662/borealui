@@ -9,5 +9,5 @@ import { ScrollToTopProps } from "../ScrollToTop.types";
 const ScrollToTopButton: React.FC<ScrollToTopProps> = (props) => (
   <ScrollToTopBase {...props} classMap={styles} IconComponent={ArrowUpIcon} />
 );
-
+ScrollToTopButton.displayName = "ScrollToTopButton";
 export default ScrollToTopButton;

@@ -50,5 +50,5 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
     );
   }
 );
-
+UserThemeSettings.displayName = "UserThemeSettings";
 export default UserThemeSettings;

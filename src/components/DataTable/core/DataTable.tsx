@@ -40,5 +40,5 @@ const classes = {
 function DataTable<T extends object>(props: DataTableProps<T>) {
   return <DataTableBase {...props} classMap={classes} />;
 }
-
+DataTable.displayName = "DataTable";
 export default DataTable;

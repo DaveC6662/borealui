@@ -8,5 +8,5 @@ import { BadgeProps } from "../Badge.types";
 const Badge: React.FC<BadgeProps> = (props) => {
   return <BadgeBase {...props} classMap={styles} />;
 };
-
+Badge.displayName = "Badge";
 export default Badge;

@@ -16,5 +16,5 @@ const TagInput: React.FC<TagInputProps> = (props) => {
     />
   );
 };
-
+TagInput.displayName = "TagInput";
 export default TagInput;

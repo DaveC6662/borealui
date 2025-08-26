@@ -8,5 +8,5 @@ import { ColorPickerProps } from "../ColorPicker.types";
 const ColorPicker: React.FC<ColorPickerProps> = (props) => (
   <ColorPickerBase {...props} classMap={styles} />
 );
-
+ColorPicker.displayName = "ColorPicker";
 export default ColorPicker;

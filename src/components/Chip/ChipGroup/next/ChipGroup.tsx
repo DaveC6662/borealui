@@ -9,5 +9,5 @@ import { ChipGroupProps, ChipGroupRef } from "../ChipGroup.types";
 const ChipGroup = forwardRef<ChipGroupRef, ChipGroupProps>((props, ref) => (
   <ChipGroupBase {...props} ref={ref} ChipComponent={Chip} classMap={styles} />
 ));
-
+ChipGroup.displayName = "ChipGroup";
 export default ChipGroup;

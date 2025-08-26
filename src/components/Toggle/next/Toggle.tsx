@@ -8,5 +8,5 @@ import { ToggleProps } from "../Toggle.types";
 const Toggle = forwardRef<HTMLButtonElement, ToggleProps>((props, ref) => {
   return <ToggleBase {...props} classMap={styles} ref={ref} />;
 });
-
+Toggle.displayName = "Toggle";
 export default Toggle;

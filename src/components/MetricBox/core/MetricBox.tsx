@@ -49,5 +49,5 @@ const classes = {
 const MetricBox: React.FC<MetricBoxProps> = (props) => {
   return <BaseMetricBox {...props} classMap={classes} />;
 };
-
+MetricBox.displayName = "MetricBox";
 export default MetricBox;

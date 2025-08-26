@@ -18,5 +18,5 @@ const Avatar = forwardRef<HTMLAnchorElement | HTMLButtonElement, AvatarProps>(
     />
   )
 );
-
+Avatar.displayName = "Avatar";
 export default Avatar;

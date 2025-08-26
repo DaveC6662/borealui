@@ -8,5 +8,5 @@ import { DividerProps } from "../Divider.types";
 const Divider = forwardRef<HTMLDivElement, DividerProps>((props, ref) => (
   <DividerBase {...props} classMap={styles} ref={ref} />
 ));
-
+Divider.displayName = "Divider";
 export default Divider;

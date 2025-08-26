@@ -62,5 +62,5 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     />
   );
 };
-
+NavBar.displayName = "NavBar";
 export default NavBar;

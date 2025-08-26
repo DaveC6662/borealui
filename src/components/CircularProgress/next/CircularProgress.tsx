@@ -8,5 +8,5 @@ import { CircularProgressProps } from "../CircularProgress.types";
 const CircularProgress: React.FC<CircularProgressProps> = (props) => (
   <CircularProgressBase {...props} classMap={styles} />
 );
-
+CircularProgress.displayName = "CircularProgress";
 export default CircularProgress;

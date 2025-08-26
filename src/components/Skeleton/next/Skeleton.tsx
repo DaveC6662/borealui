@@ -15,5 +15,5 @@ const SkeletonLoader: React.FC<SkeletonProps> = (props) => {
     />
   );
 };
-
+SkeletonLoader.displayName = "SkeletonLoader";
 export default SkeletonLoader;

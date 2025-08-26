@@ -45,5 +45,5 @@ const classes = {
 const DateTimePicker: React.FC<DateTimePickerProps> = (props) => (
   <DateTimePickerBase {...props} classMap={classes} />
 );
-
+DateTimePicker.displayName = "DateTimePicker";
 export default DateTimePicker;

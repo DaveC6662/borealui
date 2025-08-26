@@ -44,5 +44,5 @@ const classes = {
 const Toggle = forwardRef<HTMLButtonElement, ToggleProps>((props, ref) => {
   return <ToggleBase {...props} classMap={classes} ref={ref} />;
 });
-
+Toggle.displayName = "Toggle";
 export default Toggle;

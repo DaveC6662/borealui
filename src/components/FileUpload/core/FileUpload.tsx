@@ -56,5 +56,5 @@ const FileUpload: React.FC<FileUploadProps> = (props) => {
     />
   );
 };
-
+FileUpload.displayName = "FileUpload";
 export default FileUpload;

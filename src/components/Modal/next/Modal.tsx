@@ -9,5 +9,5 @@ import { ModalProps } from "../Modal.types";
 const Modal: React.FC<ModalProps> = (props) => {
   return <BaseModal {...props} IconButton={IconButton} classMap={styles} />;
 };
-
+Modal.displayName = "Modal";
 export default Modal;

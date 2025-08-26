@@ -32,5 +32,5 @@ const classes = {
 const Toolbar: React.FC<ToolbarProps> = (props) => (
   <ToolbarBase {...props} AvatarComponent={Avatar} classMap={classes} />
 );
-
+Toolbar.displayName = "Toolbar";
 export default Toolbar;

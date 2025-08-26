@@ -33,5 +33,5 @@ const Spinner: React.FC<SpinnerProps> = (props) => {
     <SpinnerBase {...props} className={props.className} classMap={classes} />
   );
 };
-
+Spinner.displayName = "Spinner";
 export default Spinner;

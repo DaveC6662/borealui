@@ -22,5 +22,5 @@ const Sidebar: React.FC<SidebarProps> = ({ links, ...rest }) => {
     />
   );
 };
-
+Sidebar.displayName = "Sidebar";
 export default Sidebar;

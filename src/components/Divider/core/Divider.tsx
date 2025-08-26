@@ -21,5 +21,5 @@ const classes = {
 const Divider = forwardRef<HTMLDivElement, DividerProps>((props, ref) => (
   <DividerBase {...props} classMap={classes} ref={ref} />
 ));
-
+Divider.displayName = "Divider";
 export default Divider;

@@ -16,5 +16,5 @@ const MessagePopUp: React.FC<MessagePopUpProps> = (props) => {
     />
   );
 };
-
+MessagePopUp.displayName = "MessagePopUp";
 export default MessagePopUp;

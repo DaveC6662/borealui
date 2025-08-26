@@ -44,5 +44,5 @@ const classes = {
 const Rating: React.FC<RatingProps> = (props) => {
   return <BaseRating {...props} classMap={classes} />;
 };
-
+Rating.displayName = "Rating";
 export default Rating;

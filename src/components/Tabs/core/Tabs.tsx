@@ -43,5 +43,5 @@ const classes = {
 const Tabs: React.FC<TabsProps> = (props) => {
   return <TabsBase {...props} classMap={classes} />;
 };
-
+Tabs.displayName = "Tabs";
 export default Tabs;

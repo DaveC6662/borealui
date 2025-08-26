@@ -48,5 +48,5 @@ const classes = {
 const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => (
   <CheckboxBase {...props} classMap={classes} ref={ref} />
 ));
-
+Checkbox.displayName = "Checkbox";
 export default Checkbox;

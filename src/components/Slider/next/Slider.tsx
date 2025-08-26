@@ -8,5 +8,5 @@ import SliderBase from "../SliderBase";
 const Slider: React.FC<SliderProps> = (props) => {
   return <SliderBase {...props} classMap={styles} />;
 };
-
+Slider.displayName = "Slider";
 export default Slider;

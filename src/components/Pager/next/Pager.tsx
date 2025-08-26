@@ -16,5 +16,5 @@ const Pager: React.FC<PaginationProps> = (props) => {
     />
   );
 };
-
+Pager.displayName = "Pager";
 export default Pager;

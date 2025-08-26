@@ -23,5 +23,5 @@ const ChipGroup = forwardRef<ChipGroupRef, ChipGroupProps>((props, ref) => (
     classMap={classMap}
   />
 ));
-
+ChipGroup.displayName = "ChipGroup";
 export default ChipGroup;
