@@ -39,28 +39,6 @@
     gap: theme.$spacing-sm;
   }
 
-  @each $name, $values in theme.$themes {
-    &_#{$name} .nav_item {
-      background-color: map.get($values, bg);
-      color: var(--text-color-primary);
-
-      &:hover {
-        background-color: map.get($values, hover);
-        transform: scale(1.1);
-
-        @include bp.down(md) {
-          transform: scale(1.05);
-        }
-      }
-    }
-
-    &_#{$name} &_active {
-      background-color: map.get($values, bg-light);
-      color: var(--secondary-color-darker);
-      font-weight: bold;
-    }
-  }
-
   &_list {
     position: relative;
     display: flex;
@@ -143,6 +121,28 @@
     @include bp.up(md) {
       display: block;
     }
+  }
+}
+
+@each $name, $values in theme.$themes {
+  .nav_#{$name} .nav_item {
+    background-color: map.get($values, bg);
+    color: var(--text-color-primary);
+
+    &:hover {
+      background-color: map.get($values, hover);
+      transform: scale(1.1);
+
+      @include bp.down(md) {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .nav_#{$name} .nav_active {
+    background-color: map.get($values, bg-light);
+    color: var(--secondary-color-darker);
+    font-weight: bold;
   }
 }
 

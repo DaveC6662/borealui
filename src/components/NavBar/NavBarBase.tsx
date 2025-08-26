@@ -63,7 +63,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
                 isActive={isActive}
                 className={combineClassNames(
                   itemClass,
-                  isActive && classMap.active
+                  isActive && classMap.item_active
                 )}
                 data-testid={`${testId}-nav-item-${slug}`}
                 aria-current={isActive ? "page" : undefined}

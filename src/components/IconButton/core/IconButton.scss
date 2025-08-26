@@ -56,131 +56,6 @@
     }
   }
 
-  @each $name, $values in theme.$themes {
-    &_#{$name} {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-
-      &:hover {
-        background-color: map.get($values, hover);
-      }
-
-      &:focus-visible {
-        outline: 2px solid map.get($values, border);
-        outline-offset: 2px;
-      }
-
-      &.icon_button_outline {
-        background-color: transparent;
-        color: map.get($values, border);
-        border: 2px solid map.get($values, border);
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-      }
-
-      &.icon_button_outline:hover {
-        border-color: map.get($values, hover);
-        color: map.get($values, text);
-      }
-    }
-  }
-
-  @each $name, $values in theme.$states {
-    &_#{$name} {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-
-      &:hover {
-        background-color: map.get($values, hover);
-      }
-
-      &:focus-visible {
-        outline: 2px solid map.get($values, border);
-        outline-offset: 2px;
-      }
-
-      &.icon_button_outline {
-        background-color: transparent;
-        color: map.get($values, border);
-        border: 2px solid map.get($values, border);
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-      }
-
-      &.icon_button_outline:hover {
-        border-color: map.get($values, hover);
-        color: map.get($values, text);
-      }
-    }
-  }
-
-  $sizes: (
-    "xs": (
-      size: 25px,
-      label: theme.$font-size-xs,
-      icon: 0.7rem,
-    ),
-    "small": (
-      size: 30px,
-      label: theme.$font-size-sm,
-      icon: 1rem,
-    ),
-    "medium": (
-      size: 40px,
-      label: theme.$font-size-md,
-      icon: 1.2rem,
-    ),
-    "large": (
-      size: 50px,
-      label: theme.$font-size-lg,
-      icon: 1.3rem,
-    ),
-    "xl": (
-      size: 60px,
-      label: theme.$font-size-lg,
-      icon: 1.5rem,
-    ),
-  );
-
-  @each $size, $vals in $sizes {
-    &_#{$size} {
-      $dim: map.get($vals, size);
-      $ico: map.get($vals, icon);
-
-      width: $dim;
-      height: $dim;
-
-      svg {
-        width: $ico;
-        height: $ico;
-      }
-
-      @include bp.down(sm) {
-        width: calc(#{$dim} * 0.9);
-        height: calc(#{$dim} * 0.9);
-
-        svg {
-          width: calc(#{$ico} * 0.9);
-          height: calc(#{$ico} * 0.9);
-        }
-      }
-
-      @include bp.up(lg) {
-        width: calc(#{$dim} * 1.1);
-        height: calc(#{$dim} * 1.1);
-
-        svg {
-          width: calc(#{$ico} * 1.05);
-          height: calc(#{$ico} * 1.05);
-        }
-      }
-    }
-  }
-
   &_disabled {
     background-color: theme.$disabled-color;
     color: var(--text-color-primary);
@@ -196,6 +71,131 @@
     border-top-color: var(--text-color-primary);
     border-radius: 50%;
     animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+}
+
+@each $name, $values in theme.$themes {
+  .icon_button_#{$name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, text);
+
+    &:hover {
+      background-color: map.get($values, hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid map.get($values, border);
+      outline-offset: 2px;
+    }
+
+    &.icon_button_outline {
+      background-color: transparent;
+      color: map.get($values, border);
+      border: 2px solid map.get($values, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+
+    &.icon_button_outline:hover {
+      border-color: map.get($values, hover);
+      color: map.get($values, text);
+    }
+  }
+}
+
+@each $name, $values in theme.$states {
+  .icon_button_#{$name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, text);
+
+    &:hover {
+      background-color: map.get($values, hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid map.get($values, border);
+      outline-offset: 2px;
+    }
+
+    &.icon_button_outline {
+      background-color: transparent;
+      color: map.get($values, border);
+      border: 2px solid map.get($values, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+
+    &.icon_button_outline:hover {
+      border-color: map.get($values, hover);
+      color: map.get($values, text);
+    }
+  }
+}
+
+$sizes: (
+  "xs": (
+    size: 25px,
+    label: theme.$font-size-xs,
+    icon: 0.7rem,
+  ),
+  "small": (
+    size: 30px,
+    label: theme.$font-size-sm,
+    icon: 1rem,
+  ),
+  "medium": (
+    size: 40px,
+    label: theme.$font-size-md,
+    icon: 1.2rem,
+  ),
+  "large": (
+    size: 50px,
+    label: theme.$font-size-lg,
+    icon: 1.3rem,
+  ),
+  "xl": (
+    size: 60px,
+    label: theme.$font-size-lg,
+    icon: 1.5rem,
+  ),
+);
+
+@each $size, $vals in $sizes {
+  .icon_button_#{$size} {
+    $dim: map.get($vals, size);
+    $ico: map.get($vals, icon);
+
+    width: $dim;
+    height: $dim;
+
+    svg {
+      width: $ico;
+      height: $ico;
+    }
+
+    @include bp.down(sm) {
+      width: calc(#{$dim} * 0.9);
+      height: calc(#{$dim} * 0.9);
+
+      svg {
+        width: calc(#{$ico} * 0.9);
+        height: calc(#{$ico} * 0.9);
+      }
+    }
+
+    @include bp.up(lg) {
+      width: calc(#{$dim} * 1.1);
+      height: calc(#{$dim} * 1.1);
+
+      svg {
+        width: calc(#{$ico} * 1.05);
+        height: calc(#{$ico} * 1.05);
+      }
+    }
   }
 }
 

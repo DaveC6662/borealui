@@ -15,7 +15,7 @@ const classes = {
   message: "notification_center_message",
   timestamp: "notification_center_timestamp",
   close: "notification_center_close",
-  clearAll: "notification_center_clearAll",
+  clearAll: "notification_center_clear_all",
 
   general: "notification_center_general",
   success: "notification_center_success",

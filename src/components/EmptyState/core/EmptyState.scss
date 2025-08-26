@@ -4,6 +4,28 @@
 @use "sass:color";
 @use "sass:map";
 
+$input-sizes: (
+  "xs": theme.$spacing-xs,
+  "small": theme.$spacing-sm,
+  "medium": theme.$spacing-md,
+  "large": theme.$spacing-lg,
+  "xl": theme.$spacing-xl,
+);
+$font-sizes: (
+  "xs": theme.$font-size-xs,
+  "small": theme.$font-size-sm,
+  "medium": theme.$font-size-md,
+  "large": theme.$font-size-base,
+  "xl": theme.$font-size-lg,
+);
+$icon-sizes: (
+  "xs": 2em,
+  "small": 3em,
+  "medium": 3.5em,
+  "large": 4em,
+  "xl": 4.5em,
+);
+
 .empty_state {
   display: flex;
   flex-direction: column;
@@ -139,78 +161,56 @@
     opacity: 0.6;
     pointer-events: none;
   }
+}
 
-  $input-sizes: (
-    "xs": theme.$spacing-xs,
-    "small": theme.$spacing-sm,
-    "medium": theme.$spacing-md,
-    "large": theme.$spacing-lg,
-    "xl": theme.$spacing-xl,
-  );
-  $font-sizes: (
-    "xs": theme.$font-size-xs,
-    "small": theme.$font-size-sm,
-    "medium": theme.$font-size-md,
-    "large": theme.$font-size-base,
-    "xl": theme.$font-size-lg,
-  );
-  $icon-sizes: (
-    "xs": 2em,
-    "small": 3em,
-    "medium": 3.5em,
-    "large": 4em,
-    "xl": 4.5em,
-  );
+@each $size, $spacing in $input-sizes {
+  .empty_state_#{$size} {
+    .empty_state_title {
+      padding: $spacing;
+      font-size: map.get($font-sizes, $size);
+    }
 
-  @each $size, $spacing in $input-sizes {
-    &_#{$size} {
+    .empty_state_message {
+      font-size: map.get($font-sizes, $size);
+    }
+
+    .empty_state_icon {
+      font-size: map.get($icon-sizes, $size);
+    }
+
+    @include bp.down(sm) {
       .empty_state_title {
-        padding: $spacing;
-        font-size: map.get($font-sizes, $size);
+        font-size: clamp(
+          theme.$font-size-xs,
+          0.9rem + 0.2vw,
+          map.get($font-sizes, $size)
+        );
       }
 
       .empty_state_message {
-        font-size: map.get($font-sizes, $size);
+        font-size: clamp(
+          theme.$font-size-xxs,
+          0.85rem + 0.15vw,
+          map.get($font-sizes, $size)
+        );
+      }
+    }
+
+    @include bp.up(lg) {
+      .empty_state_title {
+        font-size: clamp(
+          map.get($font-sizes, $size),
+          1rem + 0.4vw,
+          theme.$font-size-xl
+        );
       }
 
-      .empty_state_icon {
-        font-size: map.get($icon-sizes, $size);
-      }
-
-      @include bp.down(sm) {
-        .empty_state_title {
-          font-size: clamp(
-            theme.$font-size-xs,
-            0.9rem + 0.2vw,
-            map.get($font-sizes, $size)
-          );
-        }
-
-        .empty_state_message {
-          font-size: clamp(
-            theme.$font-size-xxs,
-            0.85rem + 0.15vw,
-            map.get($font-sizes, $size)
-          );
-        }
-      }
-
-      @include bp.up(lg) {
-        .empty_state_title {
-          font-size: clamp(
-            map.get($font-sizes, $size),
-            1rem + 0.4vw,
-            theme.$font-size-xl
-          );
-        }
-
-        .empty_state_message {
-          font-size: clamp(
-            map.get($font-sizes, $size),
-            0.95rem + 0.25vw,
-            theme.$font-size-lg
-          );
-        }
+      .empty_state_message {
+        font-size: clamp(
+          map.get($font-sizes, $size),
+          0.95rem + 0.25vw,
+          theme.$font-size-lg
+        );
       }
     }
   }

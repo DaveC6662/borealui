@@ -31,50 +31,6 @@ $progress-sizes: (
   justify-content: center;
   align-items: center;
 
-  @each $key, $value in theme.$shadow {
-    &.shadow#{$key} .circle_border {
-      box-shadow: $value;
-    }
-  }
-
-  @each $size, $props in $progress-sizes {
-    &.#{$size} {
-      $dim: map.get($props, dimensions);
-      $fs: map.get($props, font-size);
-
-      width: $dim;
-      height: $dim;
-
-      @include bp.down(sm) {
-        width: calc(#{$dim} * 0.9);
-        height: calc(#{$dim} * 0.9);
-      }
-
-      @include bp.up(lg) {
-        width: calc(#{$dim} * 1.1);
-        height: calc(#{$dim} * 1.1);
-      }
-
-      .rating_text {
-        font-size: $fs;
-        font-weight: theme.$font-weight-bold;
-        color: var(--text-color-primary);
-      }
-
-      .inner_circle {
-        padding: theme.$spacing-xxs;
-
-        @include bp.down(sm) {
-          padding: calc(theme.$spacing-xxs * 0.75);
-        }
-
-        @include bp.up(lg) {
-          padding: calc(theme.$spacing-xxs * 1.25);
-        }
-      }
-    }
-  }
-
   .circle_border {
     width: 100%;
     height: 100%;
@@ -123,6 +79,50 @@ $progress-sizes: (
     &.#{$name} {
       .inner_circle {
         background-color: map.get($values, bg);
+      }
+    }
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} .circle_border {
+    box-shadow: $value;
+  }
+}
+
+@each $size, $props in $progress-sizes {
+  .#{$size} {
+    $dim: map.get($props, dimensions);
+    $fs: map.get($props, font-size);
+
+    width: $dim;
+    height: $dim;
+
+    @include bp.down(sm) {
+      width: calc(#{$dim} * 0.9);
+      height: calc(#{$dim} * 0.9);
+    }
+
+    @include bp.up(lg) {
+      width: calc(#{$dim} * 1.1);
+      height: calc(#{$dim} * 1.1);
+    }
+
+    .rating_text {
+      font-size: $fs;
+      font-weight: theme.$font-weight-bold;
+      color: var(--text-color-primary);
+    }
+
+    .inner_circle {
+      padding: theme.$spacing-xxs;
+
+      @include bp.down(sm) {
+        padding: calc(theme.$spacing-xxs * 0.75);
+      }
+
+      @include bp.up(lg) {
+        padding: calc(theme.$spacing-xxs * 1.25);
       }
     }
   }

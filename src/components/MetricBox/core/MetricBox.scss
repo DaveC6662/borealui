@@ -66,66 +66,6 @@
     }
   }
 
-  @each $theme, $properties in theme.$themes {
-    &_#{$theme} {
-      background-color: map.get($properties, bg);
-      color: map.get($properties, color);
-
-      .metricBox_title {
-        color: map.get($properties, color);
-      }
-
-      .metricBox_subtext {
-        color: map.get($properties, color);
-      }
-
-      &.metricBox_outline {
-        border: 2px solid map.get($properties, border);
-        background-color: transparent;
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-      }
-    }
-
-    &_#{$theme}.metricBox_outline .metricBox_icon {
-      color: map.get($properties, border);
-    }
-  }
-
-  @each $state, $properties in theme.$states {
-    &_#{$state} {
-      background-color: map.get($properties, bg);
-      color: map.get($properties, color);
-
-      .metricBox_title {
-        color: map.get($properties, color);
-      }
-
-      .metricBox_subtext {
-        color: map.get($properties, color);
-      }
-
-      &.metricBox_outline {
-        border: 2px solid map.get($properties, border);
-        background-color: transparent;
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-      }
-    }
-
-    &_#{$state}.metricBox_outline .metricBox_icon {
-      color: map.get($properties, bg);
-    }
-  }
-
-  &_clear {
-    border: none;
-  }
-
   &_content {
     display: flex;
     flex-direction: column;
@@ -207,7 +147,7 @@
   );
 
   @each $size, $properties in $size-variations {
-    &_#{$size} {
+    .metricBox_#{$size} {
       .metricBox_icon {
         font-size: map.get($properties, icon-size);
       }
@@ -226,7 +166,7 @@
     }
   }
 
-  &_subtext {
+  .metricBox_subtext {
     font-size: theme.$font-size-xs !important;
     color: var(--text-color-primary);
     opacity: 0.7;
@@ -235,6 +175,66 @@
       font-size: theme.$font-size-md !important;
     }
   }
+}
+
+@each $theme, $properties in theme.$themes {
+  .metricBox_#{$theme} {
+    background-color: map.get($properties, bg);
+    color: map.get($properties, color);
+
+    .metricBox_title {
+      color: map.get($properties, color);
+    }
+
+    .metricBox_subtext {
+      color: map.get($properties, color);
+    }
+
+    &.metricBox_outline {
+      border: 2px solid map.get($properties, border);
+      background-color: transparent;
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+  }
+
+  .metricBox_#{$theme}.metricBox_outline .metricBox_icon {
+    color: map.get($properties, border);
+  }
+}
+
+@each $state, $properties in theme.$states {
+  .metricBox_#{$state} {
+    background-color: map.get($properties, bg);
+    color: map.get($properties, color);
+
+    .metricBox_title {
+      color: map.get($properties, color);
+    }
+
+    .metricBox_subtext {
+      color: map.get($properties, color);
+    }
+
+    &.metricBox_outline {
+      border: 2px solid map.get($properties, border);
+      background-color: transparent;
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+  }
+
+  .metricBox_#{$state}.metricBox_outline .metricBox_icon {
+    color: map.get($properties, bg);
+  }
+}
+
+.metricBox_clear {
+  border: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

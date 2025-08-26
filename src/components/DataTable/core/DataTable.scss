@@ -105,48 +105,6 @@
     background-color: var(--background-color-dark);
   }
 
-  @each $name, $values in theme.$themes {
-    .data_table_#{$name} {
-      th {
-        background-color: map.get($values, bg);
-        color: map.get($values, text);
-      }
-    }
-
-    .data_table_#{$name}.data_table_outline {
-      th {
-        border: 2px solid map.get($values, border);
-        background-color: transparent;
-        color: map.get($values, text-color);
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-      }
-    }
-  }
-
-  @each $name, $values in theme.$states {
-    .data_table_#{$name} {
-      th {
-        background-color: map.get($values, bg);
-        color: map.get($values, text);
-      }
-    }
-
-    .data_table_#{$name}.data_table_outline {
-      th {
-        border: 2px solid map.get($values, border);
-        background-color: transparent;
-        color: map.get($values, text-color);
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-      }
-    }
-  }
-
   &.clear {
     box-shadow: none;
 
@@ -197,6 +155,48 @@
         font-weight: theme.$font-weight-bold;
         margin-bottom: 2px;
         color: var(--text-color-secondary);
+      }
+    }
+  }
+}
+
+@each $name, $values in theme.$themes {
+  .data_table_#{$name} {
+    th {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+    }
+  }
+
+  .data_table_#{$name}.data_table_outline {
+    th {
+      border: 2px solid map.get($values, border);
+      background-color: transparent;
+      color: map.get($values, text-color);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+  }
+}
+
+@each $name, $values in theme.$states {
+  .data_table_#{$name} {
+    th {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+    }
+  }
+
+  .data_table_#{$name}.data_table_outline {
+    th {
+      border: 2px solid map.get($values, border);
+      background-color: transparent;
+      color: map.get($values, text-color);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
       }
     }
   }

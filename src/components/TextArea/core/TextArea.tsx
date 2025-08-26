@@ -5,7 +5,7 @@ import "./TextArea.scss";
 
 const classes = {
   textArea: "textArea",
-  textInput: "textArea_textInput",
+  textInput: "textArea_text_input",
   icon: "textArea_icon",
 
   primary: "textArea_primary",

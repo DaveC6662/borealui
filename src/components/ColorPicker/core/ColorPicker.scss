@@ -99,21 +99,21 @@ $swatch-sizes: (
       border-radius: 9999px;
       height: 50%;
     }
+  }
 
-    @each $size, $val in $swatch-sizes {
-      &.color_picker_#{$size} {
-        width: $val;
-        height: $val;
+  @each $size, $val in $swatch-sizes {
+    &_swatch.color_picker_#{$size} {
+      width: $val;
+      height: $val;
 
-        @include bp.down(sm) {
-          width: calc(#{$val} * 0.85);
-          height: calc(#{$val} * 0.85);
-        }
+      @include bp.down(sm) {
+        width: calc(#{$val} * 0.85);
+        height: calc(#{$val} * 0.85);
+      }
 
-        @include bp.up(lg) {
-          width: calc(#{$val} * 1.1);
-          height: calc(#{$val} * 1.1);
-        }
+      @include bp.up(lg) {
+        width: calc(#{$val} * 1.1);
+        height: calc(#{$val} * 1.1);
       }
     }
   }

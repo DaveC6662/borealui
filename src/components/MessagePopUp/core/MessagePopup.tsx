@@ -7,8 +7,8 @@ import { MessagePopUpProps } from "../MessagePopup.types";
 
 const classes = {
   wrapper: "messagePopup",
-  content: "messagePopup_popupContent",
-  close: "messagePopup_closeButton",
+  content: "messagePopup_popup_content",
+  close: "messagePopup_close_button",
   message: "messagePopup_popupMessage",
   actions: "messagePopup_popupActions",
   confirm: "messagePopup_confirmBtn",

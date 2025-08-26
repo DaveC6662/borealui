@@ -32,7 +32,7 @@
     }
   }
 
-  &_textInput {
+  &_text_input {
     width: 100%;
     flex: 1;
     resize: vertical;
@@ -115,7 +115,7 @@
         );
       }
 
-      .textArea_textInput::placeholder {
+      .textArea_text_input::placeholder {
         color: if(
           map.has-key($props, placeholder),
           map.get($props, placeholder),
@@ -130,7 +130,7 @@
         border: 2px solid map.get($props, border);
       }
 
-      .textArea_textInput:focus-visible {
+      .textArea_text_input:focus-visible {
         outline: 2px solid map.get($props, border);
         outline-offset: 2px;
       }
@@ -159,7 +159,7 @@
     cursor: not-allowed;
     background-color: theme.$disabled-color;
 
-    .textArea_textInput {
+    .textArea_text_input {
       background-color: transparent;
     }
   }
@@ -185,12 +185,12 @@
     border: 1px solid ButtonText !important;
   }
 
-  .textArea_textInput {
+  .textArea_text_input {
     background: Canvas;
     color: CanvasText;
   }
 
-  .textArea_textInput:focus-visible,
+  .textArea_text_input:focus-visible,
   .textArea:focus-within {
     outline: 2px solid Highlight !important;
     outline-offset: 2px !important;

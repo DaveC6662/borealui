@@ -2,6 +2,14 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
 
+$size-margins: (
+  "xs": theme.$spacing-xs,
+  "small": theme.$spacing-sm,
+  "medium": theme.$spacing-md,
+  "large": theme.$spacing-lg,
+  "xl": theme.$spacing-xl,
+);
+
 .form_group {
   display: flex;
   flex-direction: column;
@@ -135,25 +143,17 @@
       line-height: 1em;
     }
   }
+}
 
-  $size-margins: (
-    "xs": theme.$spacing-xs,
-    "small": theme.$spacing-sm,
-    "medium": theme.$spacing-md,
-    "large": theme.$spacing-lg,
-    "xl": theme.$spacing-xl,
-  );
+@each $size, $spacing in $size-margins {
+  .form_group_#{$size} {
+    .form_group_input_wrapper {
+      margin-bottom: $spacing;
+    }
 
-  @each $size, $spacing in $size-margins {
-    &_#{$size} {
+    @include bp.down(xs) {
       .form_group_input_wrapper {
-        margin-bottom: $spacing;
-      }
-
-      @include bp.down(xs) {
-        .form_group_input_wrapper {
-          margin-bottom: max(#{$spacing} - 4px, theme.$spacing-xs);
-        }
+        margin-bottom: max(#{$spacing} - 4px, theme.$spacing-xs);
       }
     }
   }
@@ -178,7 +178,7 @@
     color: CanvasText;
   }
 
-  .form_group_horizontal_input_field_form-error {
+  .form_group_horizontal_input_field_form_error {
     border-color: Highlight !important;
   }
 }

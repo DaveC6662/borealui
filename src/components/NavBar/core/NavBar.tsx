@@ -7,7 +7,7 @@ const classes = {
   container: "nav",
   item: "nav_item",
   list: "nav_list",
-  "item--active": "nav_active",
+  item_active: "nav_active",
   icon: "nav_icon_container",
   label: "nav_label",
   linkContent: "nav_link_container",
