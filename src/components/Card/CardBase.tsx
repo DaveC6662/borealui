@@ -211,6 +211,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                           size={button.size || size}
                           href={button.href}
                           loading={button.loading}
+                          ariaLabel={button.ariaLabel}
                         />
                       ) : (
                         <button.buttonComponent
@@ -222,6 +223,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                           href={button.href}
                           loading={button.loading}
                           size={button.size || size}
+                          ariaLabel={button.ariaLabel}
                         >
                           {button.label}
                         </button.buttonComponent>

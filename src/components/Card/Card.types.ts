@@ -78,6 +78,9 @@ export interface ActionButton {
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
    */
   shadow?: ShadowType;
+
+  /** Accessible label for screen readers. */
+  ariaLabel?: string;
 }
 
 /**
