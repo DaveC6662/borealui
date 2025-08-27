@@ -85,6 +85,11 @@ export interface IconButtonProps extends InteractiveProps {
   tooltip?: string;
 
   /**
+   * Click event handler for the button.
+   */
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+
+  /**
    * Native button type.
    * One of: "button" | "reset" | "submit"
    */
