@@ -63,7 +63,10 @@ const CardBase: React.FC<CardBaseProps> = ({
     ? (imageUrl as Extract<CardImageSource, { src: string }>).src
     : (imageUrl as string | undefined);
 
-  const imgSrc = rawSrc && rawSrc.trim().length > 0 ? rawSrc : undefined;
+  const imgSrc =
+    typeof rawSrc === "string" && rawSrc.trim().length > 0
+      ? rawSrc.trim()
+      : undefined;
 
   const hasImage = Boolean(imgSrc);
 
