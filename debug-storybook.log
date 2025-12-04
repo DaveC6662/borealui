@@ -1,16 +1,18 @@
-[13:47:11.666] [INFO] storybook v10.1.4
-[13:47:12.042] [DEBUG] Getting package.json info for C:/Users/davin/Documents/Web Design/boreal-ui/package.json...
-[13:47:13.172] [DEBUG] Serving static files from [36mnode_modules/@chromatic-com/storybook/assets[39m at [36m/addon-visual-tests-assets[39m
-[13:47:13.178] [INFO] Starting...
-[13:47:13.842] [DEBUG] Starting preview..
-[13:47:13.875] [INFO] Addon-docs: using MDX3
-[13:47:13.901] [INFO] Using implicit CSS loaders
-[13:47:14.246] [INFO] Using Babel as compiler
-[13:47:14.437] [INFO] Using default Webpack5 setup
-[13:47:15.025] [DEBUG] Using tsconfig paths for react-docgen
-[13:47:25.557] [ERROR] Failed to build the preview
-[13:47:25.560] [WARN] Force closed preview build
-[13:47:25.561] [ERROR] [38;2;241;97;97mSB_BUILDER-WEBPACK5_0003 (WebpackCompilationError): There were problems when compiling your code with Webpack.
+[15:28:59.350] [INFO] storybook v10.1.4
+[15:29:01.604] [PROMPT] Port 6007 is not available. 
+Would you like to run Storybook on port 6008 instead? {"choice":true}
+[15:29:01.946] [DEBUG] Getting package.json info for C:/Users/davin/Documents/Web Design/boreal-ui/package.json...
+[15:29:03.164] [DEBUG] Serving static files from [36mnode_modules/@chromatic-com/storybook/assets[39m at [36m/addon-visual-tests-assets[39m
+[15:29:03.169] [INFO] Starting...
+[15:29:03.881] [DEBUG] Starting preview..
+[15:29:03.920] [INFO] Addon-docs: using MDX3
+[15:29:03.947] [INFO] Using implicit CSS loaders
+[15:29:04.332] [INFO] Using Babel as compiler
+[15:29:04.540] [INFO] Using default Webpack5 setup
+[15:29:05.243] [DEBUG] Using tsconfig paths for react-docgen
+[15:29:15.845] [ERROR] Failed to build the preview
+[15:29:15.848] [WARN] Force closed preview build
+[15:29:15.849] [ERROR] [38;2;241;97;97mSB_BUILDER-WEBPACK5_0003 (WebpackCompilationError): There were problems when compiling your code with Webpack.
 Run Storybook with --debug-webpack for more information.[39m
     at starter (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/@storybook/builder-webpack5/dist/index.js:799:11)
     at starter.next (<anonymous>)
@@ -22,5 +24,5 @@ Run Storybook with --debug-webpack for more information.[39m
     at async withTelemetry (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/storybook/dist/_node-chunks/chunk-6KX7N5UF.js:205:12)
     at async dev (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/storybook/dist/bin/core.js:2734:3)
     at async _Command.<anonymous> (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/storybook/dist/bin/core.js:2801:92)
-[13:47:25.562] [WARN] Broken build, fix the error above.
+[15:29:15.850] [WARN] Broken build, fix the error above.
 You may need to refresh the browser.
