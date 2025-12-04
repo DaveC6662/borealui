@@ -41,7 +41,6 @@
  * All transitions use the theme-defined `$transition-default` for consistency.
  * CSS variables allow dynamic switching between light/dark/custom themes.
  */
-@import "modern-css-reset/modern-css-reset.css";
 
 /**
  * ---------------------------------------------------------------------
