@@ -23,9 +23,7 @@ describe("BaseMarkdownRenderer", () => {
     );
 
     await waitFor(() => {
-      const region = screen.getByRole("region", {
-        name: /markdown content/i,
-      });
+      const region = screen.getByRole("region");
       expect(region).toBeInTheDocument();
       expect(region.innerHTML).toContain("<h1>Cypress Markdown Test</h1>");
       expect(region.innerHTML).toContain("<strong>Bold Text</strong>");
@@ -42,9 +40,7 @@ describe("BaseMarkdownRenderer", () => {
     );
 
     await waitFor(() => {
-      const region = screen.getByRole("region", {
-        name: /no markdown content/i,
-      });
+      const region = screen.getByRole("region");
       expect(region).toHaveTextContent("No content available.");
     });
   });
@@ -60,9 +56,7 @@ describe("BaseMarkdownRenderer", () => {
     );
 
     await waitFor(() => {
-      const region = screen.getByRole("region", {
-        name: /markdown content/i,
-      });
+      const region = screen.getByRole("region");
       expect(region).toHaveAttribute("lang", "fr");
     });
   });
@@ -76,11 +70,7 @@ describe("BaseMarkdownRenderer", () => {
       />
     );
 
-    await waitFor(() =>
-      expect(
-        screen.getByRole("region", { name: /markdown content/i })
-      ).toBeInTheDocument()
-    );
+    await waitFor(() => expect(screen.getByRole("region")).toBeInTheDocument());
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();

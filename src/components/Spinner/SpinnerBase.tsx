@@ -51,7 +51,7 @@ const SpinnerBase: React.FC<
       aria-live="polite"
       aria-busy={true}
       {...(visibleLabelId
-        ? { "aria-labelledby": visibleLabelId }
+        ? { "aria-labelledby": visibleLabelId, "aria-label": label }
         : { "aria-label": "Loading" })}
       data-testid={testId}
     >

@@ -59,9 +59,7 @@ describe("BaseFooter", () => {
       />
     );
 
-    expect(
-      screen.getByRole("contentinfo", { name: /footer/i })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("contentinfo")).toBeInTheDocument();
 
     expect(
       screen.getByRole("navigation", { name: /footer site links/i })

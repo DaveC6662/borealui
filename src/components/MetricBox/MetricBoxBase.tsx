@@ -45,6 +45,9 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
     [classMap, theme, state, size, align, outline, shadow, rounding, className]
   );
 
+  const valueLabel =
+    title && value != null ? `${value} ${title}` : String(value ?? "");
+
   return (
     <div
       className={wrapperClass}
@@ -74,7 +77,11 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
           </h3>
         )}
 
-        <div className={classMap.value} data-testid={`${testId}-value`}>
+        <div
+          className={classMap.value}
+          data-testid={`${testId}-value`}
+          aria-label={valueLabel}
+        >
           {value}
         </div>
 

@@ -46,7 +46,7 @@ const IconButtonBase = forwardRef<
       "IconButtonBase: provide `ariaLabel` or `title` for icon-only buttons."
     );
   }
-  const label = ariaLabel || title || "Icon button";
+  const label = ariaLabel || title || undefined;
 
   const classNames = useMemo(
     () =>

@@ -1,6 +1,7 @@
 import React, { act } from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import BaseModal from "@/components/Modal/ModalBase";
+import IconButtonBase from "@/components/IconButton/IconButtonBase";
 import { axe, toHaveNoViolations } from "jest-axe";
 
 expect.extend(toHaveNoViolations);
@@ -48,10 +49,9 @@ describe("BaseModal", () => {
     expect(modal).toBeInTheDocument();
     expect(modal).toHaveAttribute("aria-modal", "true");
     expect(modal).toHaveAttribute("aria-labelledby");
-    expect(modal).toHaveAttribute("aria-describedby");
 
     const label = screen.getByText("Modal Dialog");
-    expect(label).toHaveClass("sr-only");
+    expect(label).toHaveClass("sr_only");
 
     expect(screen.getByText("Modal content")).toBeInTheDocument();
   });

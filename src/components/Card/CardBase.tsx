@@ -48,7 +48,6 @@ const CardBase: React.FC<CardBaseProps> = ({
   const autoId = useId();
   const headerId = ariaLabelledBy || `${autoId}-header`;
   const descriptionId = `${autoId}-description`;
-  const hasImage = !!imageUrl;
   const derivedAriaLabel = ariaLabel || title || description || "Content card";
 
   const FallbackImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
@@ -60,9 +59,13 @@ const CardBase: React.FC<CardBaseProps> = ({
     imageUrl !== null &&
     "src" in (imageUrl as object);
 
-  const imgSrc: string | undefined = isObjSrc
+  const rawSrc = isObjSrc
     ? (imageUrl as Extract<CardImageSource, { src: string }>).src
     : (imageUrl as string | undefined);
+
+  const imgSrc = rawSrc && rawSrc.trim().length > 0 ? rawSrc : undefined;
+
+  const hasImage = Boolean(imgSrc);
 
   const resolvedWidth =
     (isObjSrc
@@ -130,7 +133,7 @@ const CardBase: React.FC<CardBaseProps> = ({
             (imageFill ? (
               <div className={classMap.media}>
                 <ImageRenderer
-                  src={imgSrc!}
+                  src={imgSrc as any}
                   alt={imgAlt}
                   className={combineClassNames(classMap.image, imageClassName)}
                   {...(isNextImage ? { fill: true } : {})}
@@ -139,7 +142,7 @@ const CardBase: React.FC<CardBaseProps> = ({
               </div>
             ) : (
               <ImageRenderer
-                src={imgSrc!}
+                src={imgSrc as any}
                 alt={imgAlt}
                 className={combineClassNames(classMap.image, imageClassName)}
                 width={resolvedWidth ?? 640}

@@ -108,7 +108,7 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
 
   if (!html) {
     return (
-      <div className={classMap.empty} data-testid={testId}>
+      <div className={classMap.empty} data-testid={testId} role="region">
         <p>No content available.</p>
       </div>
     );
@@ -117,6 +117,7 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   return (
     <div
       className={wrapperClass}
+      role="region"
       data-testid={testId}
       lang={language}
       dangerouslySetInnerHTML={{ __html: html }}
