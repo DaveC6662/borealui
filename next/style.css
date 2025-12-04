@@ -384,7 +384,9 @@ body {
   padding: 0;
   line-height: 1.5;
   overflow-x: hidden;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
 }
 
 h1,
@@ -443,7 +445,9 @@ a {
   color: var(--link-color);
   font-weight: 700;
   text-decoration: none;
-  transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
+  transition:
+    color 0.3s ease-in-out,
+    text-decoration 0.3s ease-in-out;
 }
 
 a:hover {
@@ -517,7 +521,7 @@ a:hover {
   border: 0;
 }
 
-:global(.sr_only) {
+::global(.sr_only) {
   position: absolute;
   width: 1px;
   height: 1px;
