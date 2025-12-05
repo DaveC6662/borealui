@@ -7,7 +7,6 @@ import {
   StateType,
   ThemeType,
 } from "../../types/types";
-import { ComponentType, ReactNode } from "react";
 
 export type CardImageSource =
   | string
@@ -15,10 +14,8 @@ export type CardImageSource =
       src: string;
       width?: number;
       height?: number;
-      [key: string]: unknown;
-    }
-  | ReactNode
-  | ComponentType<any>;
+      blurDataURL?: string;
+    };
 
 export type HtmlImgLikeProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   src: string;
