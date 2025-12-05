@@ -137,8 +137,8 @@
       "types": "./dist/types/public.types.d.ts",
       "default": "./dist/types/public.types.d.ts"
     },
-    "./core/style.css": {
-      "default": "./dist/core/style.css"
+    "./core/boreal-ui.css": {
+      "default": "./dist/core/boreal-ui.css"
     },
     "./next": {
       "import": "./dist/next/index.js",
@@ -149,8 +149,8 @@
       "types": "./dist/types/public.types.d.ts",
       "default": "./dist/types/public.types.d.ts"
     },
-    "./next/style.css": {
-      "default": "./dist/next/style.css"
+    "./next/boreal-ui.css": {
+      "default": "./dist/next/boreal-ui.css"
     },
     "./core/Accordion": {
       "import": "./dist/core/Accordion.js",
