@@ -334,7 +334,3 @@ a {
 .sr_only {
   @include visually-hidden;
 }
-
-:global(.sr_only) {
-  @include visually-hidden;
-}
