@@ -14,7 +14,10 @@ export type CardImageSource =
       src: string;
       width?: number;
       height?: number;
-    };
+      [key: string]: unknown;
+    }
+  | null
+  | undefined;
 
 export type HtmlImgLikeProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   src: string;

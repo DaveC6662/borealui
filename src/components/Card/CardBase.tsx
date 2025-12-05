@@ -50,35 +50,78 @@ const CardBase: React.FC<CardBaseProps> = ({
   const descriptionId = `${autoId}-description`;
   const derivedAriaLabel = ariaLabel || title || description || "Content card";
 
+  function normalizeImageSource(
+    imageUrl: CardImageSource,
+    fallbackWidth?: number,
+    fallbackHeight?: number
+  ) {
+    if (!imageUrl) {
+      return {
+        src: undefined as string | undefined,
+        width: fallbackWidth,
+        height: fallbackHeight,
+      };
+    }
+
+    if (
+      typeof imageUrl === "object" &&
+      "src" in imageUrl &&
+      typeof (imageUrl as any).src === "string"
+    ) {
+      const { src, width, height } = imageUrl as any;
+      const trimmed = src.trim();
+
+      if (!trimmed) {
+        return {
+          src: undefined,
+          width: fallbackWidth,
+          height: fallbackHeight,
+        };
+      }
+
+      return {
+        src: trimmed,
+        width: typeof width === "number" ? width : fallbackWidth,
+        height: typeof height === "number" ? height : fallbackHeight,
+      };
+    }
+
+    if (typeof imageUrl === "string") {
+      const trimmed = imageUrl.trim();
+
+      if (!trimmed) {
+        return {
+          src: undefined,
+          width: fallbackWidth,
+          height: fallbackHeight,
+        };
+      }
+
+      return {
+        src: trimmed,
+        width: fallbackWidth,
+        height: fallbackHeight,
+      };
+    }
+
+    return {
+      src: undefined,
+      width: fallbackWidth,
+      height: fallbackHeight,
+    };
+  }
+
   const FallbackImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     <img {...props} />
   );
 
-  const isObjSrc =
-    typeof imageUrl === "object" &&
-    imageUrl !== null &&
-    "src" in (imageUrl as object);
+  const {
+    src: imgSrc,
+    width: resolvedWidth,
+    height: resolvedHeight,
+  } = normalizeImageSource(imageUrl, imageWidth, imageHeight);
 
-  const rawSrc = isObjSrc
-    ? (imageUrl as Extract<CardImageSource, { src: string }>).src
-    : (imageUrl as string | undefined);
-
-  const imgSrc =
-    typeof rawSrc === "string" && rawSrc.trim().length > 0
-      ? rawSrc.trim()
-      : undefined;
-
-  const hasImage = Boolean(imgSrc);
-
-  const resolvedWidth =
-    (isObjSrc
-      ? (imageUrl as Extract<CardImageSource, { width?: number }>).width
-      : undefined) ?? imageWidth;
-
-  const resolvedHeight =
-    (isObjSrc
-      ? (imageUrl as Extract<CardImageSource, { height?: number }>).height
-      : undefined) ?? imageHeight;
+  const hasImage = !!imgSrc;
 
   const imgAlt = imageAlt || `${title || "Card"} image`;
 
