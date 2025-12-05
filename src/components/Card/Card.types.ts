@@ -8,14 +8,14 @@ import {
   ThemeType,
 } from "../../types/types";
 
-export type CardImageSource =
-  | string
-  | {
-      src: string;
-      width?: number;
-      height?: number;
-      blurDataURL?: string;
-    };
+export interface StaticCardImage {
+  src: string;
+  width?: number;
+  height?: number;
+  blurDataURL?: string;
+}
+
+export type CardImageSource = string | StaticCardImage;
 
 export type HtmlImgLikeProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   src: string;

@@ -1,5 +1,5 @@
 import React, { useId, useMemo } from "react";
-import { CardBaseProps, CardImageSource } from "./Card.types";
+import { CardBaseProps, CardImageSource, StaticCardImage } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -54,92 +54,59 @@ const CardBase: React.FC<CardBaseProps> = ({
     <img {...props} />
   );
 
+  function isStaticCardImage(value: unknown): value is StaticCardImage {
+    return (
+      typeof value === "object" &&
+      value !== null &&
+      "src" in value &&
+      typeof (value as { src: unknown }).src === "string"
+    );
+  }
+
   function normalizeImageSource(
-    srcInput: CardImageSource,
+    srcInput: CardImageSource | undefined,
     fallbackWidth?: number,
     fallbackHeight?: number
-  ) {
+  ): { src?: string; width?: number; height?: number } {
     if (!srcInput) {
-      return {
-        src: undefined as string | undefined,
-        width: fallbackWidth,
-        height: fallbackHeight,
-      };
-    }
-
-    if (
-      typeof srcInput === "object" &&
-      "src" in srcInput &&
-      typeof (srcInput as any).src === "string"
-    ) {
-      const { src, width, height } = srcInput as any;
-      const trimmed = src.trim();
-
-      if (!trimmed) {
-        return {
-          src: undefined,
-          width: fallbackWidth,
-          height: fallbackHeight,
-        };
-      }
-
-      return {
-        src: trimmed,
-        width: typeof width === "number" ? width : fallbackWidth,
-        height: typeof height === "number" ? height : fallbackHeight,
-      };
+      return { src: undefined, width: fallbackWidth, height: fallbackHeight };
     }
 
     if (typeof srcInput === "string") {
       const trimmed = srcInput.trim();
-
       if (!trimmed) {
-        return {
-          src: undefined,
-          width: fallbackWidth,
-          height: fallbackHeight,
-        };
+        return { src: undefined, width: fallbackWidth, height: fallbackHeight };
+      }
+      return { src: trimmed, width: fallbackWidth, height: fallbackHeight };
+    }
+
+    if (isStaticCardImage(srcInput)) {
+      const trimmed = srcInput.src.trim();
+      if (!trimmed) {
+        return { src: undefined, width: fallbackWidth, height: fallbackHeight };
       }
 
       return {
         src: trimmed,
-        width: fallbackWidth,
-        height: fallbackHeight,
+        width: srcInput.width ?? fallbackWidth,
+        height: srcInput.height ?? fallbackHeight,
       };
     }
 
-    return {
-      src: undefined,
-      width: fallbackWidth,
-      height: fallbackHeight,
-    };
+    return { src: undefined, width: fallbackWidth, height: fallbackHeight };
   }
-
-  const isStaticObj =
-    typeof imageUrl === "object" &&
-    imageUrl !== null &&
-    "src" in (imageUrl as any) &&
-    typeof (imageUrl as any).src === "string";
-
-  const isReactImage =
-    imageUrl !== undefined && !isStaticObj && typeof imageUrl !== "string";
 
   const {
     src: imgSrc,
     width: resolvedWidth,
     height: resolvedHeight,
-  } = normalizeImageSource(
-    imageUrl as CardImageSource,
-    imageWidth,
-    imageHeight
-  );
+  } = normalizeImageSource(imageUrl, imageWidth, imageHeight);
 
-  const hasImage = isReactImage || !!imgSrc;
+  const hasImage = Boolean(imgSrc);
 
   const imgAlt = imageAlt || `${title || "Card"} image`;
 
   const ImageRenderer = ImageComponent || FallbackImage;
-  const isNextImage = typeof ImageRenderer !== "string";
 
   const cardClassName = useMemo(
     () =>
@@ -189,30 +156,23 @@ const CardBase: React.FC<CardBaseProps> = ({
       ) : (
         <div className={classMap.content}>
           {hasImage &&
-            (isReactImage ? (
-              <div className={classMap.media}>
-                {React.isValidElement(imageUrl)
-                  ? imageUrl
-                  : React.createElement(imageUrl as React.ComponentType<any>)}
-              </div>
-            ) : imageFill ? (
+            imgSrc &&
+            (imageFill ? (
               <div className={classMap.media}>
                 <ImageRenderer
-                  src={imgSrc as any}
+                  src={imgSrc}
                   alt={imgAlt}
                   className={combineClassNames(classMap.image, imageClassName)}
-                  {...(isNextImage ? { fill: true } : {})}
-                  {...(!isNextImage ? { loading: "lazy" as const } : {})}
+                  fill
                 />
               </div>
             ) : (
               <ImageRenderer
-                src={imgSrc as any}
+                src={imgSrc}
                 alt={imgAlt}
                 className={combineClassNames(classMap.image, imageClassName)}
                 width={resolvedWidth ?? 640}
                 height={resolvedHeight ?? 360}
-                {...(!isNextImage ? { loading: "lazy" as const } : {})}
               />
             ))}
 
