@@ -50,12 +50,16 @@ const CardBase: React.FC<CardBaseProps> = ({
   const descriptionId = `${autoId}-description`;
   const derivedAriaLabel = ariaLabel || title || description || "Content card";
 
+  const FallbackImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    <img {...props} />
+  );
+
   function normalizeImageSource(
-    imageUrl: CardImageSource,
+    srcInput: CardImageSource,
     fallbackWidth?: number,
     fallbackHeight?: number
   ) {
-    if (!imageUrl) {
+    if (!srcInput) {
       return {
         src: undefined as string | undefined,
         width: fallbackWidth,
@@ -64,11 +68,11 @@ const CardBase: React.FC<CardBaseProps> = ({
     }
 
     if (
-      typeof imageUrl === "object" &&
-      "src" in imageUrl &&
-      typeof (imageUrl as any).src === "string"
+      typeof srcInput === "object" &&
+      "src" in srcInput &&
+      typeof (srcInput as any).src === "string"
     ) {
-      const { src, width, height } = imageUrl as any;
+      const { src, width, height } = srcInput as any;
       const trimmed = src.trim();
 
       if (!trimmed) {
@@ -86,8 +90,8 @@ const CardBase: React.FC<CardBaseProps> = ({
       };
     }
 
-    if (typeof imageUrl === "string") {
-      const trimmed = imageUrl.trim();
+    if (typeof srcInput === "string") {
+      const trimmed = srcInput.trim();
 
       if (!trimmed) {
         return {
@@ -111,17 +115,26 @@ const CardBase: React.FC<CardBaseProps> = ({
     };
   }
 
-  const FallbackImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <img {...props} />
-  );
+  const isStaticObj =
+    typeof imageUrl === "object" &&
+    imageUrl !== null &&
+    "src" in (imageUrl as any) &&
+    typeof (imageUrl as any).src === "string";
+
+  const isReactImage =
+    imageUrl !== undefined && !isStaticObj && typeof imageUrl !== "string";
 
   const {
     src: imgSrc,
     width: resolvedWidth,
     height: resolvedHeight,
-  } = normalizeImageSource(imageUrl, imageWidth, imageHeight);
+  } = normalizeImageSource(
+    imageUrl as CardImageSource,
+    imageWidth,
+    imageHeight
+  );
 
-  const hasImage = !!imgSrc;
+  const hasImage = isReactImage || !!imgSrc;
 
   const imgAlt = imageAlt || `${title || "Card"} image`;
 
@@ -176,7 +189,13 @@ const CardBase: React.FC<CardBaseProps> = ({
       ) : (
         <div className={classMap.content}>
           {hasImage &&
-            (imageFill ? (
+            (isReactImage ? (
+              <div className={classMap.media}>
+                {React.isValidElement(imageUrl)
+                  ? imageUrl
+                  : React.createElement(imageUrl as React.ComponentType<any>)}
+              </div>
+            ) : imageFill ? (
               <div className={classMap.media}>
                 <ImageRenderer
                   src={imgSrc as any}

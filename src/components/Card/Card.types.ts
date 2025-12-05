@@ -7,6 +7,7 @@ import {
   StateType,
   ThemeType,
 } from "../../types/types";
+import { ComponentType, ReactNode } from "react";
 
 export type CardImageSource =
   | string
@@ -16,8 +17,8 @@ export type CardImageSource =
       height?: number;
       [key: string]: unknown;
     }
-  | null
-  | undefined;
+  | ReactNode
+  | ComponentType<any>;
 
 export type HtmlImgLikeProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   src: string;

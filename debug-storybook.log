@@ -1,26 +1,23 @@
-[20:57:44.056] [INFO] storybook v10.1.4
-[20:57:44.446] [DEBUG] Getting package.json info for C:/Users/davin/Documents/Web Design/boreal-ui/package.json...
-[20:57:51.721] [DEBUG] Serving static files from [36mnode_modules/@chromatic-com/storybook/assets[39m at [36m/addon-visual-tests-assets[39m
-[20:57:51.723] [INFO] Starting...
-[20:57:52.519] [DEBUG] Starting preview..
-[20:57:52.623] [INFO] Addon-docs: using MDX3
-[20:57:52.730] [INFO] Using implicit CSS loaders
-[20:57:56.414] [INFO] Using Babel as compiler
-[20:57:58.526] [INFO] Using default Webpack5 setup
-[20:58:03.115] [DEBUG] Using tsconfig paths for react-docgen
-[20:58:11.910] [ERROR] Failed to build the preview
-[20:58:11.911] [WARN] Force closed preview build
-[20:58:11.912] [ERROR] [38;2;241;97;97mSB_BUILDER-WEBPACK5_0003 (WebpackCompilationError): There were problems when compiling your code with Webpack.
-Run Storybook with --debug-webpack for more information.[39m
-    at starter (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/@storybook/builder-webpack5/dist/index.js:799:11)
-    at starter.next (<anonymous>)
-    at Module.start (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/@storybook/builder-webpack5/dist/index.js:857:34)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[21:34:41.563] [INFO] storybook v10.1.4
+[21:34:41.961] [DEBUG] Getting package.json info for C:/Users/davin/Documents/Web Design/boreal-ui/package.json...
+[21:34:41.989] [WARN] Could not resolve addon "@storybook/addon-essentials", skipping. Is it installed?
+[21:34:42.445] [WARN] Could not resolve addon "@storybook/addon-essentials", skipping. Is it installed?
+[21:34:42.769] [DEBUG] Serving static files from [36mnode_modules/@chromatic-com/storybook/assets[39m at [36m/addon-visual-tests-assets[39m
+[21:34:42.774] [INFO] Starting...
+[21:34:43.548] [DEBUG] Starting preview..
+[21:34:44.370] [DEBUG] Using tsconfig paths for react-docgen
+[21:34:44.590] [ERROR] Failed to build the preview
+[21:34:44.593] [ERROR] [38;2;241;97;97mReferenceError: __dirname is not defined[39m
+    at Object.viteFinal (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/.storybook-core/main.ts:18:27)
+    at file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/storybook/dist/_node-chunks/chunk-QZJSO2TW.js:10134:36
+    at async createViteServer (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/@storybook/builder-vite/dist/index.js:6410:21)
+    at async Module.start (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/@storybook/builder-vite/dist/index.js:6435:17)
     at async storybookDevServer (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/storybook/dist/core-server/index.js:7180:82)
     at async buildOrThrow (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/storybook/dist/core-server/index.js:5556:12)
     at async buildDevStandalone (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/storybook/dist/core-server/index.js:7582:66)
     at async withTelemetry (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/storybook/dist/_node-chunks/chunk-6KX7N5UF.js:205:12)
     at async dev (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/storybook/dist/bin/core.js:2734:3)
     at async _Command.<anonymous> (file:///C:/Users/davin/Documents/Web%20Design/boreal-ui/node_modules/storybook/dist/bin/core.js:2801:92)
-[20:58:11.915] [WARN] Broken build, fix the error above.
+[21:34:44.594] [WARN] Broken build, fix the error above.
 You may need to refresh the browser.
+[21:34:44.599] [WARN] Could not resolve addon "@storybook/addon-essentials", skipping. Is it installed?
