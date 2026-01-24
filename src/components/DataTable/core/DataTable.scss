@@ -6,15 +6,6 @@
 .data_table_wrapper {
   width: 100%;
   overflow-x: auto;
-  margin: theme.$spacing-md;
-
-  @include bp.down(sm) {
-    margin: theme.$spacing-sm;
-  }
-
-  @include bp.up(lg) {
-    margin: theme.$spacing-lg;
-  }
 
   .data_table {
     width: 100%;
