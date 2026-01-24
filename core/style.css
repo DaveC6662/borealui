@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 /**
  * ---------------------------------------------------------------------
  * globals.scss
@@ -41,7 +40,7 @@
  * All transitions use the theme-defined `$transition-default` for consistency.
  * CSS variables allow dynamic switching between light/dark/custom themes.
  */
-
+@import "modern-css-reset/modern-css-reset.css";
 /**
  * ---------------------------------------------------------------------
  * theme.scss
@@ -108,7 +107,6 @@
  * $rounding: key-value pairs for component rounding levels
  * $shadow: key-value pairs for shadow levels
  */
-
 /**
  * -----------------------------------------------------
  * _animations.scss
@@ -150,104 +148,84 @@
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
 }
-
 @keyframes slide-up {
   from {
     transform: translateY(100%);
     opacity: 0;
   }
-
   to {
     transform: translateY(0);
     opacity: 1;
   }
 }
-
 @keyframes spin-3d {
   0% {
     transform: rotateX(0deg) rotateY(0deg);
   }
-
   100% {
     transform: rotateX(360deg) rotateY(360deg);
   }
 }
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(360deg);
   }
 }
-
 @keyframes pulse {
   0% {
     transform: scale(1);
   }
-
   50% {
     transform: scale(1.1);
   }
-
   100% {
     transform: scale(1);
   }
 }
-
 @keyframes fade-in-up {
   from {
     opacity: 0;
     transform: translateY(-5px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
 @keyframes progress-grow {
   from {
     width: 0;
   }
-
   to {
     width: 100%;
   }
 }
-
 @keyframes indeterminate-move {
   0% {
     transform: translateX(-100%);
   }
-
   50% {
     transform: translateX(0);
   }
-
   100% {
     transform: translateX(100%);
   }
 }
-
 @keyframes skeleton-loading {
   0% {
     left: -100%;
   }
-
   100% {
     left: 100%;
   }
 }
-
 /**
  * -----------------------------------------------------
  * _breakpoints.scss
@@ -265,80 +243,94 @@
  * $breakpoints map:
  *  Use this map to loop over breakpoints or access named values.
  */
+/**
+ * -----------------------------------------------------
+ * _mixins.scss
+ * -----------------------------------------------------
+ * This file defines global SCSS mixins used for layout
+ * and styling utilities across the project.
+ *
+ * === Mixin: respond ===
+ * A responsive media query mixin for cleaner breakpoint handling.
+ *
+ * Usage:
+ *   @include respond("md") {
+ *     // Styles applied at min-width: 768px and up
+ *   }
+ *
+ * @param {string} $breakpoint - One of the keys defined in the $breakpoints map
+ *                               (e.g., "xs", "sm", "md", "lg", "xl", "2xl").
+ * @content - The styles to apply inside the media query block.
+ *
+ * Requires:
+ *   - A `$breakpoints` map from the `breakpoints` module (alias: `bp`)
+ *   - `sass:map` module to access map values safely
+ */
 :root {
   /* ================================
      PRIMARY COLOR PALETTE
   ================================== */
   --primary-color: #1c4d3a;
-  --primary-color-light: rgb(107.6 201.4 165.0285714286);
-  --primary-color-hover: rgb(14.4 39.6 29.8285714286);
-  --primary-text-color-contrast: rgb(0 0 0);
-
+  --primary-color-light: rgb(107.6, 201.4, 165.0285714286);
+  --primary-color-hover: rgb(14.4, 39.6, 29.8285714286);
+  --primary-text-color-contrast: rgb(0, 0, 0);
   /* ================================a
      SECONDARY COLOR PALETTE
   ================================== */
   --secondary-color: #6e502e;
-  --secondary-color-light: rgb(210.7692307692 181.9230769231 149.2307692308);
-  --secondary-color-hover: rgb(74.0384615385 53.8461538462 30.9615384615);
-  --secondary-text-color: rgb(0 0 0);
-
+  --secondary-color-light: rgb(210.7692307692, 181.9230769231, 149.2307692308);
+  --secondary-color-hover: rgb(74.0384615385, 53.8461538462, 30.9615384615);
+  --secondary-text-color: rgb(0, 0, 0);
   /* ================================
      TERTIARY COLOR PALETTE
   ================================== */
   --tertiary-color: #092b1c;
-  --tertiary-color-light: rgb(44.9615384615 211.0384615385 137.7692307692);
-  --tertiary-color-hover: rgb(0.1730769231 0.8269230769 0.5384615385);
-  --tertiary-text-color: rgb(255 255 255);
-
+  --tertiary-color-light: rgb(44.9615384615, 211.0384615385, 137.7692307692);
+  --tertiary-color-hover: rgb(0.1730769231, 0.8269230769, 0.5384615385);
+  --tertiary-text-color: rgb(255, 255, 255);
   /* ================================
      QUATERNARY COLOR PALETTE
   ================================== */
   --quaternary-color: #a1733a;
-  --quaternary-color-light: rgb(231.9589041096 213.6849315068 191.0410958904);
-  --quaternary-color-hover: rgb(123.5068493151 88.2191780822 44.4931506849);
-  --quaternary-text-color: rgb(255 255 255);
-
+  --quaternary-color-light: rgb(231.9589041096, 213.6849315068, 191.0410958904);
+  --quaternary-color-hover: rgb(123.5068493151, 88.2191780822, 44.4931506849);
+  --quaternary-text-color: rgb(255, 255, 255);
   /* ================================
      FEEDBACK COLORS
   ================================== */
   --success-color: #51c703;
-  --success-color-hover: rgb(60.5495049505 148.7574257426 2.2425742574);
+  --success-color-hover: rgb(60.5495049505, 148.7574257426, 2.2425742574);
   --warning-color: #fca505;
-  --warning-color-hover: rgb(203.557312253 132.7193675889 2.442687747);
+  --warning-color-hover: rgb(203.557312253, 132.7193675889, 2.442687747);
   --error-color: #f83838;
-  --error-color-hover: rgb(244.4029126214 8.5970873786 8.5970873786);
-  --disabled-color: rgb(184 184 184 / 86.7%);
-
+  --error-color-hover: rgb(244.4029126214, 8.5970873786, 8.5970873786);
+  --disabled-color: rgba(184, 184, 184, 0.8666666667);
   /* ================================
      BACKGROUND COLORS
   ================================== */
   --background-color: #222e2e;
-  --background-color-light: rgb(55.675 75.325 75.325);
-  --background-color-lighter: rgb(77.35 104.65 104.65);
-  --background-color-dark: rgb(12.325 16.675 16.675);
-  --background-color-darker: hsl(180deg 15% -4.3137254902%);
-
+  --background-color-light: rgb(55.675, 75.325, 75.325);
+  --background-color-lighter: rgb(77.35, 104.65, 104.65);
+  --background-color-dark: rgb(12.325, 16.675, 16.675);
+  --background-color-darker: hsl(180, 15%, -4.3137254902%);
   /* ================================
      TEXT COLORS
   ================================== */
-  --text-color-primary: rgb(255 255 255);
-  --text-color: rgb(255 255 255);
-  --text-color-light: hsl(0deg 0% 120%);
-  --text-color-lighter: hsl(0deg 0% 140%);
-
+  --text-color-primary: rgb(255, 255, 255);
+  --text-color: rgb(255, 255, 255);
+  --text-color-light: hsl(0, 0%, 120%);
+  --text-color-lighter: hsl(0, 0%, 140%);
   /* ================================
      LINK COLORS
   ================================== */
   --link-color: #8bb0c7;
   --link-hover-color: #627e8f;
-  --link-hover-color-primary: rgb(22.4 61.6 46.4);
-  --link-hover-color-secondary: rgb(88 64 36.8);
-
+  --link-hover-color-primary: rgb(22.4, 61.6, 46.4);
+  --link-hover-color-secondary: rgb(88, 64, 36.8);
   /* ================================
      FOCUS & INTERACTION
   ================================== */
   --focus-outline-color: var(--text-color-primary);
-
   /* ===========================
      Border Radius (Rounding)
   =========================== */
@@ -347,7 +339,6 @@
   --border-radius-md: 8px;
   --border-radius-lg: 16px;
   --border-radius-full: 9999px;
-
   /* ===========================
      Shadows
   =========================== */
@@ -356,7 +347,6 @@
   --box-shadow-medium: 0 4px 8px rgb(0 0 0 / 20%);
   --box-shadow-heavy: 0 6px 12px rgb(0 0 0 / 30%);
   --box-shadow-intense: 0 8px 16px rgb(0 0 0 / 40%);
-
   /* ===========================
      Inverted Shadows (Light UI)
   =========================== */
@@ -365,13 +355,12 @@
   --box-shadow-inverted-medium: 0 4px 8px rgb(255 255 255 / 8%);
   --box-shadow-inverted-strong: 0 6px 12px rgb(255 255 255 / 12%);
   --box-shadow-inverted-intense: 0 8px 16px rgb(255 255 255 / 20%);
-
   /* ===========================
      Divider & Overlay Colors
   =========================== */
-  --divider-color: rgb(99.025 133.975 133.975); /* subtle dividers */
+  --divider-color: rgb(99.025, 133.975, 133.975); /* subtle dividers */
   --overlay-color: rgb(0 0 0 / 50%); /* for modals or overlays */
-  --font-family-primary: lora, arial, sans-serif;
+  --font-family-primary: Lora, arial, sans-serif;
 }
 
 body {
@@ -383,9 +372,7 @@ body {
   padding: 0;
   line-height: 1.5;
   overflow-x: hidden;
-  transition:
-    background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 h1,
@@ -394,7 +381,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Lora, arial, sans-serif;
+  font-family: "Lora", arial, sans-serif;
   margin: 0;
   font-weight: 700;
   transition: color 0.3s ease-in-out;
@@ -444,11 +431,8 @@ a {
   color: var(--link-color);
   font-weight: 700;
   text-decoration: none;
-  transition:
-    color 0.3s ease-in-out,
-    text-decoration 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
 }
-
 a:hover {
   color: var(--link-color-hover);
   text-decoration: underline;
