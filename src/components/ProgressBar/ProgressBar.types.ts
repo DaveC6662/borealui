@@ -4,6 +4,7 @@ import {
   SizeType,
   StateType,
   ThemeType,
+  TitlePositionType,
 } from "@/types/types";
 
 /**
@@ -65,6 +66,17 @@ export interface ProgressBarProps {
    * Optional additional class name(s) for custom styling.
    */
   className?: string;
+
+  /**
+   * Optional title describing what the progress represents.
+   * Example: "Uploading files", "Build progress"
+   */
+  title?: React.ReactNode;
+
+  /**
+   * Position of the title relative to the progress bar.
+   */
+  titlePosition?: TitlePositionType;
 
   /**
    * Optional test ID for testing purposes.

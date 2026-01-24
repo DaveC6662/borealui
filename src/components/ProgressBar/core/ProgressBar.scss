@@ -35,7 +35,45 @@ $progress-sizes: (
     }
   }
 
+  &_layout {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &_title_top {
+    flex-direction: column;
+  }
+
+  &_title_bottom {
+    flex-direction: column;
+  }
+
+  &_title_left {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &_title_right {
+    align-items: center;
+  }
+
+  &_title_overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  &_title {
+    font-size: 0.875em;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
   &_bar {
+    position: relative;
     height: 100%;
     width: 0;
     transition: width 0.4s ease-in-out;

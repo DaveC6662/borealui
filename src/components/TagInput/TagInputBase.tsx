@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useRef,
 } from "react";
-import { TagInputBaseProps } from "./Taginput.types";
+import { TagInputBaseProps } from "./TagInput.types";
 import { CloseIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -116,7 +116,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
       if (key === "ArrowUp") {
         event.preventDefault();
         setActiveIndex(
-          (i) => (i - 1 + suggestions.length) % suggestions.length
+          (i) => (i - 1 + suggestions.length) % suggestions.length,
         );
         return;
       }
@@ -161,9 +161,9 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
         classMap.tagInput,
         classMap[theme],
         classMap[state],
-        classMap[size]
+        classMap[size],
       ),
-    [classMap, theme, state, size]
+    [classMap, theme, state, size],
   );
 
   const tagClass = useMemo(
@@ -171,9 +171,9 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
       combineClassNames(
         classMap.tag,
         shadow && classMap[`shadow${capitalize(shadow)}`],
-        rounding && classMap[`round${capitalize(rounding)}`]
+        rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, shadow, rounding]
+    [classMap, shadow, rounding],
   );
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -271,7 +271,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
               id={`${listboxId}-opt-${index}`}
               className={combineClassNames(
                 classMap.suggestionItem,
-                index === activeIndex && (classMap.active || "")
+                index === activeIndex && (classMap.active || ""),
               )}
               role="option"
               aria-selected={index === activeIndex}

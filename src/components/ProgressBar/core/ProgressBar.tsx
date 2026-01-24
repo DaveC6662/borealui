@@ -4,6 +4,14 @@ import "./ProgressBar.scss";
 import { ProgressBarProps } from "../ProgressBar.types";
 
 const classes = {
+  layout: "progress_layout",
+  title: "progress_title",
+
+  titleTop: "progress_title_top",
+  titleBottom: "progress_title_bottom",
+  titleLeft: "progress_title_left",
+  titleRight: "progress_title_right",
+  titleOverlay: "progress_title_overlay",
   container: "progress_container",
   bar: "progress_bar",
 
@@ -34,6 +42,7 @@ const classes = {
   roundSmall: "progress_round-Small",
   roundMedium: "progress_round-Medium",
   roundLarge: "progress_round-Large",
+  roundFull: "progress_round-Full",
 
   animated: "progress_animated",
   indeterminate: "progress_indeterminate",

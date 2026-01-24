@@ -4,9 +4,9 @@ import React from "react";
 import BaseMessagePopUp from "../MessagePopupBase";
 import { Button, IconButton } from "../../../index.next";
 import styles from "./MessagePopup.module.scss";
-import { MessagePopUpProps } from "../MessagePopup.types";
+import { MessagePopupProps } from "../MessagePopup.types";
 
-const MessagePopUp: React.FC<MessagePopUpProps> = (props) => {
+const MessagePopup: React.FC<MessagePopupProps> = (props) => {
   return (
     <BaseMessagePopUp
       {...props}
@@ -16,5 +16,5 @@ const MessagePopUp: React.FC<MessagePopUpProps> = (props) => {
     />
   );
 };
-MessagePopUp.displayName = "MessagePopUp";
-export default MessagePopUp;
+MessagePopup.displayName = "MessagePopup";
+export default MessagePopup;

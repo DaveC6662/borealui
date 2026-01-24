@@ -20,6 +20,8 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   indeterminate = false,
   className = "",
   ariaLabel = "Progress",
+  title,
+  titlePosition = "top",
   "data-testid": testId = "progressbar",
   classMap,
 }) => {
@@ -29,6 +31,15 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     : 0;
   const value = Math.round(clamped);
 
+  const layoutClass = useMemo(() => {
+    const posClass =
+      titlePosition === "overlay"
+        ? undefined
+        : classMap[`title${capitalize(titlePosition)}`];
+
+    return combineClassNames(classMap.layout, Boolean(title) && posClass);
+  }, [classMap, title, titlePosition]);
+
   const wrapperClass = useMemo(
     () =>
       combineClassNames(
@@ -36,9 +47,9 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
         classMap[size],
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
-        className
+        className,
       ),
-    [classMap, size, shadow, rounding, className]
+    [classMap, size, shadow, rounding, className],
   );
 
   const barClass = useMemo(
@@ -49,28 +60,48 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
         classMap[state],
         animated && classMap.animated,
         rounding && classMap[`round${capitalize(rounding)}`],
-        indeterminate && classMap.indeterminate
+        indeterminate && classMap.indeterminate,
       ),
-    [classMap, theme, state, rounding, indeterminate, animated]
+    [classMap, theme, state, rounding, indeterminate, animated],
   );
 
-  return (
+  const titleNode = title ? (
     <div
-      className={wrapperClass}
-      role="progressbar"
-      aria-label={ariaLabel}
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={indeterminate ? undefined : value}
-      aria-valuetext={indeterminate ? "Loading" : `${value}% complete`}
-      aria-busy={indeterminate || undefined}
-      data-testid={testId}
+      className={combineClassNames(
+        classMap.title,
+        titlePosition === "overlay" && classMap.titleOverlay,
+      )}
+      data-testid={`${testId}-title`}
     >
+      {title}
+    </div>
+  ) : null;
+
+  return (
+    <div className={layoutClass}>
+      {(titlePosition === "top" || titlePosition === "left") && titleNode}
+
       <div
-        className={barClass}
-        style={{ width: indeterminate ? undefined : `${value}%` }}
-        data-testid={`${testId}-bar`}
-      />
+        className={wrapperClass}
+        role="progressbar"
+        aria-label={ariaLabel}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={indeterminate ? undefined : value}
+        aria-valuetext={indeterminate ? "Loading" : `${value}% complete`}
+        aria-busy={indeterminate || undefined}
+        data-testid={testId}
+      >
+        <div
+          className={barClass}
+          style={{ width: indeterminate ? undefined : `${value}%` }}
+          data-testid={`${testId}-bar`}
+        >
+          {titlePosition === "overlay" && titleNode}
+        </div>
+      </div>
+
+      {(titlePosition === "bottom" || titlePosition === "right") && titleNode}
     </div>
   );
 };

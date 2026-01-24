@@ -13,7 +13,7 @@ const themeOptions = [
 
 const stateOptions = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
+const roundingOptions = ["none", "small", "medium", "large", "full"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<ProgressBarProps> = {
@@ -88,6 +88,19 @@ const meta: Meta<ProgressBarProps> = {
       },
       type: { name: "string" },
     },
+    title: {
+      control: "text",
+      description: "Optional title describing what the progress represents.",
+      table: { category: "Content" },
+      type: { name: "string" },
+    },
+    titlePosition: {
+      control: { type: "select" },
+      options: ["top", "bottom", "left", "right", "overlay"],
+      description: "Position of the title relative to the progress bar.",
+      table: { category: "Content", defaultValue: { summary: "top" } },
+      type: { name: "string" },
+    },
     className: {
       control: "text",
       description: "Custom class name for the progress bar container.",
@@ -126,6 +139,30 @@ export const StaticBar: Story = {
   },
 };
 
+export const TitlePositions: Story = {
+  render: (args) => {
+    const positions = ["top", "bottom", "left", "right", "overlay"] as const;
+
+    return (
+      <div style={{ display: "grid", gap: "1rem", maxWidth: "560px" }}>
+        {positions.map((pos) => (
+          <div key={pos} style={{ display: "grid", gap: "0.5rem" }}>
+            <div style={{ fontSize: "0.9rem", opacity: 0.8 }}>
+              Title Position: <strong>{pos}</strong>
+            </div>
+            <Progressbar
+              {...args}
+              progress={72}
+              title={`Build ${72}%`}
+              titlePosition={pos}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
 export const SizeVariants: Story = {
   render: (args) => {
     const sizes = ["xs", "small", "medium", "large", "xl"] as const;
@@ -134,13 +171,11 @@ export const SizeVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {sizes.map((size) => (
           <div key={size}>
-            <label style={{ marginBottom: "0.25rem", display: "block" }}>
-              {size.charAt(0).toUpperCase() + size.slice(1)}
-            </label>
             <Progressbar
               {...args}
               progress={40 + sizes.indexOf(size) * 20}
               size={size}
+              title={size.charAt(0).toUpperCase() + size.slice(1)}
             />
           </div>
         ))}
@@ -155,13 +190,11 @@ export const ThemedVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {themeOptions.map((theme) => (
           <div key={theme}>
-            <label style={{ marginBottom: "0.25rem", display: "block" }}>
-              {theme.charAt(0).toUpperCase() + theme.slice(1)}
-            </label>
             <Progressbar
               {...args}
               progress={20 + themeOptions.indexOf(theme) * 15}
               theme={theme}
+              title={theme.charAt(0).toUpperCase() + theme.slice(1)}
             />
           </div>
         ))}
@@ -176,13 +209,11 @@ export const StateVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {stateOptions.map((theme) => (
           <div key={theme}>
-            <label style={{ marginBottom: "0.25rem", display: "block" }}>
-              {theme.charAt(0).toUpperCase() + theme.slice(1)}
-            </label>
             <Progressbar
               {...args}
               progress={20 + stateOptions.indexOf(theme) * 15}
               theme={theme}
+              title={theme.charAt(0).toUpperCase() + theme.slice(1)}
             />
           </div>
         ))}
@@ -204,10 +235,11 @@ export const LiveProgress: Story = {
 
     return (
       <div style={{ maxWidth: "500px" }}>
-        <label style={{ display: "block", marginBottom: "0.5rem" }}>
-          Live Updating Progress: {progress}%
-        </label>
-        <Progressbar {...args} progress={progress} />
+        <Progressbar
+          {...args}
+          progress={progress}
+          title={`Live Updating Progress: ${progress}%`}
+        />
       </div>
     );
   },
@@ -219,13 +251,11 @@ export const RoundingVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {roundingOptions.map((rounding) => (
           <div key={rounding}>
-            <label style={{ marginBottom: "0.25rem", display: "block" }}>
-              {rounding.charAt(0).toUpperCase() + rounding.slice(1)}
-            </label>
             <Progressbar
               {...args}
               progress={20 + stateOptions.indexOf(rounding) * 15}
               rounding={rounding}
+              title={rounding.charAt(0).toUpperCase() + rounding.slice(1)}
             />
           </div>
         ))}
@@ -240,13 +270,11 @@ export const ShadowVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {shadowOptions.map((shadow) => (
           <div key={shadow}>
-            <label style={{ marginBottom: "0.25rem", display: "block" }}>
-              {shadow.charAt(0).toUpperCase() + shadow.slice(1)}
-            </label>
             <Progressbar
               {...args}
               progress={20 + stateOptions.indexOf(shadow) * 15}
               shadow={shadow}
+              title={shadow.charAt(0).toUpperCase() + shadow.slice(1)}
             />
           </div>
         ))}

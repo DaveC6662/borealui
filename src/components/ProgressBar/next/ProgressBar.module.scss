@@ -64,7 +64,57 @@ $progress-sizes: (
   }
 }
 
+.layout {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.title {
+  font-size: 0.875em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.titleTop {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.titleBottom {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.titleLeft,
+.titleRight {
+  align-items: center;
+}
+
+.titleLeft .container,
+.titleRight .container {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.titleLeft .title,
+.titleRight .title {
+  flex: 0 0 auto;
+}
+
+.titleOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  font-size: 0.7em;
+}
+
 .bar {
+  position: relative;
   height: 100%;
   width: 0;
   transition: width 0.4s ease-in-out;

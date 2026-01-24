@@ -13,18 +13,8 @@ import {
   ChevronDownIcon,
   EyeIcon,
   EyeSlashIcon,
-  BoldIcon,
-  ItalicIcon,
-  StrikethroughIcon,
-  CodeIcon,
-  ListUlIcon,
-  ListOlIcon,
-  UndoIcon,
-  RedoIcon,
-  EraserIcon,
   FolderIcon,
   PlusCircleIcon,
-  BorealLogoIcon,
 } from "../src/Icons";
 
 const meta: Meta = {
