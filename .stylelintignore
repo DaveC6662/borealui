@@ -4,3 +4,4 @@ build
 *.min.css
 core
 next
+src/styles/style.css

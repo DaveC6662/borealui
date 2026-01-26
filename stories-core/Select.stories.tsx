@@ -31,6 +31,17 @@ const meta: Meta<SelectProps> = {
     ],
   },
   argTypes: {
+    title: {
+      control: "text",
+      description: "Optional title describing what the select is for.",
+      table: { category: "Content" },
+    },
+    titlePosition: {
+      control: { type: "select" },
+      options: ["top", "bottom", "left", "right", "overlay"],
+      description: "Position of the title relative to the select.",
+      table: { category: "Content", defaultValue: { summary: "top" } },
+    },
     theme: {
       control: { type: "select" },
       options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
@@ -147,6 +158,34 @@ export const Default: Story = {
         onChange={setValue}
         ariaLabel="Default select"
       />
+    );
+  },
+};
+
+export const TitlePositions: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("a");
+    const positions = ["top", "bottom", "left", "right"] as const;
+
+    return (
+      <div style={{ display: "grid", gap: "1rem", maxWidth: "520px" }}>
+        {positions.map((pos) => (
+          <div key={pos} style={{ display: "grid", gap: "0.5rem" }}>
+            <div style={{ fontSize: "0.9rem", opacity: 0.8 }}>
+              Title Position: <strong>{pos}</strong>
+            </div>
+
+            <Select
+              {...args}
+              value={value}
+              onChange={setValue}
+              title={`Program`}
+              titlePosition={pos}
+              ariaLabel={`Select with titlePosition ${pos}`}
+            />
+          </div>
+        ))}
+      </div>
     );
   },
 };

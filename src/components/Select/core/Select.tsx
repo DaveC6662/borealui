@@ -8,6 +8,13 @@ const classes = {
   select: "select",
   outline: "select_outline",
 
+  layout: "select_layout",
+  title: "select_title",
+  titleTop: "select_title_top",
+  titleBottom: "select_title_bottom",
+  titleLeft: "select_title_left",
+  titleRight: "select_title_right",
+
   primary: "select_primary",
   secondary: "select_secondary",
   tertiary: "select_tertiary",

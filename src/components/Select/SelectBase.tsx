@@ -37,9 +37,11 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       pollInterval = 0,
       required,
       name,
+      title,
+      titlePosition = "top",
       "data-testid": testId = "select",
     },
-    ref
+    ref,
   ) => {
     const id = useId();
     const selectId = `${id}-select`;
@@ -47,6 +49,30 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
     const [internalOptions, setInternalOptions] = useState(options);
     const [loading, setLoading] = useState(false);
+
+    const hasTitle = Boolean(title);
+    const isOverlay = titlePosition === "overlay";
+
+    const layoutClasses = useMemo(() => {
+      const posClass =
+        hasTitle && !isOverlay
+          ? classMap[`title${capitalize(titlePosition)}`]
+          : undefined;
+
+      return combineClassNames(classMap.layout, posClass);
+    }, [classMap, hasTitle, isOverlay, titlePosition]);
+
+    const titleClasses = useMemo(
+      () =>
+        combineClassNames(classMap.title, isOverlay && classMap.titleOverlay),
+      [classMap, isOverlay],
+    );
+
+    const titleNode = hasTitle ? (
+      <div className={titleClasses} data-testid={`${testId}-title`}>
+        {title}
+      </div>
+    ) : null;
 
     useEffect(() => {
       if (!asyncOptions) return;
@@ -94,14 +120,14 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
           outline && classMap.outline,
-          disabled && classMap.disabled
+          disabled && classMap.disabled,
         ),
-      [classMap, theme, state, className, shadow, rounding, outline, disabled]
+      [classMap, theme, state, className, shadow, rounding, outline, disabled],
     );
 
     const selectClasses = useMemo(
       () => combineClassNames(classMap.select, outline && classMap.outline),
-      [classMap, theme, state, shadow, rounding, outline]
+      [classMap, theme, state, shadow, rounding, outline],
     );
 
     const iconClasses = useMemo(
@@ -109,71 +135,83 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         combineClassNames(
           classMap.icon,
           classMap[theme],
-          disabled && classMap.disabled
+          disabled && classMap.disabled,
         ),
-      [classMap, theme, disabled]
+      [classMap, theme, disabled],
     );
 
     const opts = asyncOptions ? internalOptions : options;
 
     return (
-      <div className={wrapperClasses} data-testid={testId}>
-        <select
-          ref={ref}
-          id={selectId}
-          name={name}
-          value={value ?? ""}
-          onChange={handleChange}
-          className={selectClasses}
-          aria-label={ariaLabel || placeholder}
-          aria-describedby={descId}
-          aria-disabled={disabled || undefined}
-          aria-invalid={state === "error" || undefined}
-          disabled={disabled}
-          required={required}
-          data-testid={`${testId}-input`}
-        >
-          <option value="" disabled hidden>
-            {placeholder}
-          </option>
+      <div className={layoutClasses} data-testid={`${testId}-layout`}>
+        {(titlePosition === "top" || titlePosition === "left") &&
+          !isOverlay &&
+          titleNode}
 
-          {opts.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-              data-testid={`${testId}-option-${option.value}`}
-            >
-              {option.label}
+        <div className={wrapperClasses} data-testid={testId}>
+          <select
+            ref={ref}
+            id={selectId}
+            name={name}
+            value={value ?? ""}
+            onChange={handleChange}
+            className={selectClasses}
+            aria-label={ariaLabel || placeholder}
+            aria-describedby={descId}
+            aria-disabled={disabled || undefined}
+            aria-invalid={state === "error" || undefined}
+            disabled={disabled}
+            required={required}
+            data-testid={`${testId}-input`}
+          >
+            <option value="" disabled hidden>
+              {placeholder}
             </option>
-          ))}
-        </select>
 
-        <div
-          className={iconClasses}
-          aria-hidden="true"
-          data-testid={`${testId}-icon`}
-        >
-          <ChevronDownIcon aria-hidden="true" focusable={false} />
+            {opts.map((option) => (
+              <option
+                key={option.value}
+                value={option.value}
+                data-testid={`${testId}-option-${option.value}`}
+              >
+                {option.label}
+              </option>
+            ))}
+          </select>
+
+          <div
+            className={iconClasses}
+            aria-hidden="true"
+            data-testid={`${testId}-icon`}
+          >
+            <ChevronDownIcon aria-hidden="true" focusable={false} />
+          </div>
+
+          {isOverlay && titleNode}
+
+          {ariaDescription && (
+            <span
+              id={descId}
+              className="sr_only"
+              data-testid={`${testId}-description`}
+            >
+              {ariaDescription}
+            </span>
+          )}
+
+          {loading && (
+            <span className={classMap.loading} aria-live="polite">
+              Loading options…
+            </span>
+          )}
         </div>
 
-        {ariaDescription && (
-          <span
-            id={descId}
-            className="sr_only"
-            data-testid={`${testId}-description`}
-          >
-            {ariaDescription}
-          </span>
-        )}
-
-        {loading && (
-          <span className={classMap.loading} aria-live="polite">
-            Loading options…
-          </span>
-        )}
+        {(titlePosition === "bottom" || titlePosition === "right") &&
+          !isOverlay &&
+          titleNode}
       </div>
     );
-  }
+  },
 );
 
 BaseSelect.displayName = "BaseSelect";
