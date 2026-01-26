@@ -21,6 +21,23 @@
   }
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+}
+
+.title {
+  margin: 0;
+}
+
+.body {
+  padding-top: 0.75rem;
+}
+
 .content {
   background: var(--background-color-light);
   color: var(--text-color-primary);

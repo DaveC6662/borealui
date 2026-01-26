@@ -23,15 +23,32 @@
     env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
 
   @each $key, $value in theme.$rounding {
-    &_round-#{$key} &_popupContent {
+    &_round-#{$key} .messagePopup_popup_content {
       border-radius: $value;
     }
   }
 
   @each $key, $value in theme.$shadow {
-    &_shadow-#{$key} &_popupContent {
+    &_shadow-#{$key} .messagePopup_popup_content {
       box-shadow: $value;
     }
+  }
+
+  &_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  }
+
+  &_title {
+    margin: 0;
+  }
+
+  &_body {
+    padding-top: 0.75rem;
   }
 
   &_popup_content {

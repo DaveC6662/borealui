@@ -17,6 +17,7 @@ import {
 
 const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   message,
+  title,
   onClose,
   onConfirm,
   onCancel,
@@ -40,6 +41,8 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   const openerRef = useRef<HTMLElement | null>(null);
   const focusablesRef = useRef<HTMLElement[]>([]);
   const messageId = useId();
+  const titleId = useId();
+  const labelledById = title ? titleId : messageId;
 
   useEffect(() => {
     setIsMounted(true);
@@ -80,8 +83,8 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
     if (!dialogRef.current) return;
     focusablesRef.current = Array.from(
       dialogRef.current.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      )
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      ),
     ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
 
     const target =
@@ -115,7 +118,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
     classMap.wrapper,
     shadow && classMap[`shadow${capitalize(shadow)}`],
     rounding && classMap[`round${capitalize(rounding)}`],
-    className
+    className,
   );
 
   return ReactDOM.createPortal(
@@ -130,60 +133,89 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
-        aria-labelledby={messageId}
+        aria-labelledby={labelledById}
         tabIndex={-1}
         ref={dialogRef}
         onKeyDown={handleKeyDown}
         data-testid={`${testId}-dialog`}
       >
-        <IconButton
-          ref={closeBtnRef}
-          className={classMap.close}
-          onClick={onClose}
-          aria-label="Close popup"
-          icon={CloseIcon}
-          state="error"
-          size="small"
-          type="button"
-          data-testid={`${testId}-close`}
-        />
-        <h2
-          id={messageId}
-          className={classMap.message}
-          data-testid={`${testId}-message`}
-        >
-          {message}
-        </h2>
-        <div className={classMap.actions} data-testid={`${testId}-actions`}>
-          {onConfirm && (
-            <Button
-              className={classMap.confirm}
-              state="success"
-              onClick={onConfirm}
-              ref={firstButtonRef}
-              rounding={controlsRounding}
-              type="button"
-              data-testid={`${testId}-confirm`}
+        {title && (
+          <div className={classMap.header} data-testid={`${testId}-header`}>
+            <h2
+              id={titleId}
+              className={classMap.title}
+              data-testid={`${testId}-title`}
             >
-              {confirmText}
-            </Button>
-          )}
-          {onCancel && (
-            <Button
-              ref={cancelButtonRef}
-              className={classMap.cancel}
-              state="warning"
-              onClick={onCancel}
+              {title}
+            </h2>
+
+            <IconButton
+              ref={closeBtnRef}
+              className={classMap.close}
+              onClick={onClose}
+              aria-label="Close popup"
+              icon={CloseIcon}
+              state="error"
+              size="small"
               type="button"
-              data-testid={`${testId}-cancel`}
-            >
-              {cancelText}
-            </Button>
-          )}
+              data-testid={`${testId}-close`}
+            />
+          </div>
+        )}
+        {!title && (
+          <IconButton
+            ref={closeBtnRef}
+            className={classMap.close}
+            onClick={onClose}
+            aria-label="Close popup"
+            icon={CloseIcon}
+            state="error"
+            size="small"
+            type="button"
+            data-testid={`${testId}-close`}
+          />
+        )}
+
+        <div className={classMap.body} data-testid={`${testId}-body`}>
+          <p
+            id={messageId}
+            className={classMap.message}
+            data-testid={`${testId}-message`}
+          >
+            {message}
+          </p>
+
+          <div className={classMap.actions} data-testid={`${testId}-actions`}>
+            {onConfirm && (
+              <Button
+                className={classMap.confirm}
+                state="success"
+                onClick={onConfirm}
+                ref={firstButtonRef}
+                rounding={controlsRounding}
+                type="button"
+                data-testid={`${testId}-confirm`}
+              >
+                {confirmText}
+              </Button>
+            )}
+            {onCancel && (
+              <Button
+                ref={cancelButtonRef}
+                className={classMap.cancel}
+                state="warning"
+                onClick={onCancel}
+                type="button"
+                data-testid={`${testId}-cancel`}
+              >
+                {cancelText}
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>,
-    portalElement
+    portalElement,
   );
 };
 

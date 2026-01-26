@@ -12,6 +12,12 @@ export interface MessagePopupProps {
   message: string;
 
   /**
+   * Optional title shown in a top bar.
+   * If provided, a header section is rendered above the message.
+   */
+  title?: React.ReactNode;
+
+  /**
    * Callback function to execute when the popup is closed.
    */
   onClose: () => void;
