@@ -19,7 +19,14 @@ export interface ModalProps {
    * Shadow of the modal.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
    */
+
   shadow?: ShadowType;
+  /**
+   * Controls whether the modal is open.
+   * - If omitted, the modal is considered open when rendered.
+   * - If provided, the modal opens/closes based on this value.
+   */
+  open?: boolean;
   /** Callback function fired when the modal is closed. */
   onClose: () => void;
   /** Optional test ID for testing frameworks. */
