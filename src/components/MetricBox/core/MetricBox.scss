@@ -15,7 +15,6 @@
   max-width: 100%;
   height: fit-content;
   text-align: center;
-  margin: theme.$spacing-sm;
   transition: theme.$transition-default;
   gap: theme.$spacing-sm;
 
@@ -25,12 +24,10 @@
 
   @include bp.down(sm) {
     gap: theme.$spacing-xs;
-    margin: theme.$spacing-xs;
   }
 
   @include bp.up(lg) {
     gap: theme.$spacing-md;
-    margin: theme.$spacing-md;
     min-width: 140px;
   }
 
@@ -147,7 +144,7 @@
   );
 
   @each $size, $properties in $size-variations {
-    .metricBox_#{$size} {
+    &.metricBox_#{$size} {
       .metricBox_icon {
         font-size: map.get($properties, icon-size);
       }

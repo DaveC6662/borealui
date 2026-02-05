@@ -51,21 +51,18 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     const [loading, setLoading] = useState(false);
 
     const hasTitle = Boolean(title);
-    const isOverlay = titlePosition === "overlay";
 
     const layoutClasses = useMemo(() => {
-      const posClass =
-        hasTitle && !isOverlay
-          ? classMap[`title${capitalize(titlePosition)}`]
-          : undefined;
+      const posClass = hasTitle
+        ? classMap[`title${capitalize(titlePosition)}`]
+        : undefined;
 
       return combineClassNames(classMap.layout, posClass);
-    }, [classMap, hasTitle, isOverlay, titlePosition]);
+    }, [classMap, hasTitle, titlePosition]);
 
     const titleClasses = useMemo(
-      () =>
-        combineClassNames(classMap.title, isOverlay && classMap.titleOverlay),
-      [classMap, isOverlay],
+      () => combineClassNames(classMap.title, classMap.titleOverlay),
+      [classMap],
     );
 
     const titleNode = hasTitle ? (
@@ -144,9 +141,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
     return (
       <div className={layoutClasses} data-testid={`${testId}-layout`}>
-        {(titlePosition === "top" || titlePosition === "left") &&
-          !isOverlay &&
-          titleNode}
+        {(titlePosition === "top" || titlePosition === "left") && titleNode}
 
         <div className={wrapperClasses} data-testid={testId}>
           <select
@@ -187,8 +182,6 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
             <ChevronDownIcon aria-hidden="true" focusable={false} />
           </div>
 
-          {isOverlay && titleNode}
-
           {ariaDescription && (
             <span
               id={descId}
@@ -206,9 +199,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           )}
         </div>
 
-        {(titlePosition === "bottom" || titlePosition === "right") &&
-          !isOverlay &&
-          titleNode}
+        {(titlePosition === "bottom" || titlePosition === "right") && titleNode}
       </div>
     );
   },
