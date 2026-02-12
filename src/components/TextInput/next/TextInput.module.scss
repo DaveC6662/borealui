@@ -93,7 +93,11 @@
 .iconContainer {
   display: flex;
   box-sizing: border-box;
-  margin: 0.1em;
+  margin: 0.5rem;
+
+  @include bp.down(xs) {
+    margin: 0.1rem;
+  }
 
   svg {
     width: 1em;
