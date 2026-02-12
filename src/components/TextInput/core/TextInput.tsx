@@ -9,6 +9,19 @@ const classes = {
   textInput: "textInput",
   iconContainer: "textInput_icon_container",
   togglePassword: "textInput_togglePassword",
+  inputRow: "textInput_inputRow",
+  inputWrapper: "textInput_inputWrapper",
+
+  hasTitle: "textInput_hasTitle",
+  title: "textInput_title",
+  titleInline: "textInput_titleInline",
+  titleOverlay: "textInput_titleOverlay",
+
+  titlePosTop: "textInput_titlePosTop",
+  titlePosBottom: "textInput_titlePosBottom",
+  titlePosLeft: "textInput_titlePosLeft",
+  titlePosRight: "textInput_titlePosRight",
+  titlePosOverlay: "textInput_titlePosOverlay",
 
   primary: "textInput_primary",
   secondary: "textInput_secondary",

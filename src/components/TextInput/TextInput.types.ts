@@ -1,4 +1,10 @@
-import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+  TitlePositionType,
+} from "@/types/types";
 import { ComponentType, InputHTMLAttributes } from "react";
 import { IconButtonProps } from "../IconButton/IconButton.types";
 
@@ -71,6 +77,24 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
    * Pass `true` to enable ("on") or `false` to disable ("off")
    */
   autocomplete?: boolean;
+
+  /**
+   * Optional visible label/title for the input.
+   */
+  title?: string;
+
+  /**
+   * Position of the title/label.
+   * - "top": label above input
+   * - "inline": label inside container (left)
+   * - "floating": material-style floating label
+   */
+  titlePosition?: TitlePositionType;
+
+  /**
+   * Maximum length of the input.
+   */
+  maxLength?: number;
 
   /**
    * Optional test ID for testing frameworks.

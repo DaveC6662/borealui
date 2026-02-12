@@ -34,19 +34,16 @@
   background-color: theme.$background-color-surface;
   display: flex;
   flex-direction: column;
-  max-width: 450px;
   width: fit-content;
   height: fit-content;
   color: var(--text-color-primary);
   transition: transform 0.3s ease;
 
   @include bp.down(sm) {
-    max-width: 100%;
     margin: theme.$spacing-xs;
   }
 
   @include bp.up(lg) {
-    max-width: 600px;
     margin: theme.$spacing-md;
   }
 }
@@ -145,7 +142,6 @@
   min-height: 200px;
   width: 100%;
   height: auto;
-  max-width: 900px;
 
   @include bp.down(sm) {
     flex-direction: column;
@@ -155,7 +151,6 @@
 
   @include bp.up(lg) {
     min-height: 250px;
-    max-width: 1100px;
   }
 
   .content {

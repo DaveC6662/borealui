@@ -35,9 +35,9 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
         classMap[layout],
         classMap[spacing],
         error && classMap.error,
-        className
+        className,
       ),
-    [classMap, layout, spacing, error, className]
+    [classMap, layout, spacing, error, className],
   );
 
   return (
