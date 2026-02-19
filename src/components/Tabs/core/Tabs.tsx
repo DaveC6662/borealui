@@ -8,7 +8,6 @@ const classes = {
   tabs: "tabs",
   tab: "tabs_tab",
   active: "tabs_active",
-  content: "tabs_content",
   icon: "tabs_icon",
 
   primary: "tabs_primary",
@@ -23,10 +22,10 @@ const classes = {
   clear: "tabs_clear",
 
   xs: "tabs_xs",
-  xl: "tabs_xl",
   small: "tabs_small",
   medium: "tabs_medium",
   large: "tabs_large",
+  xl: "tabs_xl",
 
   shadowNone: "tabs_shadow-None",
   shadowLight: "tabs_shadow-Light",
@@ -43,5 +42,6 @@ const classes = {
 const Tabs: React.FC<TabsProps> = (props) => {
   return <TabsBase {...props} classMap={classes} />;
 };
+
 Tabs.displayName = "Tabs";
 export default Tabs;

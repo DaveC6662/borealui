@@ -1,6 +1,5 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
 @use "sass:map";
 
 $sizes: (
@@ -124,24 +123,8 @@ $sizes: (
   }
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  padding: theme.$spacing-md;
-  background-color: var(--background-color-dark);
-  margin: auto;
-  gap: theme.$spacing-xs;
-  align-items: center;
-  justify-content: center;
-
-  @include bp.down(sm) {
-    padding: theme.$spacing-sm;
-  }
-
-  @include bp.down(xs) {
-    padding: 0;
-  }
-}
+/* NOTE: Panel/content styles removed because Tabs no longer renders tabpanel content.
+   Put tabpanel styling in the parent/page instead. */
 
 @each $themeName, $vals in theme.$themes {
   .#{$themeName} {
@@ -180,6 +163,7 @@ $sizes: (
     border-top-left-radius: $value;
     border-bottom-left-radius: $value;
   }
+
   .round#{$key}:last-child {
     border-top-right-radius: $value;
     border-bottom-right-radius: $value;

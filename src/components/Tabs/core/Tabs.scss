@@ -1,6 +1,5 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
 @use "sass:map";
 
 $sizes: (
@@ -113,25 +112,6 @@ $sizes: (
       @include bp.up(lg) {
         font-size: calc(#{map.get($props, font)} * 1.05);
       }
-    }
-  }
-
-  &_content {
-    display: flex;
-    flex-direction: column;
-    padding: theme.$spacing-md;
-    background-color: var(--background-color-dark);
-    margin: auto;
-    gap: theme.$spacing-xs;
-    align-items: center;
-    justify-content: center;
-
-    @include bp.down(sm) {
-      padding: theme.$spacing-sm;
-    }
-
-    @include bp.down(xs) {
-      padding: 0;
     }
   }
 

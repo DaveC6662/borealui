@@ -9,10 +9,25 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
+type Dir = 1 | -1;
+
+const getClass = (
+  classMap: Record<string, string>,
+  keys: string[],
+): string | undefined => {
+  for (const k of keys) {
+    const v = classMap[k];
+    if (typeof v === "string" && v.length > 0) return v;
+  }
+  return undefined;
+};
+
 const TabsBase: React.FC<BaseTabsProps> = ({
   tabs,
   defaultIndex = 0,
+  value,
   onChange,
+  ariaLabel = "Tabs",
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   className = "",
@@ -21,58 +36,97 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   size = getDefaultSize(),
   orientation = "horizontal",
   activationMode = "auto",
+  idBase,
   "data-testid": testId = "tabs",
   classMap,
 }) => {
   const uid = useId();
-  const baseId = `${testId}-${uid}`;
 
-  const [activeIndex, setActiveIndex] = useState(defaultIndex);
-  const [focusIndex, setFocusIndex] = useState(defaultIndex);
+  const baseId = useMemo<string>(() => {
+    return idBase ?? `${testId}-${uid}`;
+  }, [idBase, testId, uid]);
+
+  const isControlled: boolean = typeof value === "number";
+
+  const [uncontrolledIndex, setUncontrolledIndex] =
+    useState<number>(defaultIndex);
+
+  const activeIndex: number = isControlled
+    ? (value as number)
+    : uncontrolledIndex;
+
+  const [focusIndex, setFocusIndex] = useState<number>(defaultIndex);
 
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
     const current = activationMode === "manual" ? focusIndex : activeIndex;
+
     tabRefs.current.forEach((el, i) => {
       if (!el) return;
       el.setAttribute("tabindex", i === current ? "0" : "-1");
     });
+
     tabRefs.current[current]?.focus();
   }, [activeIndex, focusIndex, activationMode]);
 
-  const containerClassNames = useMemo(
-    () =>
-      combineClassNames(
-        classMap.container,
-        classMap[theme],
-        classMap[state],
-        classMap[size],
-        className
-      ),
-    [classMap, theme, state, size, className]
-  );
+  useEffect(() => {
+    if (isControlled) setFocusIndex(activeIndex);
+  }, [activeIndex, isControlled]);
 
-  const tabClassNames = useMemo(
-    () =>
-      combineClassNames(
-        classMap.tab,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
-        rounding && classMap[`round${capitalize(rounding)}`]
-      ),
-    [classMap, shadow, rounding]
-  );
+  const containerClassNames = useMemo(() => {
+    const containerClass =
+      getClass(classMap, ["container", "tabsContainer", "tabs_container"]) ??
+      "";
+    const themeClass = classMap[theme] ?? "";
+    const stateClass = state ? (classMap[state] ?? "") : "";
+    const sizeClass = classMap[size] ?? "";
 
-  const activate = (index: number) => {
-    setActiveIndex(index);
-    onChange?.(index);
-  };
+    return combineClassNames(
+      containerClass,
+      themeClass,
+      stateClass,
+      sizeClass,
+      className,
+    );
+  }, [classMap, theme, state, size, className]);
 
-  const isDisabled = (index: number) => !!tabs[index]?.disabled;
+  const tabBaseClassNames = useMemo(() => {
+    const tabClass = getClass(classMap, ["tab", "tabs_tab"]) ?? "";
+    const shadowClass = shadow
+      ? (classMap[`shadow${capitalize(shadow)}`] ??
+        classMap[`tabs_shadow-${capitalize(shadow)}`])
+      : "";
+    const roundingClass = rounding
+      ? (classMap[`round${capitalize(rounding)}`] ??
+        classMap[`tabs_round-${capitalize(rounding)}`])
+      : "";
 
-  const nextEnabled = (start: number, dir: 1 | -1) => {
+    return combineClassNames(tabClass, shadowClass, roundingClass);
+  }, [classMap, shadow, rounding]);
+
+  const activeClass = useMemo(() => {
+    return getClass(classMap, ["active", "tabs_active"]) ?? "";
+  }, [classMap]);
+
+  const disabledClass = useMemo(() => {
+    return getClass(classMap, ["disabled", "tabs_disabled"]) ?? "";
+  }, [classMap]);
+
+  const iconClass = useMemo(() => {
+    return getClass(classMap, ["icon", "tabs_icon"]) ?? "";
+  }, [classMap]);
+
+  const tabListClass = useMemo(() => {
+    return getClass(classMap, ["tabs", "tabs"]) ?? "";
+  }, [classMap]);
+
+  const isDisabled = (index: number): boolean => Boolean(tabs[index]?.disabled);
+
+  const nextEnabled = (start: number, dir: Dir): number => {
     const len = tabs.length;
     let i = start;
+
     for (let n = 0; n < len; n++) {
       i = (i + dir + len) % len;
       if (!isDisabled(i)) return i;
@@ -80,7 +134,14 @@ const TabsBase: React.FC<BaseTabsProps> = ({
     return start;
   };
 
-  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const activate = (index: number): void => {
+    if (isDisabled(index)) return;
+
+    if (!isControlled) setUncontrolledIndex(index);
+    onChange?.(index);
+  };
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     const horiz = orientation === "horizontal";
     const { key } = event;
 
@@ -119,15 +180,12 @@ const TabsBase: React.FC<BaseTabsProps> = ({
     if (activationMode === "auto") activate(newFocus);
   };
 
-  const currentPanelId = `${baseId}-panel-${activeIndex}`;
-  const currentTabId = `${baseId}-tab-${activeIndex}`;
-
   return (
     <div className={containerClassNames} data-testid={testId}>
       <div
-        className={classMap.tabs}
+        className={tabListClass}
+        aria-label={ariaLabel}
         role="tablist"
-        aria-label="Tabs"
         aria-orientation={orientation}
         onKeyDown={onKeyDown}
         data-testid={`${testId}-tablist`}
@@ -136,19 +194,20 @@ const TabsBase: React.FC<BaseTabsProps> = ({
           const Icon = tab.icon;
           const isActive = index === activeIndex;
           const disabled = isDisabled(index);
+
           const tabId = `${baseId}-tab-${index}`;
           const panelId = `${baseId}-panel-${index}`;
 
           return (
             <button
-              key={index}
+              key={`${tab.label}-${index}`}
               ref={(el) => {
                 tabRefs.current[index] = el;
               }}
               className={combineClassNames(
-                tabClassNames,
-                isActive && classMap.active,
-                disabled && classMap.disabled
+                tabBaseClassNames,
+                isActive && activeClass,
+                disabled && disabledClass,
               )}
               role="tab"
               type="button"
@@ -164,29 +223,18 @@ const TabsBase: React.FC<BaseTabsProps> = ({
               data-testid={`${testId}-tab-${index}`}
             >
               {Icon && (
-                <div
-                  className={classMap.icon}
+                <span
+                  className={iconClass}
                   aria-hidden="true"
                   data-testid={`${testId}-icon-${index}`}
                 >
                   <Icon />
-                </div>
+                </span>
               )}
               {tab.label}
             </button>
           );
         })}
-      </div>
-
-      <div
-        className={classMap.content}
-        role="tabpanel"
-        id={currentPanelId}
-        aria-labelledby={currentTabId}
-        tabIndex={0}
-        data-testid={`${testId}-panel`}
-      >
-        {tabs[activeIndex].content}
       </div>
     </div>
   );
