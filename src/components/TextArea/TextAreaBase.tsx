@@ -19,6 +19,7 @@ const TextAreaBase = forwardRef<
       readOnly = false,
       outline = false,
       autocomplete = false,
+      onChange,
       theme = getDefaultTheme(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
@@ -35,7 +36,7 @@ const TextAreaBase = forwardRef<
       required,
       ...props
     },
-    ref
+    ref,
   ) => {
     const autoId = useId();
     const id = idProp || autoId;
@@ -52,9 +53,9 @@ const TextAreaBase = forwardRef<
           disabled && classMap.disabled,
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
-          className
+          className,
         ),
-      [classMap, theme, state, outline, disabled, shadow, rounding, className]
+      [classMap, theme, state, outline, disabled, shadow, rounding, className],
     );
 
     const computedLabel = ariaLabel || placeholder;
@@ -86,6 +87,7 @@ const TextAreaBase = forwardRef<
           aria-readonly={readOnly || undefined}
           aria-disabled={disabled || undefined}
           autoComplete={autocomplete ? "on" : "off"}
+          onChange={(e) => onChange?.(e.currentTarget.value)}
           readOnly={readOnly}
           disabled={disabled}
           required={required}
@@ -115,7 +117,7 @@ const TextAreaBase = forwardRef<
         )}
       </div>
     );
-  }
+  },
 );
 
 TextAreaBase.displayName = "TextAreaBase";

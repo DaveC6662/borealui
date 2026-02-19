@@ -29,6 +29,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       theme = getDefaultTheme(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
+      onChange,
       state = "",
       disabled = false,
       autocomplete = false,
@@ -151,6 +152,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             aria-required={required || undefined}
             aria-readonly={readOnly || undefined}
             autoComplete={computedAutoComplete}
+            onChange={(e) => onChange?.(e.currentTarget.value)}
             readOnly={readOnly}
             disabled={disabled}
             required={required}

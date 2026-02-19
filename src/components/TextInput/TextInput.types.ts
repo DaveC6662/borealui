@@ -11,7 +11,16 @@ import { IconButtonProps } from "../IconButton/IconButton.types";
 /**
  * Props for the TextInput component.
  */
-export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface TextInputProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "onChange"
+> {
+  /**
+   * Called when the input value changes.
+   * Receives the current string value.
+   */
+  onChange?: (value: string) => void;
+
   /**
    * Optional icon component to display on the left side of the input.
    */

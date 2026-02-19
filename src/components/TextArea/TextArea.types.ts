@@ -4,8 +4,16 @@ import { TextareaHTMLAttributes, ComponentType } from "react";
 /**
  * Props for the TextArea component.
  */
-export interface TextAreaProps
-  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextAreaProps extends Omit<
+  TextareaHTMLAttributes<HTMLTextAreaElement>,
+  "onChange"
+> {
+  /**
+   * Called when the textarea value changes.
+   * Receives the current string value.
+   */
+  onChange?: (value: string) => void;
+
   /**
    * Optional icon to display alongside the textarea. Accepts a React component.
    */
