@@ -32,6 +32,12 @@ export interface BreadcrumbsProps {
   items: Breadcrumb[];
 
   /**
+   * Accessible label for the breadcrumb navigation.
+   * Defaults to "Breadcrumbs".
+   */
+  ariaLabel?: string;
+
+  /**
    * Disables interaction and styles as disabled.
    */
   disabled?: boolean;

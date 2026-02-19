@@ -13,6 +13,7 @@ const TimelineBase: React.FC<
 > = ({
   items,
   orientation = "vertical",
+  ariaLabel = "Timeline",
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
@@ -26,15 +27,15 @@ const TimelineBase: React.FC<
         classMap.timeline,
         classMap[orientation],
         classMap[theme],
-        className
+        className,
       ),
-    [classMap, orientation, theme, className]
+    [classMap, orientation, theme, className],
   );
 
   const itemClassName = useMemo(
     () =>
       combineClassNames(classMap.item, classMap[orientation], classMap[theme]),
-    [classMap, orientation, theme]
+    [classMap, orientation, theme],
   );
 
   const markerClassName = useMemo(
@@ -43,9 +44,9 @@ const TimelineBase: React.FC<
         classMap.marker,
         classMap[theme],
         classMap[orientation],
-        shadow && classMap[`shadow${capitalize(shadow)}`]
+        shadow && classMap[`shadow${capitalize(shadow)}`],
       ),
-    [classMap, theme, orientation, shadow]
+    [classMap, theme, orientation, shadow],
   );
 
   const contentClassName = useMemo(
@@ -54,15 +55,15 @@ const TimelineBase: React.FC<
         classMap.content,
         classMap[orientation],
         shadow && classMap[`shadow${capitalize(shadow)}`],
-        rounding && classMap[`round${capitalize(rounding)}`]
+        rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, orientation, shadow, rounding]
+    [classMap, orientation, shadow, rounding],
   );
 
   const setSize = items.length;
 
   return (
-    <ul className={outerWrapper} data-testid={testId} aria-label="Timeline">
+    <ul className={outerWrapper} data-testid={testId} aria-label={ariaLabel}>
       {items.map((item, index) => {
         const IconComponent = item.icon;
         const itemTestId = `${testId}-item-${index}`;

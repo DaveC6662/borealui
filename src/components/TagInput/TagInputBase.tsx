@@ -19,6 +19,7 @@ import {
 
 const TagInputBase: React.FC<TagInputBaseProps> = ({
   tags = [],
+  ariaLabel = "Tag Input",
   onChange,
   fetchSuggestions,
   debounceMs = 300,
@@ -193,9 +194,10 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
       aria-labelledby={labelId}
       aria-describedby={`${descId} ${statusId}`}
       data-testid={testId}
+      aria-label={ariaLabel}
     >
       <label id={labelId} className="sr_only">
-        Tag Input
+        {ariaLabel}
       </label>
       <div
         id={descId}

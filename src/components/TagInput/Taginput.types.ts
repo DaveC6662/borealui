@@ -15,6 +15,11 @@ export interface TagInputProps {
   /** Array of current tags. */
   tags?: string[];
   /**
+   * Accessible label for the tag input.
+   * Defaults to "Tag Input".
+   */
+  ariaLabel?: string;
+  /**
    * Callback fired when tags change.
    * Receives the new array of tags.
    */

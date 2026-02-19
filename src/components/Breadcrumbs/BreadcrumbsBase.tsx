@@ -16,6 +16,7 @@ import {
 
 export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   items,
+  ariaLabel = "Breadcrumbs",
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
@@ -54,7 +55,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
         outline && classMap.outline,
-        className
+        className,
       ),
     [
       theme,
@@ -66,12 +67,12 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
       outline,
       className,
       classMap,
-    ]
+    ],
   );
 
   return (
     <nav
-      aria-label="Breadcrumb"
+      aria-label={ariaLabel}
       data-testid={testId ? `${testId}-nav-container` : undefined}
       className={breadcrumbsClass}
     >
@@ -88,7 +89,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
           const itemClassName = combineClassNames(
             classMap.item,
             isExpanded && !isEllipsis && classMap.item_animate,
-            isLast && classMap.item_active
+            isLast && classMap.item_active,
           );
 
           return (

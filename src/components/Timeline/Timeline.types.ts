@@ -29,6 +29,12 @@ export interface TimelineProps {
   items: TimelineItem[];
 
   /**
+   * Accessible label for the timeline.
+   * Defaults to "Timeline".
+   */
+  ariaLabel?: string;
+
+  /**
    * Orientation of the timeline.
    * "vertical" | "horizontal"
    */
