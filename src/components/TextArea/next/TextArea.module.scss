@@ -3,10 +3,11 @@
 @use "sass:map";
 
 .textArea {
-  display: flex;
-  width: fit-content;
-  justify-content: center;
+  display: inline-flex;
+  justify-content: space-between;
   align-items: center;
+  width: fit-content;
+  margin: theme.$spacing-sm;
   transition: theme.$transition-default;
   background: transparent;
 
