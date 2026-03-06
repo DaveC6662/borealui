@@ -40,7 +40,7 @@
  * All transitions use the theme-defined `$transition-default` for consistency.
  * CSS variables allow dynamic switching between light/dark/custom themes.
  */
-@import "modern-css-reset/modern-css-reset.css";
+@import "modern-css-reset/dist/reset.css";
 /**
  * ---------------------------------------------------------------------
  * theme.scss
@@ -273,28 +273,29 @@
   --primary-color: #1c4d3a;
   --primary-color-light: rgb(107.6, 201.4, 165.0285714286);
   --primary-color-hover: rgb(14.4, 39.6, 29.8285714286);
-  --primary-text-color-contrast: rgb(0, 0, 0);
-  /* ================================a
+  --text-color-primary: rgb(255, 255, 255);
+  --text-color-primary-contrast: rgb(0, 0, 0);
+  /* ================================
      SECONDARY COLOR PALETTE
   ================================== */
   --secondary-color: #6e502e;
   --secondary-color-light: rgb(210.7692307692, 181.9230769231, 149.2307692308);
   --secondary-color-hover: rgb(74.0384615385, 53.8461538462, 30.9615384615);
-  --secondary-text-color: rgb(0, 0, 0);
+  --text-color-secondary: rgb(0, 0, 0);
   /* ================================
      TERTIARY COLOR PALETTE
   ================================== */
   --tertiary-color: #092b1c;
   --tertiary-color-light: rgb(44.9615384615, 211.0384615385, 137.7692307692);
   --tertiary-color-hover: rgb(0.1730769231, 0.8269230769, 0.5384615385);
-  --tertiary-text-color: rgb(255, 255, 255);
+  --text-color-tertiary: rgb(255, 255, 255);
   /* ================================
      QUATERNARY COLOR PALETTE
   ================================== */
   --quaternary-color: #a1733a;
   --quaternary-color-light: rgb(231.9589041096, 213.6849315068, 191.0410958904);
   --quaternary-color-hover: rgb(123.5068493151, 88.2191780822, 44.4931506849);
-  --quaternary-text-color: rgb(255, 255, 255);
+  --text-color-quaternary: rgb(255, 255, 255);
   /* ================================
      FEEDBACK COLORS
   ================================== */
@@ -309,6 +310,7 @@
      BACKGROUND COLORS
   ================================== */
   --background-color: #222e2e;
+  --background-color-surface: #384b4b;
   --background-color-light: rgb(55.675, 75.325, 75.325);
   --background-color-lighter: rgb(77.35, 104.65, 104.65);
   --background-color-dark: rgb(12.325, 16.675, 16.675);
@@ -316,7 +318,6 @@
   /* ================================
      TEXT COLORS
   ================================== */
-  --text-color-primary: rgb(255, 255, 255);
   --text-color: rgb(255, 255, 255);
   --text-color-light: hsl(0, 0%, 120%);
   --text-color-lighter: hsl(0, 0%, 140%);
@@ -332,21 +333,50 @@
   ================================== */
   --focus-outline-color: var(--text-color-primary);
   /* ===========================
+     Spacing Scale
+  =========================== */
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  /* ===========================
+      Font Sizes
+  =========================== */
+  --font-size-xxs: 10px;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-base: 18px;
+  --font-size-lg: 24px;
+  --font-size-xl: 32px;
+  --font-size-xxl: 45px;
+  /* ===========================
+     Font Weights
+  =========================== */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --font-weight-bolder: 900;
+  /* ===========================
      Border Radius (Rounding)
   =========================== */
+  --border-radius-xs: 2.5px;
+  --border-radius-sm: 5px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 20px;
+  --border-radius-xl: 40px;
+  --border-radius-full: 50%;
+  --border-radius-round: 50%;
   --border-radius-none: 0;
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 16px;
-  --border-radius-full: 9999px;
   /* ===========================
      Shadows
   =========================== */
-  --box-shadow-none: none;
-  --box-shadow-light: 0 2px 4px rgb(0 0 0 / 10%);
-  --box-shadow-medium: 0 4px 8px rgb(0 0 0 / 20%);
-  --box-shadow-heavy: 0 6px 12px rgb(0 0 0 / 30%);
-  --box-shadow-intense: 0 8px 16px rgb(0 0 0 / 40%);
+  --box-shadow-light: 0px 2px 4px rgba(46, 49, 49, 0.1);
+  --box-shadow-medium: 0px 4px 8px rgba(86, 101, 116, 0.2);
+  --box-shadow-heavy: 0px 6px 12px rgba(52, 73, 94, 0.4);
+  --box-shadow-intense: 0px 6px 12px rgba(52, 73, 94, 0.6);
   /* ===========================
      Inverted Shadows (Light UI)
   =========================== */
@@ -361,6 +391,7 @@
   --divider-color: rgb(99.025, 133.975, 133.975); /* subtle dividers */
   --overlay-color: rgb(0 0 0 / 50%); /* for modals or overlays */
   --font-family-primary: Lora, arial, sans-serif;
+  --font-family-secondary: Lora, serif;
 }
 
 body {

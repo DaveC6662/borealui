@@ -52,11 +52,11 @@ import { colorSchemes } from "../styles/Themes";
 import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
-  undefined
+  undefined,
 );
 
 const fallbackIndex = colorSchemes.findIndex(
-  (scheme) => scheme.name === getDefaultColorSchemeName()
+  (scheme) => scheme.name === getDefaultColorSchemeName(),
 );
 const defaultIndex = fallbackIndex !== -1 ? fallbackIndex : 0;
 
@@ -76,7 +76,7 @@ const ThemeProvider: React.FC<
 > = ({ children, customSchemes = [], initialScheme }) => {
   if (fallbackIndex === -1 && process.env.NODE_ENV === "development") {
     console.warn(
-      `Default color scheme "${getDefaultColorSchemeName()}" not found. Falling back to index 0.`
+      `Default color scheme "${getDefaultColorSchemeName()}" not found. Falling back to index 0.`,
     );
   }
 
@@ -98,7 +98,7 @@ const ThemeProvider: React.FC<
 
   const customSchemesKey = useMemo(
     () => JSON.stringify(customSchemes ?? []),
-    [customSchemes]
+    [customSchemes],
   );
 
   useEffect(() => {
@@ -168,7 +168,7 @@ const ThemeProvider: React.FC<
       const f = (n: number) =>
         Math.round(
           255 *
-            (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))))
+            (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))),
         );
       return `#${[f(0), f(8), f(4)].map((x) => x.toString(16).padStart(2, "0")).join("")}`;
     };
@@ -203,7 +203,17 @@ const ThemeProvider: React.FC<
       "--primary-color-hover": adjustLightness(primaryColor, -10),
       "--text-color-primary":
         forceTextColor ?? getAccessibleTextColor(primaryColor),
-
+      "--text-color-primary-contrast":
+        forceTextColor ?? getAccessibleTextColor(backgroundColor),
+      "--text-color": getAccessibleTextColor(backgroundColor),
+      "--text-color-light": adjustLightness(
+        getAccessibleTextColor(backgroundColor),
+        20,
+      ),
+      "--text-color-lighter": adjustLightness(
+        getAccessibleTextColor(backgroundColor),
+        40,
+      ),
       "--secondary-color": secondaryColor,
       "--secondary-color-light": adjustLightness(secondaryColor, 10),
       "--secondary-color-hover": adjustLightness(secondaryColor, -10),
@@ -226,12 +236,17 @@ const ThemeProvider: React.FC<
       "--background-color-lighter": adjustLightness(backgroundColor, 20),
 
       "--link-color": getAccessibleTextColor(backgroundColor),
-      "--link-color-hover": adjustLightness(
+      "--link-hover-color": adjustLightness(
         getAccessibleTextColor(backgroundColor),
-        -20
+        -20,
       ),
       "--link-hover-color-primary": adjustLightness(primaryColor, -10),
       "--link-hover-color-secondary": adjustLightness(secondaryColor, -10),
+      "--link-hover-color-tertiary": adjustLightness(tertiaryColor, -10),
+      "--link-hover-color-quaternary": adjustLightness(quaternaryColor, -10),
+
+      "--focus-outline-color": getAccessibleTextColor(backgroundColor),
+      "--divider-color": adjustLightness(backgroundColor, -10),
     } as const;
 
     const rootStyle = document.documentElement.style;

@@ -44,17 +44,6 @@
     color: map.get($values, text);
     background-color: map.get($values, bg);
 
-    &:hover {
-      background-color: map.get($values, hover);
-      transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-heavy;
-
-      @include bp.down(sm) {
-        transform: translateY(-1px);
-        box-shadow: theme.$box-shadow-medium;
-      }
-    }
-
     &:focus {
       outline: 2px solid map.get($values, border);
       outline-offset: 2px;
@@ -72,6 +61,7 @@
 
     &:hover {
       color: map.get($values, text-hover);
+      text-decoration: none;
       background-color: map.get($values, bg-hover);
     }
 
@@ -235,13 +225,14 @@
   display: inline-block;
 
   .breadcrumbs_link:hover & {
-    text-decoration: underline;
+    text-decoration: none;
+    opacity: 0.8;
   }
 }
 
 .breadcrumbs_current {
-  font-weight: theme.$font-weight-bold;
-  color: var(--text-color-primary);
+  font-weight: theme.$font-weight-bolder;
+  color: var(--text-color-disabled);
 }
 
 .breadcrumbs_separator {
