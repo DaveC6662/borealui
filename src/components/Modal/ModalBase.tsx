@@ -170,7 +170,6 @@ const BaseModal: React.FC<BaseModalProps> = ({
         <h2 id={labelId} className={classMap.srOnly ?? "sr_only"}>
           Modal Dialog
         </h2>
-
         <IconButton
           ref={closeBtnRef}
           className={classMap.closeButton}

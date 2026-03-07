@@ -7,51 +7,51 @@
 $sizes: (
   "xs": (
     header-padding: (
-      theme.$spacing-xs,
-      theme.$spacing-sm,
+      var(--spacing-xs),
+      var(--spacing-sm),
     ),
-    header-font-size: theme.$font-size-xs,
+    header-font-size: var(--font-size-caption),
     icon-size: 1rem,
   ),
   "small": (
     header-padding: (
-      theme.$spacing-xs,
-      theme.$spacing-md,
+      var(--spacing-xs),
+      var(--spacing-md),
     ),
-    header-font-size: theme.$font-size-sm,
+    header-font-size: var(--font-size-label),
     icon-size: 1.2rem,
   ),
   "medium": (
     header-padding: (
-      theme.$spacing-sm,
-      theme.$spacing-lg,
+      var(--spacing-sm),
+      var(--spacing-lg),
     ),
-    header-font-size: theme.$font-size-md,
+    header-font-size: var(--font-size-body-sm),
     icon-size: 1.5rem,
   ),
   "large": (
     header-padding: (
-      theme.$spacing-sm,
-      theme.$spacing-xl,
+      var(--spacing-sm),
+      var(--spacing-xl),
     ),
-    header-font-size: theme.$font-size-md,
+    header-font-size: var(--font-size-body),
     icon-size: 1.8rem,
   ),
   "xl": (
     header-padding: (
-      theme.$spacing-sm,
-      theme.$spacing-xl,
+      var(--spacing-sm),
+      var(--spacing-xl),
     ),
-    header-font-size: theme.$font-size-lg,
+    header-font-size: var(--font-size-h6),
     icon-size: 2rem,
   ),
 );
 
 .accordion {
-  border-radius: theme.$border-radius-md;
-  margin-bottom: theme.$spacing-sm;
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-sm);
   background-color: transparent !important;
-  transition: box-shadow theme.$transition-default;
+  transition: box-shadow var(--transition-default);
 }
 
 @each $key, $value in theme.$rounding {
@@ -78,6 +78,10 @@ $sizes: (
   }
 }
 
+.clear {
+  box-shadow: none !important;
+}
+
 .expanded .header {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -91,17 +95,21 @@ $sizes: (
   width: 100%;
   min-height: 44px;
   color: var(--text-color-primary);
-  padding: theme.$spacing-sm;
-  font-size: clamp(theme.$font-size-sm, 0.9rem + 0.2vw, theme.$font-size-base);
-  font-weight: theme.$font-weight-bold;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  text-align: left;
   cursor: pointer;
   background-color: transparent;
   border: none;
-  border-radius: theme.$border-radius-md;
+  border-radius: var(--border-radius-md);
   outline: none;
   transition:
-    background-color theme.$transition-default,
-    border-radius theme.$transition-default;
+    background-color var(--transition-default),
+    border-radius var(--transition-default);
 
   &:focus-visible {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
@@ -109,15 +117,15 @@ $sizes: (
   }
 
   @include bp.down(sm) {
-    padding: theme.$spacing-xs theme.$spacing-sm;
+    padding: var(--spacing-xs) var(--spacing-sm);
   }
 
   @include bp.between(sm, md) {
-    padding: theme.$spacing-sm theme.$spacing-md;
+    padding: var(--spacing-sm) var(--spacing-md);
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-sm theme.$spacing-lg;
+    padding: var(--spacing-sm) var(--spacing-lg);
   }
 }
 
@@ -133,7 +141,7 @@ $sizes: (
     &.outline {
       background-color: transparent;
       border: 2px solid map.get($values, border);
-      color: map.get($values, text-color);
+      color: map.get($values, text);
 
       @include bp.down(sm) {
         border-width: 1.5px;
@@ -159,7 +167,7 @@ $sizes: (
     &.outline {
       background-color: transparent;
       border: 2px solid map.get($values, border);
-      color: map.get($values, text-color);
+      color: map.get($values, text);
 
       @include bp.down(sm) {
         border-width: 1.5px;
@@ -174,7 +182,7 @@ $sizes: (
 }
 
 .disabled {
-  background-color: theme.$disabled-color;
+  background-color: var(--disabled-color);
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
@@ -185,23 +193,28 @@ $sizes: (
   grid-template-rows: 0fr;
   transition:
     grid-template-rows 300ms ease,
-    padding theme.$transition-default,
-    border-radius theme.$transition-default,
-    opacity theme.$transition-default,
-    transform theme.$transition-default;
+    padding var(--transition-default),
+    border-radius var(--transition-default),
+    opacity var(--transition-default),
+    transform var(--transition-default);
   overflow: hidden;
   box-sizing: border-box;
-  padding: 0 theme.$spacing-md;
+  padding: 0 var(--spacing-md);
   background-color: var(--background-color-lighter);
   color: var(--text-color-primary);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   opacity: 0;
 
   @include bp.down(sm) {
-    padding: 0 theme.$spacing-sm;
+    padding: 0 var(--spacing-sm);
   }
 
   @include bp.up(lg) {
-    padding: 0 theme.$spacing-lg;
+    padding: 0 var(--spacing-lg);
   }
 }
 
@@ -213,16 +226,16 @@ $sizes: (
 .expanded .content {
   grid-template-rows: 1fr;
   opacity: 1;
-  padding: theme.$spacing-xl theme.$spacing-xl;
-  border-bottom-left-radius: theme.$border-radius-md;
-  border-bottom-right-radius: theme.$border-radius-md;
+  padding: var(--spacing-xl);
+  border-bottom-left-radius: var(--border-radius-md);
+  border-bottom-right-radius: var(--border-radius-md);
 
   @include bp.down(sm) {
-    padding: theme.$spacing-md theme.$spacing-md;
+    padding: var(--spacing-md);
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-xl calc(theme.$spacing-xl * 1.1);
+    padding: var(--spacing-xl) calc(var(--spacing-xl) * 1.1);
   }
 }
 
@@ -246,20 +259,22 @@ $sizes: (
 
 .title {
   flex-grow: 1;
-  font-size: clamp(theme.$font-size-sm, 0.9rem + 0.2vw, theme.$font-size-base);
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 
 .icon {
   font-size: 1.5rem;
-  margin-right: 10px;
-  transition: transform theme.$transition-default;
+  margin-right: var(--spacing-sm);
+  transition: transform var(--transition-default);
 
   @include bp.down(sm) {
-    margin-right: theme.$spacing-xs;
+    margin-right: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    margin-right: theme.$spacing-sm;
+    margin-right: var(--spacing-sm);
   }
 }
 
@@ -273,17 +288,11 @@ $sizes: (
       padding: list.nth(map.get($config, header-padding), 1)
         list.nth(map.get($config, header-padding), 2);
 
-      $fs: map.get($config, header-font-size);
+      font-size: map.get($config, header-font-size);
+    }
 
-      font-size: clamp(
-        max(theme.$font-size-sm, $fs - 2px),
-        0.9rem + 0.25vw,
-        $fs
-      );
-
-      @include bp.up(lg) {
-        font-size: calc(#{$fs} * 1.05);
-      }
+    .title {
+      font-size: inherit;
     }
 
     .icon {
@@ -299,11 +308,9 @@ $sizes: (
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .header {
-    transition: none;
-  }
-
-  .content {
+  .header,
+  .content,
+  .icon {
     transition: none;
   }
 }

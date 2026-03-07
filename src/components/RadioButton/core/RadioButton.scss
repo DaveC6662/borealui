@@ -6,22 +6,26 @@
 .radio_wrapper {
   display: inline-flex;
   align-items: center;
-  gap: theme.$spacing-sm;
-  font-size: theme.$font-size-md;
+  gap: var(--spacing-sm);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   cursor: pointer;
   user-select: none;
-  transition: all theme.$transition-default;
+  transition: all var(--transition-default);
   position: relative;
   color: var(--text-color-primary);
 
   @include bp.down(xs) {
-    gap: theme.$spacing-xs;
-    font-size: theme.$font-size-sm;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-md;
-    font-size: theme.$font-size-base;
+    gap: var(--spacing-md);
+    font-size: var(--font-size-body-sm);
   }
 
   &:focus-visible {
@@ -45,7 +49,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  transition: all theme.$transition-default;
+  transition: all var(--transition-default);
   background: transparent;
 
   &::after {
@@ -55,7 +59,7 @@
     background-color: currentcolor;
     opacity: 0;
     transform: scale(0.6);
-    transition: all theme.$transition-default;
+    transition: all var(--transition-default);
   }
 
   @include bp.down(xs) {
@@ -100,8 +104,13 @@
 
 .radio_label {
   color: var(--text-color-primary);
-  transition: all theme.$transition-default;
+  transition: all var(--transition-default);
   width: max-content;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
 
   &.radio_disabled {
     cursor: not-allowed;
@@ -109,11 +118,11 @@
   }
 
   @include bp.down(xs) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-base;
+    font-size: var(--font-size-body-sm);
   }
 }
 
@@ -142,7 +151,7 @@
   cursor: not-allowed;
 
   .radio_circle {
-    border-color: theme.$disabled-color;
+    border-color: var(--disabled-color);
   }
 }
 

@@ -29,22 +29,22 @@
 
 .card {
   overflow: hidden;
-  margin: theme.$spacing-sm;
+  margin: var(--spacing-sm);
   position: relative;
-  background-color: theme.$background-color-surface;
+  background-color: var(--background-color-surface);
   display: flex;
   flex-direction: column;
   width: fit-content;
   height: fit-content;
   color: var(--text-color-primary);
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-default);
 
   @include bp.down(sm) {
-    margin: theme.$spacing-xs;
+    margin: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    margin: theme.$spacing-md;
+    margin: var(--spacing-md);
   }
 }
 
@@ -183,35 +183,35 @@
 
   .body {
     flex: 1;
-    padding: theme.$spacing-md;
+    padding: var(--spacing-md);
     display: flex;
     flex-direction: column;
     justify-content: center;
 
     @include bp.down(sm) {
-      padding: theme.$spacing-sm;
+      padding: var(--spacing-sm);
     }
 
     @include bp.up(lg) {
-      padding: theme.$spacing-lg;
+      padding: var(--spacing-lg);
     }
   }
 
   .footer {
-    padding: theme.$spacing-md;
+    padding: var(--spacing-md);
 
     @include bp.down(sm) {
-      padding: theme.$spacing-sm;
+      padding: var(--spacing-sm);
     }
 
     @include bp.up(lg) {
-      padding: theme.$spacing-lg;
+      padding: var(--spacing-lg);
     }
   }
 }
 
 .disabled {
-  background-color: theme.$disabled-color;
+  background-color: var(--disabled-color);
   color: var(--text-color-primary);
   cursor: not-allowed;
   pointer-events: none;
@@ -232,11 +232,11 @@
 @each $name, $props in theme.$themes {
   .#{$name} {
     background: map.get($props, bg);
-    color: var(--text-color-primary);
+    color: map.get($props, text);
 
     .icon,
     .description {
-      color: var(--text-color-primary);
+      color: inherit;
     }
 
     .loading {
@@ -258,11 +258,11 @@
 @each $name, $props in theme.$states {
   .#{$name} {
     background: map.get($props, bg);
-    color: var(--text-color-primary);
+    color: map.get($props, text);
 
     .icon,
     .description {
-      color: var(--text-color-primary);
+      color: inherit;
     }
 
     .loading {
@@ -291,53 +291,63 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: theme.$spacing-md;
+  padding: var(--spacing-md);
 
   @include bp.down(sm) {
-    padding: theme.$spacing-sm;
+    padding: var(--spacing-sm);
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-lg;
+    padding: var(--spacing-lg);
   }
 }
 
 .header,
 .body {
-  padding: theme.$spacing-md;
+  padding: var(--spacing-md);
   display: flex;
 }
 
 .body {
   flex-direction: column;
-  gap: theme.$spacing-sm;
-  padding: theme.$spacing-sm;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
 
   @include bp.up(lg) {
-    gap: theme.$spacing-md;
+    gap: var(--spacing-md);
   }
 }
 
 .title {
-  font-weight: theme.$font-weight-bold;
   margin: 0;
   flex: 1;
   display: flex;
-  gap: theme.$spacing-sm;
+  gap: var(--spacing-sm);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-heading);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-h6);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-lg;
+    font-size: var(--font-size-h3);
   }
 }
 
 .icon {
   font-size: 1.2em;
   display: flex;
-  color: var(--text-color-primary);
+  color: inherit;
+  line-height: 1;
 
   @include bp.down(sm) {
     font-size: 1em;
@@ -349,30 +359,35 @@
 }
 
 .description {
-  color: var(--text-color-primary);
   width: 95%;
-  margin: theme.$spacing-xxs auto;
+  margin: var(--spacing-xxs) auto;
+  color: inherit;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-label);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-lg;
+    font-size: var(--font-size-body);
   }
 }
 
 .footer {
-  padding: theme.$spacing-md;
+  padding: var(--spacing-md);
   border-top: 2px solid rgb(0 0 0 / 10%);
 
   @include bp.down(sm) {
-    padding: theme.$spacing-sm;
+    padding: var(--spacing-sm);
     border-width: 1px;
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-lg;
+    padding: var(--spacing-lg);
   }
 }
 
@@ -381,21 +396,21 @@
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
-  padding: theme.$spacing-sm;
-  gap: theme.$spacing-sm;
+  padding: var(--spacing-sm);
+  gap: var(--spacing-sm);
 
   @include bp.down(sm) {
-    gap: theme.$spacing-xs;
+    gap: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-md;
+    gap: var(--spacing-md);
   }
 }
 
 .xs {
   .description {
-    font-size: theme.$font-size-xs;
+    font-size: var(--font-size-caption);
   }
 
   .icon {
@@ -403,18 +418,21 @@
   }
 
   .title {
-    font-size: theme.$font-size-sm;
-    line-height: 0.9em;
+    font-size: var(--font-size-label);
+    line-height: var(--line-height-heading);
   }
 
   .children {
-    font-size: theme.$font-size-xs;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
   }
 }
 
 .small {
   .description {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-label);
   }
 
   .icon {
@@ -422,17 +440,20 @@
   }
 
   .title {
-    font-size: theme.$font-size-md;
+    font-size: var(--font-size-body-sm);
   }
 
   .children {
-    font-size: theme.$font-size-sm;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-label);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
   }
 }
 
 .medium {
   .description {
-    font-size: theme.$font-size-md;
+    font-size: var(--font-size-body-sm);
   }
 
   .icon {
@@ -440,17 +461,20 @@
   }
 
   .title {
-    font-size: theme.$font-size-base;
+    font-size: var(--font-size-body);
   }
 
   .children {
-    font-size: theme.$font-size-md;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
   }
 }
 
 .large {
   .description {
-    font-size: theme.$font-size-lg;
+    font-size: var(--font-size-body);
   }
 
   .icon {
@@ -458,17 +482,20 @@
   }
 
   .title {
-    font-size: 1.4em;
+    font-size: var(--font-size-h6);
   }
 
   .children {
-    font-size: theme.$font-size-lg;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
   }
 }
 
 .xl {
   .description {
-    font-size: theme.$font-size-xl;
+    font-size: var(--font-size-h6);
   }
 
   .icon {
@@ -476,11 +503,14 @@
   }
 
   .title {
-    font-size: 1.6em;
+    font-size: var(--font-size-h4);
   }
 
   .children {
-    font-size: theme.$font-size-xl;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-h6);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
   }
 }
 
@@ -500,7 +530,7 @@
 .center {
   text-align: center;
 
-  .card_header,
+  .header,
   .body,
   .footer,
   .actions {
@@ -526,12 +556,12 @@
 .clickable {
   cursor: pointer;
   transition:
-    transform 0.3s ease,
-    box-shadow theme.$transition-default;
+    transform var(--transition-default),
+    box-shadow var(--transition-default);
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: theme.$box-shadow-medium;
+    box-shadow: var(--box-shadow-medium);
   }
 
   &:focus-visible {
@@ -543,7 +573,7 @@
   @include bp.down(sm) {
     &:hover {
       transform: translateY(-1px);
-      box-shadow: theme.$box-shadow-light;
+      box-shadow: var(--box-shadow-light);
     }
   }
 }

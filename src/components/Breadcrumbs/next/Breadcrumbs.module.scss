@@ -1,29 +1,31 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "sass:color";
 @use "sass:map";
 
 .breadcrumbs {
   display: flex;
   align-items: center;
-  font-size: theme.$font-size-base;
-  font-weight: theme.$font-weight-light;
-  gap: theme.$spacing-xs;
   width: fit-content;
-  padding: theme.$spacing-xs theme.$spacing-sm;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  gap: var(--spacing-xs);
   list-style: none;
   overflow-x: auto;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-sm;
-    gap: theme.$spacing-xs * 0.5;
-    padding: theme.$spacing-xs;
+    font-size: var(--font-size-label);
+    gap: var(--spacing-xxs);
+    padding: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-lg;
-    gap: theme.$spacing-sm;
-    padding: theme.$spacing-sm theme.$spacing-md;
+    font-size: var(--font-size-body);
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
   }
 }
 
@@ -55,7 +57,7 @@
   }
 
   .#{$name}.outline {
-    color: map.get($values, text-color);
+    color: map.get($values, text);
     background-color: transparent;
     border: 2px solid map.get($values, border);
 
@@ -65,7 +67,7 @@
 
     &:hover {
       color: map.get($values, text-hover);
-      background-color: map.get($values, bg-hover);
+      background-color: map.get($values, hover);
     }
 
     &:focus {
@@ -73,6 +75,10 @@
       outline-offset: 2px;
     }
   }
+}
+
+.clear {
+  box-shadow: none;
 }
 
 @each $name, $values in theme.$states {
@@ -87,7 +93,7 @@
   }
 
   .#{$name}.outline {
-    color: map.get($values, text-color);
+    color: map.get($values, text);
     background-color: transparent;
     border: 2px solid map.get($values, border);
 
@@ -97,7 +103,7 @@
 
     &:hover {
       color: map.get($values, text-hover);
-      background-color: map.get($values, bg-hover);
+      background-color: map.get($values, hover);
     }
 
     &:focus {
@@ -108,62 +114,62 @@
 }
 
 .xs {
-  font-size: theme.$font-size-xs;
+  font-size: var(--font-size-caption);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-xxs;
+    font-size: var(--font-size-xxs);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-label);
   }
 }
 
 .small {
-  font-size: theme.$font-size-sm;
+  font-size: var(--font-size-label);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-xs;
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-md;
+    font-size: var(--font-size-body-sm);
   }
 }
 
 .medium {
-  font-size: theme.$font-size-md;
+  font-size: var(--font-size-body-sm);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-label);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-base;
+    font-size: var(--font-size-body);
   }
 }
 
 .large {
-  font-size: theme.$font-size-base;
+  font-size: var(--font-size-body);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-md;
+    font-size: var(--font-size-body-sm);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-lg;
+    font-size: var(--font-size-h6);
   }
 }
 
 .xl {
-  font-size: theme.$font-size-xl;
+  font-size: var(--font-size-h6);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-lg;
+    font-size: var(--font-size-body);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-xxl;
+    font-size: var(--font-size-h5);
   }
 }
 
@@ -171,18 +177,18 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  gap: theme.$spacing-xs;
+  gap: var(--spacing-xs);
   padding: 0;
   margin: 0;
   list-style: none;
   flex-wrap: nowrap;
 
   @include bp.down(sm) {
-    gap: theme.$spacing-xs * 0.5;
+    gap: var(--spacing-xxs);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-sm;
+    gap: var(--spacing-sm);
   }
 }
 
@@ -191,7 +197,11 @@
   align-items: center;
   white-space: nowrap;
   color: inherit;
-  transition: all theme.$transition-default;
+  transition:
+    color var(--transition-default),
+    opacity var(--transition-default),
+    transform var(--transition-default),
+    box-shadow var(--transition-default);
 }
 
 .item_animate {
@@ -199,12 +209,12 @@
 }
 
 .item_active {
-  font-weight: theme.$font-weight-bolder;
-  color: theme.$disabled-color;
+  font-weight: var(--font-weight-semibold);
+  color: var(--disabled-color);
 }
 
 .disabled {
-  background-color: theme.$disabled-color;
+  background-color: var(--disabled-color);
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
@@ -213,10 +223,13 @@
 .link {
   text-decoration: none;
   color: inherit;
+  font: inherit;
 }
 
 .link_label {
   display: inline-block;
+  line-height: inherit;
+  letter-spacing: inherit;
 
   .link:hover & {
     text-decoration: none;
@@ -225,38 +238,39 @@
 }
 
 .current {
-  font-weight: theme.$font-weight-bolder;
-  color: var(--text-color-disabled);
+  font-weight: var(--font-weight-bold);
+  color: var(--disabled-color);
 }
 
 .separator {
-  padding: 0 theme.$spacing-xs;
-  color: var(--text-color-primary);
-  margin-top: -1px;
   display: flex;
   align-items: center;
+  padding: 0 var(--spacing-xs);
+  color: var(--text-color-primary);
+  margin-top: -1px;
+  line-height: 1;
 
   svg {
-    height: 1.2rem;
-    width: 1.2rem;
+    width: 1.2em;
+    height: 1.2em;
 
     @include bp.down(sm) {
-      height: 1rem;
-      width: 1rem;
+      width: 1em;
+      height: 1em;
     }
 
     @include bp.up(lg) {
-      height: 1.5rem;
-      width: 1.5rem;
+      width: 1.3em;
+      height: 1.3em;
     }
   }
 
   @include bp.down(sm) {
-    padding: 0 theme.$spacing-xxs;
+    padding: 0 var(--spacing-xxs);
   }
 
   @include bp.up(lg) {
-    padding: 0 theme.$spacing-sm;
+    padding: 0 var(--spacing-sm);
   }
 }
 

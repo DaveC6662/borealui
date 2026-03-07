@@ -3,7 +3,7 @@
 @use "../../../styles/globals";
 
 .skeletonLoader {
-  --skeleton-sheen: #{theme.$disabled-color};
+  --skeleton-sheen: var(--disabled-color);
   --skeleton-duration: 1.5s;
 
   background-color: var(--background-color-light);

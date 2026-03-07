@@ -7,19 +7,19 @@
   justify-content: space-between;
   align-items: center;
   width: fit-content;
-  margin: theme.$spacing-sm;
-  transition: theme.$transition-default;
+  margin: var(--spacing-sm);
+  transition: var(--transition-default);
   max-width: 400px;
   background: transparent;
 
   &:focus-within {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 3px;
-    border-radius: theme.$border-radius-md;
+    border-radius: var(--border-radius-md);
   }
 
   @include bp.down(xs) {
-    padding: 0.5rem;
+    padding: var(--spacing-xs);
     height: 35px;
     width: 95%;
     max-width: none;
@@ -27,7 +27,7 @@
 
   input {
     width: 100%;
-    padding: theme.$spacing-xs;
+    padding: var(--spacing-sm);
     border: none;
     height: 100%;
     background-color: transparent;
@@ -63,30 +63,34 @@
 .textInput {
   outline: none;
   flex: 1;
-  margin: theme.$spacing-sm;
-  font-size: theme.$font-size-base;
+  margin: var(--spacing-sm);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   border: none;
-  border-radius: theme.$border-radius-lg;
+  border-radius: var(--border-radius-lg);
   background-color: transparent;
   color: var(--text-color-primary);
-  font-family: theme.$font-family-primary;
   min-height: 2.5rem;
 
   &::placeholder {
     color: var(--text-color-primary);
     opacity: 0.8;
+    font: inherit;
   }
 
   &:focus-visible {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
-    border-radius: theme.$border-radius-lg;
+    border-radius: var(--border-radius-lg);
   }
 
   @include bp.down(xs) {
     width: 100%;
-    font-size: calc(theme.$font-size-base * 0.9);
-    margin: theme.$spacing-xs;
+    font-size: var(--font-size-body-sm);
+    margin: var(--spacing-xs);
   }
 }
 
@@ -112,7 +116,7 @@
 }
 
 .togglePassword {
-  padding: theme.$spacing-xs;
+  padding: var(--spacing-xs);
   box-sizing: border-box;
   background: transparent;
   border: none;
@@ -122,11 +126,11 @@
   &:focus-visible {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
-    border-radius: 6px;
+    border-radius: var(--border-radius-xs);
   }
 
   @include bp.down(xs) {
-    margin-top: theme.$spacing-xs;
+    margin-top: var(--spacing-xs);
   }
 }
 
@@ -140,10 +144,18 @@
   .#{$themeName} {
     background-color: map.get($vals, bg);
     color: map.get($vals, text);
-    box-shadow: map.get($vals, shadow, theme.$box-shadow-medium);
+    box-shadow: if(
+      map.has-key($vals, shadow),
+      map.get($vals, shadow),
+      var(--box-shadow-medium)
+    );
 
     &:hover {
-      background-color: map.get($vals, hover, map.get($vals, bg));
+      background-color: if(
+        map.has-key($vals, hover),
+        map.get($vals, hover),
+        map.get($vals, bg)
+      );
     }
 
     .textInput::placeholder {
@@ -164,6 +176,7 @@
 }
 
 .clear {
+  box-shadow: none;
   .textInput {
     border: none;
   }
@@ -173,7 +186,7 @@
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
-  background-color: theme.$disabled-color;
+  background-color: var(--disabled-color);
 
   .textInput {
     background-color: transparent;

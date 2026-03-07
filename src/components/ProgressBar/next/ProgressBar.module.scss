@@ -47,20 +47,8 @@ $progress-sizes: (
     }
   }
 
-  @each $name, $vals in theme.$themes {
-    &.#{$name} {
-      background-color: map.get($vals, bg);
-    }
-  }
-
-  @each $name, $vals in theme.$states {
-    &.#{$name} {
-      background-color: map.get($vals, bg);
-    }
-  }
-
   &.clear {
-    background-color: var(--text-color-primary);
+    background-color: var(--background-color-lighter);
   }
 }
 
@@ -68,11 +56,15 @@ $progress-sizes: (
   display: flex;
   gap: 0.5rem;
   width: 100%;
+  font-family: var(--font-family-ui);
 }
 
 .title {
-  font-size: 0.875em;
-  line-height: 1.2;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   white-space: nowrap;
 }
 
@@ -110,7 +102,11 @@ $progress-sizes: (
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  font-size: 0.7em;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
 }
 
 .bar {

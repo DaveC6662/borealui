@@ -10,7 +10,7 @@
   position: sticky;
   top: 0;
   overflow-y: auto;
-  font-family: var(--font-family-primary);
+  font-family: var(--font-family-ui);
   overscroll-behavior: contain;
 
   @include bp.down(md) {
@@ -43,14 +43,14 @@
 }
 
 @each $name, $vals in theme.$themes {
-  .wrapper.sidebar_#{$name} .active {
+  .#{$name} .active {
     background-color: map.get($vals, bg);
-    color: map.get($vals, color);
+    color: map.get($vals, text);
   }
 
-  .wrapper.sidebar_#{$name}.sidebar_outline .active {
+  .#{$name}.outline .active {
     background-color: transparent;
-    color: map.get($vals, color);
+    color: map.get($vals, text);
     border: 2px solid map.get($vals, border);
 
     @include bp.down(sm) {
@@ -58,25 +58,25 @@
     }
   }
 
-  .wrapper.sidebar_clear.sidebar_#{$name} .active {
+  .wrapper.clear.#{$name} .active {
     background-color: transparent;
   }
 }
 
 @each $name, $vals in theme.$states {
-  .wrapper.sidebar_#{$name} .active {
+  .#{$name} .active {
     background-color: map.get($vals, bg);
-    color: map.get($vals, color);
+    color: map.get($vals, text);
 
     &:hover {
       background-color: map.get($vals, hover);
     }
   }
 
-  .wrapper.sidebar_#{$name}.sidebar_outline .active {
+  .#{$name}.outline .active {
     border: 2px solid map.get($vals, bg);
     background-color: transparent;
-    color: map.get($vals, color);
+    color: map.get($vals, text);
 
     &:hover {
       background-color: map.get($vals, hover);
@@ -114,7 +114,12 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: theme.$transition-default;
+  transition: var(--transition-default);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
 
   &:hover {
     text-decoration: none;
@@ -130,26 +135,27 @@
   }
 
   @include bp.down(xs) {
-    padding: theme.$spacing-xs theme.$spacing-sm;
-    font-size: theme.$font-size-sm;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-sm theme.$spacing-md;
-    font-size: theme.$font-size-base;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-body-sm);
   }
 }
 
 .active {
-  font-weight: bolder;
+  font-weight: var(--font-weight-label);
   letter-spacing: 0.1em;
 }
 
 .childLink {
-  font-size: 0.9rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-body-sm);
 
   @include bp.down(xs) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-label);
   }
 }
 
@@ -164,7 +170,7 @@
   }
 
   @include bp.down(xs) {
-    margin-right: theme.$spacing-xxs;
+    margin-right: var(--spacing-xxs);
 
     svg {
       width: 0.95em;
@@ -222,13 +228,17 @@
   @include bp.down(xs) {
     position: static;
     border-top: none;
-    padding: theme.$spacing-sm;
-    gap: theme.$spacing-xs;
+    padding: var(--spacing-sm);
+    gap: var(--spacing-xs);
   }
 }
 
 .footerLink {
-  font-size: 0.85rem;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   text-decoration: none;
 
   &:hover {
@@ -243,7 +253,11 @@
 }
 
 .footerVersion {
-  font-size: 0.75rem;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   opacity: 0.7;
   margin-top: 0.5rem;
 }

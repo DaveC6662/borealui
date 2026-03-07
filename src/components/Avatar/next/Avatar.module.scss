@@ -8,42 +8,45 @@
   justify-content: center;
   position: relative;
   aspect-ratio: 1 / 1;
-  font-weight: theme.$font-weight-bold;
+  font-family: var(--font-family-ui);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   text-transform: uppercase;
   color: var(--text-color-primary);
   border: 2px solid transparent;
   overflow: hidden;
-  transition: all theme.$transition-default;
+  transition: all var(--transition-default);
   z-index: 0;
 
   &.xs {
     width: 36px;
     height: 36px;
-    font-size: 0.5rem;
+    font-size: var(--font-size-caption);
   }
 
   &.small {
     width: 42px;
     height: 42px;
-    font-size: 0.6rem;
+    font-size: var(--font-size-caption);
   }
 
   &.medium {
     width: 56px;
     height: 56px;
-    font-size: 0.7rem;
+    font-size: var(--font-size-label);
   }
 
   &.large {
     width: 72px;
     height: 72px;
-    font-size: 0.8rem;
+    font-size: var(--font-size-body-sm);
   }
 
   &.xl {
     width: 84px;
     height: 84px;
-    font-size: 0.9rem;
+    font-size: var(--font-size-body);
   }
 
   &.circle {
@@ -51,7 +54,7 @@
   }
 
   &.rounded {
-    border-radius: theme.$border-radius-sm;
+    border-radius: var(--border-radius-sm);
   }
 
   &.square {
@@ -123,7 +126,7 @@
 
     &.#{$name}.outline {
       background-color: transparent;
-      color: map.get($props, text-color);
+      color: map.get($props, text);
       border-color: map.get($props, border);
 
       &.clickable:hover {
@@ -152,7 +155,7 @@
 
     &.#{$name}.outline {
       background-color: transparent;
-      color: map.get($props, text-color);
+      color: map.get($props, text);
       border-color: map.get($props, border);
 
       &.clickable:hover {
@@ -164,15 +167,15 @@
   }
 
   &.disabled {
-    background-color: theme.$disabled-color;
+    background-color: var(--disabled-color);
     cursor: not-allowed;
     pointer-events: none;
     opacity: 0.6;
   }
 
   &.disabled.outline {
-    color: theme.$disabled-color;
-    border-color: theme.$disabled-color;
+    color: var(--disabled-color);
+    border-color: var(--disabled-color);
   }
 
   &.image {
@@ -186,8 +189,11 @@
   }
 
   &.initials {
+    font-family: inherit;
     font-size: inherit;
-    font-weight: bold;
+    font-weight: inherit;
+    line-height: 1;
+    letter-spacing: inherit;
     z-index: 1;
     position: relative;
   }
@@ -243,22 +249,22 @@
     }
 
     &.online {
-      background-color: theme.$success-color;
+      background-color: var(--success-color);
       border: 1px solid color.adjust(theme.$success-color, $lightness: 20%);
     }
 
     &.away {
-      background-color: theme.$warning-color;
+      background-color: var(--warning-color);
       border: 1px solid color.adjust(theme.$warning-color, $lightness: 20%);
     }
 
     &.offline {
-      background-color: theme.$disabled-color;
+      background-color: var(--disabled-color);
       border: 1px solid color.adjust(theme.$disabled-color, $lightness: 20%);
     }
 
     &.busy {
-      background-color: theme.$error-color;
+      background-color: var(--error-color);
       border: 1px solid color.adjust(theme.$error-color, $lightness: 20%);
     }
   }

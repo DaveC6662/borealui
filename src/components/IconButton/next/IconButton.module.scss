@@ -6,11 +6,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 0.8rem;
+  line-height: 1;
   border: none;
   text-decoration: none;
   color: inherit;
-  transition: theme.$transition-default;
+  font-family: var(--font-family-ui);
+  transition: var(--transition-default);
   transform-origin: center;
   background: transparent;
 
@@ -55,6 +56,10 @@
   .shadow#{$k} {
     box-shadow: $v;
   }
+}
+
+.clear {
+  box-shadow: none;
 }
 
 @each $name, $vals in theme.$themes {
@@ -178,7 +183,7 @@ $sizes: (
 }
 
 .disabled {
-  background-color: theme.$disabled-color;
+  background-color: var(--disabled-color);
   color: var(--text-color-primary);
   cursor: not-allowed;
   pointer-events: none;

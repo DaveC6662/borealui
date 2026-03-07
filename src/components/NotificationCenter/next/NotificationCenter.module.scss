@@ -5,9 +5,9 @@
 
 $notification-colors: (
   primary: var(--primary-color),
-  success: theme.$success-color,
-  error: theme.$error-color,
-  warning: theme.$warning-color,
+  success: var(--success-color),
+  error: var(--error-color),
+  warning: var(--warning-color),
   info: var(--link-color),
 );
 
@@ -15,17 +15,18 @@ $notification-colors: (
   position: relative;
   width: fit-content;
   max-width: 400px;
-  padding: theme.$spacing-sm;
+  padding: var(--spacing-sm);
   overflow: hidden;
+  font-family: var(--font-family-body);
 
   @include bp.down(sm) {
     max-width: 100%;
-    padding: theme.$spacing-xs;
+    padding: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
     max-width: 520px;
-    padding: theme.$spacing-md;
+    padding: var(--spacing-md);
   }
 
   &:focus-visible {
@@ -39,17 +40,21 @@ $notification-colors: (
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: theme.$font-weight-bold;
-  margin-bottom: theme.$spacing-sm;
-  gap: theme.$spacing-xs;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  margin-bottom: var(--spacing-sm);
+  gap: var(--spacing-xs);
 
   @include bp.down(sm) {
-    margin-bottom: theme.$spacing-xs;
+    margin-bottom: var(--spacing-xs);
     flex-direction: column;
   }
 
   @include bp.up(lg) {
-    margin-bottom: theme.$spacing-md;
+    margin-bottom: var(--spacing-md);
   }
 }
 
@@ -63,7 +68,7 @@ $notification-colors: (
   width: fit-content;
   height: fit-content;
   flex-direction: column;
-  gap: theme.$spacing-xs;
+  gap: var(--spacing-xs);
   margin: 0;
   padding: 4px;
   list-style: none;
@@ -72,31 +77,31 @@ $notification-colors: (
 
   @include bp.down(sm) {
     max-height: 50vh;
-    gap: theme.$spacing-xxs;
+    gap: var(--spacing-xxs);
     padding: 2px;
   }
 
   @include bp.up(lg) {
     max-height: 60vh;
-    gap: theme.$spacing-sm;
+    gap: var(--spacing-sm);
   }
 }
 
 .notification {
   display: flex;
   align-items: center;
-  padding: theme.$spacing-xs;
+  padding: var(--spacing-xs);
   overflow-x: auto;
   background-color: var(--background-color-dark);
   border-left: 4px solid transparent;
   animation: fade-in-up 0.3s ease;
   transition:
-    background-color theme.$transition-default,
-    transform theme.$transition-default,
-    box-shadow theme.$transition-default;
+    background-color var(--transition-default),
+    transform var(--transition-default),
+    box-shadow var(--transition-default);
 
   &:hover {
-    background-color: var(--background-color);
+    background-color: var(--background-color-darker);
   }
 
   &:focus-visible {
@@ -106,11 +111,11 @@ $notification-colors: (
   }
 
   @include bp.down(sm) {
-    padding: theme.$spacing-xxs;
+    padding: var(--spacing-xxs);
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-sm;
+    padding: var(--spacing-sm);
   }
 
   @each $type, $color in $notification-colors {
@@ -120,11 +125,11 @@ $notification-colors: (
   }
 
   .icon {
-    margin-right: theme.$spacing-sm;
+    margin-right: var(--spacing-sm);
     font-size: 1.2rem;
 
     @include bp.down(sm) {
-      margin-right: theme.$spacing-xs;
+      margin-right: var(--spacing-xs);
       font-size: 1rem;
     }
 
@@ -138,37 +143,49 @@ $notification-colors: (
 
     .message {
       display: block;
-      font-size: theme.$font-size-base;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
 
       @include bp.down(sm) {
-        font-size: theme.$font-size-sm;
+        font-size: var(--font-size-body-sm);
       }
 
       @include bp.up(lg) {
-        font-size: theme.$font-size-md;
+        font-size: var(--font-size-body);
       }
     }
 
     .timestamp {
-      font-size: theme.$font-size-sm;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-caption);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
       color: var(--text-color-secondary);
 
       @include bp.down(sm) {
-        font-size: theme.$font-size-xs;
+        font-size: var(--font-size-caption);
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-label);
       }
     }
   }
 
   .close {
-    margin-left: theme.$spacing-sm;
+    margin-left: var(--spacing-sm);
     background: transparent;
     color: inherit;
     border: none;
     box-shadow: none;
     cursor: pointer;
-    padding: theme.$spacing-xxs;
+    padding: var(--spacing-xxs);
     line-height: 1;
-    transition: opacity theme.$transition-default;
+    transition: opacity var(--transition-default);
 
     &:hover {
       opacity: 0.7;
@@ -181,7 +198,7 @@ $notification-colors: (
     }
 
     @include bp.down(sm) {
-      margin-left: theme.$spacing-xs;
+      margin-left: var(--spacing-xs);
     }
   }
 }

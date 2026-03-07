@@ -1,7 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
-@use "sass:color";
 @use "sass:map";
 
 $checkbox-sizes: (
@@ -11,6 +10,7 @@ $checkbox-sizes: (
   large: 1.25em,
   xl: 1.5em,
 );
+
 $checkmark-sizes: (
   xs: (
     width: 0.41em,
@@ -38,12 +38,13 @@ $checkmark-sizes: (
     border-width: 0.175em,
   ),
 );
+
 $label-font-sizes: (
-  xs: theme.$font-size-xs,
-  small: theme.$font-size-sm,
-  medium: theme.$font-size-md,
-  large: theme.$font-size-base,
-  xl: theme.$font-size-lg,
+  xs: var(--font-size-caption),
+  small: var(--font-size-label),
+  medium: var(--font-size-body-sm),
+  large: var(--font-size-body),
+  xl: var(--font-size-h6),
 );
 
 .checkbox {
@@ -51,21 +52,25 @@ $label-font-sizes: (
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  gap: theme.$spacing-sm;
-  font-size: theme.$font-size-md;
+  gap: var(--spacing-sm);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   user-select: none;
   position: relative;
-  transition: all theme.$transition-default;
+  transition: all var(--transition-default);
   background-color: transparent;
 
   @include bp.down(sm) {
-    gap: theme.$spacing-xs;
-    font-size: theme.$font-size-sm;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-label);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-md;
-    font-size: theme.$font-size-base;
+    gap: var(--spacing-md);
+    font-size: var(--font-size-body);
   }
 }
 
@@ -134,19 +139,11 @@ $label-font-sizes: (
     font-size: map.get($label-font-sizes, $size);
 
     @include bp.down(sm) {
-      font-size: clamp(
-        theme.$font-size-sm,
-        0.9rem + 0.1vw,
-        map.get($label-font-sizes, $size)
-      );
+      font-size: map.get($label-font-sizes, $size);
     }
 
     @include bp.up(lg) {
-      font-size: clamp(
-        map.get($label-font-sizes, $size),
-        0.95rem + 0.2vw,
-        theme.$font-size-lg
-      );
+      font-size: calc(#{map.get($label-font-sizes, $size)} * 1.05);
     }
   }
 }
@@ -158,7 +155,7 @@ $label-font-sizes: (
   justify-content: center;
   background-color: #fff;
   position: relative;
-  transition: all theme.$transition-default;
+  transition: all var(--transition-default);
 
   &::before {
     content: "";
@@ -180,7 +177,7 @@ $label-font-sizes: (
   content: "";
   transform: rotate(-45deg);
   opacity: 0;
-  transition: all theme.$transition-default;
+  transition: all var(--transition-default);
 }
 
 .input:checked + .box::after {
@@ -198,7 +195,11 @@ $label-font-sizes: (
 .label {
   color: var(--text-color-primary);
   margin-bottom: -1px;
-  line-height: 1.2;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
 
   @include bp.down(sm) {
     line-height: 1.15;
@@ -240,7 +241,7 @@ $label-font-sizes: (
 .disabled {
   opacity: 0.6;
   cursor: not-allowed;
-  color: theme.$disabled-color;
+  color: var(--disabled-color);
 
   .box {
     box-shadow: none;
