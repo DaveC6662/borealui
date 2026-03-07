@@ -15,7 +15,7 @@ export { default as Typography } from "./components/Typography/next/Typography";
 // Buttons
 export { default as Button } from "./components/Button/next/Button";
 export { default as IconButton } from "./components/IconButton/next/IconButton";
-export { default as ScrollToTop } from "./components/ScrollToTop/next/STT";
+export { default as ScrollToTop } from "./components/ScrollToTop/next/ScrollToTop";
 
 // Inputs & Forms
 export { default as TextInput } from "./components/TextInput/next/TextInput";

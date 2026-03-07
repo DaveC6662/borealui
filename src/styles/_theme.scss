@@ -73,50 +73,43 @@ $tertiary-color: #092b1c !default;
 $quaternary-color: #a1733a !default;
 $background-color: #222e2e !default;
 $background-color-surface: #384b4b !default;
-
 $error-color: #f83838 !default;
 $success-color: #51c703 !default;
 $warning-color: #fca505 !default;
 $disabled-color: #b8b8b8dd !default;
-
 $link-color: #8bb0c7 !default;
 $link-hover-color: #627e8f !default;
 $link-hover-color-primary: color.mix(rgb(0 0 0), $primary-color, 20%);
 $link-hover-color-secondary: color.mix(rgb(0 0 0), $secondary-color, 20%);
-
 $text-color: rgb(255 255 255) !default;
 $text-color-light: color.adjust($text-color, $lightness: 20%);
 $text-color-lighter: color.adjust($text-color, $lightness: 40%);
 $text-color-primary: rgb(255 255 255) !default;
 $text-color-secondary: rgb(0 0 0) !default;
-
 $font-family-body:
   "Inter",
   system-ui,
   -apple-system,
   "Segoe UI",
-  Roboto,
-  Arial,
+  roboto,
+  arial,
   sans-serif !default;
 $font-family-heading:
   "Inter",
   system-ui,
   -apple-system,
   "Segoe UI",
-  Roboto,
+  roboto,
   sans-serif !default;
 $font-family-ui:
   "Inter",
   system-ui,
   -apple-system,
   "Segoe UI",
-  Roboto,
-  Arial,
+  roboto,
+  arial,
   sans-serif !default;
-
-$font-family-mono:
-  ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace !default;
-
+$font-family-mono: ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
 $font-size-xxs: 10px !default;
 $font-size-xs: 12px !default;
 $font-size-sm: 14px !default;
@@ -128,78 +121,65 @@ $font-size-xxl: 32px !default;
 $font-size-display-sm: 40px !default;
 $font-size-display-md: 48px !default;
 $font-size-display-lg: 56px !default;
-
 $font-weight-light: 300 !default;
 $font-weight-normal: 400 !default;
 $font-weight-medium: 500 !default;
 $font-weight-semibold: 600 !default;
 $font-weight-bold: 700 !default;
 $font-weight-bolder: 900 !default;
-
 $line-height-tight: 1.2 !default;
 $line-height-snug: 1.35 !default;
 $line-height-normal: 1.5 !default;
 $line-height-relaxed: 1.65 !default;
 $line-height-loose: 1.8 !default;
-
 $letter-spacing-tight: -0.02em !default;
 $letter-spacing-normal: 0 !default;
 $letter-spacing-wide: 0.02em !default;
 $letter-spacing-wider: 0.05em !default;
-
 $font-size-body: $font-size-base !default;
 $font-size-body-sm: $font-size-md !default;
 $font-size-body-lg: $font-size-lg !default;
-
 $font-size-label: $font-size-sm !default;
 $font-size-caption: $font-size-xs !default;
 $font-size-overline: $font-size-xs !default;
 $font-size-code: $font-size-sm !default;
-
 $font-size-h1: $font-size-display-md !default;
 $font-size-h2: $font-size-display-sm !default;
 $font-size-h3: $font-size-xxl !default;
 $font-size-h4: $font-size-xl !default;
 $font-size-h5: $font-size-lg !default;
 $font-size-h6: $font-size-base !default;
-
 $font-weight-body: $font-weight-normal !default;
 $font-weight-label: $font-weight-medium !default;
 $font-weight-caption: $font-weight-normal !default;
 $font-weight-code: $font-weight-normal !default;
-
 $font-weight-h1: $font-weight-bolder !default;
 $font-weight-h2: $font-weight-bolder !default;
 $font-weight-h3: $font-weight-bold !default;
 $font-weight-h4: $font-weight-bold !default;
 $font-weight-h5: $font-weight-semibold !default;
 $font-weight-h6: $font-weight-semibold !default;
-
 $line-height-body: $line-height-relaxed !default;
 $line-height-heading: $line-height-tight !default;
 $line-height-label: $line-height-normal !default;
 $line-height-caption: $line-height-normal !default;
 $line-height-code: $line-height-normal !default;
-
 $letter-spacing-heading: $letter-spacing-tight !default;
 $letter-spacing-body: $letter-spacing-normal !default;
 $letter-spacing-label: $letter-spacing-wide !default;
 $letter-spacing-caption: $letter-spacing-normal !default;
 $letter-spacing-overline: $letter-spacing-wider !default;
 $letter-spacing-code: $letter-spacing-normal !default;
-
 $spacing-xxs: 2px !default;
 $spacing-xs: 4px !default;
 $spacing-sm: 8px !default;
 $spacing-md: 16px !default;
 $spacing-lg: 24px !default;
 $spacing-xl: 32px !default;
-
 $text-margin-bottom-xs: $spacing-xs !default;
 $text-margin-bottom-sm: $spacing-sm !default;
 $text-margin-bottom-md: $spacing-md !default;
 $text-margin-bottom-lg: $spacing-lg !default;
-
 $border-radius-xs: 2.5px !default;
 $border-radius-sm: 5px !default;
 $border-radius-md: 10px !default;
@@ -207,24 +187,19 @@ $border-radius-lg: 20px !default;
 $border-radius-xl: 40px !default;
 $border-radius-full: 50% !default;
 $border-radius-round: 50% !default;
-
 $box-shadow-light: 0px 2px 4px rgb(46 49 49 / 10%) !default;
 $box-shadow-medium: 0px 4px 8px rgb(86 101 116 / 20%) !default;
 $box-shadow-heavy: 0px 6px 12px rgb(52 73 94 / 40%) !default;
 $box-shadow-intense: 0px 6px 12px rgb(52 73 94 / 60%) !default;
-
 $transition-fast: 0.2s ease-in-out !default;
 $transition-default: 0.3s ease-in-out !default;
 $transition-slow: 0.5s ease-in-out !default;
-
 $link-font-weight: $font-weight-bold !default;
 $link-text-decoration: none !default;
 $link-hover-decoration: underline !default;
-
 $z-index-drawer: 90;
 $z-index-modal: 100;
 $z-index-tooltip: 110;
-
 $themes: (
   "primary": (
     bg: var(--primary-color),
@@ -267,7 +242,6 @@ $themes: (
     text-hover: var(--disabled-color),
   ),
 ) !default;
-
 $states: (
   "success": (
     bg: var(--success-color),
@@ -291,7 +265,6 @@ $states: (
     text-hover: var(--text-color-primary),
   ),
 ) !default;
-
 $rounding: (
   "None": var(--border-radius-none),
   "Small": var(--border-radius-sm),
@@ -299,7 +272,6 @@ $rounding: (
   "Large": var(--border-radius-lg),
   "Full": var(--border-radius-full),
 ) !default;
-
 $shadow: (
   "None": var(--box-shadow-none),
   "Light": var(--box-shadow-light),
@@ -307,7 +279,6 @@ $shadow: (
   "Strong": var(--box-shadow-heavy),
   "Intense": var(--box-shadow-intense),
 ) !default;
-
 $inverted-shadows: (
   "None": var(--box-shadow-inverted-none),
   "Light": var(--box-shadow-inverted-light),

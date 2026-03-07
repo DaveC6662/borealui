@@ -349,16 +349,73 @@
   --font-size-sm: 14px;
   --font-size-md: 16px;
   --font-size-base: 18px;
-  --font-size-lg: 24px;
-  --font-size-xl: 32px;
-  --font-size-xxl: 45px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-xxl: 32px;
+  --font-size-display-sm: 40px;
+  --font-size-display-md: 48px;
+  --font-size-display-lg: 56px;
   /* ===========================
      Font Weights
   =========================== */
   --font-weight-light: 300;
   --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --font-weight-bolder: 900;
+  /* ===========================
+     Line Heights
+  =========================== */
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.35;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.65;
+  --line-height-loose: 1.8;
+  /* ===========================
+      Semantic Typographic Styles
+  =========================== */
+  --font-size-body: 18px;
+  --font-size-body-sm: 16px;
+  --font-size-body-lg: 20px;
+  --font-size-label: 14px;
+  --font-size-caption: 12px;
+  --font-size-overline: 12px;
+  --font-size-code: 14px;
+  --font-size-h1: 48px;
+  --font-size-h2: 40px;
+  --font-size-h3: 32px;
+  --font-size-h4: 24px;
+  --font-size-h5: 20px;
+  --font-size-h6: 18px;
+  --font-weight-body: 400;
+  --font-weight-label: 500;
+  --font-weight-caption: 400;
+  --font-weight-code: 400;
+  --font-weight-h1: 900;
+  --font-weight-h2: 900;
+  --font-weight-h3: 700;
+  --font-weight-h4: 700;
+  --font-weight-h5: 600;
+  --font-weight-h6: 600;
+  --line-height-body: 1.65;
+  --line-height-heading: 1.2;
+  --line-height-label: 1.5;
+  --line-height-caption: 1.5;
+  --line-height-code: 1.5;
+  --letter-spacing-heading: -0.02em;
+  --letter-spacing-body: 0;
+  --letter-spacing-label: 0.02em;
+  --letter-spacing-caption: 0;
+  --letter-spacing-overline: 0.05em;
+  --letter-spacing-code: 0;
+  /* ===========================
+     Letter Spacing
+  =========================== */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
+  --letter-spacing-wider: 0.05em;
   /* ===========================
      Border Radius (Rounding)
   =========================== */
@@ -390,18 +447,22 @@
   =========================== */
   --divider-color: rgb(99.025, 133.975, 133.975); /* subtle dividers */
   --overlay-color: rgb(0 0 0 / 50%); /* for modals or overlays */
-  --font-family-primary: Lora, arial, sans-serif;
-  --font-family-secondary: Lora, serif;
+  --font-family-body: Inter, system-ui, -apple-system, Segoe UI, roboto, arial, sans-serif;
+  --font-family-heading: Inter, system-ui, -apple-system, Segoe UI, roboto, sans-serif;
+  --font-family-ui: Inter, system-ui, -apple-system, Segoe UI, roboto, arial, sans-serif;
+  --font-family-mono: ui-monospace, sfmono-regular, menlo, consolas, Liberation Mono, monospace;
 }
 
 body {
-  font-family: var(--font-family-primary);
-  font-size: var(--font-size-base);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   color: var(--text-color-primary);
   background-color: var(--background-color);
   margin: 0;
   padding: 0;
-  line-height: 1.5;
   overflow-x: hidden;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
@@ -412,50 +473,52 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Lora", arial, sans-serif;
+  font-family: var(--font-family-heading);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-heading);
   margin: 0;
-  font-weight: 700;
   transition: color 0.3s ease-in-out;
 }
 
 h1 {
-  font-size: 32px;
-  font-weight: 900;
-  line-height: 1.2;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
 }
 
 h2 {
-  font-size: 24px;
-  font-weight: 900;
-  line-height: 1.3;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h2);
 }
 
 h3 {
-  font-size: 16px;
-  line-height: 1.4;
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-h3);
 }
 
 h4 {
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
 }
 
-h5,
-h6 {
-  font-size: 14px;
-  line-height: 1.6;
-  font-weight: 400;
+h5 {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-h5);
 }
 
 h6 {
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-h6);
   text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-overline);
 }
 
 p {
-  font-size: 18px;
-  line-height: 1.6;
-  font-weight: 500;
-  margin-bottom: 16px;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
+  margin-bottom: var(--spacing-md);
 }
 
 a {
@@ -467,6 +530,30 @@ a {
 a:hover {
   color: var(--link-color-hover);
   text-decoration: underline;
+}
+
+label {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+}
+
+small {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-code);
+  font-weight: var(--font-weight-code);
+  line-height: var(--line-height-code);
+  letter-spacing: var(--letter-spacing-code);
 }
 
 .noScroll {
