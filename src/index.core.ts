@@ -7,6 +7,8 @@ export { registerColorScheme } from "./styles/colorSchemeRegistry";
 export { colorSchemes } from "./styles/Themes";
 export { setBorealStyleConfig } from "./config/boreal-style-config";
 
+export { default as Typography } from "./components/Typography/core/Typography";
+
 // Buttons
 export { default as Button } from "./components/Button/core/Button";
 export { default as IconButton } from "./components/IconButton/core/IconButton";

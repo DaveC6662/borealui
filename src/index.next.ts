@@ -10,6 +10,8 @@ export { registerColorScheme } from "./styles/colorSchemeRegistry";
 export { colorSchemes } from "./styles/Themes";
 export { setBorealStyleConfig } from "./config/boreal-style-config";
 
+export { default as Typography } from "./components/Typography/next/Typography";
+
 // Buttons
 export { default as Button } from "./components/Button/next/Button";
 export { default as IconButton } from "./components/IconButton/next/IconButton";
