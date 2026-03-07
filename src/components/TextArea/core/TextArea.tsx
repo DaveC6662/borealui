@@ -42,7 +42,7 @@ const classes = {
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (props, ref) => {
     return <TextAreaBase {...props} ref={ref} classMap={classes} />;
-  }
+  },
 );
 
 TextArea.displayName = "TextArea";

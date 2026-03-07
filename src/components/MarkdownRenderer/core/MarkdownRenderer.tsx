@@ -22,5 +22,5 @@ const classes = {
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = (props) => {
   return <BaseMarkdownRenderer {...props} classMap={classes} />;
 };
-
+MarkdownRenderer.displayName = "MarkdownRenderer";
 export default MarkdownRenderer;

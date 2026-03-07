@@ -1,25 +1,27 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import BaseMessagePopup from "@/components/MessagePopUp/MessagePopUpBase";
+import BaseMessagePopup from "@/components/MessagePopUp/MessagePopupBase";
+import { IconButtonProps } from "@/core/IconButton";
+import { ButtonProps } from "@/core/Button";
 
 expect.extend(toHaveNoViolations);
 
-const DummyButton = React.forwardRef<HTMLButtonElement, any>(
+const DummyButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, ...props }, ref) => (
     <button ref={ref} type="button" {...props}>
       {children}
     </button>
-  )
+  ),
 );
 DummyButton.displayName = "DummyButton";
 
-const DummyIconButton = React.forwardRef<HTMLButtonElement, any>(
+const DummyIconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ icon: Icon, ...props }, ref) => (
     <button ref={ref} type="button" {...props}>
-      {Icon && <Icon aria-hidden="true" />}
+      {Icon && <Icon />}
     </button>
-  )
+  ),
 );
 DummyIconButton.displayName = "DummyIconButton";
 
@@ -48,7 +50,7 @@ describe("BaseMessagePopup", () => {
         Button={DummyButton}
         IconButton={DummyIconButton}
         classMap={classMap}
-      />
+      />,
     );
 
     expect(screen.getByRole("dialog")).toBeInTheDocument();
@@ -68,7 +70,7 @@ describe("BaseMessagePopup", () => {
         Button={DummyButton}
         IconButton={DummyIconButton}
         classMap={classMap}
-      />
+      />,
     );
 
     fireEvent.click(screen.getByTestId("message-popup"));
@@ -85,7 +87,7 @@ describe("BaseMessagePopup", () => {
         Button={DummyButton}
         IconButton={DummyIconButton}
         classMap={classMap}
-      />
+      />,
     );
 
     fireEvent.keyDown(document, { key: "Escape" });
@@ -105,7 +107,7 @@ describe("BaseMessagePopup", () => {
         Button={DummyButton}
         IconButton={DummyIconButton}
         classMap={classMap}
-      />
+      />,
     );
 
     fireEvent.click(screen.getByTestId("message-popup-confirm"));
@@ -124,7 +126,7 @@ describe("BaseMessagePopup", () => {
         Button={DummyButton}
         IconButton={DummyIconButton}
         classMap={classMap}
-      />
+      />,
     );
 
     const confirmButton = await screen.findByTestId("message-popup-confirm");
@@ -141,7 +143,7 @@ describe("BaseMessagePopup", () => {
         Button={DummyButton}
         IconButton={DummyIconButton}
         classMap={classMap}
-      />
+      />,
     );
 
     const dialog = await screen.findByRole("dialog");

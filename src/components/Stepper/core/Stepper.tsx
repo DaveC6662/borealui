@@ -34,5 +34,5 @@ const classes = {
 const Stepper: React.FC<StepperProps> = (props) => (
   <StepperBase {...props} classMap={classes} IconButtonComponent={IconButton} />
 );
-
+Stepper.displayName = "Stepper";
 export default Stepper;

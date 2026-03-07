@@ -36,5 +36,5 @@ const classes = {
 const CircularProgress: React.FC<CircularProgressProps> = (props) => (
   <CircularProgressBase {...props} classMap={classes} />
 );
-
+CircularProgress.displayName = "CircularProgress";
 export default CircularProgress;

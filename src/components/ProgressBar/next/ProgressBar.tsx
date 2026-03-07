@@ -8,5 +8,5 @@ import { ProgressBarProps } from "../ProgressBar.types";
 const ProgressBar: React.FC<ProgressBarProps> = (props) => {
   return <BaseProgressBar {...props} classMap={styles} />;
 };
-
+ProgressBar.displayName = "ProgressBar";
 export default ProgressBar;

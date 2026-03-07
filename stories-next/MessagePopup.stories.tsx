@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { MessagePopUp } from "../src/index.next";
-import type { MessagePopupProps } from "../src/components/MessagePopUp/MessagePopup.types";
+import { MessagePopup } from "../src/index.next";
+import type { MessagePopupProps } from "../src/components/MessagePopup/MessagePopup.types";
 import { RoundingType, ShadowType } from "../src/types/types";
 
 const roundingOptions = ["none", "small", "medium", "large"];
@@ -9,7 +9,7 @@ const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<MessagePopupProps> = {
   title: "Components/MessagePopup",
-  component: MessagePopUp,
+  component: MessagePopup,
   tags: ["autodocs"],
   decorators: [
     (Story) => (
@@ -28,6 +28,13 @@ const meta: Meta<MessagePopupProps> = {
         category: "Content",
         type: { summary: "string" },
       },
+    },
+    title: {
+      control: "text",
+      description:
+        "Optional title shown in a top bar. If provided, a header section is rendered above the message.",
+      type: { name: "string" },
+      table: { category: "Content" },
     },
     onClose: {
       action: "closed",
@@ -108,7 +115,7 @@ export const Default: Story = {
       <>
         <button onClick={() => setOpen(true)}>Show Popup</button>
         {open && (
-          <MessagePopUp
+          <MessagePopup
             message="Are you sure you want to delete this item?"
             onClose={() => setOpen(false)}
             onConfirm={() => {
@@ -126,6 +133,35 @@ export const Default: Story = {
   },
 };
 
+export const WithTitle: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+
+    return (
+      <>
+        <button onClick={() => setOpen(true)}>Show Titled Popup</button>
+        {open && (
+          <MessagePopup
+            title="Delete item"
+            message="Are you sure you want to delete this item? This action cannot be undone."
+            onClose={() => setOpen(false)}
+            onConfirm={() => {
+              alert("Confirmed!");
+              setOpen(false);
+            }}
+            onCancel={() => {
+              alert("Cancelled!");
+              setOpen(false);
+            }}
+            confirmText="Delete"
+            cancelText="Keep"
+          />
+        )}
+      </>
+    );
+  },
+};
+
 export const MessageOnly: Story = {
   render: () => {
     const [open, setOpen] = useState(false);
@@ -133,7 +169,7 @@ export const MessageOnly: Story = {
       <>
         <button onClick={() => setOpen(true)}>Show Message</button>
         {open && (
-          <MessagePopUp
+          <MessagePopup
             message="Just letting you know something happened."
             onClose={() => setOpen(false)}
           />
@@ -150,7 +186,7 @@ export const ConfirmOnly: Story = {
       <>
         <button onClick={() => setOpen(true)}>Show Confirm</button>
         {open && (
-          <MessagePopUp
+          <MessagePopup
             message="This will confirm an action without cancel."
             onClose={() => setOpen(false)}
             onConfirm={() => {
@@ -171,7 +207,7 @@ export const CancelOnly: Story = {
       <>
         <button onClick={() => setOpen(true)}>Show Cancel</button>
         {open && (
-          <MessagePopUp
+          <MessagePopup
             message="Cancel-only option"
             onClose={() => setOpen(false)}
             onCancel={() => {
@@ -188,7 +224,7 @@ export const CancelOnly: Story = {
 export const RoundingVariants: Story = {
   render: () => {
     const [visibleRounding, setVisibleRounding] = useState<RoundingType | null>(
-      null
+      null,
     );
 
     return (
@@ -206,7 +242,7 @@ export const RoundingVariants: Story = {
         </div>
 
         {visibleRounding && (
-          <MessagePopUp
+          <MessagePopup
             message={`Rounding: ${visibleRounding}`}
             rounding={visibleRounding}
             onClose={() => setVisibleRounding(null)}
@@ -236,7 +272,7 @@ export const ShadowVariants: Story = {
         </div>
 
         {visibleShadow && (
-          <MessagePopUp
+          <MessagePopup
             message={`Shadow: ${visibleShadow}`}
             shadow={visibleShadow}
             onClose={() => setVisibleShadow(null)}

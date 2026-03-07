@@ -51,5 +51,5 @@ const generateUniqueId = (() => {
 const Accordion: React.FC<AccordionProps> = (props) => (
   <AccordionBase {...props} getUniqueId={generateUniqueId} classMap={classes} />
 );
-
+Accordion.displayName = "Accordion";
 export default Accordion;

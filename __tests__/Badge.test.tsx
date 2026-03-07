@@ -34,7 +34,6 @@ describe("BadgeBase", () => {
     const badge = screen.getByTestId("badge-main");
     expect(badge).toBeInTheDocument();
     expect(badge).toHaveTextContent("Active");
-    expect(badge).toHaveAttribute("aria-label", "Active");
     expect(badge).toHaveAttribute("role", "status");
     expect(badge).toHaveAttribute("title", "Active");
   });

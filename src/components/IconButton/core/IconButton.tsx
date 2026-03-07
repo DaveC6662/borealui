@@ -45,5 +45,5 @@ const IconButton = forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
   IconButtonProps
 >((props, ref) => <IconButtonBase ref={ref} {...props} classMap={classes} />);
-
+IconButton.displayName = "IconButton";
 export default IconButton;

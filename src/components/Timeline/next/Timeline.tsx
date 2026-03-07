@@ -8,5 +8,5 @@ import { TimelineProps } from "../Timeline.types";
 const Timeline: React.FC<TimelineProps> = (props) => {
   return <TimelineBase {...props} classMap={styles} />;
 };
-
+Timeline.displayName = "Timeline";
 export default Timeline;

@@ -1,2 +1,2 @@
-export { default } from "../components/MessagePopUp/core/MessagePopUp";
-export * from "../components/MessagePopUp/MessagePopUp.types";
+export { default } from "../components/MessagePopup/core/MessagePopup";
+export * from "../components/MessagePopup/MessagePopup.types";

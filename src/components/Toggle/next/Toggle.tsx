@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
+import { forwardRef } from "react";
 import styles from "./Toggle.module.scss";
 import ToggleBase from "../ToggleBase";
 import { ToggleProps } from "../Toggle.types";
 
-const Toggle: React.FC<ToggleProps> = (props) => {
-  return <ToggleBase {...props} classMap={styles} />;
-};
-
+const Toggle = forwardRef<HTMLButtonElement, ToggleProps>((props, ref) => {
+  return <ToggleBase {...props} classMap={styles} ref={ref} />;
+});
+Toggle.displayName = "Toggle";
 export default Toggle;

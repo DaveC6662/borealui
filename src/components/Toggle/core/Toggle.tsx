@@ -1,4 +1,4 @@
-import React from "react";
+import { forwardRef } from "react";
 import "./Toggle.scss";
 import ToggleBase from "../ToggleBase";
 import { ToggleProps } from "../Toggle.types";
@@ -41,8 +41,8 @@ const classes = {
   roundLarge: "toggle_round-Large",
 };
 
-const Toggle: React.FC<ToggleProps> = (props) => {
-  return <ToggleBase {...props} classMap={classes} />;
-};
-
+const Toggle = forwardRef<HTMLButtonElement, ToggleProps>((props, ref) => {
+  return <ToggleBase {...props} classMap={classes} ref={ref} />;
+});
+Toggle.displayName = "Toggle";
 export default Toggle;

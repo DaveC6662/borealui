@@ -64,32 +64,36 @@ $sizes: (
 .container {
   display: flex;
   align-items: center;
-  gap: theme.$spacing-sm;
+  gap: var(--spacing-sm);
 
   @include bp.down(xs) {
-    gap: theme.$spacing-xxs;
+    gap: var(--spacing-xxs);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-md;
+    gap: var(--spacing-md);
   }
 }
 
 .toggle_label {
-  font-size: theme.$font-size-md;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   color: var(--text-color-primary);
 
   @include bp.down(xs) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-base;
+    font-size: var(--font-size-body-sm);
   }
 }
 
 .toggle {
-  background-color: theme.$disabled-color;
+  background-color: var(--disabled-color);
   position: relative;
   cursor: pointer;
   border: none;
@@ -189,7 +193,7 @@ $sizes: (
   box-shadow: none;
 
   .toggle {
-    background-color: theme.$disabled-color;
+    background-color: var(--disabled-color);
   }
 }
 

@@ -94,6 +94,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
         href={disabled ? undefined : href}
         className={combinedClassName}
         onClick={handleClick}
+        role="status"
         data-testid={testId ? `${testId}-main` : undefined}
         title={title ?? (typeof label === "string" ? label : undefined)}
         {...(needsAriaLabel ? { "aria-label": label } : {})}
@@ -113,6 +114,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       <button
         type="button"
         className={combinedClassName}
+        role="status"
         onClick={handleClick}
         disabled={disabled}
         data-testid={testId ? `${testId}-main` : undefined}
@@ -130,6 +132,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       className={combinedClassName}
       data-testid={testId ? `${testId}-main` : undefined}
       title={title ?? (typeof label === "string" ? label : undefined)}
+      role="status"
       {...(needsAriaLabel ? { "aria-label": label } : {})}
     >
       {inner}

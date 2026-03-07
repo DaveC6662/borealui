@@ -13,5 +13,5 @@ const Accordion: React.FC<AccordionProps> = (props) => {
     <AccordionBase {...props} getUniqueId={getUniqueId} classMap={styles} />
   );
 };
-
+Accordion.displayName = "Accordion";
 export default Accordion;

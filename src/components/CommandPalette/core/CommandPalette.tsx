@@ -44,5 +44,5 @@ const CommandPalette: React.FC<CommandPaletteProps> = (props) => (
     TextInputComponent={TextInput}
   />
 );
-
+CommandPalette.displayName = "CommandPalette";
 export default CommandPalette;

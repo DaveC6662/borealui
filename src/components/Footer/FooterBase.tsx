@@ -59,7 +59,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   const logoH = imgLogo?.height ?? 20;
 
   return (
-    <footer className={footerClass} data-testid={testId}>
+    <footer className={footerClass} data-testid={testId} role="contentinfo">
       <div className={classMap.content}>
         <div className={classMap.left} data-testid={`${testId}-left`}>
           {isImgLike && logoSrc ? (

@@ -27,7 +27,6 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
     [errorId, descriptionId].filter(Boolean).join(" ") || undefined;
 
   const childrenArray = React.Children.toArray(children);
-  const isGroup = childrenArray.length > 1;
 
   const wrapperClass = useMemo(
     () =>
@@ -36,25 +35,23 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
         classMap[layout],
         classMap[spacing],
         error && classMap.error,
-        className
+        className,
       ),
-    [classMap, layout, spacing, error, className]
+    [classMap, layout, spacing, error, className],
   );
 
   return (
     <div
       className={wrapperClass}
-      {...(isGroup && {
-        role: "group",
-        "aria-labelledby": labelId,
-        "aria-describedby": describedBy,
-      })}
+      role="group"
+      aria-labelledby={labelId}
+      aria-describedby={describedBy}
       data-testid={testId}
     >
       {label && (
         <label
           id={labelId}
-          {...(!isGroup && id ? { htmlFor: id } : {})}
+          {...(id ? { htmlFor: id } : {})}
           className={combineClassNames(classMap.label, hideLabel && "sr_only")}
           data-testid={`${testId}-label`}
         >

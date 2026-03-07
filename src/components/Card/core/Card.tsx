@@ -75,5 +75,5 @@ const Card: React.FC<CardProps> = (props) => {
     />
   );
 };
-
+Card.displayName = "Card";
 export default Card;

@@ -8,13 +8,14 @@ import {
   ThemeType,
 } from "../../types/types";
 
-export type CardImageSource =
-  | string
-  | {
-      src: string;
-      width?: number;
-      height?: number;
-    };
+export interface StaticCardImage {
+  src: string;
+  width?: number;
+  height?: number;
+  blurDataURL?: string;
+}
+
+export type CardImageSource = string | StaticCardImage;
 
 export type HtmlImgLikeProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   src: string;
@@ -78,6 +79,9 @@ export interface ActionButton {
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
    */
   shadow?: ShadowType;
+
+  /** Accessible label for screen readers. */
+  ariaLabel?: string;
 }
 
 /**

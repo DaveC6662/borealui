@@ -87,7 +87,7 @@ function DataTableBase<T extends object>({
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         striped && classMap.striped,
-        className
+        className,
       )}
       data-testid={testId}
     >
@@ -96,7 +96,7 @@ function DataTableBase<T extends object>({
           classMap.table,
           classMap[theme],
           classMap[state],
-          outline && classMap.outline
+          outline && classMap.outline,
         )}
         aria-label={ariaLabel}
         aria-describedby={captionId}
@@ -129,7 +129,7 @@ function DataTableBase<T extends object>({
                   }
                   className={combineClassNames(
                     col.sortable && classMap.sortable,
-                    classMap.headerCell
+                    classMap.headerCell,
                   )}
                 >
                   <span>{col.label}</span>
@@ -150,7 +150,6 @@ function DataTableBase<T extends object>({
               <td
                 className={classMap.emptyCell}
                 colSpan={columns.length}
-                // announce emptiness politely
                 aria-live="polite"
               >
                 No data available
@@ -164,7 +163,7 @@ function DataTableBase<T extends object>({
                   key={key}
                   className={combineClassNames(
                     onRowClick && classMap.clickable,
-                    striped && idx % 2 === 1 && classMap.striped
+                    striped && idx % 2 === 1 && classMap.striped,
                   )}
                   onClick={() => onRowClick?.(row)}
                   onKeyDown={handleRowKeyDown(row)}

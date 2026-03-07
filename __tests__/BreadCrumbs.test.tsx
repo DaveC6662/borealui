@@ -73,7 +73,7 @@ describe("BreadcrumbsBase", () => {
       />
     );
 
-    const ellipsis = screen.getByLabelText("Show more breadcrumbs");
+    const ellipsis = screen.getByLabelText("Show all breadcrumbs");
     expect(ellipsis).toBeInTheDocument();
     fireEvent.click(ellipsis);
 

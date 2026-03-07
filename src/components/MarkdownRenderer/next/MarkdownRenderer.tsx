@@ -8,5 +8,5 @@ import { MarkdownRendererProps } from "../MarkdownRenderer.types";
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = (props) => {
   return <BaseMarkdownRenderer {...props} classMap={styles} />;
 };
-
+MarkdownRenderer.displayName = "MarkdownRenderer";
 export default MarkdownRenderer;

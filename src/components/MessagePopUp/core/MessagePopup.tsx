@@ -1,15 +1,18 @@
 import React from "react";
-import BaseMessagePopUp from "../MessagePopupBase";
+import BaseMessagePopup from "../MessagePopupBase";
 import Button from "../../Button/core/Button";
 import IconButton from "../../IconButton/core/IconButton";
 import "./MessagePopup.scss";
-import { MessagePopUpProps } from "../MessagePopup.types";
+import { MessagePopupProps } from "../MessagePopup.types";
 
 const classes = {
   wrapper: "messagePopup",
   content: "messagePopup_popup_content",
   close: "messagePopup_close_button",
   message: "messagePopup_popupMessage",
+  header: "messagePopup_header",
+  title: "messagePopup_title",
+  body: "messagePopup_body",
   actions: "messagePopup_popupActions",
   confirm: "messagePopup_confirmBtn",
   cancel: "messagePopup_cancelBtn",
@@ -26,9 +29,9 @@ const classes = {
   roundLarge: "messagePopup_round-Large",
 };
 
-const MessagePopUp: React.FC<MessagePopUpProps> = (props) => {
+const MessagePopup: React.FC<MessagePopupProps> = (props) => {
   return (
-    <BaseMessagePopUp
+    <BaseMessagePopup
       {...props}
       Button={Button}
       IconButton={IconButton}
@@ -36,5 +39,5 @@ const MessagePopUp: React.FC<MessagePopUpProps> = (props) => {
     />
   );
 };
-
-export default MessagePopUp;
+MessagePopup.displayName = "MessagePopup";
+export default MessagePopup;

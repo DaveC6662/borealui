@@ -46,5 +46,5 @@ const classes = {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
   <ButtonBase {...props} classMap={classes} ref={ref} />
 ));
-
+Button.displayName = "Button";
 export default Button;

@@ -2,7 +2,6 @@
 @use "../../../../styles/globals";
 @use "sass:map";
 
-// Position mappings for chips
 $chip-positions: (
   "topLeft": (
     top: 20px,
@@ -47,7 +46,6 @@ $chip-positions: (
   max-width: 90vw;
   pointer-events: none;
 
-  // Apply flattened position modifiers
   @each $position, $values in $chip-positions {
     &.chip_group_#{$position} {
       @if map.has-key($values, top) {
@@ -82,7 +80,7 @@ $chip-positions: (
   justify-content: center;
   list-style: none;
   margin: 0;
-  gap: theme.$spacing-xs;
+  gap: var(--spacing-medium, 16px);
   padding: 0;
 
   .chip {

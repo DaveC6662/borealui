@@ -1,9 +1,9 @@
 import React from "react";
-import "./Taginput.scss";
+import "./TagInput.scss";
 import IconButton from "../../IconButton/core/IconButton";
 import TextInput from "../../TextInput/core/TextInput";
 import TagInputBase from "../TagInputBase";
-import { TagInputProps } from "../Taginput.types";
+import { TagInputProps } from "../TagInput.types";
 
 const classes = {
   tagInput: "tag_input",
@@ -56,5 +56,5 @@ const TagInput: React.FC<TagInputProps> = (props) => {
     />
   );
 };
-
+TagInput.displayName = "TagInput";
 export default TagInput;

@@ -4,6 +4,7 @@ import React, {
   useState,
   useId,
   KeyboardEvent,
+  useCallback,
 } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "../../Icons";
@@ -20,16 +21,19 @@ const BaseModal: React.FC<BaseModalProps> = ({
   children,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
+  open,
   onClose,
   "data-testid": testId = "modal",
   IconButton,
   classMap,
   portalId = "widget-portal",
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
+  const [isRendered, setIsRendered] = useState(false);
 
+  const isControlled = typeof open === "boolean";
+  const shouldBeOpen = isControlled ? open : true;
   const overlayRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -39,8 +43,14 @@ const BaseModal: React.FC<BaseModalProps> = ({
   const uid = useId();
   const labelId = `${uid}-label`;
 
+  const handleClose = useCallback(() => {
+    setIsVisible(false);
+    window.setTimeout(() => onClose(), 200);
+  }, [onClose]);
+
   useEffect(() => {
-    setIsMounted(true);
+    if (!isRendered) return;
+
     openerRef.current = (document.activeElement as HTMLElement) ?? null;
 
     let portal = document.getElementById(portalId);
@@ -62,7 +72,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
     });
 
     const handleEsc = (e: globalThis.KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     };
     document.addEventListener("keydown", handleEsc);
 
@@ -71,19 +81,21 @@ const BaseModal: React.FC<BaseModalProps> = ({
       document.removeEventListener("keydown", handleEsc);
       hidden.forEach((el) => el.removeAttribute("aria-hidden"));
       openerRef.current?.focus?.();
+      setPortalElement(null);
     };
-  }, [portalId, onClose]);
+  }, [isRendered, portalId, handleClose]);
 
   useEffect(() => {
-    if (!isMounted) return;
+    if (!isRendered) return;
+
     requestAnimationFrame(() => {
       setIsVisible(true);
 
       if (dialogRef.current) {
         focusablesRef.current = Array.from(
           dialogRef.current.querySelectorAll<HTMLElement>(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-          )
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+          ),
         ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
       }
 
@@ -93,7 +105,19 @@ const BaseModal: React.FC<BaseModalProps> = ({
         dialogRef.current
       )?.focus?.();
     });
-  }, [isMounted]);
+  }, [isRendered]);
+
+  useEffect(() => {
+    if (shouldBeOpen) {
+      setIsRendered(true);
+    } else if (isControlled) {
+      setIsVisible(false);
+      const t = window.setTimeout(() => setIsRendered(false), 200);
+      return () => window.clearTimeout(t);
+    } else {
+      setIsRendered(false);
+    }
+  }, [shouldBeOpen, isControlled]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== "Tab") return;
@@ -112,18 +136,13 @@ const BaseModal: React.FC<BaseModalProps> = ({
     }
   };
 
-  const handleClose = () => {
-    setIsVisible(false);
-    setTimeout(() => onClose(), 200);
-  };
-
-  if (!isMounted || !portalElement) return null;
+  if (!isRendered || !portalElement) return null;
 
   const contentClassName = combineClassNames(
     classMap.content,
     className,
     shadow && classMap[`shadow${capitalize(shadow)}`],
-    rounding && classMap[`round${capitalize(rounding)}`]
+    rounding && classMap[`round${capitalize(rounding)}`],
   );
 
   return ReactDOM.createPortal(
@@ -131,7 +150,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
       ref={overlayRef}
       className={combineClassNames(
         classMap.overlay,
-        isVisible ? classMap.visible : classMap.hidden
+        isVisible ? classMap.visible : classMap.hidden,
       )}
       onClick={handleClose}
       role="presentation"
@@ -151,7 +170,6 @@ const BaseModal: React.FC<BaseModalProps> = ({
         <h2 id={labelId} className={classMap.srOnly ?? "sr_only"}>
           Modal Dialog
         </h2>
-
         <IconButton
           ref={closeBtnRef}
           className={classMap.closeButton}
@@ -171,7 +189,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
         {children}
       </div>
     </div>,
-    portalElement
+    portalElement,
   );
 };
 

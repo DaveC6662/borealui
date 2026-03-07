@@ -8,5 +8,5 @@ import { TabsProps } from "../Tabs.types";
 const Tabs: React.FC<TabsProps> = (props) => {
   return <TabsBase {...props} classMap={styles} />;
 };
-
+Tabs.displayName = "Tabs";
 export default Tabs;

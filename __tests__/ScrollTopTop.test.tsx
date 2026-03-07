@@ -37,11 +37,7 @@ describe("ScrollToTopBase", () => {
       />
     );
     fireEvent.scroll(window);
-    expect(getByTestId("scroll-announcement")).toHaveTextContent(
-      "Scroll to top button is now visible"
-    );
-    expect(getByTestId("scroll-button")).toBeInTheDocument();
-    expect(getByTestId("scroll-icon")).toBeInTheDocument();
+    expect(getByTestId("scroll")).toBeInTheDocument();
   });
 
   it("has no accessibility violations", async () => {

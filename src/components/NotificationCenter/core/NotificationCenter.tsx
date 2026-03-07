@@ -45,5 +45,5 @@ const NotificationCenter: React.FC<NotificationCenterProps> = (props) => {
     />
   );
 };
-
+NotificationCenter.displayName = "NotificationCenter";
 export default NotificationCenter;

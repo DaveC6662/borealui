@@ -5,11 +5,17 @@ import { IconButtonProps } from "../IconButton/IconButton.types";
 /**
  * Props for the MessagePopup component.
  */
-export interface MessagePopUpProps {
+export interface MessagePopupProps {
   /**
    * Message text to be displayed within the popup dialog.
    */
   message: string;
+
+  /**
+   * Optional title shown in a top bar.
+   * If provided, a header section is rendered above the message.
+   */
+  title?: React.ReactNode;
 
   /**
    * Callback function to execute when the popup is closed.
@@ -76,7 +82,7 @@ export type IconButtonComponent = React.ForwardRefExoticComponent<
   IconButtonProps & React.RefAttributes<IconButtonRef>
 >;
 
-export interface BaseMessagePopupProps extends MessagePopUpProps {
+export interface BaseMessagePopupProps extends MessagePopupProps {
   Button: ButtonComponent;
   IconButton: IconButtonComponent;
   classMap: Record<string, string>;

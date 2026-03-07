@@ -59,5 +59,5 @@ const Chip: React.FC<ChipProps> = (props) => (
     closeIcon={CloseIcon}
   />
 );
-
+Chip.displayName = "Chip";
 export default Chip;

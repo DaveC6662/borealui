@@ -9,20 +9,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: theme.$spacing-sm;
-  font-size: theme.$font-size-base;
+  gap: var(--spacing-sm);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   user-select: none;
-  transition: all theme.$transition-default;
+  transition: all var(--transition-default);
   position: relative;
 
   @include bp.down(xs) {
-    gap: theme.$spacing-xs;
-    font-size: theme.$font-size-sm;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-md;
-    font-size: theme.$font-size-lg;
+    gap: var(--spacing-md);
+    font-size: var(--font-size-body-sm);
   }
 
   &:focus-visible {
@@ -43,7 +47,7 @@
   border-color: transparent;
   border-top-color: var(--primary-color);
   animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  transition: transform theme.$transition-default;
+  transition: transform var(--transition-default);
 
   &:hover {
     animation: pulse 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
@@ -100,18 +104,22 @@
   }
 
   &_label {
-    font-size: theme.$font-size-sm;
-    margin-top: theme.$spacing-xs;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    margin-top: var(--spacing-xs);
     color: var(--text-color-primary);
     text-align: center;
     width: max-content;
 
     @include bp.down(xs) {
-      font-size: theme.$font-size-xs;
+      font-size: var(--font-size-caption);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-base;
+      font-size: var(--font-size-body-sm);
     }
   }
 }

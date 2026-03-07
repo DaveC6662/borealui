@@ -47,24 +47,70 @@ $progress-sizes: (
     }
   }
 
-  @each $name, $vals in theme.$themes {
-    &.#{$name} {
-      background-color: map.get($vals, bg);
-    }
-  }
-
-  @each $name, $vals in theme.$states {
-    &.#{$name} {
-      background-color: map.get($vals, bg);
-    }
-  }
-
   &.clear {
-    background-color: var(--text-color-primary);
+    background-color: var(--background-color-lighter);
   }
 }
 
+.layout {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  font-family: var(--font-family-ui);
+}
+
+.title {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  white-space: nowrap;
+}
+
+.titleTop {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.titleBottom {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.titleLeft,
+.titleRight {
+  align-items: center;
+}
+
+.titleLeft .container,
+.titleRight .container {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.titleLeft .title,
+.titleRight .title {
+  flex: 0 0 auto;
+}
+
+.titleOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+}
+
 .bar {
+  position: relative;
   height: 100%;
   width: 0;
   transition: width 0.4s ease-in-out;

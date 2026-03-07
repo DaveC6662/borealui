@@ -2,11 +2,15 @@
 
 export * from "./types/index";
 
+import "./styles/globals.scss";
+
 ///Theme Context and utils
 export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
 export { registerColorScheme } from "./styles/colorSchemeRegistry";
 export { colorSchemes } from "./styles/Themes";
 export { setBorealStyleConfig } from "./config/boreal-style-config";
+
+export { default as Typography } from "./components/Typography/next/Typography";
 
 // Buttons
 export { default as Button } from "./components/Button/next/Button";
@@ -39,7 +43,7 @@ export { default as Rating } from "./components/Rating/next/Rating";
 export { default as Skeleton } from "./components/Skeleton/next/Skeleton";
 export { default as Spinner } from "./components/Spinner/next/Spinner";
 export { default as Tooltip } from "./components/Tooltip/next/Tooltip";
-export { default as MessagePopUp } from "./components/MessagePopUp/next/MessagePopup";
+export { default as MessagePopup } from "./components/MessagePopup/next/MessagePopup";
 export { default as PopOver } from "./components/PopOver/next/PopOver";
 
 // Navigation & Layout

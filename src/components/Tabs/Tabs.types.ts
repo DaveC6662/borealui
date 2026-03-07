@@ -9,13 +9,11 @@ import {
 /**
  * Represents a single tab with a label, optional icon, and content.
  */
-interface Tab {
+export interface Tab {
   /** The label of the tab. */
   label: string;
   /** An optional icon for the tab. */
   icon?: React.ComponentType;
-  /** The content to display when the tab is active. */
-  content: React.ReactNode;
   /** Whether the tab is disabled. */
   disabled?: boolean;
 }
@@ -26,10 +24,14 @@ interface Tab {
 export interface TabsProps {
   /** Array of tabs to display. */
   tabs: Tab[];
+  /** Controlled value */
+  value?: number;
   /** Custom class names to apply to the tabs container. */
   className?: string;
-  /** The default active tab index. */
+  /** Uncontrolled initial index */
   defaultIndex?: number;
+  /** Accessible name for the tablist */
+  ariaLabel?: string;
   /** Callback when the active tab changes. */
   onChange?: (index: number) => void;
   /**
@@ -57,12 +59,20 @@ export interface TabsProps {
    * "xs" | "small" | "medium" | "large" | "xl"
    */
   size?: SizeType;
+  /**
+   * Optional stable base used to create ids:
+   * `${idBase}-tab-${i}` and `${idBase}-panel-${i}`
+   */
+  idBase?: string;
   /** Test ID for testing purposes. */
   "data-testid"?: string;
 }
 
 export type BaseTabsProps = TabsProps & {
+  /* Orientation of the tabs. */
   orientation?: "horizontal" | "vertical";
+  /* Activation mode of the tabs. */
   activationMode?: "auto" | "manual";
+  /* Class names for the tab container. */
   classMap: Record<string, string>;
 };

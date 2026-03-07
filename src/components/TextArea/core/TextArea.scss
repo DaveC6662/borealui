@@ -3,11 +3,12 @@
 @use "sass:map";
 
 .textArea {
-  display: flex;
-  width: fit-content;
-  justify-content: center;
+  display: inline-flex;
+  justify-content: space-between;
   align-items: center;
-  transition: theme.$transition-default;
+  width: fit-content;
+  margin: var(--spacing-sm);
+  transition: var(--transition-default);
   background: transparent;
 
   @include bp.down(sm) {
@@ -17,7 +18,7 @@
   &:focus-within {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 3px;
-    border-radius: theme.$border-radius-sm;
+    border-radius: var(--border-radius-sm);
   }
 
   @each $key, $value in theme.$rounding {
@@ -40,35 +41,38 @@
     outline: none;
     color: var(--text-color-primary);
     background-color: transparent;
-    font-family: theme.$font-family-primary;
-    padding: theme.$spacing-sm;
-    margin: theme.$spacing-sm;
-    font-size: theme.$font-size-md;
-    border-radius: theme.$border-radius-xs;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    padding: var(--spacing-sm);
+    margin: var(--spacing-sm);
+    border-radius: var(--border-radius-xs);
     min-height: 2.5em;
-    line-height: 1.4;
 
     &::placeholder {
       color: var(--text-color-primary);
       opacity: 0.7;
+      font: inherit;
     }
 
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
-      border-radius: theme.$border-radius-xs;
+      border-radius: var(--border-radius-xs);
     }
 
     @include bp.down(xs) {
-      font-size: calc(theme.$font-size-base * 0.9);
-      padding: theme.$spacing-xs;
-      margin: theme.$spacing-xs;
+      font-size: var(--font-size-body-sm);
+      padding: var(--spacing-xs);
+      margin: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-base;
-      padding: theme.$spacing-md;
-      margin: theme.$spacing-sm;
+      font-size: var(--font-size-body);
+      padding: var(--spacing-md);
+      margin: var(--spacing-sm);
     }
   }
 
@@ -76,7 +80,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: theme.$spacing-sm;
+    padding: var(--spacing-sm);
     margin-top: -0.1em;
     margin-left: 0.5em;
 
@@ -100,11 +104,11 @@
   @each $themeName, $props in theme.$themes {
     &_#{$themeName} {
       background-color: map.get($props, bg);
-      color: map.get($props, text, inherit);
+      color: map.get($props, text);
       box-shadow: if(
         map.has-key($props, shadow),
         map.get($props, shadow),
-        theme.$box-shadow-medium
+        var(--box-shadow-medium)
       );
 
       &:hover {
@@ -140,11 +144,11 @@
   @each $stateName, $props in theme.$states {
     &_#{$stateName} {
       border: 2px solid map.get($props, border);
-      color: map.get($props, text, inherit);
+      color: map.get($props, text);
       box-shadow: if(
         map.has-key($props, shadow),
         map.get($props, shadow),
-        theme.$box-shadow-medium
+        var(--box-shadow-medium)
       );
     }
   }
@@ -157,7 +161,7 @@
     opacity: 0.6;
     pointer-events: none;
     cursor: not-allowed;
-    background-color: theme.$disabled-color;
+    background-color: var(--disabled-color);
 
     .textArea_text_input {
       background-color: transparent;

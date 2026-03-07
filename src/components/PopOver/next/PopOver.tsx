@@ -8,5 +8,5 @@ import { PopoverProps } from "../PopOver.types";
 const Popover: React.FC<PopoverProps> = (props) => {
   return <BasePopover {...props} classMap={styles} />;
 };
-
+Popover.displayName = "Popover";
 export default Popover;

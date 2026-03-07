@@ -1,4 +1,4 @@
-import React from "react";
+import { forwardRef } from "react";
 import BaseSelect from "../SelectBase";
 import "./Select.scss";
 import { SelectProps } from "../Select.types";
@@ -7,6 +7,13 @@ const classes = {
   wrapper: "select_wrapper",
   select: "select",
   outline: "select_outline",
+
+  layout: "select_layout",
+  title: "select_title",
+  titleTop: "select_title_top",
+  titleBottom: "select_title_bottom",
+  titleLeft: "select_title_left",
+  titleRight: "select_title_right",
 
   primary: "select_primary",
   secondary: "select_secondary",
@@ -34,11 +41,9 @@ const classes = {
   roundLarge: "select_round-Large",
 };
 
-const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  (props, ref) => {
-    return <BaseSelect {...props} ref={ref} classMap={classes} />;
-  }
-);
+const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
+  return <BaseSelect {...props} ref={ref} classMap={classes} />;
+});
 
 Select.displayName = "Select";
 export default Select;

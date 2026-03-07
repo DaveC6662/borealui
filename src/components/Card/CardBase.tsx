@@ -1,5 +1,5 @@
 import React, { useId, useMemo } from "react";
-import { CardBaseProps, CardImageSource } from "./Card.types";
+import { CardBaseProps, CardImageSource, StaticCardImage } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -48,36 +48,65 @@ const CardBase: React.FC<CardBaseProps> = ({
   const autoId = useId();
   const headerId = ariaLabelledBy || `${autoId}-header`;
   const descriptionId = `${autoId}-description`;
-  const hasImage = !!imageUrl;
   const derivedAriaLabel = ariaLabel || title || description || "Content card";
 
   const FallbackImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     <img {...props} />
   );
 
-  const isObjSrc =
-    typeof imageUrl === "object" &&
-    imageUrl !== null &&
-    "src" in (imageUrl as object);
+  function isStaticCardImage(value: unknown): value is StaticCardImage {
+    return (
+      typeof value === "object" &&
+      value !== null &&
+      "src" in value &&
+      typeof (value as { src: unknown }).src === "string"
+    );
+  }
 
-  const imgSrc: string | undefined = isObjSrc
-    ? (imageUrl as Extract<CardImageSource, { src: string }>).src
-    : (imageUrl as string | undefined);
+  function normalizeImageSource(
+    srcInput: CardImageSource | undefined,
+    fallbackWidth?: number,
+    fallbackHeight?: number
+  ): { src?: string; width?: number; height?: number } {
+    if (!srcInput) {
+      return { src: undefined, width: fallbackWidth, height: fallbackHeight };
+    }
 
-  const resolvedWidth =
-    (isObjSrc
-      ? (imageUrl as Extract<CardImageSource, { width?: number }>).width
-      : undefined) ?? imageWidth;
+    if (typeof srcInput === "string") {
+      const trimmed = srcInput.trim();
+      if (!trimmed) {
+        return { src: undefined, width: fallbackWidth, height: fallbackHeight };
+      }
+      return { src: trimmed, width: fallbackWidth, height: fallbackHeight };
+    }
 
-  const resolvedHeight =
-    (isObjSrc
-      ? (imageUrl as Extract<CardImageSource, { height?: number }>).height
-      : undefined) ?? imageHeight;
+    if (isStaticCardImage(srcInput)) {
+      const trimmed = srcInput.src.trim();
+      if (!trimmed) {
+        return { src: undefined, width: fallbackWidth, height: fallbackHeight };
+      }
+
+      return {
+        src: trimmed,
+        width: srcInput.width ?? fallbackWidth,
+        height: srcInput.height ?? fallbackHeight,
+      };
+    }
+
+    return { src: undefined, width: fallbackWidth, height: fallbackHeight };
+  }
+
+  const {
+    src: imgSrc,
+    width: resolvedWidth,
+    height: resolvedHeight,
+  } = normalizeImageSource(imageUrl, imageWidth, imageHeight);
+
+  const hasImage = Boolean(imgSrc);
 
   const imgAlt = imageAlt || `${title || "Card"} image`;
 
   const ImageRenderer = ImageComponent || FallbackImage;
-  const isNextImage = typeof ImageRenderer !== "string";
 
   const cardClassName = useMemo(
     () =>
@@ -127,24 +156,23 @@ const CardBase: React.FC<CardBaseProps> = ({
       ) : (
         <div className={classMap.content}>
           {hasImage &&
+            imgSrc &&
             (imageFill ? (
               <div className={classMap.media}>
                 <ImageRenderer
-                  src={imgSrc!}
+                  src={imgSrc}
                   alt={imgAlt}
                   className={combineClassNames(classMap.image, imageClassName)}
-                  {...(isNextImage ? { fill: true } : {})}
-                  {...(!isNextImage ? { loading: "lazy" as const } : {})}
+                  fill
                 />
               </div>
             ) : (
               <ImageRenderer
-                src={imgSrc!}
+                src={imgSrc}
                 alt={imgAlt}
                 className={combineClassNames(classMap.image, imageClassName)}
                 width={resolvedWidth ?? 640}
                 height={resolvedHeight ?? 360}
-                {...(!isNextImage ? { loading: "lazy" as const } : {})}
               />
             ))}
 
@@ -211,6 +239,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                           size={button.size || size}
                           href={button.href}
                           loading={button.loading}
+                          ariaLabel={button.ariaLabel}
                         />
                       ) : (
                         <button.buttonComponent
@@ -222,6 +251,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                           href={button.href}
                           loading={button.loading}
                           size={button.size || size}
+                          ariaLabel={button.ariaLabel}
                         >
                           {button.label}
                         </button.buttonComponent>

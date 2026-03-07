@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useRef,
 } from "react";
-import { TagInputBaseProps } from "./Taginput.types";
+import { TagInputBaseProps } from "./TagInput.types";
 import { CloseIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -19,6 +19,7 @@ import {
 
 const TagInputBase: React.FC<TagInputBaseProps> = ({
   tags = [],
+  ariaLabel = "Tag Input",
   onChange,
   fetchSuggestions,
   debounceMs = 300,
@@ -42,7 +43,15 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   const statusId = `${testId}-status-${uid}`;
 
   const [inputValue, setInputValue] = useState("");
-  const [tagList, setTagList] = useState<string[]>(tags);
+
+  const [internalTags, setInternalTags] = useState<string[]>(tags);
+
+  useEffect(() => {
+    setInternalTags(tags);
+  }, [tags]);
+
+  const tagList = internalTags;
+
   const [lastAction, setLastAction] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
@@ -87,21 +96,30 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
     };
   }, [inputValue, fetchSuggestions, debounceMs]);
 
+  const emitChange = (updated: string[]): void => {
+    setInternalTags(updated);
+    onChange?.(updated);
+  };
+
   const addTag = (raw: string) => {
     const newTag = raw.trim();
     if (!newTag || hasTag(newTag)) return false;
     const updated = [...tagList, newTag];
-    setTagList(updated);
-    onChange?.(updated);
+    emitChange(updated);
     setLastAction(`Added tag ${newTag}.`);
     return true;
   };
 
   const removeTag = (tag: string) => {
     const updated = tagList.filter((t) => t !== tag);
-    setTagList(updated);
-    onChange?.(updated);
+    emitChange(updated);
     setLastAction(`Removed tag ${tag}.`);
+  };
+
+  const clearSuggestions = (): void => {
+    setSuggestions([]);
+    setOpen(false);
+    setActiveIndex(-1);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -116,7 +134,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
       if (key === "ArrowUp") {
         event.preventDefault();
         setActiveIndex(
-          (i) => (i - 1 + suggestions.length) % suggestions.length
+          (i) => (i - 1 + suggestions.length) % suggestions.length,
         );
         return;
       }
@@ -161,9 +179,9 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
         classMap.tagInput,
         classMap[theme],
         classMap[state],
-        classMap[size]
+        classMap[size],
       ),
-    [classMap, theme, state, size]
+    [classMap, theme, state, size],
   );
 
   const tagClass = useMemo(
@@ -171,16 +189,14 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
       combineClassNames(
         classMap.tag,
         shadow && classMap[`shadow${capitalize(shadow)}`],
-        rounding && classMap[`round${capitalize(rounding)}`]
+        rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, shadow, rounding]
+    [classMap, shadow, rounding],
   );
 
-  const handleSuggestionClick = (suggestion: string) => {
+  const handleSuggestionClick = (suggestion: string): void => {
     if (addTag(suggestion)) setInputValue("");
-    setSuggestions([]);
-    setOpen(false);
-    setActiveIndex(-1);
+    clearSuggestions();
   };
 
   const activeOptionId =
@@ -193,9 +209,10 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
       aria-labelledby={labelId}
       aria-describedby={`${descId} ${statusId}`}
       data-testid={testId}
+      aria-label={ariaLabel}
     >
       <label id={labelId} className="sr_only">
-        Tag Input
+        {ariaLabel}
       </label>
       <div
         id={descId}
@@ -216,7 +233,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
             <span className={classMap.tagLabel}>{tag}</span>
             <IconButton
               type="button"
-              aria-label={`Remove tag ${tag}`}
+              ariaLabel={`Remove tag ${tag}`}
               className={classMap.removeButton}
               onClick={() => removeTag(tag)}
               data-testid={`${testId}-remove-${index}`}
@@ -225,6 +242,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
               theme="clear"
               shadow="none"
               iconClassName={classMap.removeButtonIcon}
+              disabled={false}
             />
           </li>
         ))}
@@ -241,9 +259,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
           className={classMap.input}
           value={inputValue}
           placeholder={tagList.length === 0 ? placeholder : ""}
-          onChange={(e: { target: { value: string } }) =>
-            setInputValue(e.target.value)
-          }
+          onChange={(val: string) => setInputValue(val)}
           onKeyDown={handleKeyDown}
           autoComplete="off"
           role="combobox"
@@ -271,7 +287,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
               id={`${listboxId}-opt-${index}`}
               className={combineClassNames(
                 classMap.suggestionItem,
-                index === activeIndex && (classMap.active || "")
+                index === activeIndex && (classMap.active || ""),
               )}
               role="option"
               aria-selected={index === activeIndex}

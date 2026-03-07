@@ -6,23 +6,23 @@
 $progress-sizes: (
   "xs": (
     dimensions: 40px,
-    font-size: theme.$font-size-xs,
+    font-size: var(--font-size-caption),
   ),
   "small": (
     dimensions: 60px,
-    font-size: theme.$font-size-sm,
+    font-size: var(--font-size-label),
   ),
   "medium": (
     dimensions: 100px,
-    font-size: theme.$font-size-md,
+    font-size: var(--font-size-body-sm),
   ),
   "large": (
     dimensions: 140px,
-    font-size: theme.$font-size-base,
+    font-size: var(--font-size-body),
   ),
   "xl": (
     dimensions: 200px,
-    font-size: theme.$font-size-lg,
+    font-size: var(--font-size-h6),
   ),
 );
 
@@ -34,7 +34,7 @@ $progress-sizes: (
   .circle_border {
     width: 100%;
     height: 100%;
-    border-radius: theme.$border-radius-round;
+    border-radius: var(--border-radius-round);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,9 +49,9 @@ $progress-sizes: (
   .inner_circle {
     width: 80%;
     height: 80%;
-    border-radius: theme.$border-radius-round;
+    border-radius: var(--border-radius-round);
     background: var(--background-color);
-    padding: theme.$spacing-xxs;
+    padding: var(--spacing-xxs);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -93,7 +93,6 @@ $progress-sizes: (
 @each $size, $props in $progress-sizes {
   .#{$size} {
     $dim: map.get($props, dimensions);
-    $fs: map.get($props, font-size);
 
     width: $dim;
     height: $dim;
@@ -109,20 +108,27 @@ $progress-sizes: (
     }
 
     .rating_text {
-      font-size: $fs;
-      font-weight: theme.$font-weight-bold;
+      font-family: var(--font-family-ui);
+      font-size: map.get($props, font-size);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
       color: var(--text-color-primary);
+
+      @include bp.up(lg) {
+        font-size: calc(#{map.get($props, font-size)} * 1.05);
+      }
     }
 
     .inner_circle {
-      padding: theme.$spacing-xxs;
+      padding: var(--spacing-xxs);
 
       @include bp.down(sm) {
-        padding: calc(theme.$spacing-xxs * 0.75);
+        padding: calc(var(--spacing-xxs) * 0.75);
       }
 
       @include bp.up(lg) {
-        padding: calc(theme.$spacing-xxs * 1.25);
+        padding: calc(var(--spacing-xxs) * 1.25);
       }
     }
   }

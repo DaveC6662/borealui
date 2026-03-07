@@ -7,9 +7,14 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
 
-  @each $theme, $values in theme.$themes {
-    &_#{$theme} {
+  @each $theme-name, $values in theme.$themes {
+    &_#{$theme-name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
     }
@@ -58,15 +63,15 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: theme.$spacing-md;
-  gap: theme.$spacing-sm;
+  padding: var(--spacing-md);
+  gap: var(--spacing-sm);
 
   @include bp.down(lg) {
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: theme.$spacing-md;
+    gap: var(--spacing-md);
   }
 
   .footer_left {
@@ -74,12 +79,16 @@
     align-items: center;
 
     p {
-      font-size: theme.$font-size-sm;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
       color: var(--text-color-primary);
       margin: 0;
 
       @include bp.up(lg) {
-        font-size: theme.$font-size-base;
+        font-size: var(--font-size-body);
       }
     }
 
@@ -88,7 +97,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: theme.$spacing-md;
+      gap: var(--spacing-md);
     }
   }
 
@@ -96,13 +105,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: theme.$spacing-md;
-    padding-left: theme.$spacing-lg;
+    gap: var(--spacing-md);
+    padding-left: var(--spacing-lg);
 
     ul {
       list-style: none;
       display: flex;
-      gap: theme.$spacing-md;
+      gap: var(--spacing-md);
       padding: 0;
       margin: 0;
     }
@@ -113,7 +122,11 @@
 
     a {
       text-decoration: none;
-      font-size: theme.$font-size-sm;
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
       color: var(--text-color-primary);
 
       &:hover {
@@ -133,14 +146,14 @@
       ul {
         flex-direction: column;
         align-items: center;
-        gap: theme.$spacing-xs;
+        gap: var(--spacing-xs);
       }
     }
   }
 
   .footer_logo {
     max-height: 20px;
-    margin-right: theme.$spacing-lg;
+    margin-right: var(--spacing-lg);
 
     img {
       max-height: 100%;
@@ -159,7 +172,7 @@
   .footer_social {
     display: flex;
     flex-wrap: wrap;
-    gap: theme.$spacing-xs;
+    gap: var(--spacing-xs);
     margin-left: auto;
 
     @include bp.down(lg) {
@@ -180,7 +193,7 @@
 
     @include bp.down(lg) {
       margin-left: 0;
-      margin-top: theme.$spacing-xs;
+      margin-top: var(--spacing-xs);
     }
 
     &:focus-visible {

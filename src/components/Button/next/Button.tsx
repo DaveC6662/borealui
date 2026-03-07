@@ -9,5 +9,5 @@ import { ButtonProps } from "../Button.types";
 const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
   <ButtonBase {...props} classMap={styles} LinkComponent={Link} ref={ref} />
 ));
-
+Button.displayName = "Button";
 export default Button;

@@ -44,7 +44,8 @@
 @use "./theme" as theme;
 @use "_animations" as animations;
 @use "_breakpoints" as breakpoints;
-@use "modern-css-reset";
+@use "_mixins" as mixins;
+@import "modern-css-reset/dist/reset.css";
 
 :root {
   /* ================================
@@ -53,9 +54,10 @@
   --primary-color: #{theme.$primary-color};
   --primary-color-light: #{color.adjust(theme.$primary-color, $lightness: 40%)};
   --primary-color-hover: #{color.adjust(theme.$primary-color, $lightness: -10%)};
-  --primary-text-color-contrast: #{theme.$text-color-secondary};
+  --text-color-primary: #{theme.$text-color-primary};
+  --text-color-primary-contrast: #{theme.$text-color-secondary};
 
-  /* ================================a
+  /* ================================
      SECONDARY COLOR PALETTE
   ================================== */
   --secondary-color: #{theme.$secondary-color};
@@ -67,7 +69,7 @@
       theme.$secondary-color,
       $lightness: -10%
     )};
-  --secondary-text-color: #{theme.$text-color-secondary};
+  --text-color-secondary: #{theme.$text-color-secondary};
 
   /* ================================
      TERTIARY COLOR PALETTE
@@ -81,7 +83,7 @@
       theme.$tertiary-color,
       $lightness: -10%
     )};
-  --tertiary-text-color: #{theme.$text-color-primary};
+  --text-color-tertiary: #{theme.$text-color-primary};
 
   /* ================================
      QUATERNARY COLOR PALETTE
@@ -95,7 +97,7 @@
       theme.$quaternary-color,
       $lightness: -10%
     )};
-  --quaternary-text-color: #{theme.$text-color-primary};
+  --text-color-quaternary: #{theme.$text-color-primary};
 
   /* ================================
      FEEDBACK COLORS
@@ -112,6 +114,7 @@
      BACKGROUND COLORS
   ================================== */
   --background-color: #{theme.$background-color};
+  --background-color-surface: #{theme.$background-color-surface};
   --background-color-light: #{color.adjust(
       theme.$background-color,
       $lightness: 10%
@@ -132,7 +135,6 @@
   /* ================================
      TEXT COLORS
   ================================== */
-  --text-color-primary: #{theme.$text-color-primary};
   --text-color: #{theme.$text-color};
   --text-color-light: #{theme.$text-color-light};
   --text-color-lighter: #{theme.$text-color-lighter};
@@ -151,22 +153,120 @@
   --focus-outline-color: var(--text-color-primary);
 
   /* ===========================
+     Spacing Scale
+  =========================== */
+  --spacing-xxs: #{theme.$spacing-xxs};
+  --spacing-xs: #{theme.$spacing-xs};
+  --spacing-sm: #{theme.$spacing-sm};
+  --spacing-md: #{theme.$spacing-md};
+  --spacing-lg: #{theme.$spacing-lg};
+  --spacing-xl: #{theme.$spacing-xl};
+
+  /* ===========================
+      Font Sizes
+  =========================== */
+  --font-size-xxs: #{theme.$font-size-xxs};
+  --font-size-xs: #{theme.$font-size-xs};
+  --font-size-sm: #{theme.$font-size-sm};
+  --font-size-md: #{theme.$font-size-md};
+  --font-size-base: #{theme.$font-size-base};
+  --font-size-lg: #{theme.$font-size-lg};
+  --font-size-xl: #{theme.$font-size-xl};
+  --font-size-xxl: #{theme.$font-size-xxl};
+  --font-size-display-sm: #{theme.$font-size-display-sm};
+  --font-size-display-md: #{theme.$font-size-display-md};
+  --font-size-display-lg: #{theme.$font-size-display-lg};
+
+  /* ===========================
+     Font Weights
+  =========================== */
+  --font-weight-light: #{theme.$font-weight-light};
+  --font-weight-normal: #{theme.$font-weight-normal};
+  --font-weight-medium: #{theme.$font-weight-medium};
+  --font-weight-semibold: #{theme.$font-weight-semibold};
+  --font-weight-bold: #{theme.$font-weight-bold};
+  --font-weight-bolder: #{theme.$font-weight-bolder};
+
+  /* ===========================
+     Line Heights
+  =========================== */
+  --line-height-tight: #{theme.$line-height-tight};
+  --line-height-snug: #{theme.$line-height-snug};
+  --line-height-normal: #{theme.$line-height-normal};
+  --line-height-relaxed: #{theme.$line-height-relaxed};
+  --line-height-loose: #{theme.$line-height-loose};
+
+  /* ===========================
+      Semantic Typographic Styles
+  =========================== */
+  --font-size-body: #{theme.$font-size-body};
+  --font-size-body-sm: #{theme.$font-size-body-sm};
+  --font-size-body-lg: #{theme.$font-size-body-lg};
+
+  --font-size-label: #{theme.$font-size-label};
+  --font-size-caption: #{theme.$font-size-caption};
+  --font-size-overline: #{theme.$font-size-overline};
+  --font-size-code: #{theme.$font-size-code};
+
+  --font-size-h1: #{theme.$font-size-h1};
+  --font-size-h2: #{theme.$font-size-h2};
+  --font-size-h3: #{theme.$font-size-h3};
+  --font-size-h4: #{theme.$font-size-h4};
+  --font-size-h5: #{theme.$font-size-h5};
+  --font-size-h6: #{theme.$font-size-h6};
+
+  --font-weight-body: #{theme.$font-weight-body};
+  --font-weight-label: #{theme.$font-weight-label};
+  --font-weight-caption: #{theme.$font-weight-caption};
+  --font-weight-code: #{theme.$font-weight-code};
+
+  --font-weight-h1: #{theme.$font-weight-h1};
+  --font-weight-h2: #{theme.$font-weight-h2};
+  --font-weight-h3: #{theme.$font-weight-h3};
+  --font-weight-h4: #{theme.$font-weight-h4};
+  --font-weight-h5: #{theme.$font-weight-h5};
+  --font-weight-h6: #{theme.$font-weight-h6};
+
+  --line-height-body: #{theme.$line-height-body};
+  --line-height-heading: #{theme.$line-height-heading};
+  --line-height-label: #{theme.$line-height-label};
+  --line-height-caption: #{theme.$line-height-caption};
+  --line-height-code: #{theme.$line-height-code};
+
+  --letter-spacing-heading: #{theme.$letter-spacing-heading};
+  --letter-spacing-body: #{theme.$letter-spacing-body};
+  --letter-spacing-label: #{theme.$letter-spacing-label};
+  --letter-spacing-caption: #{theme.$letter-spacing-caption};
+  --letter-spacing-overline: #{theme.$letter-spacing-overline};
+  --letter-spacing-code: #{theme.$letter-spacing-code};
+
+  /* ===========================
+     Letter Spacing
+  =========================== */
+  --letter-spacing-tight: #{theme.$letter-spacing-tight};
+  --letter-spacing-normal: #{theme.$letter-spacing-normal};
+  --letter-spacing-wide: #{theme.$letter-spacing-wide};
+  --letter-spacing-wider: #{theme.$letter-spacing-wider};
+
+  /* ===========================
      Border Radius (Rounding)
   =========================== */
+  --border-radius-xs: #{theme.$border-radius-xs};
+  --border-radius-sm: #{theme.$border-radius-sm};
+  --border-radius-md: #{theme.$border-radius-md};
+  --border-radius-lg: #{theme.$border-radius-lg};
+  --border-radius-xl: #{theme.$border-radius-xl};
+  --border-radius-full: #{theme.$border-radius-full};
+  --border-radius-round: #{theme.$border-radius-round};
   --border-radius-none: 0;
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 16px;
-  --border-radius-full: 9999px;
 
   /* ===========================
      Shadows
   =========================== */
-  --box-shadow-none: none;
-  --box-shadow-light: 0 2px 4px rgb(0 0 0 / 10%);
-  --box-shadow-medium: 0 4px 8px rgb(0 0 0 / 20%);
-  --box-shadow-heavy: 0 6px 12px rgb(0 0 0 / 30%);
-  --box-shadow-intense: 0 8px 16px rgb(0 0 0 / 40%);
+  --box-shadow-light: #{theme.$box-shadow-light};
+  --box-shadow-medium: #{theme.$box-shadow-medium};
+  --box-shadow-heavy: #{theme.$box-shadow-heavy};
+  --box-shadow-intense: #{theme.$box-shadow-intense};
 
   /* ===========================
      Inverted Shadows (Light UI)
@@ -182,17 +282,22 @@
   =========================== */
   --divider-color: #{color.adjust(theme.$background-color, $lightness: 30%)}; /* subtle dividers */
   --overlay-color: rgb(0 0 0 / 50%); /* for modals or overlays */
-  --font-family-primary: #{theme.$font-family-primary};
+  --font-family-body: #{theme.$font-family-body};
+  --font-family-heading: #{theme.$font-family-heading};
+  --font-family-ui: #{theme.$font-family-ui};
+  --font-family-mono: #{theme.$font-family-mono};
 }
 
 body {
-  font-family: var(--font-family-primary);
-  font-size: var(--font-size-base);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   color: var(--text-color-primary);
   background-color: var(--background-color);
   margin: 0;
   padding: 0;
-  line-height: 1.5;
   overflow-x: hidden;
   transition:
     background-color theme.$transition-default,
@@ -205,50 +310,52 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: theme.$font-family-primary;
+  font-family: var(--font-family-heading);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-heading);
   margin: 0;
-  font-weight: theme.$font-weight-bold;
   transition: color theme.$transition-default;
 }
 
 h1 {
-  font-size: theme.$font-size-xl;
-  font-weight: theme.$font-weight-bolder;
-  line-height: 1.2;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
 }
 
 h2 {
-  font-size: theme.$font-size-lg;
-  font-weight: theme.$font-weight-bolder;
-  line-height: 1.3;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h2);
 }
 
 h3 {
-  font-size: theme.$font-size-md;
-  line-height: 1.4;
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-h3);
 }
 
 h4 {
-  font-size: theme.$font-size-base;
-  line-height: 1.5;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
 }
 
-h5,
-h6 {
-  font-size: theme.$font-size-sm;
-  line-height: 1.6;
-  font-weight: theme.$font-weight-normal;
+h5 {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-h5);
 }
 
 h6 {
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-h6);
   text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-overline);
 }
 
 p {
-  font-size: theme.$font-size-base;
-  line-height: 1.6;
-  font-weight: 500;
-  margin-bottom: theme.$spacing-md;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
+  margin-bottom: var(--spacing-md);
 }
 
 a {
@@ -263,6 +370,30 @@ a {
     color: var(--link-color-hover);
     text-decoration: theme.$link-hover-decoration;
   }
+}
+
+label {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+}
+
+small {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-code);
+  font-weight: var(--font-weight-code);
+  line-height: var(--line-height-code);
+  letter-spacing: var(--letter-spacing-code);
 }
 
 .noScroll {
@@ -320,21 +451,6 @@ a {
   display: none;
 }
 
-@mixin visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
 .sr_only {
-  @include visually-hidden;
-}
-
-:global(.sr_only) {
-  @include visually-hidden;
+  @include mixins.visually-hidden;
 }

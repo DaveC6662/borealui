@@ -26,5 +26,5 @@ const classes = {
 const Modal: React.FC<ModalProps> = (props) => {
   return <BaseModal {...props} IconButton={IconButton} classMap={classes} />;
 };
-
+Modal.displayName = "Modal";
 export default Modal;

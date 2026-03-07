@@ -15,6 +15,7 @@ function importAllTests(dir: string) {
       entry.name.endsWith(".test.ts") ||
       entry.name.endsWith(".test.tsx")
     ) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       require(fullPath);
     }
   }

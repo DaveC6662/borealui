@@ -1,7 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/globals";
-@use "sass:color";
 @use "sass:map";
 
 .metricBox {
@@ -15,22 +14,20 @@
   max-width: 100%;
   height: fit-content;
   text-align: center;
-  margin: theme.$spacing-sm;
-  transition: theme.$transition-default;
-  gap: theme.$spacing-sm;
+  transition: var(--transition-default);
+  gap: var(--spacing-sm);
+  font-family: var(--font-family-body);
 
   @include bp.up(xs) {
-    padding: theme.$spacing-sm;
+    padding: var(--spacing-sm);
   }
 
   @include bp.down(sm) {
-    gap: theme.$spacing-xs;
-    margin: theme.$spacing-xs;
+    gap: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-md;
-    margin: theme.$spacing-md;
+    gap: var(--spacing-md);
     min-width: 140px;
   }
 
@@ -44,6 +41,7 @@
     font-size: 2rem;
     color: inherit;
     padding: 0;
+    line-height: 1;
 
     @include bp.down(sm) {
       font-size: 1.8rem;
@@ -70,36 +68,43 @@
     display: flex;
     flex-direction: column;
     align-items: inherit;
-    padding: theme.$spacing-sm;
+    padding: var(--spacing-sm);
 
     @include bp.up(lg) {
-      padding: theme.$spacing-md;
+      padding: var(--spacing-md);
     }
   }
 
   &_title {
-    font-size: theme.$font-size-sm;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
     color: var(--text-color-primary);
 
     @include bp.down(sm) {
-      font-size: theme.$font-size-xs;
+      font-size: var(--font-size-caption);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-base;
+      font-size: var(--font-size-body-sm);
     }
   }
 
   &_value {
-    font-size: theme.$font-size-lg;
-    font-weight: theme.$font-weight-bold;
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-weight-h3);
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
 
     @include bp.down(sm) {
-      font-size: theme.$font-size-md;
+      font-size: var(--font-size-h6);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-xl;
+      font-size: var(--font-size-h4);
     }
   }
 
@@ -116,38 +121,38 @@
   $size-variations: (
     "xs": (
       icon-size: 1.5rem,
-      title-size: theme.$font-size-xs,
-      value-size: theme.$font-size-sm,
-      subtext-size: theme.$font-size-xs,
+      title-size: var(--font-size-caption),
+      value-size: var(--font-size-label),
+      subtext-size: var(--font-size-caption),
     ),
     "small": (
       icon-size: 2rem,
-      title-size: theme.$font-size-sm,
-      value-size: theme.$font-size-md,
-      subtext-size: theme.$font-size-sm,
+      title-size: var(--font-size-label),
+      value-size: var(--font-size-body-sm),
+      subtext-size: var(--font-size-label),
     ),
     "medium": (
       icon-size: 2rem,
-      title-size: theme.$font-size-base,
-      value-size: theme.$font-size-lg,
-      subtext-size: theme.$font-size-base,
+      title-size: var(--font-size-body),
+      value-size: var(--font-size-h5),
+      subtext-size: var(--font-size-body),
     ),
     "large": (
       icon-size: 2.5rem,
-      title-size: theme.$font-size-lg,
-      value-size: theme.$font-size-xl,
-      subtext-size: theme.$font-size-lg,
+      title-size: var(--font-size-h6),
+      value-size: var(--font-size-h4),
+      subtext-size: var(--font-size-h6),
     ),
     "xl": (
       icon-size: 2.5rem,
-      title-size: theme.$font-size-xl,
-      value-size: theme.$font-size-xl,
-      subtext-size: theme.$font-size-lg,
+      title-size: var(--font-size-h5),
+      value-size: var(--font-size-h3),
+      subtext-size: var(--font-size-h6),
     ),
   );
 
   @each $size, $properties in $size-variations {
-    .metricBox_#{$size} {
+    &.metricBox_#{$size} {
       .metricBox_icon {
         font-size: map.get($properties, icon-size);
       }
@@ -167,27 +172,31 @@
   }
 
   .metricBox_subtext {
-    font-size: theme.$font-size-xs !important;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-caption) !important;
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
     color: var(--text-color-primary);
     opacity: 0.7;
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-md !important;
+      font-size: var(--font-size-body-sm) !important;
     }
   }
 }
 
-@each $theme, $properties in theme.$themes {
-  .metricBox_#{$theme} {
+@each $theme-name, $properties in theme.$themes {
+  .metricBox_#{$theme-name} {
     background-color: map.get($properties, bg);
-    color: map.get($properties, color);
+    color: map.get($properties, text);
 
     .metricBox_title {
-      color: map.get($properties, color);
+      color: map.get($properties, text);
     }
 
     .metricBox_subtext {
-      color: map.get($properties, color);
+      color: map.get($properties, text);
     }
 
     &.metricBox_outline {
@@ -200,22 +209,22 @@
     }
   }
 
-  .metricBox_#{$theme}.metricBox_outline .metricBox_icon {
+  .metricBox_#{$theme-name}.metricBox_outline .metricBox_icon {
     color: map.get($properties, border);
   }
 }
 
-@each $state, $properties in theme.$states {
-  .metricBox_#{$state} {
+@each $state-name, $properties in theme.$states {
+  .metricBox_#{$state-name} {
     background-color: map.get($properties, bg);
-    color: map.get($properties, color);
+    color: map.get($properties, text);
 
     .metricBox_title {
-      color: map.get($properties, color);
+      color: map.get($properties, text);
     }
 
     .metricBox_subtext {
-      color: map.get($properties, color);
+      color: map.get($properties, text);
     }
 
     &.metricBox_outline {
@@ -228,13 +237,14 @@
     }
   }
 
-  .metricBox_#{$state}.metricBox_outline .metricBox_icon {
+  .metricBox_#{$state-name}.metricBox_outline .metricBox_icon {
     color: map.get($properties, bg);
   }
 }
 
 .metricBox_clear {
   border: none;
+  box-shadow: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

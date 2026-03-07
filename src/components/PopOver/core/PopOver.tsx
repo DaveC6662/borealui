@@ -39,5 +39,5 @@ const classes = {
 const Popover: React.FC<PopoverProps> = (props) => {
   return <BasePopover {...props} classMap={classes} />;
 };
-
+Popover.displayName = "Popover";
 export default Popover;

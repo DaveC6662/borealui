@@ -45,7 +45,7 @@ describe("BaseDropdown", () => {
         classMap={classNames}
         data-testid="dropdown"
         ariaLabel="More options"
-      />
+      />,
     );
 
     const trigger = screen.getByTestId("dropdown-trigger");
@@ -66,7 +66,7 @@ describe("BaseDropdown", () => {
         IconButton={DummyIconButton}
         classMap={classNames}
         data-testid="dropdown"
-      />
+      />,
     );
 
     fireEvent.click(screen.getByTestId("dropdown-trigger"));
@@ -84,7 +84,7 @@ describe("BaseDropdown", () => {
         IconButton={DummyIconButton}
         classMap={classNames}
         data-testid="dropdown"
-      />
+      />,
     );
 
     const trigger = screen.getByTestId("dropdown-trigger");
@@ -106,7 +106,7 @@ describe("BaseDropdown", () => {
         classMap={classNames}
         data-testid="dropdown"
         ariaLabel="More options"
-      />
+      />,
     );
 
     fireEvent.click(screen.getByTestId("dropdown-trigger"));

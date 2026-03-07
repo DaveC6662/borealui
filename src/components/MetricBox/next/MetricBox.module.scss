@@ -14,22 +14,20 @@
   max-width: 100%;
   height: fit-content;
   text-align: center;
-  margin: theme.$spacing-sm;
-  gap: theme.$spacing-sm;
-  transition: theme.$transition-default;
+  gap: var(--spacing-sm);
+  transition: var(--transition-default);
+  font-family: var(--font-family-body);
 
   @include bp.up(xs) {
-    padding: theme.$spacing-sm;
+    padding: var(--spacing-sm);
   }
 
   @include bp.down(sm) {
-    gap: theme.$spacing-xs;
-    margin: theme.$spacing-xs;
+    gap: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-md;
-    margin: theme.$spacing-md;
+    gap: var(--spacing-md);
     min-width: 140px;
   }
 
@@ -44,6 +42,7 @@
   font-size: 2rem;
   color: inherit;
   padding: 0;
+  line-height: 1;
 
   @include bp.down(sm) {
     font-size: 1.8rem;
@@ -59,46 +58,57 @@
   flex-direction: column;
   justify-content: center;
   align-items: inherit;
-  padding: theme.$spacing-sm;
+  padding: var(--spacing-sm);
 
   @include bp.up(lg) {
-    padding: theme.$spacing-md;
+    padding: var(--spacing-md);
   }
 }
 
 .title {
-  font-size: theme.$font-size-sm;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   color: var(--text-color-primary);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-xs;
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-base;
+    font-size: var(--font-size-body-sm);
   }
 }
 
 .value {
-  font-size: theme.$font-size-lg;
-  font-weight: theme.$font-weight-bold;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-h3);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-heading);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-md;
+    font-size: var(--font-size-h6);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-xl;
+    font-size: var(--font-size-h4);
   }
 }
 
 .subtext {
-  font-size: theme.$font-size-xs !important;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-caption) !important;
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   color: var(--text-color-primary);
   opacity: 0.7;
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-md !important;
+    font-size: var(--font-size-body-sm) !important;
   }
 }
 
@@ -127,11 +137,11 @@
 @each $name, $props in theme.$themes {
   .#{$name} {
     background-color: map.get($props, bg);
-    color: map.get($props, color);
+    color: map.get($props, text);
 
     .title,
     .subtext {
-      color: map.get($props, color);
+      color: map.get($props, text);
     }
 
     &.outline {
@@ -152,11 +162,11 @@
 @each $state, $props in theme.$states {
   .#{$state} {
     background-color: map.get($props, bg);
-    color: map.get($props, color);
+    color: map.get($props, text);
 
     .title,
     .subtext {
-      color: map.get($props, color);
+      color: map.get($props, text);
     }
 
     &.outline {
@@ -176,38 +186,39 @@
 
 .clear {
   border: none;
+  box-shadow: none;
 }
 
 $sizes: (
   "xs": (
     icon: 1.5rem,
-    title: theme.$font-size-xs,
-    value: theme.$font-size-sm,
-    subtext: theme.$font-size-xs,
+    title: var(--font-size-caption),
+    value: var(--font-size-label),
+    subtext: var(--font-size-caption),
   ),
   "small": (
     icon: 2rem,
-    title: theme.$font-size-sm,
-    value: theme.$font-size-md,
-    subtext: theme.$font-size-sm,
+    title: var(--font-size-label),
+    value: var(--font-size-body-sm),
+    subtext: var(--font-size-label),
   ),
   "medium": (
     icon: 2rem,
-    title: theme.$font-size-base,
-    value: theme.$font-size-lg,
-    subtext: theme.$font-size-base,
+    title: var(--font-size-body),
+    value: var(--font-size-h5),
+    subtext: var(--font-size-body),
   ),
   "large": (
     icon: 2.5rem,
-    title: theme.$font-size-lg,
-    value: theme.$font-size-xl,
-    subtext: theme.$font-size-lg,
+    title: var(--font-size-h6),
+    value: var(--font-size-h4),
+    subtext: var(--font-size-h6),
   ),
   "xl": (
     icon: 2.5rem,
-    title: theme.$font-size-xl,
-    value: theme.$font-size-xl,
-    subtext: theme.$font-size-lg,
+    title: var(--font-size-h5),
+    value: var(--font-size-h3),
+    subtext: var(--font-size-h6),
   ),
 );
 

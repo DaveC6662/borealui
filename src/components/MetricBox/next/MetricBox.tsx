@@ -8,5 +8,5 @@ import { MetricBoxProps } from "../MetricBox.types";
 const MetricBox: React.FC<MetricBoxProps> = (props) => {
   return <BaseMetricBox {...props} classMap={styles} />;
 };
-
+MetricBox.displayName = "MetricBox";
 export default MetricBox;

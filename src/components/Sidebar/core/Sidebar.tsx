@@ -51,5 +51,5 @@ const classes = {
 const Sidebar: React.FC<SidebarProps> = ({ currentPath, ...props }) => (
   <SidebarBase {...props} currentPath={currentPath} classMap={classes} />
 );
-
+Sidebar.displayName = "Sidebar";
 export default Sidebar;

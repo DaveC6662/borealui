@@ -7,5 +7,5 @@ import { DataTableProps } from "../DataTable.types";
 function DataTable<T extends object>(props: DataTableProps<T>) {
   return <DataTableBase {...props} classMap={styles} />;
 }
-
+DataTable.displayName = "DataTable";
 export default DataTable;

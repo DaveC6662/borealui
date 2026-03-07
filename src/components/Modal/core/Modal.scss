@@ -21,7 +21,7 @@
   background: var(--background-color-light);
   color: var(--text-color-primary);
   position: relative;
-  padding: theme.$spacing-xl;
+  padding: var(--spacing-xl);
   transform: scale(0.95);
   opacity: 0;
   transition:
@@ -31,18 +31,23 @@
   max-width: 560px;
   max-height: 85vh;
   overflow: hidden;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
 
   @include bp.down(sm) {
     width: 90%;
     max-width: 100%;
-    border-top-left-radius: theme.$border-radius-lg;
-    border-top-right-radius: theme.$border-radius-lg;
-    padding: theme.$spacing-lg;
+    border-top-left-radius: var(--border-radius-lg);
+    border-top-right-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
   }
 
   @include bp.up(lg) {
     max-width: 720px;
-    padding: theme.$spacing-xl;
+    padding: var(--spacing-xl);
   }
 
   &:focus-visible {
@@ -94,8 +99,8 @@
 
 .modal_close_button {
   position: absolute;
-  top: theme.$spacing-sm;
-  right: theme.$spacing-sm;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
   z-index: 2;
   border: none;
 }

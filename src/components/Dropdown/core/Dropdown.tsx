@@ -28,5 +28,5 @@ const classes = {
 const Dropdown: React.FC<DropdownProps> = (props) => {
   return <BaseDropdown {...props} IconButton={IconButton} classMap={classes} />;
 };
-
+Dropdown.displayName = "Dropdown";
 export default Dropdown;

@@ -3,7 +3,9 @@ import { Card } from "../src/index.next";
 import { FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-import testImage from "./assets/test_pattern.jpg";
+import testImageJpg from "./assets/test_pattern.jpg";
+import testImagePng from "./assets/test_pattern.png";
+import testImageSvg from "./assets/test_pattern.svg";
 import type { CardProps } from "../src/components/Card/Card.types";
 import { StateType, ThemeType } from "../src/types/types";
 
@@ -201,10 +203,26 @@ const defaultArgs: CardProps = {
 
 export const Default: Story = {};
 
-export const WithImage: Story = {
+export const WithJpgImage: Story = {
   args: {
     ...defaultArgs,
-    imageUrl: testImage,
+    imageUrl: testImageJpg,
+    imageAlt: "Placeholder image",
+  },
+};
+
+export const WithPngImage: Story = {
+  args: {
+    ...defaultArgs,
+    imageUrl: testImagePng,
+    imageAlt: "Placeholder image",
+  },
+};
+
+export const WithSVGImage: Story = {
+  args: {
+    ...defaultArgs,
+    imageUrl: testImageSvg,
     imageAlt: "Placeholder image",
   },
 };
@@ -276,7 +294,7 @@ export const SizeVariants = () =>
     {
       title: "Card Size Preview",
       description: "This is a description for the card size variant.",
-      imageUrl: testImage,
+      imageUrl: testImagePng,
       imageAlt: "Test image",
       cardIcon: FaInfoCircle,
       actionButtons: [
@@ -309,7 +327,7 @@ export const SizeVariants = () =>
   );
 
 export const LayoutVariants = () =>
-  withVariants(Card, { ...defaultArgs, imageUrl: testImage }, [
+  withVariants(Card, { ...defaultArgs, imageUrl: testImagePng }, [
     { propName: "layout", values: [...layoutOptions] },
   ]);
 
@@ -349,7 +367,7 @@ export const AlignmentGrid: Story = {
           key={`vertical-${align}`}
           title="Card Preview"
           description={descriptions[index]}
-          imageUrl={testImage}
+          imageUrl={testImagePng}
           imageAlt={`${titles[index]} image`}
           align={align}
           layout="vertical"
@@ -383,7 +401,7 @@ export const AlignmentGrid: Story = {
           key={`horizontal-${align}`}
           title="Card Preview"
           description={descriptions[index]}
-          imageUrl={testImage}
+          imageUrl={testImagePng}
           imageAlt={`${titles[index]} image`}
           align={align}
           layout="horizontal"
@@ -435,7 +453,7 @@ export const WithClassName: Story = {
 export const WithCustomSectionClassNames: Story = {
   args: {
     ...defaultArgs,
-    imageUrl: testImage,
+    imageUrl: testImagePng,
     imageClassName: "storybook-card-image",
     headerClassName: "storybook-card-header",
     bodyClassName: "storybook-card-body",

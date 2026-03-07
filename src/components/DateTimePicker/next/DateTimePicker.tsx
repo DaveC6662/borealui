@@ -8,5 +8,5 @@ import type { DateTimePickerProps } from "../DateTimePicker.types";
 const DateTimePicker: React.FC<DateTimePickerProps> = (props) => (
   <DateTimePickerBase {...props} classMap={styles} />
 );
-
+DateTimePicker.displayName = "DateTimePicker";
 export default DateTimePicker;

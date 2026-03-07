@@ -9,5 +9,5 @@ import styles from "./EmptyState.module.scss";
 const EmptyState: React.FC<EmptyStateProps> = (props) => {
   return <BaseEmptyState {...props} Button={Button} classMap={styles} />;
 };
-
+EmptyState.displayName = "EmptyState";
 export default EmptyState;

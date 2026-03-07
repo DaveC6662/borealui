@@ -8,5 +8,5 @@ import { RatingProps } from "../Rating.types";
 const Rating: React.FC<RatingProps> = (props) => {
   return <BaseRating {...props} classMap={styles} />;
 };
-
+Rating.displayName = "Rating";
 export default Rating;

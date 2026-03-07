@@ -35,7 +35,54 @@ $progress-sizes: (
     }
   }
 
+  &_layout {
+    display: flex;
+    gap: 0.5rem;
+    font-family: var(--font-family-ui);
+  }
+
+  &_title_top {
+    flex-direction: column;
+  }
+
+  &_title_bottom {
+    flex-direction: column;
+  }
+
+  &_title_left {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &_title_right {
+    align-items: center;
+  }
+
+  &_title {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    white-space: nowrap;
+  }
+
+  &_title_overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    font-family: var(--font-family-ui);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    font-size: 0.75rem;
+    letter-spacing: var(--letter-spacing-label);
+  }
+
   &_bar {
+    position: relative;
     height: 100%;
     width: 0;
     transition: width 0.4s ease-in-out;

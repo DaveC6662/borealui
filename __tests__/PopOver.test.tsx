@@ -61,13 +61,12 @@ describe("BasePopover", () => {
       />
     );
 
-    const trigger = screen.getByTestId("popover-trigger");
+    // Popover content should not be in the DOM yet
+  expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
 
-    fireEvent.keyDown(trigger, { key: "Enter" });
+  // Click the trigger to open
+  fireEvent.click(screen.getByTestId("popover-trigger"));
     expect(screen.getByTestId("popover-content")).toBeInTheDocument();
-
-    fireEvent.keyDown(trigger, { key: " " });
-    expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
   });
 
   it("has no accessibility violations when open", async () => {

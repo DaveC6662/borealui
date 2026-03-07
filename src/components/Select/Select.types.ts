@@ -1,4 +1,10 @@
-import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
+import {
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+  TitlePositionType,
+} from "@/types/types";
 
 /**
  * Represents a single option in the Select component.
@@ -97,6 +103,16 @@ export interface SelectProps {
    * Name for the select element.
    */
   name?: string;
+
+  /**
+   * Optional title describing what the select is for.
+   */
+  title?: React.ReactNode;
+
+  /**
+   * Position of the title relative to the select.
+   */
+  titlePosition?: "top" | "bottom" | "left" | "right";
 
   /**
    * Additional class name(s) for custom styling.

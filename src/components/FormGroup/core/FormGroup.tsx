@@ -30,5 +30,5 @@ const classes = {
 const FormGroup: React.FC<FormGroupProps> = (props) => {
   return <BaseFormGroup {...props} classMap={classes} />;
 };
-
+FormGroup.displayName = "FormGroup";
 export default FormGroup;

@@ -45,5 +45,5 @@ const classes = {
 const EmptyState: React.FC<EmptyStateProps> = (props) => {
   return <BaseEmptyState {...props} Button={Button} classMap={classes} />;
 };
-
+EmptyState.displayName = "EmptyState";
 export default EmptyState;

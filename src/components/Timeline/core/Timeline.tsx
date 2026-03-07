@@ -39,5 +39,5 @@ const classes = {
 const Timeline: React.FC<TimelineProps> = (props) => {
   return <TimelineBase {...props} classMap={classes} />;
 };
-
+Timeline.displayName = "Timeline";
 export default Timeline;

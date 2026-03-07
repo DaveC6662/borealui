@@ -8,8 +8,9 @@
   justify-content: space-evenly;
   align-items: center;
   width: fit-content;
-  margin: theme.$spacing-xs 0;
-  transition: theme.$transition-default;
+  margin: var(--spacing-xs) 0;
+  transition: var(--transition-default);
+  font-family: var(--font-family-ui);
 
   @include bp.down(sm) {
     width: 100%;
@@ -23,7 +24,7 @@
     opacity: 0.6;
     pointer-events: none;
     cursor: not-allowed;
-    background-color: theme.$disabled-color !important;
+    background-color: var(--disabled-color) !important;
   }
 
   &:focus-within {
@@ -54,7 +55,7 @@
   color: var(--text-color-primary);
   transform-origin: center;
   background-color: transparent !important;
-  right: theme.$spacing-sm;
+  right: var(--spacing-sm);
 
   @include bp.down(xs) {
     font-size: 11px;
@@ -69,8 +70,11 @@
   width: 100%;
   min-height: 40px;
   padding: 5px 30px;
-  font-size: theme.$font-size-sm;
-  font-weight: 800;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   appearance: none;
   border: none;
   color: var(--text-color-primary);
@@ -82,12 +86,12 @@
 
   @include bp.down(xs) {
     min-height: 38px;
-    padding: 4px 28px 4px theme.$spacing-sm;
-    font-size: theme.$font-size-xs;
+    padding: 4px 28px 4px var(--spacing-sm);
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-label);
   }
 
   &:focus {
@@ -102,13 +106,52 @@
     background-color: var(--background-color);
     border: none;
     color: var(--text-color-primary);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-label);
   }
+}
+
+.layout {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.title {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  white-space: nowrap;
+}
+
+.titleTop {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.titleBottom {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.titleLeft,
+.titleRight {
+  flex-direction: row;
+  align-items: center;
+}
+
+.titleLeft .wrapper,
+.titleRight .wrapper {
+  flex: 1;
+  min-width: 0;
 }
 
 @each $name, $vals in theme.$themes {
   .#{$name} {
     background-color: map.get($vals, bg);
-    color: map.get($vals, color);
+    color: map.get($vals, text);
 
     &:hover {
       background-color: map.get($vals, hover);
@@ -117,7 +160,7 @@
 
   .#{$name}.outline {
     background-color: transparent;
-    color: map.get($vals, color);
+    color: map.get($vals, text);
     border: 1px solid map.get($vals, border);
 
     @include bp.down(sm) {
@@ -125,7 +168,7 @@
     }
   }
 
-  .clear.select_#{$name} {
+  .clear.#{$name} {
     background-color: transparent;
   }
 }
@@ -133,7 +176,7 @@
 @each $name, $vals in theme.$states {
   .#{$name} {
     background-color: map.get($vals, bg);
-    color: map.get($vals, color);
+    color: map.get($vals, text);
 
     &:hover {
       background-color: map.get($vals, hover);
@@ -142,7 +185,7 @@
 
   .#{$name}.outline {
     background-color: transparent;
-    color: map.get($vals, color);
+    color: map.get($vals, text);
     border: 1px solid map.get($vals, border);
 
     @include bp.down(sm) {
@@ -150,7 +193,7 @@
     }
   }
 
-  .clear.select_#{$name} {
+  .clear.#{$name} {
     background-color: transparent;
   }
 }

@@ -6,20 +6,16 @@
 .wrapper {
   width: 100%;
   overflow-x: auto;
-  margin: theme.$spacing-md;
-
-  @include bp.down(sm) {
-    margin: theme.$spacing-sm;
-  }
-
-  @include bp.up(lg) {
-    margin: theme.$spacing-lg;
-  }
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
 
   .table {
     width: 100%;
     border-collapse: collapse;
-    font-size: theme.$font-size-base;
+    font-size: inherit;
     min-width: 600px;
 
     @include bp.down(md) {
@@ -32,18 +28,27 @@
 
     th {
       text-align: left;
-      padding: theme.$spacing-sm;
-      font-weight: theme.$font-weight-bold;
+      padding: var(--spacing-sm);
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
       white-space: nowrap;
       color: var(--text-color-primary);
     }
 
     td {
-      padding: theme.$spacing-sm;
+      padding: var(--spacing-sm);
       border-bottom: 1px solid var(--text-color-primary);
       text-align: left;
       white-space: nowrap;
       color: var(--text-color-primary);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
     }
 
     th:hover {
@@ -70,7 +75,7 @@
   }
 
   .sort_icon {
-    margin-left: theme.$spacing-xxs;
+    margin-left: var(--spacing-xxs);
     font-size: 0.9em;
 
     @include bp.down(sm) {
@@ -84,7 +89,7 @@
 
   .clickable {
     cursor: pointer;
-    transition: background-color theme.$transition-default;
+    transition: background-color var(--transition-default);
 
     &:hover {
       background-color: var(--background-color-light);
@@ -115,18 +120,26 @@
 
   @include bp.down(md) {
     .table {
-      font-size: theme.$font-size-sm;
+      font-size: var(--font-size-label);
 
       th,
       td {
-        padding: theme.$spacing-xs;
+        padding: var(--spacing-xs);
+      }
+
+      th {
+        font-size: var(--font-size-caption);
+      }
+
+      td {
+        font-size: var(--font-size-label);
       }
     }
   }
 
   @include bp.down(xs) {
     .table {
-      font-size: theme.$font-size-xs;
+      font-size: var(--font-size-caption);
 
       th,
       td {
@@ -134,14 +147,14 @@
         width: 100%;
         box-sizing: border-box;
         text-align: left;
-        padding: theme.$spacing-xs;
+        padding: var(--spacing-xs);
         border-bottom: 1px solid var(--text-color-primary);
         white-space: normal;
       }
 
       tbody tr {
         display: block;
-        margin-bottom: theme.$spacing-sm;
+        margin-bottom: var(--spacing-sm);
         background-color: var(--background-color-dark);
       }
 
@@ -152,7 +165,11 @@
       td::before {
         content: attr(data-label);
         display: block;
-        font-weight: theme.$font-weight-bold;
+        font-family: var(--font-family-ui);
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-label);
+        line-height: var(--line-height-label);
+        letter-spacing: var(--letter-spacing-label);
         margin-bottom: 2px;
         color: var(--text-color-secondary);
       }
@@ -172,7 +189,7 @@
     th {
       border: 2px solid map.get($values, border);
       background-color: transparent;
-      color: map.get($values, text-color);
+      color: map.get($values, text);
 
       @include bp.down(sm) {
         border-width: 1.5px;
@@ -193,7 +210,7 @@
     th {
       border: 2px solid map.get($values, border);
       background-color: transparent;
-      color: map.get($values, text-color);
+      color: map.get($values, text);
 
       @include bp.down(sm) {
         border-width: 1.5px;

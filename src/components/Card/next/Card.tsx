@@ -1,16 +1,43 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { Button, IconButton, Skeleton } from "../../../index.next";
 import styles from "./Card.module.scss";
 import CardBase from "../CardBase";
-import { CardProps } from "../Card.types";
+import { CardImageComponentProps, CardProps } from "../Card.types";
 
-const NextImageWrapper: React.FC<React.ComponentProps<typeof Image>> = (
-  props
-) => {
-  return <Image {...props} />;
+const NextImageWrapper: React.FC<CardImageComponentProps> = ({
+  src,
+  alt,
+  className,
+  width,
+  height,
+  fill,
+}) => {
+  if (typeof src === "string" && src.toLowerCase().endsWith(".svg")) {
+    return (
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        width={width}
+        height={height}
+        loading="lazy"
+      />
+    );
+  }
+
+  return (
+    <Image
+      src={src as StaticImageData | string}
+      alt={alt}
+      className={className}
+      {...(fill
+        ? { fill, sizes: "100vw" }
+        : { width: width ?? 640, height: height ?? 360 })}
+    />
+  );
 };
 
 const Card: React.FC<CardProps> = (props) => {
@@ -30,5 +57,5 @@ const Card: React.FC<CardProps> = (props) => {
     />
   );
 };
-
+Card.displayName = "Card";
 export default Card;
