@@ -107,11 +107,12 @@ export const LongContent: Story = {
         </Button>
 
         {isOpen && (
-          <Modal onClose={() => setIsOpen(false)}>
-            <div
-              style={{ padding: "1rem", maxHeight: "70vh", overflowY: "auto" }}
-            >
-              <h2>Scrollable Content</h2>
+          <Modal
+            onClose={() => setIsOpen(false)}
+            header="Scrollable Modal"
+            footer={<Button onClick={() => setIsOpen(false)}>Close</Button>}
+          >
+            <div style={{ padding: "1rem", maxHeight: "70vh" }}>
               <p>
                 This modal contains a lot of content to test vertical scroll
                 behavior.
@@ -119,7 +120,6 @@ export const LongContent: Story = {
               {[...Array(30)].map((_, i) => (
                 <p key={i}>Line {i + 1}: Lorem ipsum dolor sit amet...</p>
               ))}
-              <Button onClick={() => setIsOpen(false)}>Close</Button>
             </div>
           </Modal>
         )}
@@ -131,7 +131,7 @@ export const LongContent: Story = {
 export const RoundingVariants: Story = {
   render: () => {
     const [visibleRounding, setVisibleRounding] = useState<RoundingType | null>(
-      null
+      null,
     );
 
     return (

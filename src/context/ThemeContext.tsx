@@ -197,6 +197,21 @@ const ThemeProvider: React.FC<
     const getAccessibleTextColor = (bg: string): string =>
       contrastRatio(bg, "#000000") >= 4.5 ? "#000000" : "#FFFFFF";
 
+    const getAdaptiveBorderColor = (
+      backgroundHex: string,
+      amountLight = 14,
+      amountDark = 14,
+    ): string => {
+      const { h, s, l } = hexToHSL(backgroundHex);
+
+      const nextLightness =
+        l >= 50 ? Math.max(0, l - amountDark) : Math.min(100, l + amountLight);
+
+      const nextSaturation = s > 8 ? Math.max(0, s - 8) : s;
+
+      return hslToHex(h, nextSaturation, nextLightness);
+    };
+
     const vars = {
       "--primary-color": primaryColor,
       "--primary-color-light": adjustLightness(primaryColor, 10),
@@ -246,7 +261,10 @@ const ThemeProvider: React.FC<
       "--link-hover-color-quaternary": adjustLightness(quaternaryColor, -10),
 
       "--focus-outline-color": getAccessibleTextColor(backgroundColor),
-      "--divider-color": adjustLightness(backgroundColor, -10),
+      "--divider-color": getAdaptiveBorderColor(backgroundColor),
+      "--border-color": getAdaptiveBorderColor(backgroundColor),
+      "--border-color-subtle": getAdaptiveBorderColor(backgroundColor, 10, 10),
+      "--border-color-strong": getAdaptiveBorderColor(backgroundColor, 20, 20),
     } as const;
 
     const rootStyle = document.documentElement.style;

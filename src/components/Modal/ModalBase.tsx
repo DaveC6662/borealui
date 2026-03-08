@@ -19,6 +19,9 @@ import {
 const BaseModal: React.FC<BaseModalProps> = ({
   className = "",
   children,
+  title = "Modal Dialog",
+  header,
+  footer,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   open,
@@ -145,6 +148,9 @@ const BaseModal: React.FC<BaseModalProps> = ({
     rounding && classMap[`round${capitalize(rounding)}`],
   );
 
+  const hasHeader = Boolean(header) || Boolean(title);
+  const hasFooter = Boolean(footer);
+
   return ReactDOM.createPortal(
     <div
       ref={overlayRef}
@@ -170,23 +176,57 @@ const BaseModal: React.FC<BaseModalProps> = ({
         <h2 id={labelId} className={classMap.srOnly ?? "sr_only"}>
           Modal Dialog
         </h2>
-        <IconButton
-          ref={closeBtnRef}
-          className={classMap.closeButton}
-          state="error"
-          size="small"
-          icon={CloseIcon}
-          ariaLabel="Close modal"
-          onClick={(e: React.MouseEvent) => {
-            e.stopPropagation();
-            handleClose();
-          }}
-          title="Close"
-          data-testid={`${testId}-close`}
-          type="button"
-        />
+        {hasHeader && (
+          <div className={classMap.header} data-testid={`${testId}-header`}>
+            <div className={classMap.headerContent}>
+              {header ?? <div className={classMap.title}>{title}</div>}
+            </div>
 
-        {children}
+            <IconButton
+              ref={closeBtnRef}
+              className={classMap.closeButton}
+              state="error"
+              size="small"
+              icon={CloseIcon}
+              ariaLabel="Close modal"
+              onClick={(e: React.MouseEvent) => {
+                e.stopPropagation();
+                handleClose();
+              }}
+              title="Close"
+              data-testid={`${testId}-close`}
+              type="button"
+            />
+          </div>
+        )}
+
+        {!hasHeader && (
+          <IconButton
+            ref={closeBtnRef}
+            className={classMap.closeButtonFloating ?? classMap.closeButton}
+            state="error"
+            size="small"
+            icon={CloseIcon}
+            ariaLabel="Close modal"
+            onClick={(e: React.MouseEvent) => {
+              e.stopPropagation();
+              handleClose();
+            }}
+            title="Close"
+            data-testid={`${testId}-close`}
+            type="button"
+          />
+        )}
+
+        <div className={classMap.body} data-testid={`${testId}-body`}>
+          {children}
+        </div>
+
+        {hasFooter && (
+          <div className={classMap.footer} data-testid={`${testId}-footer`}>
+            {footer}
+          </div>
+        )}
       </div>
     </div>,
     portalElement,

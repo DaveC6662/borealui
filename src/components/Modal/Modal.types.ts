@@ -1,5 +1,5 @@
 import { RoundingType, ShadowType } from "@/types/types";
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import { IconButtonProps } from "../IconButton/IconButton.types";
 
 /**
@@ -10,6 +10,14 @@ export interface ModalProps {
   className?: string;
   /** The content to be rendered inside the modal. Expected to be a single React element. */
   children?: ReactElement;
+  /** Optional modal title used for accessible labelling and default header content. */
+  title?: ReactNode;
+
+  /** Optional custom header content. */
+  header?: ReactNode;
+
+  /** Optional footer content. */
+  footer?: ReactNode;
   /**
    * Rounding of the modal corners.
    * One of: "none" | "small" | "medium" | "large" | "full"

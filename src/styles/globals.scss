@@ -274,8 +274,17 @@
   /* ===========================
      Divider & Overlay Colors
   =========================== */
-  --divider-color: #{color.adjust(theme.$background-color, $lightness: 30%)}; /* subtle dividers */
-  --overlay-color: rgb(0 0 0 / 50%); /* for modals or overlays */
+  --divider-color: #{color.adjust(theme.$background-color, $lightness: 30%)};
+  --border-color: #{color.adjust(theme.$background-color, $lightness: 30%)};
+  --border-color-subtle: #{color.adjust(
+      theme.$background-color,
+      $lightness: 10%
+    )};
+  --border-color-strong: #{color.adjust(
+      theme.$background-color,
+      $lightness: 20%
+    )};
+  --overlay-color: rgb(0 0 0 / 50%);
   --font-family-body: #{theme.$font-family-body};
   --font-family-heading: #{theme.$font-family-heading};
   --font-family-ui: #{theme.$font-family-ui};

@@ -72,6 +72,7 @@ $secondary-color: #6e502e !default;
 $tertiary-color: #092b1c !default;
 $quaternary-color: #a1733a !default;
 $background-color: #222e2e !default;
+$border-color: #444 !default;
 $background-color-surface: #384b4b !default;
 $error-color: #f83838 !default;
 $success-color: #51c703 !default;
@@ -109,7 +110,8 @@ $font-family-ui:
   roboto,
   arial,
   sans-serif !default;
-$font-family-mono: ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
+$font-family-mono:
+  ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
 $font-size-xxs: 10px !default;
 $font-size-xs: 12px !default;
 $font-size-sm: 14px !default;
