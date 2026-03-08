@@ -165,6 +165,11 @@
   }
 }
 
+.textInput_icon_container,
+.textInput_togglePassword {
+  background-color: transparent;
+}
+
 .textInput_disabled {
   cursor: not-allowed;
   pointer-events: none;

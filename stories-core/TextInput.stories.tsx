@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import { FaUser } from "react-icons/fa";
+import { FaInbox, FaUser } from "react-icons/fa";
 import { TextInput } from "../src/index.core";
 import type { TextInputProps } from "../src/components/TextInput/TextInput.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
@@ -320,8 +320,10 @@ export const OutlineVariants: Story = {
               {...args}
               outline
               theme={theme}
+              icon={FaInbox}
               placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
               value={value}
+              password
               onChange={(value) => setValue(value)}
             />
           );

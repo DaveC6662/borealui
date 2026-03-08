@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { FaCommentDots } from "react-icons/fa";
+import { FaCommentDots, FaInbox } from "react-icons/fa";
 import { TextArea } from "../src/index.next";
 import type { TextAreaProps } from "../src/components/TextArea/TextArea.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
@@ -240,6 +240,7 @@ export const OutlineVariants: Story = {
               {...args}
               outline
               theme={theme}
+              icon={FaInbox}
               placeholder={`${theme} outline`}
               value={value}
               onChange={(value) => setValue(value)}

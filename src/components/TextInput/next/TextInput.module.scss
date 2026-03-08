@@ -122,46 +122,6 @@
   }
 }
 
-.iconContainer {
-  display: flex;
-  box-sizing: border-box;
-  margin: 0.5rem;
-
-  @include bp.down(xs) {
-    margin: 0.1rem;
-  }
-
-  svg {
-    width: 1em;
-    height: 1em;
-    color: var(--text-color-primary);
-
-    @include bp.down(xs) {
-      width: 15px;
-      height: 15px;
-    }
-  }
-}
-
-.togglePassword {
-  padding: var(--spacing-xs);
-  box-sizing: border-box;
-  background: transparent;
-  border: none;
-  color: inherit;
-  cursor: pointer;
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: var(--border-radius-xs);
-  }
-
-  @include bp.down(xs) {
-    margin-top: var(--spacing-xs);
-  }
-}
-
 @each $state, $vals in theme.$states {
   .#{$state} {
     border: 2px solid map.get($vals, border);
@@ -207,6 +167,47 @@
   box-shadow: none;
   .textInput {
     border: none;
+  }
+}
+
+.iconContainer {
+  display: flex;
+  box-sizing: border-box;
+  margin: 0.5rem;
+  background-color: transparent;
+
+  @include bp.down(xs) {
+    margin: 0.1rem;
+  }
+
+  svg {
+    width: 1em;
+    height: 1em;
+    color: var(--text-color-primary);
+
+    @include bp.down(xs) {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}
+
+.togglePassword {
+  padding: var(--spacing-xs);
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: var(--border-radius-xs);
+  }
+
+  @include bp.down(xs) {
+    margin-top: var(--spacing-xs);
   }
 }
 
