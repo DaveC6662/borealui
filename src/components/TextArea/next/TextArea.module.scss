@@ -15,20 +15,20 @@
   font-weight: var(--font-weight-ui);
 }
 
-.label-top {
+.labelTop {
   flex-direction: column;
 }
 
-.label-bottom {
+.labelBottom {
   flex-direction: column-reverse;
 }
 
-.label-left {
+.labelLeft {
   flex-direction: row;
   align-items: center;
 }
 
-.label-right {
+.labelRight {
   flex-direction: row-reverse;
   align-items: center;
 }
