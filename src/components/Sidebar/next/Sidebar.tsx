@@ -10,6 +10,14 @@ import { SidebarLink, SidebarProps } from "../Sidebar.types";
 const normalizePath = (p: string) =>
   p.endsWith("/") && p.length > 1 ? p.slice(0, -1) : p;
 
+const isDescendantPath = (parentPath: string, currentPath: string): boolean => {
+  const parent = normalizePath(parentPath);
+  const current = normalizePath(currentPath);
+
+  if (parent === "/") return current === "/";
+  return current === parent || current.startsWith(`${parent}/`);
+};
+
 const isActiveRecursive = (
   link: SidebarLink,
   matcher: (link: SidebarLink) => boolean,
@@ -21,10 +29,17 @@ const isActiveRecursive = (
 const Sidebar: React.FC<SidebarProps> = ({ links, ...rest }) => {
   const pathname = usePathname() || "/";
 
-  const isLinkActive = (link: SidebarLink) =>
-    !!link.href && normalizePath(link.href) === normalizePath(pathname);
+  const isLinkActive = (link: SidebarLink): boolean => {
+    if (!link.href) return false;
 
-  const hasActiveChild = (link: SidebarLink) =>
+    if (link.children?.length) {
+      return isDescendantPath(link.href, pathname);
+    }
+
+    return normalizePath(link.href) === normalizePath(pathname);
+  };
+
+  const hasActiveChild = (link: SidebarLink): boolean =>
     !!link.children?.some((child) => isActiveRecursive(child, isLinkActive));
 
   return (

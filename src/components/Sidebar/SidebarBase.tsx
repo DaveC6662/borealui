@@ -131,7 +131,8 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                   id={buttonId}
                   className={combineClassNames(
                     classMap.link,
-                    (isOpen || containsActiveChild) && classMap.active,
+                    (isActive || isOpen || containsActiveChild) &&
+                      classMap.active,
                   )}
                   onClick={() => toggleItem(label)}
                   aria-expanded={isOpen}

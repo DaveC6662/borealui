@@ -55,6 +55,14 @@ const normalizePath = (p: string) =>
 const getInitialPath = () =>
   typeof window !== "undefined" ? window.location.pathname || "/" : "/";
 
+const isDescendantPath = (parentPath: string, currentPath: string): boolean => {
+  const parent = normalizePath(parentPath);
+  const current = normalizePath(currentPath);
+
+  if (parent === "/") return current === "/";
+  return current === parent || current.startsWith(`${parent}/`);
+};
+
 const isActiveRecursive = (
   link: SidebarLink,
   matcher: (link: SidebarLink) => boolean,
@@ -66,10 +74,17 @@ const isActiveRecursive = (
 const Sidebar: React.FC<SidebarProps> = (props) => {
   const [pathname] = useState(getInitialPath);
 
-  const isLinkActive = (link: SidebarLink) =>
-    !!link.href && normalizePath(link.href) === normalizePath(pathname);
+  const isLinkActive = (link: SidebarLink): boolean => {
+    if (!link.href) return false;
 
-  const hasActiveChild = (link: SidebarLink) =>
+    if (link.children?.length) {
+      return isDescendantPath(link.href, pathname);
+    }
+
+    return normalizePath(link.href) === normalizePath(pathname);
+  };
+
+  const hasActiveChild = (link: SidebarLink): boolean =>
     !!link.children?.some((child) => isActiveRecursive(child, isLinkActive));
 
   return (
