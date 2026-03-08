@@ -445,8 +445,11 @@
   /* ===========================
      Divider & Overlay Colors
   =========================== */
-  --divider-color: rgb(99.025, 133.975, 133.975); /* subtle dividers */
-  --overlay-color: rgb(0 0 0 / 50%); /* for modals or overlays */
+  --divider-color: rgb(99.025, 133.975, 133.975);
+  --border-color: rgb(99.025, 133.975, 133.975);
+  --border-color-subtle: rgb(55.675, 75.325, 75.325);
+  --border-color-strong: rgb(77.35, 104.65, 104.65);
+  --overlay-color: rgb(0 0 0 / 50%);
   --font-family-body: Inter, system-ui, -apple-system, Segoe UI, roboto, arial, sans-serif;
   --font-family-heading: Inter, system-ui, -apple-system, Segoe UI, roboto, sans-serif;
   --font-family-ui: Inter, system-ui, -apple-system, Segoe UI, roboto, arial, sans-serif;
