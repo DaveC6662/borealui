@@ -43,11 +43,6 @@ export interface SidebarProps {
   links: SidebarLink[];
 
   /**
-   * The current active path, used to highlight the active link.
-   */
-  currentPath: string;
-
-  /**
    * Whether to display a footer section at the bottom of the sidebar.
    * Defaults to `false`.
    */
