@@ -1,4 +1,5 @@
 import {
+  LabelPositionType,
   RoundingType,
   ShadowType,
   StateType,
@@ -19,7 +20,10 @@ export interface TextInputProps extends Omit<
    * Called when the input value changes.
    * Receives the current string value.
    */
-  onChange?: (value: string) => void;
+  onChange?: (
+    value: string,
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => void;
 
   /**
    * Optional icon component to display on the left side of the input.
@@ -90,15 +94,13 @@ export interface TextInputProps extends Omit<
   /**
    * Optional visible label/title for the input.
    */
-  title?: string;
+  label?: string;
 
   /**
-   * Position of the title/label.
-   * - "top": label above input
-   * - "inline": label inside container (left)
-   * - "floating": material-style floating label
+   * Position of the label.
+   * "top" | "left" | "right" | "bottom"
    */
-  titlePosition?: TitlePositionType;
+  labelPosition?: LabelPositionType;
 
   /**
    * Maximum length of the input.

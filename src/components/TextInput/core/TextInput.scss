@@ -3,7 +3,38 @@
 @use "../../../styles/globals";
 @use "sass:map";
 
-.textInput_container {
+.container {
+  display: flex;
+  gap: var(--spacing-xs);
+  width: fit-content;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.label {
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-ui);
+}
+
+.labelTop {
+  flex-direction: column;
+}
+
+.labelBottom {
+  flex-direction: column-reverse;
+}
+
+.labelLeft {
+  flex-direction: row;
+  align-items: center;
+}
+
+.labelRight {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.textInput {
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
@@ -12,40 +43,6 @@
   transition: var(--transition-default);
   max-width: 400px;
   background: transparent;
-
-  &:focus-within {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    border-radius: var(--border-radius-md);
-  }
-
-  @include bp.down(xs) {
-    padding: var(--spacing-xs);
-    height: 35px;
-    width: 95%;
-    max-width: none;
-  }
-
-  input {
-    width: 100%;
-    padding: var(--spacing-sm);
-    border: none;
-    height: 100%;
-    background-color: transparent;
-    color: var(--text-color-primary);
-
-    &:hover {
-      background-color: transparent;
-    }
-
-    &:focus-within,
-    &:focus {
-      outline: none;
-    }
-  }
-}
-
-.textInput {
   outline: none;
   flex: 1;
   margin: var(--spacing-sm);

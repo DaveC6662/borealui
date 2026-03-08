@@ -30,6 +30,20 @@ const meta: Meta<TextAreaProps> = {
     autoComplete: "off",
   },
   argTypes: {
+    label: {
+      control: "text",
+      description: "Visible label displayed for the textarea.",
+      table: { category: "Accessibility", type: { summary: "string" } },
+    },
+    labelPosition: {
+      control: { type: "select" },
+      options: ["top", "left", "right", "bottom"],
+      description: "Position of the label relative to the textarea.",
+      table: {
+        category: "Accessibility",
+        type: { summary: '"top" | "left" | "right" | "bottom"' },
+      },
+    },
     value: {
       control: "text",
       description: "The current value of the textarea (for controlled usage).",
@@ -150,11 +164,7 @@ export const Default: Story = {
   render: (args) => {
     const [value, setValue] = useState("");
     return (
-      <TextArea
-        {...args}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
+      <TextArea {...args} value={value} onChange={(value) => setValue(value)} />
     );
   },
 };
@@ -168,7 +178,7 @@ export const WithIcon: Story = {
         icon={FaCommentDots}
         placeholder="Leave a comment..."
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -187,7 +197,7 @@ export const ThemedVariants: Story = {
               theme={theme}
               placeholder={`${theme} theme`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -209,7 +219,7 @@ export const StateVariants: Story = {
               state={state}
               placeholder={`${state} state`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -232,7 +242,7 @@ export const OutlineVariants: Story = {
               theme={theme}
               placeholder={`${theme} outline`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -250,7 +260,7 @@ export const CustomHeight: Story = {
         height="150px"
         placeholder="Tall textarea for longer input..."
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -266,7 +276,7 @@ export const Unresizable: Story = {
         placeholder="Cannot be resized"
         value={value}
         rows={1}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -285,7 +295,7 @@ export const WithAriaDescription: Story = {
         placeholder="Describe your experience..."
         ariaDescription="Use this field to describe your experience with our product."
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -300,6 +310,29 @@ export const Disabled: Story = {
       onChange={() => {}}
     />
   ),
+};
+
+export const LabelPositionVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1.5rem", maxWidth: "700px" }}>
+        {(["top", "left", "right", "bottom"] as const).map((position) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextArea
+              key={position}
+              {...args}
+              label={`Label ${position}`}
+              labelPosition={position}
+              placeholder={`Label position: ${position}`}
+              value={value}
+              onChange={(value) => setValue(value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
 };
 
 export const RoundingVariants = (args) =>

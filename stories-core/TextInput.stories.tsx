@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/react";
 import { FaUser } from "react-icons/fa";
 import { TextInput } from "../src/index.core";
 import type { TextInputProps } from "../src/components/TextInput/TextInput.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: NonNullable<TextInputProps["theme"]>[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -13,9 +13,33 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const stateOptions: NonNullable<TextInputProps["state"]>[] = [
+  "success",
+  "error",
+  "warning",
+];
+
+const roundingOptions: NonNullable<TextInputProps["rounding"]>[] = [
+  "none",
+  "small",
+  "medium",
+  "large",
+];
+
+const shadowOptions: NonNullable<TextInputProps["shadow"]>[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
+
+const labelPositionOptions: NonNullable<TextInputProps["labelPosition"]>[] = [
+  "top",
+  "bottom",
+  "left",
+  "right",
+];
 
 const meta: Meta<TextInputProps> = {
   title: "Components/TextInput",
@@ -28,6 +52,7 @@ const meta: Meta<TextInputProps> = {
     readOnly: false,
     password: false,
     autocomplete: false,
+    labelPosition: "top",
   },
   argTypes: {
     value: {
@@ -44,6 +69,21 @@ const meta: Meta<TextInputProps> = {
       control: "text",
       description: "Placeholder text when input is empty.",
       table: { category: "Appearance", type: { summary: "string" } },
+    },
+    label: {
+      control: "text",
+      description: "Optional visible label/title for the input.",
+      table: { category: "Accessibility", type: { summary: "string" } },
+    },
+    labelPosition: {
+      control: { type: "select" },
+      options: labelPositionOptions,
+      description:
+        'Position of the label. "top" places it above, "left" places it to the left, "right" places it to the right, and "bottom" places it below the input.',
+      table: {
+        category: "Accessibility",
+        type: { summary: '"top" | "left" | "right" | "bottom"' },
+      },
     },
     password: {
       control: "boolean",
@@ -62,8 +102,14 @@ const meta: Meta<TextInputProps> = {
     },
     autocomplete: {
       control: "boolean",
-      description: "Enables browser autocomplete if true.",
+      description:
+        'Enables browser autocomplete if true ("on"), otherwise "off".',
       table: { category: "Behavior", defaultValue: { summary: "false" } },
+    },
+    maxLength: {
+      control: "number",
+      description: "Maximum number of characters allowed.",
+      table: { category: "Behavior", type: { summary: "number" } },
     },
     outline: {
       control: "boolean",
@@ -77,25 +123,25 @@ const meta: Meta<TextInputProps> = {
     },
     theme: {
       control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
+      options: themeOptions,
       description: "Theme for input appearance.",
       table: { category: "Appearance" },
     },
     rounding: {
       control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
+      options: roundingOptions,
       description: "Border radius for the input.",
       table: { category: "Appearance" },
     },
     shadow: {
       control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
+      options: shadowOptions,
       description: "Box shadow style for the input.",
       table: { category: "Appearance" },
     },
     state: {
       control: { type: "select" },
-      options: ["", "success", "error", "warning"],
+      options: ["", ...stateOptions],
       description: "Validation state appearance.",
       table: { category: "Appearance" },
     },
@@ -111,7 +157,8 @@ const meta: Meta<TextInputProps> = {
     },
     onChange: {
       action: "changed",
-      description: "Called when the input value changes. Receives event.",
+      description:
+        "Called when the input value changes. Receives (value, event).",
       table: { category: "Events" },
     },
     onBlur: {
@@ -148,7 +195,7 @@ export const Default: Story = {
       <TextInput
         {...args}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -163,10 +210,43 @@ export const WithIcon: Story = {
         icon={FaUser}
         placeholder="Username"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
+};
+
+export const WithLabel: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextInput
+        {...args}
+        label="Username"
+        labelPosition="top"
+        placeholder="Enter your username"
+        value={value}
+        onChange={(value) => setValue(value)}
+      />
+    );
+  },
+};
+
+export const LabelPositionVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "1rem", maxWidth: "420px" }}>
+      {labelPositionOptions.map((position) => (
+        <TextInput
+          key={position}
+          {...args}
+          label={`Label ${position}`}
+          labelPosition={position}
+          placeholder={`Label position: ${position}`}
+          defaultValue=""
+        />
+      ))}
+    </div>
+  ),
 };
 
 export const PasswordInput: Story = {
@@ -178,7 +258,7 @@ export const PasswordInput: Story = {
         placeholder="Enter password"
         password
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -197,7 +277,7 @@ export const ThemedVariants: Story = {
               theme={theme}
               placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -219,7 +299,7 @@ export const StateVariants: Story = {
               state={state}
               placeholder={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -242,7 +322,7 @@ export const OutlineVariants: Story = {
               theme={theme}
               placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -277,7 +357,7 @@ export const WithAriaDescription: Story = {
         placeholder="Type a short bio..."
         ariaDescription="This field is used to describe yourself in 100 characters or less."
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },

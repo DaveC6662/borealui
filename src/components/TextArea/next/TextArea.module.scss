@@ -2,6 +2,37 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 
+.container {
+  display: flex;
+  gap: var(--spacing-xs);
+  width: fit-content;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.label {
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-ui);
+}
+
+.label-top {
+  flex-direction: column;
+}
+
+.label-bottom {
+  flex-direction: column-reverse;
+}
+
+.label-left {
+  flex-direction: row;
+  align-items: center;
+}
+
+.label-right {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
 .textArea {
   display: inline-flex;
   justify-content: space-between;

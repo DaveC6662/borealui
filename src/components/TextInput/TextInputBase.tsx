@@ -19,8 +19,8 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
   (
     {
       icon: Icon,
-      title,
-      titlePosition = "top",
+      label,
+      labelPosition = "top",
       placeholder = "Enter text",
       password = false,
       readOnly = false,
@@ -69,31 +69,12 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
 
     const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
-    const hasTitle = Boolean(title);
-
-    const layoutClasses = useMemo(() => {
-      const posClass = hasTitle
-        ? classMap[`title${capitalize(titlePosition)}`]
-        : undefined;
-
-      return combineClassNames(classMap.layout, posClass);
-    }, [classMap, hasTitle, titlePosition]);
-
-    const titleClasses = useMemo(
-      () => combineClassNames(classMap.title, classMap.titleOverlay),
-      [classMap],
-    );
-
-    const titleNode = hasTitle ? (
-      <div className={titleClasses} data-testid={`${testId}-title`}>
-        {title}
-      </div>
-    ) : null;
+    const hasLabel = Boolean(label);
 
     const wrapperClass = useMemo(
       () =>
         combineClassNames(
-          classMap.container,
+          classMap.textInput,
           classMap[theme],
           classMap[state],
           outline && classMap.outline,
@@ -119,15 +100,27 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         ),
       [classMap, theme, disabled],
     );
-    const computedAriaLabel = hasTitle ? undefined : ariaLabel || placeholder;
+    const computedAriaLabel = hasLabel ? undefined : ariaLabel || placeholder;
 
-    const computedPlaceholder =
-      hasTitle && titlePosition === "overlay" ? " " : placeholder;
+    const computedPlaceholder = hasLabel ? " " : placeholder;
 
     return (
-      <div className={layoutClasses} data-testid={`${testId}-layout`}>
-        {(titlePosition === "top" || titlePosition === "left") && titleNode}
-
+      <div
+        className={combineClassNames(
+          classMap.container,
+          classMap[`label${capitalize(labelPosition)}`],
+        )}
+        data-testid={testId}
+      >
+        {label && (
+          <label
+            htmlFor={inputId}
+            className={classMap.label}
+            data-testid={`${testId}-label`}
+          >
+            {label}
+          </label>
+        )}
         <div className={wrapperClass} data-testid={testId}>
           {Icon && (
             <div
@@ -152,23 +145,13 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             aria-required={required || undefined}
             aria-readonly={readOnly || undefined}
             autoComplete={computedAutoComplete}
-            onChange={(e) => onChange?.(e.currentTarget.value)}
+            onChange={(e) => onChange?.(e.currentTarget.value, e)}
             readOnly={readOnly}
             disabled={disabled}
             required={required}
             data-testid={`${testId}-input`}
             {...restInput}
           />
-          {hasTitle && titlePosition === "overlay" && (
-            <label
-              className={classMap.titleOverlayLabel}
-              htmlFor={inputId}
-              data-testid={`${testId}-overlay-title`}
-            >
-              {title}
-            </label>
-          )}
-
           {password && (
             <IconButton
               type="button"
@@ -193,8 +176,6 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             </span>
           )}
         </div>
-
-        {(titlePosition === "bottom" || titlePosition === "right") && titleNode}
       </div>
     );
   },

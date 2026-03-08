@@ -111,6 +111,7 @@ export type StatusPositionType =
 export type AttachmentType = "static" | "fixed" | "sticky";
 
 export type TitlePositionType = "top" | "bottom" | "left" | "right" | "overlay";
+export type LabelPositionType = "top" | "bottom" | "left" | "right";
 
 /**
  * Props for interactive components that require user input or actions.

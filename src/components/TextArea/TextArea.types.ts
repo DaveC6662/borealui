@@ -1,4 +1,10 @@
-import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
+import {
+  LabelPositionType,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
 import { TextareaHTMLAttributes, ComponentType } from "react";
 
 /**
@@ -9,10 +15,23 @@ export interface TextAreaProps extends Omit<
   "onChange"
 > {
   /**
+   * Optional visible label for the textarea.
+   */
+  label?: string;
+
+  /**
+   * Position of the label relative to the textarea.
+   */
+  labelPosition?: LabelPositionType;
+
+  /**
    * Called when the textarea value changes.
    * Receives the current string value.
    */
-  onChange?: (value: string) => void;
+  onChange?: (
+    value: string,
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => void;
 
   /**
    * Optional icon to display alongside the textarea. Accepts a React component.

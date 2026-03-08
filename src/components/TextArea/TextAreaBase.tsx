@@ -14,6 +14,8 @@ const TextAreaBase = forwardRef<
 >(
   (
     {
+      label,
+      labelPosition = "top",
       icon: Icon,
       placeholder = "Enter text",
       readOnly = false,
@@ -58,63 +60,80 @@ const TextAreaBase = forwardRef<
       [classMap, theme, state, outline, disabled, shadow, rounding, className],
     );
 
-    const computedLabel = ariaLabel || placeholder;
+    const computedLabel = !label ? ariaLabel || placeholder : undefined;
 
     const describedBy = descriptionId || undefined;
 
     const isError = state === "error";
 
     return (
-      <div className={wrapperClass} data-testid={testId}>
-        {Icon && (
+      <div
+        className={combineClassNames(
+          classMap.container,
+          classMap[`label${capitalize(labelPosition)}`],
+        )}
+        data-testid={testId}
+      >
+        {label && (
+          <label
+            htmlFor={id}
+            className={classMap.label}
+            data-testid={`${testId}-label`}
+          >
+            {label}
+          </label>
+        )}
+        <div className={wrapperClass} data-testid={testId}>
+          {Icon && (
+            <div
+              className={classMap.iconContainer}
+              aria-hidden="true"
+              data-testid={`${testId}-icon`}
+            >
+              <Icon aria-hidden="true" />
+            </div>
+          )}
+
+          <textarea
+            ref={ref}
+            id={id}
+            placeholder={placeholder}
+            aria-label={computedLabel}
+            aria-describedby={describedBy}
+            aria-invalid={isError || undefined}
+            aria-required={required || undefined}
+            aria-readonly={readOnly || undefined}
+            aria-disabled={disabled || undefined}
+            autoComplete={autocomplete ? "on" : "off"}
+            onChange={(e) => onChange?.(e.currentTarget.value, e)}
+            readOnly={readOnly}
+            disabled={disabled}
+            required={required}
+            style={{
+              height,
+              resize: resizable ? undefined : "none",
+            }}
+            className={classMap.textInput}
+            data-testid={`${testId}-input`}
+            {...props}
+          />
+
           <div
-            className={classMap.iconContainer}
+            className={classMap.customResizeHandle}
             aria-hidden="true"
-            data-testid={`${testId}-icon`}
-          >
-            <Icon aria-hidden="true" />
-          </div>
-        )}
+            data-testid={`${testId}-resize-handle`}
+          />
 
-        <textarea
-          ref={ref}
-          id={id}
-          placeholder={placeholder}
-          aria-label={computedLabel}
-          aria-describedby={describedBy}
-          aria-invalid={isError || undefined}
-          aria-required={required || undefined}
-          aria-readonly={readOnly || undefined}
-          aria-disabled={disabled || undefined}
-          autoComplete={autocomplete ? "on" : "off"}
-          onChange={(e) => onChange?.(e.currentTarget.value)}
-          readOnly={readOnly}
-          disabled={disabled}
-          required={required}
-          style={{
-            height,
-            resize: resizable ? undefined : "none",
-          }}
-          className={classMap.textInput}
-          data-testid={`${testId}-input`}
-          {...props}
-        />
-
-        <div
-          className={classMap.customResizeHandle}
-          aria-hidden="true"
-          data-testid={`${testId}-resize-handle`}
-        />
-
-        {ariaDescription && (
-          <span
-            id={descriptionId}
-            className="sr_only"
-            data-testid={`${testId}-description`}
-          >
-            {ariaDescription}
-          </span>
-        )}
+          {ariaDescription && (
+            <span
+              id={descriptionId}
+              className="sr_only"
+              data-testid={`${testId}-description`}
+            >
+              {ariaDescription}
+            </span>
+          )}
+        </div>
       </div>
     );
   },
