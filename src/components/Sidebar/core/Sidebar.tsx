@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import SidebarBase from "../SidebarBase";
 import "./Sidebar.scss";
-import { SidebarProps } from "../Sidebar.types";
+import { SidebarLink, SidebarProps } from "../Sidebar.types";
 
 const classes = {
   wrapper: "sidebar",
@@ -12,6 +12,7 @@ const classes = {
   link: "sidebar_link",
   childLink: "sidebar_child_link",
   active: "sidebar_active",
+  icon: "sidebar_icon",
 
   footer: "sidebar_footer",
   footerLink: "sidebar_footer_link",
@@ -48,8 +49,38 @@ const classes = {
   roundLarge: "sidebar_round-Large",
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ currentPath, ...props }) => (
-  <SidebarBase {...props} currentPath={currentPath} classMap={classes} />
-);
+const normalizePath = (p: string) =>
+  p.endsWith("/") && p.length > 1 ? p.slice(0, -1) : p;
+
+const getInitialPath = () =>
+  typeof window !== "undefined" ? window.location.pathname || "/" : "/";
+
+const isActiveRecursive = (
+  link: SidebarLink,
+  matcher: (link: SidebarLink) => boolean,
+): boolean => {
+  if (matcher(link)) return true;
+  return !!link.children?.some((child) => isActiveRecursive(child, matcher));
+};
+
+const Sidebar: React.FC<SidebarProps> = (props) => {
+  const [pathname] = useState(getInitialPath);
+
+  const isLinkActive = (link: SidebarLink) =>
+    !!link.href && normalizePath(link.href) === normalizePath(pathname);
+
+  const hasActiveChild = (link: SidebarLink) =>
+    !!link.children?.some((child) => isActiveRecursive(child, isLinkActive));
+
+  return (
+    <SidebarBase
+      {...props}
+      classMap={classes}
+      isLinkActive={isLinkActive}
+      hasActiveChild={hasActiveChild}
+    />
+  );
+};
+
 Sidebar.displayName = "Sidebar";
 export default Sidebar;

@@ -117,4 +117,6 @@ export interface SidebarProps {
 export interface BaseSidebarProps extends SidebarProps {
   classMap: Record<string, string>;
   LinkComponent?: React.ElementType;
+  isLinkActive?: (link: SidebarLink) => boolean;
+  hasActiveChild?: (link: SidebarLink) => boolean;
 }
