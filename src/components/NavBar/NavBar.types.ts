@@ -45,7 +45,6 @@ export interface NavBarProps {
 }
 
 export interface BaseNavBarProps extends NavBarProps {
-  currentPath: string;
   LinkWrapper: (props: {
     href: string;
     children: React.ReactNode;
@@ -55,4 +54,5 @@ export interface BaseNavBarProps extends NavBarProps {
     "aria-current"?: "page";
   }) => JSX.Element;
   classMap: Record<string, string>;
+  isItemActive?: (item: NavItem) => boolean;
 }

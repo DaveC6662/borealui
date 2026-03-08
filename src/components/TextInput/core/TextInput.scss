@@ -39,12 +39,11 @@
   justify-content: space-between;
   align-items: center;
   width: fit-content;
+  height: fit-content;
   margin: var(--spacing-sm);
   transition: var(--transition-default);
-  max-width: 400px;
   background: transparent;
   outline: none;
-  flex: 1;
   margin: var(--spacing-sm);
   font-family: var(--font-family-body);
   font-size: var(--font-size-body);
@@ -55,7 +54,6 @@
   border-radius: var(--border-radius-lg);
   background-color: transparent;
   color: var(--text-color-primary);
-  min-height: 2.5rem;
 
   &::placeholder {
     color: var(--text-color-primary);

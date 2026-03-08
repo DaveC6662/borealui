@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BaseNavBar from "../NavBarBase";
 import "./NavBar.scss";
-import { NavBarProps } from "../NavBar.types";
+import { NavBarProps, NavItem } from "../NavBar.types";
 
 const classes = {
   container: "nav",
@@ -31,6 +31,9 @@ const classes = {
   roundFull: "nav_round-Full",
 };
 
+const normalizePath = (p: string) =>
+  p.endsWith("/") && p.length > 1 ? p.slice(0, -1) : p;
+
 const NavBar: React.FC<NavBarProps> = (props) => {
   const [pathname, setPathname] = useState("");
 
@@ -38,10 +41,13 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     setPathname(window.location.pathname);
   }, []);
 
+  const isItemActive = (item: NavItem) =>
+    normalizePath(item.path) === normalizePath(pathname);
+
   return (
     <BaseNavBar
       {...props}
-      currentPath={pathname}
+      isItemActive={isItemActive}
       LinkWrapper={({
         href,
         children,
