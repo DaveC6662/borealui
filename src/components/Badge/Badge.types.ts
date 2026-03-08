@@ -13,14 +13,14 @@ import { AnchorHTMLAttributes, ButtonHTMLAttributes, MouseEvent } from "react";
  */
 export interface BadgeProps {
   /**
-   * Badge content text (used when no children are provided).
-   */
-  text: string;
-
-  /**
    * Optional custom content to override `text` (e.g., JSX with formatting).
    */
   children?: React.ReactNode;
+
+  /**
+   * Accessible label for non-text badge content.
+   */
+  ariaLabel?: string;
 
   /**
    * Theme color for the badge

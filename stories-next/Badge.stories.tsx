@@ -17,20 +17,26 @@ const themeOptions = [
   "quaternary",
   "clear",
 ];
+
 const stateOptions = ["success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
-const roundingOptions = ["none", "small", "medium", "large"];
+const roundingOptions = ["none", "small", "medium", "large", "full"];
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
   component: Badge,
   tags: ["autodocs"],
   argTypes: {
-    text: {
-      description: "Text or label displayed inside the badge.",
+    children: {
+      description: "Badge content.",
       control: "text",
       table: { category: "Content" },
+    },
+    ariaLabel: {
+      description: "Accessible label for non-text badge content.",
+      control: "text",
+      table: { category: "Accessibility" },
     },
     theme: {
       description: "Theme color of the badge (primary, secondary, etc).",
@@ -50,6 +56,18 @@ const meta: Meta<typeof Badge> = {
       options: sizeOptions,
       table: { category: "Appearance" },
     },
+    rounding: {
+      description: "Corner rounding of the badge.",
+      control: { type: "select" },
+      options: roundingOptions,
+      table: { category: "Appearance" },
+    },
+    shadow: {
+      description: "Shadow depth of the badge.",
+      control: { type: "select" },
+      options: shadowOptions,
+      table: { category: "Appearance" },
+    },
     outline: {
       description:
         "If true, displays badge with outline instead of solid background.",
@@ -60,6 +78,11 @@ const meta: Meta<typeof Badge> = {
       description: "Optional icon displayed at the start of the badge.",
       control: false,
       table: { category: "Content" },
+    },
+    disabled: {
+      description: "Disables interaction and applies disabled styling.",
+      control: "boolean",
+      table: { category: "Behavior" },
     },
     onClick: {
       description: "Callback fired when badge is clicked (if interactive).",
@@ -84,12 +107,12 @@ export default meta;
 type Story = StoryObj<typeof Badge>;
 
 const defaultArgs = {
-  text: "Badge",
+  children: "Badge",
   theme: "primary" as ThemeType,
   state: "" as StateType,
   size: "medium" as SizeType,
   shadow: "none" as ShadowType,
-  rounding: "sm" as RoundingType,
+  rounding: "small" as RoundingType,
 };
 
 export const Default: Story = {
@@ -101,9 +124,15 @@ export const Default: Story = {
 export const WithIcon: Story = {
   render: () => (
     <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-      <Badge text="Check" icon={FaCheck} state="success" />
-      <Badge text="Warning" icon={FaExclamation} state="warning" />
-      <Badge text="Info" icon={FaInfoCircle} theme="primary" />
+      <Badge icon={FaCheck} state="success">
+        Check
+      </Badge>
+      <Badge icon={FaExclamation} state="warning">
+        Warning
+      </Badge>
+      <Badge icon={FaInfoCircle} theme="primary">
+        Info
+      </Badge>
     </div>
   ),
 };
@@ -111,16 +140,16 @@ export const WithIcon: Story = {
 export const WithOnClick: Story = {
   args: {
     ...defaultArgs,
-    text: "Clickable Badge",
+    children: "Clickable Badge",
     onClick: () => alert("Badge clicked!"),
-    theme: "success" as ThemeType,
+    state: "success" as StateType,
   },
 };
 
 export const Disabled: Story = {
   args: {
     ...defaultArgs,
-    title: "Disabled Badge",
+    children: "Disabled Badge",
     disabled: true,
   },
 };
@@ -157,15 +186,22 @@ export const OutlineVariants = () =>
       ...defaultArgs,
       outline: true,
     },
-    [{ propName: "theme", values: [...themeOptions, ...stateOptions] }]
+    [{ propName: "theme", values: themeOptions }],
   );
 
 export const WithChildren: Story = {
   render: () => (
-    <Badge text="With Children">
-      <span role="img" aria-label="star">
-        ⭐
-      </span>
+    <Badge ariaLabel="With children star badge">
+      <span>With Children</span>
+      <span aria-hidden="true"> ⭐</span>
     </Badge>
   ),
+};
+
+export const IconOnly: Story = {
+  args: {
+    icon: FaInfoCircle,
+    ariaLabel: "Information badge",
+  },
+  render: (args) => <Badge {...args} />,
 };
