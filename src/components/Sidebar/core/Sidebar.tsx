@@ -71,10 +71,14 @@ const isActiveRecursive = (
   return !!link.children?.some((child) => isActiveRecursive(child, matcher));
 };
 
-const Sidebar: React.FC<SidebarProps> = (props) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  isLinkActive: consumerIsLinkActive,
+  hasActiveChild: consumerHasActiveChild,
+  ...props
+}) => {
   const [pathname] = useState(getInitialPath);
 
-  const isLinkActive = (link: SidebarLink): boolean => {
+  const defaultIsLinkActive = (link: SidebarLink): boolean => {
     if (!link.href) return false;
 
     if (link.children?.length) {
@@ -84,15 +88,22 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
     return normalizePath(link.href) === normalizePath(pathname);
   };
 
-  const hasActiveChild = (link: SidebarLink): boolean =>
-    !!link.children?.some((child) => isActiveRecursive(child, isLinkActive));
+  const resolvedIsLinkActive = consumerIsLinkActive ?? defaultIsLinkActive;
+
+  const defaultHasActiveChild = (link: SidebarLink): boolean =>
+    !!link.children?.some((child) =>
+      isActiveRecursive(child, resolvedIsLinkActive),
+    );
+
+  const resolvedHasActiveChild =
+    consumerHasActiveChild ?? defaultHasActiveChild;
 
   return (
     <SidebarBase
       {...props}
       classMap={classes}
-      isLinkActive={isLinkActive}
-      hasActiveChild={hasActiveChild}
+      isLinkActive={resolvedIsLinkActive}
+      hasActiveChild={resolvedHasActiveChild}
     />
   );
 };

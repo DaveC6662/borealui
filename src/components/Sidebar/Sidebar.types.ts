@@ -107,11 +107,18 @@ export interface SidebarProps {
    * Example: "Sidebar navigation"
    */
   ariaLabel?: string;
+  /**
+   * Optional callback used to determine whether a link should be styled as active.
+   */
+  isLinkActive?: (link: SidebarLink) => boolean;
+
+  /**
+   * Optional callback used to determine whether a link contains an active child.
+   */
+  hasActiveChild?: (link: SidebarLink) => boolean;
 }
 
 export interface BaseSidebarProps extends SidebarProps {
   classMap: Record<string, string>;
   LinkComponent?: React.ElementType;
-  isLinkActive?: (link: SidebarLink) => boolean;
-  hasActiveChild?: (link: SidebarLink) => boolean;
 }
