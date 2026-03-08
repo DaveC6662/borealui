@@ -42,6 +42,11 @@ export interface NavBarProps {
 
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
+
+  /**
+   * Optional callback used to determine whether a nav item should be styled as active.
+   */
+  isItemActive?: (item: NavItem) => boolean;
 }
 
 export interface BaseNavBarProps extends NavBarProps {
@@ -54,5 +59,4 @@ export interface BaseNavBarProps extends NavBarProps {
     "aria-current"?: "page";
   }) => JSX.Element;
   classMap: Record<string, string>;
-  isItemActive?: (item: NavItem) => boolean;
 }

@@ -12,18 +12,21 @@ const normalizePath = (p: string) =>
 
 const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
   mockPath,
+  isItemActive: consumerIsItemActive,
   ...props
 }) => {
   const pathname = usePathname();
   const resolvedPath = mockPath ?? pathname ?? "/";
 
-  const isItemActive = (item: NavItem) =>
+  const defaultIsItemActive = (item: NavItem) =>
     normalizePath(item.path) === normalizePath(resolvedPath);
+
+  const resolvedIsItemActive = consumerIsItemActive ?? defaultIsItemActive;
 
   return (
     <BaseNavBar
       {...props}
-      isItemActive={isItemActive}
+      isItemActive={resolvedIsItemActive}
       LinkWrapper={({
         href,
         children,
