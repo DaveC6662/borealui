@@ -48,6 +48,14 @@
   }
 }
 
+@each $key, $value in theme.$border-width {
+  .border#{$key} {
+    border-width: $value;
+    border-style: solid;
+    border-color: var(--divider-color);
+  }
+}
+
 @each $key, $value in theme.$rounding {
   .round#{$key} {
     border-radius: $value;
@@ -276,6 +284,14 @@
       @include bp.down(sm) {
         border-width: 1.5px;
       }
+    }
+  }
+}
+
+@each $name, $width in theme.$border-width {
+  @if $name != "None" {
+    .border#{$name}.outline {
+      border-width: $width;
     }
   }
 }

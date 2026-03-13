@@ -27,6 +27,7 @@ const descriptions = [
 ];
 
 const roundingOptions = ["none", "small", "medium", "large"];
+const borderOptions = ["none", "xs", "small", "medium", "large", "xl"] as const;
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<CardProps> = {
@@ -39,6 +40,7 @@ const meta: Meta<CardProps> = {
       "This is a description of the card. You can include additional info here.",
     theme: "primary" as ThemeType,
     state: "" as StateType,
+    border: "none",
   },
   argTypes: {
     title: {
@@ -55,6 +57,12 @@ const meta: Meta<CardProps> = {
       description: "Visual theme color for the card.",
       control: { type: "select" },
       options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    border: {
+      description: "Border width preset for the card.",
+      control: { type: "select" },
+      options: borderOptions,
       table: { category: "Appearance" },
     },
     state: {
@@ -244,6 +252,11 @@ export const WithActions: Story = {
   },
 };
 
+export const BorderVariants = () =>
+  withVariants(Card, { ...defaultArgs }, [
+    { propName: "border", values: [...borderOptions] },
+  ]);
+
 export const WithCustomRender: Story = {
   args: {
     renderHeader: () => <h2 style={{ margin: 0 }}>Custom Header 🎉</h2>,
@@ -305,7 +318,7 @@ export const SizeVariants = () =>
         </p>
       ),
     },
-    [{ propName: "size", values: [...sizeOptions] }]
+    [{ propName: "size", values: [...sizeOptions] }],
   );
 
 export const LayoutVariants = () =>

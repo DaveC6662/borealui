@@ -110,7 +110,8 @@ $font-family-ui:
   roboto,
   arial,
   sans-serif !default;
-$font-family-mono: ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
+$font-family-mono:
+  ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
 $font-size-xxs: 10px !default;
 $font-size-xs: 12px !default;
 $font-size-sm: 14px !default;
@@ -188,6 +189,13 @@ $border-radius-lg: 20px !default;
 $border-radius-xl: 40px !default;
 $border-radius-full: 50% !default;
 $border-radius-round: 50% !default;
+$border-radius-none: 0 !default;
+$border-width-none: 0 !default;
+$border-width-xs: 1px !default;
+$border-width-sm: 2px !default;
+$border-width-md: 3px !default;
+$border-width-lg: 4px !default;
+$border-width-xl: 5px !default;
 $box-shadow-light: 0px 2px 4px rgb(46 49 49 / 10%) !default;
 $box-shadow-medium: 0px 4px 8px rgb(86 101 116 / 20%) !default;
 $box-shadow-heavy: 0px 6px 12px rgb(52 73 94 / 40%) !default;
@@ -272,6 +280,14 @@ $rounding: (
   "Medium": var(--border-radius-md),
   "Large": var(--border-radius-lg),
   "Full": var(--border-radius-full),
+) !default;
+$border-width: (
+  "None": var(--border-width-none),
+  "Xs": var(--border-width-xs),
+  "Small": var(--border-width-sm),
+  "Medium": var(--border-width-md),
+  "Large": var(--border-width-lg),
+  "Xl": var(--border-width-xl),
 ) !default;
 $shadow: (
   "None": var(--box-shadow-none),

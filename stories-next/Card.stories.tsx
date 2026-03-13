@@ -29,6 +29,7 @@ const descriptions = [
 ];
 
 const roundingOptions = ["none", "small", "medium", "large"];
+const borderOptions = ["none", "xs", "small", "medium", "large", "xl"] as const;
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<CardProps> = {
@@ -41,6 +42,7 @@ const meta: Meta<CardProps> = {
       "This is a description of the card. You can include additional info here.",
     theme: "primary" as ThemeType,
     state: "" as StateType,
+    border: "none",
   },
   argTypes: {
     title: {
@@ -57,6 +59,12 @@ const meta: Meta<CardProps> = {
       description: "Visual theme color for the card.",
       control: { type: "select" },
       options: themeOptions,
+      table: { category: "Appearance" },
+    },
+    border: {
+      description: "Border width preset for the card.",
+      control: { type: "select" },
+      options: borderOptions,
       table: { category: "Appearance" },
     },
     state: {
@@ -203,26 +211,10 @@ const defaultArgs: CardProps = {
 
 export const Default: Story = {};
 
-export const WithJpgImage: Story = {
+export const WithImage: Story = {
   args: {
     ...defaultArgs,
     imageUrl: testImageJpg,
-    imageAlt: "Placeholder image",
-  },
-};
-
-export const WithPngImage: Story = {
-  args: {
-    ...defaultArgs,
-    imageUrl: testImagePng,
-    imageAlt: "Placeholder image",
-  },
-};
-
-export const WithSVGImage: Story = {
-  args: {
-    ...defaultArgs,
-    imageUrl: testImageSvg,
     imageAlt: "Placeholder image",
   },
 };
@@ -262,6 +254,11 @@ export const WithActions: Story = {
   },
 };
 
+export const BorderVariants = () =>
+  withVariants(Card, { ...defaultArgs }, [
+    { propName: "border", values: [...borderOptions] },
+  ]);
+
 export const WithCustomRender: Story = {
   args: {
     renderHeader: () => <h2 style={{ margin: 0 }}>Custom Header 🎉</h2>,
@@ -294,7 +291,7 @@ export const SizeVariants = () =>
     {
       title: "Card Size Preview",
       description: "This is a description for the card size variant.",
-      imageUrl: testImagePng,
+      imageUrl: testImageJpg,
       imageAlt: "Test image",
       cardIcon: FaInfoCircle,
       actionButtons: [
@@ -323,11 +320,11 @@ export const SizeVariants = () =>
         </p>
       ),
     },
-    [{ propName: "size", values: [...sizeOptions] }]
+    [{ propName: "size", values: [...sizeOptions] }],
   );
 
 export const LayoutVariants = () =>
-  withVariants(Card, { ...defaultArgs, imageUrl: testImagePng }, [
+  withVariants(Card, { ...defaultArgs, imageUrl: testImageJpg }, [
     { propName: "layout", values: [...layoutOptions] },
   ]);
 
@@ -367,7 +364,7 @@ export const AlignmentGrid: Story = {
           key={`vertical-${align}`}
           title="Card Preview"
           description={descriptions[index]}
-          imageUrl={testImagePng}
+          imageUrl={testImageJpg}
           imageAlt={`${titles[index]} image`}
           align={align}
           layout="vertical"
@@ -401,7 +398,7 @@ export const AlignmentGrid: Story = {
           key={`horizontal-${align}`}
           title="Card Preview"
           description={descriptions[index]}
-          imageUrl={testImagePng}
+          imageUrl={testImageJpg}
           imageAlt={`${titles[index]} image`}
           align={align}
           layout="horizontal"
@@ -453,7 +450,7 @@ export const WithClassName: Story = {
 export const WithCustomSectionClassNames: Story = {
   args: {
     ...defaultArgs,
-    imageUrl: testImagePng,
+    imageUrl: testImageJpg,
     imageClassName: "storybook-card-image",
     headerClassName: "storybook-card-header",
     bodyClassName: "storybook-card-body",

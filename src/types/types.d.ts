@@ -64,6 +64,11 @@ export type ShadowType = "none" | "light" | "medium" | "strong" | "intense";
 export type RoundingType = "none" | "small" | "medium" | "large" | "full";
 
 /**
+ * Border width values used for component borders.
+ */
+export type BorderType = "none" | "xs" | "small" | "medium" | "large" | "xl";
+
+/**
  * Anchor position typically used for tooltips, badges, or floating elements.
  */
 export type PositionType =

@@ -6,6 +6,7 @@ import {
   SizeType,
   StateType,
   ThemeType,
+  BorderType,
 } from "../../types/types";
 
 export interface StaticCardImage {
@@ -111,6 +112,12 @@ export interface CardProps {
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
    */
   shadow?: ShadowType;
+
+  /**
+   * Optional border width for the card
+   * ('none' | 'xs' | 'small' | 'medium' | 'large' | 'xl').
+   */
+  border?: BorderType;
 
   /** Optional card title displayed in the header. */
   title?: string;

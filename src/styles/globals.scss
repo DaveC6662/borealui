@@ -255,6 +255,16 @@
   --border-radius-none: 0;
 
   /* ===========================
+     Border Widths
+  =========================== */
+  --border-width-none: 0;
+  --border-width-xs: #{theme.$border-width-xs};
+  --border-width-sm: #{theme.$border-width-sm};
+  --border-width-md: #{theme.$border-width-md};
+  --border-width-lg: #{theme.$border-width-lg};
+  --border-width-xl: #{theme.$border-width-xl};
+
+  /* ===========================
      Shadows
   =========================== */
   --box-shadow-light: #{theme.$box-shadow-light};

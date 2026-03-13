@@ -7,6 +7,7 @@ import {
   getDefaultShadow,
   getDefaultSize,
   getDefaultTheme,
+  getDefaultBorder,
 } from "../../config/boreal-style-config";
 
 const CardBase: React.FC<CardBaseProps> = ({
@@ -14,6 +15,7 @@ const CardBase: React.FC<CardBaseProps> = ({
   state = "",
   cardIcon,
   title = "",
+  border = getDefaultBorder(),
   description = "",
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
@@ -66,7 +68,7 @@ const CardBase: React.FC<CardBaseProps> = ({
   function normalizeImageSource(
     srcInput: CardImageSource | undefined,
     fallbackWidth?: number,
-    fallbackHeight?: number
+    fallbackHeight?: number,
   ): { src?: string; width?: number; height?: number } {
     if (!srcInput) {
       return { src: undefined, width: fallbackWidth, height: fallbackHeight };
@@ -119,9 +121,10 @@ const CardBase: React.FC<CardBaseProps> = ({
         classMap[size],
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
+        border && classMap[`border${capitalize(border)}`],
         outline && classMap.outline,
         loading && classMap.loading,
-        className
+        className,
       ),
     [
       classMap,
@@ -132,10 +135,11 @@ const CardBase: React.FC<CardBaseProps> = ({
       size,
       shadow,
       rounding,
+      border,
       outline,
       loading,
       className,
-    ]
+    ],
   );
 
   return (
@@ -255,7 +259,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                         >
                           {button.label}
                         </button.buttonComponent>
-                      )
+                      ),
                     )}
                   </div>
                 )}

@@ -125,6 +125,14 @@
     }
   }
 
+  @each $name, $props in theme.$border-width {
+    &_border-#{$name} {
+      border-width: $props;
+      border-style: solid;
+      border-color: var(--divider-color);
+    }
+  }
+
   @each $name, $props in theme.$themes {
     &_#{$name} {
       background: map.get($props, bg);
@@ -142,6 +150,7 @@
 
     &_#{$name}.card_outline {
       background: transparent;
+      border-color: map.get($props, border);
       border: 2px solid map.get($props, border);
       box-shadow: none;
 
@@ -172,6 +181,14 @@
 
       @include bp.down(sm) {
         border-width: 1.5px;
+      }
+    }
+  }
+
+  @each $name, $width in theme.$border-width {
+    @if $name != "None" {
+      &_outline#{&}_border-#{$name} {
+        border-width: $width;
       }
     }
   }

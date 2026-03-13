@@ -44,6 +44,13 @@ const classes = {
   roundMedium: "card_round-Medium",
   roundLarge: "card_round-Large",
 
+  borderNone: "card_border-None",
+  borderXs: "card_border-Xs",
+  borderSmall: "card_border-Small",
+  borderMedium: "card_border-Medium",
+  borderLarge: "card_border-Large",
+  borderXl: "card_border-Xl",
+
   vertical: "card_vertical",
   horizontal: "card_horizontal",
 
