@@ -59,7 +59,7 @@ $progress-sizes: (
   font-family: var(--font-family-ui);
 }
 
-.title {
+.label {
   font-family: var(--font-family-ui);
   font-size: var(--font-size-label);
   font-weight: var(--font-weight-label);
@@ -68,45 +68,31 @@ $progress-sizes: (
   white-space: nowrap;
 }
 
-.titleTop {
+.labelTop {
   flex-direction: column;
   align-items: flex-start;
 }
 
-.titleBottom {
+.labelBottom {
   flex-direction: column;
   align-items: flex-start;
 }
 
-.titleLeft,
-.titleRight {
+.labelLeft,
+.labelRight {
   align-items: center;
 }
 
-.titleLeft .container,
-.titleRight .container {
+.labelLeft .container,
+.labelRight .container {
   width: auto;
   flex: 1 1 0;
   min-width: 0;
 }
 
-.titleLeft .title,
-.titleRight .title {
+.labelLeft .label,
+.labelRight .label {
   flex: 0 0 auto;
-}
-
-.titleOverlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-caption);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
 }
 
 .bar {

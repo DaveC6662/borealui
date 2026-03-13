@@ -10,7 +10,7 @@ import {
 import { BaseProgressBarProps } from "./ProgressBar.types";
 
 const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
-  progress = 0,
+  value = 0,
   theme = getDefaultTheme(),
   state = "",
   size = getDefaultSize(),
@@ -20,25 +20,21 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   indeterminate = false,
   className = "",
   ariaLabel = "Progress",
-  title,
-  titlePosition = "top",
+  label,
+  labelPosition = "top",
   "data-testid": testId = "progressbar",
   classMap,
 }) => {
-  const numeric = Number(progress);
+  const numeric = Number(value);
   const clamped = Number.isFinite(numeric)
     ? Math.min(100, Math.max(0, numeric))
     : 0;
-  const value = Math.round(clamped);
+  const progressValue = Math.round(clamped);
 
   const layoutClass = useMemo(() => {
-    const posClass =
-      titlePosition === "overlay"
-        ? undefined
-        : classMap[`title${capitalize(titlePosition)}`];
-
-    return combineClassNames(classMap.layout, Boolean(title) && posClass);
-  }, [classMap, title, titlePosition]);
+    const posClass = classMap[`label${capitalize(labelPosition)}`];
+    return combineClassNames(classMap.layout, Boolean(label) && posClass);
+  }, [classMap, label, labelPosition]);
 
   const wrapperClass = useMemo(
     () =>
@@ -65,21 +61,15 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     [classMap, theme, state, rounding, indeterminate, animated],
   );
 
-  const titleNode = title ? (
-    <div
-      className={combineClassNames(
-        classMap.title,
-        titlePosition === "overlay" && classMap.titleOverlay,
-      )}
-      data-testid={`${testId}-title`}
-    >
-      {title}
+  const labelNode = label ? (
+    <div className={classMap.label} data-testid={`${testId}-label`}>
+      {label}
     </div>
   ) : null;
 
   return (
     <div className={layoutClass}>
-      {(titlePosition === "top" || titlePosition === "left") && titleNode}
+      {(labelPosition === "top" || labelPosition === "left") && labelNode}
 
       <div
         className={wrapperClass}
@@ -87,21 +77,21 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
         aria-label={ariaLabel}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-valuenow={indeterminate ? undefined : value}
-        aria-valuetext={indeterminate ? "Loading" : `${value}% complete`}
+        aria-valuenow={indeterminate ? undefined : progressValue}
+        aria-valuetext={
+          indeterminate ? "Loading" : `${progressValue}% complete`
+        }
         aria-busy={indeterminate || undefined}
         data-testid={testId}
       >
         <div
           className={barClass}
-          style={{ width: indeterminate ? undefined : `${value}%` }}
+          style={{ width: indeterminate ? undefined : `${progressValue}%` }}
           data-testid={`${testId}-bar`}
-        >
-          {titlePosition === "overlay" && titleNode}
-        </div>
+        ></div>
       </div>
 
-      {(titlePosition === "bottom" || titlePosition === "right") && titleNode}
+      {(labelPosition === "bottom" || labelPosition === "right") && labelNode}
     </div>
   );
 };

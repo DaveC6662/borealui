@@ -1,10 +1,10 @@
 import {
+  LabelPositionType,
   RoundingType,
   ShadowType,
   SizeType,
   StateType,
   ThemeType,
-  TitlePositionType,
 } from "@/types/types";
 
 /**
@@ -12,9 +12,9 @@ import {
  */
 export interface ProgressBarProps {
   /**
-   * Percentage of progress (0 to 100). Ignored if `indeterminate` is true.
+   * Value of progress (0 to 100). Ignored if `indeterminate` is true.
    */
-  progress?: number;
+  value?: number;
 
   /**
    * Theme for styling the progress bar.
@@ -58,7 +58,7 @@ export interface ProgressBarProps {
 
   /**
    * If true, the progress bar shows an indeterminate animation.
-   * When true, the progress prop is ignored.
+   * When true, the value prop is ignored.
    */
   indeterminate?: boolean;
 
@@ -68,15 +68,15 @@ export interface ProgressBarProps {
   className?: string;
 
   /**
-   * Optional title describing what the progress represents.
+   * Optional label describing what the progress represents.
    * Example: "Uploading files", "Build progress"
    */
-  title?: React.ReactNode;
+  label?: React.ReactNode;
 
   /**
-   * Position of the title relative to the progress bar.
+   * Position of the label relative to the progress bar.
    */
-  titlePosition?: TitlePositionType;
+  labelPosition?: LabelPositionType;
 
   /**
    * Optional test ID for testing purposes.

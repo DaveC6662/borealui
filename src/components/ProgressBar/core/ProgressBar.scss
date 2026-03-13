@@ -41,44 +41,30 @@ $progress-sizes: (
     font-family: var(--font-family-ui);
   }
 
-  &_title_top {
+  &_label_top {
     flex-direction: column;
   }
 
-  &_title_bottom {
+  &_label_bottom {
     flex-direction: column;
   }
 
-  &_title_left {
+  &_label_left {
     flex-direction: row;
     align-items: center;
   }
 
-  &_title_right {
+  &_label_right {
     align-items: center;
   }
 
-  &_title {
+  &_label {
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
     white-space: nowrap;
-  }
-
-  &_title_overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    font-family: var(--font-family-ui);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    font-size: 0.75rem;
-    letter-spacing: var(--letter-spacing-label);
   }
 
   &_bar {
