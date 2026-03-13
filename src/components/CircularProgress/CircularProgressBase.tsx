@@ -16,7 +16,7 @@ const getColor = (percent: number): string => {
 };
 
 const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
-  rating,
+  value,
   min = 0,
   max = 100,
   label = "Progress",
@@ -30,7 +30,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   "data-testid": testId = "circular-progress",
 }) => {
   const range = Math.max(0, max - min);
-  const clamped = Math.min(max, Math.max(min, rating));
+  const clamped = Math.min(max, Math.max(min, value));
   const percent = range === 0 ? 0 : ((clamped - min) / range) * 100;
 
   const [displayPercent, setDisplayPercent] = useState(0);
@@ -51,9 +51,9 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
         classMap[size],
         classMap[state],
         shadow && classMap[`shadow${capitalize(shadow)}`],
-        className
+        className,
       ),
-    [classMap, theme, size, state, shadow, className]
+    [classMap, theme, size, state, shadow, className],
   );
 
   const valueText = showRaw ? `${clamped}/${max}` : `${displayPercent}%`;
@@ -72,7 +72,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
       <div
         className={combineClassNames(
           classMap.circle_border,
-          state && classMap[`state_${state}`]
+          state && classMap[`state_${state}`],
         )}
         style={
           progressColor
@@ -88,7 +88,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
       >
         <div className={classMap.inner_circle}>
           <span
-            className={classMap.rating_text}
+            className={classMap.value_text}
             aria-live="polite"
             aria-atomic="true"
           >

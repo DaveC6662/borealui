@@ -7,7 +7,7 @@ const classes = {
   circular_progress: "circular_progress",
   circle_border: "circular_progress_circle_border",
   inner_circle: "circular_progress_inner_circle",
-  rating_text: "circular_progress_rating_text",
+  value_text: "circular_progress_value_text",
 
   primary: "circular_progress_primary",
   secondary: "circular_progress_secondary",

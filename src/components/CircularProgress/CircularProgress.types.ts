@@ -9,8 +9,8 @@ import {
  * Props for the CircularProgress component.
  */
 export interface CircularProgressProps {
-  /** Current rating value to be visualized (e.g., 75). */
-  rating: number;
+  /** Current value to be visualized (e.g., 75). */
+  value: number;
 
   /** Minimum value for the range (default: 0). */
   min?: number;
@@ -21,7 +21,7 @@ export interface CircularProgressProps {
   /** Accessible label and tooltip title for the component. */
   label?: string;
 
-  /** Whether to show raw rating (e.g., "75/100") instead of percent. */
+  /** Whether to show raw value (e.g., "75/100") instead of percent. */
   showRaw?: boolean;
 
   /**
