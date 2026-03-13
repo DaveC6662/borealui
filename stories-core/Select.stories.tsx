@@ -31,15 +31,15 @@ const meta: Meta<SelectProps> = {
     ],
   },
   argTypes: {
-    title: {
+    label: {
       control: "text",
-      description: "Optional title describing what the select is for.",
+      description: "Optional label describing what the select is for.",
       table: { category: "Content" },
     },
-    titlePosition: {
+    labelPosition: {
       control: { type: "select" },
       options: ["top", "bottom", "left", "right", "overlay"],
-      description: "Position of the title relative to the select.",
+      description: "Position of the label relative to the select.",
       table: { category: "Content", defaultValue: { summary: "top" } },
     },
     theme: {
@@ -162,7 +162,7 @@ export const Default: Story = {
   },
 };
 
-export const TitlePositions: Story = {
+export const labelPositions: Story = {
   render: (args) => {
     const [value, setValue] = useState("a");
     const positions = ["top", "bottom", "left", "right"] as const;
@@ -172,16 +172,16 @@ export const TitlePositions: Story = {
         {positions.map((pos) => (
           <div key={pos} style={{ display: "grid", gap: "0.5rem" }}>
             <div style={{ fontSize: "0.9rem", opacity: 0.8 }}>
-              Title Position: <strong>{pos}</strong>
+              label Position: <strong>{pos}</strong>
             </div>
 
             <Select
               {...args}
               value={value}
               onChange={setValue}
-              title={`Program`}
-              titlePosition={pos}
-              ariaLabel={`Select with titlePosition ${pos}`}
+              label={`Program`}
+              labelPosition={pos}
+              ariaLabel={`Select with labelPosition ${pos}`}
             />
           </div>
         ))}

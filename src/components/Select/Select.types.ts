@@ -1,4 +1,5 @@
 import {
+  LabelPositionType,
   RoundingType,
   ShadowType,
   StateType,
@@ -105,14 +106,14 @@ export interface SelectProps {
   name?: string;
 
   /**
-   * Optional title describing what the select is for.
+   * Optional label describing what the select is for.
    */
-  title?: React.ReactNode;
+  label?: React.ReactNode;
 
   /**
-   * Position of the title relative to the select.
+   * Position of the label relative to the select.
    */
-  titlePosition?: "top" | "bottom" | "left" | "right";
+  labelPosition?: LabelPositionType;
 
   /**
    * Additional class name(s) for custom styling.

@@ -37,8 +37,8 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       pollInterval = 0,
       required,
       name,
-      title,
-      titlePosition = "top",
+      label,
+      labelPosition = "top",
       "data-testid": testId = "select",
     },
     ref,
@@ -50,24 +50,24 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     const [internalOptions, setInternalOptions] = useState(options);
     const [loading, setLoading] = useState(false);
 
-    const hasTitle = Boolean(title);
+    const hasLabel = Boolean(label);
 
     const layoutClasses = useMemo(() => {
-      const posClass = hasTitle
-        ? classMap[`title${capitalize(titlePosition)}`]
+      const posClass = hasLabel
+        ? classMap[`label${capitalize(labelPosition)}`]
         : undefined;
 
       return combineClassNames(classMap.layout, posClass);
-    }, [classMap, hasTitle, titlePosition]);
+    }, [classMap, hasLabel, labelPosition]);
 
-    const titleClasses = useMemo(
-      () => combineClassNames(classMap.title, classMap.titleOverlay),
+    const labelClasses = useMemo(
+      () => combineClassNames(classMap.label, classMap.labelOverlay),
       [classMap],
     );
 
-    const titleNode = hasTitle ? (
-      <div className={titleClasses} data-testid={`${testId}-title`}>
-        {title}
+    const labelNode = hasLabel ? (
+      <div className={labelClasses} data-testid={`${testId}-label`}>
+        {label}
       </div>
     ) : null;
 
@@ -141,7 +141,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
     return (
       <div className={layoutClasses} data-testid={`${testId}-layout`}>
-        {(titlePosition === "top" || titlePosition === "left") && titleNode}
+        {(labelPosition === "top" || labelPosition === "left") && labelNode}
 
         <div className={wrapperClasses} data-testid={testId}>
           <select
@@ -199,7 +199,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           )}
         </div>
 
-        {(titlePosition === "bottom" || titlePosition === "right") && titleNode}
+        {(labelPosition === "bottom" || labelPosition === "right") && labelNode}
       </div>
     );
   },
