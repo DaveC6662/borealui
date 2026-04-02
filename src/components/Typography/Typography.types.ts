@@ -41,7 +41,7 @@ export type TypographyTheme =
   | "error"
   | "inherit";
 
-export interface TypographyOwnProps {
+export interface TypographyProps {
   children?: ReactNode;
   variant?: TypographyVariant;
   as?: ElementType;
@@ -68,7 +68,7 @@ export interface TypographyOwnProps {
   "aria-busy"?: boolean;
 }
 
-export interface TypographyBaseProps extends TypographyOwnProps {
+export interface TypographyBaseProps extends TypographyProps {
   classMap: Record<string, string>;
   combineClassNames: (
     ...classes: Array<string | false | null | undefined>

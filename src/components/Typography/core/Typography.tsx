@@ -2,7 +2,7 @@
 
 import { JSX } from "react";
 import TypographyBase from "../TypographyBase";
-import { TypographyOwnProps } from "../Typography.types";
+import { TypographyProps } from "../Typography.types";
 import { combineClassNames } from "@/utils/classNames";
 import "./Typography.scss";
 
@@ -46,8 +46,6 @@ const classMap = {
   truncate: "typography_truncate",
   noWrap: "typography_no-wrap",
 };
-
-export type TypographyProps = TypographyOwnProps;
 
 export default function Typography(props: TypographyProps): JSX.Element {
   return (

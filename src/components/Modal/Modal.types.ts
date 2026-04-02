@@ -48,19 +48,19 @@ export interface ModalProps {
    * Use this when the modal does not have a visible title or when you want
    * to provide a custom accessible name for screen readers.
    */
-  ariaLabel?: string;
+  "aria-label"?: string;
 
   /**
    * The id of an element that labels the modal dialog.
    * Prefer this when a visible heading or custom header should act as the dialog label.
    */
-  ariaLabelledBy?: string;
+  "aria-labelledby"?: string;
 
   /**
    * The id of an element that describes the modal dialog.
    * Useful for linking help text, instructions, or supporting content.
    */
-  ariaDescribedBy?: string;
+  "aria-describedby"?: string;
 
   /**
    * Accessible label for the close button.
