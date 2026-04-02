@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { CommandPalette } from "../src/index.next";
+import {
+  CommandPalette,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.next";
 import type { CommandPaletteProps } from "../src/components/CommandPalette/CommandPalette.types";
 import { FaSearch, FaUser, FaCog } from "react-icons/fa";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -13,10 +19,16 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<CommandPaletteProps> = {
   title: "Components/CommandPalette",
@@ -30,73 +42,6 @@ const meta: Meta<CommandPaletteProps> = {
       </>
     ),
   ],
-  argTypes: {
-    isOpen: {
-      description: "Controls whether the command palette is open.",
-      control: "boolean",
-      table: { category: "State" },
-    },
-    onClose: {
-      description:
-        "Callback fired when the palette closes (e.g., Escape or click outside).",
-      action: "closed",
-      table: { category: "Events" },
-    },
-    commands: {
-      description: "Array of available commands to show in the palette.",
-      control: false,
-      table: { category: "Main" },
-    },
-    placeholder: {
-      description: "Placeholder text for the search input.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    theme: {
-      description: "Theme variant for the command palette.",
-      control: { type: "select" },
-      options: themeOptions,
-      table: { category: "Appearance" },
-    },
-    state: {
-      description: "Visual state variant (success, warning, error, etc.).",
-      control: { type: "select" },
-      options: ["", ...stateOptions],
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      description: "Corner rounding of the palette dialog.",
-      control: { type: "select" },
-      options: roundingOptions,
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      description: "Box shadow style for the palette dialog.",
-      control: { type: "select" },
-      options: shadowOptions,
-      table: { category: "Appearance" },
-    },
-    asyncSearch: {
-      description: "Optional async search function for dynamic filtering.",
-      control: false,
-      table: { category: "Advanced" },
-    },
-    debounceMs: {
-      description: "Debounce time (ms) for the search input.",
-      control: "number",
-      table: { category: "Performance" },
-    },
-    className: {
-      description: "Additional CSS class for the palette container.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      description: "Test id for the palette container.",
-      control: "text",
-      table: { category: "Testing" },
-    },
-  },
 };
 
 export default meta;
@@ -247,7 +192,7 @@ export const AsyncSearch: Story = {
       return new Promise<typeof sampleCommands>((resolve) => {
         setTimeout(() => {
           const filtered = sampleCommands.filter((cmd) =>
-            cmd.label.toLowerCase().includes(query.toLowerCase())
+            cmd.label.toLowerCase().includes(query.toLowerCase()),
           );
           resolve(filtered);
         }, 500);

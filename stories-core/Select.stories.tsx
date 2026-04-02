@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/react-vite";
 import { Select } from "../src/index.core";
 import type { SelectProps } from "../src/components/Select/Select.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
@@ -29,104 +29,6 @@ const meta: Meta<SelectProps> = {
       { label: "Option B", value: "b" },
       { label: "Option C", value: "c" },
     ],
-  },
-  argTypes: {
-    label: {
-      control: "text",
-      description: "Optional label describing what the select is for.",
-      table: { category: "Content" },
-    },
-    labelPosition: {
-      control: { type: "select" },
-      options: ["top", "bottom", "left", "right", "overlay"],
-      description: "Position of the label relative to the select.",
-      table: { category: "Content", defaultValue: { summary: "top" } },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme color for the select.",
-      table: { category: "Appearance", defaultValue: { summary: "primary" } },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "warning", "error"],
-      description: "Visual state for feedback.",
-      table: { category: "Appearance" },
-    },
-    outline: {
-      control: "boolean",
-      description: "Use outlined style.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Corner rounding.",
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Box shadow style.",
-      table: { category: "Appearance" },
-    },
-    options: {
-      control: false,
-      description: "Array of selectable options.",
-      table: { category: "Content" },
-    },
-    value: {
-      control: "text",
-      description: "Selected value.",
-      table: { category: "Behavior" },
-    },
-    onChange: {
-      action: "changed",
-      description: "Change event handler.",
-      table: { category: "Events" },
-    },
-    placeholder: {
-      control: "text",
-      description: "Placeholder when no value is selected.",
-      table: { category: "Content" },
-    },
-    ariaLabel: {
-      control: "text",
-      description: "ARIA label for accessibility.",
-      table: { category: "Accessibility" },
-    },
-    ariaDescription: {
-      control: "text",
-      description: "ARIA description for accessibility.",
-      table: { category: "Accessibility" },
-    },
-    disabled: {
-      control: "boolean",
-      description: "Disable the select input.",
-      table: { category: "Behavior" },
-    },
-    asyncOptions: {
-      control: false,
-      description: "Async function for loading options.",
-      table: { category: "Advanced" },
-    },
-    pollInterval: {
-      control: { type: "number", min: 0, step: 100 },
-      description: "Interval (ms) for polling async options.",
-      table: { category: "Advanced", defaultValue: { summary: "0" } },
-    },
-    className: {
-      control: "text",
-      description: "Custom class names for outer wrapper.",
-      table: { category: "Advanced" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for querying the component in tests.",
-      type: { name: "string" },
-      table: { category: "Testing" },
-    },
   },
 };
 

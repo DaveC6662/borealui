@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Badge } from "../src/index.core";
 import { FaCheck, FaExclamation, FaInfoCircle } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
@@ -27,79 +27,6 @@ const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
   component: Badge,
   tags: ["autodocs"],
-  argTypes: {
-    children: {
-      description: "Badge content.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    ariaLabel: {
-      description: "Accessible label for non-text badge content.",
-      control: "text",
-      table: { category: "Accessibility" },
-    },
-    theme: {
-      description: "Theme color of the badge (primary, secondary, etc).",
-      control: { type: "select" },
-      options: themeOptions,
-      table: { category: "Appearance" },
-    },
-    state: {
-      description: "Semantic state style (success, error, warning).",
-      control: { type: "select" },
-      options: [...stateOptions, ""],
-      table: { category: "Appearance" },
-    },
-    size: {
-      description: "Badge size (xs, small, medium, large, xl).",
-      control: { type: "select" },
-      options: sizeOptions,
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      description: "Corner rounding of the badge.",
-      control: { type: "select" },
-      options: roundingOptions,
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      description: "Shadow depth of the badge.",
-      control: { type: "select" },
-      options: shadowOptions,
-      table: { category: "Appearance" },
-    },
-    outline: {
-      description:
-        "If true, displays badge with outline instead of solid background.",
-      control: "boolean",
-      table: { category: "Appearance" },
-    },
-    icon: {
-      description: "Optional icon displayed at the start of the badge.",
-      control: false,
-      table: { category: "Content" },
-    },
-    disabled: {
-      description: "Disables interaction and applies disabled styling.",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    onClick: {
-      description: "Callback fired when badge is clicked (if interactive).",
-      action: "clicked",
-      table: { category: "Events" },
-    },
-    className: {
-      description: "Additional CSS class name(s) for custom styling.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      description: "Test ID for test automation.",
-      control: "text",
-      table: { category: "Testing" },
-    },
-  },
 };
 
 export default meta;
@@ -191,7 +118,7 @@ export const OutlineVariants = () =>
 
 export const WithChildren: Story = {
   render: () => (
-    <Badge ariaLabel="With children star badge">
+    <Badge aria-label="With children star badge">
       <span>With Children</span>
       <span aria-hidden="true"> ⭐</span>
     </Badge>
@@ -201,7 +128,7 @@ export const WithChildren: Story = {
 export const IconOnly: Story = {
   args: {
     icon: FaInfoCircle,
-    ariaLabel: "Information badge",
+    "aria-label": "Information badge",
   },
   render: (args) => <Badge {...args} />,
 };

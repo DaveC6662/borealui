@@ -1,12 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Typography } from "../src/index.next";
-import type {
-  TypographyAlign,
-  TypographyTheme,
-  TypographyVariant,
-  TypographyWeight,
-  TypographyOwnProps,
-} from "../src/components/Typography/Typography.types";
+import type { TypographyVariant } from "../src/components/Typography/Typography.types";
 
 const variantOptions: TypographyVariant[] = [
   "display",
@@ -25,138 +19,10 @@ const variantOptions: TypographyVariant[] = [
   "code",
 ];
 
-const alignOptions: TypographyAlign[] = ["left", "center", "right", "inherit"];
-
-const weightOptions: TypographyWeight[] = [
-  "light",
-  "normal",
-  "medium",
-  "bold",
-  "bolder",
-  "inherit",
-];
-
-const themeOptions: TypographyTheme[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-  "success",
-  "warning",
-  "error",
-  "inherit",
-];
-
-const asOptions = [
-  "span",
-  "p",
-  "div",
-  "label",
-  "strong",
-  "em",
-  "code",
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
-];
-
 const meta: Meta<typeof Typography> = {
   title: "Components/Typography",
   component: Typography,
   tags: ["autodocs"],
-  argTypes: {
-    children: {
-      description:
-        "The text or content rendered inside the typography component.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    variant: {
-      description: "Semantic typography style preset.",
-      control: { type: "select" },
-      options: variantOptions,
-      table: { category: "Appearance" },
-    },
-    as: {
-      description: "Override the rendered HTML element.",
-      control: { type: "select" },
-      options: asOptions,
-      table: { category: "Semantics" },
-    },
-    align: {
-      description: "Text alignment.",
-      control: { type: "select" },
-      options: alignOptions,
-      table: { category: "Appearance" },
-    },
-    weight: {
-      description: "Override font weight.",
-      control: { type: "select" },
-      options: weightOptions,
-      table: { category: "Appearance" },
-    },
-    theme: {
-      description: "Text color theme.",
-      control: { type: "select" },
-      options: themeOptions,
-      table: { category: "Appearance" },
-    },
-    italic: {
-      description: "Render text in italic style.",
-      control: "boolean",
-      table: { category: "Appearance" },
-    },
-    underline: {
-      description: "Underline the text.",
-      control: "boolean",
-      table: { category: "Appearance" },
-    },
-    truncate: {
-      description: "Truncate overflowing text with ellipsis.",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    noWrap: {
-      description: "Prevent text wrapping.",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    srOnly: {
-      description:
-        "Visually hide text while keeping it accessible to screen readers.",
-      control: "boolean",
-      table: { category: "Accessibility" },
-    },
-    className: {
-      description: "Custom CSS class for styling.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    id: {
-      description: "Optional HTML id.",
-      control: "text",
-      table: { category: "Accessibility" },
-    },
-    title: {
-      description: "Optional title attribute.",
-      control: "text",
-      table: { category: "Accessibility" },
-    },
-    testId: {
-      description: "Test ID for automation.",
-      control: "text",
-      table: { category: "Testing" },
-    },
-    style: {
-      description: "Optional inline styles.",
-      control: false,
-      table: { category: "Appearance" },
-    },
-  },
 };
 
 export default meta;
@@ -174,7 +40,7 @@ const defaultArgs = {
   truncate: false,
   noWrap: false,
   srOnly: false,
-};
+} satisfies React.ComponentProps<typeof Typography>;
 
 export const Default: Story = {
   args: {

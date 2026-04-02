@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/react-vite";
 import { Spinner } from "../src/index.core";
 import type { SpinnerProps } from "../src/components/Spinner/Spinner.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
@@ -22,47 +22,6 @@ const meta: Meta<SpinnerProps> = {
   args: {
     size: 50,
     theme: "primary",
-  },
-  argTypes: {
-    size: {
-      control: { type: "number", min: 8, max: 256, step: 1 },
-      description: "Diameter of the spinner in pixels.",
-      table: { category: "Appearance", defaultValue: { summary: "50" } },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme color for the spinner.",
-      table: { category: "Appearance" },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "error", "warning"],
-      description: "Visual state style for the spinner.",
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Box shadow applied to the spinner.",
-      table: { category: "Appearance" },
-    },
-    label: {
-      control: "text",
-      description:
-        "Visually hidden label for accessibility (announced by screen readers).",
-      table: { category: "Accessibility" },
-    },
-    className: {
-      control: "text",
-      description: "Additional CSS class names to apply.",
-      table: { category: "Advanced" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Custom test ID for the root element.",
-      table: { category: "Testing" },
-    },
   },
 };
 

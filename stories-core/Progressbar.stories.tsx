@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/react-vite";
 import { Progressbar } from "../src/index.core";
 import type { ProgressBarProps } from "../src/components/ProgressBar/ProgressBar.types";
 
@@ -24,95 +24,6 @@ const meta: Meta<ProgressBarProps> = {
     theme: "primary",
     size: "medium",
     animated: true,
-  },
-  argTypes: {
-    value: {
-      control: { type: "number", min: 0, max: 100, step: 1 },
-      description: "Current progress value as a percentage (0–100).",
-      table: { category: "Value", defaultValue: { summary: "0" } },
-      type: { name: "number" },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme color variant.",
-      table: { category: "Appearance", defaultValue: { summary: "primary" } },
-      type: { name: "string" },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "error", "warning"],
-      description: "Optional state variant for emphasis.",
-      table: { category: "Appearance" },
-      type: { name: "string" },
-    },
-    size: {
-      control: { type: "select" },
-      options: ["xs", "small", "medium", "large", "xl"],
-      description: "Height and thickness of the progress bar.",
-      table: { category: "Appearance", defaultValue: { summary: "medium" } },
-      type: { name: "string" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Border radius for the progress bar.",
-      table: { category: "Appearance", defaultValue: { summary: "none" } },
-      type: { name: "string" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Box shadow for the progress bar.",
-      table: { category: "Appearance", defaultValue: { summary: "none" } },
-      type: { name: "string" },
-    },
-    animated: {
-      control: "boolean",
-      description: "If true, progress changes are smoothly animated.",
-      table: { category: "Behavior", defaultValue: { summary: "true" } },
-      type: { name: "boolean" },
-    },
-    indeterminate: {
-      control: "boolean",
-      description: "If true, shows an indeterminate loading animation.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-      type: { name: "boolean" },
-    },
-    ariaLabel: {
-      control: "text",
-      description: "Accessible label for screen readers.",
-      table: {
-        category: "Accessibility",
-        defaultValue: { summary: "Progress" },
-      },
-      type: { name: "string" },
-    },
-    label: {
-      control: "text",
-      description: "Optional label describing what the progress represents.",
-      table: { category: "Content" },
-      type: { name: "string" },
-    },
-    labelPosition: {
-      control: { type: "select" },
-      options: ["top", "bottom", "left", "right", "overlay"],
-      description: "Position of the label relative to the progress bar.",
-      table: { category: "Content", defaultValue: { summary: "top" } },
-      type: { name: "string" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class name for the progress bar container.",
-      table: { category: "Advanced" },
-      type: { name: "string" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for querying the component in tests.",
-      type: { name: "string" },
-      table: { category: "Testing" },
-    },
   },
 };
 
@@ -212,7 +123,7 @@ export const StateVariants: Story = {
             <Progressbar
               {...args}
               value={20 + stateOptions.indexOf(state) * 15}
-              theme={state}
+              state={state}
               label={state.charAt(0).toUpperCase() + state.slice(1)}
             />
           </div>

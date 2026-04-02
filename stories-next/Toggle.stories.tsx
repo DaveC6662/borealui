@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Toggle } from "../src/index.next";
+import {
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+  Toggle,
+} from "../src/index.next";
 import type { ToggleProps } from "../src/components/Toggle/Toggle.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -12,9 +18,15 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<ToggleProps> = {
   title: "Components/Toggle",
@@ -26,71 +38,6 @@ const meta: Meta<ToggleProps> = {
     theme: "primary",
     size: "medium",
     disabled: false,
-  },
-  argTypes: {
-    checked: {
-      control: "boolean",
-      description: "Whether the toggle is checked/on.",
-      table: { category: "State", defaultValue: { summary: "false" } },
-    },
-    onChange: {
-      action: "changed",
-      description: "Callback fired when the toggle is switched.",
-      table: {
-        category: "Events",
-        type: { summary: "(checked: boolean) => void" },
-      },
-    },
-    label: {
-      control: "text",
-      description: "Text label displayed next to the toggle.",
-      table: { category: "Content" },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Visual theme of the toggle.",
-      table: { category: "Appearance" },
-    },
-    size: {
-      control: { type: "select" },
-      options: ["xs", "small", "medium", "large", "xl"],
-      description: "Size of the toggle.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Border radius of the toggle.",
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Shadow style for the toggle.",
-      table: { category: "Appearance" },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "warning", "error"],
-      description: "State color (for status or feedback).",
-      table: { category: "Appearance" },
-    },
-    disabled: {
-      control: "boolean",
-      description: "If true, the toggle is disabled and cannot be changed.",
-      table: { category: "State" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class name for the toggle root element.",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for the toggle element.",
-      table: { category: "Testing" },
-    },
   },
 };
 
@@ -190,12 +137,12 @@ export const SizeVariants: Story = {
   },
 };
 
-export const RoundingVariants = (args) =>
+export const RoundingVariants = (args: React.ComponentProps<typeof Toggle>) =>
   withVariants(Toggle, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof Toggle>) =>
   withVariants(Toggle, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react-vite";
 import { FaCommentDots, FaInbox } from "react-icons/fa";
 import { TextArea } from "../src/index.core";
 import type { TextAreaProps } from "../src/components/TextArea/TextArea.types";
@@ -28,132 +28,6 @@ const meta: Meta<TextAreaProps> = {
     disabled: false,
     readOnly: false,
     autoComplete: "off",
-  },
-  argTypes: {
-    label: {
-      control: "text",
-      description: "Visible label displayed for the textarea.",
-      table: { category: "Accessibility", type: { summary: "string" } },
-    },
-    labelPosition: {
-      control: { type: "select" },
-      options: ["top", "left", "right", "bottom"],
-      description: "Position of the label relative to the textarea.",
-      table: {
-        category: "Accessibility",
-        type: { summary: '"top" | "left" | "right" | "bottom"' },
-      },
-    },
-    value: {
-      control: "text",
-      description: "The current value of the textarea (for controlled usage).",
-      table: { category: "Data", type: { summary: "string" } },
-    },
-    defaultValue: {
-      control: "text",
-      description: "Default value for the textarea (for uncontrolled usage).",
-      table: { category: "Data", type: { summary: "string" } },
-    },
-    placeholder: {
-      control: "text",
-      description: "Placeholder text when the textarea is empty.",
-      table: { category: "Appearance", type: { summary: "string" } },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Visual theme for the textarea.",
-      table: { category: "Appearance" },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "error", "warning"],
-      description: "Validation state coloring.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Border radius of the textarea.",
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Shadow style for the textarea container.",
-      table: { category: "Appearance" },
-    },
-    outline: {
-      control: "boolean",
-      description: "If true, renders the textarea with an outlined style.",
-      table: { category: "Appearance" },
-    },
-    icon: {
-      control: false,
-      description: "Optional icon component displayed inside the textarea.",
-      table: { category: "Appearance", type: { summary: "React.ElementType" } },
-    },
-    disabled: {
-      control: "boolean",
-      description: "Disables the textarea.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    readOnly: {
-      control: "boolean",
-      description: "Renders the textarea as read-only.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    autoComplete: {
-      control: "text",
-      description: "Sets the browser autocomplete attribute.",
-      table: { category: "Behavior", defaultValue: { summary: "off" } },
-    },
-    height: {
-      control: "text",
-      description:
-        "Explicit CSS height for the textarea (e.g. '100px', '10rem').",
-      table: { category: "Appearance" },
-    },
-    resizable: {
-      control: "boolean",
-      description: "If false, the textarea is not resizable.",
-      table: { category: "Behavior" },
-    },
-    ariaLabel: {
-      control: "text",
-      description: "Custom ARIA label for accessibility.",
-      table: { category: "Accessibility" },
-    },
-    ariaDescription: {
-      control: "text",
-      description: "ARIA description for screen readers.",
-      table: { category: "Accessibility" },
-    },
-    onChange: {
-      action: "changed",
-      description: "Fired when the value changes. Receives event.",
-      table: { category: "Events" },
-    },
-    onBlur: {
-      action: "blurred",
-      description: "Fired when the textarea loses focus.",
-      table: { category: "Events" },
-    },
-    onFocus: {
-      action: "focused",
-      description: "Fired when the textarea receives focus.",
-      table: { category: "Events" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class name for the root element.",
-      table: { category: "Advanced" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test ID for the root element (testing utilities).",
-      table: { category: "Testing" },
-    },
   },
 };
 
@@ -294,7 +168,7 @@ export const WithAriaDescription: Story = {
       <TextArea
         {...args}
         placeholder="Describe your experience..."
-        ariaDescription="Use this field to describe your experience with our product."
+        aria-description="Use this field to describe your experience with our product."
         value={value}
         onChange={(value) => setValue(value)}
       />

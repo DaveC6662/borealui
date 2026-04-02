@@ -3,10 +3,11 @@ import CircularProgress from "../src/components/CircularProgress/next/CircularPr
 import type { CircularProgressProps } from "../src/components/CircularProgress/CircularProgress.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
+import { StateType, ThemeType } from "@/types";
 
 const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -14,7 +15,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
@@ -34,70 +35,6 @@ const meta: Meta<CircularProgressProps> = {
     state: "",
     className: "",
     "data-testid": "circular-progress",
-  },
-  argTypes: {
-    value: {
-      description:
-        "Current value shown in the circular progress (usually a percentage).",
-      control: "number",
-      table: { category: "Main" },
-    },
-    min: {
-      description: "Minimum value for the progress range (default: 0).",
-      control: "number",
-      table: { category: "Main" },
-    },
-    max: {
-      description: "Maximum value for the progress range (default: 100).",
-      control: "number",
-      table: { category: "Main" },
-    },
-    label: {
-      description:
-        "Optional label displayed below or inside the circular progress.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    shadow: {
-      description: "Visual shadow depth for the component.",
-      control: { type: "select" },
-      options: shadowOptions,
-      table: { category: "Appearance" },
-    },
-    showRaw: {
-      description:
-        "Show the raw numeric value instead of the formatted percentage.",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    size: {
-      description: "Size of the circular progress indicator.",
-      control: { type: "select" },
-      options: sizeOptions,
-      table: { category: "Appearance" },
-    },
-    theme: {
-      description: "Visual theme of the component.",
-      control: { type: "select" },
-      options: themeOptions,
-      table: { category: "Appearance" },
-    },
-    state: {
-      description: "Status color: '', success, error, or warning.",
-      control: { type: "select" },
-      options: ["", ...stateOptions],
-      table: { category: "Appearance" },
-    },
-    className: {
-      description: "Additional CSS class names for custom styling.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      description: "Test ID for targeting the component in tests.",
-      control: "text",
-      table: { category: "Advanced" },
-    },
   },
 };
 
@@ -177,7 +114,7 @@ export const StateVariants = () => (
       <CircularProgress
         key={state}
         value={76}
-        theme={state}
+        state={state}
         label={`State: ${state}`}
       />
     ))}

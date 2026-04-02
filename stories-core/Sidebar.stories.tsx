@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react-vite";
 import { Sidebar } from "../src/index.core";
 import { SidebarProps } from "../src/components/Sidebar/Sidebar.types";
 import { FaBook, FaPaperclip, FaCogs, FaCalendar } from "react-icons/fa";
@@ -55,94 +55,11 @@ const meta: Meta<SidebarProps> = {
   tags: ["autodocs"],
   args: {
     links: mockLinks,
-    currentPath: "/Settings",
     theme: "primary",
     outline: false,
     rounding: "medium",
     shadow: "light",
     showFooter: false,
-  },
-  argTypes: {
-    links: {
-      control: false,
-      description:
-        "Array of navigation links, each may include label, href, icon, and children.",
-      table: { category: "Content" },
-    },
-    currentPath: {
-      control: "text",
-      description: "The current active path used to highlight the active link.",
-      table: { category: "Behavior" },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme color for the sidebar.",
-      table: { category: "Appearance", defaultValue: { summary: "primary" } },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "warning", "error", "disabled"],
-      description: "Visual state for feedback.",
-      table: { category: "Appearance" },
-    },
-    outline: {
-      control: "boolean",
-      description: "Whether the sidebar should use an outlined style.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large", "full"],
-      description: "Corner rounding style for the sidebar container.",
-      table: { category: "Appearance", defaultValue: { summary: "medium" } },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Box shadow style for the sidebar container.",
-      table: { category: "Appearance", defaultValue: { summary: "light" } },
-    },
-    LinkComponent: {
-      control: false,
-      description:
-        "Custom link component (e.g. Next.js Link or React Router Link).",
-      table: { category: "Advanced" },
-    },
-    showFooter: {
-      control: "boolean",
-      description:
-        "Whether to display the footer section at the bottom of the sidebar.",
-      table: { category: "Content" },
-    },
-    footerLinks: {
-      control: false,
-      description: "Array of footer links displayed when `showFooter` is true.",
-      table: { category: "Content" },
-    },
-    footerVersion: {
-      control: "text",
-      description: "Version label displayed in the footer (e.g. v1.0.0).",
-      table: { category: "Content" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class names for the sidebar wrapper.",
-      table: { category: "Advanced" },
-    },
-    ariaLabel: {
-      control: "text",
-      description: "ARIA label for the sidebar navigation landmark.",
-      table: {
-        category: "Accessibility",
-        defaultValue: { summary: "Sidebar navigation" },
-      },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for querying the component in tests.",
-      table: { category: "Testing" },
-    },
   },
 };
 

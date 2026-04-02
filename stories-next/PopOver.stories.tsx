@@ -1,5 +1,11 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { PopOver, Button } from "../src/index.next";
+import {
+  PopOver,
+  Button,
+  StateType,
+  ShadowType,
+  RoundingType,
+} from "../src/index.next";
 import type { PopoverProps } from "../src/components/PopOver/PopOver.types";
 
 const meta: Meta<PopoverProps> = {
@@ -10,73 +16,18 @@ const meta: Meta<PopoverProps> = {
     placement: "bottom",
     theme: "primary",
   },
-  argTypes: {
-    trigger: {
-      control: false,
-      description: "Element that triggers the popover when clicked/focused.",
-      table: { category: "Content", type: { summary: "ReactNode" } },
-      type: { name: "string", required: true },
-    },
-    content: {
-      control: false,
-      description: "Content shown inside the popover.",
-      table: { category: "Content", type: { summary: "ReactNode" } },
-      type: { name: "string", required: true },
-    },
-    placement: {
-      control: { type: "select" },
-      options: ["top", "right", "bottom", "left"],
-      description: "Position of the popover relative to the trigger.",
-      table: { category: "Position", defaultValue: { summary: "bottom" } },
-      type: { name: "string" },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme color variant.",
-      table: { category: "Appearance", defaultValue: { summary: "primary" } },
-      type: { name: "string" },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "error", "warning"],
-      description: "Optional state variant for emphasis.",
-      table: { category: "Appearance" },
-      type: { name: "string" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Border radius for the popover container.",
-      table: { category: "Appearance", defaultValue: { summary: "none" } },
-      type: { name: "string" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Box-shadow for the popover container.",
-      table: { category: "Appearance", defaultValue: { summary: "none" } },
-      type: { name: "string" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class name for the popover container.",
-      table: { category: "Advanced" },
-      type: { name: "string" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for querying the component in tests.",
-      type: { name: "string" },
-      table: { category: "Testing" },
-    },
-  },
 };
 
 export default meta;
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 type Story = StoryObj<PopoverProps>;
 
@@ -122,7 +73,7 @@ export const ThemedVariants: Story = {
 
 export const StateVariants: Story = {
   render: () => {
-    const stateOptions = ["success", "error", "warning"];
+    const stateOptions: StateType[] = ["success", "error", "warning"];
 
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
@@ -230,14 +181,14 @@ export const RoundingVariants: Story = {
   render: () => {
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        {roundingOptions.map((state) => (
+        {roundingOptions.map((rounding) => (
           <PopOver
-            key={state}
-            rounding={state}
-            trigger={<Button>{state}</Button>}
+            key={rounding}
+            rounding={rounding}
+            trigger={<Button>{rounding}</Button>}
             content={
               <div style={{ padding: "0.5rem" }}>
-                {state.charAt(0).toUpperCase() + state.slice(1)} state
+                {rounding.charAt(0).toUpperCase() + rounding.slice(1)} rounding
               </div>
             }
           />
@@ -251,14 +202,14 @@ export const ShadowVariants: Story = {
   render: () => {
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        {shadowOptions.map((state) => (
+        {shadowOptions.map((shadow) => (
           <PopOver
-            key={state}
-            shadow={state}
-            trigger={<Button>{state}</Button>}
+            key={shadow}
+            shadow={shadow}
+            trigger={<Button>{shadow}</Button>}
             content={
               <div style={{ padding: "0.5rem" }}>
-                {state.charAt(0).toUpperCase() + state.slice(1)} state
+                {shadow.charAt(0).toUpperCase() + shadow.slice(1)} shadow
               </div>
             }
           />

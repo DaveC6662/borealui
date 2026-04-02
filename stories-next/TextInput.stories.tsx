@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaInbox, FaTextHeight, FaTypo3, FaUser } from "react-icons/fa";
+import { FaInbox, FaUser } from "react-icons/fa";
 import { TextInput } from "../src/index.next";
 import type { TextInputProps } from "../src/components/TextInput/TextInput.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
@@ -53,134 +53,6 @@ const meta: Meta<TextInputProps> = {
     password: false,
     autocomplete: false,
     labelPosition: "top",
-  },
-  argTypes: {
-    value: {
-      control: "text",
-      description: "The current value of the input (for controlled usage).",
-      table: { category: "Data", type: { summary: "string" } },
-    },
-    defaultValue: {
-      control: "text",
-      description: "Default value of the input (for uncontrolled usage).",
-      table: { category: "Data", type: { summary: "string" } },
-    },
-    placeholder: {
-      control: "text",
-      description: "Placeholder text when input is empty.",
-      table: { category: "Appearance", type: { summary: "string" } },
-    },
-    label: {
-      control: "text",
-      description: "Optional visible label/title for the input.",
-      table: { category: "Accessibility", type: { summary: "string" } },
-    },
-    labelPosition: {
-      control: { type: "select" },
-      options: labelPositionOptions,
-      description:
-        'Position of the label. "top" places it above, "left" places it to the left, "right" places it to the right, and "bottom" places it below the input.',
-      table: {
-        category: "Accessibility",
-        type: { summary: '"top" | "left" | "right" | "bottom"' },
-      },
-    },
-    password: {
-      control: "boolean",
-      description: "If true, renders an input of type 'password' with toggle.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    readOnly: {
-      control: "boolean",
-      description: "If true, the input is read-only.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    disabled: {
-      control: "boolean",
-      description: "If true, the input is disabled.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    autocomplete: {
-      control: "boolean",
-      description:
-        'Enables browser autocomplete if true ("on"), otherwise "off".',
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    maxLength: {
-      control: "number",
-      description: "Maximum number of characters allowed.",
-      table: { category: "Behavior", type: { summary: "number" } },
-    },
-    outline: {
-      control: "boolean",
-      description: "Renders an outlined input variant.",
-      table: { category: "Appearance" },
-    },
-    icon: {
-      control: false,
-      description: "Optional icon component rendered in the input.",
-      table: { category: "Appearance", type: { summary: "React.ElementType" } },
-    },
-    theme: {
-      control: { type: "select" },
-      options: themeOptions,
-      description: "Theme for input appearance.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: roundingOptions,
-      description: "Border radius for the input.",
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: shadowOptions,
-      description: "Box shadow style for the input.",
-      table: { category: "Appearance" },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", ...stateOptions],
-      description: "Validation state appearance.",
-      table: { category: "Appearance" },
-    },
-    ariaLabel: {
-      control: "text",
-      description: "ARIA label for accessibility.",
-      table: { category: "Accessibility" },
-    },
-    ariaDescription: {
-      control: "text",
-      description: "ARIA description for screen readers.",
-      table: { category: "Accessibility" },
-    },
-    onChange: {
-      action: "changed",
-      description:
-        "Called when the input value changes. Receives (value, event).",
-      table: { category: "Events" },
-    },
-    onBlur: {
-      action: "blurred",
-      description: "Called when the input loses focus.",
-      table: { category: "Events" },
-    },
-    onFocus: {
-      action: "focused",
-      description: "Called when the input receives focus.",
-      table: { category: "Events" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class name for the input.",
-      table: { category: "Advanced" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test ID for the root element (testing utilities).",
-      table: { category: "Testing" },
-    },
   },
 };
 
@@ -357,7 +229,7 @@ export const WithAriaDescription: Story = {
       <TextInput
         {...args}
         placeholder="Type a short bio..."
-        ariaDescription="This field is used to describe yourself in 100 characters or less."
+        aria-description="This field is used to describe yourself in 100 characters or less."
         value={value}
         onChange={(value) => setValue(value)}
       />
@@ -365,12 +237,14 @@ export const WithAriaDescription: Story = {
   },
 };
 
-export const RoundingVariants = (args) =>
+export const RoundingVariants = (
+  args: React.ComponentProps<typeof TextInput>,
+) =>
   withVariants(TextInput, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof TextInput>) =>
   withVariants(TextInput, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);
