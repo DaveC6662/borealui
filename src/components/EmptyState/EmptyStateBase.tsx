@@ -22,13 +22,32 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   actionLabel,
   onActionClick,
   className = "",
+  id,
+  role,
+  iconDecorative = true,
+  iconAriaLabel,
+  actionAriaLabel,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   "data-testid": testId = "empty-state",
   Button,
   classMap,
+  ...rest
 }) => {
   const uid = useId();
-  const titleId = `${testId}-title-${uid}`;
-  const descId = message ? `${testId}-message-${uid}` : undefined;
+
+  const titleId =
+    title && !ariaLabelledBy ? `${testId}-title-${uid}` : undefined;
+  const messageId =
+    message && !ariaDescribedBy ? `${testId}-message-${uid}` : undefined;
+
+  const resolvedRole = role ?? (title ? "region" : undefined);
+
+  const resolvedAriaLabelledBy =
+    ariaLabelledBy ?? (!ariaLabel && titleId ? titleId : undefined);
+
+  const resolvedAriaDescribedBy = ariaDescribedBy ?? messageId;
 
   const sectionClassNames = useMemo(
     () =>
@@ -40,39 +59,53 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
-        className
+        className,
       ),
-    [classMap, rounding, shadow, size, state, theme, outline, className]
+    [classMap, rounding, shadow, size, state, theme, outline, className],
   );
 
-  const buttonAriaLabel =
-    typeof actionLabel === "string" ? undefined : "Perform action";
+  const resolvedActionAriaLabel =
+    actionAriaLabel ??
+    (typeof actionLabel === "string" ? undefined : "Perform action");
 
-  return title ? (
+  return (
     <section
+      id={id}
       className={sectionClassNames}
-      role="region"
-      aria-labelledby={titleId}
-      aria-describedby={descId}
+      role={resolvedRole}
+      aria-label={ariaLabel}
+      aria-labelledby={resolvedAriaLabelledBy}
+      aria-describedby={resolvedAriaDescribedBy}
       data-testid={testId}
+      {...rest}
     >
       {Icon && (
-        <div className={classMap.icon} data-testid={`${testId}-icon`}>
-          <Icon aria-hidden="true" focusable={false} />
+        <div
+          className={classMap.icon}
+          data-testid={`${testId}-icon`}
+          aria-hidden={iconDecorative ? true : undefined}
+        >
+          <Icon
+            aria-hidden={iconDecorative ? true : undefined}
+            aria-label={!iconDecorative ? iconAriaLabel : undefined}
+            focusable={false}
+          />
         </div>
       )}
 
-      <h2
-        id={titleId}
-        className={classMap.title}
-        data-testid={`${testId}-title`}
-      >
-        {title}
-      </h2>
+      {title && (
+        <h2
+          id={titleId}
+          className={classMap.title}
+          data-testid={`${testId}-title`}
+        >
+          {title}
+        </h2>
+      )}
 
       {message && (
         <p
-          id={descId}
+          id={messageId}
           className={classMap.message}
           data-testid={`${testId}-message`}
         >
@@ -85,41 +118,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
           theme="clear"
           outline={outline}
           onClick={onActionClick}
-          aria-label={buttonAriaLabel}
-          data-testid={`${testId}-action`}
-        >
-          {actionLabel}
-        </Button>
-      )}
-    </section>
-  ) : (
-    <section
-      className={sectionClassNames}
-      aria-describedby={descId}
-      data-testid={testId}
-    >
-      {Icon && (
-        <div className={classMap.icon} data-testid={`${testId}-icon`}>
-          <Icon aria-hidden="true" focusable={false} />
-        </div>
-      )}
-
-      {message && (
-        <p
-          id={descId}
-          className={classMap.message}
-          data-testid={`${testId}-message`}
-        >
-          {message}
-        </p>
-      )}
-
-      {actionLabel && onActionClick && (
-        <Button
-          theme="clear"
-          outline={outline}
-          onClick={onActionClick}
-          aria-label={buttonAriaLabel}
+          aria-label={resolvedActionAriaLabel}
           data-testid={`${testId}-action`}
         >
           {actionLabel}

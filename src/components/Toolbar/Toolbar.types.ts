@@ -8,27 +8,24 @@ import { AvatarProps } from "../Avatar/Avatar.types";
  */
 export interface ToolbarBaseProps extends ToolbarProps {
   /**
-   * The Avatar component to use for rendering the toolbar avatar (should accept props for avatar display).
-   * Accepts a React functional component.
+   * The Avatar component to use for rendering the toolbar avatar.
    */
   AvatarComponent: React.FC<AvatarProps>;
 
   /**
    * A mapping of BEM-style class names for the toolbar component parts.
-   * Example: { root: "toolbar__root", left: "toolbar__left", ... }
    */
   classMap: Record<string, string>;
 
   /**
-   * Optional accessible label for the entire toolbar container.
+   * Backward-compatible accessible label for the toolbar container.
+   * Prefer `aria-label` going forward.
    */
-  ariaLabel?: string;
+  "aria-label"?: string;
 
   /**
    * Optional heading level for the toolbar title.
-   * Determines the HTML heading tag rendered (e.g., <h1>, <h2>, ...).
    * Must be an integer from 1 to 6.
-   * Valid values: 1 | 2 | 3 | 4 | 5 | 6
    */
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
 }
@@ -41,6 +38,12 @@ export interface ToolbarProps {
    * Optional title displayed in the center section.
    */
   title?: string;
+
+  /**
+   * Optional id used for the rendered title element.
+   * Useful for linking the toolbar with `aria-labelledby`.
+   */
+  titleId?: string;
 
   /**
    * Content to render in the left section of the toolbar.
@@ -65,33 +68,45 @@ export interface ToolbarProps {
      * The name or initials to display when no image is provided.
      */
     name?: string;
+
     /**
      * The image source URL for the avatar.
      */
     src?: string;
+
     /**
      * Size of the avatar.
      * "xs" | "small" | "medium" | "large" | "xl"
      */
     size?: SizeType;
+
     /**
      * Shape of the avatar.
      * "circle" | "square" | "rounded"
      */
     shape?: "circle" | "square" | "rounded";
+
     /**
      * The theme color of the avatar.
      * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
      */
     theme?: ThemeType;
+
     /**
      * Whether the avatar has an outline.
      */
     outline?: boolean;
+
     /**
      * Optional click handler for the avatar.
      */
     onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+
+    /**
+     * Accessible label for the avatar when it is interactive
+     * or when its visual meaning is not otherwise conveyed.
+     */
+    "aria-label"?: string;
   };
 
   /**
@@ -116,6 +131,38 @@ export interface ToolbarProps {
    * Optional additional class names for styling.
    */
   className?: string;
+
+  /**
+   * Accessible name for the toolbar.
+   * Prefer this over the legacy `ariaLabel` prop.
+   */
+  "aria-label"?: string;
+
+  /**
+   * References another element that labels the toolbar.
+   * Prefer this over `aria-label` when there is visible text available.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * References one or more elements that describe the toolbar.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Optional accessible label for the left section.
+   */
+  leftAriaLabel?: string;
+
+  /**
+   * Optional accessible label for the center section.
+   */
+  centerAriaLabel?: string;
+
+  /**
+   * Optional accessible label for the right section.
+   */
+  rightAriaLabel?: string;
 
   /**
    * Data test ID for testing frameworks.

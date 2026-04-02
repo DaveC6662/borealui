@@ -19,9 +19,15 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   animated = true,
   indeterminate = false,
   className = "",
-  ariaLabel = "Progress",
+  "aria-label": ariaLabel = "Progress",
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-valuetext": ariaValueText,
   label,
   labelPosition = "top",
+  labelId,
+  description,
+  descriptionId,
   "data-testid": testId = "progressbar",
   classMap,
 }) => {
@@ -30,6 +36,20 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     ? Math.min(100, Math.max(0, numeric))
     : 0;
   const progressValue = Math.round(clamped);
+
+  const resolvedLabelId = label ? labelId || `${testId}-label` : undefined;
+  const resolvedDescriptionId = description
+    ? descriptionId || `${testId}-description`
+    : undefined;
+
+  const computedAriaLabel =
+    !ariaLabelledBy && !resolvedLabelId ? ariaLabel : undefined;
+
+  const computedAriaLabelledBy = ariaLabelledBy || resolvedLabelId;
+  const computedAriaDescribedBy = ariaDescribedBy || resolvedDescriptionId;
+
+  const computedAriaValueText =
+    ariaValueText || (indeterminate ? "Loading" : `${progressValue}% complete`);
 
   const layoutClass = useMemo(() => {
     const posClass = classMap[`label${capitalize(labelPosition)}`];
@@ -62,8 +82,18 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   );
 
   const labelNode = label ? (
-    <div className={classMap.label} data-testid={`${testId}-label`}>
+    <div
+      id={resolvedLabelId}
+      className={classMap.label}
+      data-testid={`${testId}-label`}
+    >
       {label}
+    </div>
+  ) : null;
+
+  const descriptionNode = description ? (
+    <div id={resolvedDescriptionId} data-testid={`${testId}-description`}>
+      {description}
     </div>
   ) : null;
 
@@ -74,13 +104,13 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
       <div
         className={wrapperClass}
         role="progressbar"
-        aria-label={ariaLabel}
+        aria-label={computedAriaLabel}
+        aria-labelledby={computedAriaLabelledBy}
+        aria-describedby={computedAriaDescribedBy}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={indeterminate ? undefined : progressValue}
-        aria-valuetext={
-          indeterminate ? "Loading" : `${progressValue}% complete`
-        }
+        aria-valuetext={computedAriaValueText}
         aria-busy={indeterminate || undefined}
         data-testid={testId}
       >
@@ -88,10 +118,11 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
           className={barClass}
           style={{ width: indeterminate ? undefined : `${progressValue}%` }}
           data-testid={`${testId}-bar`}
-        ></div>
+        />
       </div>
 
       {(labelPosition === "bottom" || labelPosition === "right") && labelNode}
+      {descriptionNode}
     </div>
   );
 };

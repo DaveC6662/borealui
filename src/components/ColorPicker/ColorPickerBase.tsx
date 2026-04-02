@@ -18,35 +18,78 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   shadow = getDefaultShadow(),
   shape = "round",
   allowCustom = false,
+  required = false,
+  invalid = false,
+  helperText,
+  errorText,
+  customInputAriaLabel = "Custom color picker",
+  hideLabel = false,
   className = "",
   classMap,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   "data-testid": testId = "color-picker",
 }) => {
   const legendId = `${testId}-legend`;
+  const helperTextId = helperText ? `${testId}-helper-text` : undefined;
+  const errorTextId = errorText ? `${testId}-error-text` : undefined;
+
+  const describedBy =
+    [ariaDescribedBy, helperTextId, invalid ? errorTextId : undefined]
+      .filter(Boolean)
+      .join(" ") || undefined;
+
+  const computedAriaLabelledBy =
+    ariaLabelledBy ?? (!ariaLabel ? legendId : undefined);
 
   const labelClass = useMemo(
-    () => combineClassNames(classMap.swatch, classMap[size], classMap[shape]),
-    [classMap, size, shape]
+    () =>
+      combineClassNames(
+        classMap.swatch,
+        classMap[size],
+        classMap[shape],
+        disabled && classMap.disabled,
+      ),
+    [classMap, size, shape, disabled],
   );
 
   return (
     <fieldset
-      className={combineClassNames(classMap.color_picker, className)}
+      className={combineClassNames(
+        classMap.color_picker,
+        invalid && classMap.invalid,
+        disabled && classMap.disabled,
+        className,
+      )}
       disabled={disabled}
       data-testid={testId}
+      aria-label={ariaLabel}
+      aria-labelledby={computedAriaLabelledBy}
+      aria-describedby={describedBy}
+      aria-invalid={invalid || undefined}
     >
-      <legend id={legendId} className={classMap.legend}>
+      <legend
+        id={legendId}
+        className={combineClassNames(classMap.legend, hideLabel && "sr_only")}
+      >
         {label}
       </legend>
 
-      <div className={classMap.color_picker_grid}>
+      <div className={classMap.color_picker_grid} role="radiogroup">
         {colors.map((color, i) => {
           const id = `${testId}-color-${i}`;
+          const optionLabelId = `${id}-label`;
           const isSelected = selected === color.value;
+          const optionDisabled = disabled || color.disabled;
+
           return (
             <label
               key={`${color.value}-${i}`}
-              className={labelClass}
+              className={combineClassNames(
+                labelClass,
+                optionDisabled && classMap.disabled,
+              )}
               htmlFor={id}
               title={color.label}
               data-testid={`${testId}-option-${color.value}`}
@@ -59,14 +102,24 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
                 checked={isSelected}
                 onChange={() => onChange(color.value)}
                 className={classMap.radio_input}
+                disabled={optionDisabled}
+                aria-describedby={describedBy}
+                aria-invalid={invalid || undefined}
+                aria-required={required || undefined}
+                aria-labelledby={optionLabelId}
               />
-              <span className="sr_only">{color.label}</span>
+
+              <span id={optionLabelId} className={"sr_only"}>
+                {color.label}
+              </span>
+
               <span
                 className={combineClassNames(
                   classMap.preview,
                   classMap[shape],
                   isSelected && classMap.selected,
-                  shadow && classMap[`shadow${capitalize(shadow)}`]
+                  optionDisabled && classMap.disabled,
+                  shadow && classMap[`shadow${capitalize(shadow)}`],
                 )}
                 style={{ backgroundColor: color.value }}
                 aria-hidden="true"
@@ -76,18 +129,43 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
         })}
       </div>
 
+      {helperText && (
+        <div
+          id={helperTextId}
+          className={classMap.helper_text}
+          data-testid={`${testId}-helper-text`}
+        >
+          {helperText}
+        </div>
+      )}
+
+      {invalid && errorText && (
+        <div
+          id={errorTextId}
+          className={classMap.error_text}
+          data-testid={`${testId}-error-text`}
+          aria-live="polite"
+        >
+          {errorText}
+        </div>
+      )}
+
       {allowCustom && (
         <input
           type="color"
           className={classMap.custom_input}
           value={selected}
           onChange={(e) => onChange(e.target.value)}
-          aria-label="Custom color picker"
+          aria-label={customInputAriaLabel}
+          aria-describedby={describedBy}
+          aria-invalid={invalid || undefined}
           data-testid={`${testId}-custom-input`}
+          disabled={disabled}
         />
       )}
     </fieldset>
   );
 };
+
 ColorPickerBase.displayName = "ColorPickerBase";
 export default ColorPickerBase;

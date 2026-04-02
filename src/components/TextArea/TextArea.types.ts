@@ -5,7 +5,12 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
-import { TextareaHTMLAttributes, ComponentType } from "react";
+import {
+  TextareaHTMLAttributes,
+  ComponentType,
+  ReactNode,
+  ChangeEvent,
+} from "react";
 
 /**
  * Props for the TextArea component.
@@ -26,25 +31,22 @@ export interface TextAreaProps extends Omit<
 
   /**
    * Called when the textarea value changes.
-   * Receives the current string value.
+   * Receives the current string value and the original change event.
    */
-  onChange?: (
-    value: string,
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => void;
+  onChange?: (value: string, event: ChangeEvent<HTMLTextAreaElement>) => void;
 
   /**
-   * Optional icon to display alongside the textarea. Accepts a React component.
+   * Optional icon to display alongside the textarea.
    */
-  icon?: ComponentType;
+  icon?: ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
 
   /**
-   * Placeholder text for the textarea. Defaults to "Enter text".
+   * Placeholder text for the textarea.
    */
   placeholder?: string;
 
   /**
-   * Additional custom CSS class name(s) to apply to the container.
+   * Additional custom CSS class name(s) to apply to the wrapper.
    */
   className?: string;
 
@@ -54,41 +56,55 @@ export interface TextAreaProps extends Omit<
   readOnly?: boolean;
 
   /**
-   * Enables or disables autocomplete on the textarea ("on" or "off").
+   * Enables or disables autocomplete.
    */
   autocomplete?: boolean;
 
   /**
-   * Accessible label for the textarea. Defaults to the placeholder text if not provided.
+   * Legacy accessible label prop.
+   * Prefer using `aria-label`.
    */
-  ariaLabel?: string;
+  "aria-label"?: string;
 
   /**
-   * Accessible description for the textarea, rendered as visually hidden text.
+   * Legacy accessible description text rendered internally as visually hidden content.
+   * Prefer using `aria-describedby` when referencing external help text.
    */
-  ariaDescription?: string;
+  "aria-describedby"?: string;
+
+  /**
+   * Optional helper text shown below the textarea.
+   */
+  helperText?: ReactNode;
+
+  /**
+   * Optional error message shown below the textarea.
+   */
+  errorMessage?: ReactNode;
+
+  /**
+   * Optional id of external descriptive content.
+   * This will be merged with internally generated description ids.
+   */
+  describedBy?: string;
 
   /**
    * Theme used for styling.
-   * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
    */
   theme?: ThemeType;
 
   /**
-   * State of the text area (for feedback/validation).
-   * "success" | "error" | "warning" | "disabled" | ""
+   * State of the text area.
    */
   state?: StateType;
 
   /**
    * Rounding of the component.
-   * "none" | "small" | "medium" | "large" | "full"
    */
   rounding?: RoundingType;
 
   /**
    * Shadow of the component.
-   * "none" | "light" | "medium" | "strong" | "intense"
    */
   shadow?: ShadowType;
 
@@ -108,12 +124,12 @@ export interface TextAreaProps extends Omit<
   resizable?: boolean;
 
   /**
-   * Optional height for the textarea. Can be a CSS value (e.g., "100px") or a number (interpreted as pixels).
+   * Optional height for the textarea.
    */
   height?: string | number;
 
   /**
-   * Optional test ID for testing frameworks. Defaults to "text-area".
+   * Optional test ID for testing frameworks.
    */
   "data-testid"?: string;
 }

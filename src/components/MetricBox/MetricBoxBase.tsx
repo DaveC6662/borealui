@@ -22,10 +22,19 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   align = "center",
   size = getDefaultSize(),
   className = "",
+  role,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-live": ariaLive,
+  "aria-atomic": ariaAtomic,
+  decorativeIcon = true,
+  iconAriaLabel,
   "data-testid": testId = "metric-box",
   classMap,
 }) => {
   const uid = useId();
+
   const titleId = title ? `${testId}-title-${uid}` : undefined;
   const subtextId = subtext ? `${testId}-subtext-${uid}` : undefined;
 
@@ -40,29 +49,42 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
         classMap[align],
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
-        className
+        className,
       ),
-    [classMap, theme, state, size, align, outline, shadow, rounding, className]
+    [classMap, theme, state, size, align, outline, shadow, rounding, className],
   );
 
   const valueLabel =
     title && value != null ? `${value} ${title}` : String(value ?? "");
 
+  const resolvedRole = role ?? (title ? "region" : undefined);
+  const resolvedAriaLabelledBy =
+    ariaLabelledBy ?? (title ? titleId : undefined);
+  const resolvedAriaDescribedBy =
+    ariaDescribedBy ?? (subtext ? subtextId : undefined);
+
   return (
     <div
       className={wrapperClass}
-      {...(title
-        ? {
-            role: "region",
-            "aria-labelledby": titleId,
-            "aria-describedby": subtextId,
-          }
-        : {})}
+      role={resolvedRole}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabel ? undefined : resolvedAriaLabelledBy}
+      aria-describedby={resolvedAriaDescribedBy}
+      aria-live={ariaLive}
+      aria-atomic={ariaAtomic}
       data-testid={testId}
     >
       {Icon && (
-        <div className={classMap.icon} data-testid={`${testId}-icon`}>
-          <Icon aria-hidden={true} focusable={false} />
+        <div
+          className={classMap.icon}
+          data-testid={`${testId}-icon`}
+          aria-hidden={decorativeIcon ? true : undefined}
+        >
+          <Icon
+            aria-hidden={decorativeIcon ? true : undefined}
+            aria-label={!decorativeIcon ? iconAriaLabel : undefined}
+            focusable={false}
+          />
         </div>
       )}
 

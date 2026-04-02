@@ -28,8 +28,6 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       value,
       onChange,
       placeholder = "Select an option",
-      ariaLabel,
-      ariaDescription,
       disabled = false,
       className = "",
       classMap,
@@ -39,13 +37,28 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       name,
       label,
       labelPosition = "top",
+      id,
+      form,
+      autoComplete,
+      role,
+      tabIndex,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-description": ariaDescription,
+      "aria-describedby": ariaDescribedBy,
+      "aria-invalid": ariaInvalid,
+      "aria-required": ariaRequired,
+      "aria-busy": ariaBusy,
+      "aria-live": ariaLive = "polite",
       "data-testid": testId = "select",
     },
     ref,
   ) => {
-    const id = useId();
-    const selectId = `${id}-select`;
-    const descId = ariaDescription ? `${id}-desc` : undefined;
+    const generatedId = useId();
+    const selectId = id || `${generatedId}-select`;
+    const internalDescriptionId = ariaDescription
+      ? `${generatedId}-desc`
+      : undefined;
 
     const [internalOptions, setInternalOptions] = useState(options);
     const [loading, setLoading] = useState(false);
@@ -64,6 +77,15 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       () => combineClassNames(classMap.label, classMap.labelOverlay),
       [classMap],
     );
+
+    const computedDescribedBy = useMemo(() => {
+      const ids = [ariaDescribedBy, internalDescriptionId].filter(Boolean);
+      return ids.length > 0 ? ids.join(" ") : undefined;
+    }, [ariaDescribedBy, internalDescriptionId]);
+
+    const computedAriaLabel = ariaLabelledBy
+      ? undefined
+      : ariaLabel || placeholder;
 
     const labelNode = hasLabel ? (
       <div className={labelClasses} data-testid={`${testId}-label`}>
@@ -124,7 +146,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
     const selectClasses = useMemo(
       () => combineClassNames(classMap.select, outline && classMap.outline),
-      [classMap, theme, state, shadow, rounding, outline],
+      [classMap, outline],
     );
 
     const iconClasses = useMemo(
@@ -148,13 +170,21 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
             ref={ref}
             id={selectId}
             name={name}
+            form={form}
+            autoComplete={autoComplete}
+            role={role}
+            tabIndex={tabIndex}
             value={value ?? ""}
             onChange={handleChange}
             className={selectClasses}
-            aria-label={ariaLabel || placeholder}
-            aria-describedby={descId}
+            aria-label={computedAriaLabel}
+            aria-labelledby={ariaLabelledBy}
+            aria-description={ariaDescription}
+            aria-describedby={computedDescribedBy}
             aria-disabled={disabled || undefined}
-            aria-invalid={state === "error" || undefined}
+            aria-invalid={ariaInvalid ?? (state === "error" || undefined)}
+            aria-required={ariaRequired ?? (required || undefined)}
+            aria-busy={ariaBusy ?? (loading || undefined)}
             disabled={disabled}
             required={required}
             data-testid={`${testId}-input`}
@@ -167,6 +197,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
               <option
                 key={option.value}
                 value={option.value}
+                disabled={option.disabled}
                 data-testid={`${testId}-option-${option.value}`}
               >
                 {option.label}
@@ -184,7 +215,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
           {ariaDescription && (
             <span
-              id={descId}
+              id={internalDescriptionId}
               className="sr_only"
               data-testid={`${testId}-description`}
             >
@@ -193,7 +224,11 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           )}
 
           {loading && (
-            <span className={classMap.loading} aria-live="polite">
+            <span
+              className={classMap.loading}
+              aria-live={ariaLive}
+              data-testid={`${testId}-loading`}
+            >
               Loading options…
             </span>
           )}

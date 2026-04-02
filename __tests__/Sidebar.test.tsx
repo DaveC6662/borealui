@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import SidebarBase from "../src/components/Sidebar/SidebarBase";
 
@@ -37,36 +38,301 @@ const classMap = {
   footer: "footer",
   footerLink: "footerLink",
   footerVersion: "footerVersion",
+  icon: "icon",
+  outline: "outline",
+  primary: "primary",
+  success: "success",
+  shadowMedium: "shadowMedium",
+  roundMedium: "roundMedium",
 };
 
+const TestLink = React.forwardRef<
+  HTMLAnchorElement,
+  React.AnchorHTMLAttributes<HTMLAnchorElement>
+>(({ children, href, ...props }, ref) => (
+  <a ref={ref} href={href} {...props}>
+    {children}
+  </a>
+));
+TestLink.displayName = "TestLink";
+
 describe("SidebarBase", () => {
-  it("renders without crashing and shows main list", () => {
+  const isLinkActive = (link: { href?: string }) => link.href === "/Settings";
+
+  it("renders without crashing and shows the main navigation list", () => {
     render(
       <SidebarBase
         classMap={classMap}
         links={mockLinks}
-        currentPath="/Settings"
-      />
+        isLinkActive={isLinkActive}
+      />,
     );
+
     expect(screen.getByTestId("sidebar")).toBeInTheDocument();
+
     const lists = screen.getAllByTestId("sidebar-list");
     expect(lists.length).toBeGreaterThan(0);
     expect(lists[0]).toBeInTheDocument();
   });
 
-  it("highlights the active link", () => {
+  it("renders the navigation landmark with the default accessible label", () => {
     render(
       <SidebarBase
         classMap={classMap}
         links={mockLinks}
-        currentPath="/Settings"
-      />
+        isLinkActive={isLinkActive}
+      />,
     );
-    const activeLink = screen
-      .getAllByTestId("sidebar-sidebarLink")
-      .find((link) => link.classList.contains("active"));
-    expect(activeLink).toBeInTheDocument();
-    expect(activeLink?.textContent).toBe("Settings");
+
+    expect(
+      screen.getByRole("navigation", { name: "Sidebar navigation" }),
+    ).toBeInTheDocument();
+  });
+
+  it("applies a custom aria-label to the navigation landmark", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        isLinkActive={isLinkActive}
+        aria-label="Primary sidebar"
+      />,
+    );
+
+    expect(
+      screen.getByRole("navigation", { name: "Primary sidebar" }),
+    ).toBeInTheDocument();
+  });
+
+  it("prefers aria-labelledby over aria-label on the navigation landmark", () => {
+    render(
+      <>
+        <h2 id="sidebar-heading">Workspace Sidebar</h2>
+        <SidebarBase
+          classMap={classMap}
+          links={mockLinks}
+          isLinkActive={isLinkActive}
+          aria-label="Ignored sidebar label"
+          aria-labelledby="sidebar-heading"
+        />
+      </>,
+    );
+
+    const nav = screen.getByRole("navigation", { name: "Workspace Sidebar" });
+    expect(nav).toBeInTheDocument();
+    expect(nav).toHaveAttribute("aria-labelledby", "sidebar-heading");
+    expect(nav).not.toHaveAttribute("aria-label", "Ignored sidebar label");
+  });
+
+  it("applies aria-describedby to the navigation landmark", () => {
+    render(
+      <>
+        <p id="sidebar-description">Main application navigation</p>
+        <SidebarBase
+          classMap={classMap}
+          links={mockLinks}
+          isLinkActive={isLinkActive}
+          aria-describedby="sidebar-description"
+        />
+      </>,
+    );
+
+    expect(screen.getByTestId("sidebar")).toHaveAttribute(
+      "aria-describedby",
+      "sidebar-description",
+    );
+  });
+
+  it("highlights the active link and sets aria-current=page", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        isLinkActive={isLinkActive}
+        LinkComponent={TestLink}
+      />,
+    );
+
+    const settingsLink = screen.getByRole("link", { name: "Settings" });
+    expect(settingsLink).toHaveClass("active");
+    expect(settingsLink).toHaveAttribute("aria-current", "page");
+  });
+
+  it("does not set aria-current on inactive links", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        isLinkActive={isLinkActive}
+        LinkComponent={TestLink}
+      />,
+    );
+
+    const dashboardLink = screen.getByRole("link", { name: "Dashboard" });
+    expect(dashboardLink).not.toHaveAttribute("aria-current");
+  });
+
+  it("renders expandable parent items as buttons with collapsed state by default", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        isLinkActive={isLinkActive}
+      />,
+    );
+
+    const reportsButton = screen.getByRole("button", { name: /reports/i });
+    expect(reportsButton).toBeInTheDocument();
+    expect(reportsButton).toHaveAttribute("aria-expanded", "false");
+
+    const subMenu = screen.getByTestId("sidebar-subMenu");
+    expect(subMenu).toHaveAttribute("hidden");
+  });
+
+  it("expands and collapses a submenu when the parent button is clicked", () => {
+    render(<SidebarBase classMap={classMap} links={mockLinks} />);
+
+    const reportsButton = screen.getByRole("button", { name: /reports/i });
+    expect(reportsButton).toHaveAttribute("aria-expanded", "false");
+
+    fireEvent.click(reportsButton);
+    expect(reportsButton).toHaveAttribute("aria-expanded", "true");
+
+    const subMenu = screen.getByTestId("sidebar-subMenu");
+    expect(subMenu).not.toHaveAttribute("hidden");
+
+    fireEvent.click(reportsButton);
+    expect(reportsButton).toHaveAttribute("aria-expanded", "false");
+    expect(subMenu).toHaveAttribute("hidden");
+  });
+
+  it("automatically opens a parent item when it contains an active child", () => {
+    const activeChildMatcher = (link: { href?: string }) =>
+      link.href === "/Reports/Monthly";
+
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        isLinkActive={activeChildMatcher}
+        LinkComponent={TestLink}
+      />,
+    );
+
+    const reportsButton = screen.getByRole("button", { name: /reports/i });
+    expect(reportsButton).toHaveAttribute("aria-expanded", "true");
+
+    const monthlyLink = screen.getByRole("link", { name: "Monthly" });
+    expect(monthlyLink).toHaveAttribute("aria-current", "page");
+  });
+
+  it("uses hasActiveChild to mark parent items active/open", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        hasActiveChild={(link) => link.label === "Reports"}
+      />,
+    );
+
+    const reportsButton = screen.getByRole("button", { name: /reports/i });
+    expect(reportsButton).toHaveAttribute("aria-expanded", "true");
+    expect(reportsButton).toHaveClass("active");
+  });
+
+  it("associates each submenu with its controlling button", () => {
+    render(<SidebarBase classMap={classMap} links={mockLinks} />);
+
+    const reportsButton = screen.getByRole("button", { name: /reports/i });
+    const subMenu = screen.getByTestId("sidebar-subMenu");
+
+    const controlsId = reportsButton.getAttribute("aria-controls");
+    expect(controlsId).toBeTruthy();
+    expect(subMenu).toHaveAttribute("id", controlsId!);
+    expect(subMenu).toHaveAttribute("aria-labelledby", reportsButton.id);
+  });
+
+  it("renders non-clickable items as labels when href is missing and there are no children", () => {
+    const links = [{ label: "Section Title" }];
+
+    render(<SidebarBase classMap={classMap} links={links} />);
+
+    expect(screen.getByTestId("sidebar-sidebarLabel")).toHaveTextContent(
+      "Section Title",
+    );
+  });
+
+  it("applies per-link aria props to regular links", () => {
+    const links = [
+      {
+        label: "Settings",
+        href: "/Settings",
+        "aria-label": "Open settings page",
+        "aria-description": "Navigates to application settings",
+        "aria-disabled": true,
+      },
+    ];
+
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={links}
+        LinkComponent={TestLink}
+      />,
+    );
+
+    const link = screen.getByRole("link", { name: "Open settings page" });
+    expect(link).toHaveAttribute(
+      "aria-description",
+      "Navigates to application settings",
+    );
+    expect(link).toHaveAttribute("aria-disabled", "true");
+  });
+
+  it("applies generated aria props to expandable buttons", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        getExpandButtonAriaLabel={(link, isOpen) =>
+          `${link.label} submenu ${isOpen ? "expanded" : "collapsed"}`
+        }
+        getExpandButtonAriaDescription={(link) =>
+          `Toggle ${link.label} navigation section`
+        }
+      />,
+    );
+
+    const button = screen.getByRole("button", {
+      name: "Reports submenu collapsed",
+    });
+
+    expect(button).toHaveAttribute(
+      "aria-description",
+      "Toggle Reports navigation section",
+    );
+  });
+
+  it("updates the generated expand button aria-label after toggling", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        getExpandButtonAriaLabel={(link, isOpen) =>
+          `${link.label} submenu ${isOpen ? "expanded" : "collapsed"}`
+        }
+      />,
+    );
+
+    const button = screen.getByRole("button", {
+      name: "Reports submenu collapsed",
+    });
+
+    fireEvent.click(button);
+
+    expect(
+      screen.getByRole("button", { name: "Reports submenu expanded" }),
+    ).toBeInTheDocument();
   });
 
   it("renders footer when showFooter is true", () => {
@@ -74,40 +340,140 @@ describe("SidebarBase", () => {
       <SidebarBase
         classMap={classMap}
         links={mockLinks}
-        currentPath="/Settings"
         showFooter
         footerLinks={mockFooterLinks}
         footerVersion="v1.0.0"
-      />
+        LinkComponent={TestLink}
+      />,
     );
 
     expect(screen.getByTestId("sidebar-footer")).toBeInTheDocument();
     expect(screen.getAllByTestId("sidebar-footerLink")).toHaveLength(2);
     expect(screen.getByTestId("sidebar-footerVersion")).toHaveTextContent(
-      "v1.0.0"
+      "v1.0.0",
     );
   });
 
   it("does not render footer when showFooter is false", () => {
     render(
-      <SidebarBase
-        classMap={classMap}
-        links={mockLinks}
-        currentPath="/Settings"
-        showFooter={false}
-      />
+      <SidebarBase classMap={classMap} links={mockLinks} showFooter={false} />,
     );
+
     expect(screen.queryByTestId("sidebar-footer")).not.toBeInTheDocument();
   });
 
-  it("is accessible according to axe", async () => {
+  it("applies footer landmark accessibility props", () => {
+    render(
+      <>
+        <span id="footer-label">Support links</span>
+        <SidebarBase
+          classMap={classMap}
+          links={mockLinks}
+          showFooter
+          footerLinks={mockFooterLinks}
+          footerAriaLabel="Ignored footer label"
+          footerAriaLabelledBy="footer-label"
+          LinkComponent={TestLink}
+        />
+      </>,
+    );
+
+    const footer = screen.getByTestId("sidebar-footer");
+    expect(footer).toHaveAttribute("aria-labelledby", "footer-label");
+    expect(footer).not.toHaveAttribute("aria-label", "Ignored footer label");
+  });
+
+  it("applies accessibility props to footer links", () => {
+    const footerLinks = [
+      {
+        label: "Help",
+        href: "/Help",
+        "aria-label": "Open help center",
+        "aria-description": "Get support and documentation",
+        "aria-disabled": true,
+      },
+    ];
+
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        showFooter
+        footerLinks={footerLinks}
+        LinkComponent={TestLink}
+      />,
+    );
+
+    const footerLink = screen.getByRole("link", { name: "Open help center" });
+    expect(footerLink).toHaveAttribute(
+      "aria-description",
+      "Get support and documentation",
+    );
+    expect(footerLink).toHaveAttribute("aria-disabled", "true");
+  });
+
+  it("applies custom data-testid values consistently", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        data-testid="custom-sidebar"
+      />,
+    );
+
+    expect(screen.getByTestId("custom-sidebar")).toBeInTheDocument();
+    expect(screen.getAllByTestId("custom-sidebar-list")).toHaveLength(2);
+  });
+
+  it("renders nested list after expansion with child list styling", () => {
+    render(<SidebarBase classMap={classMap} links={mockLinks} />);
+
+    const button = screen.getByRole("button", { name: /reports/i });
+    fireEvent.click(button);
+
+    const lists = screen.getAllByTestId("sidebar-list");
+    expect(lists).toHaveLength(2);
+    expect(lists[1]).toHaveClass("childList");
+  });
+
+  it("applies theme, state, outline, rounding, shadow, and custom className to the wrapper", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        theme="primary"
+        state="success"
+        outline
+        rounding="medium"
+        shadow="medium"
+        className="customSidebar"
+      />,
+    );
+
+    const sidebar = screen.getByTestId("sidebar");
+    expect(sidebar).toHaveClass("wrapper");
+    expect(sidebar).toHaveClass("primary");
+    expect(sidebar).toHaveClass("success");
+    expect(sidebar).toHaveClass("outline");
+    expect(sidebar).toHaveClass("roundMedium");
+    expect(sidebar).toHaveClass("shadowMedium");
+    expect(sidebar).toHaveClass("customSidebar");
+  });
+
+  it("has no accessibility violations", async () => {
     const { container } = render(
       <SidebarBase
         classMap={classMap}
         links={mockLinks}
-        currentPath="/Settings"
-      />
+        isLinkActive={isLinkActive}
+        showFooter
+        footerLinks={mockFooterLinks}
+        footerVersion="v1.0.0"
+        LinkComponent={TestLink}
+        aria-label="Application sidebar"
+      />,
     );
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

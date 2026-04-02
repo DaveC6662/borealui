@@ -14,6 +14,13 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   IconComponent,
   offset = 300,
   className = "",
+  "aria-label": ariaLabel = "Scroll to top",
+  "aria-describedby": ariaDescribedBy,
+  "aria-labelledby": ariaLabelledBy,
+  title,
+  role,
+  wrapperAriaLabel,
+  id,
   "data-testid": testId = "scroll",
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -43,10 +50,15 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
 
   const scrollToTop = () => {
     if (typeof window === "undefined") return;
+
     const prefersReduced = window.matchMedia?.(
-      "(prefers-reduced-motion: reduce)"
+      "(prefers-reduced-motion: reduce)",
     ).matches;
-    window.scrollTo({ top: 0, behavior: prefersReduced ? "auto" : "smooth" });
+
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReduced ? "auto" : "smooth",
+    });
   };
 
   const buttonClass = useMemo(
@@ -54,25 +66,30 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
       combineClassNames(
         classMap.button,
         shadow && classMap[`shadow${capitalize(shadow)}`],
-        rounding && classMap[`round${capitalize(rounding)}`]
+        rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, shadow, rounding]
+    [classMap, shadow, rounding],
   );
 
   const iconClass = useMemo(() => combineClassNames(classMap.icon), [classMap]);
 
   return (
     <div
+      id={id}
       className={combineClassNames(classMap.wrapper, className)}
       data-testid={testId}
+      role={role}
+      aria-label={role && wrapperAriaLabel ? wrapperAriaLabel : undefined}
     >
       {isVisible && (
         <button
           type="button"
           onClick={scrollToTop}
           className={buttonClass}
-          aria-label="Scroll to top"
-          title="Scroll to top"
+          aria-label={ariaLabelledBy ? undefined : ariaLabel}
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={ariaDescribedBy}
+          title={title ?? ariaLabel}
           data-testid={`${testId}-button`}
         >
           <IconComponent

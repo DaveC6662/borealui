@@ -428,6 +428,15 @@
   --border-radius-round: 50%;
   --border-radius-none: 0;
   /* ===========================
+     Border Widths
+  =========================== */
+  --border-width-none: 0;
+  --border-width-xs: 1px;
+  --border-width-sm: 2px;
+  --border-width-md: 3px;
+  --border-width-lg: 4px;
+  --border-width-xl: 5px;
+  /* ===========================
      Shadows
   =========================== */
   --box-shadow-light: 0px 2px 4px rgba(46, 49, 49, 0.1);

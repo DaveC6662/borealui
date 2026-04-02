@@ -56,6 +56,11 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   language = "en",
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
+  role = "region",
+  tabIndex,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   "data-testid": testId = "markdown-renderer",
   classMap,
   sanitizeHtml,
@@ -101,14 +106,27 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
         classMap.wrapper,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
-        className
+        className,
       ),
-    [classMap, rounding, shadow, className]
+    [classMap, rounding, shadow, className],
   );
+
+  const accessibilityProps = {
+    role,
+    lang: language,
+    tabIndex,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+  };
 
   if (!html) {
     return (
-      <div className={classMap.empty} data-testid={testId} role="region">
+      <div
+        className={classMap.empty}
+        data-testid={testId}
+        {...accessibilityProps}
+      >
         <p>No content available.</p>
       </div>
     );
@@ -117,9 +135,8 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   return (
     <div
       className={wrapperClass}
-      role="region"
       data-testid={testId}
-      lang={language}
+      {...accessibilityProps}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

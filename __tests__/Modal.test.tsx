@@ -1,19 +1,16 @@
-import React, { act } from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import React from "react";
+import {
+  act,
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+} from "@testing-library/react";
 import BaseModal from "@/components/Modal/ModalBase";
-import IconButtonBase from "@/components/IconButton/IconButtonBase";
 import { axe, toHaveNoViolations } from "jest-axe";
+import { DummyIconButton } from "./test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
-
-const DummyIconButton = React.forwardRef<HTMLButtonElement, any>(
-  ({ icon: Icon, ...props }, ref) => (
-    <button ref={ref} {...props}>
-      {Icon && <Icon aria-hidden="true" />}
-    </button>
-  )
-);
-DummyIconButton.displayName = "DummyIconButton";
 
 const classMap = {
   overlay: "modalOverlay",
@@ -21,148 +18,450 @@ const classMap = {
   hidden: "modalHidden",
   content: "modalContent",
   closeButton: "closeButton",
+  closeButtonFloating: "closeButtonFloating",
+  header: "modalHeader",
+  headerContent: "modalHeaderContent",
+  title: "modalTitle",
+  body: "modalBody",
+  footer: "modalFooter",
+  srOnly: "sr_only",
+  shadowLight: "shadowLight",
+  shadowMedium: "shadowMedium",
+  roundSmall: "roundSmall",
+  roundMedium: "roundMedium",
 };
 
 describe("BaseModal", () => {
-  const portal = document.createElement("div");
-  portal.setAttribute("id", "widget-portal");
-  document.body.appendChild(portal);
-
   const onClose = jest.fn();
+  let portal: HTMLDivElement;
+  let rootSibling: HTMLDivElement;
+  let opener: HTMLButtonElement;
+  let originalRequestAnimationFrame: typeof window.requestAnimationFrame;
 
-  beforeEach(() => {
-    onClose.mockClear();
+  beforeAll(() => {
+    originalRequestAnimationFrame = window.requestAnimationFrame;
+    window.requestAnimationFrame = (cb: FrameRequestCallback): number => {
+      cb(0);
+      return 0;
+    };
   });
 
-  it("renders modal with aria attributes and content", () => {
+  afterAll(() => {
+    window.requestAnimationFrame = originalRequestAnimationFrame;
+  });
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+
+    onClose.mockClear();
+
+    document.body.innerHTML = "";
+
+    rootSibling = document.createElement("div");
+    rootSibling.setAttribute("data-testid", "app-root");
+    document.body.appendChild(rootSibling);
+
+    opener = document.createElement("button");
+    opener.textContent = "Open modal";
+    opener.setAttribute("data-testid", "opener");
+    document.body.appendChild(opener);
+    opener.focus();
+
+    portal = document.createElement("div");
+    portal.setAttribute("id", "widget-portal");
+    document.body.appendChild(portal);
+  });
+
+  afterEach(() => {
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+    jest.useRealTimers();
+    document.body.innerHTML = "";
+  });
+
+  const renderModal = (
+    props: Partial<React.ComponentProps<typeof BaseModal>> = {},
+  ) =>
     render(
       <BaseModal
+        onClose={onClose}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+        {...props}
+      >
+        {props.children ?? <p>Modal content</p>}
+      </BaseModal>,
+    );
+
+  it("renders the dialog with default fallback accessible name and content", async () => {
+    renderModal();
+
+    const dialog = await screen.findByRole("dialog", { name: "Modal Dialog" });
+
+    expect(dialog).toBeInTheDocument();
+    expect(dialog).toHaveAttribute("aria-modal", "true");
+    expect(dialog).toHaveAttribute("aria-labelledby");
+    expect(dialog).not.toHaveAttribute("aria-label");
+
+    const srHeading = screen.getByRole("heading", { name: "Modal Dialog" });
+    expect(srHeading).toBeInTheDocument();
+    expect(srHeading).toHaveClass("sr_only");
+
+    expect(screen.getByText("Modal content")).toBeInTheDocument();
+    expect(screen.getByTestId("modal")).toBeInTheDocument();
+    expect(screen.getByTestId("modal-content")).toBeInTheDocument();
+    expect(screen.getByTestId("modal-body")).toBeInTheDocument();
+    expect(screen.getByTestId("modal-header")).toBeInTheDocument();
+    expect(screen.queryByTestId("modal-footer")).not.toBeInTheDocument();
+  });
+
+  it("uses the provided title as the accessible dialog name", async () => {
+    renderModal({ title: "Delete Project" });
+
+    const dialog = await screen.findByRole("dialog", {
+      name: "Delete Project",
+    });
+    expect(dialog).toBeInTheDocument();
+
+    const srHeading = screen.getByRole("heading", { name: "Delete Project" });
+    expect(srHeading).toBeInTheDocument();
+    expect(srHeading).toHaveClass("sr_only");
+  });
+
+  it("uses ariaLabel when provided and does not require fallback heading labelling", async () => {
+    renderModal({
+      ariaLabel: "Custom Modal Label",
+    });
+
+    const dialog = await screen.findByRole("dialog", {
+      name: "Custom Modal Label",
+    });
+
+    expect(dialog).toHaveAttribute("aria-label", "Custom Modal Label");
+    expect(dialog).not.toHaveAttribute("aria-labelledby");
+    expect(
+      screen.queryByRole("heading", { name: "Modal Dialog" }),
+    ).not.toBeInTheDocument();
+
+    expect(screen.getByTestId("modal-header")).toBeInTheDocument();
+    expect(screen.getByText("Modal Dialog")).toBeInTheDocument();
+  });
+
+  it("uses ariaLabelledBy when provided", async () => {
+    renderModal({
+      ariaLabelledBy: "external-modal-title",
+      header: <h2 id="external-modal-title">External Header Title</h2>,
+      title: undefined,
+    });
+
+    const dialog = await screen.findByRole("dialog", {
+      name: "External Header Title",
+    });
+
+    expect(dialog).toHaveAttribute("aria-labelledby", "external-modal-title");
+    expect(dialog).not.toHaveAttribute("aria-label");
+    expect(screen.getByText("External Header Title")).toBeInTheDocument();
+  });
+
+  it("applies ariaDescribedBy when provided", async () => {
+    renderModal({
+      ariaDescribedBy: "modal-description",
+      children: (
+        <>
+          <p id="modal-description">This action cannot be undone.</p>
+          <button>Confirm</button>
+        </>
+      ),
+    });
+
+    const dialog = await screen.findByRole("dialog", { name: "Modal Dialog" });
+    expect(dialog).toHaveAttribute("aria-describedby", "modal-description");
+    expect(
+      screen.getByText("This action cannot be undone."),
+    ).toBeInTheDocument();
+  });
+
+  it("uses the custom close button aria label", async () => {
+    renderModal({ closeButtonAriaLabel: "Dismiss dialog" });
+
+    const closeButton = await screen.findByRole("button", {
+      name: "Dismiss dialog",
+    });
+    expect(closeButton).toBeInTheDocument();
+    expect(closeButton).toHaveAttribute("title", "Close");
+  });
+
+  it("renders custom header and footer content", async () => {
+    renderModal({
+      header: <div>Custom Header Area</div>,
+      footer: <button>Footer Action</button>,
+    });
+
+    expect(await screen.findByTestId("modal-header")).toBeInTheDocument();
+    expect(screen.getByText("Custom Header Area")).toBeInTheDocument();
+    expect(screen.getByTestId("modal-footer")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Footer Action" }),
+    ).toBeInTheDocument();
+  });
+
+  it("does not render when controlled open is false", () => {
+    renderModal({ open: false });
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("renders when controlled open is true", async () => {
+    renderModal({ open: true });
+    expect(await screen.findByRole("dialog")).toBeInTheDocument();
+  });
+
+  it("applies rounding and shadow classes when provided", async () => {
+    renderModal({
+      rounding: "medium",
+      shadow: "light",
+      className: "customModalClass",
+    });
+
+    const content = await screen.findByTestId("modal-content");
+    expect(content).toHaveClass("modalContent");
+    expect(content).toHaveClass("roundMedium");
+    expect(content).toHaveClass("shadowLight");
+    expect(content).toHaveClass("customModalClass");
+  });
+
+  it("calls onClose when the close button is clicked", async () => {
+    renderModal();
+
+    const closeButton = await screen.findByTestId("modal-close");
+    fireEvent.click(closeButton);
+
+    act(() => {
+      jest.advanceTimersByTime(200);
+    });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("calls onClose when clicking the overlay", async () => {
+    renderModal();
+
+    const overlay = await screen.findByTestId("modal");
+    fireEvent.click(overlay);
+
+    act(() => {
+      jest.advanceTimersByTime(200);
+    });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not call onClose when clicking inside modal content", async () => {
+    renderModal();
+
+    const content = await screen.findByTestId("modal-content");
+    fireEvent.click(content);
+
+    act(() => {
+      jest.advanceTimersByTime(200);
+    });
+
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it("calls onClose when Escape is pressed", async () => {
+    renderModal();
+
+    await screen.findByRole("dialog");
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    act(() => {
+      jest.advanceTimersByTime(200);
+    });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("moves focus into the modal on mount", async () => {
+    renderModal({
+      children: (
+        <>
+          <button>First Action</button>
+          <button>Second Action</button>
+        </>
+      ),
+    });
+
+    const firstButton = await screen.findByRole("button", {
+      name: "Close modal",
+    });
+    await waitFor(() => {
+      expect(firstButton).toHaveFocus();
+    });
+  });
+
+  it("traps focus forward from the last focusable element to the first", async () => {
+    renderModal({
+      children: (
+        <>
+          <button>Action One</button>
+          <button>Action Two</button>
+        </>
+      ),
+    });
+
+    const dialog = await screen.findByTestId("modal-content");
+    const closeButton = await screen.findByRole("button", {
+      name: "Close modal",
+    });
+    const actionTwo = screen.getByRole("button", { name: "Action Two" });
+
+    actionTwo.focus();
+    expect(actionTwo).toHaveFocus();
+
+    act(() => {
+      fireEvent.keyDown(dialog, {
+        key: "Tab",
+        code: "Tab",
+        bubbles: true,
+      });
+    });
+
+    await waitFor(() => {
+      expect(closeButton).toHaveFocus();
+    });
+  });
+
+  it("traps focus forward from the last focusable element to the first", async () => {
+    renderModal({
+      children: (
+        <>
+          <button>Action One</button>
+          <button>Action Two</button>
+        </>
+      ),
+    });
+
+    const closeButton = await screen.findByRole("button", {
+      name: "Close modal",
+    });
+    const actionTwo = screen.getByRole("button", { name: "Action Two" });
+
+    actionTwo.focus();
+    expect(actionTwo).toHaveFocus();
+
+    act(() => {
+      fireEvent.keyDown(actionTwo, {
+        key: "Tab",
+        code: "Tab",
+        bubbles: true,
+      });
+    });
+
+    await waitFor(() => {
+      expect(closeButton).toHaveFocus();
+    });
+  });
+
+  it("restores focus to the opener when the modal unmounts", async () => {
+    const { rerender } = render(
+      <BaseModal
+        open
         onClose={onClose}
         IconButton={DummyIconButton}
         classMap={classMap}
       >
         <p>Modal content</p>
-      </BaseModal>
+      </BaseModal>,
     );
 
-    const modal = screen.getByRole("dialog");
-    expect(modal).toBeInTheDocument();
-    expect(modal).toHaveAttribute("aria-modal", "true");
-    expect(modal).toHaveAttribute("aria-labelledby");
+    await screen.findByRole("dialog");
+    expect(document.body.classList.contains("noScroll")).toBe(true);
 
-    const label = screen.getByText("Modal Dialog");
-    expect(label).toHaveClass("sr_only");
-
-    expect(screen.getByText("Modal content")).toBeInTheDocument();
-  });
-
-  it("calls onClose when close button is clicked", async () => {
-    render(
+    rerender(
       <BaseModal
+        open={false}
         onClose={onClose}
         IconButton={DummyIconButton}
         classMap={classMap}
       >
-        <p>Close me</p>
-      </BaseModal>
-    );
-
-    const closeBtn = screen.getByTestId("modal-close");
-    fireEvent.click(closeBtn);
-
-    await waitFor(() => {
-      expect(onClose).toHaveBeenCalled();
-    });
-  });
-
-  it("calls onClose when Escape key is pressed", () => {
-    render(
-      <BaseModal
-        onClose={onClose}
-        IconButton={DummyIconButton}
-        classMap={classMap}
-      >
-        <p>Press Escape</p>
-      </BaseModal>
-    );
-
-    fireEvent.keyDown(screen.getByTestId("modal"), { key: "Escape" });
-    expect(onClose).toHaveBeenCalled();
-  });
-
-  it("focuses modal on mount", async () => {
-    jest.useFakeTimers();
-
-    render(
-      <BaseModal
-        onClose={() => {}}
-        IconButton={DummyIconButton}
-        classMap={classMap}
-      >
-        <button>Focusable</button>
-      </BaseModal>
+        <p>Modal content</p>
+      </BaseModal>,
     );
 
     act(() => {
-      jest.runAllTimers();
+      jest.advanceTimersByTime(200);
     });
-
-    const modal = screen.getByTestId("modal");
-    await waitFor(() => expect(modal).toHaveFocus());
-
-    jest.useRealTimers();
-  });
-
-  it("calls onClose when clicking outside the modal", async () => {
-    render(
-      <BaseModal
-        onClose={onClose}
-        IconButton={DummyIconButton}
-        classMap={classMap}
-      >
-        <p>Outside Click Test</p>
-      </BaseModal>
-    );
-
-    const overlay = screen.getByTestId("modal");
-    fireEvent.click(overlay);
 
     await waitFor(() => {
-      expect(onClose).toHaveBeenCalled();
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     });
+
+    expect(opener).toHaveFocus();
   });
 
-  it("does not call onClose when clicking inside the modal content", () => {
-    render(
-      <BaseModal
-        onClose={onClose}
-        IconButton={DummyIconButton}
-        classMap={classMap}
-      >
-        <p>Inside</p>
-      </BaseModal>
-    );
+  it("adds noScroll to the body while open and removes it on unmount", async () => {
+    const { unmount } = renderModal();
 
-    const content = screen.getByTestId("modal-content");
-    fireEvent.click(content);
+    await screen.findByRole("dialog");
+    expect(document.body).toHaveClass("noScroll");
 
-    expect(onClose).not.toHaveBeenCalled();
+    unmount();
+
+    expect(document.body).not.toHaveClass("noScroll");
+  });
+
+  it("sets aria-hidden on body siblings while open and removes it on cleanup", async () => {
+    const { unmount } = renderModal();
+
+    await screen.findByRole("dialog");
+
+    expect(rootSibling).toHaveAttribute("aria-hidden", "true");
+    expect(opener).toHaveAttribute("aria-hidden", "true");
+    expect(portal).not.toHaveAttribute("aria-hidden");
+
+    unmount();
+
+    expect(rootSibling).not.toHaveAttribute("aria-hidden");
+    expect(opener).not.toHaveAttribute("aria-hidden");
+  });
+
+  it("renders the standard close button when ariaLabel is provided but the default title still creates a header", async () => {
+    renderModal({
+      ariaLabel: "Floating Close Modal",
+    });
+
+    const closeButton = await screen.findByTestId("modal-close");
+    expect(closeButton).toBeInTheDocument();
+    expect(closeButton).toHaveClass("closeButton");
+    expect(screen.getByTestId("modal-header")).toBeInTheDocument();
+  });
+
+  it("matches the default close button label when no custom close label is provided", async () => {
+    renderModal();
+    expect(
+      await screen.findByRole("button", { name: "Close modal" }),
+    ).toBeInTheDocument();
   });
 
   it("has no accessibility violations", async () => {
+    jest.useRealTimers();
+
     const { container } = render(
       <BaseModal
         onClose={onClose}
         IconButton={DummyIconButton}
         classMap={classMap}
+        ariaDescribedBy="a11y-description"
       >
-        <p>Accessible Modal Content</p>
-      </BaseModal>
+        <div>
+          <p id="a11y-description">Accessible modal content</p>
+          <button>Proceed</button>
+        </div>
+      </BaseModal>,
     );
 
-    await waitFor(() => {
-      expect(screen.getByRole("dialog")).toBeInTheDocument();
-    });
+    await screen.findByRole("dialog");
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();

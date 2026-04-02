@@ -1,6 +1,6 @@
-import { CSSProperties, ElementType, ReactNode } from "react";
+import { AriaRole, CSSProperties, ElementType, ReactNode } from "react";
 
-/*Font types */
+/* Font types */
 export type TypographyVariant =
   | "display"
   | "h1"
@@ -58,9 +58,16 @@ export interface TypographyOwnProps {
   id?: string;
   title?: string;
   testId?: string;
+  role?: AriaRole;
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
+  "aria-describedby"?: string;
+  "aria-hidden"?: boolean;
+  "aria-live"?: "off" | "polite" | "assertive";
+  "aria-atomic"?: boolean;
+  "aria-busy"?: boolean;
 }
 
-///Base types
 export interface TypographyBaseProps extends TypographyOwnProps {
   classMap: Record<string, string>;
   combineClassNames: (

@@ -24,6 +24,7 @@ const CardBase: React.FC<CardBaseProps> = ({
   imageHeight,
   imageWidth,
   imageFill,
+  imageDecorative = false,
   className = "",
   imageClassName = "",
   headerClassName = "",
@@ -40,17 +41,39 @@ const CardBase: React.FC<CardBaseProps> = ({
   layout = "vertical",
   loading = false,
   children,
+  id,
+  role,
+  tabIndex,
+  selectable = false,
+  selected = false,
+  disabled = false,
   "data-testid": testId = "card",
   "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   "aria-label": ariaLabel,
+  "aria-expanded": ariaExpanded,
+  "aria-controls": ariaControls,
+  "aria-current": ariaCurrent,
+  "aria-live": ariaLive,
+  "aria-atomic": ariaAtomic,
+  headerId,
+  descriptionId,
   classMap,
   SkeletonComponent,
   ImageComponent,
 }) => {
   const autoId = useId();
-  const headerId = ariaLabelledBy || `${autoId}-header`;
-  const descriptionId = `${autoId}-description`;
+  const resolvedHeaderId = headerId || ariaLabelledBy || `${autoId}-header`;
+  const resolvedDescriptionId = descriptionId || `${autoId}-description`;
+
+  const hasTitle = Boolean(title);
+  const hasDescription = Boolean(description);
+
   const derivedAriaLabel = ariaLabel || title || description || "Content card";
+
+  const resolvedRole =
+    role ||
+    (selectable ? "button" : hasTitle || ariaLabel ? "region" : undefined);
 
   const FallbackImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     <img {...props} />
@@ -105,8 +128,7 @@ const CardBase: React.FC<CardBaseProps> = ({
   } = normalizeImageSource(imageUrl, imageWidth, imageHeight);
 
   const hasImage = Boolean(imgSrc);
-
-  const imgAlt = imageAlt || `${title || "Card"} image`;
+  const imgAlt = imageDecorative ? "" : imageAlt || `${title || "Card"} image`;
 
   const ImageRenderer = ImageComponent || FallbackImage;
 
@@ -124,6 +146,9 @@ const CardBase: React.FC<CardBaseProps> = ({
         border && classMap[`border${capitalize(border)}`],
         outline && classMap.outline,
         loading && classMap.loading,
+        disabled && classMap.disabled,
+        selected && classMap.selected,
+        selectable && classMap.selectable,
         className,
       ),
     [
@@ -138,18 +163,35 @@ const CardBase: React.FC<CardBaseProps> = ({
       border,
       outline,
       loading,
+      disabled,
+      selected,
+      selectable,
       className,
     ],
   );
 
   return (
     <div
+      id={id}
       data-testid={testId}
       className={cardClassName}
-      role="region"
-      aria-labelledby={title ? headerId : undefined}
-      aria-label={!title ? derivedAriaLabel : undefined}
+      role={resolvedRole}
+      tabIndex={disabled ? -1 : tabIndex}
+      aria-labelledby={
+        hasTitle && !ariaLabel ? resolvedHeaderId : ariaLabelledBy
+      }
+      aria-describedby={
+        ariaDescribedBy || (hasDescription ? resolvedDescriptionId : undefined)
+      }
+      aria-label={!hasTitle || ariaLabel ? derivedAriaLabel : undefined}
       aria-busy={loading || undefined}
+      aria-disabled={disabled || undefined}
+      aria-pressed={selectable ? selected : undefined}
+      aria-expanded={ariaExpanded}
+      aria-controls={ariaControls}
+      aria-current={ariaCurrent}
+      aria-live={ariaLive}
+      aria-atomic={ariaAtomic}
     >
       {loading ? (
         <SkeletonComponent
@@ -183,11 +225,11 @@ const CardBase: React.FC<CardBaseProps> = ({
           <div>
             <div
               className={combineClassNames(classMap.header, headerClassName)}
-              id={headerId}
+              id={resolvedHeaderId}
             >
               {renderHeader ? (
                 renderHeader()
-              ) : title ? (
+              ) : hasTitle ? (
                 <h2 className={classMap.title}>
                   {cardIcon && (
                     <span
@@ -203,17 +245,16 @@ const CardBase: React.FC<CardBaseProps> = ({
               ) : null}
             </div>
 
-            <div
-              className={combineClassNames(classMap.body, bodyClassName)}
-              role="group"
-              aria-describedby={description ? descriptionId : undefined}
-            >
+            <div className={combineClassNames(classMap.body, bodyClassName)}>
               {renderContent ? (
                 renderContent()
               ) : (
                 <>
-                  {description && (
-                    <p id={descriptionId} className={classMap.description}>
+                  {hasDescription && (
+                    <p
+                      id={resolvedDescriptionId}
+                      className={classMap.description}
+                    >
                       {description}
                     </p>
                   )}
@@ -239,11 +280,19 @@ const CardBase: React.FC<CardBaseProps> = ({
                           className={classMap.action_button}
                           theme={button.theme || "clear"}
                           state={button.state || ""}
-                          aria-label={button.label}
+                          aria-label={button["aria-label"] || button.label}
+                          aria-describedby={button["aria-describedby"]}
+                          aria-labelledby={button["aria-labelledby"]}
+                          aria-pressed={button["aria-pressed"]}
+                          aria-expanded={button["aria-expanded"]}
+                          aria-controls={button["aria-controls"]}
+                          aria-current={button["aria-current"]}
+                          role={button.role}
+                          title={button.title}
                           size={button.size || size}
                           href={button.href}
                           loading={button.loading}
-                          ariaLabel={button.ariaLabel}
+                          disabled={button.disabled}
                         />
                       ) : (
                         <button.buttonComponent
@@ -255,7 +304,16 @@ const CardBase: React.FC<CardBaseProps> = ({
                           href={button.href}
                           loading={button.loading}
                           size={button.size || size}
-                          ariaLabel={button.ariaLabel}
+                          ariaLabel={button["aria-label"] || button.label}
+                          aria-describedby={button["aria-describedby"]}
+                          aria-labelledby={button["aria-labelledby"]}
+                          aria-pressed={button["aria-pressed"]}
+                          aria-expanded={button["aria-expanded"]}
+                          aria-controls={button["aria-controls"]}
+                          aria-current={button["aria-current"]}
+                          role={button.role}
+                          title={button.title}
+                          disabled={button.disabled}
                         >
                           {button.label}
                         </button.buttonComponent>

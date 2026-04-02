@@ -1,4 +1,5 @@
 import { ShadowType, StateType, ThemeType } from "@/types/types";
+import React from "react";
 
 /**
  * Props for the Spinner component.
@@ -38,7 +39,42 @@ export interface SpinnerProps {
   "data-testid"?: string;
 
   /**
-   * Optional label for screen readers. Describes the loading state.
+   * Optional visible label for the spinner.
    */
   label?: string;
+
+  /**
+   * Accessible label announced by screen readers.
+   * Falls back to `label`, then "Loading".
+   */
+  "aria-label"?: string;
+
+  /**
+   * ID of element(s) that label the spinner.
+   * Takes precedence over `aria-label` when provided.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * ID of element(s) that describe the spinner.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * ARIA live region politeness.
+   * Defaults to "polite".
+   */
+  "aria-live"?: "off" | "polite" | "assertive";
+
+  /**
+   * Whether the related region is busy.
+   * Defaults to true.
+   */
+  "aria-busy"?: boolean;
+
+  /**
+   * Optional ARIA role.
+   * Defaults to "status".
+   */
+  role?: React.AriaRole;
 }

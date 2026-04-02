@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import ButtonBase from "../src/components/Button/ButtonBase";
@@ -7,100 +8,644 @@ expect.extend(toHaveNoViolations);
 
 const classMap = {
   button: "btn",
+
   primary: "btn-primary",
-  outline: "btn-outline",
+  secondary: "btn-secondary",
+  tertiary: "btn-tertiary",
+  quaternary: "btn-quaternary",
+
+  success: "btn-success",
+  warning: "btn-warning",
+  error: "btn-error",
+  clear: "btn-clear",
+
+  xs: "btn-xs",
   small: "btn-sm",
   medium: "btn-md",
   large: "btn-lg",
-  fullWidth: "btn-full",
+  xl: "btn-xl",
+
+  outline: "btn-outline",
   disabled: "btn-disabled",
+  fullWidth: "btn-full",
   link: "btn-link",
+
   buttonIcon: "btn-icon",
   buttonLabel: "btn-label",
   loader: "btn-loader",
   icon: "icon-style",
+
+  shadowNone: "btn-shadow-none",
+  shadowLight: "btn-shadow-light",
+  shadowMedium: "btn-shadow-medium",
+  shadowStrong: "btn-shadow-strong",
+  shadowIntense: "btn-shadow-intense",
+
+  roundNone: "btn-round-none",
+  roundSmall: "btn-round-small",
+  roundMedium: "btn-round-medium",
+  roundLarge: "btn-round-large",
+  roundFull: "btn-round-full",
 };
 
 describe("ButtonBase", () => {
-  it("renders button with icon and text", () => {
+  const renderButton = (
+    props: Partial<React.ComponentProps<typeof ButtonBase>> = {},
+    children: React.ReactNode = "Click me",
+  ) =>
     render(
-      <ButtonBase
-        icon={FaStar}
-        classMap={classMap}
-        ariaLabel="Favorite"
-        data-testid="button-test"
-      >
-        Click me
-      </ButtonBase>
+      <ButtonBase classMap={classMap} data-testid="button-test" {...props}>
+        {children}
+      </ButtonBase>,
     );
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders a button by default", () => {
+    renderButton();
 
     const button = screen.getByTestId("button-test");
     expect(button).toBeInTheDocument();
+    expect(button.tagName).toBe("BUTTON");
+    expect(button).toHaveAttribute("type", "button");
+  });
 
+  it("renders button with icon and text", () => {
+    renderButton(
+      {
+        icon: FaStar,
+        "aria-label": "Favorite",
+      },
+      "Click me",
+    );
+
+    const button = screen.getByTestId("button-test");
     const icon = screen.getByTestId("button-test-icon");
+
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveTextContent("Click me");
+
     expect(icon).toBeInTheDocument();
     expect(icon).toHaveAttribute("aria-hidden", "true");
+    expect(icon).toHaveClass("btn-icon");
+
+    const svg = icon.querySelector("svg");
+    expect(svg).toBeInTheDocument();
+    expect(svg).toHaveClass("icon-style");
+    expect(svg).toHaveAttribute("aria-hidden", "true");
+    expect(svg).toHaveAttribute("focusable", "false");
+  });
+
+  it("renders children inside the label container", () => {
+    renderButton({}, "Button Label");
+
+    const label = screen.getByTestId("button-test-loading");
+    expect(label).toBeInTheDocument();
+    expect(label).toHaveTextContent("Button Label");
+    expect(label).toHaveClass("btn-label");
   });
 
   it("handles click events", () => {
     const handleClick = jest.fn();
-    render(
-      <ButtonBase
-        onClick={handleClick}
-        classMap={classMap}
-        data-testid="clickable"
-      >
-        Click
-      </ButtonBase>
-    );
 
-    fireEvent.click(screen.getByTestId("clickable"));
-    expect(handleClick).toHaveBeenCalled();
+    renderButton({ onClick: handleClick }, "Click");
+
+    fireEvent.click(screen.getByTestId("button-test"));
+    expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
   it("respects disabled state", () => {
     const handleClick = jest.fn();
-    render(
-      <ButtonBase
-        classMap={classMap}
-        disabled
-        onClick={handleClick}
-        data-testid="disabled-btn"
-      >
-        Disabled
-      </ButtonBase>
+
+    renderButton(
+      {
+        disabled: true,
+        onClick: handleClick,
+      },
+      "Disabled",
     );
 
-    const button = screen.getByTestId("disabled-btn");
+    const button = screen.getByTestId("button-test");
     expect(button).toBeDisabled();
+
+    fireEvent.click(button);
+    expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  it("disables the button when loading is true", () => {
+    const handleClick = jest.fn();
+
+    renderButton(
+      {
+        loading: true,
+        onClick: handleClick,
+      },
+      "Loading",
+    );
+
+    const button = screen.getByTestId("button-test");
+    expect(button).toBeDisabled();
+    expect(button).toHaveAttribute("aria-busy", "true");
+
     fireEvent.click(button);
     expect(handleClick).not.toHaveBeenCalled();
   });
 
   it("renders loading spinner when loading is true", () => {
-    render(
-      <ButtonBase classMap={classMap} loading data-testid="button-load">
-        Loading
-      </ButtonBase>
+    renderButton({ loading: true }, "Loading");
+
+    const loadingContainer = screen.getByTestId("button-test-loading");
+    expect(loadingContainer).toBeInTheDocument();
+    expect(loadingContainer).toHaveAttribute("aria-live", "polite");
+    expect(loadingContainer).toHaveAttribute("aria-atomic", "true");
+
+    expect(
+      loadingContainer.querySelector(`.${classMap.loader}`),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Loading")).toBeInTheDocument();
+  });
+
+  it("uses a custom loading label when provided", () => {
+    renderButton(
+      {
+        loading: true,
+        loadingLabel: "Saving changes",
+      },
+      "Save",
     );
 
-    const loadingContainer = screen.getByTestId("button-load-loading");
-    expect(loadingContainer).toBeInTheDocument();
+    expect(screen.getByText("Saving changes")).toBeInTheDocument();
+    expect(screen.queryByText("Loading")).not.toBeInTheDocument();
+  });
+
+  it("uses custom aria-live and aria-atomic values while loading", () => {
+    renderButton(
+      {
+        loading: true,
+        "aria-live": "assertive",
+        "aria-atomic": false,
+      },
+      "Save",
+    );
+
+    const loadingContainer = screen.getByTestId("button-test-loading");
+    expect(loadingContainer).toHaveAttribute("aria-live", "assertive");
+    expect(loadingContainer).toHaveAttribute("aria-atomic", "false");
+  });
+
+  it("does not render child text while loading", () => {
+    renderButton({ loading: true }, "Submit Form");
+
+    const loadingContainer = screen.getByTestId("button-test-loading");
+    expect(loadingContainer).not.toHaveTextContent("Submit Form");
     expect(
-      loadingContainer.querySelector(`.${classMap.loader}`)
+      loadingContainer.querySelector(`.${classMap.loader}`),
     ).toBeInTheDocument();
   });
 
-  it("has no accessibility violations", async () => {
+  it("supports icon-only buttons with aria-label", () => {
+    render(
+      <ButtonBase
+        icon={FaStar}
+        aria-label="Favorite"
+        classMap={classMap}
+        data-testid="icon-only"
+      />,
+    );
+
+    const button = screen.getByTestId("icon-only");
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute("aria-label", "Favorite");
+    expect(screen.getByTestId("icon-only-icon")).toBeInTheDocument();
+  });
+
+  it("supports icon-only buttons with aria-labelledby", () => {
+    render(
+      <>
+        <span id="favorite-button-label">Favorite item</span>
+        <ButtonBase
+          icon={FaStar}
+          aria-labelledby="favorite-button-label"
+          classMap={classMap}
+          data-testid="icon-only"
+        />
+      </>,
+    );
+
+    const button = screen.getByRole("button", { name: "Favorite item" });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute("aria-labelledby", "favorite-button-label");
+    expect(button).not.toHaveAttribute("aria-label");
+  });
+
+  it("does not set aria-label for text buttons unless needed", () => {
+    renderButton({ "aria-label": "Favorite button" }, "Favorite");
+
+    const button = screen.getByTestId("button-test");
+    expect(button).not.toHaveAttribute("aria-label");
+  });
+
+  it("warns in development for icon-only buttons without aria-label or aria-labelledby", () => {
+    const originalEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "development";
+
+    const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+
+    render(
+      <ButtonBase icon={FaStar} classMap={classMap} data-testid="icon-only" />,
+    );
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      "ButtonBase: icon-only buttons must provide `aria-label` or `aria-labelledby`.",
+    );
+
+    warnSpy.mockRestore();
+    process.env.NODE_ENV = originalEnv;
+  });
+
+  it("does not warn in development for icon-only buttons with aria-labelledby", () => {
+    const originalEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "development";
+
+    const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+
+    render(
+      <>
+        <span id="icon-button-label">Favorite</span>
+        <ButtonBase
+          icon={FaStar}
+          aria-labelledby="icon-button-label"
+          classMap={classMap}
+          data-testid="icon-only"
+        />
+      </>,
+    );
+
+    expect(warnSpy).not.toHaveBeenCalled();
+
+    warnSpy.mockRestore();
+    process.env.NODE_ENV = originalEnv;
+  });
+
+  it("does not warn outside development for icon-only buttons without accessible name props", () => {
+    const originalEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "test";
+
+    const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+
+    render(
+      <ButtonBase icon={FaStar} classMap={classMap} data-testid="icon-only" />,
+    );
+
+    expect(warnSpy).not.toHaveBeenCalled();
+
+    warnSpy.mockRestore();
+    process.env.NODE_ENV = originalEnv;
+  });
+
+  it("renders anchor when href is provided", () => {
+    renderButton({ href: "/profile" }, "Profile");
+
+    const link = screen.getByTestId("button-test");
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveAttribute("href", "/profile");
+    expect(link).toHaveClass("btn-link");
+  });
+
+  it("renders external anchor attributes when href is external", () => {
+    renderButton({ href: "https://example.com", isExternal: true }, "External");
+
+    const link = screen.getByTestId("button-test");
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveAttribute("href", "https://example.com");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(screen.getByText("(opens in a new tab)")).toBeInTheDocument();
+  });
+
+  it("does not set target or rel for internal href", () => {
+    renderButton({ href: "/dashboard", isExternal: false }, "Dashboard");
+
+    const link = screen.getByTestId("button-test");
+    expect(link).not.toHaveAttribute("target");
+    expect(link).not.toHaveAttribute("rel");
+  });
+
+  it("prevents navigation for disabled anchors", () => {
+    const handleClick = jest.fn();
+
+    renderButton(
+      {
+        href: "/profile",
+        disabled: true,
+        onClick: handleClick,
+      },
+      "Disabled Link",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link.tagName).toBe("A");
+    expect(link).not.toHaveAttribute("href");
+    expect(link).toHaveAttribute("aria-disabled", "true");
+    expect(link).toHaveAttribute("tabindex", "-1");
+
+    fireEvent.click(link);
+    expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  it("calls onClick for enabled anchors", () => {
+    const handleClick = jest.fn();
+
+    renderButton(
+      {
+        href: "/profile",
+        onClick: handleClick,
+      },
+      "Profile",
+    );
+
+    fireEvent.click(screen.getByTestId("button-test"));
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("supports a custom LinkComponent", () => {
+    const CustomLink = React.forwardRef<
+      HTMLAnchorElement,
+      React.AnchorHTMLAttributes<HTMLAnchorElement>
+    >(function CustomLink(props, ref) {
+      return <a ref={ref} data-custom-link="true" {...props} />;
+    });
+
+    render(
+      <ButtonBase
+        href="/custom"
+        classMap={classMap}
+        LinkComponent={CustomLink}
+        data-testid="custom-link"
+      >
+        Custom Link
+      </ButtonBase>,
+    );
+
+    const link = screen.getByTestId("custom-link");
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/custom");
+    expect(link).toHaveAttribute("data-custom-link", "true");
+  });
+
+  it("applies theme, state, size, outline, shadow, rounding, fullWidth, disabled, and custom className", () => {
+    renderButton(
+      {
+        theme: "primary",
+        state: "success",
+        size: "medium",
+        outline: true,
+        shadow: "light",
+        rounding: "small",
+        fullWidth: true,
+        disabled: true,
+        className: "custom-class",
+      },
+      "Styled",
+    );
+
+    const button = screen.getByTestId("button-test");
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-primary");
+    expect(button).toHaveClass("btn-success");
+    expect(button).toHaveClass("btn-md");
+    expect(button).toHaveClass("btn-outline");
+    expect(button).toHaveClass("btn-shadow-light");
+    expect(button).toHaveClass("btn-round-small");
+    expect(button).toHaveClass("btn-full");
+    expect(button).toHaveClass("btn-disabled");
+    expect(button).toHaveClass("custom-class");
+  });
+
+  it("forwards extra props to button elements", () => {
+    renderButton(
+      {
+        id: "my-button",
+        name: "actionButton",
+        "aria-describedby": "button-help",
+      },
+      "Forwarded",
+    );
+
+    const button = screen.getByTestId("button-test");
+    expect(button).toHaveAttribute("id", "my-button");
+    expect(button).toHaveAttribute("name", "actionButton");
+    expect(button).toHaveAttribute("aria-describedby", "button-help");
+  });
+
+  it("forwards extra props to anchor elements", () => {
+    renderButton(
+      {
+        href: "/profile",
+        id: "my-link",
+        "aria-describedby": "link-help",
+      },
+      "Profile",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).toHaveAttribute("id", "my-link");
+    expect(link).toHaveAttribute("aria-describedby", "link-help");
+  });
+
+  it("supports custom button type", () => {
+    renderButton({ type: "submit" }, "Submit");
+
+    expect(screen.getByTestId("button-test")).toHaveAttribute("type", "submit");
+  });
+
+  it("uses the default test id when none is provided", () => {
+    render(<ButtonBase classMap={classMap}>Default Test Id</ButtonBase>);
+
+    expect(screen.getByTestId("button")).toBeInTheDocument();
+    expect(screen.getByTestId("button-loading")).toBeInTheDocument();
+  });
+
+  it("applies aria-describedby and aria-labelledby to button elements", () => {
+    render(
+      <>
+        <span id="button-label">Save item</span>
+        <span id="button-description">This action saves your draft.</span>
+        <ButtonBase
+          classMap={classMap}
+          data-testid="button-test"
+          aria-labelledby="button-label"
+          aria-describedby="button-description"
+        />
+      </>,
+    );
+
+    const button = screen.getByRole("button", { name: "Save item" });
+    expect(button).toHaveAttribute("aria-labelledby", "button-label");
+    expect(button).toHaveAttribute("aria-describedby", "button-description");
+  });
+
+  it("applies disclosure-related aria props to button elements", () => {
+    renderButton(
+      {
+        "aria-controls": "details-panel",
+        "aria-expanded": true,
+        "aria-haspopup": "dialog",
+      },
+      "Open details",
+    );
+
+    const button = screen.getByTestId("button-test");
+    expect(button).toHaveAttribute("aria-controls", "details-panel");
+    expect(button).toHaveAttribute("aria-expanded", "true");
+    expect(button).toHaveAttribute("aria-haspopup", "dialog");
+  });
+
+  it("applies aria-pressed to button elements", () => {
+    renderButton(
+      {
+        "aria-pressed": true,
+      },
+      "Bold",
+    );
+
+    const button = screen.getByTestId("button-test");
+    expect(button).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("applies aria-current to button elements", () => {
+    renderButton(
+      {
+        "aria-current": "page",
+      },
+      "Current page",
+    );
+
+    const button = screen.getByTestId("button-test");
+    expect(button).toHaveAttribute("aria-current", "page");
+  });
+
+  it("applies aria props to anchor elements", () => {
+    renderButton(
+      {
+        href: "/settings",
+        "aria-controls": "settings-panel",
+        "aria-expanded": false,
+        "aria-current": "page",
+        "aria-haspopup": "menu",
+      },
+      "Settings",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).toHaveAttribute("aria-controls", "settings-panel");
+    expect(link).toHaveAttribute("aria-expanded", "false");
+    expect(link).toHaveAttribute("aria-current", "page");
+    expect(link).toHaveAttribute("aria-haspopup", "menu");
+  });
+
+  it("sets aria-busy on links when loading is true", () => {
+    renderButton(
+      {
+        href: "/sync",
+        loading: true,
+      },
+      "Sync",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).toHaveAttribute("aria-busy", "true");
+  });
+
+  it("supports overriding aria-busy on button elements when not loading", () => {
+    renderButton(
+      {
+        "aria-busy": false,
+      },
+      "Idle",
+    );
+
+    const button = screen.getByTestId("button-test");
+    expect(button).toHaveAttribute("aria-busy", "false");
+  });
+
+  it("supports overriding aria-disabled on anchor elements", () => {
+    renderButton(
+      {
+        href: "/profile",
+        "aria-disabled": true,
+      },
+      "Profile",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).toHaveAttribute("aria-disabled", "true");
+  });
+
+  it("has no accessibility violations for standard button", async () => {
+    const { container } = renderButton(
+      {
+        icon: FaStar,
+      },
+      "Accessible Button",
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it("has no accessibility violations for icon-only button with aria-label", async () => {
     const { container } = render(
       <ButtonBase
         icon={FaStar}
+        aria-label="Favorite"
         classMap={classMap}
-        ariaLabel="Favorite"
-        data-testid="button-axe"
-      >
-        Accessible Button
-      </ButtonBase>
+        data-testid="icon-only"
+      />,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it("has no accessibility violations for icon-only button with aria-labelledby", async () => {
+    const { container } = render(
+      <>
+        <span id="favorite-label">Favorite item</span>
+        <ButtonBase
+          icon={FaStar}
+          aria-labelledby="favorite-label"
+          classMap={classMap}
+          data-testid="icon-only"
+        />
+      </>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it("has no accessibility violations for link button", async () => {
+    const { container } = renderButton(
+      {
+        href: "/profile",
+        icon: FaStar,
+      },
+      "Profile",
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it("has no accessibility violations for loading button", async () => {
+    const { container } = renderButton(
+      {
+        loading: true,
+      },
+      "Loading",
     );
 
     const results = await axe(container);

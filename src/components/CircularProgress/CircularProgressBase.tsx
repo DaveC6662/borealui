@@ -27,13 +27,21 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   state = "",
   className = "",
   classMap,
+  decorative = false,
+  announceInnerValue = false,
+  ariaValueText,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   "data-testid": testId = "circular-progress",
+  ...rest
 }) => {
   const range = Math.max(0, max - min);
   const clamped = Math.min(max, Math.max(min, value));
   const percent = range === 0 ? 0 : ((clamped - min) / range) * 100;
 
   const [displayPercent, setDisplayPercent] = useState(0);
+
   useEffect(() => {
     setDisplayPercent(Math.round(percent));
   }, [percent]);
@@ -58,16 +66,35 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
 
   const valueText = showRaw ? `${clamped}/${max}` : `${displayPercent}%`;
 
+  const resolvedAriaValueText =
+    ariaValueText ??
+    (showRaw ? `${clamped} out of ${max}` : `${displayPercent}%`);
+
+  const accessibleNameProps = decorative
+    ? {}
+    : ariaLabelledBy
+      ? { "aria-labelledby": ariaLabelledBy }
+      : ariaLabel
+        ? { "aria-label": ariaLabel }
+        : { "aria-label": label };
+
   return (
     <div
       className={combinedClassName}
-      role="progressbar"
-      aria-valuemin={min}
-      aria-valuemax={max}
-      aria-valuenow={clamped}
-      aria-valuetext={valueText}
-      aria-label={label}
       data-testid={testId}
+      {...(!decorative && {
+        role: "progressbar",
+        "aria-valuemin": min,
+        "aria-valuemax": max,
+        "aria-valuenow": clamped,
+        "aria-valuetext": resolvedAriaValueText,
+        "aria-describedby": ariaDescribedBy,
+        ...accessibleNameProps,
+      })}
+      {...(decorative && {
+        "aria-hidden": true,
+      })}
+      {...rest}
     >
       <div
         className={combineClassNames(
@@ -89,8 +116,9 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
         <div className={classMap.inner_circle}>
           <span
             className={classMap.value_text}
-            aria-live="polite"
-            aria-atomic="true"
+            aria-hidden={announceInnerValue ? undefined : true}
+            aria-live={announceInnerValue ? "polite" : undefined}
+            aria-atomic={announceInnerValue ? "true" : undefined}
           >
             {valueText}
           </span>

@@ -25,7 +25,13 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
   outline = false,
   className = "",
   "data-testid": testId = "sidebar",
-  ariaLabel = "Sidebar navigation",
+  "aria-label": ariaLabel = "Sidebar navigation",
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  footerAriaLabel = "Sidebar footer",
+  footerAriaLabelledBy,
+  getExpandButtonAriaLabel,
+  getExpandButtonAriaDescription,
   ...rest
 }) => {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
@@ -100,9 +106,18 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
       )}
       data-testid={`${testId}-list`}
     >
-      {items.map(({ label, href, children, icon }, idx) => {
+      {items.map((link, idx) => {
+        const {
+          label,
+          href,
+          children,
+          icon,
+          "aria-label": linkAriaLabel,
+          "aria-description": linkAriaDescription,
+          "aria-disabled": linkAriaDisabled,
+        } = link;
+
         const key = `${label}-${idx}`;
-        const link: SidebarLink = { label, href, children, icon };
 
         const isActive = isLinkActive?.(link) ?? false;
         const containsActiveChild =
@@ -137,6 +152,14 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                   onClick={() => toggleItem(label)}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
+                  aria-label={
+                    getExpandButtonAriaLabel?.(link, isOpen) ?? linkAriaLabel
+                  }
+                  aria-description={
+                    getExpandButtonAriaDescription?.(link, isOpen) ??
+                    linkAriaDescription
+                  }
+                  aria-disabled={linkAriaDisabled || undefined}
                   data-testid={`${testId}-expandItemButton`}
                 >
                   {icon && <span className={classMap.icon}>{icon}</span>}
@@ -175,6 +198,9 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                   isActive && classMap.active,
                 )}
                 aria-current={isActive ? "page" : undefined}
+                aria-label={linkAriaLabel}
+                aria-description={linkAriaDescription}
+                aria-disabled={linkAriaDisabled || undefined}
                 data-testid={`${testId}-sidebarLink`}
               >
                 {icon && <span className={classMap.icon}>{icon}</span>}
@@ -186,6 +212,9 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                   classMap.link,
                   isChild && classMap.childLink,
                 )}
+                aria-label={linkAriaLabel}
+                aria-description={linkAriaDescription}
+                aria-disabled={linkAriaDisabled || undefined}
                 data-testid={`${testId}-sidebarLabel`}
               >
                 {icon && <span className={classMap.icon}>{icon}</span>}
@@ -201,24 +230,47 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
   return (
     <nav
       className={containerClasses}
-      aria-label={ariaLabel}
+      aria-label={ariaLabelledBy ? undefined : ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       data-testid={testId}
       {...rest}
     >
       <div className={classMap.nav}>{renderLinks(links)}</div>
 
       {showFooter && (
-        <footer className={classMap.footer} data-testid={`${testId}-footer`}>
-          {footerLinks?.map(({ label, href }, i) => (
-            <LinkComponent
-              key={`${label}-${i}`}
-              href={href}
-              className={classMap.footerLink}
-              data-testid={`${testId}-footerLink`}
-            >
-              {label}
-            </LinkComponent>
-          ))}
+        <footer
+          className={classMap.footer}
+          aria-label={footerAriaLabelledBy ? undefined : footerAriaLabel}
+          aria-labelledby={footerAriaLabelledBy}
+          data-testid={`${testId}-footer`}
+        >
+          {footerLinks?.map(
+            (
+              {
+                label,
+                href,
+                icon,
+                "aria-label": footerLinkAriaLabel,
+                "aria-description": footerLinkAriaDescription,
+                "aria-disabled": footerLinkAriaDisabled,
+              },
+              i,
+            ) => (
+              <LinkComponent
+                key={`${label}-${i}`}
+                href={href}
+                className={classMap.footerLink}
+                aria-label={footerLinkAriaLabel}
+                aria-description={footerLinkAriaDescription}
+                aria-disabled={footerLinkAriaDisabled || undefined}
+                data-testid={`${testId}-footerLink`}
+              >
+                {icon && <span className={classMap.icon}>{icon}</span>}
+                {label}
+              </LinkComponent>
+            ),
+          )}
           {footerVersion && (
             <span
               className={classMap.footerVersion}

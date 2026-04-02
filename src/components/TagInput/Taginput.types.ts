@@ -14,52 +14,118 @@ import { TextInputProps } from "../TextInput/TextInput.types";
 export interface TagInputProps {
   /** Array of current tags. */
   tags?: string[];
+
   /**
-   * Accessible label for the tag input.
+   * Accessible label for the overall tag input group.
+   * Used when no external aria-labelledby is provided.
    * Defaults to "Tag Input".
    */
-  ariaLabel?: string;
+  "aria-label"?: string;
+
+  /**
+   * References the ID of an external element that labels the tag input group.
+   * Takes precedence over "aria-label" when provided.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * References the ID of an external element that describes the tag input group.
+   * Merged with the internal accessibility description/status when provided.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Optional screen reader description for the input behavior.
+   * This is announced through an internally rendered description element.
+   */
+  "aria-description"?: string;
+
+  /**
+   * Optional accessible label for the text input itself.
+   * Defaults to "Add new tag".
+   */
+  inputAriaLabel?: string;
+
+  /**
+   * References the ID of an external element that labels the text input.
+   * Takes precedence over inputAriaLabel when provided.
+   */
+  inputAriaLabelledBy?: string;
+
+  /**
+   * References the ID of an external element that describes the text input.
+   * Merged with the internal description/status when provided.
+   */
+  inputAriaDescribedBy?: string;
+
+  /**
+   * Accessible label for the suggestions listbox.
+   * Defaults to "Tag suggestions".
+   */
+  suggestionsAriaLabel?: string;
+
+  /**
+   * Accessible label prefix for remove-tag buttons.
+   * Example output: "Remove tag React".
+   * Defaults to "Remove tag".
+   */
+  removeTagButtonLabel?: string;
+
   /**
    * Callback fired when tags change.
    * Receives the new array of tags.
    */
   onChange?: (tags: string[]) => void;
+
   /**
    * Optional function to fetch autocomplete suggestions based on input query.
    * Should return a promise resolving to a string array.
    */
   fetchSuggestions?: (query: string) => Promise<string[]>;
+
   /** Debounce time (ms) for suggestions/autocomplete fetches. */
   debounceMs?: number;
+
   /** Placeholder text displayed in the input when empty. */
   placeholder?: string;
+
   /**
    * Theme for styling the input and tags.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
    */
   theme?: ThemeType;
+
   /**
    * State of the input (for feedback/validation).
    * One of: "success" | "error" | "warning" | "disabled" | ""
    */
   state?: StateType;
+
   /**
    * Size of the input and tags.
    * One of: "xs" | "small" | "medium" | "large" | "xl"
    */
   size?: SizeType;
+
   /**
    * Rounding style for the input and tags.
    * One of: "none" | "small" | "medium" | "large" | "full"
    */
   rounding?: RoundingType;
+
   /**
    * Shadow style for the input and tags.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
    */
   shadow?: ShadowType;
-  /** Optional description for accessibility (aria-describedby). */
-  ariaDescription?: string;
+
+  /**
+   * Custom ID base for stable accessibility relationships.
+   * Can be used to generate predictable ids for label, description,
+   * listbox, input, and status elements.
+   */
+  idBase?: string;
+
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }

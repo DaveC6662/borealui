@@ -3,8 +3,10 @@ import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 /**
  * Props for the RadioButton component.
  */
-export interface RadioButtonProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+export interface RadioButtonProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "onChange"
+> {
   /**
    * The label text displayed next to the radio button.
    */
@@ -53,6 +55,32 @@ export interface RadioButtonProps
    * Whether the radio button is disabled.
    */
   disabled?: boolean;
+
+  /**
+   * Marks the radio button as invalid for accessibility.
+   */
+  "aria-invalid"?: boolean | "true" | "false";
+
+  /**
+   * Identifies the element (or elements) that label this radio button.
+   * Usually not needed when using the built-in `label` prop, but available for advanced cases.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * Identifies the element (or elements) that describe this radio button.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Provides an accessible label when no visible label is present.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Indicates whether this radio button is required as part of a group.
+   */
+  "aria-required"?: boolean | "true" | "false";
 
   /**
    * Additional CSS class names for custom styling.

@@ -26,6 +26,12 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   shadow = getDefaultShadow(),
   confirmText = "Confirm",
   cancelText = "Cancel",
+  dialogRole = "dialog",
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-label-close-button": ariaLabelCloseButton = "Close popup",
+  "aria-live": ariaLive,
   className = "",
   "data-testid": testId = "message-popup",
   Button,
@@ -42,7 +48,11 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   const focusablesRef = useRef<HTMLElement[]>([]);
   const messageId = useId();
   const titleId = useId();
-  const labelledById = title ? titleId : messageId;
+
+  const internalLabelledById = title ? titleId : messageId;
+  const resolvedAriaLabelledBy =
+    ariaLabelledBy ?? (!ariaLabel ? internalLabelledById : undefined);
+  const resolvedAriaDescribedBy = ariaDescribedBy ?? messageId;
 
   useEffect(() => {
     setIsMounted(true);
@@ -81,6 +91,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
 
   useEffect(() => {
     if (!dialogRef.current) return;
+
     focusablesRef.current = Array.from(
       dialogRef.current.querySelectorAll<HTMLElement>(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
@@ -92,11 +103,13 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
       cancelButtonRef.current ||
       (closeBtnRef.current as HTMLElement | null) ||
       focusablesRef.current[0];
+
     target?.focus?.();
   }, [isMounted]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== "Tab") return;
+
     const list = focusablesRef.current;
     if (!list.length) return;
 
@@ -131,9 +144,11 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
       <div
         className={classMap.content}
         onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={labelledById}
+        role={dialogRole}
+        aria-modal={true}
+        aria-label={ariaLabel}
+        aria-labelledby={resolvedAriaLabelledBy}
+        aria-describedby={resolvedAriaDescribedBy}
         tabIndex={-1}
         ref={dialogRef}
         onKeyDown={handleKeyDown}
@@ -153,7 +168,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
               ref={closeBtnRef}
               className={classMap.close}
               onClick={onClose}
-              aria-label="Close popup"
+              aria-label={ariaLabelCloseButton}
               icon={CloseIcon}
               state="error"
               size="small"
@@ -162,12 +177,13 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
             />
           </div>
         )}
+
         {!title && (
           <IconButton
             ref={closeBtnRef}
             className={classMap.close}
             onClick={onClose}
-            aria-label="Close popup"
+            aria-label={ariaLabelCloseButton}
             icon={CloseIcon}
             state="error"
             size="small"
@@ -180,6 +196,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           <p
             id={messageId}
             className={classMap.message}
+            aria-live={ariaLive}
             data-testid={`${testId}-message`}
           >
             {message}
@@ -199,6 +216,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
                 {confirmText}
               </Button>
             )}
+
             {onCancel && (
               <Button
                 ref={cancelButtonRef}

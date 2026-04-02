@@ -18,6 +18,14 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   state = "",
   className = "",
   role = "dialog",
+  triggerAriaLabel,
+  triggerTitle,
+  disabled = false,
+  id,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-modal": ariaModal,
   "data-testid": testId = "popover",
   classMap,
 }): JSX.Element => {
@@ -26,8 +34,12 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   const popoverRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const uid = useId();
-  const contentId = `${uid}-content`;
-  const labelId = `${uid}-label`;
+
+  const generatedContentId = `${uid}-content`;
+  const generatedLabelId = `${uid}-label`;
+
+  const contentId = id ?? generatedContentId;
+  const fallbackLabelId = generatedLabelId;
 
   type PopupRole = "dialog" | "menu" | "tooltip";
   const VALID_ROLES: PopupRole[] = ["dialog", "menu", "tooltip"];
@@ -45,14 +57,18 @@ const BasePopover: React.FC<BasePopoverProps> = ({
 
   const triggerAria =
     role === "tooltip"
-      ? { "aria-describedby": contentId }
+      ? { "aria-describedby": open ? contentId : undefined }
       : {
           ...(ariaHasPopup ? { "aria-haspopup": ariaHasPopup } : {}),
           "aria-expanded": open,
           "aria-controls": contentId,
         };
 
-  const toggleOpen = () => setOpen((prev) => !prev);
+  const toggleOpen = () => {
+    if (disabled) return;
+    setOpen((prev) => !prev);
+  };
+
   const close = () => {
     setOpen(false);
     setDynamicPlacement(placement);
@@ -61,23 +77,31 @@ const BasePopover: React.FC<BasePopoverProps> = ({
 
   useEffect(() => {
     if (!open) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       const t = event.target as Node;
       if (popoverRef.current?.contains(t)) return;
-      if (triggerRef.current?.contains(t as Node)) return;
+      if (triggerRef.current?.contains(t)) return;
       close();
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open, placement]);
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+
     const onReflow = () => setDynamicPlacement((p) => p);
+
     document.addEventListener("keydown", onKey);
     window.addEventListener("resize", onReflow, { passive: true });
     window.addEventListener("scroll", onReflow, { passive: true });
+
     return () => {
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", onReflow);
@@ -105,14 +129,16 @@ const BasePopover: React.FC<BasePopoverProps> = ({
     popoverEl.style.bottom = "";
 
     let newPlacement = placement;
-    if (placement === "top" && popoverEl.offsetHeight > spaceAbove)
+
+    if (placement === "top" && popoverEl.offsetHeight > spaceAbove) {
       newPlacement = "bottom";
-    else if (placement === "bottom" && popoverEl.offsetHeight > spaceBelow)
+    } else if (placement === "bottom" && popoverEl.offsetHeight > spaceBelow) {
       newPlacement = "top";
-    else if (placement === "left" && popoverEl.offsetWidth > spaceLeft)
+    } else if (placement === "left" && popoverEl.offsetWidth > spaceLeft) {
       newPlacement = "right";
-    else if (placement === "right" && popoverEl.offsetWidth > spaceRight)
+    } else if (placement === "right" && popoverEl.offsetWidth > spaceRight) {
       newPlacement = "left";
+    }
 
     setDynamicPlacement(newPlacement);
 
@@ -145,20 +171,29 @@ const BasePopover: React.FC<BasePopoverProps> = ({
         classMap[state],
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
-        className
+        className,
       ),
-    [classMap, dynamicPlacement, rounding, shadow, theme, state, className]
+    [classMap, dynamicPlacement, rounding, shadow, theme, state, className],
   );
 
   useEffect(() => {
-    if (!open) return;
+    if (!open || popupRole === "tooltip") return;
+
     const el = popoverRef.current;
     if (!el) return;
+
     const focusable = el.querySelector<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
+
     (focusable ?? el).focus();
-  }, [open]);
+  }, [open, popupRole]);
+
+  const computedAriaLabelledBy =
+    ariaLabelledBy ?? (!ariaLabel ? fallbackLabelId : undefined);
+
+  const computedAriaDescribedBy =
+    role === "tooltip" ? ariaDescribedBy : ariaDescribedBy;
 
   return (
     <div
@@ -169,8 +204,10 @@ const BasePopover: React.FC<BasePopoverProps> = ({
         type="button"
         className={classMap.trigger}
         onClick={toggleOpen}
-        aria-label="Toggle popover"
+        aria-label={triggerAriaLabel ?? "Toggle popover"}
+        title={triggerTitle}
         ref={triggerRef}
+        disabled={disabled}
         data-testid={`${testId}-trigger`}
         {...triggerAria}
       >
@@ -182,14 +219,19 @@ const BasePopover: React.FC<BasePopoverProps> = ({
           ref={popoverRef}
           id={contentId}
           role={popupRole}
-          aria-labelledby={labelId}
+          aria-label={ariaLabel}
+          aria-labelledby={computedAriaLabelledBy}
+          aria-describedby={computedAriaDescribedBy}
+          aria-modal={popupRole === "dialog" ? ariaModal : undefined}
           className={popoverContentClass}
           data-testid={`${testId}-content`}
           tabIndex={popupRole === "tooltip" ? undefined : -1}
         >
-          <span id={labelId} className={classMap.srOnly ?? "sr_only"}>
-            Popover Content
-          </span>
+          {!ariaLabel && !ariaLabelledBy && (
+            <span id={fallbackLabelId} className={classMap.srOnly ?? "sr_only"}>
+              Popover Content
+            </span>
+          )}
           {content}
         </div>
       )}

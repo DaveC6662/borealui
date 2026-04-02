@@ -5,6 +5,11 @@ import { SizeType, StateType, ThemeType } from "@/types/types";
  */
 export interface RatingProps {
   /**
+   * Optional unique id for the rating group.
+   */
+  id?: string;
+
+  /**
    * The current rating value.
    */
   value: number;
@@ -21,9 +26,41 @@ export interface RatingProps {
   max?: number;
 
   /**
-   * The label for the rating component, used for accessibility.
+   * Visible label for the rating component.
    */
   label?: string;
+
+  /**
+   * Accessible label for the rating group.
+   * Prefer `label` when a visible label is needed.
+   */
+  "aria-label"?: string;
+
+  /**
+   * References the id of an element that labels the rating group.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * References the id of an element that describes the rating group.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Optional aria-label prefix for each star.
+   * Example: "Rating star" -> "Rating star 1 of 5"
+   */
+  starAriaLabelPrefix?: string;
+
+  /**
+   * If true, marks the field as required.
+   */
+  required?: boolean;
+
+  /**
+   * If true, the rating is read-only and cannot be changed.
+   */
+  readOnly?: boolean;
 
   /**
    * The size of the rating component.

@@ -25,27 +25,50 @@ const ButtonBase = forwardRef<
       children,
       className = "",
       disabled = false,
-      ariaLabel,
+
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
+      "aria-controls": ariaControls,
+      "aria-expanded": ariaExpanded,
+      "aria-pressed": ariaPressed,
+      "aria-current": ariaCurrent,
+      "aria-haspopup": ariaHasPopup,
+      "aria-live": ariaLive,
+      "aria-atomic": ariaAtomic,
+      "aria-busy": ariaBusy,
+      "aria-disabled": ariaDisabled,
+
       href,
       isExternal = false,
       outline = false,
       size = getDefaultSize(),
       loading = false,
+      loadingLabel = "Loading",
       fullWidth = false,
       "data-testid": testId = "button",
       classMap,
       LinkComponent = "a",
       ...rest
     },
-    ref
+    ref,
   ) => {
     const iconOnly =
       !children ||
       (typeof children !== "string" && React.Children.count(children) === 0);
-    const computedAriaLabel = iconOnly ? ariaLabel : undefined;
 
-    if (process.env.NODE_ENV === "development" && iconOnly && !ariaLabel) {
-      console.warn("ButtonBase: icon-only buttons must provide `ariaLabel`.");
+    const computedAriaLabel =
+      iconOnly && !ariaLabelledBy ? ariaLabel : undefined;
+
+    if (
+      process.env.NODE_ENV === "development" &&
+      iconOnly &&
+      !ariaLabel &&
+      !ariaLabelledBy
+    ) {
+      console.warn(
+        "ButtonBase: icon-only buttons must provide `aria-label` or `aria-labelledby`.",
+      );
     }
 
     const combinedClassName = useMemo(
@@ -60,7 +83,7 @@ const ButtonBase = forwardRef<
           rounding && classMap[`round${capitalize(rounding)}`],
           fullWidth && classMap.fullWidth,
           disabled && classMap.disabled,
-          className
+          className,
         ),
       [
         theme,
@@ -73,7 +96,7 @@ const ButtonBase = forwardRef<
         disabled,
         className,
         classMap,
-      ]
+      ],
     );
 
     const content = (
@@ -84,19 +107,24 @@ const ButtonBase = forwardRef<
             aria-hidden="true"
             data-testid={testId ? `${testId}-icon` : undefined}
           >
-            <Icon className={classMap.icon} />
+            <Icon
+              className={classMap.icon}
+              aria-hidden={true}
+              focusable={false}
+            />
           </span>
         )}
+
         <span
           className={classMap.buttonLabel}
-          aria-live={loading ? "polite" : undefined}
-          aria-atomic={loading || undefined}
+          aria-live={loading ? (ariaLive ?? "polite") : undefined}
+          aria-atomic={loading ? (ariaAtomic ?? true) : undefined}
           data-testid={testId ? `${testId}-loading` : undefined}
         >
           {loading ? (
             <>
               <div className={classMap.loader} aria-hidden="true" />
-              <span className="sr_only">Loading</span>
+              <span className="sr_only">{loadingLabel}</span>
             </>
           ) : (
             <>
@@ -120,9 +148,16 @@ const ButtonBase = forwardRef<
         onClick: disabled
           ? (e: React.MouseEvent) => e.preventDefault()
           : onClick,
-        "aria-disabled": disabled || undefined,
+        "aria-label": computedAriaLabel,
+        "aria-labelledby": ariaLabelledBy,
+        "aria-describedby": ariaDescribedBy,
+        "aria-controls": ariaControls,
+        "aria-expanded": ariaExpanded,
+        "aria-current": ariaCurrent,
+        "aria-haspopup": ariaHasPopup,
+        "aria-busy": loading ? (ariaBusy ?? true) : ariaBusy,
+        "aria-disabled": disabled ? (ariaDisabled ?? true) : ariaDisabled,
         tabIndex: disabled ? -1 : undefined,
-        ...(computedAriaLabel ? { "aria-label": computedAriaLabel } : {}),
         "data-testid": testId,
       } as const;
 
@@ -147,6 +182,8 @@ const ButtonBase = forwardRef<
             "children"
           >)}
           href={href as never}
+          target={external ? "_blank" : undefined}
+          rel={external ? "noopener noreferrer" : undefined}
           {...(rest as React.ComponentPropsWithoutRef<typeof Comp>)}
         >
           {content}
@@ -160,16 +197,24 @@ const ButtonBase = forwardRef<
         type={type}
         className={combinedClassName}
         disabled={disabled || loading}
-        aria-busy={loading || undefined}
-        {...(computedAriaLabel ? { "aria-label": computedAriaLabel } : {})}
+        aria-label={computedAriaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        aria-controls={ariaControls}
+        aria-expanded={ariaExpanded}
+        aria-pressed={ariaPressed}
+        aria-current={ariaCurrent}
+        aria-haspopup={ariaHasPopup}
+        aria-busy={loading ? (ariaBusy ?? true) : ariaBusy}
+        aria-disabled={ariaDisabled}
         data-testid={testId}
-        onClick={disabled ? undefined : onClick}
+        onClick={disabled || loading ? undefined : onClick}
         {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
       >
         {content}
       </button>
     );
-  }
+  },
 );
 
 ButtonBase.displayName = "ButtonBase";

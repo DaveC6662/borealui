@@ -24,8 +24,6 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       placeholder = "Enter text",
       password = false,
       readOnly = false,
-      ariaLabel,
-      ariaDescription,
       theme = getDefaultTheme(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
@@ -33,11 +31,12 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       state = "",
       disabled = false,
       autocomplete = false,
-      "data-testid": testId = "text-input",
-      classMap,
       outline = false,
+      classMap,
       IconButton,
       className = "",
+      srOnlyText,
+      "data-testid": testId = "text-input",
       ...rest
     },
     ref,
@@ -45,14 +44,66 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
     const [showPassword, setShowPassword] = useState(false);
 
     const autoId = useId();
+
     const {
       id: idProp,
       required,
       autoComplete: autoCompleteProp,
       type: typeProp,
+      role,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
+      "aria-invalid": ariaInvalid,
+      "aria-required": ariaRequired,
+      "aria-readonly": ariaReadOnly,
+      "aria-disabled": ariaDisabled,
+      "aria-description": ariaDescription,
+      "aria-activedescendant": ariaActiveDescendant,
+      "aria-haspopup": ariaHasPopup,
+      "aria-expanded": ariaExpanded,
+      "aria-controls": ariaControls,
       ...restInput
-    } = rest as InputHTMLAttributes<HTMLInputElement>;
+    } = rest as InputHTMLAttributes<HTMLInputElement> & {
+      role?: React.AriaRole;
+      "aria-label"?: string;
+      "aria-labelledby"?: string;
+      "aria-describedby"?: string;
+      "aria-invalid"?: boolean | "true" | "false" | "grammar" | "spelling";
+      "aria-required"?: boolean;
+      "aria-readonly"?: boolean;
+      "aria-disabled"?: boolean;
+      "aria-description"?: string;
+      "aria-activedescendant"?: string;
+      "aria-haspopup"?:
+        | boolean
+        | "false"
+        | "true"
+        | "menu"
+        | "listbox"
+        | "tree"
+        | "grid"
+        | "dialog";
+      "aria-expanded"?: boolean;
+      "aria-controls"?: string;
+    };
+
     const inputId = idProp || autoId;
+    const hasLabel = Boolean(label);
+
+    const generatedDescriptionId = srOnlyText
+      ? `${inputId}-sr-description`
+      : undefined;
+
+    const computedAriaDescribedBy =
+      [ariaDescribedBy, generatedDescriptionId].filter(Boolean).join(" ") ||
+      undefined;
+
+    const computedAriaLabel = hasLabel
+      ? undefined
+      : ariaLabel || placeholder || "Text input";
+
+    const computedPlaceholder = hasLabel ? " " : placeholder;
 
     const inputType = password
       ? showPassword
@@ -60,16 +111,29 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         : "password"
       : typeProp || "text";
 
-    const descId = ariaDescription ? `${inputId}-description` : undefined;
     const isError = state === "error";
 
     const computedAutoComplete =
       autoCompleteProp ??
       (autocomplete ? (password ? "current-password" : "on") : "off");
 
-    const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
+    const computedAriaInvalid = ariaInvalid ?? (isError || undefined);
+    const computedAriaRequired = ariaRequired ?? (required || undefined);
+    const computedAriaReadOnly = ariaReadOnly ?? (readOnly || undefined);
+    const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
 
-    const hasLabel = Boolean(label);
+    const togglePasswordVisibility = () => {
+      setShowPassword((prev) => !prev);
+    };
+
+    const containerClass = useMemo(
+      () =>
+        combineClassNames(
+          classMap.container,
+          classMap[`label${capitalize(labelPosition)}`],
+        ),
+      [classMap, labelPosition],
+    );
 
     const wrapperClass = useMemo(
       () =>
@@ -100,18 +164,9 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         ),
       [classMap, theme, disabled],
     );
-    const computedAriaLabel = hasLabel ? undefined : ariaLabel || placeholder;
-
-    const computedPlaceholder = hasLabel ? " " : placeholder;
 
     return (
-      <div
-        className={combineClassNames(
-          classMap.container,
-          classMap[`label${capitalize(labelPosition)}`],
-        )}
-        data-testid={testId}
-      >
+      <div className={containerClass} data-testid={testId}>
         {label && (
           <label
             htmlFor={inputId}
@@ -121,29 +176,36 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             {label}
           </label>
         )}
-        <div className={wrapperClass} data-testid={testId}>
+
+        <div className={wrapperClass} data-testid={`${testId}-wrapper`}>
           {Icon && (
             <div
               className={iconClasses}
               aria-hidden="true"
               data-testid={`${testId}-icon`}
             >
-              <Icon aria-hidden="true" />
+              <Icon aria-hidden={true} />
             </div>
           )}
-
           <input
             ref={ref}
             id={inputId}
             type={inputType}
             className={inputClasses}
             placeholder={computedPlaceholder}
+            role={role}
             aria-label={computedAriaLabel}
-            aria-describedby={descId}
-            aria-disabled={disabled || undefined}
-            aria-invalid={isError || undefined}
-            aria-required={required || undefined}
-            aria-readonly={readOnly || undefined}
+            aria-labelledby={ariaLabelledBy}
+            aria-describedby={computedAriaDescribedBy}
+            aria-invalid={computedAriaInvalid}
+            aria-required={computedAriaRequired}
+            aria-readonly={computedAriaReadOnly}
+            aria-disabled={computedAriaDisabled}
+            aria-description={ariaDescription}
+            aria-activedescendant={ariaActiveDescendant}
+            aria-haspopup={ariaHasPopup}
+            aria-expanded={ariaExpanded}
+            aria-controls={ariaControls}
             autoComplete={computedAutoComplete}
             onChange={(e) => onChange?.(e.currentTarget.value, e)}
             readOnly={readOnly}
@@ -152,6 +214,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             data-testid={`${testId}-input`}
             {...restInput}
           />
+
           {password && (
             <IconButton
               type="button"
@@ -166,13 +229,13 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             />
           )}
 
-          {ariaDescription && (
+          {srOnlyText && (
             <span
-              id={descId}
-              className="sr_only"
-              data-testid={`${testId}-description`}
+              id={generatedDescriptionId}
+              className={classMap.srOnly || "sr_only"}
+              data-testid={`${testId}-sr-only-text`}
             >
-              {ariaDescription}
+              {srOnlyText}
             </span>
           )}
         </div>
@@ -182,4 +245,5 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
 );
 
 TextInputBase.displayName = "TextInputBase";
+
 export default TextInputBase;

@@ -15,6 +15,14 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       checked,
       onChange,
       label,
+      id,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
+      "aria-invalid": ariaInvalid,
+      "aria-errormessage": ariaErrorMessage,
+      "aria-disabled": ariaDisabled,
+      tabIndex,
       theme = getDefaultTheme(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
@@ -25,19 +33,31 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       className,
       "data-testid": testId = "toggle",
     },
-    ref
+    ref,
   ) => {
     const uid = useId();
-    const buttonId = `${testId}-button-${uid}`;
-    const labelId = label ? `${testId}-label-${uid}` : undefined;
+
+    const buttonId = id ?? `${testId}-button-${uid}`;
+    const internalLabelId = label ? `${testId}-label-${uid}` : undefined;
+
+    const resolvedAriaLabelledBy =
+      ariaLabelledBy || (!ariaLabel && label ? internalLabelId : undefined);
+
+    const resolvedAriaLabel = !resolvedAriaLabelledBy
+      ? ariaLabel || (!label ? "Toggle switch" : undefined)
+      : undefined;
 
     const setOn = (next: boolean) => {
-      if (!disabled && next !== checked) onChange(next);
+      if (!disabled && next !== checked) {
+        onChange(next);
+      }
     };
+
     const toggle = () => setOn(!checked);
 
     const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
       if (disabled) return;
+
       switch (e.key) {
         case " ":
         case "Enter":
@@ -63,9 +83,9 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
           classMap[state],
           classMap[size],
           disabled && classMap.disabled,
-          className
+          className,
         ),
-      [classMap, theme, state, size, disabled, className]
+      [classMap, theme, state, size, disabled, className],
     );
 
     const toggleClass = useMemo(
@@ -74,9 +94,9 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
           classMap.toggle,
           checked && classMap.active,
           shadow && classMap[`shadow${capitalize(shadow)}`],
-          rounding && classMap[`round${capitalize(rounding)}`]
+          rounding && classMap[`round${capitalize(rounding)}`],
         ),
-      [classMap, checked, shadow, rounding]
+      [classMap, checked, shadow, rounding],
     );
 
     return (
@@ -86,11 +106,16 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
           id={buttonId}
           className={toggleClass}
           role="switch"
-          aria-checked={checked}
-          aria-labelledby={label ? labelId : undefined}
-          aria-label={label ? undefined : "Toggle switch"}
           type="button"
           disabled={disabled}
+          aria-checked={checked}
+          aria-label={resolvedAriaLabel}
+          aria-labelledby={resolvedAriaLabelledBy}
+          aria-describedby={ariaDescribedBy}
+          aria-invalid={ariaInvalid}
+          aria-errormessage={ariaErrorMessage}
+          aria-disabled={(ariaDisabled ?? disabled) || undefined}
+          tabIndex={tabIndex}
           onClick={toggle}
           onKeyDown={handleKeyDown}
           data-testid={testId}
@@ -102,9 +127,9 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
           />
         </button>
 
-        {label && (
+        {label && !ariaLabelledBy && (
           <label
-            id={labelId}
+            id={internalLabelId}
             htmlFor={buttonId}
             className={classMap.label}
             data-testid={`${testId}-label`}
@@ -114,7 +139,7 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 ToggleBase.displayName = "ToggleBase";

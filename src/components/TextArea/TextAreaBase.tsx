@@ -27,8 +27,12 @@ const TextAreaBase = forwardRef<
       shadow = getDefaultShadow(),
       state = "",
       resizable = true,
-      ariaLabel,
-      ariaDescription,
+
+      "aria-label": ariaLabel,
+      "aria-description": ariaDescription,
+      helperText,
+      errorMessage,
+      describedBy,
       disabled = false,
       height,
       classMap,
@@ -36,6 +40,13 @@ const TextAreaBase = forwardRef<
       "data-testid": testId = "text-area",
       id: idProp,
       required,
+
+      // Native accessibility props
+      "aria-label": ariaLabelProp,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedByProp,
+      "aria-errormessage": ariaErrorMessageProp,
+
       ...props
     },
     ref,
@@ -43,7 +54,10 @@ const TextAreaBase = forwardRef<
     const autoId = useId();
     const id = idProp || autoId;
 
+    const labelId = label ? `${id}-label` : undefined;
     const descriptionId = ariaDescription ? `${id}-description` : undefined;
+    const helperTextId = helperText ? `${id}-helper-text` : undefined;
+    const internalErrorId = errorMessage ? `${id}-error-message` : undefined;
 
     const wrapperClass = useMemo(
       () =>
@@ -60,11 +74,28 @@ const TextAreaBase = forwardRef<
       [classMap, theme, state, outline, disabled, shadow, rounding, className],
     );
 
-    const computedLabel = !label ? ariaLabel || placeholder : undefined;
-
-    const describedBy = descriptionId || undefined;
-
     const isError = state === "error";
+
+    const computedAriaLabel =
+      !ariaLabelledBy && !label
+        ? ariaLabelProp || ariaLabel || placeholder
+        : undefined;
+
+    const describedByIds =
+      [
+        ariaDescribedByProp,
+        describedBy,
+        descriptionId,
+        helperTextId,
+        isError ? internalErrorId : undefined,
+      ]
+        .filter(Boolean)
+        .join(" ") || undefined;
+
+    const errorMessageId =
+      isError && (ariaErrorMessageProp || internalErrorId)
+        ? ariaErrorMessageProp || internalErrorId
+        : undefined;
 
     return (
       <div
@@ -76,6 +107,7 @@ const TextAreaBase = forwardRef<
       >
         {label && (
           <label
+            id={labelId}
             htmlFor={id}
             className={classMap.label}
             data-testid={`${testId}-label`}
@@ -83,14 +115,15 @@ const TextAreaBase = forwardRef<
             {label}
           </label>
         )}
-        <div className={wrapperClass} data-testid={testId}>
+
+        <div className={wrapperClass} data-testid={`${testId}-wrapper`}>
           {Icon && (
             <div
               className={classMap.iconContainer}
               aria-hidden="true"
               data-testid={`${testId}-icon`}
             >
-              <Icon aria-hidden="true" />
+              <Icon aria-hidden={true} />
             </div>
           )}
 
@@ -98,8 +131,12 @@ const TextAreaBase = forwardRef<
             ref={ref}
             id={id}
             placeholder={placeholder}
-            aria-label={computedLabel}
-            aria-describedby={describedBy}
+            aria-label={computedAriaLabel}
+            aria-labelledby={
+              ariaLabelledBy || (!ariaLabelledBy && label ? labelId : undefined)
+            }
+            aria-describedby={describedByIds}
+            aria-errormessage={errorMessageId}
             aria-invalid={isError || undefined}
             aria-required={required || undefined}
             aria-readonly={readOnly || undefined}
@@ -134,6 +171,27 @@ const TextAreaBase = forwardRef<
             </span>
           )}
         </div>
+
+        {helperText && (
+          <div
+            id={helperTextId}
+            className={classMap.helperText}
+            data-testid={`${testId}-helper-text`}
+          >
+            {helperText}
+          </div>
+        )}
+
+        {errorMessage && (
+          <div
+            id={internalErrorId}
+            className={classMap.errorMessage}
+            role={isError ? "alert" : undefined}
+            data-testid={`${testId}-error-message`}
+          >
+            {errorMessage}
+          </div>
+        )}
       </div>
     );
   },

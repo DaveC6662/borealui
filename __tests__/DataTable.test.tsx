@@ -1,130 +1,776 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import React from "react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import { axe, toHaveNoViolations } from "jest-axe";
 import DataTableBase from "@/components/DataTable/DataTableBase";
 import { Column } from "@/components/DataTable/DataTable.types";
-import { axe, toHaveNoViolations } from "jest-axe";
+
 expect.extend(toHaveNoViolations);
 
-const columns: Column<{ name: string; age: number }>[] = [
+type Row = {
+  id?: string;
+  name: string;
+  age: number | null;
+  status?: string;
+  meta?: { city: string };
+};
+
+const baseColumns: Column<Row>[] = [
   { key: "name", label: "Name", sortable: true },
   { key: "age", label: "Age", sortable: true },
 ];
 
-const data = [
-  { name: "Alice", age: 28 },
-  { name: "Bob", age: 34 },
+const baseData: Row[] = [
+  { id: "a1", name: "Alice", age: 28 },
+  { id: "b2", name: "Bob", age: 34 },
 ];
 
 const classMap = {
   wrapper: "tableWrapper",
   table: "table",
   striped: "striped",
-  headerCell: "header",
+  headerCell: "headerCell",
   sortIcon: "sortIcon",
   sortable: "sortable",
+  sortButton: "sortButton",
   clickable: "clickable",
   cell: "cell",
+  emptyCell: "emptyCell",
+  outline: "outline",
+  primary: "primary",
+  success: "success",
+  roundMedium: "roundMedium",
+  shadowLight: "shadowLight",
+  srOnly: "srOnly",
 };
+
+const renderTable = (
+  props: Partial<React.ComponentProps<typeof DataTableBase<Row>>> = {},
+) =>
+  render(
+    <DataTableBase<Row>
+      columns={baseColumns}
+      data={baseData}
+      classMap={classMap}
+      {...props}
+    />,
+  );
 
 describe("DataTableBase", () => {
   it("renders a table with headers and rows", () => {
-    render(<DataTableBase columns={columns} data={data} classMap={classMap} />);
+    renderTable();
 
     expect(screen.getByRole("table")).toBeInTheDocument();
     expect(screen.getAllByRole("columnheader")).toHaveLength(2);
     expect(screen.getAllByRole("row")).toHaveLength(3);
+
+    expect(screen.getByText("Alice")).toBeInTheDocument();
+    expect(screen.getByText("Bob")).toBeInTheDocument();
+    expect(screen.getByText("28")).toBeInTheDocument();
+    expect(screen.getByText("34")).toBeInTheDocument();
+  });
+
+  it("renders the wrapper with default structural classes", () => {
+    renderTable();
+
+    const wrapper = screen.getByTestId("data-table");
+    expect(wrapper).toHaveClass("tableWrapper");
+    expect(wrapper).toHaveClass("striped");
+    expect(wrapper).toHaveClass("roundMedium");
+    expect(wrapper).toHaveClass("shadowLight");
+  });
+
+  it("applies custom className to the wrapper", () => {
+    renderTable({ className: "customWrapper" });
+
+    expect(screen.getByTestId("data-table")).toHaveClass("customWrapper");
+  });
+
+  it("applies theme, state, and outline classes to the table", () => {
+    renderTable({
+      theme: "primary",
+      state: "success",
+      outline: true,
+    });
+
+    const table = screen.getByRole("table");
+    expect(table).toHaveClass("table");
+    expect(table).toHaveClass("primary");
+    expect(table).toHaveClass("success");
+    expect(table).toHaveClass("outline");
+  });
+
+  it("uses the provided aria-label on the table", () => {
+    renderTable({ "aria-label": "User data table" });
+
+    expect(
+      screen.getByRole("table", { name: "User data table" }),
+    ).toBeInTheDocument();
+  });
+
+  it("uses aria-labelledby on the table when provided", () => {
+    render(
+      <>
+        <h2 id="users-heading">Users</h2>
+        <DataTableBase<Row>
+          columns={baseColumns}
+          data={baseData}
+          classMap={classMap}
+          aria-labelledby="users-heading"
+        />
+      </>,
+    );
+
+    const table = screen.getByRole("table", { name: "Users" });
+    expect(table).toHaveAttribute("aria-labelledby", "users-heading");
+  });
+
+  it("renders a custom caption and associates it with the table", () => {
+    renderTable({
+      "data-testid": "users-table",
+      caption: "User records",
+    });
+
+    const table = screen.getByRole("table");
+    const caption = screen.getByText("User records");
+
+    expect(caption).toBeInTheDocument();
+    expect(caption).toHaveAttribute("id", "users-table-caption");
+    expect(caption).toHaveClass("srOnly");
+    expect(table).toHaveAttribute(
+      "aria-describedby",
+      expect.stringContaining("users-table-caption"),
+    );
+  });
+
+  it("renders a visible caption when hideCaption is false", () => {
+    renderTable({
+      caption: "Visible table caption",
+      hideCaption: false,
+    });
+
+    const caption = screen.getByText("Visible table caption");
+    expect(caption).toBeInTheDocument();
+    expect(caption).not.toHaveClass("srOnly");
+  });
+
+  it("merges custom aria-describedby with the generated caption and live region ids", () => {
+    renderTable({
+      "data-testid": "users-table",
+      "aria-describedby": "external-description",
+      caption: "User records",
+    });
+
+    const table = screen.getByRole("table");
+    expect(table).toHaveAttribute(
+      "aria-describedby",
+      expect.stringContaining("external-description"),
+    );
+    expect(table).toHaveAttribute(
+      "aria-describedby",
+      expect.stringContaining("users-table-caption"),
+    );
+    expect(table).toHaveAttribute(
+      "aria-describedby",
+      expect.stringContaining("users-table-live-region"),
+    );
+  });
+
+  it("applies aria-colcount and aria-rowcount when provided", () => {
+    renderTable({
+      colCount: 5,
+      rowCount: 20,
+    });
+
+    const table = screen.getByRole("table");
+    expect(table).toHaveAttribute("aria-colcount", "5");
+    expect(table).toHaveAttribute("aria-rowcount", "20");
   });
 
   it("sorts by defaultSortKey and defaultSortOrder on mount", () => {
-    render(
-      <DataTableBase
-        columns={columns}
-        data={data}
-        classMap={classMap}
-        defaultSortKey="age"
-        defaultSortOrder="desc"
-      />
-    );
+    renderTable({
+      defaultSortKey: "age",
+      defaultSortOrder: "desc",
+    });
 
     const rows = screen.getAllByRole("row");
     expect(rows[1]).toHaveTextContent("Bob");
+    expect(rows[2]).toHaveTextContent("Alice");
   });
 
-  it("sorts columns when header is clicked", () => {
-    render(<DataTableBase columns={columns} data={data} classMap={classMap} />);
-    const header = screen.getByText("Age").closest("th");
+  it("renders sortable headers with buttons", () => {
+    renderTable();
 
-    fireEvent.click(header!);
-    expect(header).toHaveAttribute("aria-sort", "ascending");
+    const nameSortButton = screen.getByRole("button", { name: /name/i });
+    const ageSortButton = screen.getByRole("button", { name: /age/i });
 
-    fireEvent.click(header!);
-    expect(header).toHaveAttribute("aria-sort", "descending");
+    expect(nameSortButton).toBeInTheDocument();
+    expect(ageSortButton).toBeInTheDocument();
+    expect(nameSortButton).toHaveClass("sortButton");
+    expect(ageSortButton).toHaveClass("sortButton");
   });
 
-  it("supports keyboard interaction for sorting", () => {
-    render(<DataTableBase columns={columns} data={data} classMap={classMap} />);
-    const header = screen.getByText("Name").closest("th");
+  it("sorts ascending on first sortable header button click", () => {
+    renderTable({
+      data: [
+        { name: "Bob", age: 34 },
+        { name: "Alice", age: 28 },
+      ],
+    });
 
-    header && fireEvent.keyDown(header, { key: "Enter" });
-    expect(header).toHaveAttribute("aria-sort", "ascending");
+    const ageHeader = screen.getByRole("columnheader", { name: /age/i });
+    const ageButton = within(ageHeader).getByRole("button");
 
-    header && fireEvent.keyDown(header, { key: " " });
-    expect(header).toHaveAttribute("aria-sort", "descending");
+    fireEvent.click(ageButton);
+
+    const rows = screen.getAllByRole("row");
+    expect(ageHeader).toHaveAttribute("aria-sort", "ascending");
+    expect(rows[1]).toHaveTextContent("Alice");
+    expect(rows[2]).toHaveTextContent("Bob");
   });
 
-  it("calls onSortChange when serverSort is enabled", () => {
+  it("toggles to descending when the same sortable header button is clicked again", () => {
+    renderTable();
+
+    const ageHeader = screen.getByRole("columnheader", { name: /age/i });
+    const ageButton = within(ageHeader).getByRole("button");
+
+    fireEvent.click(ageButton);
+    expect(ageHeader).toHaveAttribute("aria-sort", "ascending");
+
+    fireEvent.click(ageButton);
+    expect(ageHeader).toHaveAttribute("aria-sort", "descending");
+  });
+
+  it("supports keyboard sorting with Enter on the sort button", () => {
+    renderTable({
+      data: [
+        { name: "Bob", age: 34 },
+        { name: "Alice", age: 28 },
+      ],
+    });
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const nameButton = within(nameHeader).getByRole("button");
+
+    fireEvent.keyDown(nameButton, { key: "Enter" });
+
+    expect(nameHeader).toHaveAttribute("aria-sort", "ascending");
+    const rows = screen.getAllByRole("row");
+    expect(rows[1]).toHaveTextContent("Alice");
+    expect(rows[2]).toHaveTextContent("Bob");
+  });
+
+  it("supports keyboard sorting with Space on the sort button", () => {
+    renderTable();
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const nameButton = within(nameHeader).getByRole("button");
+
+    fireEvent.keyDown(nameButton, { key: " " });
+    expect(nameHeader).toHaveAttribute("aria-sort", "ascending");
+
+    fireEvent.keyDown(nameButton, { key: " " });
+    expect(nameHeader).toHaveAttribute("aria-sort", "descending");
+  });
+
+  it("does not sort when an unrelated key is pressed on a sort button", () => {
+    renderTable();
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const nameButton = within(nameHeader).getByRole("button");
+
+    fireEvent.keyDown(nameButton, { key: "Escape" });
+
+    expect(nameHeader).toHaveAttribute("aria-sort", "none");
+  });
+
+  it("renders aria-sort='none' on sortable columns before they become active", () => {
+    renderTable();
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const ageHeader = screen.getByRole("columnheader", { name: /age/i });
+
+    expect(nameHeader).toHaveAttribute("aria-sort", "none");
+    expect(ageHeader).toHaveAttribute("aria-sort", "none");
+  });
+
+  it("renders sort icons and marks them aria-hidden", () => {
+    renderTable();
+
+    const headers = screen.getAllByRole("columnheader");
+    const firstHeaderIcon = within(headers[0]).getByText("⇅");
+    const secondHeaderIcon = within(headers[1]).getByText("⇅");
+
+    expect(firstHeaderIcon).toHaveAttribute("aria-hidden", "true");
+    expect(secondHeaderIcon).toHaveAttribute("aria-hidden", "true");
+    expect(firstHeaderIcon).toHaveClass("sortIcon");
+    expect(secondHeaderIcon).toHaveClass("sortIcon");
+  });
+
+  it("updates sort icon when a column is sorted ascending then descending", () => {
+    renderTable();
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const nameButton = within(nameHeader).getByRole("button");
+
+    fireEvent.click(nameButton);
+    expect(within(nameHeader).getByText("▲")).toBeInTheDocument();
+
+    fireEvent.click(nameButton);
+    expect(within(nameHeader).getByText("▼")).toBeInTheDocument();
+  });
+
+  it("uses custom sort button aria labels when getSortAriaLabel is provided", () => {
+    renderTable({
+      getSortAriaLabel: (column, order, isActive) =>
+        `${column.label} custom label ${order} ${String(isActive)}`,
+    });
+
+    const nameButton = screen.getByRole("button", {
+      name: "Name custom label asc false",
+    });
+
+    expect(nameButton).toBeInTheDocument();
+  });
+
+  it("announces sort changes in the live region", () => {
+    renderTable({
+      "data-testid": "users-table",
+    });
+
+    const liveRegion = screen.getByText("", {
+      selector: "#users-table-live-region",
+    });
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const nameButton = within(nameHeader).getByRole("button");
+
+    fireEvent.click(nameButton);
+
+    expect(liveRegion).toHaveTextContent("Name sorted ascending");
+  });
+
+  it("uses a custom sort announcement when getSortAnnouncement is provided", () => {
+    renderTable({
+      "data-testid": "users-table",
+      getSortAnnouncement: (column, order) =>
+        `Sorted ${column.label} in ${order} order`,
+    });
+
+    const liveRegion = screen.getByText("", {
+      selector: "#users-table-live-region",
+    });
+    const ageHeader = screen.getByRole("columnheader", { name: /age/i });
+    const ageButton = within(ageHeader).getByRole("button");
+
+    fireEvent.click(ageButton);
+
+    expect(liveRegion).toHaveTextContent("Sorted Age in asc order");
+  });
+
+  it("supports server-side sorting without reordering the visible data", () => {
     const onSortChange = jest.fn();
-    render(
-      <DataTableBase
-        columns={columns}
-        data={data}
-        classMap={classMap}
-        serverSort
-        onSortChange={onSortChange}
-      />
-    );
 
-    fireEvent.click(screen.getByText("Name"));
+    renderTable({
+      data: [
+        { name: "Bob", age: 34 },
+        { name: "Alice", age: 28 },
+      ],
+      serverSort: true,
+      onSortChange,
+    });
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const nameButton = within(nameHeader).getByRole("button");
+
+    fireEvent.click(nameButton);
+
     expect(onSortChange).toHaveBeenCalledWith("name", "asc");
 
-    fireEvent.click(screen.getByText("Name"));
-    expect(onSortChange).toHaveBeenCalledWith("name", "desc");
+    const rows = screen.getAllByRole("row");
+    expect(rows[1]).toHaveTextContent("Bob");
+    expect(rows[2]).toHaveTextContent("Alice");
+  });
+
+  it("toggles server-side sort order across repeated clicks", () => {
+    const onSortChange = jest.fn();
+
+    renderTable({
+      serverSort: true,
+      onSortChange,
+    });
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const nameButton = within(nameHeader).getByRole("button");
+
+    fireEvent.click(nameButton);
+    fireEvent.click(nameButton);
+
+    expect(onSortChange).toHaveBeenNthCalledWith(1, "name", "asc");
+    expect(onSortChange).toHaveBeenNthCalledWith(2, "name", "desc");
   });
 
   it("triggers onRowClick when a row is clicked", () => {
     const handleClick = jest.fn();
-    render(
-      <DataTableBase
-        columns={columns}
-        data={data}
-        classMap={classMap}
-        onRowClick={handleClick}
-      />
-    );
+
+    renderTable({ onRowClick: handleClick });
 
     const row = screen.getAllByRole("row")[1];
     fireEvent.click(row);
-    expect(handleClick).toHaveBeenCalledWith(data[0]);
+
+    expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(handleClick).toHaveBeenCalledWith(baseData[0]);
   });
 
-  it("uses rowKey prop to assign row keys", () => {
-    const rowKey = (row: { name: string }) => row.name;
-    const { container } = render(
-      <DataTableBase
+  it("makes body rows keyboard-focusable when onRowClick is provided", () => {
+    const handleClick = jest.fn();
+
+    renderTable({ onRowClick: handleClick });
+
+    const bodyRows = screen.getAllByRole("row").slice(1);
+    expect(bodyRows[0]).toHaveAttribute("tabIndex", "0");
+    expect(bodyRows[1]).toHaveAttribute("tabIndex", "0");
+    expect(bodyRows[0]).toHaveClass("clickable");
+  });
+
+  it("does not make rows keyboard-focusable when onRowClick is not provided", () => {
+    renderTable();
+
+    const bodyRows = screen.getAllByRole("row").slice(1);
+    expect(bodyRows[0]).not.toHaveAttribute("tabIndex");
+    expect(bodyRows[1]).not.toHaveClass("clickable");
+  });
+
+  it("applies row aria-label and aria-description when provided for interactive rows", () => {
+    const handleClick = jest.fn();
+
+    renderTable({
+      onRowClick: handleClick,
+      rowKey: (row) => row.id ?? row.name,
+      getRowAriaLabel: (row) => `Open ${row.name}`,
+      getRowAriaDescription: (row) => `${row.name} details row`,
+    });
+
+    const firstRow = screen.getByTestId("data-table-row-a1");
+    expect(firstRow).toHaveAttribute("aria-label", "Open Alice");
+    expect(firstRow).toHaveAttribute("aria-description", "Alice details row");
+  });
+
+  it("does not apply row aria-label when rows are not interactive", () => {
+    renderTable({
+      rowKey: (row) => row.id ?? row.name,
+      getRowAriaLabel: (row) => `Open ${row.name}`,
+    });
+
+    const firstRow = screen.getByTestId("data-table-row-a1");
+    expect(firstRow).not.toHaveAttribute("aria-label");
+  });
+
+  it("triggers onRowClick with Enter on a row", () => {
+    const handleClick = jest.fn();
+
+    renderTable({ onRowClick: handleClick });
+
+    const row = screen.getAllByRole("row")[1];
+    fireEvent.keyDown(row, { key: "Enter" });
+
+    expect(handleClick).toHaveBeenCalledWith(baseData[0]);
+  });
+
+  it("triggers onRowClick with Space on a row", () => {
+    const handleClick = jest.fn();
+
+    renderTable({ onRowClick: handleClick });
+
+    const row = screen.getAllByRole("row")[1];
+    fireEvent.keyDown(row, { key: " " });
+
+    expect(handleClick).toHaveBeenCalledWith(baseData[0]);
+  });
+
+  it("does not trigger onRowClick for unrelated row key presses", () => {
+    const handleClick = jest.fn();
+
+    renderTable({ onRowClick: handleClick });
+
+    const row = screen.getAllByRole("row")[1];
+    fireEvent.keyDown(row, { key: "Tab" });
+
+    expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  it("renders a loading row when loading is true", () => {
+    renderTable({ loading: true, loadingMessage: "Loading users" });
+
+    const liveRegion = document.getElementById("data-table-live-region");
+    const loadingCell = screen.getByRole("cell", { name: "Loading users" });
+
+    expect(liveRegion).toBeInTheDocument();
+    expect(liveRegion).toHaveTextContent("Loading users");
+    expect(liveRegion).toHaveAttribute("aria-live", "polite");
+
+    expect(loadingCell).toBeInTheDocument();
+    expect(loadingCell).toHaveAttribute("aria-live", "polite");
+  });
+
+  it("renders a no-data row when data is empty", () => {
+    renderTable({ data: [] });
+
+    expect(screen.getByText("No data available")).toBeInTheDocument();
+    expect(screen.getByText("No data available")).toHaveAttribute(
+      "aria-live",
+      "polite",
+    );
+  });
+
+  it("renders a custom empty message when provided", () => {
+    renderTable({ data: [], emptyMessage: "Nothing to display" });
+
+    expect(screen.getByText("Nothing to display")).toBeInTheDocument();
+  });
+
+  it("renders the empty cell with the correct colSpan and class", () => {
+    renderTable({ data: [] });
+
+    const emptyCell = screen.getByText("No data available");
+    expect(emptyCell).toHaveAttribute("colSpan", String(baseColumns.length));
+    expect(emptyCell).toHaveClass("emptyCell");
+  });
+
+  it("renders striped row class on alternating body rows when striped is true", () => {
+    renderTable({
+      data: [
+        { name: "Alice", age: 28 },
+        { name: "Bob", age: 34 },
+        { name: "Cara", age: 22 },
+      ],
+      striped: true,
+    });
+
+    const bodyRows = screen.getAllByRole("row").slice(1);
+    expect(bodyRows[0]).not.toHaveClass("striped");
+    expect(bodyRows[1]).toHaveClass("striped");
+    expect(bodyRows[2]).not.toHaveClass("striped");
+  });
+
+  it("does not apply striped classes when striped is false", () => {
+    renderTable({
+      striped: false,
+      data: [
+        { name: "Alice", age: 28 },
+        { name: "Bob", age: 34 },
+      ],
+    });
+
+    const wrapper = screen.getByTestId("data-table");
+    const bodyRows = screen.getAllByRole("row").slice(1);
+
+    expect(wrapper).not.toHaveClass("striped");
+    expect(bodyRows[0]).not.toHaveClass("striped");
+    expect(bodyRows[1]).not.toHaveClass("striped");
+  });
+
+  it("renders custom cell content when a column render function is provided", () => {
+    const columns: Column<Row>[] = [
+      {
+        key: "name",
+        label: "Name",
+        sortable: true,
+        render: (value) => <strong>{String(value)}</strong>,
+      },
+      { key: "age", label: "Age", sortable: true },
+    ];
+
+    render(
+      <DataTableBase<Row>
         columns={columns}
-        data={data}
+        data={baseData}
         classMap={classMap}
-        rowKey={rowKey}
-      />
+      />,
     );
 
-    const rowElements = container.querySelectorAll("tbody tr");
-    expect(rowElements[0].getAttribute("key")).toBe(null);
+    expect(screen.getByText("Alice").tagName).toBe("STRONG");
+    expect(screen.getByText("Bob").tagName).toBe("STRONG");
+  });
+
+  it("stringifies object values when no render function is provided", () => {
+    const columns: Column<Row>[] = [
+      { key: "name", label: "Name", sortable: true },
+      { key: "meta", label: "Meta" },
+    ];
+
+    const data: Row[] = [{ name: "Alice", age: 28, meta: { city: "Kenora" } }];
+
+    render(
+      <DataTableBase<Row> columns={columns} data={data} classMap={classMap} />,
+    );
+
+    expect(screen.getByText('{"city":"Kenora"}')).toBeInTheDocument();
+  });
+
+  it("renders empty string for nullish cell values", () => {
+    const columns: Column<Row>[] = [
+      { key: "name", label: "Name" },
+      { key: "status", label: "Status" },
+    ];
+
+    const data: Row[] = [{ name: "Alice", age: 28, status: undefined }];
+
+    render(
+      <DataTableBase<Row> columns={columns} data={data} classMap={classMap} />,
+    );
+
+    const bodyRow = screen.getAllByRole("row")[1];
+    const cells = within(bodyRow).getAllByRole("cell");
+
+    expect(cells[0]).toHaveTextContent("Alice");
+    expect(cells[1]).toHaveTextContent("");
+  });
+
+  it("adds data-label attributes to body cells", () => {
+    renderTable();
+
+    const bodyRow = screen.getAllByRole("row")[1];
+    const cells = within(bodyRow).getAllByRole("cell");
+
+    expect(cells[0]).toHaveAttribute("data-label", "Name");
+    expect(cells[1]).toHaveAttribute("data-label", "Age");
+  });
+
+  it("applies the cell class to all body cells", () => {
+    renderTable();
+
+    const cells = screen.getAllByRole("cell");
+    cells.forEach((cell) => {
+      expect(cell).toHaveClass("cell");
+    });
+  });
+
+  it("renders row header cells when a column is marked as isRowHeader", () => {
+    const columns: Column<Row>[] = [
+      { key: "name", label: "Name", isRowHeader: true },
+      { key: "age", label: "Age" },
+    ];
+
+    render(
+      <DataTableBase<Row>
+        columns={columns}
+        data={baseData}
+        classMap={classMap}
+      />,
+    );
+
+    const rowHeaders = screen.getAllByRole("rowheader");
+    expect(rowHeaders).toHaveLength(2);
+    expect(rowHeaders[0]).toHaveTextContent("Alice");
+    expect(rowHeaders[1]).toHaveTextContent("Bob");
+  });
+
+  it("uses custom header ids and associates body cells through headers", () => {
+    const columns: Column<Row>[] = [
+      { key: "name", label: "Name", id: "name-col" },
+      { key: "age", label: "Age", id: "age-col" },
+    ];
+
+    render(
+      <DataTableBase<Row>
+        columns={columns}
+        data={baseData}
+        classMap={classMap}
+      />,
+    );
+
+    const bodyRow = screen.getAllByRole("row")[1];
+    const cells = within(bodyRow).getAllByRole("cell");
+
+    expect(cells[0]).toHaveAttribute("headers", "name-col");
+    expect(cells[1]).toHaveAttribute("headers", "age-col");
+  });
+
+  it("sorts null values after non-null values in ascending order", () => {
+    renderTable({
+      data: [
+        { name: "Null Age", age: null },
+        { name: "Young", age: 22 },
+        { name: "Older", age: 40 },
+      ],
+    });
+
+    const ageHeader = screen.getByRole("columnheader", { name: /age/i });
+    const ageButton = within(ageHeader).getByRole("button");
+    fireEvent.click(ageButton);
+
+    const rows = screen.getAllByRole("row");
+    expect(rows[1]).toHaveTextContent("Young");
+    expect(rows[2]).toHaveTextContent("Older");
+    expect(rows[3]).toHaveTextContent("Null Age");
+  });
+
+  it("sorts string values using localeCompare", () => {
+    renderTable({
+      data: [
+        { name: "Charlie", age: 30 },
+        { name: "Alice", age: 28 },
+        { name: "Bob", age: 34 },
+      ],
+    });
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const nameButton = within(nameHeader).getByRole("button");
+    fireEvent.click(nameButton);
+
+    const rows = screen.getAllByRole("row");
+    expect(rows[1]).toHaveTextContent("Alice");
+    expect(rows[2]).toHaveTextContent("Bob");
+    expect(rows[3]).toHaveTextContent("Charlie");
+  });
+
+  it("accepts a rowKey prop and uses it in the row test id", () => {
+    const rowKey = jest.fn((row: Row) => row.id ?? row.name);
+
+    render(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={baseData}
+        classMap={classMap}
+        rowKey={rowKey}
+      />,
+    );
+
+    expect(rowKey).toHaveBeenCalledTimes(baseData.length);
+    expect(rowKey).toHaveBeenNthCalledWith(1, baseData[0]);
+    expect(rowKey).toHaveBeenNthCalledWith(2, baseData[1]);
+
+    expect(screen.getByTestId("data-table-row-a1")).toBeInTheDocument();
+    expect(screen.getByTestId("data-table-row-b2")).toBeInTheDocument();
   });
 
   it("has no accessibility violations", async () => {
-    const { container } = render(
-      <DataTableBase columns={columns} data={data} classMap={classMap} />
-    );
+    const { container } = renderTable();
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it("has no accessibility violations when empty", async () => {
+    const { container } = renderTable({ data: [] });
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it("has no accessibility violations when rows are interactive", async () => {
+    const { container } = renderTable({
+      onRowClick: jest.fn(),
+      getRowAriaLabel: (row) => `Open ${row.name}`,
+    });
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it("has no accessibility violations when loading", async () => {
+    const { container } = renderTable({
+      loading: true,
+      loadingMessage: "Loading users",
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

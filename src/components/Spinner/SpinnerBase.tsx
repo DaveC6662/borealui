@@ -17,6 +17,12 @@ const SpinnerBase: React.FC<
   className = "",
   "data-testid": testId = "spinner",
   label,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-live": ariaLive = "polite",
+  "aria-busy": ariaBusy = true,
+  role = "status",
   classMap,
 }) => {
   const uid = useId();
@@ -27,33 +33,40 @@ const SpinnerBase: React.FC<
 
   const wrapperClass = useMemo(
     () => combineClassNames(classMap.wrapper, className),
-    [classMap, className]
+    [classMap, className],
   );
 
   const spinnerClasses = useMemo(
     () => combineClassNames(classMap.spinner, classMap[theme], classMap[state]),
-    [classMap, theme, state]
+    [classMap, theme, state],
   );
 
   const shadowClass = useMemo(
     () =>
       combineClassNames(
         classMap.shadowElement,
-        shadow && classMap[`shadow${capitalize(shadow)}`]
+        shadow && classMap[`shadow${capitalize(shadow)}`],
       ),
-    [classMap, shadow]
+    [classMap, shadow],
   );
+
+  const accessibleNameProps = ariaLabelledBy
+    ? { "aria-labelledby": ariaLabelledBy }
+    : ariaLabel
+      ? { "aria-label": ariaLabel }
+      : visibleLabelId
+        ? { "aria-labelledby": visibleLabelId }
+        : { "aria-label": "Loading" };
 
   return (
     <div
       className={wrapperClass}
-      role="status"
-      aria-live="polite"
-      aria-busy={true}
-      {...(visibleLabelId
-        ? { "aria-labelledby": visibleLabelId, "aria-label": label }
-        : { "aria-label": "Loading" })}
+      role={role}
+      aria-live={ariaLive}
+      aria-busy={ariaBusy}
+      aria-describedby={ariaDescribedBy}
       data-testid={testId}
+      {...accessibleNameProps}
     >
       <div
         className={shadowClass}
@@ -72,7 +85,7 @@ const SpinnerBase: React.FC<
         data-testid={`${testId}-ring`}
       />
 
-      {label && (
+      {label && !ariaLabelledBy && (
         <span
           id={visibleLabelId}
           className={classMap.label}

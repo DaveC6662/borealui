@@ -8,8 +8,10 @@ import { IconButtonProps } from "../IconButton/IconButton.types";
 export interface ModalProps {
   /** Additional class names for custom styling the modal content. */
   className?: string;
+
   /** The content to be rendered inside the modal. Expected to be a single React element. */
   children?: ReactElement;
+
   /** Optional modal title used for accessible labelling and default header content. */
   title?: ReactNode;
 
@@ -18,25 +20,54 @@ export interface ModalProps {
 
   /** Optional footer content. */
   footer?: ReactNode;
+
   /**
    * Rounding of the modal corners.
    * One of: "none" | "small" | "medium" | "large" | "full"
    */
   rounding?: RoundingType;
+
   /**
    * Shadow of the modal.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
    */
-
   shadow?: ShadowType;
+
   /**
    * Controls whether the modal is open.
    * - If omitted, the modal is considered open when rendered.
    * - If provided, the modal opens/closes based on this value.
    */
   open?: boolean;
+
   /** Callback function fired when the modal is closed. */
   onClose: () => void;
+
+  /**
+   * Accessible label for the modal dialog.
+   * Use this when the modal does not have a visible title or when you want
+   * to provide a custom accessible name for screen readers.
+   */
+  ariaLabel?: string;
+
+  /**
+   * The id of an element that labels the modal dialog.
+   * Prefer this when a visible heading or custom header should act as the dialog label.
+   */
+  ariaLabelledBy?: string;
+
+  /**
+   * The id of an element that describes the modal dialog.
+   * Useful for linking help text, instructions, or supporting content.
+   */
+  ariaDescribedBy?: string;
+
+  /**
+   * Accessible label for the close button.
+   * Defaults to "Close modal" in the base implementation.
+   */
+  closeButtonAriaLabel?: string;
+
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }

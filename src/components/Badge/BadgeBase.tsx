@@ -11,7 +11,13 @@ import {
 
 export const BadgeBase: React.FC<BadgeBaseProps> = ({
   children,
-  ariaLabel,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-live": ariaLive,
+  "aria-atomic": ariaAtomic,
+  role,
+  tabIndex,
   theme = getDefaultTheme(),
   state = "",
   disabled = false,
@@ -59,7 +65,6 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       disabled,
       outline,
       onClick,
-      href,
       className,
       classMap,
     ],
@@ -71,7 +76,18 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       e.stopPropagation();
       return;
     }
+
     onClick?.(e as MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
+  };
+
+  const sharedAccessibilityProps = {
+    ...(accessibleLabel ? { "aria-label": accessibleLabel } : {}),
+    ...(ariaLabelledBy ? { "aria-labelledby": ariaLabelledBy } : {}),
+    ...(ariaDescribedBy ? { "aria-describedby": ariaDescribedBy } : {}),
+    ...(ariaLive ? { "aria-live": ariaLive } : {}),
+    ...(ariaAtomic !== undefined ? { "aria-atomic": ariaAtomic } : {}),
+    ...(role ? { role } : {}),
+    ...(tabIndex !== undefined ? { tabIndex } : {}),
   };
 
   const inner = (
@@ -90,19 +106,19 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
 
   if (href) {
     const isHttp = /^https?:\/\//i.test(href);
+
     return (
       <a
         href={disabled ? undefined : href}
         className={combinedClassName}
         onClick={handleClick}
-        role="status"
         data-testid={testId ? `${testId}-main` : undefined}
         title={title ?? accessibleLabel}
-        {...(accessibleLabel ? { "aria-label": accessibleLabel } : {})}
         aria-disabled={disabled || undefined}
-        tabIndex={disabled ? -1 : 0}
+        tabIndex={disabled ? -1 : tabIndex}
         target={isHttp && !disabled ? "_blank" : undefined}
         rel={isHttp && !disabled ? "noopener noreferrer" : undefined}
+        {...sharedAccessibilityProps}
         {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {inner}
@@ -115,12 +131,11 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       <button
         type="button"
         className={combinedClassName}
-        role="status"
         onClick={handleClick}
         disabled={disabled}
         data-testid={testId ? `${testId}-main` : undefined}
         title={title ?? accessibleLabel}
-        {...(accessibleLabel ? { "aria-label": accessibleLabel } : {})}
+        {...sharedAccessibilityProps}
         {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
       >
         {inner}
@@ -133,8 +148,14 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       className={combinedClassName}
       data-testid={testId ? `${testId}-main` : undefined}
       title={title ?? accessibleLabel}
-      role="status"
+      role={role ?? "status"}
+      tabIndex={tabIndex}
       {...(accessibleLabel ? { "aria-label": accessibleLabel } : {})}
+      {...(ariaLabelledBy ? { "aria-labelledby": ariaLabelledBy } : {})}
+      {...(ariaDescribedBy ? { "aria-describedby": ariaDescribedBy } : {})}
+      {...(ariaLive ? { "aria-live": ariaLive } : {})}
+      {...(ariaAtomic !== undefined ? { "aria-atomic": ariaAtomic } : {})}
+      {...(rest as React.HTMLAttributes<HTMLSpanElement>)}
     >
       {inner}
     </span>

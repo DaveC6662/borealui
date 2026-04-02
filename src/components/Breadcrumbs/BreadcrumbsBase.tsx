@@ -16,7 +16,9 @@ import {
 
 export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   items,
-  ariaLabel = "Breadcrumbs",
+  "aria-label": ariaLabel = "Breadcrumbs",
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
@@ -31,16 +33,22 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   LinkComponent = "a",
   ButtonComponent = "button",
   "data-testid": testId = "breadcrumbs",
+  ...rest
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const handleExpand = () => setIsExpanded(true);
+
+  const handleExpand = () => {
+    setIsExpanded(true);
+  };
 
   if (!items || items.length === 0) return null;
 
   const visibleItems: Breadcrumb[] = useMemo(() => {
     if (isExpanded || !maxVisible || items.length <= maxVisible) return items;
+
     const first = items[0];
     const lastItems = items.slice(items.length - (maxVisible - 2));
+
     return [first, { label: ELLIPSIS_LABEL }, ...lastItems];
   }, [items, isExpanded, maxVisible]);
 
@@ -72,7 +80,10 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
 
   return (
     <nav
-      aria-label={ariaLabel}
+      {...rest}
+      aria-label={ariaLabelledBy ? undefined : ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       data-testid={testId ? `${testId}-nav-container` : undefined}
       className={breadcrumbsClass}
     >
@@ -85,12 +96,16 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
         {visibleItems.map((item, index) => {
           const isLast = index === visibleItems.length - 1;
           const isEllipsis = item.label === ELLIPSIS_LABEL;
+          const isItemDisabled = disabled || item.disabled;
 
           const itemClassName = combineClassNames(
             classMap.item,
             isExpanded && !isEllipsis && classMap.item_animate,
             isLast && classMap.item_active,
+            isItemDisabled && classMap.disabled,
           );
+
+          const itemTitle = item.title ?? item.label;
 
           return (
             <li
@@ -108,19 +123,24 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   className={classMap.ellipsis}
                   aria-label="Show all breadcrumbs"
                   aria-expanded={isExpanded}
-                  onClick={disabled ? undefined : handleExpand}
-                  disabled={disabled}
-                  tabIndex={disabled ? -1 : 0}
+                  aria-disabled={isItemDisabled || undefined}
+                  onClick={isItemDisabled ? undefined : handleExpand}
+                  disabled={isItemDisabled}
+                  tabIndex={isItemDisabled ? -1 : 0}
                   data-testid={testId ? `${testId}-ellipsis` : undefined}
                 >
                   {item.label}
                 </ButtonComponent>
               ) : item.href && !isLast ? (
-                disabled ? (
-                  // Disabled: render non-interactive label for links
+                isItemDisabled ? (
                   <span
-                    className={classMap.link_disabled}
-                    title={item.label}
+                    className={combineClassNames(
+                      classMap.link_disabled,
+                      classMap.current,
+                    )}
+                    title={itemTitle}
+                    aria-label={item["aria-label"]}
+                    aria-disabled="true"
                     itemProp="name"
                     data-testid={
                       testId ? `${testId}-nav-item-label` : undefined
@@ -132,7 +152,8 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   <LinkComponent
                     href={item.href}
                     className={classMap.link}
-                    title={item.label}
+                    title={itemTitle}
+                    aria-label={item["aria-label"]}
                     itemProp="item"
                     data-testid={
                       testId ? `${testId}-nav-item-label` : undefined
@@ -148,6 +169,8 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   className={classMap.current}
                   itemProp="name"
                   aria-current="page"
+                  aria-label={item["aria-label"]}
+                  title={itemTitle}
                   data-testid={
                     testId ? `${testId}-nav-item-current` : undefined
                   }
@@ -161,6 +184,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   {separator ?? <ArrowRightIcon />}
                 </span>
               )}
+
               <meta itemProp="position" content={`${index + 1}`} />
             </li>
           );

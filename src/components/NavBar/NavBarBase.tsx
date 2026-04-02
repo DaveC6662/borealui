@@ -25,6 +25,11 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   shadow = getDefaultShadow(),
   className = "",
   "data-testid": testId = "nav-bar",
+  "aria-label": ariaLabel = "Main navigation",
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "list-aria-label": listAriaLabel = "Main navigation items",
+  getItemAriaLabel,
 }) => {
   const wrapperClass = useMemo(
     () => combineClassNames(classMap.container, classMap[theme], className),
@@ -43,17 +48,28 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
 
   return (
     <nav
-      aria-label="Main navigation"
+      aria-label={ariaLabelledBy ? undefined : ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       className={wrapperClass}
       data-testid={`${testId}-nav-bar`}
     >
-      <ul className={classMap.list}>
+      <ul
+        className={classMap.list}
+        aria-label={listAriaLabel}
+        data-testid={`${testId}-nav-list`}
+      >
         {items.map((item) => {
           const isActive = isItemActive?.(item) ?? false;
           const slug = slugify(item.label || item.path);
+          const itemAriaLabel = getItemAriaLabel?.(item) ?? item.label;
 
           return (
-            <li key={`${item.path}-${slug}`} className={classMap.listItem}>
+            <li
+              key={`${item.path}-${slug}`}
+              className={classMap.listItem}
+              data-testid={`${testId}-nav-list-item-${slug}`}
+            >
               <LinkWrapper
                 href={item.path}
                 isActive={isActive}
@@ -63,6 +79,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
                 )}
                 data-testid={`${testId}-nav-item-${slug}`}
                 aria-current={isActive ? "page" : undefined}
+                aria-label={itemAriaLabel}
               >
                 <span className={classMap.linkContent}>
                   {item.icon && (

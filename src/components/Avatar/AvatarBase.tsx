@@ -5,6 +5,7 @@ import React, {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   forwardRef,
+  useId,
 } from "react";
 import { AvatarBaseProps } from "./Avatar.types";
 import { getInitials } from "../../utils/getInitials";
@@ -30,6 +31,7 @@ export const AvatarBase = forwardRef<
     disabled = false,
     href,
     status,
+    statusLabel,
     statusIcon,
     statusPosition = "bottomRight",
     fallback,
@@ -45,20 +47,51 @@ export const AvatarBase = forwardRef<
     ImageComponent = "img",
     LinkComponent = "a",
     classMap,
+    role,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    "aria-current": ariaCurrent,
     "data-testid": testId = "avatar",
     ...rest
   },
-  ref
+  ref,
 ) {
   const [imgError, setImgError] = useState(false);
+  const generatedStatusId = useId();
 
   const computedLabel = label || alt || name || "User avatar";
 
+  const describedBy = useMemo(() => {
+    const ids: string[] = [];
+
+    if (ariaDescribedBy) {
+      ids.push(ariaDescribedBy);
+    }
+
+    if (statusLabel && (status || statusIcon)) {
+      ids.push(generatedStatusId);
+    }
+
+    return ids.length > 0 ? ids.join(" ") : undefined;
+  }, [ariaDescribedBy, statusLabel, status, statusIcon, generatedStatusId]);
+
   const linkAria = {
-    "aria-label": computedLabel,
+    role,
+    "aria-label": ariaLabelledBy ? undefined : (ariaLabel ?? computedLabel),
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": describedBy,
+    "aria-current": ariaCurrent,
     "aria-disabled": disabled || undefined,
   } as const;
-  const buttonAria = { "aria-label": computedLabel } as const;
+
+  const buttonAria = {
+    role,
+    "aria-label": ariaLabelledBy ? undefined : (ariaLabel ?? computedLabel),
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": describedBy,
+    "aria-current": ariaCurrent,
+  } as const;
 
   const fallbackContent =
     fallback ??
@@ -80,7 +113,7 @@ export const AvatarBase = forwardRef<
         disabled && classMap.disabled,
         outline && classMap.outline,
         onClick && classMap.clickable,
-        className
+        className,
       ),
     [
       theme,
@@ -93,7 +126,7 @@ export const AvatarBase = forwardRef<
       onClick,
       className,
       classMap,
-    ]
+    ],
   );
 
   const isNextImage = typeof ImageComponent !== "string";
@@ -102,7 +135,7 @@ export const AvatarBase = forwardRef<
     !imgError && src ? (
       <ImageComponent
         src={src}
-        alt={computedLabel}
+        alt={alt || computedLabel}
         className={classMap.image}
         onError={() => setImgError(true)}
         {...(priority
@@ -114,9 +147,8 @@ export const AvatarBase = forwardRef<
     ) : (
       <span
         className={classMap.initials}
-        role="img"
-        aria-label={computedLabel}
         title={computedLabel}
+        aria-hidden={children ? true : undefined}
         data-testid={testId ? `${testId}-initials` : undefined}
       >
         {fallbackContent}
@@ -124,18 +156,30 @@ export const AvatarBase = forwardRef<
     );
 
   const statusIndicator = (status || statusIcon) && (
-    <span
-      className={combineClassNames(
-        classMap.status,
-        status && classMap[status],
-        statusIcon ? classMap.icon_only : undefined,
-        classMap[statusPosition]
-      )}
-      aria-hidden="true"
-      data-testid={testId ? `${testId}-status` : undefined}
-    >
-      {statusIcon || <span className={classMap.dot} />}
-    </span>
+    <>
+      <span
+        className={combineClassNames(
+          classMap.status,
+          status && classMap[status],
+          statusIcon ? classMap.icon_only : undefined,
+          classMap[statusPosition],
+        )}
+        aria-hidden="true"
+        data-testid={testId ? `${testId}-status` : undefined}
+      >
+        {statusIcon || <span className={classMap.dot} />}
+      </span>
+
+      {statusLabel ? (
+        <span
+          id={generatedStatusId}
+          className={classMap.srOnly}
+          data-testid={testId ? `${testId}-status-label` : undefined}
+        >
+          {statusLabel}
+        </span>
+      ) : null}
+    </>
   );
 
   const content = (
@@ -151,11 +195,13 @@ export const AvatarBase = forwardRef<
       e.stopPropagation();
       return;
     }
+
     onClick?.(e as MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
   };
 
   if (href) {
     const isHttp = /^https?:\/\//i.test(href);
+
     return LinkComponent === "a" ? (
       <a
         ref={ref as React.Ref<HTMLAnchorElement>}

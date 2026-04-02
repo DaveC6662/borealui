@@ -14,6 +14,7 @@ const IconButtonBase = forwardRef<
   IconButtonBaseProps
 >(function IconButtonBase(
   {
+    id,
     icon: Icon,
     theme = getDefaultTheme(),
     state = "",
@@ -24,7 +25,24 @@ const IconButtonBase = forwardRef<
     className = "",
     iconClassName = "",
     disabled = false,
-    ariaLabel,
+    rel,
+    target,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledby,
+    "aria-describedby": ariaDescribedby,
+    "aria-errormessage": ariaErrormessage,
+    "aria-invalid": ariaInvalid,
+    "aria-haspopup": ariaHaspopup,
+    "aria-expanded": ariaExpanded,
+    "aria-controls": ariaControls,
+    "aria-pressed": ariaPressed,
+    "aria-selected": ariaSelected,
+    "aria-checked": ariaChecked,
+    "aria-current": ariaCurrent,
+    "aria-busy": ariaBusy,
+    "aria-live": ariaLive,
+    "aria-atomic": ariaAtomic,
+    role,
     title,
     outline = false,
     rounding = getDefaultRounding(),
@@ -38,15 +56,21 @@ const IconButtonBase = forwardRef<
     tabIndex,
     ...rest
   },
-  ref
+  ref,
 ) {
-  const needsLabel = !ariaLabel && !title;
+  const needsLabel = !ariaLabel && !ariaLabelledby && !title;
   if (process.env.NODE_ENV === "development" && needsLabel) {
     console.warn(
-      "IconButtonBase: provide `ariaLabel` or `title` for icon-only buttons."
+      "IconButtonBase: provide `aria-label`, `aria-labelledby`, or `title` for icon-only buttons.",
     );
   }
-  const label = ariaLabel || title || undefined;
+
+  const resolvedLabel =
+    ariaLabel || (!ariaLabelledby ? title : undefined) || undefined;
+
+  const resolvedBusy = loading || ariaBusy || undefined;
+  const inert = disabled || loading;
+  const renderAsLink = !!href;
 
   const classNames = useMemo(
     () =>
@@ -58,35 +82,37 @@ const IconButtonBase = forwardRef<
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
-        (disabled || loading) && classMap.disabled,
-        className
+        inert && classMap.disabled,
+        className,
       ),
-    [
-      classMap,
-      theme,
-      state,
-      size,
-      shadow,
-      rounding,
-      outline,
-      disabled,
-      loading,
-      className,
-    ]
+    [classMap, theme, state, size, shadow, rounding, outline, inert, className],
   );
 
-  const sharedAria = {
-    "aria-label": label,
-    "aria-busy": loading || undefined,
+  const sharedAccessibilityProps = {
+    id,
+    role,
     title,
     "data-testid": testId,
+    "aria-label": resolvedLabel,
+    "aria-labelledby": ariaLabelledby,
+    "aria-describedby": ariaDescribedby,
+    "aria-errormessage": ariaErrormessage,
+    "aria-invalid": ariaInvalid,
+    "aria-haspopup": ariaHaspopup,
+    "aria-expanded": ariaExpanded,
+    "aria-controls": ariaControls,
+    "aria-pressed": ariaPressed,
+    "aria-selected": ariaSelected,
+    "aria-checked": ariaChecked,
+    "aria-current": ariaCurrent,
+    "aria-busy": resolvedBusy,
   } as const;
 
   const iconContent = (
     <span
       className={classMap.buttonLabel}
-      aria-live="polite"
-      aria-atomic="true"
+      aria-live={ariaLive ?? "polite"}
+      aria-atomic={ariaAtomic ?? true}
     >
       {loading ? (
         <>
@@ -104,19 +130,18 @@ const IconButtonBase = forwardRef<
     </span>
   );
 
-  const renderAsLink = !!href;
-  const inert = disabled || loading;
-
   if (renderAsLink) {
     const linkProps = {
       className: combineClassNames(classNames, classMap.link),
       ref: ref as React.Ref<HTMLAnchorElement>,
-      onClick: inert ? (e: React.MouseEvent) => e.preventDefault() : onClick,
+      onClick: inert
+        ? (e: React.MouseEvent<HTMLElement>) => e.preventDefault()
+        : onClick,
       onKeyDown,
       "aria-disabled": inert || undefined,
-      tabIndex: inert ? -1 : tabIndex,
-      ...sharedAria,
+      ...sharedAccessibilityProps,
       ...rest,
+      tabIndex: inert ? -1 : tabIndex,
     };
 
     if (isExternal) {
@@ -124,8 +149,8 @@ const IconButtonBase = forwardRef<
         <a
           {...linkProps}
           href={inert ? undefined : href}
-          target="_blank"
-          rel="noopener noreferrer"
+          target={target ?? "_blank"}
+          rel={rel ?? "noopener noreferrer"}
         >
           {iconContent}
         </a>
@@ -142,14 +167,16 @@ const IconButtonBase = forwardRef<
   return (
     <button
       type={type}
-      disabled={disabled || loading}
+      disabled={inert}
       className={classNames}
-      onClick={disabled ? (e) => e.preventDefault() : onClick}
+      onClick={inert ? (e) => e.preventDefault() : onClick}
       onKeyDown={onKeyDown}
       ref={ref as React.Ref<HTMLButtonElement>}
-      tabIndex={tabIndex}
-      {...sharedAria}
+      {...sharedAccessibilityProps}
       {...rest}
+      tabIndex={tabIndex}
+      target={target}
+      rel={rel}
     >
       {iconContent}
     </button>
