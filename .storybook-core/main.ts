@@ -8,11 +8,7 @@ const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
   stories: ["../stories-core/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
-  addons: [
-    "@storybook/addon-onboarding",
-    "@chromatic-com/storybook",
-    "@storybook/addon-docs"
-  ],
+  addons: ["@chromatic-com/storybook", "@storybook/addon-docs"],
   framework: {
     name: "@storybook/react-vite",
     options: {},
