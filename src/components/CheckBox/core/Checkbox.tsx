@@ -40,6 +40,7 @@ const classes = {
   roundMedium: "checkbox_round-Medium",
   roundLarge: "checkbox_round-Large",
 
+  labelWrapper: "checkbox_label-wrapper",
   label: "checkbox_label",
   input: "checkbox_input",
   box: "checkbox_box",
