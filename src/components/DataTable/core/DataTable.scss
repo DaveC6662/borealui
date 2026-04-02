@@ -70,6 +70,17 @@
     }
   }
 
+  .data_table_sort_button {
+    margin-left: var(--spacing-xxs);
+    background-color: transparent;
+    border: none;
+    color: var(--text-color-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+  }
+
   .data_table_sort_icon {
     margin-left: var(--spacing-xxs);
     font-size: 0.9em;
