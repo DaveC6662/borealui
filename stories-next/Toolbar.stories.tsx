@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { IconButton, Toolbar } from "../src/index.next";
 import { FaBell, FaArrowLeft } from "react-icons/fa";
 import type {

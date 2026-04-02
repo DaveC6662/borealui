@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Modal, Button } from "../src/index.next";
 import type { ModalProps } from "../src/components/Modal/Modal.types";
 import { RoundingType, ShadowType } from "../src/types/types";

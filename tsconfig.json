@@ -30,8 +30,11 @@
     "jest.setup.ts",
     "jest.config.ts",
     "global.d.ts",
+    "./src/types/scss.d.ts",
+    "./src/types/types.d.ts",
     "next.config.mjs",
-    ".storybook-core/types",
+    "stories-core/**/*",
+    "stories-next/**/*",
     "webpack.config.cjs",
     "scripts/buildEntryMap.js"
   ],

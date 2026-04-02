@@ -1,7 +1,7 @@
 // src/stories/Chip.stories.tsx
 
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Chip } from "../src/index.next";
 import { FaCheckCircle } from "react-icons/fa";
 import {

@@ -1,7 +1,7 @@
 // src/stories/ColorPicker.stories.tsx
 
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ColorPicker } from "../src/index.next";
 import type { ColorPickerProps } from "../src/components/ColorPicker/ColorPicker.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";

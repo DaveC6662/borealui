@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Checkbox } from "../src/index.next";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {

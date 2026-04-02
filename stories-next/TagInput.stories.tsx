@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { TagInput } from "../src/index.next";
 import type { TagInputProps } from "../src/components/TagInput/Taginput.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Spinner } from "../src/index.next";
 import type { SpinnerProps } from "../src/components/Spinner/Spinner.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

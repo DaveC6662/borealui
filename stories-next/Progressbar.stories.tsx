@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Progressbar } from "../src/index.next";
 import type { ProgressBarProps } from "../src/components/ProgressBar/ProgressBar.types";
 

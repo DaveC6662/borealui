@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Breadcrumbs } from "../src/index.next";
 import { FaArrowRight } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

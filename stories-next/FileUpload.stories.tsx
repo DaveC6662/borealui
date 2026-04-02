@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FileUpload } from "../src/index.next";
 import type { FileUploadProps } from "../src/components/FileUpload/FileUpload.types";
 

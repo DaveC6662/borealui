@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Slider } from "../src/index.next";
 import type { SliderProps } from "../src/components/Slider/Slider.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { RadioButton } from "../src/index.next";
 import type { RadioButtonProps } from "../src/components/RadioButton/RadioButton.types";
 

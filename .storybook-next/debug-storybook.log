@@ -1,0 +1,53 @@
+[12:24:15.866] [INFO] Storybook upgrade - v10.3.4
+[12:24:15.869] [INFO] detect-projects-spinner-start: Detecting projects...
+[12:24:15.870] [DEBUG] Finding Storybook projects...
+[12:24:15.877] [DEBUG] Found 0 Storybook projects
+[12:24:35.177] [PROMPT] No Storybook projects were found. Please enter the path to the .storybook directory for the project you want to upgrade. {"choice":"storybook-next"}
+[12:24:35.179] [INFO] detect-projects-spinner: Detecting projects: 1 projects
+[12:24:35.179] [DEBUG] Getting Storybook data...
+[12:24:35.179] [DEBUG] Getting Storybook info...
+[12:24:35.191] [DEBUG] SB_CORE-SERVER_0006 (MainFileMissingError): No configuration files have been found in your configDir: [33mstorybook-next[39m.
+Storybook needs a "main.js|ts" file, please add it.
+
+You can pass a --config-dir flag to tell Storybook, where your main.js|ts file is located at.
+
+More info: https://storybook.js.org/docs/configure?ref=error
+
+[12:24:35.191] [INFO] detect-projects-spinner-stop: 1 project detected
+[12:24:35.191] [DEBUG] Found 0 valid projects and 1 error projects
+[12:24:35.192] [ERROR] Failed to get projects
+[12:24:35.193] [ERROR] [38;2;241;97;97mError: ❌ Storybook found errors while collecting data for the following projects:
+storybook-next:
+SB_CORE-SERVER_0006 (MainFileMissingError): No configuration files have been found in your configDir: [33mstorybook-next[39m.
+Storybook needs a "main.js|ts" file, please add it.
+
+You can pass a --config-dir flag to tell Storybook, where your main.js|ts file is located at.
+
+More info: https://storybook.js.org/docs/configure?ref=error
+
+    at validateConfigurationFiles (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/storybook/dist/_node-chunks/chunk-3LP2BDDH.js:9971:11)
+    at async loadMainConfig (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/storybook/dist/_node-chunks/chunk-3LP2BDDH.js:11678:3)
+    at async getStorybookInfo (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/storybook/dist/_node-chunks/chunk-3LP2BDDH.js:11801:59)
+    at async getStorybookData (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/@storybook/cli/dist/_node-chunks/chunk-BE2AADWY.js:169:7)
+    at async processProject (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/@storybook/cli/dist/_node-chunks/chunk-BE2AADWY.js:304:9)
+Please fix the errors and run the upgrade command again.[39m
+    at getProjects (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/@storybook/cli/dist/_node-chunks/chunk-BE2AADWY.js:477:13)
+    at async upgrade (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/@storybook/cli/dist/_node-chunks/run-EN64L6LH.js:9480:24)
+    at async file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/@storybook/cli/dist/_node-chunks/run-EN64L6LH.js:9678:70
+    at async withTelemetry (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/storybook/dist/_node-chunks/chunk-HUYNFPPD.js:225:12)
+    at async Command.<anonymous> (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/@storybook/cli/dist/_node-chunks/run-EN64L6LH.js:9674:3)
+[12:24:35.809] [ERROR] Error: ❌ Storybook found errors while collecting data for the following projects:
+storybook-next:
+SB_CORE-SERVER_0006 (MainFileMissingError): No configuration files have been found in your configDir: [33mstorybook-next[39m.
+Storybook needs a "main.js|ts" file, please add it.
+
+You can pass a --config-dir flag to tell Storybook, where your main.js|ts file is located at.
+
+More info: https://storybook.js.org/docs/configure?ref=error
+
+    at validateConfigurationFiles (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/storybook/dist/_node-chunks/chunk-3LP2BDDH.js:9971:11)
+    at async loadMainConfig (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/storybook/dist/_node-chunks/chunk-3LP2BDDH.js:11678:3)
+    at async getStorybookInfo (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/storybook/dist/_node-chunks/chunk-3LP2BDDH.js:11801:59)
+    at async getStorybookData (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/@storybook/cli/dist/_node-chunks/chunk-BE2AADWY.js:169:7)
+    at async processProject (file:///C:/Users/davin/AppData/Local/npm-cache/_npx/f04738d1b719dc9c/node_modules/@storybook/cli/dist/_node-chunks/chunk-BE2AADWY.js:304:9)
+Please fix the errors and run the upgrade command again.

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FaPlus } from "react-icons/fa";
 import { Button } from "../src/index.next";
 import { ButtonProps } from "../src/components/Button/Button.types";

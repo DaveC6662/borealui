@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Tooltip, Button } from "../src/index.next";
 import type { TooltipProps } from "../src/components/Tooltip/Tooltip.types";
 

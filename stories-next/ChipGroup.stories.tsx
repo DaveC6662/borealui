@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ChipGroup } from "../src/index.next";
 import type {
   ChipGroupProps,

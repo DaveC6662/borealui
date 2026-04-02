@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { NotificationCenter } from "../src/index.next";
 import type {
   NotificationCenterProps,

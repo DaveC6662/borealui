@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { MessagePopup } from "../src/index.next";
 import type { MessagePopupProps } from "../src/components/MessagePopup/MessagePopup.types";
 import { RoundingType, ShadowType } from "../src/types/types";

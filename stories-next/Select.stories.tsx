@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Select } from "../src/index.next";
 import type { SelectProps } from "../src/components/Select/Select.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

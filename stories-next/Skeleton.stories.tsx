@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Skeleton } from "../src/index.next";
 import type { SkeletonProps } from "../src/components/Skeleton/Skeleton.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Divider } from "../src/index.next";
 import type { DividerProps } from "../src/components/Divider/Divider.types";
 

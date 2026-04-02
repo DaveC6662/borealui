@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Toggle } from "../src/index.next";
 import type { ToggleProps } from "../src/components/Toggle/Toggle.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

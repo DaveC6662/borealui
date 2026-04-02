@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Rating } from "../src/index.next";
 import type { RatingProps } from "../src/components/Rating/Rating.types";
 

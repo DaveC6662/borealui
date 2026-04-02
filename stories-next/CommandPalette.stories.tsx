@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { CommandPalette } from "../src/index.next";
 import type { CommandPaletteProps } from "../src/components/CommandPalette/CommandPalette.types";
 import { FaSearch, FaUser, FaCog } from "react-icons/fa";
