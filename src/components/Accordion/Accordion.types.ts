@@ -1,4 +1,4 @@
-import type { AriaAttributes, HTMLAttributes, ReactNode } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 import {
   RoundingType,
   ShadowType,
@@ -12,7 +12,7 @@ import {
  */
 export interface AccordionProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
-  "title" | "children"
+  "title" | "children" | "onToggle"
 > {
   /**
    * The title text displayed in the accordion header.

@@ -178,7 +178,6 @@ function DataTableBase<T extends object>({
     if (!activeColumn) return;
 
     announceSortChange(activeColumn, sortOrder);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

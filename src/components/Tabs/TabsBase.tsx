@@ -203,13 +203,8 @@ const TabsBase: React.FC<BaseTabsProps> = ({
           const Icon = tab.icon;
           const isActive = index === activeIndex;
           const disabled = isDisabled(index);
-
           const generatedTabId = `${baseId}-tab-${index}`;
-          const generatedPanelId = `${baseId}-panel-${index}`;
-
           const tabId = tab.id ?? generatedTabId;
-          const panelId = tab.panelId ?? generatedPanelId;
-
           return (
             <button
               key={`${tab.label}-${index}`}

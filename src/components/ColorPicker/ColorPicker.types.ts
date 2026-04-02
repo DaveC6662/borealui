@@ -1,4 +1,3 @@
-import type { AriaAttributes } from "react";
 import { ShadowType, SizeType } from "@/types/types";
 
 /**
