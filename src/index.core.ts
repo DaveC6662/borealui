@@ -2,6 +2,8 @@ import "./styles/globals.scss";
 
 export * from "./types/index";
 
+export * from "./generated-docs/index";
+
 export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
 export { registerColorScheme } from "./styles/colorSchemeRegistry";
 export { colorSchemes } from "./styles/Themes";

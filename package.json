@@ -157,6 +157,14 @@
     "./next/boreal-ui.css": {
       "default": "./dist/next/boreal-ui.css"
     },
+    "./docs": {
+      "types": "./dist/generated-docs/index.d.ts",
+      "default": "./dist/generated-docs/index.ts"
+    },
+    "./docs/*": {
+      "types": "./dist/generated-docs/*.d.ts",
+      "default": "./dist/generated-docs/*.ts"
+    },
     "./core/Accordion": {
       "types": "./dist/types/components/Accordion/core/Accordion.d.ts",
       "import": "./dist/core/Accordion.js",
