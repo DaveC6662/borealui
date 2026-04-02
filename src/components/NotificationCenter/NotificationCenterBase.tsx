@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { CloseIcon } from "../../Icons";
-import {
-  BaseNotificationCenterProps,
-  themeIcons,
-} from "./NotificationCenter.types";
+import { BaseNotificationCenterProps } from "./NotificationCenter.types";
+import { themeIcons } from "./NotificationCenter.constants";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {

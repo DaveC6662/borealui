@@ -1,9 +1,5 @@
 import React, { useMemo, useState } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbsBaseProps,
-  ELLIPSIS_LABEL,
-} from "./Breadcrumbs.types";
+import { Breadcrumb, BreadcrumbsBaseProps } from "./Breadcrumbs.types";
 import { combineClassNames } from "../../utils/classNames";
 import { ArrowRightIcon } from "../../Icons/index";
 import { capitalize } from "../../utils/capitalize";
@@ -13,6 +9,8 @@ import {
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
+
+const ELLIPSIS_LABEL = "…";
 
 export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   items,

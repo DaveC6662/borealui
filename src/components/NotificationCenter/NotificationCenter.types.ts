@@ -1,9 +1,3 @@
-import {
-  FaCheckCircle,
-  FaExclamationCircle,
-  FaInfoCircle,
-} from "react-icons/fa";
-import { IconType } from "react-icons";
 import { NotificationType, RoundingType, ShadowType } from "@/types/types";
 import { ButtonProps } from "../Button/Button.types";
 import { IconButtonProps } from "../IconButton/IconButton.types";
@@ -125,17 +119,6 @@ export interface NotificationCenterProps {
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
-
-/**
- * A mapping from notification types to their associated icon components.
- */
-export const themeIcons: Record<NotificationType, IconType> = {
-  general: FaInfoCircle,
-  success: FaCheckCircle,
-  error: FaExclamationCircle,
-  warning: FaExclamationCircle,
-  info: FaInfoCircle,
-};
 
 export interface BaseNotificationCenterProps extends NotificationCenterProps {
   Button: React.ComponentType<ButtonProps>;

@@ -132,11 +132,6 @@ export interface BreadcrumbsProps extends Omit<
   "data-testid"?: string;
 }
 
-/**
- * Label used to represent collapsed breadcrumb items.
- */
-export const ELLIPSIS_LABEL = "…";
-
 export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
   classMap: Record<string, string>;
   LinkComponent?: ElementType;
