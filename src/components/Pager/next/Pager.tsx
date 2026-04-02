@@ -4,9 +4,9 @@ import React from "react";
 import BasePager from "../PagerBase";
 import { Button, IconButton } from "@/index.next";
 import styles from "./Pager.module.scss";
-import { PaginationProps } from "../Pager.types";
+import { PagerProps } from "../Pager.types";
 
-const Pager: React.FC<PaginationProps> = (props) => {
+const Pager: React.FC<PagerProps> = (props) => {
   return (
     <BasePager
       {...props}

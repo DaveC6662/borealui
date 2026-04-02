@@ -68,14 +68,6 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
-      "name": "buttonProps",
-      "type": "Omit<ButtonHTMLAttributes<HTMLButtonElement>, \"disabled\" | \"title\" | \"type\" | \"className\" | \"aria-label\" | \"aria-labelledby\" | \"aria-describedby\" | \"onClick\">",
-      "description": "Optional props passed to the picker trigger button.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "className",
       "type": "string",
       "description": "Additional class name for custom styling.",
@@ -119,14 +111,6 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "name": "id",
       "type": "string",
       "description": "Custom input id.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "inputProps",
-      "type": "Omit<InputHTMLAttributes<HTMLInputElement>, \"disabled\" | \"name\" | \"type\" | \"value\" | \"defaultValue\" | \"onChange\" | \"min\" | \"max\" | ... 10 more ... | \"aria-required\">",
-      "description": "Optional props passed to the native input element.",
       "required": false,
       "inherited": false,
       "category": "props"

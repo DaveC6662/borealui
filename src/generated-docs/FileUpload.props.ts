@@ -140,14 +140,6 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
-      "name": "inputProps",
-      "type": "Omit<React.InputHTMLAttributes<HTMLInputElement>, \"disabled\" | \"type\" | \"onChange\" | \"required\" | \"aria-label\" | \"aria-labelledby\" | \"aria-describedby\" | ... 4 more ... | \"multiple\">",
-      "description": "Props passed directly to the native file input.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "label",
       "type": "string",
       "description": "Label displayed above the file input.",
@@ -220,14 +212,6 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
-      "name": "progressBarProps",
-      "type": "Omit<ProgressBarProps, \"value\" | \"theme\" | \"indeterminate\">",
-      "description": "Props passed directly to the progress bar.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "rejectedFilesAriaLabel",
       "type": "string",
       "description": "Accessible label for the rejected files list.",
@@ -242,14 +226,6 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "events"
-    },
-    {
-      "name": "removeButtonProps",
-      "type": "Omit<IconButtonProps, \"aria-label\" | \"onClick\" | \"icon\" | \"state\">",
-      "description": "Props passed directly to each remove-file button.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
     },
     {
       "name": "removeFileAriaLabel",
@@ -271,14 +247,6 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "name": "selectButtonAriaLabel",
       "type": "string",
       "description": "Accessible label for the upload trigger button.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "selectButtonProps",
-      "type": "Omit<ButtonProps, \"disabled\" | \"children\" | \"onClick\" | \"icon\" | \"theme\" | \"state\" | \"rounding\" | \"shadow\" | \"outline\">",
-      "description": "Props passed directly to the select-file button.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -311,14 +279,6 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "name": "uploadButtonAriaLabel",
       "type": "string",
       "description": "Accessible label for the submit/upload button.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "uploadButtonProps",
-      "type": "Omit<ButtonProps, \"disabled\" | \"children\" | \"onClick\" | \"theme\" | \"state\" | \"loading\">",
-      "description": "Props passed directly to the upload button.",
       "required": false,
       "inherited": false,
       "category": "props"

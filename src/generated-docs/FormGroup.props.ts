@@ -60,14 +60,6 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
-      "name": "controlProps",
-      "type": "FormGroupControlProps",
-      "description": "Optional props merged into each child control.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "data-testid",
       "type": "string",
       "description": "Optional test ID for testing frameworks.",
@@ -84,25 +76,9 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
-      "name": "descriptionProps",
-      "type": "HTMLAttributes<HTMLParagraphElement>",
-      "description": "Optional props applied to the description element.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "error",
       "type": "string",
       "description": "Optional error message shown below the input.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "errorProps",
-      "type": "HTMLAttributes<HTMLParagraphElement>",
-      "description": "Optional props applied to the error element.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -127,14 +103,6 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "name": "label",
       "type": "string",
       "description": "Label for the input field.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "labelProps",
-      "type": "Omit<LabelHTMLAttributes<HTMLLabelElement>, \"id\" | \"htmlFor\">",
-      "description": "Optional props applied to the rendered label element.",
       "required": false,
       "inherited": false,
       "category": "props"

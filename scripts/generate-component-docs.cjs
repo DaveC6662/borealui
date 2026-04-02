@@ -3,7 +3,7 @@
 const path = require("path");
 const fs = require("fs/promises");
 const fg = require("fast-glob");
-const { Project, Node } = require("ts-morph");
+const { Project, Node, SyntaxKind } = require("ts-morph");
 
 const TypeFormatFlagsForDocs = {
   NoTruncation: 1,
@@ -32,6 +32,8 @@ function cleanPropName(name) {
 }
 
 function getJsDocText(node) {
+  if (!node || typeof node.getJsDocs !== "function") return "";
+
   const docs = node.getJsDocs();
   if (!docs.length) return "";
 
@@ -81,8 +83,42 @@ function isInternalPropName(name) {
   ].includes(name);
 }
 
+function shouldExcludeProp(name, typeText) {
+  if (isInternalPropName(name)) return true;
+
+  // Exclude nested prop bags like buttonProps, inputProps, menuProps, etc.
+  if (/Props$/.test(name)) return true;
+
+  // Exclude renderer / wrapper / injected implementation details
+  if (/(Component|Renderer|Render|Wrapper)$/.test(name)) return true;
+
+  // Exclude HTML passthrough bags
+  if (
+    /^(button|input|trigger|menu|dialog|popover|content|label|wrapper|container|root)[A-Z].*Props$/.test(
+      name,
+    ) ||
+    /^(button|input|trigger|menu|dialog|popover|content|label|wrapper|container|root)Props$/.test(
+      name,
+    )
+  ) {
+    return true;
+  }
+
+  // Exclude prop bags whose type is HTML attribute passthrough
+  if (
+    /^(Omit|Pick|Partial|Required|Readonly)</.test(typeText) &&
+    /(HTMLAttributes|ButtonHTMLAttributes|InputHTMLAttributes|TextareaHTMLAttributes|SelectHTMLAttributes|LabelHTMLAttributes|AriaAttributes)/.test(
+      typeText,
+    )
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 function categorizeProp(name, typeText) {
-  if (isInternalPropName(name)) return "internal";
+  if (shouldExcludeProp(name, typeText)) return "internal";
 
   if (name.startsWith("aria-") || /^aria[A-Z]/.test(name) || name === "role") {
     return "aria";
@@ -113,7 +149,7 @@ function categorizeProp(name, typeText) {
   return "props";
 }
 
-function shouldSkipInterface(name) {
+function shouldSkipPropsLikeName(name) {
   return (
     !/Props$/.test(name) ||
     /^Base[A-Z]/.test(name) ||
@@ -125,48 +161,205 @@ function shouldSkipInterface(name) {
   );
 }
 
-function getExpectedInterfaceNameFromFile(filePath) {
+function getExpectedPropsNameFromFile(filePath) {
   const base = path.basename(filePath, ".types.ts");
   return `${base}Props`;
 }
 
-function getComponentNameFromInterface(interfaceName) {
-  return interfaceName.replace(/Props$/, "");
+function getComponentNameFromPropsName(propsName) {
+  return propsName.replace(/Props$/, "");
 }
 
 function toExportName(componentName) {
   return `${componentName.charAt(0).toLowerCase()}${componentName.slice(1)}PropDocs`;
 }
 
-function getPropDocsFromOwnMembers(iface) {
-  const props = [];
+function makePropDoc(member, inherited = false) {
+  const name = cleanPropName(member.getName());
 
-  for (const member of iface.getMembers()) {
-    if (!Node.isPropertySignature(member)) continue;
+  let typeText = member.getType().getText(member, TypeFormatFlagsForDocs);
+  typeText = simplifyTypeText(typeText);
 
-    const name = cleanPropName(member.getName());
+  const description = getJsDocText(member);
+  const required = !member.hasQuestionToken();
+  const category = categorizeProp(name, typeText);
+  const internal = category === "internal";
 
-    let typeText = member.getType().getText(member, TypeFormatFlagsForDocs);
-    typeText = simplifyTypeText(typeText);
+  if (internal) return null;
 
-    const description = getJsDocText(member);
-    const required = !member.hasQuestionToken();
-    const category = categorizeProp(name, typeText);
-    const internal = category === "internal";
+  return {
+    name,
+    type: typeText,
+    description,
+    required,
+    inherited,
+    category,
+  };
+}
 
-    if (internal) continue;
+function mergePropDocs(existingProps, newProps) {
+  const map = new Map();
 
-    props.push({
-      name,
-      type: typeText,
+  for (const prop of existingProps) {
+    map.set(prop.name, prop);
+  }
+
+  for (const prop of newProps) {
+    if (!prop) continue;
+
+    if (!map.has(prop.name)) {
+      map.set(prop.name, prop);
+      continue;
+    }
+
+    const existing = map.get(prop.name);
+
+    // Prefer richer description
+    const description =
+      existing.description &&
+      existing.description.length >= prop.description.length
+        ? existing.description
+        : prop.description;
+
+    // If the prop appears optional in one branch and required in another,
+    // keep it optional for the union doc surface.
+    const required = existing.required && prop.required;
+
+    // Prefer non-inherited over inherited
+    const inherited = existing.inherited && prop.inherited;
+
+    map.set(prop.name, {
+      ...existing,
       description,
       required,
-      inherited: false,
-      category,
+      inherited,
     });
   }
 
+  return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function getPropertySignaturesFromTypeLiteral(typeLiteralNode) {
+  return typeLiteralNode
+    .getMembers()
+    .filter((member) => Node.isPropertySignature(member));
+}
+
+function getPropertySignaturesFromInterfaceDeclaration(interfaceDecl) {
+  return interfaceDecl
+    .getMembers()
+    .filter((member) => Node.isPropertySignature(member));
+}
+
+function getPropertySignaturesFromIntersection(typeNode, sourceFile) {
+  let props = [];
+
+  for (const part of typeNode.getTypeNodes()) {
+    props = mergePropDocs(props, getPropDocsFromTypeNode(part, sourceFile));
+  }
+
+  return props;
+}
+
+function getPropertySignaturesFromUnion(typeNode, sourceFile) {
+  let props = [];
+
+  for (const part of typeNode.getTypeNodes()) {
+    props = mergePropDocs(props, getPropDocsFromTypeNode(part, sourceFile));
+  }
+
+  return props;
+}
+
+function resolveTypeReferenceNode(typeRefNode, sourceFile) {
+  const typeNameNode = typeRefNode.getTypeName();
+  const typeName = typeNameNode.getText();
+
+  const localInterface = sourceFile.getInterface(typeName);
+  if (localInterface) {
+    return {
+      kind: "interface",
+      node: localInterface,
+    };
+  }
+
+  const localTypeAlias = sourceFile.getTypeAlias(typeName);
+  if (localTypeAlias) {
+    return {
+      kind: "typeAlias",
+      node: localTypeAlias,
+    };
+  }
+
+  return null;
+}
+
+function getPropDocsFromInterface(iface, inherited = false) {
+  const props = [];
+
+  for (const member of getPropertySignaturesFromInterfaceDeclaration(iface)) {
+    const propDoc = makePropDoc(member, inherited);
+    if (propDoc) props.push(propDoc);
+  }
+
   return props.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function getPropDocsFromTypeLiteral(typeLiteralNode, inherited = false) {
+  const props = [];
+
+  for (const member of getPropertySignaturesFromTypeLiteral(typeLiteralNode)) {
+    const propDoc = makePropDoc(member, inherited);
+    if (propDoc) props.push(propDoc);
+  }
+
+  return props.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function getPropDocsFromTypeNode(typeNode, sourceFile, inherited = false) {
+  if (!typeNode) return [];
+
+  if (Node.isTypeLiteral(typeNode)) {
+    return getPropDocsFromTypeLiteral(typeNode, inherited);
+  }
+
+  if (Node.isIntersectionTypeNode(typeNode)) {
+    return getPropertySignaturesFromIntersection(typeNode, sourceFile);
+  }
+
+  if (Node.isUnionTypeNode(typeNode)) {
+    return getPropertySignaturesFromUnion(typeNode, sourceFile);
+  }
+
+  if (Node.isTypeReference(typeNode)) {
+    const resolved = resolveTypeReferenceNode(typeNode, sourceFile);
+    if (!resolved) return [];
+
+    if (resolved.kind === "interface") {
+      return getPropDocsFromInterface(resolved.node, true);
+    }
+
+    if (resolved.kind === "typeAlias") {
+      return getPropDocsFromTypeAlias(resolved.node, sourceFile, true);
+    }
+  }
+
+  if (typeNode.getKind() === SyntaxKind.ParenthesizedType) {
+    return getPropDocsFromTypeNode(
+      typeNode.getTypeNode(),
+      sourceFile,
+      inherited,
+    );
+  }
+
+  return [];
+}
+
+function getPropDocsFromTypeAlias(typeAlias, sourceFile, inherited = false) {
+  const typeNode = typeAlias.getTypeNode();
+  if (!typeNode) return [];
+
+  return getPropDocsFromTypeNode(typeNode, sourceFile, inherited);
 }
 
 function buildTypesFile() {
@@ -232,6 +425,69 @@ async function ensureDir(dirPath) {
   await fs.mkdir(dirPath, { recursive: true });
 }
 
+function getCandidateInterfaces(sourceFile) {
+  return sourceFile
+    .getInterfaces()
+    .filter(
+      (candidate) =>
+        candidate.isExported() && !shouldSkipPropsLikeName(candidate.getName()),
+    );
+}
+
+function getCandidateTypeAliases(sourceFile) {
+  return sourceFile
+    .getTypeAliases()
+    .filter(
+      (candidate) =>
+        candidate.isExported() && !shouldSkipPropsLikeName(candidate.getName()),
+    );
+}
+
+function findBestPropsDeclaration(sourceFile, expectedPropsName) {
+  const interfaces = getCandidateInterfaces(sourceFile);
+  const typeAliases = getCandidateTypeAliases(sourceFile);
+
+  const exactInterface = interfaces.find(
+    (candidate) => candidate.getName() === expectedPropsName,
+  );
+  if (exactInterface) {
+    return { kind: "interface", node: exactInterface };
+  }
+
+  const exactTypeAlias = typeAliases.find(
+    (candidate) => candidate.getName() === expectedPropsName,
+  );
+  if (exactTypeAlias) {
+    return { kind: "typeAlias", node: exactTypeAlias };
+  }
+
+  const caseInsensitiveInterface = interfaces.find(
+    (candidate) =>
+      candidate.getName().toLowerCase() === expectedPropsName.toLowerCase(),
+  );
+  if (caseInsensitiveInterface) {
+    return { kind: "interface", node: caseInsensitiveInterface };
+  }
+
+  const caseInsensitiveTypeAlias = typeAliases.find(
+    (candidate) =>
+      candidate.getName().toLowerCase() === expectedPropsName.toLowerCase(),
+  );
+  if (caseInsensitiveTypeAlias) {
+    return { kind: "typeAlias", node: caseInsensitiveTypeAlias };
+  }
+
+  if (interfaces[0]) {
+    return { kind: "interface", node: interfaces[0] };
+  }
+
+  if (typeAliases[0]) {
+    return { kind: "typeAlias", node: typeAliases[0] };
+  }
+
+  return null;
+}
+
 async function main() {
   const project = new Project({
     tsConfigFilePath: config.tsConfigFilePath,
@@ -263,28 +519,25 @@ async function main() {
     const sourceFile =
       project.getSourceFile(filePath) || project.addSourceFileAtPath(filePath);
 
-    const expectedInterfaceName = getExpectedInterfaceNameFromFile(filePath);
+    const expectedPropsName = getExpectedPropsNameFromFile(filePath);
+    const declaration = findBestPropsDeclaration(sourceFile, expectedPropsName);
 
-    const iface = sourceFile
-      .getInterfaces()
-      .find(
-        (candidate) =>
-          candidate.isExported() &&
-          candidate.getName() === expectedInterfaceName &&
-          !shouldSkipInterface(candidate.getName()),
-      );
+    if (!declaration) continue;
 
-    if (!iface) continue;
+    const propsName = declaration.node.getName();
+    const componentName = getComponentNameFromPropsName(propsName);
 
-    const interfaceName = iface.getName();
-    const componentName = getComponentNameFromInterface(interfaceName);
+    const props =
+      declaration.kind === "interface"
+        ? getPropDocsFromInterface(declaration.node, false)
+        : getPropDocsFromTypeAlias(declaration.node, sourceFile, false);
 
     const doc = {
       name: componentName,
-      interfaceName,
-      description: getJsDocText(iface),
+      interfaceName: propsName,
+      description: getJsDocText(declaration.node),
       sourcePath: path.relative(process.cwd(), filePath),
-      props: getPropDocsFromOwnMembers(iface),
+      props,
     };
 
     const outputFile = path.join(config.outputDir, `${componentName}.props.ts`);

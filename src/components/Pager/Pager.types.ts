@@ -11,7 +11,7 @@ import { IconButtonProps } from "../IconButton/IconButton.types";
 /**
  * Props for the Pager (pagination) component.
  */
-export interface PaginationProps {
+export interface PagerProps {
   /** Total number of items to paginate through. */
   totalItems: number;
 
@@ -91,7 +91,7 @@ export interface PaginationProps {
   "data-testid"?: string;
 }
 
-export interface BasePagerProps extends PaginationProps {
+export interface BasePagerProps extends PagerProps {
   Button: React.ComponentType<ButtonProps>;
   IconButton: React.ComponentType<IconButtonProps>;
   classMap: Record<string, string>;

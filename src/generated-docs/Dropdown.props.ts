@@ -124,14 +124,6 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
-      "name": "menuProps",
-      "type": "Omit<React.HTMLProps<HTMLDivElement>, \"role\" | \"id\" | \"children\">",
-      "description": "Extra props applied to the menu container.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "menuRounding",
       "type": "RoundingType",
       "description": "Rounding of the dropdown menu ('none' | 'small' | 'medium' | 'large' | 'full').",
@@ -207,14 +199,6 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "name": "triggerId",
       "type": "string",
       "description": "Optional id for the trigger element.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "triggerProps",
-      "type": "Omit<IconButtonProps, \"aria-label\" | \"aria-labelledby\" | \"aria-describedby\" | \"aria-controls\" | \"aria-expanded\" | \"aria-haspopup\" | \"onClick\" | \"icon\" | ... 4 more ... | \"outline\">",
-      "description": "Extra props applied to the trigger IconButton. Keeps accessibility flexible without bloating the main API.",
       "required": false,
       "inherited": false,
       "category": "props"
