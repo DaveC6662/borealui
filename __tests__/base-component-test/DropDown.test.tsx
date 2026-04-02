@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import BaseDropdown from "@/components/Dropdown/DropdownBase";
 import { FaEllipsisV, FaUser, FaSignOutAlt, FaCog } from "react-icons/fa";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { DummyIconButton } from "./test-utils/dummyComponents";
+import { DummyIconButton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

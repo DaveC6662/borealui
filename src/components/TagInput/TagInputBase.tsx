@@ -17,8 +17,10 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
+const EMPTY_TAGS: string[] = [];
+
 const TagInputBase: React.FC<TagInputBaseProps> = ({
-  tags = [],
+  tags = EMPTY_TAGS,
   "aria-label": ariaLabel = "Tag Input",
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
@@ -63,7 +65,16 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    setInternalTags(tags);
+    setInternalTags((prev) => {
+      if (
+        prev.length === tags.length &&
+        prev.every((tag, index) => tag === tags[index])
+      ) {
+        return prev;
+      }
+
+      return tags;
+    });
   }, [tags]);
 
   const tagList = internalTags;

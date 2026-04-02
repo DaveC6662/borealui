@@ -3,7 +3,7 @@ import { render, screen, fireEvent, act } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { FaBell, FaTimes } from "react-icons/fa";
 import ChipBase from "@/components/Chip/ChipBase";
-import { DummyIconButton } from "./test-utils/dummyComponents";
+import { DummyIconButton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

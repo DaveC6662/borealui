@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import StepperBase from "@/components/Stepper/StepperBase";
 import { StepperBaseProps } from "@/components/Stepper/Stepper.types";
-import { DummyIconButton } from "./test-utils/dummyComponents";
+import { DummyIconButton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

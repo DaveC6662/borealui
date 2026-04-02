@@ -60,6 +60,13 @@ export const DummyButton = React.forwardRef<
       href,
       theme,
       outline,
+      state,
+      rounding,
+      shadow,
+      size,
+      loading,
+      isExternal,
+      onClick,
       ...props
     },
     ref,
@@ -72,6 +79,10 @@ export const DummyButton = React.forwardRef<
           data-outline={outline ? "true" : "false"}
           href={href}
           aria-label={ariaLabel}
+          onClick={(e) => {
+            e.preventDefault();
+            onClick?.(e as React.MouseEvent<HTMLElement>);
+          }}
           tabIndex={disabled ? -1 : undefined}
           aria-disabled={disabled ? "true" : undefined}
           {...props}
@@ -88,6 +99,7 @@ export const DummyButton = React.forwardRef<
         data-theme={theme}
         data-outline={outline ? "true" : "false"}
         aria-label={ariaLabel}
+        onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
         disabled={disabled}
         {...props}
       >
@@ -113,46 +125,63 @@ DummyButton.displayName = "DummyButton";
 export const DummyIconButton = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
   IconButtonProps
->(({ icon: Icon, href, disabled, ...props }, ref) => {
-  const testId = props["data-testid"];
+>(
+  (
+    {
+      icon: Icon,
+      href,
+      disabled,
+      outline,
+      theme,
+      state,
+      rounding,
+      shadow,
+      size,
+      loading,
+      isExternal,
+      tooltip,
+      rel,
+      target,
+      onClick,
+      ...props
+    },
+    ref,
+  ) => {
+    const testId = props["data-testid"];
 
-  if (href) {
+    if (href) {
+      return (
+        <a
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          href={disabled ? undefined : href}
+          tabIndex={disabled ? -1 : props.tabIndex}
+          aria-disabled={disabled || undefined}
+          rel={rel}
+          onClick={(e) => {
+            e.preventDefault();
+            onClick?.(e as React.MouseEvent<HTMLElement>);
+          }}
+          target={target}
+          {...props}
+        >
+          {Icon ? <Icon data-testid={`${testId}-icon`} /> : null}
+        </a>
+      );
+    }
+
     return (
-      <a
-        ref={ref as React.Ref<HTMLAnchorElement>}
+      <button
+        ref={ref as React.Ref<HTMLButtonElement>}
+        type="button"
+        disabled={disabled}
+        onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
         {...props}
-        href={disabled ? undefined : href}
-        tabIndex={disabled ? -1 : undefined}
-        aria-disabled={disabled ? "true" : undefined}
       >
-        {Icon && (
-          <Icon
-            aria-hidden={true}
-            focusable={false}
-            data-testid={testId ? `${testId}-icon` : undefined}
-          />
-        )}
-      </a>
+        {Icon ? <Icon data-testid={`${testId}-icon`} /> : null}
+      </button>
     );
-  }
-
-  return (
-    <button
-      ref={ref as React.Ref<HTMLButtonElement>}
-      {...props}
-      type={props.type ?? "button"}
-      disabled={disabled}
-    >
-      {Icon && (
-        <Icon
-          aria-hidden={true}
-          focusable={false}
-          data-testid={testId ? `${testId}-icon` : undefined}
-        />
-      )}
-    </button>
-  );
-});
+  },
+);
 
 DummyIconButton.displayName = "DummyIconButton";
 

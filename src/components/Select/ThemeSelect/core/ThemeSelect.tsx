@@ -28,7 +28,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
           value: String(index),
           label: scheme.name,
         })),
-      [schemes]
+      [schemes],
     );
 
     return (
@@ -41,14 +41,14 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
           options={options}
           data-testid={testId}
           value={String(selectedScheme)}
-          ariaLabel="Select Theme"
+          aria-label="Select Theme"
           onChange={(value: string | number) =>
             setSelectedScheme(parseInt(String(value), 10))
           }
         />
       </div>
     );
-  }
+  },
 );
 UserThemeSettings.displayName = "UserThemeSettings";
 export default UserThemeSettings;

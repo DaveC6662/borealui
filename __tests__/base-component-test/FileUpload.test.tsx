@@ -14,7 +14,7 @@ import {
   DummyFormGroup,
   DummyIconButton,
   DummyProgressBar,
-} from "./test-utils/dummyComponents";
+} from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 
@@ -87,7 +87,6 @@ const renderFileUpload = (
 
 describe("BaseFileUpload", () => {
   afterEach(() => {
-    jest.runOnlyPendingTimers();
     jest.useRealTimers();
     jest.clearAllMocks();
   });

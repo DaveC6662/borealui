@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import BasePager from "@/components/Pager/PagerBase";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { DummyButton, DummyIconButton } from "./test-utils/dummyComponents";
+import { DummyButton, DummyIconButton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

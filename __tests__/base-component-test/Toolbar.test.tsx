@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import ToolbarBase from "@/components/Toolbar/ToolbarBase";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { jest } from "@jest/globals";
-import { DummyAvatar } from "./test-utils/dummyComponents";
+import { DummyAvatar } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

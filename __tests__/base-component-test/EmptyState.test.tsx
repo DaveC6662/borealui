@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseEmptyState from "@/components/EmptyState/EmptyStateBase";
 import { FaRegSmile } from "react-icons/fa";
-import { DummyButton } from "./test-utils/dummyComponents";
+import { DummyButton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

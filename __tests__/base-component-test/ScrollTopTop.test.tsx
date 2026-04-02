@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import ScrollToTopBase from "@/components/ScrollToTop/ScrollToTopBase";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { DummyIcon } from "./test-utils/dummyComponents";
+import { DummyIcon } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 
@@ -193,7 +193,7 @@ describe("ScrollToTopBase", () => {
 
     await screen.findByTestId("scroll-button");
 
-    const icon = screen.getByTestId("scroll-icon");
+    const icon = screen.getByTestId("dummy-icon");
     expect(icon).toBeInTheDocument();
     expect(icon).toHaveClass("icon");
     expect(icon).toHaveAttribute("aria-hidden", "true");

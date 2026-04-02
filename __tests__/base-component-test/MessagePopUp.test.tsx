@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseMessagePopup from "@/components/MessagePopup/MessagePopupBase";
-import { DummyButton, DummyIconButton } from "./test-utils/dummyComponents";
+import { DummyButton, DummyIconButton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

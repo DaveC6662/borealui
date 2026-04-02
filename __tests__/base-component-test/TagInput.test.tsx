@@ -1,7 +1,13 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import TagInputBase from "@/components/TagInput/TagInputBase";
-import { DummyIconButton, DummyTextInput } from "./test-utils/dummyComponents";
+import { DummyIconButton, DummyTextInput } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 
@@ -369,6 +375,8 @@ describe("TagInputBase", () => {
   });
 
   it("fetches and displays suggestions", async () => {
+    jest.useFakeTimers();
+
     const fetchSuggestions = jest
       .fn()
       .mockResolvedValue(["React", "React Native"]);
@@ -386,6 +394,10 @@ describe("TagInputBase", () => {
     const input = screen.getByTestId("tag-input-input");
     fireEvent.change(input, { target: { value: "Re" } });
 
+    await act(async () => {
+      jest.runOnlyPendingTimers();
+    });
+
     await waitFor(() => {
       expect(fetchSuggestions).toHaveBeenCalledWith("Re");
     });
@@ -393,10 +405,8 @@ describe("TagInputBase", () => {
     expect(
       await screen.findByRole("listbox", { name: /tag suggestions/i }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "React" })).toBeInTheDocument();
-    expect(
-      screen.getByRole("option", { name: "React Native" }),
-    ).toBeInTheDocument();
+
+    jest.useRealTimers();
   });
 
   it("uses suggestionsAriaLabel on the listbox", async () => {

@@ -175,8 +175,6 @@ const IconButtonBase = forwardRef<
       {...sharedAccessibilityProps}
       {...rest}
       tabIndex={tabIndex}
-      target={target}
-      rel={rel}
     >
       {iconContent}
     </button>

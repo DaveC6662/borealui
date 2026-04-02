@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { BadgeBase } from "@/components/Badge/BadgeBase";
-import { DummyIcon } from "./test-utils/dummyComponents";
+import { DummyIcon } from "../test-utils/dummyComponents";
 import { BadgeBaseProps } from "@/components/Badge/Badge.types";
 
 expect.extend(toHaveNoViolations);

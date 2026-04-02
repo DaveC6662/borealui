@@ -9,7 +9,7 @@ jest.mock("uuid", () => ({
 import ChipGroupBase from "@/components/Chip/ChipGroup/ChipGroupBase";
 import type { ChipGroupRef } from "@/components/Chip/ChipGroup/ChipGroup.types";
 import type { ChipProps } from "@/components/Chip/Chip.types";
-import { DummyChip } from "./test-utils/dummyComponents";
+import { DummyChip } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

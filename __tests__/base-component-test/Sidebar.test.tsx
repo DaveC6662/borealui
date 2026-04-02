@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import SidebarBase from "../src/components/Sidebar/SidebarBase";
+import SidebarBase from "../../src/components/Sidebar/SidebarBase";
 
 expect.extend(toHaveNoViolations);
 

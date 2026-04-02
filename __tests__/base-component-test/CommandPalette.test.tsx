@@ -11,7 +11,7 @@ import { axe, toHaveNoViolations } from "jest-axe";
 import "@testing-library/jest-dom";
 
 import CommandPaletteBase from "@/components/CommandPalette/CommandPaletteBase";
-import { DummyTextInput } from "./test-utils/dummyComponents";
+import { DummyTextInput } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

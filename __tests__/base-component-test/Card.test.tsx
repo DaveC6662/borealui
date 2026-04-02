@@ -8,7 +8,7 @@ import {
   DummyIconButton,
   DummyImage,
   DummySkeleton,
-} from "./test-utils/dummyComponents";
+} from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

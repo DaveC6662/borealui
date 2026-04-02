@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import BaseModal from "@/components/Modal/ModalBase";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { DummyIconButton } from "./test-utils/dummyComponents";
+import { DummyIconButton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

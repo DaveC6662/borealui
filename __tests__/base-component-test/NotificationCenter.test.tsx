@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseNotificationCenter from "@/components/NotificationCenter/NotificationCenterBase";
-import { DummyButton, DummyIconButton } from "./test-utils/dummyComponents";
+import { DummyButton, DummyIconButton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

@@ -7,7 +7,7 @@ import { FaGithub, FaTwitter } from "react-icons/fa";
 import {
   DummyIconButton,
   DummyThemeSelect,
-} from "./test-utils/dummyComponents";
+} from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

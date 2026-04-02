@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { BreadcrumbsBase } from "@/components/Breadcrumbs/BreadcrumbsBase";
 import { ELLIPSIS_LABEL } from "@/components/Breadcrumbs/Breadcrumbs.types";
-import { DummyButton, DummyLinkComponent } from "./test-utils/dummyComponents";
+import { DummyButton, DummyLinkComponent } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 

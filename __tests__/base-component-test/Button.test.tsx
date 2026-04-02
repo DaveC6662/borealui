@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import ButtonBase from "../src/components/Button/ButtonBase";
+import ButtonBase from "../../src/components/Button/ButtonBase";
 import { FaStar } from "react-icons/fa";
 
 expect.extend(toHaveNoViolations);
