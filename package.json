@@ -20,10 +20,11 @@
     "boreal": "ts-node ./scripts/boreal.cjs",
     "build:core": "vite build --config vite.config.core.ts",
     "build:next": "vite build --config vite.config.next.ts",
+    "build:docs": "tsc -p tsconfig.docs.json",
     "build:types": "tsc -p tsconfig.build.json",
     "build:types:public": "tsc -p tsconfig.build.json && node scripts/generateTypesBarrel.cjs",
     "build:css-next": "sass --load-path=node_modules src/styles/globals.scss src/styles/style.css --no-source-map",
-    "build": "npm run clean && npm run build:core && npm run build:next && npm run build:types && npm run build:types:public",
+    "build": "npm run clean && npm run build:core && npm run build:next && npm run build:docs && npm run build:types && npm run build:types:public",
     "lint:styles": "stylelint '**/*.{css,scss}'",
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
     "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
@@ -158,12 +159,12 @@
       "default": "./dist/next/boreal-ui.css"
     },
     "./docs": {
-      "types": "./dist/generated-docs/index.d.ts",
-      "default": "./dist/generated-docs/index.ts"
+      "types": "./dist/types/generated-docs/*.d.ts",
+      "default": "./dist/generated-docs/index.js"
     },
     "./docs/*": {
-      "types": "./dist/generated-docs/*.d.ts",
-      "default": "./dist/generated-docs/*.ts"
+      "types": "./dist/types/generated-docs/index.d.ts",
+      "default": "./dist/generated-docs/*.js"
     },
     "./core/Accordion": {
       "types": "./dist/types/components/Accordion/core/Accordion.d.ts",
