@@ -1,41 +1,5 @@
 "use client";
 
-/**
- * ---------------------------------------------------------------------
- * ThemeProvider.tsx
- * ---------------------------------------------------------------------
- * Provides a React context for managing and applying color schemes
- * dynamically across the Boreal UI system.
- *
- * Responsibilities:
- * - Registers any custom color schemes at runtime
- * - Sets the active color scheme based on `localStorage` or fallback default
- * - Dynamically updates CSS custom properties (`--*`) on the `:root`
- *   to reflect the selected theme's color values
- * - Ensures text color contrast by calculating luminance and WCAG ratios
- *
- * Includes:
- * - Lightness adjustment utilities for generating `*-light` and `*-hover` variants
- * - Contrast checking and accessible text color fallbacks
- * - `ThemeContext` with `selectedScheme` index and setter
- *
- * Hooks:
- * - `useEffect` to register schemes and sync saved theme index
- * - `useEffect` to apply all computed color variables to `document.documentElement`
- *
- * Usage:
- * ```tsx
- * <ThemeProvider customSchemes={[customTheme]}>
- *   <App />
- * </ThemeProvider>
- * ```
- *
- * Access via context:
- * ```ts
- * const { selectedScheme, setSelectedScheme } = useContext(ThemeContext);
- * ```
- */
-
 import React, {
   createContext,
   useState,
@@ -48,19 +12,13 @@ import {
   registerColorScheme,
 } from "../styles/colorSchemeRegistry";
 import { getDefaultColorSchemeName } from "../config/boreal-style-config";
-import { colorSchemes } from "../styles/Themes";
 import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
   undefined,
 );
 
-const fallbackIndex = colorSchemes.findIndex(
-  (scheme) => scheme.name === getDefaultColorSchemeName(),
-);
-const defaultIndex = fallbackIndex !== -1 ? fallbackIndex : 0;
-
-const STORAGE_KEY = "boreal:selectedScheme";
+const STORAGE_KEY = "boreal:selectedSchemeName";
 
 function shallowEqualByName(a: { name: string }[], b: { name: string }[]) {
   if (a === b) return true;
@@ -71,30 +29,21 @@ function shallowEqualByName(a: { name: string }[], b: { name: string }[]) {
   return true;
 }
 
+function getSchemeIndexByName(
+  schemes: { name: string }[],
+  name?: string | null,
+): number {
+  if (!name) return -1;
+  return schemes.findIndex((scheme) => scheme.name === name);
+}
+
 const ThemeProvider: React.FC<
   ThemeProviderProps & { initialScheme?: number }
 > = ({ children, customSchemes = [], initialScheme }) => {
-  if (fallbackIndex === -1 && process.env.NODE_ENV === "development") {
-    console.warn(
-      `Default color scheme "${getDefaultColorSchemeName()}" not found. Falling back to index 0.`,
-    );
-  }
-
-  const [selectedScheme, setSelectedScheme] = useState<number>(() => {
-    if (typeof initialScheme === "number") return initialScheme;
-
-    if (typeof window !== "undefined") {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved != null) return parseInt(saved, 10);
-      } catch {
-        console.error("Failed to load saved theme index");
-      }
-    }
-    return defaultIndex;
-  });
-
   const [schemes, setSchemes] = useState(() => getAllColorSchemes());
+  const [selectedScheme, setSelectedScheme] = useState<number>(0);
+  const [hasResolvedInitialScheme, setHasResolvedInitialScheme] =
+    useState(false);
 
   const customSchemesKey = useMemo(
     () => JSON.stringify(customSchemes ?? []),
@@ -111,13 +60,60 @@ const ThemeProvider: React.FC<
       console.error("Failed to parse custom schemes");
     }
 
-    const next = getAllColorSchemes();
-    setSchemes((prev) => (shallowEqualByName(prev, next) ? prev : next));
-  }, [customSchemesKey]);
+    const nextSchemes = getAllColorSchemes();
+    setSchemes((prev) =>
+      shallowEqualByName(prev, nextSchemes) ? prev : nextSchemes,
+    );
+
+    let nextIndex = 0;
+
+    if (typeof initialScheme === "number") {
+      nextIndex =
+        initialScheme >= 0 && initialScheme < nextSchemes.length
+          ? initialScheme
+          : 0;
+    } else {
+      let savedName: string | null = null;
+
+      if (typeof window !== "undefined") {
+        try {
+          savedName = localStorage.getItem(STORAGE_KEY);
+        } catch {
+          console.error("Failed to load saved theme name");
+        }
+      }
+
+      const savedIndex = getSchemeIndexByName(nextSchemes, savedName);
+      const defaultIndex = getSchemeIndexByName(
+        nextSchemes,
+        getDefaultColorSchemeName(),
+      );
+
+      if (savedIndex !== -1) {
+        nextIndex = savedIndex;
+      } else if (defaultIndex !== -1) {
+        nextIndex = defaultIndex;
+      } else {
+        nextIndex = 0;
+      }
+    }
+
+    setSelectedScheme(nextIndex);
+    setHasResolvedInitialScheme(true);
+  }, [customSchemesKey, initialScheme]);
 
   useLayoutEffect(() => {
-    const allSchemes = getAllColorSchemes();
-    const scheme = allSchemes[selectedScheme] ?? allSchemes[defaultIndex];
+    if (!hasResolvedInitialScheme) return;
+
+    const allSchemes = schemes;
+    const fallbackIndex = getSchemeIndexByName(
+      allSchemes,
+      getDefaultColorSchemeName(),
+    );
+    const safeFallbackIndex = fallbackIndex !== -1 ? fallbackIndex : 0;
+    const scheme = allSchemes[selectedScheme] ?? allSchemes[safeFallbackIndex];
+
+    if (!scheme) return;
 
     const {
       primaryColor,
@@ -170,7 +166,9 @@ const ThemeProvider: React.FC<
           255 *
             (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))),
         );
-      return `#${[f(0), f(8), f(4)].map((x) => x.toString(16).padStart(2, "0")).join("")}`;
+      return `#${[f(0), f(8), f(4)]
+        .map((x) => x.toString(16).padStart(2, "0"))
+        .join("")}`;
     };
 
     const adjustLightness = (hex: string, percent: number): string => {
@@ -233,23 +231,19 @@ const ThemeProvider: React.FC<
       "--secondary-color-light": adjustLightness(secondaryColor, 10),
       "--secondary-color-hover": adjustLightness(secondaryColor, -10),
       "--text-color-secondary": getAccessibleTextColor(secondaryColor),
-
       "--tertiary-color": tertiaryColor,
       "--tertiary-color-light": adjustLightness(tertiaryColor, 10),
       "--tertiary-color-hover": adjustLightness(tertiaryColor, -10),
       "--text-color-tertiary": getAccessibleTextColor(tertiaryColor),
-
       "--quaternary-color": quaternaryColor,
       "--quaternary-color-light": adjustLightness(quaternaryColor, 10),
       "--quaternary-color-hover": adjustLightness(quaternaryColor, -10),
       "--text-color-quaternary": getAccessibleTextColor(quaternaryColor),
-
       "--background-color": backgroundColor,
       "--background-color-dark": adjustLightness(backgroundColor, -10),
       "--background-color-darker": adjustLightness(backgroundColor, -25),
       "--background-color-light": adjustLightness(backgroundColor, 10),
       "--background-color-lighter": adjustLightness(backgroundColor, 20),
-
       "--link-color": getAccessibleTextColor(backgroundColor),
       "--link-hover-color": adjustLightness(
         getAccessibleTextColor(backgroundColor),
@@ -259,7 +253,6 @@ const ThemeProvider: React.FC<
       "--link-hover-color-secondary": adjustLightness(secondaryColor, -10),
       "--link-hover-color-tertiary": adjustLightness(tertiaryColor, -10),
       "--link-hover-color-quaternary": adjustLightness(quaternaryColor, -10),
-
       "--focus-outline-color": getAccessibleTextColor(backgroundColor),
       "--divider-color": getAdaptiveBorderColor(backgroundColor),
       "--border-color": getAdaptiveBorderColor(backgroundColor),
@@ -268,14 +261,16 @@ const ThemeProvider: React.FC<
     } as const;
 
     const rootStyle = document.documentElement.style;
-    for (const [k, v] of Object.entries(vars)) rootStyle.setProperty(k, v);
+    for (const [k, v] of Object.entries(vars)) {
+      rootStyle.setProperty(k, v);
+    }
 
     try {
-      localStorage.setItem(STORAGE_KEY, String(selectedScheme));
+      localStorage.setItem(STORAGE_KEY, scheme.name);
     } catch {
-      console.error("Failed to save theme index");
+      console.error("Failed to save theme name");
     }
-  }, [selectedScheme]);
+  }, [selectedScheme, schemes, hasResolvedInitialScheme]);
 
   return (
     <ThemeContext.Provider
