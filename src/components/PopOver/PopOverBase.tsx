@@ -1,5 +1,14 @@
-import React, { useState, useRef, useEffect, JSX, useMemo, useId } from "react";
-import { BasePopoverProps } from "./PopOver.types";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  JSX,
+  useMemo,
+  useId,
+  isValidElement,
+  cloneElement,
+} from "react";
+import { BasePopoverProps, TriggerElementProps } from "./PopOver.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -11,12 +20,14 @@ import {
 const BasePopover: React.FC<BasePopoverProps> = ({
   trigger,
   content,
+  asChild = false,
   placement = "bottom",
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",
   className = "",
+  contentClassName = "",
   role = "dialog",
   triggerAriaLabel,
   triggerTitle,
@@ -32,7 +43,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   const [open, setOpen] = useState(false);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
   const popoverRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLElement>(null);
   const uid = useId();
 
   const generatedContentId = `${uid}-content`;
@@ -79,9 +90,9 @@ const BasePopover: React.FC<BasePopoverProps> = ({
     if (!open) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      const t = event.target as Node;
-      if (popoverRef.current?.contains(t)) return;
-      if (triggerRef.current?.contains(t)) return;
+      const target = event.target as Node;
+      if (popoverRef.current?.contains(target)) return;
+      if (triggerRef.current?.contains(target)) return;
       close();
     };
 
@@ -96,7 +107,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
       if (e.key === "Escape") close();
     };
 
-    const onReflow = () => setDynamicPlacement((p) => p);
+    const onReflow = () => setDynamicPlacement((prev) => prev);
 
     document.addEventListener("keydown", onKey);
     window.addEventListener("resize", onReflow, { passive: true });
@@ -107,7 +118,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
       window.removeEventListener("resize", onReflow);
       window.removeEventListener("scroll", onReflow);
     };
-  }, [open]);
+  }, [open, placement]);
 
   useEffect(() => {
     if (!open || !popoverRef.current || !triggerRef.current) return;
@@ -171,9 +182,17 @@ const BasePopover: React.FC<BasePopoverProps> = ({
         classMap[state],
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
-        className,
+        contentClassName,
       ),
-    [classMap, dynamicPlacement, rounding, shadow, theme, state, className],
+    [
+      classMap,
+      dynamicPlacement,
+      theme,
+      state,
+      shadow,
+      rounding,
+      contentClassName,
+    ],
   );
 
   useEffect(() => {
@@ -192,27 +211,67 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   const computedAriaLabelledBy =
     ariaLabelledBy ?? (!ariaLabel ? fallbackLabelId : undefined);
 
-  const computedAriaDescribedBy =
-    role === "tooltip" ? ariaDescribedBy : ariaDescribedBy;
+  const triggerProps: TriggerElementProps = {
+    "aria-label": triggerAriaLabel,
+    title: triggerTitle,
+    disabled,
+    "data-testid": `${testId}-trigger`,
+    ...triggerAria,
+  };
 
-  return (
-    <div
-      className={combineClassNames(classMap.container, className)}
-      data-testid={testId}
-    >
+  const renderedTrigger =
+    asChild && isValidElement<TriggerElementProps>(trigger) ? (
+      (() => {
+        const triggerEl = trigger as React.ReactElement<TriggerElementProps>;
+
+        return cloneElement(triggerEl, {
+          ...triggerProps,
+          ...triggerEl.props,
+          onClick: (e: React.MouseEvent) => {
+            triggerEl.props.onClick?.(e);
+            if (!e.defaultPrevented) {
+              toggleOpen();
+            }
+          },
+          ref: (node: HTMLElement | null) => {
+            triggerRef.current = node;
+
+            const childRef = (
+              triggerEl as React.ReactElement<TriggerElementProps> & {
+                ref?: React.Ref<HTMLElement>;
+              }
+            ).ref;
+
+            if (typeof childRef === "function") {
+              childRef(node);
+            }
+          },
+        });
+      })()
+    ) : (
       <button
         type="button"
         className={classMap.trigger}
         onClick={toggleOpen}
         aria-label={triggerAriaLabel ?? "Toggle popover"}
         title={triggerTitle}
-        ref={triggerRef}
+        ref={(node) => {
+          triggerRef.current = node;
+        }}
         disabled={disabled}
         data-testid={`${testId}-trigger`}
         {...triggerAria}
       >
         {trigger}
       </button>
+    );
+
+  return (
+    <div
+      className={combineClassNames(classMap.container, className)}
+      data-testid={testId}
+    >
+      {renderedTrigger}
 
       {open && (
         <div
@@ -221,7 +280,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
           role={popupRole}
           aria-label={ariaLabel}
           aria-labelledby={computedAriaLabelledBy}
-          aria-describedby={computedAriaDescribedBy}
+          aria-describedby={ariaDescribedBy}
           aria-modal={popupRole === "dialog" ? ariaModal : undefined}
           className={popoverContentClass}
           data-testid={`${testId}-content`}
