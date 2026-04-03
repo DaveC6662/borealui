@@ -58,9 +58,6 @@
     "**/*.css",
     "**/*.scss"
   ],
-  "dependencies": {
-    "recharts": "^3.1.2"
-  },
   "peerDependencies": {
     "marked": ">=12.0.0",
     "next": ">=13.0.0",
