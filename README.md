@@ -37,7 +37,7 @@ npm install boreal-ui
 In your globals.css (or globals.scss), add the following at the top:
 
 ```css
-@import "boreal-ui/next/style.css";
+@import "boreal-ui/next/globals.css";
 ```
 
 Then, make sure this global file is included in your layout or \_app.tsx:
@@ -51,7 +51,7 @@ import "./globals.css"; // or "./globals.scss"
 If you're using boreal-ui/core, import the base styles in your main entry (e.g., index.tsx or App.tsx):
 
 ```tsx
-import "boreal-ui/core/style.css";
+import "boreal-ui/core/globals.css";
 ```
 
 ### Importing Components
