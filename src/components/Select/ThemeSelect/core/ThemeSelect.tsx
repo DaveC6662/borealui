@@ -9,13 +9,16 @@ import {
 import { ThemeSelectProps } from "../../Select.types";
 
 const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
-  ({
-    theme = getDefaultTheme(),
-    shadow = getDefaultShadow(),
-    rounding = getDefaultRounding(),
-    "data-testid": testId = "theme-select",
-    state = "",
-  }) => {
+  (
+    {
+      theme = getDefaultTheme(),
+      shadow = getDefaultShadow(),
+      rounding = getDefaultRounding(),
+      "data-testid": testId = "theme-select",
+      state = "",
+    },
+    ref,
+  ) => {
     const ctx = useContext(ThemeContext);
     if (!ctx)
       throw new Error("ThemeContext is undefined. Wrap with ThemeProvider.");
@@ -34,6 +37,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
     return (
       <div className="control-container">
         <Select
+          ref={ref}
           theme={theme}
           state={state}
           shadow={shadow}

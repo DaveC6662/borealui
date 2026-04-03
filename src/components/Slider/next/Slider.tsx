@@ -1,5 +1,7 @@
 "use client";
 
+//TODO: Fix: Slider horizontal alignments is off
+
 import React from "react";
 import styles from "./Slider.module.scss";
 import { SliderProps } from "../Slider.types";

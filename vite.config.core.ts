@@ -1,3 +1,5 @@
+//TODO Fix: Update to match next build config
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import getEntryMap from "./scripts/buildEntryMap";
