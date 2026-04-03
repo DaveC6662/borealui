@@ -14,7 +14,6 @@ const externals = [
 
 const nextEntries = getEntryMap("./src/next");
 nextEntries["index"] = path.resolve(__dirname, "./src/index.next.ts");
-console.log("nextEntries:", nextEntries);
 
 export default defineConfig({
   plugins: [react()],
@@ -30,15 +29,13 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: true,
     minify: false,
-
-    cssCodeSplit: false,
+    cssCodeSplit: true,
 
     lib: {
       entry: nextEntries,
       formats: ["es", "cjs"],
-      fileName: (format, entryName) => {
-        return `${entryName}${format === "es" ? ".js" : ".cjs.js"}`;
-      },
+      fileName: (format, entryName) =>
+        `${entryName}${format === "es" ? ".js" : ".cjs.js"}`,
     },
 
     rollupOptions: {

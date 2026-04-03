@@ -143,8 +143,8 @@
       "types": "./dist/types/public.types.d.ts",
       "default": "./dist/types/public.types.d.ts"
     },
-    "./core/boreal-ui.css": {
-      "default": "./dist/core/boreal-ui.css"
+    "./core/globals.css": {
+      "default": "./dist/core/globals.css"
     },
     "./next": {
       "types": "./dist/types/index.next.d.ts",
@@ -155,8 +155,8 @@
       "types": "./dist/types/public.types.d.ts",
       "default": "./dist/types/public.types.d.ts"
     },
-    "./next/boreal-ui.css": {
-      "default": "./dist/next/boreal-ui.css"
+    "./next/globals.css": {
+      "default": "./dist/next/globals.css"
     },
     "./docs": {
       "types": "./dist/types/generated-docs/*.d.ts",
