@@ -12,27 +12,6 @@ jest.mock("../../src/config/boreal-style-config", () => ({
   getDefaultColorSchemeName: jest.fn(),
 }));
 
-jest.mock("../../src/styles/Themes", () => ({
-  colorSchemes: [
-    {
-      name: "Forest Dusk",
-      primaryColor: "#336699",
-      secondaryColor: "#993366",
-      tertiaryColor: "#669933",
-      quaternaryColor: "#cc9933",
-      backgroundColor: "#ffffff",
-    },
-    {
-      name: "Ocean Breeze",
-      primaryColor: "#005577",
-      secondaryColor: "#227799",
-      tertiaryColor: "#4499bb",
-      quaternaryColor: "#66bbdd",
-      backgroundColor: "#f4faff",
-    },
-  ],
-}));
-
 import {
   getAllColorSchemes,
   registerColorScheme,
@@ -62,6 +41,8 @@ const baseSchemes = [
   },
 ];
 
+const STORAGE_KEY = "boreal:selectedSchemeName";
+
 const Consumer = () => {
   const context: ThemeContextType | undefined = React.useContext(ThemeContext);
 
@@ -82,7 +63,6 @@ const Consumer = () => {
 };
 
 describe("ThemeProvider", () => {
-  const originalWarn = console.warn;
   const originalError = console.error;
 
   beforeEach(() => {
@@ -93,42 +73,41 @@ describe("ThemeProvider", () => {
     mockedGetDefaultColorSchemeName.mockReturnValue("Forest Dusk");
     mockedGetAllColorSchemes.mockReturnValue(baseSchemes);
 
-    console.warn = jest.fn();
     console.error = jest.fn();
   });
 
   afterAll(() => {
-    console.warn = originalWarn;
     console.error = originalError;
   });
 
-  it("uses getAllColorSchemes to initialize schemes", () => {
+  it("uses getAllColorSchemes to initialize schemes", async () => {
     render(
       <ThemeProvider>
         <Consumer />
       </ThemeProvider>,
     );
-
-    expect(mockedGetAllColorSchemes).toHaveBeenCalled();
-    expect(screen.getByTestId("scheme-count")).toHaveTextContent("2");
-  });
-
-  it("uses the default color scheme index when nothing is saved", async () => {
-    render(
-      <ThemeProvider>
-        <Consumer />
-      </ThemeProvider>,
-    );
-
-    expect(screen.getByTestId("selected-scheme")).toHaveTextContent("0");
 
     await waitFor(() => {
-      expect(localStorage.getItem("boreal:selectedScheme")).toBe("0");
+      expect(mockedGetAllColorSchemes).toHaveBeenCalled();
+      expect(screen.getByTestId("scheme-count")).toHaveTextContent("2");
     });
   });
 
-  it("loads the saved theme index from localStorage", async () => {
-    localStorage.setItem("boreal:selectedScheme", "1");
+  it("uses the default color scheme when nothing is saved", async () => {
+    render(
+      <ThemeProvider>
+        <Consumer />
+      </ThemeProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("selected-scheme")).toHaveTextContent("0");
+      expect(localStorage.getItem(STORAGE_KEY)).toBe("Forest Dusk");
+    });
+  });
+
+  it("loads the saved theme name from localStorage", async () => {
+    localStorage.setItem(STORAGE_KEY, "Ocean Breeze");
 
     render(
       <ThemeProvider>
@@ -136,9 +115,8 @@ describe("ThemeProvider", () => {
       </ThemeProvider>,
     );
 
-    expect(screen.getByTestId("selected-scheme")).toHaveTextContent("1");
-
     await waitFor(() => {
+      expect(screen.getByTestId("selected-scheme")).toHaveTextContent("1");
       expect(
         document.documentElement.style.getPropertyValue("--primary-color"),
       ).toBe("#005577");
@@ -146,7 +124,7 @@ describe("ThemeProvider", () => {
   });
 
   it("prefers initialScheme over the saved localStorage value", async () => {
-    localStorage.setItem("boreal:selectedScheme", "0");
+    localStorage.setItem(STORAGE_KEY, "Forest Dusk");
 
     render(
       <ThemeProvider initialScheme={1}>
@@ -154,10 +132,9 @@ describe("ThemeProvider", () => {
       </ThemeProvider>,
     );
 
-    expect(screen.getByTestId("selected-scheme")).toHaveTextContent("1");
-
     await waitFor(() => {
-      expect(localStorage.getItem("boreal:selectedScheme")).toBe("1");
+      expect(screen.getByTestId("selected-scheme")).toHaveTextContent("1");
+      expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
     });
   });
 
@@ -184,7 +161,7 @@ describe("ThemeProvider", () => {
     });
   });
 
-  it("refreshes schemes after registering custom schemes by calling getAllColorSchemes again", async () => {
+  it("refreshes schemes after registering custom schemes", async () => {
     const customSchemes = [
       {
         name: "Custom Aurora",
@@ -258,7 +235,7 @@ describe("ThemeProvider", () => {
     });
   });
 
-  it("updates selectedScheme through context and saves it", async () => {
+  it("updates selectedScheme through context and saves the scheme name", async () => {
     render(
       <ThemeProvider initialScheme={0}>
         <Consumer />
@@ -269,7 +246,7 @@ describe("ThemeProvider", () => {
 
     await waitFor(() => {
       expect(screen.getByTestId("selected-scheme")).toHaveTextContent("1");
-      expect(localStorage.getItem("boreal:selectedScheme")).toBe("1");
+      expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
       expect(
         document.documentElement.style.getPropertyValue("--primary-color"),
       ).toBe("#005577");
@@ -285,33 +262,13 @@ describe("ThemeProvider", () => {
       </ThemeProvider>,
     );
 
-    expect(screen.getByTestId("selected-scheme")).toHaveTextContent("0");
-
     await waitFor(() => {
-      expect(localStorage.getItem("boreal:selectedScheme")).toBe("0");
+      expect(screen.getByTestId("selected-scheme")).toHaveTextContent("0");
+      expect(localStorage.getItem(STORAGE_KEY)).toBe("Forest Dusk");
     });
   });
 
-  it("warns in development when the default color scheme is not found", () => {
-    const originalEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = "development";
-
-    mockedGetDefaultColorSchemeName.mockReturnValue("Missing Scheme");
-
-    render(
-      <ThemeProvider>
-        <Consumer />
-      </ThemeProvider>,
-    );
-
-    expect(console.warn).toHaveBeenCalledWith(
-      'Default color scheme "Missing Scheme" not found. Falling back to index 0.',
-    );
-
-    process.env.NODE_ENV = originalEnv;
-  });
-
-  it("logs an error if reading localStorage fails", () => {
+  it("logs an error if reading localStorage fails", async () => {
     const getItemSpy = jest
       .spyOn(Storage.prototype, "getItem")
       .mockImplementationOnce(() => {
@@ -324,9 +281,11 @@ describe("ThemeProvider", () => {
       </ThemeProvider>,
     );
 
-    expect(console.error).toHaveBeenCalledWith(
-      "Failed to load saved theme index",
-    );
+    await waitFor(() => {
+      expect(console.error).toHaveBeenCalledWith(
+        "Failed to load saved theme name",
+      );
+    });
 
     getItemSpy.mockRestore();
   });
@@ -345,7 +304,7 @@ describe("ThemeProvider", () => {
     );
 
     await waitFor(() => {
-      expect(console.error).toHaveBeenCalledWith("Failed to save theme index");
+      expect(console.error).toHaveBeenCalledWith("Failed to save theme name");
     });
 
     setItemSpy.mockRestore();
@@ -373,5 +332,20 @@ describe("ThemeProvider", () => {
 
     stringifySpy.mockRestore();
     parseSpy.mockRestore();
+  });
+
+  it("does not overwrite a saved theme name before initial resolution completes", async () => {
+    localStorage.setItem(STORAGE_KEY, "Ocean Breeze");
+
+    render(
+      <ThemeProvider>
+        <Consumer />
+      </ThemeProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("selected-scheme")).toHaveTextContent("1");
+      expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
+    });
   });
 });
