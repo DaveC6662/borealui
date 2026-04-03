@@ -92,11 +92,20 @@ $slider-sizes: (
     border-radius: inherit;
   }
 
-  &::-webkit-slider-thumb,
+  &::-webkit-slider-thumb {
+    appearance: none;
+    border-radius: 50%;
+    background-color: var(--text-color-primary);
+    cursor: pointer;
+    box-shadow: 0 0 2px rgb(0 0 0 / 20%);
+    border: none;
+    transition: transform 0.15s ease;
+  }
+
   &::-moz-range-thumb {
     appearance: none;
     border-radius: 50%;
-    background-color: var(--text-color-primary) !important;
+    background-color: var(--text-color-primary);
     cursor: pointer;
     box-shadow: 0 0 2px rgb(0 0 0 / 20%);
     border: none;
@@ -183,28 +192,49 @@ $slider-sizes: (
 
 @each $size, $props in $slider-sizes {
   .slider_#{$size} .slider {
-    height: map.get($props, track);
+    $track: map.get($props, track);
+    $thumb: map.get($props, thumb);
 
-    &::-webkit-slider-runnable-track,
-    &::-moz-range-track {
-      height: map.get($props, track);
+    height: $thumb;
+
+    &::-webkit-slider-runnable-track {
+      height: $track;
     }
 
-    &::-webkit-slider-thumb,
+    &::-moz-range-track {
+      height: $track;
+    }
+
+    &::-webkit-slider-thumb {
+      width: $thumb;
+      height: $thumb;
+      border-radius: 50%;
+      background-color: var(--text-color-primary);
+      margin-top: calc((#{$track} - #{$thumb}) / 2);
+    }
+
     &::-moz-range-thumb {
-      width: map.get($props, thumb);
-      height: map.get($props, thumb);
+      width: $thumb;
+      height: $thumb;
+      border-radius: 50%;
     }
 
     @include bp.down(xs) {
       height: calc(#{map.get($props, track)} * 0.9);
 
-      &::-webkit-slider-runnable-track,
+      &::-webkit-slider-runnable-track {
+        height: calc(#{map.get($props, track)} * 0.9);
+      }
+
       &::-moz-range-track {
         height: calc(#{map.get($props, track)} * 0.9);
       }
 
-      &::-webkit-slider-thumb,
+      &::-webkit-slider-thumb {
+        width: calc(#{map.get($props, thumb)} * 0.9);
+        height: calc(#{map.get($props, thumb)} * 0.9);
+      }
+
       &::-moz-range-thumb {
         width: calc(#{map.get($props, thumb)} * 0.9);
         height: calc(#{map.get($props, thumb)} * 0.9);
@@ -214,12 +244,19 @@ $slider-sizes: (
     @include bp.up(lg) {
       height: calc(#{map.get($props, track)} * 1.1);
 
-      &::-webkit-slider-runnable-track,
+      &::-webkit-slider-runnable-track {
+        height: calc(#{map.get($props, track)} * 1.1);
+      }
+
       &::-moz-range-track {
         height: calc(#{map.get($props, track)} * 1.1);
       }
 
-      &::-webkit-slider-thumb,
+      &::-webkit-slider-thumb {
+        width: calc(#{map.get($props, thumb)} * 1.05);
+        height: calc(#{map.get($props, thumb)} * 1.05);
+      }
+
       &::-moz-range-thumb {
         width: calc(#{map.get($props, thumb)} * 1.05);
         height: calc(#{map.get($props, thumb)} * 1.05);
@@ -237,7 +274,10 @@ $slider-sizes: (
 }
 
 @media (hover: none) {
-  .slider::-webkit-slider-thumb,
+  .slider::-webkit-slider-thumb {
+    transition: none;
+  }
+
   .slider::-moz-range-thumb {
     transition: none;
   }
@@ -251,7 +291,11 @@ $slider-sizes: (
     border: 1px solid ButtonText;
   }
 
-  .slider::-webkit-slider-runnable-track,
+  .slider::-webkit-slider-runnable-track {
+    background: ButtonFace;
+    border: 1px solid ButtonText;
+  }
+
   .slider::-moz-range-track {
     background: ButtonFace;
     border: 1px solid ButtonText;
