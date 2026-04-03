@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:color";
 @use "sass:map";
 
@@ -45,6 +45,14 @@
 
   @include bp.up(lg) {
     margin: var(--spacing-md);
+  }
+}
+
+@each $key, $value in theme.$border-width {
+  .border#{$key} {
+    border-width: $value;
+    border-style: solid;
+    border-color: var(--divider-color);
   }
 }
 
@@ -276,6 +284,14 @@
       @include bp.down(sm) {
         border-width: 1.5px;
       }
+    }
+  }
+}
+
+@each $name, $width in theme.$border-width {
+  @if $name != "None" {
+    .border#{$name}.outline {
+      border-width: $width;
     }
   }
 }

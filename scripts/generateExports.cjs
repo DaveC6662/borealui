@@ -21,6 +21,7 @@ function addExports(type) {
     .forEach((file) => {
       const name = file.replace(/\.js$/, "");
       const key = `./${type}/${name}`;
+
       const typeCandidates = [
         `../dist/types/components/${name}/${type}/${name}.d.ts`,
         `../dist/types/config/${name}.d.ts`,
@@ -31,7 +32,7 @@ function addExports(type) {
         `../dist/types/utils/${name}.d.ts`,
       ];
 
-      let typesPath = undefined;
+      let typesPath;
       for (const candidate of typeCandidates) {
         const absPath = path.resolve(__dirname, candidate);
         if (fs.existsSync(absPath)) {
@@ -40,11 +41,16 @@ function addExports(type) {
         }
       }
 
-      exportsMap[key] = {
-        import: `./dist/${type}/${name}.js`,
-        require: `./dist/${type}/${name}.cjs.js`,
-        types: typesPath,
-      };
+      const exportEntry = {};
+
+      if (typesPath) {
+        exportEntry.types = typesPath;
+      }
+
+      exportEntry.import = `./dist/${type}/${name}.js`;
+      exportEntry.require = `./dist/${type}/${name}.cjs.js`;
+
+      exportsMap[key] = exportEntry;
     });
 }
 
@@ -53,5 +59,5 @@ addExports("next");
 
 pkg.exports = exportsMap;
 
-fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
+fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
 console.log("Updated package.json exports with per-component entries!");

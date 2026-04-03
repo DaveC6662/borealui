@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
-import { FaUser } from "react-icons/fa";
+import { Meta, StoryObj } from "@storybook/react-vite";
+import { FaInbox, FaUser } from "react-icons/fa";
 import { TextInput } from "../src/index.core";
 import type { TextInputProps } from "../src/components/TextInput/TextInput.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: NonNullable<TextInputProps["theme"]>[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -13,9 +13,33 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const stateOptions: NonNullable<TextInputProps["state"]>[] = [
+  "success",
+  "error",
+  "warning",
+];
+
+const roundingOptions: NonNullable<TextInputProps["rounding"]>[] = [
+  "none",
+  "small",
+  "medium",
+  "large",
+];
+
+const shadowOptions: NonNullable<TextInputProps["shadow"]>[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
+
+const labelPositionOptions: NonNullable<TextInputProps["labelPosition"]>[] = [
+  "top",
+  "bottom",
+  "left",
+  "right",
+];
 
 const meta: Meta<TextInputProps> = {
   title: "Components/TextInput",
@@ -28,112 +52,7 @@ const meta: Meta<TextInputProps> = {
     readOnly: false,
     password: false,
     autocomplete: false,
-  },
-  argTypes: {
-    value: {
-      control: "text",
-      description: "The current value of the input (for controlled usage).",
-      table: { category: "Data", type: { summary: "string" } },
-    },
-    defaultValue: {
-      control: "text",
-      description: "Default value of the input (for uncontrolled usage).",
-      table: { category: "Data", type: { summary: "string" } },
-    },
-    placeholder: {
-      control: "text",
-      description: "Placeholder text when input is empty.",
-      table: { category: "Appearance", type: { summary: "string" } },
-    },
-    password: {
-      control: "boolean",
-      description: "If true, renders an input of type 'password' with toggle.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    readOnly: {
-      control: "boolean",
-      description: "If true, the input is read-only.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    disabled: {
-      control: "boolean",
-      description: "If true, the input is disabled.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    autocomplete: {
-      control: "boolean",
-      description: "Enables browser autocomplete if true.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    outline: {
-      control: "boolean",
-      description: "Renders an outlined input variant.",
-      table: { category: "Appearance" },
-    },
-    icon: {
-      control: false,
-      description: "Optional icon component rendered in the input.",
-      table: { category: "Appearance", type: { summary: "React.ElementType" } },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme for input appearance.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Border radius for the input.",
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Box shadow style for the input.",
-      table: { category: "Appearance" },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "error", "warning"],
-      description: "Validation state appearance.",
-      table: { category: "Appearance" },
-    },
-    ariaLabel: {
-      control: "text",
-      description: "ARIA label for accessibility.",
-      table: { category: "Accessibility" },
-    },
-    ariaDescription: {
-      control: "text",
-      description: "ARIA description for screen readers.",
-      table: { category: "Accessibility" },
-    },
-    onChange: {
-      action: "changed",
-      description: "Called when the input value changes. Receives event.",
-      table: { category: "Events" },
-    },
-    onBlur: {
-      action: "blurred",
-      description: "Called when the input loses focus.",
-      table: { category: "Events" },
-    },
-    onFocus: {
-      action: "focused",
-      description: "Called when the input receives focus.",
-      table: { category: "Events" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class name for the input.",
-      table: { category: "Advanced" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test ID for the root element (testing utilities).",
-      table: { category: "Testing" },
-    },
+    labelPosition: "top",
   },
 };
 
@@ -148,7 +67,7 @@ export const Default: Story = {
       <TextInput
         {...args}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -163,10 +82,43 @@ export const WithIcon: Story = {
         icon={FaUser}
         placeholder="Username"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
+};
+
+export const WithLabel: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextInput
+        {...args}
+        label="Username"
+        labelPosition="top"
+        placeholder="Enter your username"
+        value={value}
+        onChange={(value) => setValue(value)}
+      />
+    );
+  },
+};
+
+export const LabelPositionVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "1rem", maxWidth: "420px" }}>
+      {labelPositionOptions.map((position) => (
+        <TextInput
+          key={position}
+          {...args}
+          label={`Label ${position}`}
+          labelPosition={position}
+          placeholder={`Label position: ${position}`}
+          defaultValue=""
+        />
+      ))}
+    </div>
+  ),
 };
 
 export const PasswordInput: Story = {
@@ -178,7 +130,7 @@ export const PasswordInput: Story = {
         placeholder="Enter password"
         password
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -197,7 +149,7 @@ export const ThemedVariants: Story = {
               theme={theme}
               placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -219,7 +171,7 @@ export const StateVariants: Story = {
               state={state}
               placeholder={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -240,9 +192,11 @@ export const OutlineVariants: Story = {
               {...args}
               outline
               theme={theme}
+              icon={FaInbox}
               placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              password
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -275,9 +229,9 @@ export const WithAriaDescription: Story = {
       <TextInput
         {...args}
         placeholder="Type a short bio..."
-        ariaDescription="This field is used to describe yourself in 100 characters or less."
+        aria-description="This field is used to describe yourself in 100 characters or less."
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },

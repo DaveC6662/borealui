@@ -3,14 +3,72 @@
 @use "sass:map";
 
 .container {
+  display: flex;
+  gap: var(--spacing-xs);
+  width: fit-content;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.label {
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-ui);
+}
+
+.labelTop {
+  flex-direction: column;
+}
+
+.labelBottom {
+  flex-direction: column-reverse;
+}
+
+.labelLeft {
+  flex-direction: row;
+  align-items: center;
+}
+
+.labelRight {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+@each $k, $v in theme.$rounding {
+  .round#{$k} {
+    border-radius: $v;
+
+    input {
+      border-radius: $v;
+    }
+  }
+}
+
+@each $k, $v in theme.$shadow {
+  .shadow#{$k} {
+    box-shadow: $v;
+  }
+}
+
+.textInput {
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
   width: fit-content;
+  height: fit-content;
   margin: var(--spacing-sm);
   transition: var(--transition-default);
-  max-width: 400px;
   background: transparent;
+  outline: none;
+  margin: var(--spacing-sm);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  background-color: transparent;
+  color: var(--text-color-primary);
 
   &:focus-within {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
@@ -42,38 +100,6 @@
       outline: none;
     }
   }
-}
-
-@each $k, $v in theme.$rounding {
-  .round#{$k} {
-    border-radius: $v;
-
-    input {
-      border-radius: $v;
-    }
-  }
-}
-
-@each $k, $v in theme.$shadow {
-  .shadow#{$k} {
-    box-shadow: $v;
-  }
-}
-
-.textInput {
-  outline: none;
-  flex: 1;
-  margin: var(--spacing-sm);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  border: none;
-  border-radius: var(--border-radius-lg);
-  background-color: transparent;
-  color: var(--text-color-primary);
-  min-height: 2.5rem;
 
   &::placeholder {
     color: var(--text-color-primary);
@@ -91,46 +117,6 @@
     width: 100%;
     font-size: var(--font-size-body-sm);
     margin: var(--spacing-xs);
-  }
-}
-
-.iconContainer {
-  display: flex;
-  box-sizing: border-box;
-  margin: 0.5rem;
-
-  @include bp.down(xs) {
-    margin: 0.1rem;
-  }
-
-  svg {
-    width: 1em;
-    height: 1em;
-    color: var(--text-color-primary);
-
-    @include bp.down(xs) {
-      width: 15px;
-      height: 15px;
-    }
-  }
-}
-
-.togglePassword {
-  padding: var(--spacing-xs);
-  box-sizing: border-box;
-  background: transparent;
-  border: none;
-  color: inherit;
-  cursor: pointer;
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: var(--border-radius-xs);
-  }
-
-  @include bp.down(xs) {
-    margin-top: var(--spacing-xs);
   }
 }
 
@@ -179,6 +165,47 @@
   box-shadow: none;
   .textInput {
     border: none;
+  }
+}
+
+.iconContainer {
+  display: flex;
+  box-sizing: border-box;
+  margin: 0.5rem;
+  background-color: transparent;
+
+  @include bp.down(xs) {
+    margin: 0.1rem;
+  }
+
+  svg {
+    width: 1em;
+    height: 1em;
+    color: var(--text-color-primary);
+
+    @include bp.down(xs) {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}
+
+.togglePassword {
+  padding: var(--spacing-xs);
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: var(--border-radius-xs);
+  }
+
+  @include bp.down(xs) {
+    margin-top: var(--spacing-xs);
   }
 }
 

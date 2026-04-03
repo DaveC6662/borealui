@@ -8,13 +8,23 @@ import React, {
   cloneElement,
 } from "react";
 import { combineClassNames } from "../../utils/classNames";
-import { TooltipProps } from "./Tooltip.types";
+import { TooltipProps, TriggerElementProps } from "./Tooltip.types";
 import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
+
+function mergeIds(...values: Array<string | undefined>) {
+  return values.filter(Boolean).join(" ") || undefined;
+}
+
+function callAll<E>(...handlers: Array<((event: E) => void) | undefined>) {
+  return (event: E) => {
+    handlers.forEach((handler) => handler?.(event));
+  };
+}
 
 const TooltipBase = forwardRef<
   HTMLDivElement,
@@ -29,13 +39,23 @@ const TooltipBase = forwardRef<
     state = "",
     children,
     className = "",
+    id,
+    triggerId,
+    triggerAriaLabel,
+    triggerAriaLabelledBy,
+    triggerAriaDescribedBy,
+    keepMountedWhenHidden = true,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
     "data-testid": testId = "tooltip",
     classMap,
     ...rest
   },
-  ref
+  ref,
 ) {
-  const tooltipId = useId();
+  const generatedId = useId();
+  const tooltipId = id ?? generatedId;
+
   const [visible, setVisible] = useState(false);
 
   const show = () => setVisible(true);
@@ -43,9 +63,11 @@ const TooltipBase = forwardRef<
 
   useEffect(() => {
     if (!visible) return;
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") hide();
     };
+
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [visible]);
@@ -59,47 +81,74 @@ const TooltipBase = forwardRef<
         classMap[state],
         visible && classMap.visible,
         shadow && classMap[`shadow${capitalize(shadow)}`],
-        rounding && classMap[`round${capitalize(rounding)}`]
+        rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, position, theme, state, visible, shadow, rounding]
+    [classMap, position, theme, state, visible, shadow, rounding],
   );
-
-  const triggerProps = {
-    onMouseEnter: show,
-    onMouseLeave: hide,
-    onFocus: show,
-    onBlur: hide,
-    "aria-describedby": visible ? tooltipId : undefined,
-    "data-testid": `${testId}-trigger`,
-  } as const;
 
   let trigger: React.ReactNode;
 
   if (isValidElement(children)) {
-    const isNaturallyFocusable =
-      React.isValidElement(children) &&
-      typeof children.type === "string" &&
-      ["a", "button", "input", "textarea", "select"].includes(children.type);
+    const child = children as React.ReactElement<TriggerElementProps>;
+    const childProps = child.props;
 
-    const existingTabIndex = (
-      children.props as React.HTMLAttributes<HTMLElement>
-    ).tabIndex;
+    const isNaturallyFocusable =
+      typeof child.type === "string" &&
+      ["a", "button", "input", "textarea", "select"].includes(child.type);
+
     const maybeTabIndex =
-      isNaturallyFocusable || existingTabIndex !== undefined
+      isNaturallyFocusable || childProps.tabIndex !== undefined
         ? {}
         : { tabIndex: 0 };
 
-    trigger = cloneElement(children as React.ReactElement, {
-      ...triggerProps,
+    const mergedAriaDescribedBy = mergeIds(
+      childProps["aria-describedby"],
+      triggerAriaDescribedBy,
+      visible ? tooltipId : undefined,
+    );
+
+    trigger = cloneElement(child, {
       ...maybeTabIndex,
+      id: triggerId ?? childProps.id,
+      "aria-label": triggerAriaLabel ?? childProps["aria-label"],
+      "aria-labelledby": triggerAriaLabelledBy ?? childProps["aria-labelledby"],
+      "aria-describedby": mergedAriaDescribedBy,
+      "data-testid": `${testId}-trigger`,
+      onMouseEnter: callAll<React.MouseEvent<HTMLElement>>(
+        childProps.onMouseEnter,
+        show,
+      ),
+      onMouseLeave: callAll<React.MouseEvent<HTMLElement>>(
+        childProps.onMouseLeave,
+        hide,
+      ),
+      onFocus: callAll<React.FocusEvent<HTMLElement>>(childProps.onFocus, show),
+      onBlur: callAll<React.FocusEvent<HTMLElement>>(childProps.onBlur, hide),
     });
   } else {
     trigger = (
-      <span tabIndex={0} {...triggerProps} className={classMap.triggerWrapper}>
+      <span
+        id={triggerId}
+        tabIndex={0}
+        className={classMap.triggerWrapper}
+        aria-label={triggerAriaLabel}
+        aria-labelledby={triggerAriaLabelledBy}
+        aria-describedby={mergeIds(
+          triggerAriaDescribedBy,
+          visible ? tooltipId : undefined,
+        )}
+        data-testid={`${testId}-trigger`}
+        onMouseEnter={show}
+        onMouseLeave={hide}
+        onFocus={show}
+        onBlur={hide}
+      >
         {children}
       </span>
     );
   }
+
+  const shouldRenderTooltip = keepMountedWhenHidden || visible;
 
   return (
     <div
@@ -108,17 +157,21 @@ const TooltipBase = forwardRef<
     >
       {trigger}
 
-      <div
-        ref={ref}
-        id={tooltipId}
-        className={toolTipClassName}
-        role="tooltip"
-        aria-hidden={!visible}
-        data-testid={testId}
-        {...rest}
-      >
-        {content}
-      </div>
+      {shouldRenderTooltip && (
+        <div
+          ref={ref}
+          id={tooltipId}
+          className={toolTipClassName}
+          role="tooltip"
+          aria-hidden={!visible}
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabelledBy}
+          data-testid={testId}
+          {...rest}
+        >
+          {content}
+        </div>
+      )}
     </div>
   );
 });

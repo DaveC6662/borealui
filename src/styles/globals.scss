@@ -202,37 +202,31 @@
   --font-size-body: #{theme.$font-size-body};
   --font-size-body-sm: #{theme.$font-size-body-sm};
   --font-size-body-lg: #{theme.$font-size-body-lg};
-
   --font-size-label: #{theme.$font-size-label};
   --font-size-caption: #{theme.$font-size-caption};
   --font-size-overline: #{theme.$font-size-overline};
   --font-size-code: #{theme.$font-size-code};
-
   --font-size-h1: #{theme.$font-size-h1};
   --font-size-h2: #{theme.$font-size-h2};
   --font-size-h3: #{theme.$font-size-h3};
   --font-size-h4: #{theme.$font-size-h4};
   --font-size-h5: #{theme.$font-size-h5};
   --font-size-h6: #{theme.$font-size-h6};
-
   --font-weight-body: #{theme.$font-weight-body};
   --font-weight-label: #{theme.$font-weight-label};
   --font-weight-caption: #{theme.$font-weight-caption};
   --font-weight-code: #{theme.$font-weight-code};
-
   --font-weight-h1: #{theme.$font-weight-h1};
   --font-weight-h2: #{theme.$font-weight-h2};
   --font-weight-h3: #{theme.$font-weight-h3};
   --font-weight-h4: #{theme.$font-weight-h4};
   --font-weight-h5: #{theme.$font-weight-h5};
   --font-weight-h6: #{theme.$font-weight-h6};
-
   --line-height-body: #{theme.$line-height-body};
   --line-height-heading: #{theme.$line-height-heading};
   --line-height-label: #{theme.$line-height-label};
   --line-height-caption: #{theme.$line-height-caption};
   --line-height-code: #{theme.$line-height-code};
-
   --letter-spacing-heading: #{theme.$letter-spacing-heading};
   --letter-spacing-body: #{theme.$letter-spacing-body};
   --letter-spacing-label: #{theme.$letter-spacing-label};
@@ -261,6 +255,16 @@
   --border-radius-none: 0;
 
   /* ===========================
+     Border Widths
+  =========================== */
+  --border-width-none: 0;
+  --border-width-xs: #{theme.$border-width-xs};
+  --border-width-sm: #{theme.$border-width-sm};
+  --border-width-md: #{theme.$border-width-md};
+  --border-width-lg: #{theme.$border-width-lg};
+  --border-width-xl: #{theme.$border-width-xl};
+
+  /* ===========================
      Shadows
   =========================== */
   --box-shadow-light: #{theme.$box-shadow-light};
@@ -280,8 +284,17 @@
   /* ===========================
      Divider & Overlay Colors
   =========================== */
-  --divider-color: #{color.adjust(theme.$background-color, $lightness: 30%)}; /* subtle dividers */
-  --overlay-color: rgb(0 0 0 / 50%); /* for modals or overlays */
+  --divider-color: #{color.adjust(theme.$background-color, $lightness: 30%)};
+  --border-color: #{color.adjust(theme.$background-color, $lightness: 30%)};
+  --border-color-subtle: #{color.adjust(
+      theme.$background-color,
+      $lightness: 10%
+    )};
+  --border-color-strong: #{color.adjust(
+      theme.$background-color,
+      $lightness: 20%
+    )};
+  --overlay-color: rgb(0 0 0 / 50%);
   --font-family-body: #{theme.$font-family-body};
   --font-family-heading: #{theme.$font-family-heading};
   --font-family-ui: #{theme.$font-family-ui};

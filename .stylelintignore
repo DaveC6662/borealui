@@ -4,4 +4,5 @@ build
 *.min.css
 core
 next
+coverage
 src/styles/style.css

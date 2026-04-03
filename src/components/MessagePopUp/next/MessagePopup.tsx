@@ -2,7 +2,8 @@
 
 import React from "react";
 import BaseMessagePopUp from "../MessagePopupBase";
-import { Button, IconButton } from "../../../index.next";
+import Button from "../../Button/next/Button";
+import IconButton from "../../IconButton/next/IconButton";
 import styles from "./MessagePopup.module.scss";
 import { MessagePopupProps } from "../MessagePopup.types";
 

@@ -15,6 +15,8 @@ const SliderBase: React.FC<
   value,
   onChange,
   onValueChange,
+  id,
+  name,
   min = 0,
   max = 100,
   step = 1,
@@ -26,14 +28,25 @@ const SliderBase: React.FC<
   state = "",
   showValue = true,
   className = "",
-  "aria-label": ariaLabel,
   disabled = false,
+  required = false,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-valuetext": ariaValueText,
+  "aria-valuemin": ariaValueMin,
+  "aria-valuemax": ariaValueMax,
+  "aria-valuenow": ariaValueNow,
+  "aria-invalid": ariaInvalid,
+  "aria-required": ariaRequired,
+  "aria-orientation": ariaOrientation = "horizontal",
   "data-testid": testId = "slider",
   classMap,
   ...rest
 }) => {
   const uid = useId();
-  const inputId = `${testId}-input-${uid}`;
+
+  const inputId = id || `${testId}-input-${uid}`;
   const labelId = label ? `${testId}-label-${uid}` : undefined;
   const valueId = showValue ? `${testId}-value-${uid}` : undefined;
 
@@ -51,9 +64,9 @@ const SliderBase: React.FC<
         classMap[state],
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
-        className
+        className,
       ),
-    [classMap, size, theme, state, className, shadow, rounding]
+    [classMap, size, theme, state, className, shadow, rounding],
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,17 +75,42 @@ const SliderBase: React.FC<
     onValueChange?.(numeric);
   };
 
+  const computedAriaLabelledBy = label
+    ? [labelId, ariaLabelledBy].filter(Boolean).join(" ")
+    : ariaLabelledBy;
+
+  const computedAriaDescribedBy =
+    [ariaDescribedBy, showValue ? valueId : undefined]
+      .filter(Boolean)
+      .join(" ") || undefined;
+
+  const computedAriaInvalid =
+    ariaInvalid !== undefined
+      ? ariaInvalid
+      : state === "error"
+        ? true
+        : undefined;
+
+  const computedAriaRequired =
+    ariaRequired !== undefined ? ariaRequired : required ? true : undefined;
+
   return (
     <div className={containerClasses} data-testid={`${testId}-container`}>
       {label && (
-        <label id={labelId} htmlFor={inputId} className={classMap.label}>
+        <label
+          id={labelId}
+          htmlFor={inputId}
+          className={classMap.label}
+          data-testid={`${testId}-label`}
+        >
           {label}
         </label>
       )}
 
-      <div className={classMap.wrapper}>
+      <div className={classMap.wrapper} data-testid={`${testId}-wrapper`}>
         <input
           id={inputId}
+          name={name}
           type="range"
           className={classMap.slider}
           value={clamped}
@@ -80,13 +118,24 @@ const SliderBase: React.FC<
           min={safeMin}
           max={safeMax}
           step={safeStep}
-          aria-labelledby={label ? labelId : undefined}
-          aria-label={label ? undefined : ariaLabel || "Slider"}
-          aria-describedby={valueId}
           disabled={disabled}
+          required={required}
+          aria-label={
+            !computedAriaLabelledBy ? ariaLabel || "Slider" : undefined
+          }
+          aria-labelledby={computedAriaLabelledBy || undefined}
+          aria-describedby={computedAriaDescribedBy}
+          aria-valuetext={ariaValueText}
+          aria-valuemin={ariaValueMin ?? safeMin}
+          aria-valuemax={ariaValueMax ?? safeMax}
+          aria-valuenow={ariaValueNow ?? clamped}
+          aria-invalid={computedAriaInvalid}
+          aria-required={computedAriaRequired}
+          aria-orientation={ariaOrientation}
           data-testid={testId}
           {...rest}
         />
+
         {showValue && (
           <output
             id={valueId}

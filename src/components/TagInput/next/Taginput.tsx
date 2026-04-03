@@ -2,7 +2,8 @@
 
 import React from "react";
 import styles from "./TagInput.module.scss";
-import { IconButton, TextInput } from "@/index.next";
+import IconButton from "../../IconButton/next/IconButton";
+import TextInput from "../../TextInput/next/TextInput";
 import TagInputBase from "../TagInputBase";
 import { TagInputProps } from "../TagInput.types";
 

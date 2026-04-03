@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import { MouseEvent, ReactNode } from "react";
 import {
   ShadowType,
   ShapeType,
@@ -12,6 +12,7 @@ import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   ElementType,
+  AriaRole,
 } from "react";
 
 export type AnchorInteractiveProps = Omit<
@@ -45,7 +46,8 @@ export interface AvatarProps {
   src?: string;
 
   /**
-   * Alternative text for accessibility (used in <img> and ARIA).
+   * Alternative text for the avatar image.
+   * Used as the image alt text and may also contribute to the accessible name.
    */
   alt?: string;
 
@@ -55,9 +57,40 @@ export interface AvatarProps {
   name?: string;
 
   /**
-   * Custom label used for ARIA and title attributes.
+   * Visible or semantic label for the avatar.
+   * Used as a fallback accessible name when aria-label / aria-labelledby are not provided.
    */
   label?: string;
+
+  /**
+   * Explicit accessible name for the interactive avatar element.
+   * Overrides inferred labels such as label, alt, or name.
+   */
+  "aria-label"?: string;
+
+  /**
+   * References the element(s) that label the avatar.
+   * Should take precedence over aria-label when provided.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * References the element(s) that describe the avatar with additional context.
+   * Useful for status, activity, or profile details.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Indicates the current state or item within a set when the avatar acts as a link.
+   * Example: page, step, location, date, time, true.
+   */
+  "aria-current"?: boolean | "page" | "step" | "location" | "date" | "time";
+
+  /**
+   * Optional role override for custom avatar rendering patterns.
+   * In most cases this should be left undefined so the native button/link role is preserved.
+   */
+  role?: AriaRole;
 
   /**
    * Size of the avatar ('xs' | 'small' | 'medium' | 'large' | 'xl').
@@ -90,29 +123,26 @@ export interface AvatarProps {
   disabled?: boolean;
 
   /**
-   * Optional status indicator for user availability and activity ('online'
-  | 'idle'
-  | 'offline'
-  | 'busy'
-  | 'in-a-meeting'
-  | 'on-vacation'
-  | 'streaming'
-  | 'recording'
-  | 'typing'
-  | 'speaking'
-  | 'viewing'
-  | 'custom' ).
+   * Optional status indicator for user availability and activity.
    * Useful for chat apps, collaboration tools, or profile displays.
    */
   status?: StatusType;
 
   /**
-   * Custom icon to replace the default status dot.
+   * Optional accessible label for the status indicator.
+   * Example: "Online", "Busy", or "In a meeting".
+   * Helpful when the status conveys important information not otherwise described nearby.
    */
-  statusIcon?: React.ReactNode;
+  statusLabel?: string;
 
   /**
-   * Position of the status indicator dot/icon ('topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight').
+   * Custom icon to replace the default status dot.
+   */
+  statusIcon?: ReactNode;
+
+  /**
+   * Position of the status indicator dot/icon
+   * ('topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight').
    */
   statusPosition?: StatusPositionType;
 
@@ -124,12 +154,12 @@ export interface AvatarProps {
   /**
    * Custom fallback content (overrides initials).
    */
-  fallback?: React.ReactNode;
+  fallback?: ReactNode;
 
   /**
    * Custom child elements (replaces avatar content entirely).
    */
-  children?: React.ReactNode;
+  children?: ReactNode;
 
   /**
    * Whether to apply an outline style.
@@ -142,7 +172,7 @@ export interface AvatarProps {
   href?: string;
 
   /**
-   * If true, the image loads with higher priority (useful for above-the-fold).
+   * If true, the image loads with higher priority.
    */
   priority?: boolean;
 

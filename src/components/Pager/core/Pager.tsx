@@ -1,8 +1,9 @@
 import React from "react";
 import BasePager from "../PagerBase";
-import { Button, IconButton } from "@/index.core";
+import Button from "../../Button/core/Button";
+import IconButton from "../../IconButton/core/IconButton";
 import "./Pager.scss";
-import { PaginationProps } from "../Pager.types";
+import { PagerProps } from "../Pager.types";
 
 const classes = {
   wrapper: "pagination",
@@ -13,7 +14,7 @@ const classes = {
   active: "pagination_active",
 };
 
-const Pager: React.FC<PaginationProps> = (props) => {
+const Pager: React.FC<PagerProps> = (props) => {
   return (
     <BasePager
       {...props}

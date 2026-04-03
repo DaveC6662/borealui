@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FaRocket, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
-import { Timeline } from "../src/index.next";
+import { ThemeType, Timeline } from "../src/index.next";
 import type { TimelineProps } from "../src/components/Timeline/Timeline.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -50,47 +50,6 @@ const meta: Meta<TimelineProps> = {
     theme: "primary",
     items: sampleEvents,
   },
-  argTypes: {
-    items: {
-      control: "object",
-      description: "Array of timeline event objects to render.",
-      table: { category: "Data", type: { summary: "TimelineItem[]" } },
-    },
-    orientation: {
-      control: { type: "select" },
-      options: ["vertical", "horizontal"],
-      description: "Direction the timeline is laid out.",
-      table: { category: "Layout", defaultValue: { summary: "vertical" } },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme for coloring timeline elements.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Border radius applied to timeline cards/events.",
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Shadow style for timeline events/cards.",
-      table: { category: "Appearance" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class name for the timeline container.",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for the timeline element (for testing utilities).",
-      table: { category: "Testing" },
-    },
-  },
 };
 
 export default meta;
@@ -112,6 +71,7 @@ export const Horizontal: Story = {
 
 export const WithoutIcons: Story = {
   args: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     items: sampleEvents.map(({ icon, ...rest }) => rest),
   },
 };
@@ -128,12 +88,12 @@ export const ThemeVariants: Story = {
   },
 };
 
-export const RoundingVariants = (args) =>
+export const RoundingVariants = (args: React.ComponentProps<typeof Timeline>) =>
   withVariants(Timeline, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof Timeline>) =>
   withVariants(Timeline, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

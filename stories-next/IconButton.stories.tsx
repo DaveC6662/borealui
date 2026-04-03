@@ -1,10 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/nextjs";
-import { IconButton } from "../src/index.next";
-import type { IconButtonProps } from "../src/components/IconButton/IconButton.types";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import {
+  IconButton,
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../src/index.next";
 import { FaPlus, FaExternalLinkAlt } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -12,12 +18,18 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "warning", "error"];
+const stateOptions: StateType[] = ["success", "warning", "error"];
 
-const sizeOptions = ["xs", "small", "medium", "large", "xl"];
+const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",
@@ -28,106 +40,7 @@ const meta: Meta<typeof IconButton> = {
     theme: "primary",
     size: "medium",
     rounding: "large",
-    ariaLabel: "Add",
-  },
-  argTypes: {
-    icon: {
-      control: false,
-      description:
-        "The icon element to display inside the button (e.g., FaPlus). Required.",
-      table: { category: "Content", type: { summary: "IconType" } },
-    },
-    theme: {
-      control: "select",
-      options: themeOptions,
-      description: "Theme color for the button.",
-      table: { category: "Appearance", defaultValue: { summary: "primary" } },
-    },
-    state: {
-      control: "select",
-      options: stateOptions,
-      description: "State variant (success, warning, error).",
-      table: { category: "State" },
-    },
-    size: {
-      control: "select",
-      options: sizeOptions,
-      description: "Size of the button.",
-      table: { category: "Appearance", defaultValue: { summary: "medium" } },
-    },
-    rounding: {
-      control: "select",
-      options: roundingOptions,
-      description: "Border radius/rounding of the button.",
-      table: { category: "Appearance", defaultValue: { summary: "large" } },
-    },
-    shadow: {
-      control: "select",
-      options: shadowOptions,
-      description: "Shadow effect for the button.",
-      table: { category: "Appearance", defaultValue: { summary: "none" } },
-    },
-    outline: {
-      control: "boolean",
-      description: "Show button as outlined style.",
-      table: { category: "Appearance", defaultValue: { summary: "false" } },
-    },
-    loading: {
-      control: "boolean",
-      description: "Displays a spinner instead of the icon when true.",
-      table: { category: "State", defaultValue: { summary: "false" } },
-    },
-    disabled: {
-      control: "boolean",
-      description: "Disables the button and makes it non-interactive.",
-      table: { category: "State", defaultValue: { summary: "false" } },
-    },
-    href: {
-      control: "text",
-      description: "If set, renders as a link (<a> or custom LinkComponent).",
-      table: { category: "Links", type: { summary: "string" } },
-    },
-    isExternal: {
-      control: "boolean",
-      description: "If true, opens the link in a new tab (for external links).",
-      table: { category: "Links", defaultValue: { summary: "false" } },
-    },
-    ariaLabel: {
-      control: "text",
-      description:
-        "Accessible label for screen readers (required if only icon).",
-      table: { category: "Accessibility" },
-    },
-    title: {
-      control: "text",
-      description: "Native title tooltip (optional, falls back to ariaLabel).",
-      table: { category: "Accessibility" },
-    },
-    tabIndex: {
-      control: "number",
-      description: "Tab order for keyboard navigation.",
-      table: { category: "Accessibility" },
-    },
-    onClick: {
-      action: "clicked",
-      description: "Callback fired on button click.",
-      table: { category: "Events", type: { summary: "(event) => void" } },
-    },
-    onKeyDown: {
-      action: "keydown",
-      description: "Callback fired on keydown events.",
-      table: { category: "Events", type: { summary: "(event) => void" } },
-    },
-    className: {
-      control: "text",
-      description: "Additional CSS class(es) to apply.",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Custom data-testid for testing.",
-      table: { category: "Testing" },
-    },
+    "aria-label": "Add",
   },
 };
 
@@ -143,10 +56,10 @@ export const ThemeVariants = () =>
     {
       icon: FaPlus,
       size: "medium",
-      ariaLabel: "Theme",
+      "aria-label": "Theme",
       theme: "primary",
     },
-    [{ propName: "theme", values: themeOptions }]
+    [{ propName: "theme", values: themeOptions }],
   );
 
 export const StateVariants = () =>
@@ -155,10 +68,10 @@ export const StateVariants = () =>
     {
       icon: FaPlus,
       size: "medium",
-      ariaLabel: "Theme",
+      "aria-label": "State",
       state: "",
     },
-    [{ propName: "state", values: stateOptions }]
+    [{ propName: "state", values: stateOptions }],
   );
 
 export const OutlineAndDisabledVariants: Story = {
@@ -170,19 +83,19 @@ export const OutlineAndDisabledVariants: Story = {
           {...args}
           theme={theme}
           outline
-          ariaLabel={`Theme: ${theme}`}
+          aria-label={`Theme: ${theme}`}
         />
       ))}
-      {stateOptions.map((theme) => (
+      {stateOptions.map((state) => (
         <IconButton
-          key={theme}
+          key={state}
           {...args}
-          theme={theme}
+          state={state}
           outline
-          ariaLabel={`Theme: ${theme}`}
+          aria-label={`State: ${state}`}
         />
       ))}
-      <IconButton {...args} disabled ariaLabel="Disabled" />
+      <IconButton {...args} disabled aria-label="Disabled" />
     </div>
   ),
 };
@@ -193,10 +106,10 @@ export const SizeVariants = () =>
     {
       icon: FaPlus,
       theme: "primary",
-      ariaLabel: "Size",
+      "aria-label": "Size",
       size: "medium",
     },
-    [{ propName: "size", values: sizeOptions }]
+    [{ propName: "size", values: sizeOptions }],
   );
 
 export const LoadingState: Story = {
@@ -213,13 +126,13 @@ export const LinkVariants: Story = {
         href="https://example.com"
         icon={FaExternalLinkAlt}
         isExternal
-        ariaLabel="External Link"
+        aria-label="External Link"
       />
       <IconButton
         {...args}
         href="/internal-route"
         icon={FaPlus}
-        ariaLabel="Internal Link"
+        aria-label="Internal Link"
       />
     </div>
   ),
@@ -231,11 +144,11 @@ export const RoundingVariants = () =>
     {
       icon: FaPlus,
       theme: "primary",
-      ariaLabel: "Size",
+      "aria-label": "Size",
       rounding: "large",
       size: "medium",
     },
-    [{ propName: "rounding", values: roundingOptions }]
+    [{ propName: "rounding", values: roundingOptions }],
   );
 
 export const ShadowVariants = () =>
@@ -244,9 +157,9 @@ export const ShadowVariants = () =>
     {
       icon: FaPlus,
       theme: "primary",
-      ariaLabel: "Size",
+      "aria-label": "Size",
       shadow: "none",
       size: "medium",
     },
-    [{ propName: "shadow", values: shadowOptions }]
+    [{ propName: "shadow", values: shadowOptions }],
   );

@@ -1,11 +1,11 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 $progress-sizes: (
   "xs": (
-    dimensions: 40px,
+    dimensions: 50px,
     font-size: var(--font-size-caption),
   ),
   "small": (
@@ -107,7 +107,7 @@ $progress-sizes: (
       height: calc(#{$dim} * 1.1);
     }
 
-    .rating_text {
+    .value_text {
       font-family: var(--font-family-ui);
       font-size: map.get($props, font-size);
       font-weight: var(--font-weight-label);

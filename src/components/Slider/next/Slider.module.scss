@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 @use "sass:color";
 
@@ -76,6 +76,7 @@ $slider-sizes: (
 
 .slider {
   width: 100%;
+  -webkit-appearance: none;
   appearance: none;
   outline: none;
   background-color: var(--background-color-light);
@@ -93,11 +94,21 @@ $slider-sizes: (
     border-radius: inherit;
   }
 
-  &::-webkit-slider-thumb,
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 50%;
+    background-color: var(--text-color-primary);
+    border: none;
+    box-shadow: 0 0 2px rgb(0 0 0 / 20%);
+    transition: transform 0.15s ease;
+    cursor: pointer;
+  }
+
   &::-moz-range-thumb {
     appearance: none;
     border-radius: 50%;
-    background-color: var(--text-color-primary) !important;
+    background-color: var(--text-color-primary);
     border: none;
     box-shadow: 0 0 2px rgb(0 0 0 / 20%);
     transition: transform 0.15s ease;
@@ -110,7 +121,10 @@ $slider-sizes: (
     border-radius: 9999px;
   }
 
-  &:focus-visible::-webkit-slider-thumb,
+  &:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px var(--focus-outline-color, var(--primary-color));
+  }
+
   &:focus-visible::-moz-range-thumb {
     box-shadow: 0 0 0 3px var(--focus-outline-color, var(--primary-color));
   }
@@ -161,9 +175,12 @@ $slider-sizes: (
       background-color: map.get($vals, hover);
     }
 
-    &::-webkit-slider-thumb,
+    &::-webkit-slider-thumb {
+      background-color: var(--text-color-primary);
+    }
+
     &::-moz-range-thumb {
-      background-color: var(--text-color-primary) !important;
+      background-color: var(--text-color-primary);
     }
   }
 }
@@ -176,9 +193,12 @@ $slider-sizes: (
       background-color: map.get($vals, hover);
     }
 
-    &::-webkit-slider-thumb,
+    &::-webkit-slider-thumb {
+      background-color: var(--text-color-primary);
+    }
+
     &::-moz-range-thumb {
-      background-color: var(--text-color-primary) !important;
+      background-color: var(--text-color-primary);
     }
   }
 }
@@ -192,28 +212,46 @@ $slider-sizes: (
     $track: map.get($props, track);
     $thumb: map.get($props, thumb);
 
-    height: $track;
+    height: $thumb;
 
-    &::-webkit-slider-runnable-track,
+    &::-webkit-slider-runnable-track {
+      height: $track;
+    }
+
     &::-moz-range-track {
       height: $track;
     }
 
-    &::-webkit-slider-thumb,
+    &::-webkit-slider-thumb {
+      width: $thumb;
+      height: $thumb;
+      border-radius: 50%;
+      background-color: var(--text-color-primary);
+      margin-top: calc((#{$track} - #{$thumb}) / 2);
+    }
+
     &::-moz-range-thumb {
       width: $thumb;
       height: $thumb;
+      border-radius: 50%;
     }
 
     @include bp.down(xs) {
       height: calc(#{$track} * 0.9);
 
-      &::-webkit-slider-runnable-track,
+      &::-webkit-slider-runnable-track {
+        height: calc(#{$track} * 0.9);
+      }
+
       &::-moz-range-track {
         height: calc(#{$track} * 0.9);
       }
 
-      &::-webkit-slider-thumb,
+      &::-webkit-slider-thumb {
+        width: calc(#{$thumb} * 0.9);
+        height: calc(#{$thumb} * 0.9);
+      }
+
       &::-moz-range-thumb {
         width: calc(#{$thumb} * 0.9);
         height: calc(#{$thumb} * 0.9);
@@ -223,12 +261,19 @@ $slider-sizes: (
     @include bp.up(lg) {
       height: calc(#{$track} * 1.1);
 
-      &::-webkit-slider-runnable-track,
+      &::-webkit-slider-runnable-track {
+        height: calc(#{$track} * 1.1);
+      }
+
       &::-moz-range-track {
         height: calc(#{$track} * 1.1);
       }
 
-      &::-webkit-slider-thumb,
+      &::-webkit-slider-thumb {
+        width: calc(#{$thumb} * 1.05);
+        height: calc(#{$thumb} * 1.05);
+      }
+
       &::-moz-range-thumb {
         width: calc(#{$thumb} * 1.05);
         height: calc(#{$thumb} * 1.05);
@@ -246,7 +291,9 @@ $slider-sizes: (
 }
 
 @media (hover: none) {
-  .slider::-webkit-slider-thumb,
+  .slider::-webkit-slider-thumb {
+    transition: none;
+  }
   .slider::-moz-range-thumb {
     transition: none;
   }
@@ -259,7 +306,11 @@ $slider-sizes: (
     color: ButtonText;
     border: 1px solid ButtonText;
 
-    &::-webkit-slider-runnable-track,
+    &::-webkit-slider-runnable-track {
+      background: ButtonFace;
+      border: 1px solid ButtonText;
+    }
+
     &::-moz-range-track {
       background: ButtonFace;
       border: 1px solid ButtonText;

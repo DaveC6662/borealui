@@ -27,7 +27,11 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   defaultIndex = 0,
   value,
   onChange,
-  ariaLabel = "Tabs",
+  "aria-label": ariaLabel = "Tabs",
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-live": ariaLive,
+  tabListId,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   className = "",
@@ -131,6 +135,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
       i = (i + dir + len) % len;
       if (!isDisabled(i)) return i;
     }
+
     return start;
   };
 
@@ -183,8 +188,12 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   return (
     <div className={containerClassNames} data-testid={testId}>
       <div
+        id={tabListId}
         className={tabListClass}
-        aria-label={ariaLabel}
+        aria-label={ariaLabelledBy ? undefined : ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        aria-live={ariaLive}
         role="tablist"
         aria-orientation={orientation}
         onKeyDown={onKeyDown}
@@ -194,10 +203,8 @@ const TabsBase: React.FC<BaseTabsProps> = ({
           const Icon = tab.icon;
           const isActive = index === activeIndex;
           const disabled = isDisabled(index);
-
-          const tabId = `${baseId}-tab-${index}`;
-          const panelId = `${baseId}-panel-${index}`;
-
+          const generatedTabId = `${baseId}-tab-${index}`;
+          const tabId = tab.id ?? generatedTabId;
           return (
             <button
               key={`${tab.label}-${index}`}
@@ -212,7 +219,8 @@ const TabsBase: React.FC<BaseTabsProps> = ({
               role="tab"
               type="button"
               aria-selected={isActive}
-              aria-controls={panelId}
+              aria-label={tab["aria-label"]}
+              aria-describedby={tab["aria-describedby"]}
               id={tabId}
               aria-disabled={disabled || undefined}
               onClick={() => {

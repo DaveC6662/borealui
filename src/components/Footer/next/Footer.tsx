@@ -3,7 +3,8 @@
 import React from "react";
 import FooterBase from "../FooterBase";
 import { FooterProps } from "../Footer.types";
-import { IconButton, ThemeSelect } from "@/index.next";
+import IconButton from "../../IconButton/next/IconButton";
+import ThemeSelect from "../../Select/ThemeSelect/next/ThemeSelect";
 import Link from "next/link";
 import styles from "./Footer.module.scss";
 import Image from "next/image";

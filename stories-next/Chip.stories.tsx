@@ -1,7 +1,7 @@
 // src/stories/Chip.stories.tsx
 
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Chip } from "../src/index.next";
 import { FaCheckCircle } from "react-icons/fa";
 import {
@@ -13,7 +13,7 @@ import {
 } from "../src/types/types";
 import { ChipBaseProps } from "../src/components/Chip/Chip.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -21,7 +21,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const positions: PositionType[] = [
   "topLeft",
@@ -47,105 +47,6 @@ const meta: Meta<ChipBaseProps> = {
       </>
     ),
   ],
-  argTypes: {
-    id: {
-      description: "Unique identifier for the chip.",
-      control: "text",
-      table: { category: "Identification" },
-    },
-    message: {
-      description: "The content/message displayed inside the chip.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    visible: {
-      description: "Controls whether the chip is visible (for controlled use).",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    onClose: {
-      description: "Callback fired when the close icon is clicked.",
-      action: "closed",
-      control: false,
-      table: { category: "Events" },
-    },
-    icon: {
-      description: "Custom icon component displayed at the start of the chip.",
-      control: false,
-      table: { category: "Content" },
-    },
-    closeIcon: {
-      description: "Custom close icon component (if closable).",
-      control: false,
-      table: { category: "Content" },
-    },
-    size: {
-      description: "Size of the chip.",
-      control: { type: "select" },
-      options: ["xs", "small", "medium", "large", "xl"],
-      table: { category: "Appearance" },
-    },
-    theme: {
-      description: "Visual theme of the chip.",
-      control: { type: "select" },
-      options: themeOptions,
-      table: { category: "Appearance" },
-    },
-    state: {
-      description: "State color style (success, error, warning, etc).",
-      control: { type: "select" },
-      options: ["", ...stateOptions],
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      description: "Border radius style.",
-      control: { type: "select" },
-      options: roundingOptions,
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      description: "Shadow style.",
-      control: { type: "select" },
-      options: shadowOptions,
-      table: { category: "Appearance" },
-    },
-    position: {
-      description: "Fixed position (for toasts, e.g. top-right).",
-      control: { type: "select" },
-      options: positions,
-      table: { category: "Behavior" },
-    },
-    usePortal: {
-      description: "Render chip in a portal (for fixed/floating positioning).",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    autoClose: {
-      description: "Enable auto-close after a specified duration.",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    duration: {
-      description: "Auto-close timeout duration in milliseconds.",
-      control: "number",
-      table: { category: "Behavior" },
-    },
-    stackIndex: {
-      description: "Stack index for the chip (controls z-index).",
-      control: "number",
-      table: { category: "Behavior" },
-    },
-    className: {
-      description: "Additional custom CSS class names.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      description: "Test ID for end-to-end or unit testing.",
-      control: "text",
-      table: { category: "Testing" },
-    },
-  },
 };
 
 export default meta;
@@ -183,7 +84,7 @@ export const WithIcon: Story = {
           icon={FaCheckCircle}
           visible={visible}
           onClose={() => setVisible(false)}
-          theme="success"
+          state="success"
           autoClose={false}
         />
       </>
@@ -252,22 +153,22 @@ export const States: Story = {
     return (
       <>
         <div className="grid grid-cols-6 gap-2">
-          {stateOptions.map((theme) => (
+          {stateOptions.map((state) => (
             <button
-              key={theme}
-              onClick={() => setVisibleState(theme as StateType)}
+              key={state}
+              onClick={() => setVisibleState(state as StateType)}
               className="p-2 border rounded"
             >
-              {theme}
+              {state}
             </button>
           ))}
         </div>
 
         {visibleState && (
           <Chip
-            id="theme-chip"
+            id="state-chip"
             message={`State: ${visibleState}`}
-            theme={visibleState}
+            state={visibleState}
             position="topRight"
             visible={true}
             onClose={() => setVisibleState(null)}
@@ -283,7 +184,7 @@ export const States: Story = {
 export const Positions: Story = {
   render: () => {
     const [visiblePosition, setVisiblePosition] = useState<PositionType | null>(
-      null
+      null,
     );
 
     return (
@@ -320,7 +221,7 @@ export const Positions: Story = {
 export const RoundingVariants: Story = {
   render: () => {
     const [visibleRounding, setVisibleRounding] = useState<RoundingType | null>(
-      null
+      null,
     );
 
     return (

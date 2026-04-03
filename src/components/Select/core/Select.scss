@@ -1,12 +1,12 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .select_wrapper {
   position: relative;
   display: inline-flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   width: fit-content;
   margin: var(--spacing-xs) 0;
@@ -116,7 +116,7 @@
 .select {
   width: 100%;
   min-height: 40px;
-  padding: 5px 30px;
+  padding: 5px 10px;
   font-family: var(--font-family-ui);
   font-size: var(--font-size-label);
   font-weight: var(--font-weight-label);
@@ -162,10 +162,10 @@
   &_layout {
     display: flex;
     gap: 0.5rem;
-    width: 100%;
+    width: fit-content;
   }
 
-  &_title {
+  &_label {
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
@@ -174,24 +174,24 @@
     white-space: nowrap;
   }
 
-  &_title_top {
+  &_label_top {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  &_title_bottom {
+  &_label_bottom {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  &_title_left,
-  &_title_right {
+  &_label_left,
+  &_label_right {
     flex-direction: row;
     align-items: center;
   }
 
-  &_title_left .select_wrapper,
-  &_title_right .select_wrapper {
+  &_label_left .select_wrapper,
+  &_label_right .select_wrapper {
     flex: 1;
     min-width: 0;
   }

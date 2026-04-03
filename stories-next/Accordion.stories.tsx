@@ -1,6 +1,7 @@
-import { useState } from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import React, { useState } from "react";
+import "../src/components/Accordion/next/Accordion.module.scss";
 import { Accordion } from "../src/index.next";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {
   RoundingType,
@@ -10,7 +11,9 @@ import {
   ThemeType,
 } from "../src/types/types";
 
-const themeOptions = [
+Accordion.displayName = "Accordion";
+
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -18,134 +21,21 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
-const sizeOptions = ["xs", "small", "medium", "large", "xl"];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const stateOptions: StateType[] = ["", "success", "error", "warning"];
+const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
   component: Accordion,
   tags: ["autodocs"],
-  argTypes: {
-    title: {
-      description: "Accordion summary or heading text.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    id: {
-      description: "HTML id for the accordion (for accessibility).",
-      control: "text",
-      table: { category: "Accessibility" },
-    },
-    description: {
-      description: "Optional description below the title.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    children: {
-      description: "Content to display inside the expanded accordion.",
-      control: false,
-      table: { category: "Content" },
-    },
-    theme: {
-      description: "Visual theme of the accordion.",
-      control: { type: "select" },
-      options: themeOptions,
-      table: { category: "Appearance" },
-    },
-    state: {
-      description:
-        "Visual state for semantic meaning (success, warning, error).",
-      control: { type: "select" },
-      options: stateOptions,
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      description: "Shadow effect for the accordion container.",
-      control: { type: "select" },
-      options: shadowOptions,
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      description: "Corner radius of the accordion container.",
-      control: { type: "select" },
-      options: roundingOptions,
-      table: { category: "Appearance" },
-    },
-    size: {
-      description: "Overall size of the accordion.",
-      control: { type: "select" },
-      options: sizeOptions,
-      table: { category: "Appearance" },
-    },
-    initiallyExpanded: {
-      description: "If true, accordion is expanded by default.",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    expanded: {
-      description: "Manually control expanded state (controlled mode).",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    outline: {
-      description: "Show outline border style.",
-      control: "boolean",
-      table: { category: "Appearance" },
-    },
-    disabled: {
-      description: "Disable interaction and dim the accordion.",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    isToggleable: {
-      description: "If false, accordion cannot be collapsed.",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    asyncContent: {
-      description: "Simulate async content loading when expanded.",
-      control: "boolean",
-      table: { category: "Behavior" },
-    },
-    lazyLoad: {
-      description: "Only render children when expanded.",
-      control: "boolean",
-      table: { category: "Performance" },
-    },
-    iconPosition: {
-      description: "Position of expand/collapse icon.",
-      control: { type: "radio" },
-      options: ["left", "right"],
-      table: { category: "Appearance" },
-    },
-    customExpandedIcon: {
-      description: "Custom icon to show when expanded.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    customCollapsedIcon: {
-      description: "Custom icon to show when collapsed.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    className: {
-      description: "Custom CSS class for styling.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    onToggle: {
-      description: "Callback fired when expanded/collapsed state changes.",
-      action: "onToggle",
-      table: { category: "Events" },
-    },
-    "data-testid": {
-      description: "Test ID for test automation.",
-      control: "text",
-      table: { category: "Testing" },
-    },
-  },
 };
 
 export default meta;
@@ -160,6 +50,7 @@ const defaultArgs = {
   state: "" as StateType,
   rounding: "medium" as RoundingType,
   shadow: "medium" as ShadowType,
+  "data-testid": "accordion",
 };
 
 export const Default: Story = {
@@ -172,13 +63,12 @@ export const Default: Story = {
 export const Controlled: Story = {
   render: (args) => {
     const [open, setOpen] = useState(true);
+
     return (
       <Accordion
         {...args}
         expanded={open}
-        onToggle={(val: boolean | ((prev: boolean) => boolean)) =>
-          setOpen(typeof val === "function" ? val(open) : val)
-        }
+        onToggle={(nextExpanded) => setOpen(nextExpanded)}
         customCollapsedIcon="⏵"
         customExpandedIcon="⏷"
       />
@@ -201,9 +91,11 @@ export const Disabled: Story = {
 
 export const LazyAndAsync: Story = {
   args: {
+    ...defaultArgs,
     title: "Lazy & Async Accordion",
     lazyLoad: true,
     asyncContent: true,
+    loadingAriaLabel: "Loading accordion content",
     initiallyExpanded: false,
     children: (
       <div>
@@ -212,42 +104,13 @@ export const LazyAndAsync: Story = {
           <strong>async-loaded</strong>.
         </p>
         <p>
-          It will not render into the DOM until the accordion is expanded, and
-          then simulates a delay to fetch content.
-        </p>
-        <p>
-          After a short simulated loading period, the content appears. You can
-          customize this delay or replace it with a real fetch call.
+          It is not rendered until the accordion is opened, then a simulated
+          loading state is shown before the content appears.
         </p>
       </div>
     ),
   },
 };
-
-export const ThemeVariants = () =>
-  withVariants(Accordion, { ...defaultArgs }, [
-    { propName: "theme", values: [...themeOptions] },
-  ]);
-
-export const StateVariants = () =>
-  withVariants(Accordion, { ...defaultArgs }, [
-    { propName: "state", values: stateOptions },
-  ]);
-
-export const SizeVariants = () =>
-  withVariants(Accordion, { ...defaultArgs }, [
-    { propName: "size", values: sizeOptions },
-  ]);
-
-export const OutlineVariants = () =>
-  withVariants(
-    Accordion,
-    {
-      ...defaultArgs,
-      outline: true,
-    },
-    [{ propName: "theme", values: [...themeOptions, ...stateOptions] }]
-  );
 
 export const LotsOfContent: Story = {
   args: {
@@ -258,8 +121,7 @@ export const LotsOfContent: Story = {
       <div>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-          lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod
-          malesuada.
+          lacinia odio vitae vestibulum vestibulum.
         </p>
         {[...Array(10)].map((_, i) => (
           <p key={i}>
@@ -269,14 +131,11 @@ export const LotsOfContent: Story = {
           </p>
         ))}
         <ul>
-          {["Item A", "Item B", "Item C", "Item D", "Item E"].map((item, i) => (
-            <li key={i}>{item}</li>
+          {["Item A", "Item B", "Item C", "Item D", "Item E"].map((item) => (
+            <li key={item}>{item}</li>
           ))}
         </ul>
-        <p>
-          End of content. Scroll or expand/collapse the accordion to test
-          transitions and max-height handling.
-        </p>
+        <p>End of content.</p>
       </div>
     ),
   },
@@ -284,18 +143,15 @@ export const LotsOfContent: Story = {
 
 export const LazyLoadContent: Story = {
   args: {
+    ...defaultArgs,
     title: "Lazy Loaded Accordion",
     lazyLoad: true,
     initiallyExpanded: false,
     children: (
       <div>
         <p>
-          This content is <strong>not rendered</strong> in the DOM until the
-          accordion is expanded.
-        </p>
-        <p>
-          Try inspecting the DOM before expanding — the content won't exist
-          until you open it.
+          This content is <strong>not rendered</strong> until the accordion is
+          expanded.
         </p>
       </div>
     ),
@@ -304,6 +160,7 @@ export const LazyLoadContent: Story = {
 
 export const IconOnLeft: Story = {
   args: {
+    ...defaultArgs,
     title: "Icon on the Left",
     iconPosition: "left",
     initiallyExpanded: true,
@@ -320,13 +177,14 @@ export const IconOnLeft: Story = {
 
 export const NonToggleableAccordion: Story = {
   args: {
+    ...defaultArgs,
     title: "Non-Toggleable Accordion",
     initiallyExpanded: true,
     isToggleable: false,
     children: (
       <p>
         Once opened, this accordion cannot be closed. This is useful for locked
-        or non-interruptible sections.
+        or persistent sections.
       </p>
     ),
   },
@@ -334,17 +192,50 @@ export const NonToggleableAccordion: Story = {
 
 export const WithDescription: Story = {
   args: {
+    ...defaultArgs,
     title: "Accordion with Screen Reader Description",
     description: "This section contains tips for screen reader users.",
     initiallyExpanded: false,
     children: (
       <p>
-        The description prop is visually hidden but read aloud to users of
-        assistive technologies.
+        The description prop is visually hidden but announced to assistive
+        technologies.
       </p>
     ),
   },
 };
+
+export const AccessibleRegionOverrides: Story = {
+  args: {
+    ...defaultArgs,
+    title: "Accordion with Custom Region Accessibility",
+    regionAriaLabel: "Additional details panel",
+    regionAriaDescribedBy: "custom-region-help",
+    children: (
+      <div>
+        <p id="custom-region-help">
+          This panel uses explicit accessibility metadata for the content
+          region.
+        </p>
+      </div>
+    ),
+  },
+};
+
+export const ThemeVariants = () =>
+  withVariants(Accordion, { ...defaultArgs }, [
+    { propName: "theme", values: themeOptions },
+  ]);
+
+export const StateVariants = () =>
+  withVariants(Accordion, { ...defaultArgs }, [
+    { propName: "state", values: stateOptions },
+  ]);
+
+export const SizeVariants = () =>
+  withVariants(Accordion, { ...defaultArgs }, [
+    { propName: "size", values: sizeOptions },
+  ]);
 
 export const RoundingVariants = () =>
   withVariants(Accordion, { ...defaultArgs }, [
@@ -355,3 +246,13 @@ export const ShadowVariants = () =>
   withVariants(Accordion, { ...defaultArgs }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const OutlineVariants = () =>
+  withVariants(
+    Accordion,
+    {
+      ...defaultArgs,
+      outline: true,
+    },
+    [{ propName: "theme", values: themeOptions }],
+  );

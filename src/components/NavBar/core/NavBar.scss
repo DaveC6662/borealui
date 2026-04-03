@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .nav {
@@ -54,6 +54,7 @@
       transform: translateX(-50%);
       flex-direction: row;
       justify-content: center;
+      padding: 0px;
       gap: var(--spacing-sm);
       top: 0;
       left: 50%;

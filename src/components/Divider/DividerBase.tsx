@@ -14,42 +14,50 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       theme = getDefaultTheme(),
       state = "",
       as = "div",
+      decorative = true,
+      label,
+      labelledBy,
       classMap,
       "data-testid": testId = "divider",
-      "aria-hidden": ariaHidden,
+      style,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const isVertical = orientation === "vertical";
-
     const ComponentTag = as;
 
-    const needsExplicitRole = ComponentTag !== "hr" || isVertical;
-    const role = needsExplicitRole ? "separator" : undefined;
+    const isHr = ComponentTag === "hr";
 
-    const style: React.CSSProperties =
-      ComponentTag === "hr"
-        ? {
-            border: 0,
-            margin: 0,
-            ...(isVertical
-              ? {
-                  width: 0,
-                  height: length,
-                  borderLeft: `${thickness} ${dashed ? "dashed" : "solid"} currentColor`,
-                }
-              : {
-                  height: 0,
-                  width: length,
-                  borderTop: `${thickness} ${dashed ? "dashed" : "solid"} currentColor`,
-                }),
-          }
-        : {
-            width: isVertical ? thickness : length,
-            height: isVertical ? length : thickness,
-            backgroundColor: dashed ? "transparent" : undefined,
-          };
+    const computedRole = decorative
+      ? undefined
+      : isHr && !isVertical
+        ? undefined
+        : "separator";
+
+    const computedStyle: React.CSSProperties = isHr
+      ? {
+          border: 0,
+          margin: 0,
+          ...(isVertical
+            ? {
+                width: 0,
+                height: length,
+                borderLeft: `${thickness} ${dashed ? "dashed" : "solid"} currentColor`,
+              }
+            : {
+                height: 0,
+                width: length,
+                borderTop: `${thickness} ${dashed ? "dashed" : "solid"} currentColor`,
+              }),
+          ...style,
+        }
+      : {
+          width: isVertical ? thickness : length,
+          height: isVertical ? length : thickness,
+          backgroundColor: dashed ? "transparent" : undefined,
+          ...style,
+        };
 
     return (
       <ComponentTag
@@ -60,18 +68,20 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
           theme && classMap[theme],
           state && classMap[state],
           dashed && classMap.dashed,
-          className
+          className,
         )}
-        {...(role && { role })}
-        {...(isVertical && { "aria-orientation": "vertical" })}
-        {...(ariaHidden !== undefined && { "aria-hidden": ariaHidden })}
+        role={computedRole}
+        aria-hidden={decorative ? true : undefined}
+        aria-orientation={!decorative && isVertical ? "vertical" : undefined}
+        aria-label={!decorative ? label : undefined}
+        aria-labelledby={!decorative ? labelledBy : undefined}
         data-orientation={orientation}
-        style={style}
+        style={computedStyle}
         data-testid={testId}
         {...rest}
       />
     );
-  }
+  },
 );
 
 DividerBase.displayName = "DividerBase";

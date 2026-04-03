@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 @use "sass:list";
 
@@ -63,7 +63,6 @@ $sizes: (
   justify-content: center;
   gap: var(--spacing-xs);
   flex-wrap: nowrap;
-  padding: 10px 20px;
   width: fit-content;
   border: none;
   cursor: pointer;

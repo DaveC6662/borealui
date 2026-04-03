@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .command_palette_overlay {
@@ -30,6 +30,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: var(--spacing-sm);
   font-family: var(--font-family-ui);
   font-size: var(--font-size-body-sm);
@@ -104,6 +105,7 @@
   padding: 0;
   margin: 0;
   max-height: 300px;
+  width: 100%;
   overflow-y: auto;
 
   @include bp.down(sm) {

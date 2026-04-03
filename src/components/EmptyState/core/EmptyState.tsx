@@ -1,7 +1,7 @@
 import React from "react";
 import BaseEmptyState from "../EmptyStateBase";
 import { EmptyStateProps } from "../EmptyState.types";
-import { Button } from "../../../index.core";
+import Button from "../../Button/core/Button";
 import "./EmptyState.scss";
 
 const classes = {

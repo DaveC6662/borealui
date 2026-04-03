@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Avatar } from "../src/index.core";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
@@ -66,104 +66,6 @@ const meta: Meta<typeof Avatar> = {
   title: "Components/Avatar",
   component: Avatar,
   tags: ["autodocs"],
-  argTypes: {
-    src: {
-      description:
-        "Image URL for the avatar. If not set, uses fallback initials or icon.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    alt: {
-      description: "Alternative text for the image (improves accessibility).",
-      control: "text",
-      table: { category: "Accessibility" },
-    },
-    name: {
-      description: "Name or initials to display when no image is provided.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    label: {
-      description: "Aria label for accessibility.",
-      control: "text",
-      table: { category: "Accessibility" },
-    },
-    fallback: {
-      description: "Fallback string (e.g., initials) when no image is loaded.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    size: {
-      description: "Size of the avatar (xs, sm, md, lg, xl).",
-      control: { type: "select" },
-      options: sizeOptions,
-      table: { category: "Appearance" },
-    },
-    shape: {
-      description: "Shape of the avatar ('circle', 'square', 'rounded').",
-      control: { type: "select" },
-      options: shapeOptions,
-      table: { category: "Appearance" },
-    },
-    theme: {
-      description: "Visual theme color (primary, secondary, etc).",
-      control: { type: "select" },
-      options: themeOptions,
-      table: { category: "Appearance" },
-    },
-    state: {
-      description: "State style for semantic status (success, warning, error).",
-      control: { type: "select" },
-      options: stateOptions,
-      table: { category: "Appearance" },
-    },
-    status: {
-      description:
-        "Shows a status indicator dot or icon (e.g., 'online', 'busy', etc).",
-      control: { type: "select" },
-      options: [...statusOptions, undefined],
-      table: { category: "Status" },
-    },
-    statusPosition: {
-      description:
-        "Where to place the status indicator (e.g., 'bottom-right').",
-      control: { type: "select" },
-      options: statusPositionOptions,
-      table: { category: "Status" },
-    },
-    outline: {
-      description: "Whether to display a colored outline around the avatar.",
-      control: "boolean",
-      table: { category: "Appearance" },
-    },
-    priority: {
-      description:
-        "If true, loads the image with high priority (Next.js only).",
-      control: "boolean",
-      table: { category: "Performance" },
-    },
-    href: {
-      description: "If set, wraps avatar in a link.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    className: {
-      description: "Additional CSS class for custom styling.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    children: {
-      description:
-        "Children for custom content inside the avatar (overrides src/fallback).",
-      control: false,
-      table: { category: "Advanced" },
-    },
-    "data-testid": {
-      description: "Test ID for test automation.",
-      control: "text",
-      table: { category: "Testing" },
-    },
-  },
 };
 
 export default meta;
@@ -266,7 +168,7 @@ export const ShadowVariants = () =>
         propName: "shadow",
         values: shadowOptions,
       },
-    ]
+    ],
   );
 
 export const Disabled: Story = {
@@ -291,7 +193,7 @@ export const OutlineVariants = () =>
         propName: "theme",
         values: [...themeOptions, ...stateOptions],
       },
-    ]
+    ],
   );
 
 export const ThemeVariants = () =>
@@ -329,7 +231,7 @@ export const ShapeVariants = () =>
         propName: "shape",
         values: shapeOptions,
       },
-    ]
+    ],
   );
 
 export const AllStatuses: Story = {

@@ -7,7 +7,8 @@
       "default",
       {
         "aria-valid-attr-value": "off",
-        "aria-roles": "off"
+        "aria-roles": "off",
+        "aria-allowed-attr": "off"
       }
     ],
     "meta-viewport": "off",

@@ -1,7 +1,7 @@
 import React from "react";
 import BaseDropdown from "../DropdownBase";
 import { DropdownProps } from "../Dropdown.types";
-import { IconButton } from "@/index.core";
+import IconButton from "../../IconButton/core/IconButton";
 import "./Dropdown.scss";
 
 const classes = {

@@ -2,7 +2,7 @@ import React from "react";
 import "./Stepper.scss";
 import StepperBase from "../StepperBase";
 import { StepperProps } from "../Stepper.types";
-import { IconButton } from "@/index.core";
+import IconButton from "../../IconButton/core/IconButton";
 
 const classes = {
   stepper: "stepper",

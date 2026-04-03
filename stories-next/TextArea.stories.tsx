@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
-import { FaCommentDots } from "react-icons/fa";
-import { TextArea } from "../src/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { FaCommentDots, FaInbox } from "react-icons/fa";
+import { StateType, TextArea, ThemeType } from "../src/index.next";
 import type { TextAreaProps } from "../src/components/TextArea/TextArea.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -13,7 +13,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
@@ -29,118 +29,6 @@ const meta: Meta<TextAreaProps> = {
     readOnly: false,
     autoComplete: "off",
   },
-  argTypes: {
-    value: {
-      control: "text",
-      description: "The current value of the textarea (for controlled usage).",
-      table: { category: "Data", type: { summary: "string" } },
-    },
-    defaultValue: {
-      control: "text",
-      description: "Default value for the textarea (for uncontrolled usage).",
-      table: { category: "Data", type: { summary: "string" } },
-    },
-    placeholder: {
-      control: "text",
-      description: "Placeholder text when the textarea is empty.",
-      table: { category: "Appearance", type: { summary: "string" } },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Visual theme for the textarea.",
-      table: { category: "Appearance" },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "error", "warning"],
-      description: "Validation state coloring.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Border radius of the textarea.",
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Shadow style for the textarea container.",
-      table: { category: "Appearance" },
-    },
-    outline: {
-      control: "boolean",
-      description: "If true, renders the textarea with an outlined style.",
-      table: { category: "Appearance" },
-    },
-    icon: {
-      control: false,
-      description: "Optional icon component displayed inside the textarea.",
-      table: { category: "Appearance", type: { summary: "React.ElementType" } },
-    },
-    disabled: {
-      control: "boolean",
-      description: "Disables the textarea.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    readOnly: {
-      control: "boolean",
-      description: "Renders the textarea as read-only.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-    },
-    autoComplete: {
-      control: "text",
-      description: "Sets the browser autocomplete attribute.",
-      table: { category: "Behavior", defaultValue: { summary: "off" } },
-    },
-    height: {
-      control: "text",
-      description:
-        "Explicit CSS height for the textarea (e.g. '100px', '10rem').",
-      table: { category: "Appearance" },
-    },
-    resizable: {
-      control: "boolean",
-      description: "If false, the textarea is not resizable.",
-      table: { category: "Behavior" },
-    },
-    ariaLabel: {
-      control: "text",
-      description: "Custom ARIA label for accessibility.",
-      table: { category: "Accessibility" },
-    },
-    ariaDescription: {
-      control: "text",
-      description: "ARIA description for screen readers.",
-      table: { category: "Accessibility" },
-    },
-    onChange: {
-      action: "changed",
-      description: "Fired when the value changes. Receives event.",
-      table: { category: "Events" },
-    },
-    onBlur: {
-      action: "blurred",
-      description: "Fired when the textarea loses focus.",
-      table: { category: "Events" },
-    },
-    onFocus: {
-      action: "focused",
-      description: "Fired when the textarea receives focus.",
-      table: { category: "Events" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class name for the root element.",
-      table: { category: "Advanced" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test ID for the root element (testing utilities).",
-      table: { category: "Testing" },
-    },
-  },
 };
 
 export default meta;
@@ -150,11 +38,7 @@ export const Default: Story = {
   render: (args) => {
     const [value, setValue] = useState("");
     return (
-      <TextArea
-        {...args}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
+      <TextArea {...args} value={value} onChange={(value) => setValue(value)} />
     );
   },
 };
@@ -168,7 +52,7 @@ export const WithIcon: Story = {
         icon={FaCommentDots}
         placeholder="Leave a comment..."
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -187,7 +71,7 @@ export const ThemedVariants: Story = {
               theme={theme}
               placeholder={`${theme} theme`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -209,7 +93,7 @@ export const StateVariants: Story = {
               state={state}
               placeholder={`${state} state`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -230,9 +114,10 @@ export const OutlineVariants: Story = {
               {...args}
               outline
               theme={theme}
+              icon={FaInbox}
               placeholder={`${theme} outline`}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           );
         })}
@@ -250,7 +135,7 @@ export const CustomHeight: Story = {
         height="150px"
         placeholder="Tall textarea for longer input..."
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -266,11 +151,10 @@ export const Unresizable: Story = {
         placeholder="Cannot be resized"
         value={value}
         rows={1}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
-  name: "Unresizable",
   args: {
     resizable: false,
   },
@@ -283,9 +167,9 @@ export const WithAriaDescription: Story = {
       <TextArea
         {...args}
         placeholder="Describe your experience..."
-        ariaDescription="Use this field to describe your experience with our product."
+        aria-description="Use this field to describe your experience with our product."
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(value) => setValue(value)}
       />
     );
   },
@@ -302,12 +186,35 @@ export const Disabled: Story = {
   ),
 };
 
-export const RoundingVariants = (args) =>
+export const LabelPositionVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1.5rem", maxWidth: "700px" }}>
+        {(["top", "left", "right", "bottom"] as const).map((position) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextArea
+              key={position}
+              {...args}
+              label={`Label ${position}`}
+              labelPosition={position}
+              placeholder={`Label position: ${position}`}
+              value={value}
+              onChange={(value) => setValue(value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const RoundingVariants = (args: React.ComponentProps<typeof TextArea>) =>
   withVariants(TextArea, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof TextArea>) =>
   withVariants(TextArea, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

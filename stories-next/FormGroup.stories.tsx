@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FormGroup, TextInput, Button } from "../src/index.next";
 import type { FormGroupProps } from "../src/components/FormGroup/FormGroup.types";
 
@@ -7,78 +7,6 @@ const meta: Meta<FormGroupProps> = {
   title: "Components/FormGroup",
   component: FormGroup,
   tags: ["autodocs"],
-  argTypes: {
-    label: {
-      control: "text",
-      description:
-        "Label for the form group. Required unless `hideLabel` is set.",
-      table: { category: "Content" },
-    },
-    description: {
-      control: "text",
-      description:
-        "Additional description or help text displayed below the inputs.",
-      table: { category: "Content" },
-    },
-    error: {
-      control: "text",
-      description:
-        "Error message to show below the inputs. If provided, shows in place of description.",
-      table: { category: "State" },
-    },
-    id: {
-      control: "text",
-      description:
-        "Unique id for accessibility, used for ARIA labelling and test ids.",
-      table: { category: "Accessibility" },
-    },
-    required: {
-      control: "boolean",
-      description:
-        "Marks the field as required, adds a visual indicator and aria-required.",
-      table: { category: "State" },
-    },
-    layout: {
-      control: "select",
-      options: ["vertical", "horizontal"],
-      description:
-        "Layout direction of the label and children: vertical (default) or horizontal.",
-      table: { category: "Appearance" },
-    },
-    spacing: {
-      control: "select",
-      options: ["xs", "small", "medium", "large", "xl"],
-      description: "Spacing (gap) between children inside the group.",
-      table: { category: "Appearance" },
-    },
-    hideLabel: {
-      control: "boolean",
-      description:
-        "Visually hides the label but keeps it accessible for screen readers.",
-      table: { category: "Accessibility" },
-    },
-    controller: {
-      control: false,
-      description:
-        "JSX element rendered beside the first input (e.g., button, icon).",
-      table: { category: "Content", type: { summary: "ReactNode" } },
-    },
-    children: {
-      control: false,
-      description: "Inputs or elements to render inside the form group.",
-      table: { category: "Content", type: { summary: "ReactNode" } },
-    },
-    className: {
-      control: "text",
-      description: "Custom CSS class for the wrapper.",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Custom test id for the root element.",
-      table: { category: "Testing" },
-    },
-  },
 };
 
 export default meta;
@@ -91,14 +19,14 @@ export const LayoutVariants: Story = {
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
         <FormGroup label="Vertical" id="layout-vertical" layout="vertical">
-          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+          <TextInput value={value} onChange={(value) => setValue(value)} />
         </FormGroup>
         <FormGroup
           label="Horizontal"
           id="layout-horizontal"
           layout="horizontal"
         >
-          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+          <TextInput value={value} onChange={(value) => setValue(value)} />
         </FormGroup>
       </div>
     );
@@ -122,12 +50,12 @@ export const SpacingVariants: Story = {
             <TextInput
               placeholder="Text 1"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
             <TextInput
               placeholder="Text 2"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           </FormGroup>
         ))}
@@ -142,14 +70,14 @@ export const DescriptionVariants: Story = {
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
         <FormGroup label="No Description" id="desc-none">
-          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+          <TextInput value={value} onChange={(value) => setValue(value)} />
         </FormGroup>
         <FormGroup
           label="With Description"
           id="desc-present"
           description="Helpful context goes here."
         >
-          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+          <TextInput value={value} onChange={(value) => setValue(value)} />
         </FormGroup>
       </div>
     );

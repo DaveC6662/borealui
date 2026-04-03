@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Navbar } from "../src/index.next";
 import {
   FaHome,
@@ -48,53 +48,6 @@ const meta: Meta<NavBarProps> = {
     theme: "primary",
     rounding: "full",
     shadow: "light",
-  },
-  argTypes: {
-    items: {
-      control: false,
-      description:
-        "Navigation items to render (each item should have a label, icon, and path).",
-      type: { name: "string", required: true },
-      table: {
-        category: "Content",
-        type: {
-          summary: "Array<{ label: string; icon?: ReactNode; path: string }>",
-        },
-      },
-    },
-    theme: {
-      control: "select",
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme for navigation bar.",
-      type: { name: "string" },
-      table: { category: "Style", defaultValue: { summary: "primary" } },
-    },
-    rounding: {
-      control: "select",
-      options: ["full", "none", "small", "medium", "large"],
-      description: "Border radius for navigation items.",
-      type: { name: "string" },
-      table: { category: "Style", defaultValue: { summary: "full" } },
-    },
-    shadow: {
-      control: "select",
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Shadow depth for navigation items.",
-      type: { name: "string" },
-      table: { category: "Style", defaultValue: { summary: "light" } },
-    },
-    className: {
-      control: "text",
-      description: "Custom CSS class for the navbar content container.",
-      type: { name: "string" },
-      table: { category: "Style" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for querying the component in tests.",
-      type: { name: "string" },
-      table: { category: "Testing" },
-    },
   },
 };
 

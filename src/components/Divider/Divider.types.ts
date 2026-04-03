@@ -1,9 +1,13 @@
+import React from "react";
 import { ThemeType, OrientationType, StateType } from "@/types/types";
 
 /**
  * Props for the Divider component.
  */
-export interface DividerProps extends React.HTMLAttributes<HTMLElement> {
+export interface DividerProps extends Omit<
+  React.HTMLAttributes<HTMLElement>,
+  "role" | "children" | "aria-label" | "aria-labelledby"
+> {
   /**
    * Orientation of the divider
    * ('horizontal' | 'vertical'). Default is 'horizontal'.
@@ -36,6 +40,26 @@ export interface DividerProps extends React.HTMLAttributes<HTMLElement> {
    * ('div' | 'hr' | 'span').
    */
   as?: "div" | "hr" | "span";
+
+  /**
+   * Whether the divider is purely decorative.
+   * When true, it is hidden from assistive technology.
+   *
+   * Default: true
+   */
+  decorative?: boolean;
+
+  /**
+   * Accessible label for a meaningful separator.
+   * Only used when decorative is false.
+   */
+  label?: string;
+
+  /**
+   * ID of an element that labels this separator.
+   * Only used when decorative is false.
+   */
+  labelledBy?: string;
 
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;

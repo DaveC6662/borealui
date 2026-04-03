@@ -7,12 +7,39 @@ import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 export interface Column<T> {
   /** Key of the field in the data object. */
   key: keyof T;
+
   /** Label to display in the table header. */
   label: string;
+
   /** Whether the column is sortable. */
   sortable?: boolean;
+
   /** Optional custom render function for the cell. */
   render?: (value: unknown, row: T) => React.ReactNode;
+
+  /**
+   * Optional abbreviated label for compact headers.
+   * This can be exposed to assistive technology when the visual label is shortened.
+   */
+  srLabel?: string;
+
+  /**
+   * Optional header cell id.
+   * Useful when you want to explicitly associate data cells with headers.
+   */
+  id?: string;
+
+  /**
+   * Optional column header scope override.
+   * Defaults to "col" in most implementations.
+   */
+  scope?: "col" | "colgroup";
+
+  /**
+   * Whether this column should be treated as the row header for each row.
+   * Useful for tables where the first column identifies the row.
+   */
+  isRowHeader?: boolean;
 }
 
 /**
@@ -72,8 +99,52 @@ export interface DataTableProps<T> {
 
   /**
    * Accessible label for screen readers.
+   * Use this when there is no visible caption or heading tied to the table.
    */
-  ariaLabel?: string;
+  "aria-label"?: string;
+
+  /**
+   * Accessible labelledby reference for the table.
+   * Prefer this when a visible heading already labels the table.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * Accessible description reference for the table.
+   * Useful for tying helper or instructional text to the table.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Optional visible or screen-reader-only caption text for the table.
+   * A table caption is the preferred built-in table label.
+   */
+  caption?: string;
+
+  /**
+   * Whether the caption should be visually hidden.
+   * Useful when you want semantic labeling without visible UI.
+   */
+  hideCaption?: boolean;
+
+  /**
+   * Accessible label for the sort buttons/controls.
+   * Receives the column label and current sort order.
+   */
+  getSortAriaLabel?: (
+    column: Column<T>,
+    sortOrder: "asc" | "desc",
+    isActive: boolean,
+  ) => string;
+
+  /**
+   * Live region text announced when sorting changes.
+   * Receives the active column and current order.
+   */
+  getSortAnnouncement?: (
+    column: Column<T>,
+    sortOrder: "asc" | "desc",
+  ) => string;
 
   /** Whether to enable server-side sorting. */
   serverSort?: boolean;
@@ -83,6 +154,45 @@ export interface DataTableProps<T> {
 
   /** Function to derive a unique key for each row. */
   rowKey?: (row: T) => string | number;
+
+  /**
+   * Optional accessible label for interactive rows.
+   * Only used when onRowClick is provided.
+   */
+  getRowAriaLabel?: (row: T, index: number) => string;
+
+  /**
+   * Optional row description for screen readers.
+   * Only used when rows are interactive.
+   */
+  getRowAriaDescription?: (row: T, index: number) => string;
+
+  /**
+   * Text shown when no rows are available.
+   */
+  emptyMessage?: string;
+
+  /**
+   * Whether the table is currently loading data.
+   */
+  loading?: boolean;
+
+  /**
+   * Accessible and/or visible loading message.
+   */
+  loadingMessage?: string;
+
+  /**
+   * Total column count override.
+   * Helpful when rendering dynamic or grouped columns in advanced cases.
+   */
+  colCount?: number;
+
+  /**
+   * Total row count override.
+   * Helpful for virtualized or server-paginated tables.
+   */
+  rowCount?: number;
 
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;

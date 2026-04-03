@@ -5,15 +5,17 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, ReactNode } from "react";
 
 /**
  * Props for the Checkbox component.
  */
-export interface CheckBoxProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "size"> {
+export interface CheckBoxProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "size" | "children"
+> {
   /** Label text displayed beside the checkbox. */
-  label?: string;
+  label?: ReactNode;
 
   /** Checked state of the checkbox. */
   checked: boolean;
@@ -57,6 +59,27 @@ export interface CheckBoxProps
   /** Whether the checkbox is disabled. */
   disabled?: boolean;
 
+  /** Whether the checkbox is required. */
+  required?: boolean;
+
+  /**
+   * Marks the checkbox as invalid.
+   * Useful when validation fails.
+   */
+  invalid?: boolean;
+
+  /**
+   * Visible helper text rendered below or beside the checkbox.
+   * Should provide extra guidance for the user.
+   */
+  description?: ReactNode;
+
+  /**
+   * Visible error message rendered for invalid state.
+   * This can also be referenced by assistive technologies.
+   */
+  errorMessage?: ReactNode;
+
   /** Custom class name for additional styling. */
   className?: string;
 
@@ -65,6 +88,33 @@ export interface CheckBoxProps
    * ('left' | 'right').
    */
   labelPosition?: "left" | "right";
+
+  /**
+   * Accessible label for the checkbox when no visible label is present
+   * or when a more descriptive label is needed.
+   */
+  "aria-label"?: string;
+
+  /**
+   * ID reference(s) to element(s) that label the checkbox.
+   * If provided, this takes precedence over the internal label association.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * ID reference(s) to element(s) that describe the checkbox.
+   * This may include helper text, error text, or external descriptions.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * ID reference to the element containing the error message.
+   * Typically used together with aria-invalid.
+   */
+  "aria-errormessage"?: string;
+
+  /** Optional role override, though checkbox is the default semantic role. */
+  role?: "checkbox";
 
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;

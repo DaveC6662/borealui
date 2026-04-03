@@ -25,9 +25,15 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       id,
       "data-testid": testId = "radio-button",
       classMap,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
+      "aria-invalid": ariaInvalid,
+      "aria-required": ariaRequired,
+      required,
       ...props
     },
-    ref
+    ref,
   ) => {
     const uid = useId();
     const inputId = id ?? `${testId}-input-${uid}`;
@@ -45,9 +51,9 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
           classMap[theme],
           classMap[state],
           disabled && classMap.disabled,
-          className
+          className,
         ),
-      [classMap, theme, state, disabled, className]
+      [classMap, theme, state, disabled, className],
     );
 
     const radioClasses = useMemo(
@@ -55,10 +61,13 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
         combineClassNames(
           classMap.circle,
           shadow && classMap[`shadow${capitalize(shadow)}`],
-          rounding && classMap[`round${capitalize(rounding)}`]
+          rounding && classMap[`round${capitalize(rounding)}`],
         ),
-      [classMap, rounding, shadow]
+      [classMap, rounding, shadow],
     );
+
+    const resolvedAriaLabelledBy =
+      ariaLabelledBy ?? (label ? labelId : undefined);
 
     return (
       <label
@@ -76,7 +85,12 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
           checked={checked}
           onChange={handleChange}
           disabled={disabled}
-          aria-labelledby={label ? labelId : undefined}
+          required={required}
+          aria-label={ariaLabel}
+          aria-labelledby={resolvedAriaLabelledBy}
+          aria-describedby={ariaDescribedBy}
+          aria-invalid={ariaInvalid}
+          aria-required={ariaRequired ?? required}
           data-testid={testId}
           {...props}
         />
@@ -96,7 +110,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
         )}
       </label>
     );
-  }
+  },
 );
 
 BaseRadioButton.displayName = "BaseRadioButton";

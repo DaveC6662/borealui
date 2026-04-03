@@ -8,6 +8,7 @@ import {
 import { BaseRatingProps } from "./Rating.types";
 
 const BaseRating: React.FC<BaseRatingProps> = ({
+  id,
   value,
   onChange,
   max = 5,
@@ -17,6 +18,12 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   state = "",
   className = "",
   label,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  starAriaLabelPrefix = "Rate",
+  required = false,
+  readOnly = false,
   "data-testid": testId = "rating",
   classMap,
 }) => {
@@ -25,20 +32,26 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   const clampedValue = Math.min(safeMax, Math.max(0, Math.floor(value || 0)));
   const [hover, setHover] = useState<number | null>(null);
 
-  const labelId = label ? `${uid}-label` : undefined;
-  const groupProps = label
-    ? { "aria-labelledby": labelId }
-    : { "aria-label": "Rating" };
+  const ratingId = id || `${uid}-rating`;
+  const labelId = label ? `${ratingId}-label` : undefined;
+  const isDisabled = !interactive || state === "disabled";
+  const isReadOnly = readOnly;
+  const canInteract = interactive && !isReadOnly && !isDisabled;
+
+  const resolvedAriaLabelledBy = ariaLabelledBy || labelId;
+  const resolvedAriaLabel = !resolvedAriaLabelledBy
+    ? ariaLabel || "Rating"
+    : undefined;
 
   const handleClick = (index: number) => {
-    if (interactive && onChange) onChange(index + 1);
+    if (canInteract && onChange) onChange(index + 1);
   };
 
   const handleKeyDown = (
     event: KeyboardEvent<HTMLSpanElement>,
-    index: number
+    index: number,
   ) => {
-    if (!interactive) return;
+    if (!canInteract) return;
 
     const commit = (v: number) => onChange?.(v);
 
@@ -80,10 +93,10 @@ const BaseRating: React.FC<BaseRatingProps> = ({
         classMap[theme],
         classMap[state],
         classMap[size],
-        interactive && classMap.interactive,
-        className
+        canInteract && classMap.interactive,
+        className,
       ),
-    [classMap, theme, state, size, interactive, className]
+    [classMap, theme, state, size, canInteract, className],
   );
 
   return (
@@ -95,40 +108,52 @@ const BaseRating: React.FC<BaseRatingProps> = ({
           data-testid={`${testId}-label`}
         >
           {label}
+          {required && <span aria-hidden="true"> *</span>}
         </span>
       )}
 
       <div
+        id={ratingId}
         className={wrapperClass}
         role="radiogroup"
-        {...groupProps}
-        aria-disabled={!interactive || undefined}
+        aria-label={resolvedAriaLabel}
+        aria-labelledby={resolvedAriaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        aria-disabled={isDisabled || undefined}
+        aria-readonly={isReadOnly || undefined}
+        aria-required={required || undefined}
         data-testid={testId}
       >
         {Array.from({ length: safeMax }).map((_, index) => {
+          const starValue = index + 1;
           const active = index < (hover ?? clampedValue);
-          const isChecked = clampedValue === index + 1;
+          const isChecked = clampedValue === starValue;
           const isTabbable =
-            interactive && (isChecked || (clampedValue === 0 && index === 0));
+            canInteract && (isChecked || (clampedValue === 0 && index === 0));
 
           return (
             <span
-              key={index}
+              key={starValue}
+              id={`${ratingId}-star-${starValue}`}
               className={combineClassNames(
                 classMap.star,
-                active && classMap.active
+                active && classMap.active,
               )}
               onClick={() => handleClick(index)}
-              onMouseEnter={() => interactive && setHover(index)}
-              onMouseLeave={() => interactive && setHover(null)}
+              onMouseEnter={() => canInteract && setHover(starValue)}
+              onMouseLeave={() => canInteract && setHover(null)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               role="radio"
-              aria-checked={!!isChecked}
+              aria-checked={isChecked}
+              aria-setsize={safeMax}
+              aria-posinset={starValue}
+              aria-label={`${starAriaLabelPrefix} ${starValue} of ${safeMax}${
+                isChecked ? ", selected" : ""
+              }`}
               tabIndex={isTabbable ? 0 : -1}
-              aria-label={`${index + 1} out of ${safeMax} stars`}
-              data-testid={`${testId}-star-${index + 1}`}
+              data-testid={`${testId}-star-${starValue}`}
             >
-              <StarIcon aria-hidden="true" />
+              <StarIcon aria-hidden="true" focusable="false" />
             </span>
           );
         })}

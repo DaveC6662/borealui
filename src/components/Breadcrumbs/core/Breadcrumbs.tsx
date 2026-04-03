@@ -2,7 +2,7 @@ import React from "react";
 import "./Breadcrumbs.scss";
 import { BreadcrumbsBase } from "../BreadcrumbsBase";
 import { BreadcrumbsProps } from "../Breadcrumbs.types";
-import { Button } from "../../../index.core";
+import Button from "../../Button/core/Button";
 
 const classes = {
   breadcrumbs: "breadcrumbs",

@@ -6,8 +6,12 @@ import { ShadowType, SizeType } from "@/types/types";
 export interface ColorOption {
   /** Label to display as a tooltip or for screen readers. */
   label: string;
+
   /** Color value (e.g., `#ff0000`, `rgb(255,0,0)`, `red`). */
   value: string;
+
+  /** Whether this specific option is disabled. */
+  disabled?: boolean;
 }
 
 /**
@@ -22,7 +26,7 @@ export type ShapeType = "square" | "round" | "pill";
  * Props for the ColorPicker component.
  */
 export interface ColorPickerProps {
-  /** Optional label above the color group. */
+  /** Optional visible label above the color group. */
   label?: string;
 
   /** Array of color options to choose from. */
@@ -37,7 +41,7 @@ export interface ColorPickerProps {
   /** Optional name attribute for the radio group. */
   name?: string;
 
-  /** Whether the picker is disabled. */
+  /** Whether the entire picker is disabled. */
   disabled?: boolean;
 
   /**
@@ -60,6 +64,46 @@ export interface ColorPickerProps {
 
   /** If true, allows picking a custom color via a color input. */
   allowCustom?: boolean;
+
+  /** Marks the group as required. */
+  required?: boolean;
+
+  /** Marks the group as invalid. */
+  invalid?: boolean;
+
+  /** Optional helper text shown below or associated with the picker. */
+  helperText?: string;
+
+  /** Optional error message shown when invalid. */
+  errorText?: string;
+
+  /**
+   * Accessible name for the group when no visible label should be used
+   * or when a more descriptive label is needed.
+   */
+  "aria-label"?: string;
+
+  /**
+   * References an external element that labels the group.
+   * Prefer this when the visible label exists outside the component.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * References one or more elements that describe the group.
+   * This will be merged with helperText / errorText IDs when provided.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Optional label for the custom color input.
+   */
+  customInputAriaLabel?: string;
+
+  /**
+   * Hide the visible legend visually while preserving it for screen readers.
+   */
+  hideLabel?: boolean;
 
   /** Custom class name for the component container. */
   className?: string;

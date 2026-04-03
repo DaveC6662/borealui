@@ -1,6 +1,5 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
 @use "sass:map";
 
 .data_table_wrapper {
@@ -68,6 +67,17 @@
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 0.5px;
     }
+  }
+
+  .data_table_sort_button {
+    margin-left: var(--spacing-xxs);
+    background-color: transparent;
+    border: none;
+    color: var(--text-color-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
   }
 
   .data_table_sort_icon {

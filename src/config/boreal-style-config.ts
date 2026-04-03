@@ -8,6 +8,7 @@
  * - Theme type (e.g., primary, secondary)
  * - Component rounding
  * - Shadow intensity
+ * - Default border width
  * - Default size
  * - Default color scheme name
  *
@@ -20,6 +21,7 @@
  *   defaultTheme: "secondary",
  *   defaultRounding: "large",
  *   defaultShadow: "strong",
+ *   defaultBorderWidth: "sm",
  *   defaultSize: "large",
  *   defaultColorSchemeName: "Ocean Breeze",
  * });
@@ -28,7 +30,13 @@
  * Accessor functions ensure safe fallback to internal defaults.
  */
 
-import { RoundingType, ShadowType, SizeType, ThemeType } from "../types/types";
+import {
+  BorderType,
+  RoundingType,
+  ShadowType,
+  SizeType,
+  ThemeType,
+} from "../types/types";
 
 /**
  * Type for configuring global Boreal UI style defaults.
@@ -38,6 +46,7 @@ export type BorealStyleConfig = {
   defaultRounding: RoundingType;
   defaultShadow: ShadowType;
   defaultSize: SizeType;
+  defaultBorderWidth: BorderType;
   defaultColorSchemeName: string;
 };
 
@@ -46,6 +55,7 @@ const fallback: BorealStyleConfig = {
   defaultRounding: "medium",
   defaultShadow: "light",
   defaultSize: "medium",
+  defaultBorderWidth: "none",
   defaultColorSchemeName: "Forest Dusk",
 };
 
@@ -90,3 +100,9 @@ export const getDefaultSize = (): SizeType =>
 
 export const getDefaultColorSchemeName = (): string =>
   userConfig.defaultColorSchemeName ?? fallback.defaultColorSchemeName;
+
+/**
+ * Gets the default border width (e.g., "none", "sm", "md", "lg").
+ */
+export const getDefaultBorder = (): BorderType =>
+  userConfig.defaultBorderWidth ?? fallback.defaultBorderWidth;

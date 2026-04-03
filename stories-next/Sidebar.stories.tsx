@@ -1,20 +1,32 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { Sidebar } from "../src/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import {
+  RoundingType,
+  ShadowType,
+  Sidebar,
+  StateType,
+  ThemeType,
+} from "../src/index.next";
 import { SidebarProps } from "../src/components/Sidebar/Sidebar.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import { FaBook, FaCalendar, FaCogs, FaPaperclip } from "react-icons/fa";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
   "quaternary",
   "clear",
 ];
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const mockLinks = [
   { label: "Dashboard", href: "/Dashboard", icon: <FaBook /> },
@@ -35,88 +47,11 @@ const meta: Meta<SidebarProps> = {
   tags: ["autodocs"],
   args: {
     links: mockLinks,
-    currentPath: "/Settings",
     theme: "primary",
     outline: false,
     rounding: "medium",
     shadow: "light",
     showFooter: false,
-  },
-  argTypes: {
-    links: {
-      control: false,
-      description:
-        "Array of navigation links, each may include label, href, icon, and children.",
-      table: { category: "Content" },
-    },
-    currentPath: {
-      control: "text",
-      description: "The current active path used to highlight the active link.",
-      table: { category: "Behavior" },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme color for the sidebar.",
-      table: { category: "Appearance", defaultValue: { summary: "primary" } },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "warning", "error", "disabled"],
-      description: "Visual state for feedback.",
-      table: { category: "Appearance" },
-    },
-    outline: {
-      control: "boolean",
-      description: "Whether the sidebar should use an outlined style.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large", "full"],
-      description: "Corner rounding style for the sidebar container.",
-      table: { category: "Appearance", defaultValue: { summary: "medium" } },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Box shadow style for the sidebar container.",
-      table: { category: "Appearance", defaultValue: { summary: "light" } },
-    },
-    showFooter: {
-      control: "boolean",
-      description:
-        "Whether to display the footer section at the bottom of the sidebar.",
-      table: { category: "Content" },
-    },
-    footerLinks: {
-      control: false,
-      description: "Array of footer links displayed when `showFooter` is true.",
-      table: { category: "Content" },
-    },
-    footerVersion: {
-      control: "text",
-      description: "Version label displayed in the footer (e.g. v1.0.0).",
-      table: { category: "Content" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class names for the sidebar wrapper.",
-      table: { category: "Advanced" },
-    },
-    ariaLabel: {
-      control: "text",
-      description: "ARIA label for the sidebar navigation landmark.",
-      table: {
-        category: "Accessibility",
-        defaultValue: { summary: "Sidebar navigation" },
-      },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for querying the component in tests.",
-      table: { category: "Testing" },
-    },
   },
 };
 
@@ -128,22 +63,10 @@ export const Default: Story = {};
 export const OutlineVariants = () => (
   <StoryGrid title="Outline Sidebars">
     {themeOptions.map((theme) => (
-      <Sidebar
-        key={theme}
-        theme={theme}
-        outline
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+      <Sidebar key={theme} theme={theme} outline links={mockLinks} />
     ))}
-    {stateOptions.map((theme) => (
-      <Sidebar
-        key={theme}
-        theme={theme}
-        outline
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+    {stateOptions.map((state) => (
+      <Sidebar key={state} state={state} outline links={mockLinks} />
     ))}
   </StoryGrid>
 );
@@ -151,12 +74,7 @@ export const OutlineVariants = () => (
 export const ThemeVariants = () => (
   <StoryGrid title="Theme Variants">
     {themeOptions.map((theme) => (
-      <Sidebar
-        key={theme}
-        theme={theme}
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+      <Sidebar key={theme} theme={theme} links={mockLinks} />
     ))}
   </StoryGrid>
 );
@@ -164,12 +82,7 @@ export const ThemeVariants = () => (
 export const StateVariants = () => (
   <StoryGrid title="State Variants">
     {stateOptions.map((state) => (
-      <Sidebar
-        key={state}
-        state={state}
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+      <Sidebar key={state} state={state} links={mockLinks} />
     ))}
   </StoryGrid>
 );
@@ -177,12 +90,7 @@ export const StateVariants = () => (
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
-      <Sidebar
-        key={rounding}
-        rounding={rounding}
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+      <Sidebar key={rounding} rounding={rounding} links={mockLinks} />
     ))}
   </StoryGrid>
 );
@@ -190,12 +98,7 @@ export const RoundingVariants = () => (
 export const ShadowVariants = () => (
   <StoryGrid title="Shadow Variants">
     {shadowOptions.map((shadow) => (
-      <Sidebar
-        key={shadow}
-        shadow={shadow}
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+      <Sidebar key={shadow} shadow={shadow} links={mockLinks} />
     ))}
   </StoryGrid>
 );

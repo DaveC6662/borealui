@@ -20,12 +20,23 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   shadow = getDefaultShadow(),
   rounding = getDefaultRounding(),
   "data-testid": testId = "stepper",
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  groupLabel = "Progress Stepper",
+  getStepAriaLabel,
   classMap,
   className,
   IconButtonComponent,
 }) => {
   const stepCount = steps.length;
-  const groupLabelId = `${testId}-label`;
+  const fallbackGroupLabelId = `${testId}-label`;
+
+  const resolvedAriaLabelledBy = ariaLabelledBy
+    ? ariaLabelledBy
+    : !ariaLabel
+      ? fallbackGroupLabelId
+      : undefined;
 
   return (
     <div
@@ -35,15 +46,19 @@ const StepperBase: React.FC<StepperBaseProps> = ({
         classMap[theme],
         classMap[state],
         classMap[size],
-        className
+        className,
       )}
       role="list"
-      aria-labelledby={groupLabelId}
+      aria-label={ariaLabelledBy ? undefined : ariaLabel}
+      aria-labelledby={resolvedAriaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       data-testid={testId}
     >
-      <span id={groupLabelId} className="sr_only">
-        Progress Stepper
-      </span>
+      {!ariaLabel && !ariaLabelledBy && (
+        <span id={fallbackGroupLabelId} className="sr_only">
+          {groupLabel}
+        </span>
+      )}
 
       {steps.map((step, index) => {
         const Icon = step.icon || (() => <span>{index + 1}</span>);
@@ -51,9 +66,16 @@ const StepperBase: React.FC<StepperBaseProps> = ({
         const isActive = index === activeStep;
         const isBefore = index < activeStep;
         const isDisabled = disableBackNavigation && isBefore;
-        const canFocus = !!onStepClick && !isDisabled;
+        const isInteractive = !!onStepClick && !isDisabled;
         const stepId = `${testId}-step-${index}`;
-        const label = `Step ${index + 1} of ${stepCount}: ${step.label}`;
+
+        const defaultStepLabel = `Step ${index + 1} of ${stepCount}: ${step.label}${
+          isActive ? ", current step" : isCompleted ? ", completed" : ""
+        }`;
+
+        const stepAriaLabel = getStepAriaLabel
+          ? getStepAriaLabel(step, index, stepCount, isActive, isCompleted)
+          : defaultStepLabel;
 
         return (
           <div
@@ -63,7 +85,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
               classMap.step,
               isActive ? classMap.active : "",
               isCompleted ? classMap.completed : "",
-              onStepClick ? classMap.clickable : ""
+              onStepClick ? classMap.clickable : "",
             )}
             data-testid={stepId}
           >
@@ -74,19 +96,23 @@ const StepperBase: React.FC<StepperBaseProps> = ({
               className={combineClassNames(
                 classMap.stepButton,
                 isActive ? classMap.active : "",
-                isCompleted ? classMap.completed : ""
+                isCompleted ? classMap.completed : "",
               )}
               size={size}
               shadow={shadow}
               rounding={rounding}
               disabled={isDisabled}
               outline={!isActive}
-              aria-label={label}
+              aria-label={stepAriaLabel}
               aria-current={isActive ? "step" : undefined}
-              aria-disabled={isDisabled}
+              aria-disabled={isDisabled ? true : undefined}
               data-testid={`${stepId}-icon`}
-              tabIndex={canFocus ? 0 : -1}
-              onClick={() => onStepClick?.(index)}
+              tabIndex={isInteractive ? 0 : -1}
+              onClick={() => {
+                if (!isDisabled) {
+                  onStepClick?.(index);
+                }
+              }}
               onKeyDown={(e: React.KeyboardEvent) => {
                 if ((e.key === "Enter" || e.key === " ") && !isDisabled) {
                   e.preventDefault();

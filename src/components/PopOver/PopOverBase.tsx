@@ -1,5 +1,14 @@
-import React, { useState, useRef, useEffect, JSX, useMemo, useId } from "react";
-import { BasePopoverProps } from "./PopOver.types";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  JSX,
+  useMemo,
+  useId,
+  isValidElement,
+  cloneElement,
+} from "react";
+import { BasePopoverProps, TriggerElementProps } from "./PopOver.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -11,23 +20,37 @@ import {
 const BasePopover: React.FC<BasePopoverProps> = ({
   trigger,
   content,
+  asChild = false,
   placement = "bottom",
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",
   className = "",
+  contentClassName = "",
   role = "dialog",
+  triggerAriaLabel,
+  triggerTitle,
+  disabled = false,
+  id,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-modal": ariaModal,
   "data-testid": testId = "popover",
   classMap,
 }): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
   const popoverRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLElement>(null);
   const uid = useId();
-  const contentId = `${uid}-content`;
-  const labelId = `${uid}-label`;
+
+  const generatedContentId = `${uid}-content`;
+  const generatedLabelId = `${uid}-label`;
+
+  const contentId = id ?? generatedContentId;
+  const fallbackLabelId = generatedLabelId;
 
   type PopupRole = "dialog" | "menu" | "tooltip";
   const VALID_ROLES: PopupRole[] = ["dialog", "menu", "tooltip"];
@@ -45,14 +68,18 @@ const BasePopover: React.FC<BasePopoverProps> = ({
 
   const triggerAria =
     role === "tooltip"
-      ? { "aria-describedby": contentId }
+      ? { "aria-describedby": open ? contentId : undefined }
       : {
           ...(ariaHasPopup ? { "aria-haspopup": ariaHasPopup } : {}),
           "aria-expanded": open,
           "aria-controls": contentId,
         };
 
-  const toggleOpen = () => setOpen((prev) => !prev);
+  const toggleOpen = () => {
+    if (disabled) return;
+    setOpen((prev) => !prev);
+  };
+
   const close = () => {
     setOpen(false);
     setDynamicPlacement(placement);
@@ -61,29 +88,37 @@ const BasePopover: React.FC<BasePopoverProps> = ({
 
   useEffect(() => {
     if (!open) return;
+
     const handleClickOutside = (event: MouseEvent) => {
-      const t = event.target as Node;
-      if (popoverRef.current?.contains(t)) return;
-      if (triggerRef.current?.contains(t as Node)) return;
+      const target = event.target as Node;
+      if (popoverRef.current?.contains(target)) return;
+      if (triggerRef.current?.contains(target)) return;
       close();
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open, placement]);
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
-    const onReflow = () => setDynamicPlacement((p) => p);
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+
+    const onReflow = () => setDynamicPlacement((prev) => prev);
+
     document.addEventListener("keydown", onKey);
     window.addEventListener("resize", onReflow, { passive: true });
     window.addEventListener("scroll", onReflow, { passive: true });
+
     return () => {
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", onReflow);
       window.removeEventListener("scroll", onReflow);
     };
-  }, [open]);
+  }, [open, placement]);
 
   useEffect(() => {
     if (!open || !popoverRef.current || !triggerRef.current) return;
@@ -105,14 +140,16 @@ const BasePopover: React.FC<BasePopoverProps> = ({
     popoverEl.style.bottom = "";
 
     let newPlacement = placement;
-    if (placement === "top" && popoverEl.offsetHeight > spaceAbove)
+
+    if (placement === "top" && popoverEl.offsetHeight > spaceAbove) {
       newPlacement = "bottom";
-    else if (placement === "bottom" && popoverEl.offsetHeight > spaceBelow)
+    } else if (placement === "bottom" && popoverEl.offsetHeight > spaceBelow) {
       newPlacement = "top";
-    else if (placement === "left" && popoverEl.offsetWidth > spaceLeft)
+    } else if (placement === "left" && popoverEl.offsetWidth > spaceLeft) {
       newPlacement = "right";
-    else if (placement === "right" && popoverEl.offsetWidth > spaceRight)
+    } else if (placement === "right" && popoverEl.offsetWidth > spaceRight) {
       newPlacement = "left";
+    }
 
     setDynamicPlacement(newPlacement);
 
@@ -145,51 +182,115 @@ const BasePopover: React.FC<BasePopoverProps> = ({
         classMap[state],
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
-        className
+        contentClassName,
       ),
-    [classMap, dynamicPlacement, rounding, shadow, theme, state, className]
+    [
+      classMap,
+      dynamicPlacement,
+      theme,
+      state,
+      shadow,
+      rounding,
+      contentClassName,
+    ],
   );
 
   useEffect(() => {
-    if (!open) return;
+    if (!open || popupRole === "tooltip") return;
+
     const el = popoverRef.current;
     if (!el) return;
+
     const focusable = el.querySelector<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
+
     (focusable ?? el).focus();
-  }, [open]);
+  }, [open, popupRole]);
+
+  const computedAriaLabelledBy =
+    ariaLabelledBy ?? (!ariaLabel ? fallbackLabelId : undefined);
+
+  const triggerProps: TriggerElementProps = {
+    "aria-label": triggerAriaLabel,
+    title: triggerTitle,
+    disabled,
+    "data-testid": `${testId}-trigger`,
+    ...triggerAria,
+  };
+
+  const renderedTrigger =
+    asChild && isValidElement<TriggerElementProps>(trigger) ? (
+      (() => {
+        const triggerEl = trigger as React.ReactElement<TriggerElementProps>;
+
+        return cloneElement(triggerEl, {
+          ...triggerProps,
+          ...triggerEl.props,
+          onClick: (e: React.MouseEvent) => {
+            triggerEl.props.onClick?.(e);
+            if (!e.defaultPrevented) {
+              toggleOpen();
+            }
+          },
+          ref: (node: HTMLElement | null) => {
+            triggerRef.current = node;
+
+            const childRef = (
+              triggerEl as React.ReactElement<TriggerElementProps> & {
+                ref?: React.Ref<HTMLElement>;
+              }
+            ).ref;
+
+            if (typeof childRef === "function") {
+              childRef(node);
+            }
+          },
+        });
+      })()
+    ) : (
+      <button
+        type="button"
+        className={classMap.trigger}
+        onClick={toggleOpen}
+        aria-label={triggerAriaLabel ?? "Toggle popover"}
+        title={triggerTitle}
+        ref={(node) => {
+          triggerRef.current = node;
+        }}
+        disabled={disabled}
+        data-testid={`${testId}-trigger`}
+        {...triggerAria}
+      >
+        {trigger}
+      </button>
+    );
 
   return (
     <div
       className={combineClassNames(classMap.container, className)}
       data-testid={testId}
     >
-      <button
-        type="button"
-        className={classMap.trigger}
-        onClick={toggleOpen}
-        aria-label="Toggle popover"
-        ref={triggerRef}
-        data-testid={`${testId}-trigger`}
-        {...triggerAria}
-      >
-        {trigger}
-      </button>
+      {renderedTrigger}
 
       {open && (
         <div
           ref={popoverRef}
           id={contentId}
           role={popupRole}
-          aria-labelledby={labelId}
+          aria-label={ariaLabel}
+          aria-labelledby={computedAriaLabelledBy}
+          aria-describedby={ariaDescribedBy}
+          aria-modal={popupRole === "dialog" ? ariaModal : undefined}
           className={popoverContentClass}
           data-testid={`${testId}-content`}
           tabIndex={popupRole === "tooltip" ? undefined : -1}
         >
-          <span id={labelId} className={classMap.srOnly ?? "sr_only"}>
-            Popover Content
-          </span>
+          {!ariaLabel && !ariaLabelledBy && (
+            <span id={fallbackLabelId} className={classMap.srOnly ?? "sr_only"}>
+              Popover Content
+            </span>
+          )}
           {content}
         </div>
       )}

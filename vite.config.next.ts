@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
 import getEntryMap from "./scripts/buildEntryMap.js";
 import path from "path";
 
@@ -14,10 +15,9 @@ const externals = [
 
 const nextEntries = getEntryMap("./src/next");
 nextEntries["index"] = path.resolve(__dirname, "./src/index.next.ts");
-console.log("nextEntries:", nextEntries);
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), libInjectCss()],
 
   resolve: {
     alias: {
@@ -30,15 +30,13 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: true,
     minify: false,
-
-    cssCodeSplit: false,
+    cssCodeSplit: true,
 
     lib: {
       entry: nextEntries,
       formats: ["es", "cjs"],
-      fileName: (format, entryName) => {
-        return `${entryName}${format === "es" ? ".js" : ".cjs.js"}`;
-      },
+      fileName: (format, entryName) =>
+        `${entryName}${format === "es" ? ".js" : ".cjs.js"}`,
     },
 
     rollupOptions: {

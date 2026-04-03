@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 $checkbox-sizes: (
@@ -49,6 +49,8 @@ $label-font-sizes: (
 
 .checkbox {
   display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -192,9 +194,15 @@ $label-font-sizes: (
   transform: none;
 }
 
+.checkbox_label-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
 .checkbox_label {
   color: var(--text-color-primary);
-  margin-bottom: -1px;
   font-family: var(--font-family-ui);
   font-size: var(--font-size-body-sm);
   font-weight: var(--font-weight-body);

@@ -8,7 +8,7 @@ const classes = {
   header: "accordion_header",
   content: "accordion_content",
   icon: "accordion_icon",
-  title: "accordion_title",
+  accordionTitle: "accordion_title",
 
   shadowNone: "accordion_shadow-None",
   shadowLight: "accordion_shadow-Light",

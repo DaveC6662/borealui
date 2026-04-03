@@ -16,8 +16,6 @@ export interface ScrollToTopProps {
 
   /**
    * The scroll offset (in pixels) from the top of the page at which the button becomes visible.
-   *
-   * @default 300
    */
   offset?: number;
 
@@ -25,6 +23,43 @@ export interface ScrollToTopProps {
    * Additional custom class names for the root element of the component.
    */
   className?: string;
+
+  /**
+   * Accessible label for the scroll-to-top button.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Optional accessible description id applied to the button.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Optional id of an external label element applied to the button.
+   * When provided, this takes precedence over "aria-label" for accessible naming.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * Optional title attribute for the button.
+   * Defaults to the same value as "aria-label" when not provided.
+   */
+  title?: string;
+
+  /**
+   * Optional role for the outer wrapper if semantic grouping is needed.
+   */
+  role?: React.AriaRole;
+
+  /**
+   * Optional accessible label for the wrapper when a semantic role is used.
+   */
+  wrapperAriaLabel?: string;
+
+  /**
+   * Optional id for the root element.
+   */
+  id?: string;
 
   /**
    * Test identifier for the component, used to target it in testing frameworks.

@@ -2,10 +2,16 @@ import { forwardRef } from "react";
 import "./TextInput.scss";
 import { TextInputProps } from "../TextInput.types";
 import TextInputBase from "../TextInputBase";
-import { IconButton } from "@/index.core";
+import IconButton from "../../IconButton/core/IconButton";
 
 const classes = {
-  container: "textInput_container",
+  container: "container",
+  label: "label",
+  labelTop: "labelTop",
+  labelBottom: "labelBottom",
+  labelLeft: "labelLeft",
+  labelRight: "labelRight",
+
   textInput: "textInput",
   iconContainer: "textInput_icon_container",
   togglePassword: "textInput_togglePassword",

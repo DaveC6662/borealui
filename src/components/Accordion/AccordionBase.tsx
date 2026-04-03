@@ -1,4 +1,4 @@
-import React, { useMemo, useState, KeyboardEvent } from "react";
+import React, { useMemo, useState, KeyboardEvent, useEffect } from "react";
 import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -38,6 +38,13 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   className = "",
   getUniqueId,
   classMap,
+  regionAriaLabel,
+  regionAriaLabelledBy,
+  regionAriaDescribedBy,
+  loadingAriaLabel,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   "data-testid": testId = "accordion",
   ...rest
 }) => {
@@ -46,11 +53,28 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   const [internalExpanded, setInternalExpanded] = useState(initiallyExpanded);
   const [hasBeenExpanded, setHasBeenExpanded] = useState(initiallyExpanded);
   const [isLoading, setIsLoading] = useState(asyncContent && initiallyExpanded);
+
   const isExpanded = isControlled ? expanded : internalExpanded;
 
-  const contentId = `${id || internalId}-content`;
-  const buttonId = `${id || internalId}-button`;
-  const descId = description ? `${id || internalId}-desc` : undefined;
+  const baseId = id || internalId;
+  const contentId = `${baseId}-content`;
+  const buttonId = `${baseId}-button`;
+  const descId = description ? `${baseId}-desc` : undefined;
+  const loadingId = `${baseId}-loading`;
+
+  const buttonDescribedBy =
+    [descId, ariaDescribedBy].filter(Boolean).join(" ") || undefined;
+
+  const regionLabelledBy =
+    regionAriaLabelledBy || (!regionAriaLabel ? buttonId : undefined);
+
+  const regionDescribedBy =
+    [
+      regionAriaDescribedBy,
+      asyncContent && isExpanded && isLoading ? loadingId : undefined,
+    ]
+      .filter(Boolean)
+      .join(" ") || undefined;
 
   const toggleAccordion = () => {
     if (disabled) return;
@@ -63,29 +87,34 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (disabled) return;
+
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       toggleAccordion();
     }
   };
 
-  useMemo(() => {
+  useEffect(() => {
     if (isExpanded && !hasBeenExpanded) {
       setHasBeenExpanded(true);
     }
-  }, [isExpanded]);
+  }, [isExpanded, hasBeenExpanded]);
 
-  useMemo(() => {
-    if (asyncContent && isExpanded && isLoading) {
+  useEffect(() => {
+    if (asyncContent && isExpanded) {
+      setIsLoading(true);
+
       const timer = setTimeout(() => {
         setIsLoading(false);
       }, 1000);
 
       return () => clearTimeout(timer);
     }
-  }, [asyncContent, isExpanded, isLoading]);
+
+    return undefined;
+  }, [asyncContent, isExpanded]);
 
   const renderedIcon = isExpanded
     ? (customExpandedIcon ?? "−")
@@ -101,9 +130,9 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
         isExpanded && classMap.expanded,
-        className
+        className,
       ),
-    [classMap, size, disabled, isExpanded, className]
+    [classMap, size, state, shadow, rounding, disabled, isExpanded, className],
   );
 
   const headerClassName = useMemo(
@@ -114,19 +143,19 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         classMap[state],
         outline && classMap.outline,
         disabled && classMap.disabled,
-        isExpanded && classMap.expanded
+        isExpanded && classMap.expanded,
       ),
-    [classMap, isExpanded]
+    [classMap, theme, state, outline, disabled, isExpanded],
   );
 
   const contentClassName = useMemo(
     () => combineClassNames(classMap.content, isExpanded && classMap.expanded),
-    [classMap, isExpanded]
+    [classMap, isExpanded],
   );
 
   const iconClassName = useMemo(
     () => combineClassNames(classMap.icon, isExpanded && classMap.expanded),
-    [classMap, isExpanded]
+    [classMap, isExpanded],
   );
 
   return (
@@ -139,8 +168,10 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         type="button"
         aria-expanded={isExpanded}
         aria-controls={contentId}
-        aria-disabled={disabled}
-        aria-describedby={descId}
+        aria-disabled={disabled || undefined}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={buttonDescribedBy}
         tabIndex={disabled ? -1 : 0}
         disabled={disabled}
         data-testid={testId ? `${testId}-accordion-toggle` : undefined}
@@ -154,12 +185,14 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
             {renderedIcon}
           </span>
         )}
+
         <span
           className={classMap.accordionTitle}
           data-testid={testId ? `${testId}-title` : undefined}
         >
           {title}
         </span>
+
         {iconPosition === "right" && (
           <span
             className={iconClassName}
@@ -184,14 +217,26 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       <div
         id={contentId}
         role="region"
-        aria-labelledby={buttonId}
+        aria-label={regionAriaLabel}
+        aria-labelledby={regionLabelledBy}
+        aria-describedby={regionDescribedBy}
+        aria-busy={asyncContent && isExpanded && isLoading ? true : undefined}
         className={contentClassName}
         data-state={isExpanded ? "open" : "collapsed"}
         data-testid={testId ? `${testId}-content` : undefined}
       >
         {isExpanded && asyncContent && isLoading && (
-          <div className={classMap.loading}>Loading...</div>
+          <div
+            id={loadingId}
+            className={classMap.loading}
+            aria-live="polite"
+            aria-atomic="true"
+            data-testid={testId ? `${testId}-loading` : undefined}
+          >
+            {loadingAriaLabel || "Loading content"}
+          </div>
         )}
+
         {(!lazyLoad || hasBeenExpanded) &&
           (!asyncContent || !isLoading) &&
           children}

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import BaseNavBar from "../NavBarBase";
 import "./NavBar.scss";
-import { NavBarProps } from "../NavBar.types";
+import { NavBarProps, NavItem } from "../NavBar.types";
 
 const classes = {
   container: "nav",
   item: "nav_item",
   list: "nav_list",
+  listItem: "nav_list_item",
   item_active: "nav_active",
   icon: "nav_icon_container",
   label: "nav_label",
@@ -31,17 +32,28 @@ const classes = {
   roundFull: "nav_round-Full",
 };
 
-const NavBar: React.FC<NavBarProps> = (props) => {
-  const [pathname, setPathname] = useState("");
+const normalizePath = (p: string) =>
+  p.endsWith("/") && p.length > 1 ? p.slice(0, -1) : p;
+
+const NavBar: React.FC<NavBarProps> = ({
+  isItemActive: consumerIsItemActive,
+  ...props
+}) => {
+  const [pathname, setPathname] = useState("/");
 
   useEffect(() => {
-    setPathname(window.location.pathname);
+    setPathname(window.location.pathname || "/");
   }, []);
+
+  const defaultIsItemActive = (item: NavItem) =>
+    normalizePath(item.path) === normalizePath(pathname);
+
+  const resolvedIsItemActive = consumerIsItemActive ?? defaultIsItemActive;
 
   return (
     <BaseNavBar
       {...props}
-      currentPath={pathname}
+      isItemActive={resolvedIsItemActive}
       LinkWrapper={({
         href,
         children,
@@ -62,5 +74,6 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     />
   );
 };
+
 NavBar.displayName = "NavBar";
 export default NavBar;

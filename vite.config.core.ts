@@ -1,34 +1,23 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import getEntryMap from "./scripts/buildEntryMap";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
+import getEntryMap from "./scripts/buildEntryMap.js";
 import path from "path";
-import copy from "rollup-plugin-copy";
 
 const externals = [
   "react",
   "react-dom",
   "react/jsx-runtime",
   "react/jsx-dev-runtime",
-  "next",
   "marked",
   "uuid",
 ];
 
 const coreEntries = getEntryMap("./src/core");
 coreEntries["index"] = path.resolve(__dirname, "./src/index.core.ts");
-console.log("nextEntries:", coreEntries);
 
 export default defineConfig({
-  plugins: [
-    react(),
-    copy({
-      targets: [
-        { src: "src/styles/style.css", dest: "core/next" },
-        { src: "src/styles/style.css", dest: "core" },
-      ],
-      hook: "writeBundle",
-    }),
-  ],
+  plugins: [react(), libInjectCss()],
 
   resolve: {
     alias: {
@@ -41,13 +30,13 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: true,
     minify: false,
+    cssCodeSplit: true,
 
     lib: {
       entry: coreEntries,
       formats: ["es", "cjs"],
-      fileName: (format, entryName) => {
-        return `${entryName}${format === "es" ? ".js" : ".cjs.js"}`;
-      },
+      fileName: (format, entryName) =>
+        `${entryName}${format === "es" ? ".js" : ".cjs.js"}`,
     },
 
     rollupOptions: {
