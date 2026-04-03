@@ -24,8 +24,6 @@ Offers both Core (framework-agnostic React) and Next.js-optimized variants for s
 
 ```bash
 npm install boreal-ui
-# or
-yarn add boreal-ui
 ```
 
 ---
