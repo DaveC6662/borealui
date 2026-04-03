@@ -3,7 +3,7 @@
 import React from "react";
 import CommandPaletteBase from "../CommandPaletteBase";
 import styles from "./CommandPalette.module.scss";
-import { TextInput } from "@/index.next";
+import TextInput from "../../TextInput/next/TextInput";
 import { CommandPaletteProps } from "../CommandPalette.types";
 
 const CommandPalette: React.FC<CommandPaletteProps> = (props) => (

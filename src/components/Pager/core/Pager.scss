@@ -1,10 +1,10 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 
-$small-gap: 4px;
-$medium-gap: 10px;
-$large-gap: 20px;
+$small-gap: var(--spacing-xxs);
+$medium-gap: var(--spacing-sm);
+$large-gap: var(--spacing-lg);
 
 .pagination {
   display: flex;
@@ -14,6 +14,11 @@ $large-gap: 20px;
   margin: auto;
   justify-content: center;
   align-items: center;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
 
   @include bp.down(sm) {
     flex-wrap: wrap;
@@ -33,7 +38,7 @@ $large-gap: 20px;
     padding: 0;
 
     @include bp.down(xs) {
-      gap: clamp(5px, 4vw, $large-gap);
+      gap: clamp(5px, 4vw, #{$large-gap});
       order: -1;
     }
   }
@@ -57,7 +62,7 @@ $large-gap: 20px;
     margin: 2px;
 
     @include bp.down(xs) {
-      font-size: 12px;
+      font-size: var(--font-size-caption);
     }
 
     &:focus-visible {

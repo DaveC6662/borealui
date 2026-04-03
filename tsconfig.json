@@ -13,10 +13,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
 
     "types": ["node", "jest", "jest-axe", "@testing-library/jest-dom"],
@@ -32,8 +30,11 @@
     "jest.setup.ts",
     "jest.config.ts",
     "global.d.ts",
+    "./src/types/scss.d.ts",
+    "./src/types/types.d.ts",
     "next.config.mjs",
-    ".storybook-core/types",
+    "stories-core/**/*",
+    "stories-next/**/*",
     "webpack.config.cjs",
     "scripts/buildEntryMap.js"
   ],

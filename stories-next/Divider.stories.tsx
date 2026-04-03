@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
-import { Divider } from "../src/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { Divider, ThemeType } from "../src/index.next";
 import type { DividerProps } from "../src/components/Divider/Divider.types";
 
 const meta: Meta<DividerProps> = {
@@ -12,66 +12,6 @@ const meta: Meta<DividerProps> = {
     thickness: "1px",
     dashed: false,
     theme: "primary",
-  },
-  argTypes: {
-    orientation: {
-      description: "Orientation of the divider: horizontal or vertical.",
-      control: { type: "select" },
-      options: ["horizontal", "vertical"],
-      table: { category: "Appearance" },
-    },
-    theme: {
-      description: "Color theme of the divider.",
-      control: { type: "select" },
-      options: [
-        "primary",
-        "secondary",
-        "tertiary",
-        "quaternary",
-        "clear",
-        "success",
-        "error",
-        "warning",
-      ],
-      table: { category: "Appearance" },
-    },
-    state: {
-      description: "Visual state style (success, error, warning).",
-      control: { type: "select" },
-      options: ["", "success", "error", "warning"],
-      table: { category: "Appearance" },
-    },
-    length: {
-      description: "Length of the divider (CSS value: px, %, rem, etc.).",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    thickness: {
-      description: "Thickness of the divider line (CSS value: px, em, etc.).",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    dashed: {
-      description: "Display a dashed line instead of solid.",
-      control: "boolean",
-      table: { category: "Appearance" },
-    },
-    as: {
-      description:
-        "Render as a specific HTML element (e.g., 'hr', 'div', 'span').",
-      control: "text",
-      table: { category: "Advanced" },
-    },
-    className: {
-      description: "Custom CSS class for the divider.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      description: "Test id for the divider element.",
-      control: "text",
-      table: { category: "Testing" },
-    },
   },
 };
 
@@ -147,9 +87,9 @@ export const Themed: Story = {
 export const States: Story = {
   render: () => (
     <div style={{ padding: "1rem", display: "grid", gap: "1rem" }}>
-      <Divider theme="success" />
-      <Divider theme="error" />
-      <Divider theme="warning" />
+      <Divider theme={"success" as ThemeType} />
+      <Divider theme={"error" as ThemeType} />
+      <Divider theme={"warning" as ThemeType} />
     </div>
   ),
 };

@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .sidebar {
@@ -11,7 +11,7 @@
   position: sticky;
   top: 0;
   overflow-y: auto;
-  font-family: var(--font-family-primary);
+  font-family: var(--font-family-ui);
   overscroll-behavior: contain;
 
   @include bp.down(md) {
@@ -42,15 +42,15 @@
     }
   }
 
-  @each $theme, $values in theme.$themes {
-    &_#{$theme} .sidebar_active {
+  @each $themeName, $values in theme.$themes {
+    &_#{$themeName} .sidebar_active {
       background-color: map.get($values, bg);
-      color: map.get($values, color);
+      color: map.get($values, text);
     }
 
-    &_#{$theme}.sidebar_outline .sidebar_active {
+    &_#{$themeName}.sidebar_outline .sidebar_active {
       background-color: transparent;
-      color: map.get($values, color);
+      color: map.get($values, text);
       border: 2px solid map.get($values, border);
 
       @include bp.down(sm) {
@@ -58,25 +58,25 @@
       }
     }
 
-    &_clear.sidebar_#{$theme} .sidebar_active {
+    &_clear.sidebar_#{$themeName} .sidebar_active {
       background-color: transparent;
     }
   }
 
-  @each $state, $values in theme.$states {
-    &_#{$state} .sidebar_active {
+  @each $stateName, $values in theme.$states {
+    &_#{$stateName} .sidebar_active {
       background-color: map.get($values, bg);
-      color: map.get($values, color);
+      color: map.get($values, text);
 
       &:hover {
         background-color: map.get($values, hover);
       }
     }
 
-    &_#{$state}.sidebar_outline .sidebar_active {
+    &_#{$stateName}.sidebar_outline .sidebar_active {
       border: 2px solid map.get($values, bg);
       background-color: transparent;
-      color: map.get($values, color);
+      color: map.get($values, text);
 
       &:hover {
         background-color: map.get($values, hover);
@@ -115,7 +115,12 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: theme.$transition-default;
+  transition: var(--transition-default);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
 
   &:hover {
     text-decoration: none;
@@ -131,26 +136,27 @@
   }
 
   @include bp.down(xs) {
-    padding: theme.$spacing-xs theme.$spacing-sm;
-    font-size: theme.$font-size-sm;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-sm theme.$spacing-md;
-    font-size: theme.$font-size-base;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-body-sm);
   }
 }
 
 .sidebar_active {
-  font-weight: bolder;
+  font-weight: var(--font-weight-label);
   letter-spacing: 0.1em;
 }
 
 .sidebar_child_link {
-  font-size: 0.9rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-body-sm);
 
   @include bp.down(xs) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-label);
   }
 }
 
@@ -169,7 +175,7 @@
   }
 
   @include bp.down(xs) {
-    margin-right: theme.$spacing-xxs;
+    margin-right: var(--spacing-xxs);
 
     svg {
       width: 0.95em;
@@ -223,13 +229,17 @@
   @include bp.down(xs) {
     position: static;
     border-top: none;
-    padding: theme.$spacing-sm;
-    gap: theme.$spacing-xs;
+    padding: var(--spacing-sm);
+    gap: var(--spacing-xs);
   }
 }
 
 .sidebar_footer_link {
-  font-size: 0.85rem;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   text-decoration: none;
 
   &:hover {
@@ -244,7 +254,11 @@
 }
 
 .sidebar_footer_version {
-  font-size: 0.75rem;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   opacity: 0.7;
   margin-top: 0.5rem;
 }

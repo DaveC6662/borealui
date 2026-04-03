@@ -1,6 +1,6 @@
-import { useMemo, useState, KeyboardEvent } from "react";
+import { useEffect, useMemo, useState, KeyboardEvent } from "react";
 import { combineClassNames } from "../../utils/classNames";
-import { DataTableBaseProps } from "./DataTable.types";
+import { DataTableBaseProps, Column } from "./DataTable.types";
 import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultRounding,
@@ -21,15 +21,40 @@ function DataTableBase<T extends object>({
   className = "",
   striped = true,
   defaultSortKey,
-  ariaLabel,
   defaultSortOrder = "asc",
   serverSort = false,
   onSortChange,
   rowKey,
+  caption = "Data table",
+  hideCaption = true,
+  getSortAriaLabel,
+  getSortAnnouncement,
+  getRowAriaLabel,
+  getRowAriaDescription,
+  emptyMessage = "No data available",
+  loading = false,
+  loadingMessage = "Loading data",
+  colCount,
+  rowCount,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   "data-testid": testId = "data-table",
 }: DataTableBaseProps<T>) {
   const [sortKey, setSortKey] = useState<keyof T | undefined>(defaultSortKey);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(defaultSortOrder);
+  const [sortAnnouncement, setSortAnnouncement] = useState("");
+
+  const captionId = `${testId}-caption`;
+  const liveRegionId = `${testId}-live-region`;
+
+  const computedAriaDescribedBy = [
+    ariaDescribedBy,
+    caption ? captionId : undefined,
+    liveRegionId,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   const sortedData = useMemo(() => {
     if (serverSort || !sortKey) return data;
@@ -37,6 +62,7 @@ function DataTableBase<T extends object>({
     return [...data].sort((a, b) => {
       const valA = a[sortKey];
       const valB = b[sortKey];
+
       if (valA === valB) return 0;
       if (valA == null) return 1;
       if (valB == null) return -1;
@@ -48,37 +74,111 @@ function DataTableBase<T extends object>({
       if (bothNumeric) {
         return sortOrder === "asc" ? numA - numB : numB - numA;
       }
+
       const cmp = String(valA).localeCompare(String(valB), undefined, {
         numeric: true,
       });
+
       return sortOrder === "asc" ? cmp : -cmp;
     });
   }, [data, sortKey, sortOrder, serverSort]);
 
-  const handleSort = (key: keyof T) => {
-    const newOrder = key === sortKey && sortOrder === "asc" ? "desc" : "asc";
-    setSortKey(key);
-    setSortOrder(newOrder);
-    if (serverSort && onSortChange) onSortChange(key, newOrder);
+  const announceSortChange = (
+    column: Column<T>,
+    nextOrder: "asc" | "desc",
+  ): void => {
+    const message = getSortAnnouncement
+      ? getSortAnnouncement(column, nextOrder)
+      : `${column.label} sorted ${nextOrder === "asc" ? "ascending" : "descending"}`;
+
+    setSortAnnouncement(message);
   };
 
-  const handleSortKeyDown = (e: KeyboardEvent, key: keyof T) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handleSort(key);
+  const handleSort = (column: Column<T>): void => {
+    const nextOrder =
+      column.key === sortKey && sortOrder === "asc" ? "desc" : "asc";
+
+    setSortKey(column.key);
+    setSortOrder(nextOrder);
+    announceSortChange(column, nextOrder);
+
+    if (serverSort && onSortChange) {
+      onSortChange(column.key, nextOrder);
     }
   };
 
+  const handleSortKeyDown =
+    (column: Column<T>) =>
+    (e: KeyboardEvent<HTMLButtonElement>): void => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleSort(column);
+      }
+    };
+
   const handleRowKeyDown =
-    (row: T) => (e: KeyboardEvent<HTMLTableRowElement>) => {
+    (row: T) =>
+    (e: KeyboardEvent<HTMLTableRowElement>): void => {
       if (!onRowClick) return;
+
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         onRowClick(row);
       }
     };
 
-  const captionId = `${testId}-caption`;
+  const getHeaderScope = (column: Column<T>): "col" | "colgroup" =>
+    column.scope ?? "col";
+
+  const getHeaderId = (column: Column<T>): string =>
+    column.id ?? `${testId}-header-${String(column.key)}`;
+
+  const getColumnAriaLabel = (
+    column: Column<T>,
+    isActive: boolean,
+  ): string | undefined => {
+    if (!column.sortable) {
+      return column.srLabel;
+    }
+
+    if (getSortAriaLabel) {
+      return getSortAriaLabel(column, sortOrder, isActive);
+    }
+
+    const baseLabel = column.srLabel ?? column.label;
+
+    if (isActive) {
+      return `${baseLabel}, sorted ${sortOrder === "asc" ? "ascending" : "descending"}. Activate to sort ${sortOrder === "asc" ? "descending" : "ascending"}.`;
+    }
+
+    return `${baseLabel}. Activate to sort ascending.`;
+  };
+
+  const renderCellContent = (row: T, column: Column<T>): React.ReactNode => {
+    const value = row[column.key];
+
+    if (column.render) {
+      return column.render(value, row);
+    }
+
+    if (typeof value === "object" && value !== null) {
+      return JSON.stringify(value);
+    }
+
+    return String(value ?? "");
+  };
+
+  useEffect(() => {
+    if (!sortKey) {
+      setSortAnnouncement("");
+      return;
+    }
+
+    const activeColumn = columns.find((column) => column.key === sortKey);
+    if (!activeColumn) return;
+
+    announceSortChange(activeColumn, sortOrder);
+  }, []);
 
   return (
     <div
@@ -91,6 +191,15 @@ function DataTableBase<T extends object>({
       )}
       data-testid={testId}
     >
+      <div
+        id={liveRegionId}
+        className={classMap.srOnly ?? "sr_only"}
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {loading ? loadingMessage : sortAnnouncement}
+      </div>
+
       <table
         className={combineClassNames(
           classMap.table,
@@ -99,23 +208,32 @@ function DataTableBase<T extends object>({
           outline && classMap.outline,
         )}
         aria-label={ariaLabel}
-        aria-describedby={captionId}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={computedAriaDescribedBy || undefined}
+        aria-colcount={colCount}
+        aria-rowcount={rowCount}
       >
-        <caption id={captionId} className={classMap.srOnly ?? "sr_only"}>
-          Sortable data table
-        </caption>
+        {caption ? (
+          <caption
+            id={captionId}
+            className={hideCaption ? (classMap.srOnly ?? "sr_only") : undefined}
+          >
+            {caption}
+          </caption>
+        ) : null}
 
         <thead>
           <tr>
-            {columns.map((col) => {
-              const isActive = sortKey === col.key;
+            {columns.map((column) => {
+              const isActive = sortKey === column.key;
+
               return (
                 <th
-                  key={String(col.key)}
-                  scope="col"
-                  tabIndex={col.sortable ? 0 : undefined}
+                  key={String(column.key)}
+                  id={getHeaderId(column)}
+                  scope={getHeaderScope(column)}
                   aria-sort={
-                    col.sortable
+                    column.sortable
                       ? isActive
                         ? sortOrder === "asc"
                           ? "ascending"
@@ -123,20 +241,27 @@ function DataTableBase<T extends object>({
                         : "none"
                       : undefined
                   }
-                  onClick={() => col.sortable && handleSort(col.key)}
-                  onKeyDown={(e) =>
-                    col.sortable && handleSortKeyDown(e, col.key)
-                  }
                   className={combineClassNames(
-                    col.sortable && classMap.sortable,
+                    column.sortable && classMap.sortable,
                     classMap.headerCell,
                   )}
                 >
-                  <span>{col.label}</span>
-                  {col.sortable && (
-                    <span className={classMap.sortIcon} aria-hidden="true">
-                      {isActive ? (sortOrder === "asc" ? "▲" : "▼") : "⇅"}
-                    </span>
+                  {column.sortable ? (
+                    <button
+                      type="button"
+                      className={classMap.sortButton}
+                      onClick={() => handleSort(column)}
+                      onKeyDown={handleSortKeyDown(column)}
+                      aria-label={getColumnAriaLabel(column, isActive)}
+                      data-testid={`${testId}-sort-${String(column.key)}`}
+                    >
+                      <span>{column.label}</span>
+                      <span className={classMap.sortIcon} aria-hidden="true">
+                        {isActive ? (sortOrder === "asc" ? "▲" : "▼") : "⇅"}
+                      </span>
+                    </button>
+                  ) : (
+                    <span aria-label={column.srLabel}>{column.label}</span>
                   )}
                 </th>
               );
@@ -145,43 +270,76 @@ function DataTableBase<T extends object>({
         </thead>
 
         <tbody>
-          {sortedData.length === 0 ? (
+          {loading ? (
             <tr>
               <td
                 className={classMap.emptyCell}
                 colSpan={columns.length}
                 aria-live="polite"
               >
-                No data available
+                {loadingMessage}
+              </td>
+            </tr>
+          ) : sortedData.length === 0 ? (
+            <tr>
+              <td
+                className={classMap.emptyCell}
+                colSpan={columns.length}
+                aria-live="polite"
+              >
+                {emptyMessage}
               </td>
             </tr>
           ) : (
-            sortedData.map((row, idx) => {
-              const key = rowKey ? rowKey(row) : idx;
+            sortedData.map((row, index) => {
+              const key = rowKey ? rowKey(row) : index;
+              const rowAriaLabel = getRowAriaLabel?.(row, index);
+              const rowAriaDescription = getRowAriaDescription?.(row, index);
+
               return (
                 <tr
                   key={key}
                   className={combineClassNames(
                     onRowClick && classMap.clickable,
-                    striped && idx % 2 === 1 && classMap.striped,
+                    striped && index % 2 === 1 && classMap.striped,
                   )}
                   onClick={() => onRowClick?.(row)}
                   onKeyDown={handleRowKeyDown(row)}
                   tabIndex={onRowClick ? 0 : undefined}
+                  aria-label={onRowClick ? rowAriaLabel : undefined}
+                  aria-description={onRowClick ? rowAriaDescription : undefined}
+                  data-testid={`${testId}-row-${key}`}
                 >
-                  {columns.map((col) => (
-                    <td
-                      key={String(col.key)}
-                      data-label={col.label}
-                      className={classMap.cell}
-                    >
-                      {col.render
-                        ? col.render(row[col.key], row)
-                        : typeof row[col.key] === "object"
-                          ? JSON.stringify(row[col.key])
-                          : String(row[col.key] ?? "")}
-                    </td>
-                  ))}
+                  {columns.map((column) => {
+                    const cellKey = String(column.key);
+                    const content = renderCellContent(row, column);
+                    const headerId = getHeaderId(column);
+
+                    if (column.isRowHeader) {
+                      return (
+                        <th
+                          key={cellKey}
+                          scope="row"
+                          headers={headerId}
+                          data-label={column.label}
+                          className={classMap.cell}
+                        >
+                          {content}
+                        </th>
+                      );
+                    }
+
+                    return (
+                      <td
+                        key={cellKey}
+                        headers={headerId}
+                        data-label={column.label}
+                        className={classMap.cell}
+                      >
+                        {content}
+                      </td>
+                    );
+                  })}
                 </tr>
               );
             })
@@ -191,5 +349,6 @@ function DataTableBase<T extends object>({
     </div>
   );
 }
+
 DataTableBase.displayName = "DataTableBase";
 export default DataTableBase;

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import React, { useMemo, useRef, useState, useEffect, useId } from "react";
 import { BaseFileUploadProps } from "./FileUpload.types";
 import { FileIcon, TrashIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
@@ -25,15 +25,55 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   maxFileSizeBytes = Infinity,
   allowedFileTypes = [],
   onSubmit,
+  onFilesChange,
   uploadProgress,
   "data-testid": testId = "file-upload",
+  id,
   FormGroup,
   disabled = false,
   Button,
   IconButton,
   ProgressBar,
   classMap,
+
+  // a11y props
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-errormessage": ariaErrorMessage,
+  "aria-invalid": ariaInvalid,
+  "aria-required": ariaRequired,
+  "aria-busy": ariaBusy,
+  "aria-live": ariaLive,
+
+  inputAriaLabel,
+  selectButtonAriaLabel,
+  uploadButtonAriaLabel,
+  removeFileAriaLabel,
+  fileListAriaLabel,
+  rejectedFilesAriaLabel,
+  successMessage = "Upload successful.",
+  failureMessage = "Upload failed. Please try again.",
+  filesSelectedMessage,
+  fileRemovedMessage,
+  rejectedFilesMessage,
+  liveRegionPoliteness = "polite",
+  dropzoneDescription,
+  dropzoneRole = "group",
+  enableDragAndDrop = true,
+
+  inputProps,
+  selectButtonProps,
+  uploadButtonProps,
+  removeButtonProps,
+  progressBarProps,
+
+  className,
+  ...rest
 }) => {
+  const reactId = useId();
+  const baseId = id || testId || `file-upload-${reactId.replace(/:/g, "")}`;
+
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const [rejectedFiles, setRejectedFiles] = useState<
@@ -43,8 +83,17 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   const [uploading, setUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadMessage, setUploadMessage] = useState<string | null>(null);
+
   const fileInput = useRef<HTMLInputElement | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const descriptionId = `${baseId}-description`;
+  const errorId = `${baseId}-error`;
+  const dropzoneDescriptionId = `${baseId}-dropzone-description`;
+  const liveRegionId = `${baseId}-live-region`;
+  const fileListId = `${baseId}-file-list`;
+  const rejectedListId = `${baseId}-rejected-list`;
+  const inputId = `${baseId}-input`;
 
   const accept = useMemo(() => {
     if (!allowedFileTypes || allowedFileTypes.length === 0) return undefined;
@@ -82,6 +131,28 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
   const truncate = (s: string) => (s.length > 30 ? s.slice(0, 27) + "..." : s);
 
+  const announce = (message: string | null) => {
+    setUploadMessage(message);
+  };
+
+  const buildSelectedMessage = (selectedFiles: File[]) => {
+    if (filesSelectedMessage) return filesSelectedMessage(selectedFiles);
+    const count = selectedFiles.length;
+    return count === 1
+      ? `${selectedFiles[0].name} selected.`
+      : `${count} files selected.`;
+  };
+
+  const buildRejectedMessage = (
+    nextRejectedFiles: { name: string; reason: string }[],
+  ) => {
+    if (nextRejectedFiles.length === 0) return null;
+    if (rejectedFilesMessage) return rejectedFilesMessage(nextRejectedFiles);
+    return nextRejectedFiles.length === 1
+      ? `${nextRejectedFiles[0].name} was rejected: ${nextRejectedFiles[0].reason}.`
+      : `${nextRejectedFiles.length} files were rejected.`;
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files;
     if (!selected || selected.length === 0) return;
@@ -92,14 +163,33 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     setFiles(updatedFiles);
     setFileNames(updatedFiles.map((f) => truncate(f.name)));
     setRejectedFiles(rejected);
+    onFilesChange?.(updatedFiles);
+
+    const selectedMessage =
+      valid.length > 0 ? buildSelectedMessage(updatedFiles) : null;
+    const rejectedMessage = buildRejectedMessage(rejected);
+
+    announce(
+      [selectedMessage, rejectedMessage].filter(Boolean).join(" ") || null,
+    );
 
     if (fileInput.current) fileInput.current.value = "";
   };
 
   const removeFile = (index: number) => {
+    const removedFile = files[index];
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
     setFileNames(updatedFiles.map((f) => truncate(f.name)));
+    onFilesChange?.(updatedFiles);
+
+    if (removedFile) {
+      announce(
+        fileRemovedMessage
+          ? fileRemovedMessage(removedFile.name, index)
+          : `${removedFile.name} removed.`,
+      );
+    }
   };
 
   const getButtonLabel = () => {
@@ -108,17 +198,21 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   };
 
   const handleDragOver = (e: React.DragEvent) => {
+    if (!enableDragAndDrop || disabled) return;
     e.preventDefault();
     setIsDragging(true);
   };
 
   const handleDragLeave = () => {
+    if (!enableDragAndDrop || disabled) return;
     setIsDragging(false);
   };
 
   const handleDrop = (e: React.DragEvent) => {
+    if (!enableDragAndDrop || disabled) return;
     e.preventDefault();
     setIsDragging(false);
+
     const droppedFiles = e.dataTransfer.files;
     if (droppedFiles.length > 0) {
       handleFileChange({
@@ -128,10 +222,11 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   };
 
   const handleUpload = async () => {
-    if (!files.length || uploading) return;
+    if (!files.length || uploading || disabled) return;
+
     setUploading(true);
     setInternalProgress(0);
-    setUploadMessage(null);
+    announce(null);
 
     try {
       if (uploadProgress === undefined) {
@@ -147,15 +242,16 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       }
 
       await Promise.resolve(onSubmit?.(files));
-      setUploadMessage("Upload successful.");
+      announce(successMessage);
     } catch {
-      setUploadMessage("Upload failed. Please try again.");
+      announce(failureMessage);
     } finally {
       if (intervalRef.current) {
         if (uploadProgress === undefined) setInternalProgress(100);
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
+
       setTimeout(() => setUploading(false), 300);
     }
   };
@@ -176,7 +272,8 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         outlineRounding && classMap[`round${capitalize(outlineRounding)}`],
         error && classMap.error,
         isDragging && classMap.dragging,
-        disabled && classMap.disabled
+        disabled && classMap.disabled,
+        className,
       ),
     [
       classMap,
@@ -187,16 +284,25 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       error,
       isDragging,
       disabled,
-    ]
+      className,
+    ],
   );
 
   const describedBy =
     [
-      description ? `${testId}-description` : undefined,
-      error ? `${testId}-error` : undefined,
+      description ? descriptionId : undefined,
+      error ? errorId : undefined,
+      dropzoneDescription ? dropzoneDescriptionId : undefined,
+      ariaDescribedBy,
     ]
       .filter(Boolean)
       .join(" ") || undefined;
+
+  const computedAriaInvalid =
+    ariaInvalid !== undefined ? ariaInvalid : error ? true : undefined;
+
+  const computedAriaRequired =
+    ariaRequired !== undefined ? ariaRequired : required ? true : undefined;
 
   return (
     <FormGroup
@@ -207,52 +313,91 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       data-testid={testId}
     >
       <div
+        {...rest}
         className={containerClassName}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        aria-busy={uploading || undefined}
+        onDragOver={enableDragAndDrop ? handleDragOver : undefined}
+        onDragLeave={enableDragAndDrop ? handleDragLeave : undefined}
+        onDrop={enableDragAndDrop ? handleDrop : undefined}
+        role={dropzoneRole}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={describedBy}
+        aria-errormessage={error ? ariaErrorMessage || errorId : undefined}
+        aria-invalid={computedAriaInvalid}
+        aria-required={computedAriaRequired}
+        aria-busy={ariaBusy !== undefined ? ariaBusy : uploading || undefined}
         data-testid={testId ? `${testId}-wrapper` : undefined}
       >
+        {dropzoneDescription && (
+          <div id={dropzoneDescriptionId} className="sr_only">
+            {dropzoneDescription}
+          </div>
+        )}
+
         <input
+          {...inputProps}
           ref={fileInput}
-          id={`${testId}-input`}
+          id={inputProps?.id || inputId}
           type="file"
           multiple={multiple}
           accept={accept}
           onChange={handleFileChange}
-          className={classMap.hiddenInput}
+          className={combineClassNames(
+            classMap.hiddenInput,
+            inputProps?.className,
+          )}
           required={required}
-          aria-label={label}
+          disabled={disabled}
+          aria-label={inputAriaLabel || label || "Choose file"}
           aria-describedby={describedBy}
-          data-testid={testId ? `${testId}-input` : undefined}
+          aria-errormessage={error ? ariaErrorMessage || errorId : undefined}
+          aria-invalid={computedAriaInvalid}
+          aria-required={computedAriaRequired}
+          data-testid={`${testId}-input`}
         />
 
         <div className={classMap.uploadActions}>
           <Button
+            {...selectButtonProps}
             icon={FileIcon}
-            size="small"
+            size={selectButtonProps?.size ?? "small"}
             theme={theme}
             state={error ? "error" : state}
-            className={classMap.fileInput}
+            className={combineClassNames(
+              classMap.fileInput,
+              selectButtonProps?.className,
+            )}
             disabled={uploading || disabled}
             outline={outline}
             rounding={controlRounding}
             shadow={controlShadow}
-            onClick={() => fileInput.current?.click()}
+            onClick={() => {
+              fileInput.current?.click();
+            }}
             aria-label={
-              fileNames.length > 0 ? fileNames.join(", ") : "Choose File"
+              selectButtonProps?.["aria-label"] ||
+              selectButtonAriaLabel ||
+              "Choose file"
             }
-            data-testid={testId ? `${testId}-file-button` : undefined}
+            aria-describedby={fileNames.length > 0 ? fileListId : undefined}
+            data-testid={`${testId}-file-button`}
           >
             {getButtonLabel()}
           </Button>
         </div>
 
         {rejectedFiles.length > 0 && (
-          <div className={classMap.rejectedFiles}>
+          <div
+            className={classMap.rejectedFiles}
+            aria-label={rejectedFilesAriaLabel}
+            data-testid={testId ? `${testId}-rejected-files` : undefined}
+          >
             <p className={classMap.rejectedLabel}>Rejected Files:</p>
-            <ul className={classMap.rejectedList}>
+            <ul
+              id={rejectedListId}
+              className={classMap.rejectedList}
+              aria-label={rejectedFilesAriaLabel || "Rejected files"}
+            >
               {rejectedFiles.map((file, index) => (
                 <li key={index} className={classMap.rejectedItem}>
                   <span>{file.name}</span>
@@ -271,51 +416,79 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             className={classMap.uploadControls}
             data-testid={testId ? `${testId}-controls` : undefined}
           >
-            <ul className={classMap.fileList}>
+            <ul
+              id={fileListId}
+              className={classMap.fileList}
+              aria-label={fileListAriaLabel || "Selected files"}
+            >
               {fileNames.map((name, index) => (
                 <li key={index} className={classMap.fileListItem}>
                   <span>{name}</span>
                   <IconButton
+                    {...removeButtonProps}
                     icon={TrashIcon}
                     state="error"
-                    size="small"
+                    size={removeButtonProps?.size ?? "small"}
                     type="button"
                     outline
-                    aria-label={`Remove ${name}`}
+                    aria-label={
+                      removeFileAriaLabel?.(name, index) || `Remove ${name}`
+                    }
                     onClick={() => removeFile(index)}
-                    className={classMap.removeButton}
+                    className={combineClassNames(
+                      classMap.removeButton,
+                      removeButtonProps?.className,
+                    )}
+                    data-testid={`${testId}-remove-${index}`}
                   />
                 </li>
               ))}
             </ul>
+
             {uploading && (
               <ProgressBar
+                {...progressBarProps}
                 theme={theme}
-                className={classMap.uploadProgress}
-                progress={uploadProgress ?? internalProgress}
+                className={combineClassNames(
+                  classMap.uploadProgress,
+                  progressBarProps?.className,
+                )}
+                value={uploadProgress ?? internalProgress}
                 indeterminate={uploadProgress === undefined}
-                data-testid={testId ? `${testId}-progress` : undefined}
+                data-testid={
+                  progressBarProps?.["data-testid"] || `${testId}-progress`
+                }
               />
             )}
+
             {!uploading && (
               <Button
+                {...uploadButtonProps}
                 theme={theme}
                 state={error ? "error" : state}
                 disabled={disabled || files.length === 0}
-                onClick={handleUpload}
+                onClick={() => {
+                  void handleUpload();
+                }}
                 loading={uploading}
-                size="small"
-                className={classMap.uploadButton}
-                data-testid={testId ? `${testId}-upload-button` : undefined}
+                size={uploadButtonProps?.size ?? "small"}
+                className={combineClassNames(
+                  classMap.uploadButton,
+                  uploadButtonProps?.className,
+                )}
+                aria-label={uploadButtonAriaLabel || "Upload selected files"}
+                data-testid={`${testId}-upload-button`}
               >
                 Upload
               </Button>
             )}
           </div>
         )}
+
         <div
+          id={liveRegionId}
           className="sr_only"
-          aria-live="polite"
+          aria-live={ariaLive || liveRegionPoliteness}
           aria-atomic="true"
           data-testid={testId ? `${testId}-upload-message` : undefined}
         >
@@ -325,5 +498,6 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     </FormGroup>
   );
 };
+
 BaseFileUpload.displayName = "BaseFileUpload";
 export default BaseFileUpload;

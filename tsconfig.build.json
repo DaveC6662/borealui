@@ -23,7 +23,8 @@
     "src/config",
     "src/utils",
     "src/styles",
-    "src/types"
+    "src/types",
+    "src/generated-docs"
   ],
   "exclude": [
     "node_modules",

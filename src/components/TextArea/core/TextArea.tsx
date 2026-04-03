@@ -4,9 +4,16 @@ import type { TextAreaProps } from "../TextArea.types";
 import "./TextArea.scss";
 
 const classes = {
+  container: "container",
   textArea: "textArea",
   textInput: "textArea_text_input",
   icon: "textArea_icon",
+
+  label: "label",
+  labelTop: "labelTop",
+  labelBottom: "labelBottom",
+  labelLeft: "labelLeft",
+  labelRight: "labelRight",
 
   primary: "textArea_primary",
   secondary: "textArea_secondary",

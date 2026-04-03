@@ -5,6 +5,7 @@
   position: relative;
   display: inline-block;
   outline: none;
+  font-family: var(--font-family-ui);
 }
 
 .trigger {
@@ -33,11 +34,16 @@
   position: absolute;
   top: 100%;
   overflow: hidden;
-  margin-top: theme.$spacing-xs;
+  margin-top: var(--spacing-xs);
   background-color: var(--background-color-lighter);
   z-index: theme.$z-index-drawer;
-  padding: theme.$spacing-xs 0;
+  padding: var(--spacing-xs) 0;
   width: max-content;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   animation: fade-in 0.2s ease-in-out;
 
   @include bp.up(sm) {
@@ -57,7 +63,7 @@
     max-height: 50vh;
     overflow-y: auto;
     animation: slide-up 0.3s ease-in-out;
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + theme.$spacing-sm);
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--spacing-sm));
   }
 
   @include bp.up(lg) {
@@ -74,21 +80,23 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: theme.$spacing-sm;
-  line-height: 1em;
+  gap: var(--spacing-sm);
+  line-height: var(--line-height-label);
   width: 100%;
   background: none;
   border: none;
-  padding: theme.$spacing-sm theme.$spacing-md;
-  font-weight: theme.$font-weight-bold;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  letter-spacing: var(--letter-spacing-label);
   color: var(--text-color-primary);
-  font-size: theme.$font-size-sm;
   cursor: pointer;
   text-align: left;
   transition:
-    background-color theme.$transition-default,
-    transform theme.$transition-default,
-    box-shadow theme.$transition-default;
+    background-color var(--transition-default),
+    transform var(--transition-default),
+    box-shadow var(--transition-default);
 
   &:hover,
   &:focus {
@@ -104,29 +112,29 @@
   }
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-xs;
-    padding: theme.$spacing-md;
-    gap: theme.$spacing-xs;
+    font-size: var(--font-size-caption);
+    padding: var(--spacing-md);
+    gap: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-sm;
-    padding: theme.$spacing-md theme.$spacing-lg;
-    gap: theme.$spacing-sm;
+    font-size: var(--font-size-label);
+    padding: var(--spacing-md) var(--spacing-lg);
+    gap: var(--spacing-sm);
   }
 }
 
 .icon {
-  margin-right: theme.$spacing-xs;
+  margin-right: var(--spacing-xs);
   display: flex;
   align-items: center;
 
   @include bp.down(sm) {
-    margin-right: theme.$spacing-xxs;
+    margin-right: var(--spacing-xxs);
   }
 
   @include bp.up(lg) {
-    margin-right: theme.$spacing-sm;
+    margin-right: var(--spacing-sm);
   }
 }
 
@@ -145,6 +153,7 @@ a.item {
   .round#{$key} {
     border-radius: $value;
   }
+
   .round#{$key} .item {
     border-radius: $value;
   }

@@ -1,19 +1,24 @@
+import type { AriaRole, ReactNode } from "react";
 import {
+  LabelPositionType,
   RoundingType,
   ShadowType,
   StateType,
   ThemeType,
-  TitlePositionType,
 } from "@/types/types";
 
 /**
  * Represents a single option in the Select component.
  */
-interface Option {
+export interface Option {
   /** The value to be used for the option. */
   value: string;
+
   /** The display label for the option. */
   label: string;
+
+  /** Whether this specific option is disabled. */
+  disabled?: boolean;
 }
 
 /**
@@ -54,7 +59,7 @@ export interface SelectProps {
   onChange: (value: string) => void;
 
   /**
-   * If provided, the select element will render options asynchronously (with debounce).
+   * If provided, the select element will render options asynchronously.
    * Should return a Promise resolving to Option[] based on search query.
    */
   asyncOptions?: (query: string) => Promise<Option[]>;
@@ -84,19 +89,7 @@ export interface SelectProps {
   /** Whether the select element is required. */
   required?: boolean;
 
-  /**
-   * Accessible label for the select element.
-   */
-  ariaLabel?: string;
-
-  /**
-   * Optional description for the select element, used for accessibility.
-   */
-  ariaDescription?: string;
-
-  /**
-   * If true, the select element is disabled.
-   */
+  /** Whether the select element is disabled. */
   disabled?: boolean;
 
   /**
@@ -105,14 +98,83 @@ export interface SelectProps {
   name?: string;
 
   /**
-   * Optional title describing what the select is for.
+   * Optional visible label describing what the select is for.
    */
-  title?: React.ReactNode;
+  label?: ReactNode;
 
   /**
-   * Position of the title relative to the select.
+   * Position of the label relative to the select.
    */
-  titlePosition?: "top" | "bottom" | "left" | "right";
+  labelPosition?: LabelPositionType;
+
+  /**
+   * Optional id for the underlying select element.
+   */
+  id?: string;
+
+  /**
+   * Optional form association.
+   */
+  form?: string;
+
+  /**
+   * Optional autocomplete behavior for compatible use cases.
+   */
+  autoComplete?: string;
+
+  /**
+   * Optional aria-label for screen readers.
+   * Useful when no visible label is provided.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Optional aria-labelledby id reference.
+   * Prefer this when an external label element exists.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * Optional description text for the select element.
+   */
+  "aria-description"?: string;
+
+  /**
+   * Optional aria-describedby id reference for helper/error text.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Marks the field as invalid for assistive technology.
+   * If omitted, component logic may still infer invalid from state === "error".
+   */
+  "aria-invalid"?: boolean;
+
+  /**
+   * Indicates the field is required to assistive technology.
+   */
+  "aria-required"?: boolean;
+
+  /**
+   * Indicates the select is busy, useful while async options are loading.
+   */
+  "aria-busy"?: boolean;
+
+  /**
+   * Optional aria-live setting for async status messaging.
+   */
+  "aria-live"?: "off" | "polite" | "assertive";
+
+  /**
+   * Optional role override.
+   * Usually not needed for a native select, but included for flexibility.
+   */
+  role?: AriaRole;
+
+  /**
+   * Optional tab index for keyboard navigation control.
+   */
+  tabIndex?: number;
 
   /**
    * Additional class name(s) for custom styling.
@@ -133,6 +195,41 @@ export interface ThemeSelectProps {
   theme?: ThemeType;
   shadow?: ShadowType;
   rounding?: RoundingType;
-  "data-testid"?: string;
   state?: StateType;
+  "data-testid"?: string;
+
+  /**
+   * Optional accessible label for the theme select trigger/input.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Optional description for screen readers.
+   */
+  "aria-description"?: string;
+
+  /**
+   * Optional labelled-by reference.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * Optional described-by reference.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Marks the control invalid for assistive technology.
+   */
+  "aria-invalid"?: boolean;
+
+  /**
+   * Marks the control required for assistive technology.
+   */
+  "aria-required"?: boolean;
+
+  disabled?: boolean;
+  label?: ReactNode;
+  name?: string;
+  id?: string;
 }

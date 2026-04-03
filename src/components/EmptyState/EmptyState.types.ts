@@ -1,3 +1,4 @@
+import type { AriaRole, HTMLAttributes, ReactNode, ComponentType } from "react";
 import { IconType } from "react-icons";
 import {
   ThemeType,
@@ -11,15 +12,18 @@ import { ButtonProps } from "../Button/Button.types";
 /**
  * Props for the EmptyState component.
  */
-export interface EmptyStateProps {
+export interface EmptyStateProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  "title" | "children"
+> {
   /** Optional icon component (e.g., from react-icons). */
   icon?: IconType;
 
   /** Title text displayed prominently. */
-  title?: string;
+  title?: ReactNode;
 
   /** Optional supporting message below the title. */
-  message?: string;
+  message?: ReactNode;
 
   /**
    * Theming option for styling
@@ -55,19 +59,63 @@ export interface EmptyStateProps {
   outline?: boolean;
 
   /** Optional label for an action button. */
-  actionLabel?: string;
+  actionLabel?: ReactNode;
 
   /** Optional click handler for the action button. */
   onActionClick?: () => void;
 
-  /** Additional class name for the container. */
-  className?: string;
+  /**
+   * Optional custom accessible label for the entire empty state region.
+   * Useful when the title is visual but not sufficient as a landmark label.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Optional custom accessible label reference for the entire empty state region.
+   * If provided, overrides the generated title association.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * Optional custom accessible description reference for the empty state region.
+   * If provided, overrides the generated message association.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Optional role override.
+   * Defaults to "region" when a title exists, otherwise no role is applied.
+   */
+  role?: AriaRole;
+
+  /**
+   * Whether the icon should be announced to assistive technology.
+   * Defaults to false.
+   */
+  iconDecorative?: boolean;
+
+  /**
+   * Accessible label for the icon when it is not decorative.
+   */
+  iconAriaLabel?: string;
+
+  /**
+   * Optional accessible label for the action button.
+   * Helpful when the visible action text is ambiguous.
+   */
+  actionAriaLabel?: string;
+
+  /**
+   * Optional ID for the root empty state container.
+   * Useful for external aria-labelledby / aria-describedby wiring.
+   */
+  id?: string;
 
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;
 }
 
 export interface BaseEmptyStateProps extends EmptyStateProps {
-  Button: React.ComponentType<ButtonProps>;
+  Button: ComponentType<ButtonProps>;
   classMap: Record<string, string>;
 }

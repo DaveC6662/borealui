@@ -1,34 +1,63 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
-.textInput_container {
+.container {
+  display: flex;
+  gap: var(--spacing-xs);
+  width: fit-content;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.label {
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-ui);
+}
+
+.labelTop {
+  flex-direction: column;
+}
+
+.labelBottom {
+  flex-direction: column-reverse;
+}
+
+.labelLeft {
+  flex-direction: row;
+  align-items: center;
+}
+
+.labelRight {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.textInput {
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
   width: fit-content;
-  margin: theme.$spacing-sm;
-  transition: theme.$transition-default;
-  max-width: 400px;
+  height: fit-content;
+  margin: var(--spacing-sm);
+  transition: var(--transition-default);
   background: transparent;
-
-  &:focus-within {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    border-radius: theme.$border-radius-md;
-  }
-
-  @include bp.down(xs) {
-    padding: 0.5rem;
-    height: 35px;
-    width: 95%;
-    max-width: none;
-  }
+  outline: none;
+  margin: var(--spacing-sm);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  background-color: transparent;
+  color: var(--text-color-primary);
 
   input {
     width: 100%;
-    padding: theme.$spacing-xs;
+    padding: var(--spacing-sm);
     border: none;
     height: 100%;
     background-color: transparent;
@@ -38,40 +67,34 @@
       background-color: transparent;
     }
 
-    &:focus-within,
-    &:focus {
+    &:focus,
+    &:focus-within {
       outline: none;
     }
   }
-}
 
-.textInput {
-  outline: none;
-  flex: 1;
-  margin: theme.$spacing-sm;
-  font-size: theme.$font-size-base;
-  border: none;
-  border-radius: theme.$border-radius-lg;
-  background-color: transparent;
-  color: var(--text-color-primary);
-  font-family: theme.$font-family-primary;
-  min-height: 2.5rem;
+  &:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: var(--border-radius-md);
+  }
 
   &::placeholder {
     color: var(--text-color-primary);
     opacity: 0.8;
+    font: inherit;
   }
 
   &:focus-visible {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
-    border-radius: theme.$border-radius-lg;
+    border-radius: var(--border-radius-lg);
   }
 
   @include bp.down(xs) {
     width: 100%;
-    font-size: calc(theme.$font-size-base * 0.9);
-    margin: theme.$spacing-xs;
+    font-size: var(--font-size-body-sm);
+    margin: var(--spacing-xs);
   }
 
   &_icon_container {
@@ -96,7 +119,7 @@
   }
 
   &_togglePassword {
-    padding: theme.$spacing-xs;
+    padding: var(--spacing-xs);
     box-sizing: border-box;
     background: transparent;
     border: none;
@@ -106,11 +129,11 @@
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
-      border-radius: 6px;
+      border-radius: var(--border-radius-xs);
     }
 
     @include bp.down(xs) {
-      margin-top: theme.$spacing-xs;
+      margin-top: var(--spacing-xs);
     }
   }
 
@@ -133,10 +156,18 @@
   .textInput_#{$themeName} {
     background-color: map.get($vals, bg);
     color: map.get($vals, text);
-    box-shadow: map.get($vals, shadow, theme.$box-shadow-medium);
+    box-shadow: if(
+      map.has-key($vals, shadow),
+      map.get($vals, shadow),
+      var(--box-shadow-medium)
+    );
 
     &:hover {
-      background-color: map.get($vals, hover);
+      background-color: if(
+        map.has-key($vals, hover),
+        map.get($vals, hover),
+        map.get($vals, bg)
+      );
     }
 
     .textInput::placeholder {
@@ -156,11 +187,16 @@
   }
 }
 
+.textInput_icon_container,
+.textInput_togglePassword {
+  background-color: transparent;
+}
+
 .textInput_disabled {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
-  background-color: theme.$disabled-color;
+  background-color: var(--disabled-color);
 }
 
 @each $key, $value in theme.$rounding {

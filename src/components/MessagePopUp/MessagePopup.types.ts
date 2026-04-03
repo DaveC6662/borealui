@@ -61,6 +61,42 @@ export interface MessagePopupProps {
   cancelText?: string;
 
   /**
+   * Accessible label for the dialog when no visible title is available.
+   * Prefer this when the popup does not render a heading.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Optional ID of an external element that labels the dialog.
+   * Overrides the internally generated label association when provided.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * Optional ID of an external element that describes the dialog.
+   * Useful when the popup description should point to custom content.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Accessible label for the close button.
+   * Defaults to "Close popup".
+   */
+  "aria-label-close-button"?: string;
+
+  /**
+   * Optional aria-live politeness setting for announcing popup content.
+   * Only use when the popup message should be announced dynamically.
+   */
+  "aria-live"?: "off" | "polite" | "assertive";
+
+  /**
+   * Optional role for the popup container.
+   * Defaults to "dialog". Use "alertdialog" for urgent confirmations.
+   */
+  dialogRole?: "dialog" | "alertdialog";
+
+  /**
    * Optional additional class names for custom styling.
    */
   className?: string;

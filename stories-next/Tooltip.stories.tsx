@@ -1,8 +1,15 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
-import { Tooltip, Button } from "../src/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import {
+  Tooltip,
+  Button,
+  ThemeType,
+  StateType,
+  RoundingType,
+  ShadowType,
+} from "../src/index.next";
 import type { TooltipProps } from "../src/components/Tooltip/Tooltip.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -10,9 +17,15 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<TooltipProps> = {
   title: "Components/Tooltip",
@@ -22,59 +35,6 @@ const meta: Meta<TooltipProps> = {
     content: "Tooltip message",
     position: "top",
     theme: "primary",
-  },
-  argTypes: {
-    content: {
-      description: "The message to be displayed inside the tooltip.",
-      control: { type: "text" },
-      table: { category: "Content" },
-    },
-    position: {
-      description: "Tooltip position relative to the trigger element.",
-      control: { type: "select" },
-      options: ["top", "bottom", "left", "right"],
-      table: { category: "Appearance", defaultValue: { summary: "top" } },
-    },
-    theme: {
-      description: "Visual theme of the tooltip.",
-      control: { type: "select" },
-      options: ["primary", "secondary", "success", "error", "warning", "clear"],
-      table: { category: "Appearance" },
-    },
-    state: {
-      description:
-        "State for semantic styling (e.g., error, success, warning).",
-      control: { type: "select" },
-      options: ["", "success", "error", "warning"],
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      description: "Border radius for the tooltip container.",
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      description: "Shadow effect applied to the tooltip.",
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      table: { category: "Appearance" },
-    },
-    children: {
-      description: "The trigger element (e.g., a button, icon, or text).",
-      control: false,
-      table: { category: "Content" },
-    },
-    className: {
-      description: "Custom class name(s) for the tooltip.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      description: "Test id for the tooltip container.",
-      control: "text",
-      table: { category: "Testing" },
-    },
   },
   parameters: {
     layout: "centered",
@@ -87,13 +47,20 @@ const meta: Meta<TooltipProps> = {
   },
 };
 
+const defaultArgs: Partial<React.ComponentProps<typeof Tooltip>> = {
+  theme: "primary",
+  state: "success",
+  content: "Tooltip text",
+  children: <button>Hover me</button>,
+};
+
 export default meta;
 type Story = StoryObj<TooltipProps>;
 
 export const Default: Story = {
   name: "Default Tooltip",
   args: {
-    children: <Button>Hover me</Button>,
+    ...defaultArgs,
   },
 };
 

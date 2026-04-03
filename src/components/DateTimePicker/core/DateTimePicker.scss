@@ -1,7 +1,5 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
-@use "sass:color";
 @use "sass:map";
 
 .datetime_picker {
@@ -9,14 +7,15 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    gap: theme.$spacing-xs;
+    gap: var(--spacing-xs);
+    font-family: var(--font-family-ui);
 
     @include bp.down(sm) {
-      gap: theme.$spacing-xxs;
+      gap: var(--spacing-xxs);
     }
 
     @include bp.up(lg) {
-      gap: theme.$spacing-sm;
+      gap: var(--spacing-sm);
     }
   }
 
@@ -30,16 +29,19 @@
   }
 
   &_label {
-    font-size: theme.$font-size-sm;
-    font-weight: theme.$font-weight-bold;
-    margin-bottom: theme.$spacing-xs;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    margin-bottom: var(--spacing-xs);
 
     @include bp.down(sm) {
-      font-size: theme.$font-size-xs;
+      font-size: var(--font-size-caption);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-md;
+      font-size: var(--font-size-body-sm);
     }
   }
 
@@ -56,20 +58,24 @@
     width: fit-content;
     padding: 0;
     border: 2px solid transparent;
-    font-size: theme.$font-size-base;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
     background-color: transparent;
     color: var(--text-color-primary);
     transition:
-      border-color theme.$transition-default,
-      background-color theme.$transition-default;
+      border-color var(--transition-default),
+      background-color var(--transition-default);
 
     @include bp.down(sm) {
-      font-size: theme.$font-size-sm;
+      font-size: var(--font-size-label);
       border-width: 1.2px;
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-lg;
+      font-size: var(--font-size-h6);
     }
 
     &:focus {
@@ -91,13 +97,13 @@
   }
 
   &_icon {
-    font-size: theme.$font-size-base;
+    font-size: var(--font-size-body);
     cursor: pointer;
     z-index: 2;
     pointer-events: auto;
     transition:
-      color theme.$transition-default,
-      transform theme.$transition-default;
+      color var(--transition-default),
+      transform var(--transition-default);
     color: var(--text-color-primary);
     line-height: 1em;
     background-color: transparent;
@@ -105,11 +111,11 @@
     margin: 0;
 
     @include bp.down(sm) {
-      font-size: theme.$font-size-sm;
+      font-size: var(--font-size-label);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-lg;
+      font-size: var(--font-size-h6);
     }
 
     &:hover {
@@ -123,56 +129,56 @@
     }
   }
 
-  @each $theme, $values in theme.$themes {
-    &_#{$theme} &_input_wrapper {
+  @each $theme-name, $values in theme.$themes {
+    &_#{$theme-name} &_input_wrapper {
       background-color: map.get($values, bg);
       color: map.get($values, text);
 
-      &:focus {
-        border-color: map.get($values, focus);
+      &:focus-within {
+        border-color: map.get($values, border);
       }
     }
 
-    &_#{$theme}.datetime_picker_outline &_input_wrapper {
+    &_#{$theme-name}.datetime_picker_outline &_input_wrapper {
       border: 2px solid map.get($values, bg);
 
       @include bp.down(sm) {
         border-width: 1.5px;
       }
 
-      &:focus {
-        border-color: map.get($values, focus);
+      &:focus-within {
+        border-color: map.get($values, border);
       }
 
       &:hover {
-        border-color: map.get($values, color);
+        border-color: map.get($values, hover);
       }
     }
   }
 
-  @each $state, $values in theme.$states {
-    &_#{$state} &_input_wrapper {
+  @each $state-name, $values in theme.$states {
+    &_#{$state-name} &_input_wrapper {
       background-color: map.get($values, bg);
       color: map.get($values, text);
 
-      &:focus {
-        border-color: map.get($values, focus);
+      &:focus-within {
+        border-color: map.get($values, border);
       }
     }
 
-    &_#{$state}.datetime_picker_outline &_input_wrapper {
+    &_#{$state-name}.datetime_picker_outline &_input_wrapper {
       border: 2px solid map.get($values, bg);
 
       @include bp.down(sm) {
         border-width: 1.5px;
       }
 
-      &:focus {
-        border-color: map.get($values, focus);
+      &:focus-within {
+        border-color: map.get($values, border);
       }
 
       &:hover {
-        border-color: map.get($values, color);
+        border-color: map.get($values, hover);
       }
     }
   }
@@ -194,7 +200,7 @@
   &_disabled .datetime_picker_input_wrapper {
     opacity: 0.6;
     pointer-events: none;
-    background-color: theme.$disabled-color;
+    background-color: var(--disabled-color);
     color: var(--text-color-secondary);
     cursor: not-allowed;
   }
@@ -209,37 +215,32 @@
   $input-sizes: (
     "xs": (
       padding: 4px 3px,
-      font-size: theme.$font-size-xs,
+      font-size: var(--font-size-caption),
       max-width: 170px,
-      icon-margin: -27px,
       icon-size: 15px,
     ),
     "small": (
       padding: 6px 10px,
-      font-size: theme.$font-size-sm,
+      font-size: var(--font-size-label),
       max-width: 190px,
-      icon-margin: -30px,
       icon-size: 20px,
     ),
     "medium": (
       padding: 6px 10px,
-      font-size: theme.$font-size-md,
+      font-size: var(--font-size-body-sm),
       max-width: 215px,
-      icon-margin: -32px,
       icon-size: 22px,
     ),
     "large": (
       padding: 8px 16px,
-      font-size: theme.$font-size-base,
+      font-size: var(--font-size-body),
       max-width: 250px,
-      icon-margin: -42px,
       icon-size: 25px,
     ),
     "xl": (
       padding: 10px 20px,
-      font-size: theme.$font-size-lg,
+      font-size: var(--font-size-h6),
       max-width: 330px,
-      icon-margin: -50px,
       icon-size: 30px,
     ),
   );
@@ -251,6 +252,7 @@
 
     &_#{$size} .datetime_picker_input {
       font-size: map.get($props, font-size);
+      max-width: map.get($props, max-width);
     }
 
     &_#{$size} .datetime_picker_icon {
@@ -262,15 +264,19 @@
   }
 
   &_description {
-    font-size: theme.$font-size-sm;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
     color: var(--text-color-primary);
 
     @include bp.down(sm) {
-      font-size: theme.$font-size-xs;
+      font-size: var(--font-size-label);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-md;
+      font-size: var(--font-size-body);
     }
   }
 }
@@ -307,6 +313,7 @@
     color: CanvasText;
     border: 1px solid ButtonText !important;
     outline-color: Highlight;
+    box-shadow: none !important;
   }
 
   .datetime_picker_icon {

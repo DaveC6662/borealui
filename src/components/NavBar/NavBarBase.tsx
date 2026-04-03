@@ -8,8 +8,6 @@ import {
 } from "../../config/boreal-style-config";
 import { BaseNavBarProps } from "./NavBar.types";
 
-const normalizePath = (p: string) =>
-  p.endsWith("/") && p.length > 1 ? p.slice(0, -1) : p;
 const slugify = (s: string) =>
   s
     .toLowerCase()
@@ -19,18 +17,23 @@ const slugify = (s: string) =>
 
 const BaseNavBar: React.FC<BaseNavBarProps> = ({
   items,
-  currentPath,
   LinkWrapper,
   classMap,
+  isItemActive,
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   className = "",
   "data-testid": testId = "nav-bar",
+  "aria-label": ariaLabel = "Main navigation",
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "list-aria-label": listAriaLabel = "Main navigation items",
+  getItemAriaLabel,
 }) => {
   const wrapperClass = useMemo(
     () => combineClassNames(classMap.container, classMap[theme], className),
-    [classMap, theme, className]
+    [classMap, theme, className],
   );
 
   const itemClass = useMemo(
@@ -38,35 +41,45 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
       combineClassNames(
         classMap.item,
         shadow && classMap[`shadow${capitalize(shadow)}`],
-        rounding && classMap[`round${capitalize(rounding)}`]
+        rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, shadow, rounding]
+    [classMap, shadow, rounding],
   );
-
-  const current = normalizePath(currentPath ?? "/");
 
   return (
     <nav
-      aria-label="Main navigation"
+      aria-label={ariaLabelledBy ? undefined : ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       className={wrapperClass}
       data-testid={`${testId}-nav-bar`}
     >
-      <ul className={classMap.list}>
+      <ul
+        className={classMap.list}
+        aria-label={listAriaLabel}
+        data-testid={`${testId}-nav-list`}
+      >
         {items.map((item) => {
-          const isActive = normalizePath(item.path) === current;
+          const isActive = isItemActive?.(item) ?? false;
           const slug = slugify(item.label || item.path);
+          const itemAriaLabel = getItemAriaLabel?.(item) ?? item.label;
 
           return (
-            <li key={`${item.path}-${slug}`} className={classMap.listItem}>
+            <li
+              key={`${item.path}-${slug}`}
+              className={classMap.listItem}
+              data-testid={`${testId}-nav-list-item-${slug}`}
+            >
               <LinkWrapper
                 href={item.path}
                 isActive={isActive}
                 className={combineClassNames(
                   itemClass,
-                  isActive && classMap.item_active
+                  isActive && classMap.item_active,
                 )}
                 data-testid={`${testId}-nav-item-${slug}`}
                 aria-current={isActive ? "page" : undefined}
+                aria-label={itemAriaLabel}
               >
                 <span className={classMap.linkContent}>
                   {item.icon && (

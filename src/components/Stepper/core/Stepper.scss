@@ -1,44 +1,45 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 $stepper-sizes: (
-  "xs": theme.$font-size-xs,
-  "small": theme.$font-size-sm,
-  "medium": theme.$font-size-md,
-  "large": theme.$font-size-base,
-  "xl": theme.$font-size-lg,
+  "xs": var(--font-size-caption),
+  "small": var(--font-size-label),
+  "medium": var(--font-size-body-sm),
+  "large": var(--font-size-body),
+  "xl": var(--font-size-h6),
 );
 
 .stepper {
-  margin: theme.$spacing-xxs;
+  margin: var(--spacing-xxs);
   display: flex;
   width: fit-content;
   align-items: center;
   justify-content: space-evenly;
   position: relative;
-  gap: theme.$spacing-md;
+  gap: var(--spacing-md);
+  font-family: var(--font-family-ui);
 
   @include bp.down(xs) {
-    gap: theme.$spacing-xs;
+    gap: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-md;
+    gap: var(--spacing-md);
   }
 
   &_vertical {
     flex-direction: column;
     align-items: flex-start;
     height: fit-content;
-    gap: theme.$spacing-md;
+    gap: var(--spacing-md);
 
     .stepper_connector {
       width: 2px;
       height: auto;
       align-self: stretch;
-      margin: theme.$spacing-xs 0;
+      margin: var(--spacing-xs) 0;
     }
   }
 
@@ -53,7 +54,7 @@ $stepper-sizes: (
     align-items: center;
     position: relative;
     cursor: default;
-    transition: color theme.$transition-default;
+    transition: color var(--transition-default);
   }
 
   &_clickable {
@@ -85,28 +86,34 @@ $stepper-sizes: (
   &_step_icon {
     width: 10px;
     height: 10px;
-    border-radius: theme.$border-radius-round;
-    background-color: var(--background-light-color);
+    border-radius: var(--border-radius-round);
+    background-color: var(--background-color-light);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
+    font-weight: var(--font-weight-label);
     transition:
       background-color 0.3s ease-in-out,
       transform 0.2s ease;
   }
 
   &_step_label {
-    margin-left: theme.$spacing-sm;
-    font-weight: theme.$font-weight-bold;
+    margin-left: var(--spacing-sm);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
     color: var(--text-color-primary);
 
     @include bp.down(xs) {
-      margin-left: theme.$spacing-xs;
+      margin-left: var(--spacing-xs);
+      font-size: var(--font-size-caption);
     }
 
     @include bp.up(lg) {
-      margin-left: theme.$spacing-md;
+      margin-left: var(--spacing-md);
+      font-size: var(--font-size-body-sm);
     }
   }
 
@@ -130,12 +137,12 @@ $stepper-sizes: (
   &_completed {
     .stepper_step_button {
       background-color: var(--background-color-light);
-      color: theme.$disabled-color;
+      color: var(--disabled-color);
       border: 2px solid var(--background-color-light);
     }
 
     .stepper_step_label {
-      color: theme.$disabled-color;
+      color: var(--disabled-color);
     }
   }
 }

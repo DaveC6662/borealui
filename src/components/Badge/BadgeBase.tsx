@@ -10,8 +10,14 @@ import {
 } from "../../config/boreal-style-config";
 
 export const BadgeBase: React.FC<BadgeBaseProps> = ({
-  text,
   children,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-live": ariaLive,
+  "aria-atomic": ariaAtomic,
+  role,
+  tabIndex,
   theme = getDefaultTheme(),
   state = "",
   disabled = false,
@@ -28,10 +34,13 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   href,
   ...rest
 }: BadgeBaseProps) => {
-  if (!text && !children) return null;
+  if (children == null && !Icon) return null;
 
-  const content = children ?? text;
-  const label = typeof content === "string" ? content : text;
+  const isTextContent =
+    typeof children === "string" || typeof children === "number";
+
+  const accessibleLabel =
+    ariaLabel ?? (isTextContent ? String(children) : undefined);
 
   const combinedClassName = useMemo(
     () =>
@@ -45,7 +54,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
         disabled && classMap.disabled,
         outline && classMap.outline,
         onClick && classMap.clickable,
-        className
+        className,
       ),
     [
       size,
@@ -56,10 +65,9 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       disabled,
       outline,
       onClick,
-      href,
       className,
       classMap,
-    ]
+    ],
   );
 
   const handleClick = (e: MouseEvent<HTMLElement>) => {
@@ -68,10 +76,19 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       e.stopPropagation();
       return;
     }
+
     onClick?.(e as MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
   };
 
-  const needsAriaLabel = typeof content !== "string";
+  const sharedAccessibilityProps = {
+    ...(accessibleLabel ? { "aria-label": accessibleLabel } : {}),
+    ...(ariaLabelledBy ? { "aria-labelledby": ariaLabelledBy } : {}),
+    ...(ariaDescribedBy ? { "aria-describedby": ariaDescribedBy } : {}),
+    ...(ariaLive ? { "aria-live": ariaLive } : {}),
+    ...(ariaAtomic !== undefined ? { "aria-atomic": ariaAtomic } : {}),
+    ...(role ? { role } : {}),
+    ...(tabIndex !== undefined ? { tabIndex } : {}),
+  };
 
   const inner = (
     <>
@@ -83,25 +100,25 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
           data-testid={testId ? `${testId}-icon` : undefined}
         />
       )}
-      {content}
+      {children}
     </>
   );
 
   if (href) {
     const isHttp = /^https?:\/\//i.test(href);
+
     return (
       <a
         href={disabled ? undefined : href}
         className={combinedClassName}
         onClick={handleClick}
-        role="status"
         data-testid={testId ? `${testId}-main` : undefined}
-        title={title ?? (typeof label === "string" ? label : undefined)}
-        {...(needsAriaLabel ? { "aria-label": label } : {})}
+        title={title ?? accessibleLabel}
         aria-disabled={disabled || undefined}
-        tabIndex={disabled ? -1 : 0}
+        tabIndex={disabled ? -1 : tabIndex}
         target={isHttp && !disabled ? "_blank" : undefined}
         rel={isHttp && !disabled ? "noopener noreferrer" : undefined}
+        {...sharedAccessibilityProps}
         {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {inner}
@@ -114,12 +131,11 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       <button
         type="button"
         className={combinedClassName}
-        role="status"
         onClick={handleClick}
         disabled={disabled}
         data-testid={testId ? `${testId}-main` : undefined}
-        title={title ?? (typeof label === "string" ? label : undefined)}
-        {...(needsAriaLabel ? { "aria-label": label } : {})}
+        title={title ?? accessibleLabel}
+        {...sharedAccessibilityProps}
         {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
       >
         {inner}
@@ -131,9 +147,15 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
     <span
       className={combinedClassName}
       data-testid={testId ? `${testId}-main` : undefined}
-      title={title ?? (typeof label === "string" ? label : undefined)}
-      role="status"
-      {...(needsAriaLabel ? { "aria-label": label } : {})}
+      title={title ?? accessibleLabel}
+      role={role ?? "status"}
+      tabIndex={tabIndex}
+      {...(accessibleLabel ? { "aria-label": accessibleLabel } : {})}
+      {...(ariaLabelledBy ? { "aria-labelledby": ariaLabelledBy } : {})}
+      {...(ariaDescribedBy ? { "aria-describedby": ariaDescribedBy } : {})}
+      {...(ariaLive ? { "aria-live": ariaLive } : {})}
+      {...(ariaAtomic !== undefined ? { "aria-atomic": ariaAtomic } : {})}
+      {...(rest as React.HTMLAttributes<HTMLSpanElement>)}
     >
       {inner}
     </span>

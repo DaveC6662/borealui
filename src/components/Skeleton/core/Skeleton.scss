@@ -1,9 +1,9 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 
 .skeleton_loader {
-  --skeleton-sheen: #{theme.$disabled-color};
+  --skeleton-sheen: var(--disabled-color);
   --skeleton-duration: 1.5s;
 
   background-color: var(--background-color-light);

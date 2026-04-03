@@ -25,6 +25,20 @@ const FooterBase: React.FC<BaseFooterProps> = ({
       {children}
     </a>
   ),
+
+  // New accessibility props
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  navAriaLabel = "Footer site links",
+  socialNavAriaLabel = "Social media",
+  themeSelectAriaLabel = "Theme selector",
+  logoAriaLabel = "Logo",
+  logoDecorative = false,
+  labelId,
+
+  // Pass-through HTML props
+  ...rest
 }) => {
   const footerClass = useMemo(
     () =>
@@ -34,17 +48,17 @@ const FooterBase: React.FC<BaseFooterProps> = ({
         shadow !== "none" && classMap[`shadow${capitalize(shadow)}`],
         rounding !== "none" && classMap[`round${capitalize(rounding)}`],
         classMap[`attachment${capitalize(attachment)}`],
-        className
+        className,
       ),
-    [classMap, theme, shadow, rounding, attachment, className]
+    [classMap, theme, shadow, rounding, attachment, className],
   );
 
   const isLogoImage = (
-    v: unknown
-  ): v is { src: string; width?: number; height?: number } =>
-    typeof v === "object" &&
-    v !== null &&
-    "src" in (v as Record<string, unknown>);
+    value: unknown,
+  ): value is { src: string; width?: number; height?: number } =>
+    typeof value === "object" &&
+    value !== null &&
+    "src" in (value as Record<string, unknown>);
 
   const isImgLike = typeof logo === "string" || isLogoImage(logo);
 
@@ -59,7 +73,15 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   const logoH = imgLogo?.height ?? 20;
 
   return (
-    <footer className={footerClass} data-testid={testId} role="contentinfo">
+    <footer
+      className={footerClass}
+      data-testid={testId}
+      role="contentinfo"
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy ?? labelId}
+      aria-describedby={ariaDescribedBy}
+      {...rest}
+    >
       <div className={classMap.content}>
         <div className={classMap.left} data-testid={`${testId}-left`}>
           {isImgLike && logoSrc ? (
@@ -69,7 +91,8 @@ const FooterBase: React.FC<BaseFooterProps> = ({
                 data-testid={`${testId}-logo`}
                 loading="lazy"
                 src={logoSrc}
-                alt="Logo"
+                alt={logoDecorative ? "" : logoAriaLabel}
+                aria-hidden={logoDecorative ? true : undefined}
                 height={logoH}
                 width={logoW}
               />
@@ -78,16 +101,18 @@ const FooterBase: React.FC<BaseFooterProps> = ({
                 className={classMap.logo}
                 data-testid={`${testId}-logo`}
                 src={logoSrc}
-                alt="Logo"
+                alt={logoDecorative ? "" : logoAriaLabel}
+                aria-hidden={logoDecorative ? true : undefined}
                 height={logoH}
                 width={logoW}
               />
             )
-          ) : (
+          ) : logo ? (
             <span
               className={classMap.logo}
-              role="img"
-              aria-label="Logo"
+              role={logoDecorative ? undefined : "img"}
+              aria-label={logoDecorative ? undefined : logoAriaLabel}
+              aria-hidden={logoDecorative ? true : undefined}
               data-testid={`${testId}-logo`}
             >
               {
@@ -97,14 +122,14 @@ const FooterBase: React.FC<BaseFooterProps> = ({
                 >
               }
             </span>
-          )}
+          ) : null}
 
           {copyright && (
             <div
               className={classMap.copyright ?? classMap.left}
               data-testid={`${testId}-copyright`}
             >
-              <p>{copyright}</p>
+              <p id={labelId}>{copyright}</p>
             </div>
           )}
         </div>
@@ -112,7 +137,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
         {links.length > 0 && (
           <nav
             className={classMap.links}
-            aria-label="Footer site links"
+            aria-label={navAriaLabel}
             data-testid={`${testId}-nav`}
           >
             <ul>
@@ -120,12 +145,33 @@ const FooterBase: React.FC<BaseFooterProps> = ({
                 const slug = (link.label || link.href || `link-${i}`)
                   .toLowerCase()
                   .replace(/\s+/g, "-");
+
+                if (link.disabled) {
+                  return (
+                    <li key={`${link.href ?? slug}-${i}`}>
+                      <span
+                        className={classMap.link}
+                        data-testid={`${testId}-link-${slug}`}
+                        aria-disabled="true"
+                        title={link.title}
+                      >
+                        {link.label}
+                      </span>
+                    </li>
+                  );
+                }
+
                 return (
                   <li key={`${link.href ?? slug}-${i}`}>
                     <LinkWrapper
                       href={link.href}
                       className={classMap.link}
                       data-testid={`${testId}-link-${slug}`}
+                      aria-label={link["aria-label"]}
+                      aria-current={link["aria-current"]}
+                      title={link.title}
+                      rel={link.rel}
+                      target={link.target}
                     >
                       {link.label}
                     </LinkWrapper>
@@ -140,15 +186,20 @@ const FooterBase: React.FC<BaseFooterProps> = ({
           <div
             className={classMap.themeToggle}
             data-testid={`${testId}-theme-select`}
+            aria-label={themeSelectAriaLabel}
           >
-            <ThemeSelect theme="clear" shadow="none" aria-label="Theme" />
+            <ThemeSelect
+              theme="clear"
+              shadow="none"
+              aria-label={themeSelectAriaLabel}
+            />
           </div>
         )}
 
         {socialLinks.length > 0 && (
           <nav
             className={classMap.social}
-            aria-label="Social media"
+            aria-label={socialNavAriaLabel}
             data-testid={`${testId}-social`}
           >
             {socialLinks.map((social, index) => (
@@ -156,12 +207,17 @@ const FooterBase: React.FC<BaseFooterProps> = ({
                 key={`${social.href ?? social.title}-${index}`}
                 icon={social.icon}
                 href={social.href}
-                isExternal
+                isExternal={social.isExternal ?? true}
                 shadow="none"
-                ariaLabel={social.title}
-                title={social.title}
+                aria-label={social["aria-label"] ?? social.title}
+                title={social.tooltip ?? social.title}
                 theme="clear"
-                data-testid={`${testId}-social-${social.title.toLowerCase().replace(/\s+/g, "-")}`}
+                disabled={social.disabled}
+                rel={social.rel}
+                target={social.target}
+                data-testid={`${testId}-social-${social.title
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
               />
             ))}
           </nav>

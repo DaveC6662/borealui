@@ -1,20 +1,22 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "sass:color";
 @use "sass:map";
 
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--spacing-xs);
   width: fit-content;
-  font-size: theme.$font-size-sm;
-  font-weight: theme.$font-weight-bold;
-  padding: 6px 12px;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  padding: var(--spacing-xs) var(--spacing-md);
   border: none;
-  border-radius: theme.$border-radius-sm;
+  border-radius: var(--border-radius-sm);
   white-space: nowrap;
-  transition: all theme.$transition-default;
+  transition: all var(--transition-default);
   cursor: default;
 
   &.clickable:hover {
@@ -34,18 +36,19 @@
   }
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-xs;
-    padding: 4px 8px;
+    font-size: var(--font-size-caption);
+    padding: var(--spacing-xs) var(--spacing-sm);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-md;
-    padding: 6px 14px;
+    font-size: var(--font-size-body-sm);
+    padding: var(--spacing-xs) calc(var(--spacing-md) - 2px);
   }
 }
 
 .icon {
   font-size: 1.2em;
+  line-height: 1;
   margin-top: -0.1em;
 
   @include bp.down(sm) {
@@ -63,11 +66,11 @@
 
   &.clickable:hover {
     transform: translateY(-2px);
-    box-shadow: theme.$box-shadow-heavy;
+    box-shadow: var(--box-shadow-heavy);
 
     @include bp.down(sm) {
       transform: translateY(-1px);
-      box-shadow: theme.$box-shadow-medium;
+      box-shadow: var(--box-shadow-medium);
     }
   }
 
@@ -87,11 +90,11 @@
 
     &.clickable:hover {
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-heavy;
+      box-shadow: var(--box-shadow-heavy);
 
       @include bp.down(sm) {
         transform: translateY(-1px);
-        box-shadow: theme.$box-shadow-medium;
+        box-shadow: var(--box-shadow-medium);
       }
     }
 
@@ -122,11 +125,11 @@
     &.clickable:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-heavy;
+      box-shadow: var(--box-shadow-heavy);
 
       @include bp.down(sm) {
         transform: translateY(-1px);
-        box-shadow: theme.$box-shadow-medium;
+        box-shadow: var(--box-shadow-medium);
       }
     }
 
@@ -142,7 +145,7 @@
 
   .#{$name}.outline {
     background-color: transparent;
-    color: map.get($values, text-color);
+    color: map.get($values, text);
     border: 2px solid map.get($values, border);
     box-shadow: none;
 
@@ -165,11 +168,11 @@
     &.clickable:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
-      box-shadow: theme.$box-shadow-heavy;
+      box-shadow: var(--box-shadow-heavy);
 
       @include bp.down(sm) {
         transform: translateY(-1px);
-        box-shadow: theme.$box-shadow-medium;
+        box-shadow: var(--box-shadow-medium);
       }
     }
 
@@ -185,7 +188,7 @@
 
   .#{$name}.outline {
     background-color: transparent;
-    color: map.get($values, text-color);
+    color: map.get($values, text);
     border: 2px solid map.get($values, border);
     box-shadow: none;
 
@@ -201,73 +204,73 @@
 }
 
 .disabled {
-  background-color: theme.$disabled-color;
+  background-color: var(--disabled-color);
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
 }
 
 .xs {
-  font-size: theme.$font-size-xxs;
-  padding: 2px 8px;
+  font-size: var(--font-size-xxs);
+  padding: 2px var(--spacing-sm);
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-xs;
+    font-size: var(--font-size-xs);
     padding: 3px 10px;
   }
 }
 
 .small {
-  font-size: theme.$font-size-xs;
-  padding: 4px 8px;
+  font-size: var(--font-size-caption);
+  padding: var(--spacing-xs) var(--spacing-sm);
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-sm;
-    padding: 4px 10px;
+    font-size: var(--font-size-label);
+    padding: var(--spacing-xs) 10px;
   }
 }
 
 .medium {
-  font-size: theme.$font-size-sm;
-  padding: 4px 10px;
+  font-size: var(--font-size-label);
+  padding: var(--spacing-xs) 10px;
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-xs;
-    padding: 3px 8px;
+    font-size: var(--font-size-caption);
+    padding: 3px var(--spacing-sm);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-md;
+    font-size: var(--font-size-body-sm);
     padding: 5px 12px;
   }
 }
 
 .large {
-  font-size: theme.$font-size-md;
-  padding: 4px 12px;
+  font-size: var(--font-size-body-sm);
+  padding: var(--spacing-xs) 12px;
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-sm;
-    padding: 4px 10px;
+    font-size: var(--font-size-label);
+    padding: var(--spacing-xs) 10px;
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-lg;
+    font-size: var(--font-size-body);
     padding: 6px 14px;
   }
 }
 
 .xl {
-  font-size: theme.$font-size-lg;
-  padding: 4px 14px;
+  font-size: var(--font-size-body);
+  padding: var(--spacing-xs) 14px;
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-md;
-    padding: 4px 12px;
+    font-size: var(--font-size-body-sm);
+    padding: var(--spacing-xs) 12px;
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-xl;
+    font-size: var(--font-size-h6);
     padding: 6px 16px;
   }
 }

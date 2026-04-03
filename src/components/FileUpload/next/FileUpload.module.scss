@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .fileUpload {
@@ -8,21 +8,26 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: theme.$spacing-sm;
-  padding: theme.$spacing-md;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
   text-align: center;
   background-color: var(--background-color-light);
   border: 2px dashed var(--background-color-darker);
-  transition: theme.$transition-default;
+  transition: var(--transition-default);
   max-width: 300px;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
 
   @include bp.down(md) {
-    padding: theme.$spacing-md;
+    padding: var(--spacing-md);
     max-width: 100%;
   }
 
   @include bp.down(xs) {
-    padding: theme.$spacing-sm;
+    padding: var(--spacing-sm);
   }
 
   @include bp.up(lg) {
@@ -64,18 +69,18 @@
   .uploadControls {
     display: flex;
     flex-direction: column;
-    gap: theme.$spacing-sm;
+    gap: var(--spacing-sm);
     align-items: center;
     width: 100%;
 
     @include bp.up(lg) {
-      gap: theme.$spacing-md;
+      gap: var(--spacing-md);
     }
   }
 
   .uploadProgress {
     width: 100%;
-    margin-top: theme.$spacing-sm;
+    margin-top: var(--spacing-sm);
   }
 
   .uploadButton {
@@ -92,18 +97,22 @@
   }
 
   .fileList {
-    margin: theme.$spacing-sm 0;
+    margin: var(--spacing-sm) 0;
     padding: 0;
     list-style: none;
-    font-size: theme.$font-size-sm;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
     color: var(--text-color-secondary);
 
     @include bp.down(xs) {
-      font-size: theme.$font-size-xs;
+      font-size: var(--font-size-label);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-base;
+      font-size: var(--font-size-body);
     }
   }
 
@@ -111,9 +120,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: theme.$spacing-sm;
+    gap: var(--spacing-sm);
     padding: 2px 0;
-    font-size: theme.$font-size-sm;
+    font-family: inherit;
+    font-size: inherit;
     text-overflow: ellipsis;
 
     > :first-child {
@@ -129,28 +139,36 @@
     }
 
     @include bp.down(xs) {
-      gap: theme.$spacing-xxs;
+      gap: var(--spacing-xxs);
     }
   }
 
   .rejectedFiles {
-    margin-top: theme.$spacing-sm;
+    margin-top: var(--spacing-sm);
     color: var(--error-color);
-    font-size: theme.$font-size-sm;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
 
     @include bp.down(xs) {
-      font-size: theme.$font-size-xs;
+      font-size: var(--font-size-label);
     }
   }
 
   .rejectedLabel {
-    font-weight: theme.$font-weight-bold;
-    margin-bottom: theme.$spacing-xs;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    margin-bottom: var(--spacing-xs);
   }
 
   .rejectedList {
     list-style: disc;
-    padding-left: theme.$spacing-md;
+    padding-left: var(--spacing-md);
   }
 
   .rejectedItem {
@@ -170,17 +188,18 @@
   }
 }
 
-@each $theme, $vals in theme.$themes {
-  .#{$theme}:hover {
+@each $theme-name, $vals in theme.$themes {
+  .#{$theme-name}:hover {
     border-color: map.get($vals, border);
   }
 }
 
-@each $state, $vals in theme.$states {
-  .#{$state} {
+@each $state-name, $vals in theme.$states {
+  .#{$state-name} {
     border-color: map.get($vals, border);
   }
-  .#{$state}:hover {
+
+  .#{$state-name}:hover {
     border-color: map.get($vals, hover);
   }
 }

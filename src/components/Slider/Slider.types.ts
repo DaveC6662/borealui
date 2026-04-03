@@ -1,3 +1,4 @@
+import React from "react";
 import {
   RoundingType,
   ShadowType,
@@ -23,6 +24,12 @@ export interface SliderProps {
    * Callback invoked when the slider value changes.
    */
   onValueChange?: (value: number) => void;
+
+  /** Optional id for the slider input. */
+  id?: string;
+
+  /** Optional form field name. */
+  name?: string;
 
   /** The minimum value of the slider. */
   min?: number;
@@ -68,6 +75,9 @@ export interface SliderProps {
    */
   disabled?: boolean;
 
+  /** If true, the slider is required in form contexts. */
+  required?: boolean;
+
   /**
    * Controls the shadow of the component.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
@@ -77,8 +87,35 @@ export interface SliderProps {
   /** Additional CSS class names for custom styling. */
   className?: string;
 
-  /** Accessible label for the slider if label is not provided. */
+  /** Accessible label for the slider if no visible label is provided. */
   "aria-label"?: string;
+
+  /** Id of external element(s) that label the slider. */
+  "aria-labelledby"?: string;
+
+  /** Id of external element(s) that describe the slider. */
+  "aria-describedby"?: string;
+
+  /** Human-friendly text alternative for the current value. */
+  "aria-valuetext"?: string;
+
+  /** Explicit minimum value for assistive technology. */
+  "aria-valuemin"?: number;
+
+  /** Explicit maximum value for assistive technology. */
+  "aria-valuemax"?: number;
+
+  /** Explicit current numeric value for assistive technology. */
+  "aria-valuenow"?: number;
+
+  /** Marks the slider as invalid. */
+  "aria-invalid"?: boolean | "true" | "false";
+
+  /** Marks the slider as required for assistive technology. */
+  "aria-required"?: boolean | "true" | "false";
+
+  /** Orientation of the slider. */
+  "aria-orientation"?: "horizontal" | "vertical";
 
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;

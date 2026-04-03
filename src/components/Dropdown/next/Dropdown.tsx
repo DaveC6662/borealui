@@ -2,7 +2,7 @@
 import React from "react";
 import BaseDropdown from "../DropdownBase";
 import { DropdownProps } from "../Dropdown.types";
-import { IconButton } from "@/index.next";
+import IconButton from "../../IconButton/next/IconButton";
 import styles from "./Dropdown.module.scss";
 
 const Dropdown: React.FC<DropdownProps> = (props) => {

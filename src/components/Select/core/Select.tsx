@@ -9,11 +9,11 @@ const classes = {
   outline: "select_outline",
 
   layout: "select_layout",
-  title: "select_title",
-  titleTop: "select_title_top",
-  titleBottom: "select_title_bottom",
-  titleLeft: "select_title_left",
-  titleRight: "select_title_right",
+  label: "select_label",
+  labelTop: "select_label_top",
+  labelBottom: "select_label_bottom",
+  labelLeft: "select_label_left",
+  labelRight: "select_label_right",
 
   primary: "select_primary",
   secondary: "select_secondary",

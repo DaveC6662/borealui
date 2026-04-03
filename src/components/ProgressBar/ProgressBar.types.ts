@@ -1,10 +1,11 @@
+import React from "react";
 import {
+  LabelPositionType,
   RoundingType,
   ShadowType,
   SizeType,
   StateType,
   ThemeType,
-  TitlePositionType,
 } from "@/types/types";
 
 /**
@@ -12,9 +13,9 @@ import {
  */
 export interface ProgressBarProps {
   /**
-   * Percentage of progress (0 to 100). Ignored if `indeterminate` is true.
+   * Value of progress (0 to 100). Ignored if `indeterminate` is true.
    */
-  progress?: number;
+  value?: number;
 
   /**
    * Theme for styling the progress bar.
@@ -53,12 +54,31 @@ export interface ProgressBarProps {
 
   /**
    * Accessible label for the progress bar.
+   * Use this when no visible label exists.
    */
-  ariaLabel?: string;
+  "aria-label"?: string;
+
+  /**
+   * ID of the element that labels the progress bar.
+   * Prefer this when there is a visible label in the UI.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * ID of the element that describes the progress bar.
+   * Useful for extra context or status messaging.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Custom accessible text for screen readers.
+   * Example: "Uploading 3 of 5 files"
+   */
+  "aria-valuetext"?: string;
 
   /**
    * If true, the progress bar shows an indeterminate animation.
-   * When true, the progress prop is ignored.
+   * When true, the value prop is ignored.
    */
   indeterminate?: boolean;
 
@@ -68,15 +88,32 @@ export interface ProgressBarProps {
   className?: string;
 
   /**
-   * Optional title describing what the progress represents.
+   * Optional label describing what the progress represents.
    * Example: "Uploading files", "Build progress"
    */
-  title?: React.ReactNode;
+  label?: React.ReactNode;
 
   /**
-   * Position of the title relative to the progress bar.
+   * Position of the label relative to the progress bar.
    */
-  titlePosition?: TitlePositionType;
+  labelPosition?: LabelPositionType;
+
+  /**
+   * Optional id applied to the visible label container.
+   * Useful when connecting the label with aria-labelledby.
+   */
+  labelId?: string;
+
+  /**
+   * Optional description content rendered for assistive technology.
+   */
+  description?: React.ReactNode;
+
+  /**
+   * Optional id applied to the description container.
+   * Useful when connecting the description with aria-describedby.
+   */
+  descriptionId?: string;
 
   /**
    * Optional test ID for testing purposes.

@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
-import { Footer } from "../src/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { Footer, RoundingType, ShadowType, ThemeType } from "../src/index.next";
 import type { FooterProps } from "../src/components/Footer/Footer.types";
-import { FaGithub, FaTwitter, FaLinkedin, FaIcons } from "react-icons/fa";
+import { FaGithub, FaTwitter, FaLinkedin } from "react-icons/fa";
 import ThemeProvider from "../src/context/ThemeContext";
 import image from "./assets/tutorials.svg";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -13,8 +13,14 @@ const themeOptions = [
   "clear",
 ];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<FooterProps> = {
   title: "Components/Footer",
@@ -30,77 +36,6 @@ const meta: Meta<FooterProps> = {
   args: {
     theme: "primary",
     showThemeSelect: false,
-  },
-  argTypes: {
-    theme: {
-      control: "select",
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme color for the footer background and text.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: "select",
-      options: ["none", "small", "medium", "large"],
-      description: "Border radius for the footer container.",
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      control: "select",
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Box shadow style for the footer.",
-      table: { category: "Appearance" },
-    },
-    className: {
-      control: "text",
-      description: "Additional CSS class for the footer container.",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Custom test id for the root element.",
-      table: { category: "Testing" },
-    },
-    copyright: {
-      control: "text",
-      description: "Copyright notice displayed in the footer.",
-      table: { category: "Content" },
-    },
-    links: {
-      control: "object",
-      description:
-        "Array of navigation links in the footer. Each item is `{ label: string; href: string }`.",
-      table: {
-        category: "Content",
-        type: { summary: "Array<{ label, href }>" },
-      },
-    },
-    logo: {
-      control: false,
-      description:
-        "Logo for the footer. Can be an image URL, imported image, or JSX element.",
-      table: { category: "Content" },
-    },
-    socialLinks: {
-      control: "object",
-      description:
-        "Array of social link objects. Each is `{ icon: React.ElementType, href: string, title: string }`.",
-      table: {
-        category: "Content",
-        type: { summary: "Array<{ icon, href, title }>" },
-      },
-    },
-    showThemeSelect: {
-      control: "boolean",
-      description: "Show a theme select dropdown in the footer.",
-      table: { category: "Controls" },
-    },
-    attachment: {
-      control: "select",
-      options: ["static", "sticky", "fixed"],
-      description:
-        "Attachment type of the footer: static (default), sticky (sticks to bottom), or fixed (fixed to viewport).",
-      table: { category: "Layout" },
-    },
   },
 };
 

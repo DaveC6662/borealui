@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 $sizes: (
@@ -14,28 +14,28 @@ $sizes: (
 .container {
   display: flex;
   align-items: center;
-  gap: theme.$spacing-sm;
+  gap: var(--spacing-sm);
 
   @include bp.down(xs) {
-    gap: theme.$spacing-xs;
+    gap: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-md;
+    gap: var(--spacing-md);
   }
 }
 
 .wrapper {
   display: flex;
   align-items: center;
-  gap: theme.$spacing-xs;
+  gap: var(--spacing-xs);
 
   @include bp.down(xs) {
-    gap: theme.$spacing-xxs;
+    gap: var(--spacing-xxs);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-sm;
+    gap: var(--spacing-sm);
   }
 
   @each $size, $font-size in $sizes {
@@ -50,7 +50,7 @@ $sizes: (
 }
 
 .label {
-  font-size: theme.$font-size-md;
+  font-size: var(--font-size-label);
   line-height: 1;
   color: var(--text-color-primary);
   margin: 0;
@@ -58,11 +58,11 @@ $sizes: (
   align-items: center;
 
   @include bp.down(xs) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-lg;
+    font-size: var(--font-size-body-sm);
   }
 }
 

@@ -1,26 +1,69 @@
-import { IconType } from "react-icons";
-import {
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  MouseEvent,
+  ReactNode,
+  AriaRole,
+} from "react";
+import type { IconType } from "react-icons";
+import type {
   RoundingType,
   ShadowType,
   SizeType,
   StateType,
   ThemeType,
 } from "../../types/types";
-import { AnchorHTMLAttributes, ButtonHTMLAttributes, MouseEvent } from "react";
+
+/**
+ * Shared accessibility props for the Badge component.
+ */
+export interface BadgeAccessibilityProps {
+  /**
+   * Accessible label for the badge.
+   * Useful when the badge content is icon-only or not descriptive enough.
+   */
+  "aria-label"?: string;
+
+  /**
+   * References another element that labels this badge.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * References another element that describes this badge.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Announces dynamic badge updates to assistive technologies.
+   */
+  "aria-live"?: "off" | "polite" | "assertive";
+
+  /**
+   * Indicates whether the badge content is atomic when announced by screen readers.
+   */
+  "aria-atomic"?: boolean;
+
+  /**
+   * Optional semantic role for the badge.
+   * Examples: "status", "note", "button", "link".
+   */
+  role?: AriaRole;
+
+  /**
+   * Removes the badge from the tab order when needed.
+   */
+  tabIndex?: number;
+}
 
 /**
  * Props for the Badge component.
  */
-export interface BadgeProps {
+export interface BadgeProps extends BadgeAccessibilityProps {
   /**
-   * Badge content text (used when no children are provided).
+   * Optional custom badge content.
    */
-  text: string;
-
-  /**
-   * Optional custom content to override `text` (e.g., JSX with formatting).
-   */
-  children?: React.ReactNode;
+  children?: ReactNode;
 
   /**
    * Theme color for the badge
@@ -35,7 +78,7 @@ export interface BadgeProps {
   state?: StateType;
 
   /**
-   * Optional tooltip shown on hover (defaults to `text`).
+   * Optional tooltip shown on hover.
    */
   title?: string;
 
@@ -63,7 +106,7 @@ export interface BadgeProps {
   outline?: boolean;
 
   /**
-   * Optional icon to render inside the badge (e.g., from `react-icons`).
+   * Optional icon to render inside the badge.
    */
   icon?: IconType;
 
@@ -90,14 +133,17 @@ export interface BadgeProps {
 
 type AnchorExtras = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
-  "href" | "children" | "className" | "onClick" | "title"
->;
-type ButtonExtras = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  "type" | "children" | "className" | "onClick" | "title"
+  "href" | "children" | "className" | "onClick" | "title" | "role" | "tabIndex"
 >;
 
-type BadgeBaseCommon = { classMap: Record<string, string> };
+type ButtonExtras = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "type" | "children" | "className" | "onClick" | "title" | "role" | "tabIndex"
+>;
+
+type BadgeBaseCommon = {
+  classMap: Record<string, string>;
+};
 
 export type BadgeBaseProps =
   | (BadgeProps & BadgeBaseCommon & { href: string } & AnchorExtras)

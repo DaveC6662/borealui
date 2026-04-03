@@ -7,6 +7,7 @@ const classes = {
   table: "data_table",
   headerCell: "data_table_header_cell",
   sortable: "data_table_header_sortable",
+  sortButton: "data_table_sort_button",
   sortIcon: "data_table_sort_icon",
   clickable: "data_table_row_clickable",
   striped: "data_table_row_striped",

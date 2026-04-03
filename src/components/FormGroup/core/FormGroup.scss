@@ -1,20 +1,21 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 
 $size-margins: (
-  "xs": theme.$spacing-xs,
-  "small": theme.$spacing-sm,
-  "medium": theme.$spacing-md,
-  "large": theme.$spacing-lg,
-  "xl": theme.$spacing-xl,
+  "xs": var(--spacing-xs),
+  "small": var(--spacing-sm),
+  "medium": var(--spacing-md),
+  "large": var(--spacing-lg),
+  "xl": var(--spacing-xl),
 );
 
 .form_group {
   display: flex;
   flex-direction: column;
-  margin-bottom: theme.$spacing-md;
+  margin-bottom: var(--spacing-md);
   width: fit-content;
+  font-family: var(--font-family-body);
 
   @include bp.down(sm) {
     width: 100%;
@@ -22,20 +23,24 @@ $size-margins: (
 
   &_label {
     color: var(--text-color-primary);
-    font-size: theme.$font-size-md;
-    margin-bottom: theme.$spacing-xxs;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    margin-bottom: var(--spacing-xxs);
 
     @include bp.down(xs) {
-      font-size: theme.$font-size-sm;
+      font-size: var(--font-size-caption);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-base;
+      font-size: var(--font-size-body-sm);
     }
   }
 
   &_required {
-    color: theme.$error-color;
+    color: var(--error-color);
     margin-left: 4px;
   }
 
@@ -45,7 +50,7 @@ $size-margins: (
 
     @include bp.up(sm) {
       flex-direction: row;
-      gap: theme.$spacing-sm;
+      gap: var(--spacing-sm);
       align-items: center;
     }
   }
@@ -62,7 +67,7 @@ $size-margins: (
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: theme.$spacing-xs;
+    margin-top: var(--spacing-xs);
 
     @include bp.up(xs) {
       margin-top: 0;
@@ -71,15 +76,19 @@ $size-margins: (
 
   &_description,
   &_error_message {
-    font-size: theme.$font-size-sm;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
     margin-top: 4px;
 
     @include bp.down(xs) {
-      font-size: theme.$font-size-xxs;
+      font-size: var(--font-size-caption);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-base;
+      font-size: var(--font-size-body);
     }
   }
 
@@ -88,7 +97,7 @@ $size-margins: (
   }
 
   &_error_message {
-    color: theme.$error-color;
+    color: var(--error-color);
   }
 
   &_horizontal {
@@ -98,7 +107,7 @@ $size-margins: (
 
     &_label {
       margin-bottom: 0;
-      margin-right: theme.$spacing-sm;
+      margin-right: var(--spacing-sm);
       width: auto;
       text-align: left;
 
@@ -117,7 +126,7 @@ $size-margins: (
 
       @include bp.up(sm) {
         align-items: flex-start;
-        gap: theme.$spacing-xxs;
+        gap: var(--spacing-xxs);
       }
     }
 
@@ -126,13 +135,13 @@ $size-margins: (
       flex: 1;
 
       &_form-error {
-        border: 1px solid theme.$error-color;
+        border: 1px solid var(--error-color);
       }
     }
 
     &_controller {
       margin-left: auto;
-      margin-right: theme.$spacing-sm;
+      margin-right: var(--spacing-sm);
     }
 
     &_description,
@@ -153,7 +162,7 @@ $size-margins: (
 
     @include bp.down(xs) {
       .form_group_input_wrapper {
-        margin-bottom: max(#{$spacing} - 4px, theme.$spacing-xs);
+        margin-bottom: max(#{$spacing} - 4px, var(--spacing-xs));
       }
     }
   }
@@ -178,7 +187,7 @@ $size-margins: (
     color: CanvasText;
   }
 
-  .form_group_horizontal_input_field_form_error {
+  .form_group_horizontal_input_field_form-error {
     border-color: Highlight !important;
   }
 }

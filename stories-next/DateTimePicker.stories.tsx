@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
-import { DateTimePicker } from "../src/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import {
+  DateTimePicker,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.next";
 import type { DateTimePickerProps } from "../src/components/DateTimePicker/DateTimePicker.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -12,10 +18,16 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<DateTimePickerProps> = {
   title: "Components/DateTimePicker",
@@ -25,89 +37,6 @@ const meta: Meta<DateTimePickerProps> = {
     label: "Select date and time",
     theme: "primary",
     size: "medium",
-  },
-  argTypes: {
-    value: {
-      description:
-        "The current value of the picker (ISO string, Date object, or formatted).",
-      control: "text",
-      table: { category: "Main" },
-    },
-    onChange: {
-      description: "Callback fired when the value changes.",
-      action: "changed",
-      table: { category: "Events" },
-    },
-    theme: {
-      description: "Theme variant for the picker.",
-      control: { type: "select" },
-      options: themeOptions,
-      table: { category: "Appearance" },
-    },
-    state: {
-      description: "Visual state for the picker (success, error, warning).",
-      control: { type: "select" },
-      options: ["", ...stateOptions],
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      description: "Corner rounding style.",
-      control: { type: "select" },
-      options: roundingOptions,
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      description: "Box shadow style.",
-      control: { type: "select" },
-      options: shadowOptions,
-      table: { category: "Appearance" },
-    },
-    size: {
-      description: "Size of the input and popover (xs-xl).",
-      control: { type: "select" },
-      options: ["xs", "small", "medium", "large", "xl"],
-      table: { category: "Appearance" },
-    },
-    outline: {
-      description: "Display with outline style.",
-      control: "boolean",
-      table: { category: "Appearance" },
-    },
-    required: {
-      description: "Whether selection is required.",
-      control: "boolean",
-      table: { category: "Input" },
-    },
-    disabled: {
-      description: "Disable the input.",
-      control: "boolean",
-      table: { category: "Input" },
-    },
-    label: {
-      description: "Label displayed above or beside the input.",
-      control: "text",
-      table: { category: "Input" },
-    },
-    min: {
-      description: "Minimum selectable date/time (ISO string or Date).",
-      control: "text",
-      table: { category: "Input" },
-    },
-    max: {
-      description: "Maximum selectable date/time (ISO string or Date).",
-      control: "text",
-      table: { category: "Input" },
-    },
-    className: {
-      description: "Custom CSS class for the picker.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      description: "Test id for the component container.",
-      control: "text",
-      table: { category: "Testing" },
-    },
   },
 };
 

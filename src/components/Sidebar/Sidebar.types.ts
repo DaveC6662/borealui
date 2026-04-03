@@ -5,19 +5,40 @@ export interface SidebarLink {
    * Display label for the link.
    */
   label: string;
+
   /**
    * Navigation path or URL for the link.
    * If omitted, the link may be used as a non-clickable parent for submenu items.
    */
   href?: string;
+
   /**
    * Optional child links to render as a collapsible submenu.
    */
   children?: SidebarLink[];
+
   /**
    * Optional icon to display next to the label.
    */
   icon?: React.ReactNode;
+
+  /**
+   * Optional accessible label override for this specific link.
+   * Useful when the visible label is abbreviated or unclear.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Optional accessible description for this specific link.
+   * Can be used to provide extra context for screen reader users.
+   */
+  "aria-description"?: string;
+
+  /**
+   * Whether this item should be announced as disabled.
+   * Useful for non-interactive or temporarily unavailable items.
+   */
+  "aria-disabled"?: boolean;
 }
 
 export interface SidebarFooterLink {
@@ -25,14 +46,31 @@ export interface SidebarFooterLink {
    * Display label for the footer link.
    */
   label: string;
+
   /**
    * Navigation path or URL for the footer link.
    */
   href: string;
+
   /**
    * Optional icon to display next to the label.
    */
   icon?: React.ReactNode;
+
+  /**
+   * Optional accessible label override for this footer link.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Optional accessible description for this footer link.
+   */
+  "aria-description"?: string;
+
+  /**
+   * Whether this footer link should be announced as disabled.
+   */
+  "aria-disabled"?: boolean;
 }
 
 export interface SidebarProps {
@@ -41,11 +79,6 @@ export interface SidebarProps {
    * Each link may optionally include a nested submenu.
    */
   links: SidebarLink[];
-
-  /**
-   * The current active path, used to highlight the active link.
-   */
-  currentPath: string;
 
   /**
    * Whether to display a footer section at the bottom of the sidebar.
@@ -108,10 +141,56 @@ export interface SidebarProps {
 
   /**
    * Accessible label for the navigation landmark.
-   * Helps screen reader users understand the purpose of the sidebar.
-   * Example: "Sidebar navigation"
+   * Prefer the kebab-case ARIA prop for consistency with other React ARIA props.
    */
-  ariaLabel?: string;
+  "aria-label"?: string;
+
+  /**
+   * ID reference to one or more elements that label the sidebar navigation landmark.
+   * Takes precedence over aria-label when both are provided.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * ID reference to one or more elements that describe the sidebar navigation landmark.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Optional label for the footer landmark when footer content is rendered.
+   * Example: "Sidebar footer links"
+   */
+  footerAriaLabel?: string;
+
+  /**
+   * Optional ID reference to label the footer landmark.
+   */
+  footerAriaLabelledBy?: string;
+
+  /**
+   * Optional accessible label generator for expandable parent items.
+   * Useful when you want screen readers to hear something more descriptive
+   * than the visible text alone.
+   */
+  getExpandButtonAriaLabel?: (link: SidebarLink, isOpen: boolean) => string;
+
+  /**
+   * Optional accessible description generator for expandable parent items.
+   */
+  getExpandButtonAriaDescription?: (
+    link: SidebarLink,
+    isOpen: boolean,
+  ) => string;
+
+  /**
+   * Optional callback used to determine whether a link should be styled as active.
+   */
+  isLinkActive?: (link: SidebarLink) => boolean;
+
+  /**
+   * Optional callback used to determine whether a link contains an active child.
+   */
+  hasActiveChild?: (link: SidebarLink) => boolean;
 }
 
 export interface BaseSidebarProps extends SidebarProps {

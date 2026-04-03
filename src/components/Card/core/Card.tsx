@@ -1,7 +1,9 @@
 import React from "react";
 import CardBase from "../CardBase";
 import "./Card.scss";
-import { Button, IconButton, Skeleton } from "../../../index.core";
+import Button from "../../Button/core/Button";
+import IconButton from "../../IconButton/core/IconButton";
+import Skeleton from "../../Skeleton/core/Skeleton";
 import { CardProps } from "../Card.types";
 
 const classes = {
@@ -43,6 +45,13 @@ const classes = {
   roundSmall: "card_round-Small",
   roundMedium: "card_round-Medium",
   roundLarge: "card_round-Large",
+
+  borderNone: "card_border-None",
+  borderXs: "card_border-Xs",
+  borderSmall: "card_border-Small",
+  borderMedium: "card_border-Medium",
+  borderLarge: "card_border-Large",
+  borderXl: "card_border-Xl",
 
   vertical: "card_vertical",
   horizontal: "card_horizontal",

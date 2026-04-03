@@ -1,7 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
-@use "sass:color";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .chip {
@@ -10,7 +9,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-weight: theme.$font-weight-bold;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   max-width: 90vw;
   width: fit-content;
   min-width: 180px;
@@ -18,9 +21,9 @@
   text-align: center;
   animation: fade-in 0.3s ease-out;
   transition:
-    transform 0.3s ease-in-out,
-    opacity 0.3s ease-in-out,
-    box-shadow theme.$transition-default;
+    transform var(--transition-default),
+    opacity var(--transition-default),
+    box-shadow var(--transition-default);
 
   @include bp.down(sm) {
     min-width: 150px;
@@ -101,7 +104,7 @@ $chip-offset: 20px;
   .#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
-    border: map.get($values, border);
+    border: 1px solid map.get($values, border);
 
     &:focus-visible {
       outline: 2px solid map.get($values, border);
@@ -114,7 +117,7 @@ $chip-offset: 20px;
   .#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
-    border: map.get($values, border);
+    border: 1px solid map.get($values, border);
 
     &:focus-visible {
       outline: 2px solid map.get($values, border);
@@ -124,30 +127,33 @@ $chip-offset: 20px;
 }
 
 .icon {
-  margin-right: theme.$spacing-sm;
+  margin-right: var(--spacing-sm);
   display: flex;
   align-items: center;
   margin-top: -0.1em;
 
   @include bp.down(sm) {
-    margin-right: theme.$spacing-xs;
+    margin-right: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    margin-right: theme.$spacing-md;
+    margin-right: var(--spacing-md);
   }
 }
 
 .message {
   flex-grow: 1;
   margin-right: 12px;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 
   @include bp.down(sm) {
-    margin-right: theme.$spacing-xs;
+    margin-right: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    margin-right: theme.$spacing-sm;
+    margin-right: var(--spacing-sm);
   }
 }
 
@@ -159,29 +165,29 @@ $chip-offset: 20px;
 $chip-sizes: (
   "xs": (
     padding: 5px 9px,
-    font: theme.$font-size-xs,
+    font: var(--font-size-caption),
     icon: 0.8rem,
     height: 20px,
   ),
   "small": (
     padding: 6px 10px,
-    font: theme.$font-size-sm,
+    font: var(--font-size-label),
     icon: 0.9rem,
     height: 20px,
   ),
   "medium": (
     padding: 6px 12px,
-    font: theme.$font-size-md,
+    font: var(--font-size-body-sm),
     icon: 1.2rem,
   ),
   "large": (
     padding: 6px 14px,
-    font: theme.$font-size-lg,
+    font: var(--font-size-body),
     icon: 1.3rem,
   ),
   "xl": (
     padding: 10px 18px,
-    font: theme.$font-size-xl,
+    font: var(--font-size-h6),
     icon: 2rem,
   ),
 );
@@ -205,11 +211,7 @@ $chip-sizes: (
 
     @include bp.down(sm) {
       .message {
-        font-size: clamp(
-          theme.$font-size-xs,
-          0.9rem + 0.1vw,
-          map.get($props, font)
-        );
+        font-size: map.get($props, font);
       }
 
       padding: 5px 10px;
@@ -217,11 +219,7 @@ $chip-sizes: (
 
     @include bp.up(lg) {
       .message {
-        font-size: clamp(
-          map.get($props, font),
-          0.95rem + 0.25vw,
-          theme.$font-size-xl
-        );
+        font-size: calc(#{map.get($props, font)} * 1.05);
       }
 
       padding: 8px 14px;

@@ -1,10 +1,16 @@
 import { useCallback, useRef, useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
-import { Select } from "../src/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import {
+  RoundingType,
+  Select,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.next";
 import type { SelectProps } from "../src/components/Select/Select.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -12,10 +18,16 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<SelectProps> = {
   title: "Components/Select",
@@ -30,109 +42,11 @@ const meta: Meta<SelectProps> = {
       { label: "Option C", value: "c" },
     ],
   },
-  argTypes: {
-    title: {
-      control: "text",
-      description: "Optional title describing what the select is for.",
-      table: { category: "Content" },
-    },
-    titlePosition: {
-      control: { type: "select" },
-      options: ["top", "bottom", "left", "right", "overlay"],
-      description: "Position of the title relative to the select.",
-      table: { category: "Content", defaultValue: { summary: "top" } },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme color for the select.",
-      table: { category: "Appearance", defaultValue: { summary: "primary" } },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "warning", "error"],
-      description: "Visual state for feedback.",
-      table: { category: "Appearance" },
-    },
-    outline: {
-      control: "boolean",
-      description: "Use outlined style.",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Corner rounding.",
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Box shadow style.",
-      table: { category: "Appearance" },
-    },
-    options: {
-      control: false,
-      description: "Array of selectable options.",
-      table: { category: "Content" },
-    },
-    value: {
-      control: "text",
-      description: "Selected value.",
-      table: { category: "Behavior" },
-    },
-    onChange: {
-      action: "changed",
-      description: "Change event handler.",
-      table: { category: "Events" },
-    },
-    placeholder: {
-      control: "text",
-      description: "Placeholder when no value is selected.",
-      table: { category: "Content" },
-    },
-    ariaLabel: {
-      control: "text",
-      description: "ARIA label for accessibility.",
-      table: { category: "Accessibility" },
-    },
-    ariaDescription: {
-      control: "text",
-      description: "ARIA description for accessibility.",
-      table: { category: "Accessibility" },
-    },
-    disabled: {
-      control: "boolean",
-      description: "Disable the select input.",
-      table: { category: "Behavior" },
-    },
-    asyncOptions: {
-      control: false,
-      description: "Async function for loading options.",
-      table: { category: "Advanced" },
-    },
-    pollInterval: {
-      control: { type: "number", min: 0, step: 100 },
-      description: "Interval (ms) for polling async options.",
-      table: { category: "Advanced", defaultValue: { summary: "0" } },
-    },
-    className: {
-      control: "text",
-      description: "Custom class names for outer wrapper.",
-      table: { category: "Advanced" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for querying the component in tests.",
-      type: { name: "string" },
-      table: { category: "Testing" },
-    },
-  },
 };
 
 const defaultArgs = {
   placeholder: "Choose an option",
-  theme: "primary",
+  theme: "primary" as ThemeType,
   options: [
     { label: "Option A", value: "a" },
     { label: "Option B", value: "b" },
@@ -140,8 +54,8 @@ const defaultArgs = {
   ],
   value: "a",
   onChange: () => {},
-  rounding: "medium",
-  shadow: "light",
+  rounding: "medium" as RoundingType,
+  shadow: "light" as ShadowType,
 };
 
 export default meta;
@@ -156,13 +70,13 @@ export const Default: Story = {
         {...args}
         value={value}
         onChange={setValue}
-        ariaLabel="Default select"
+        aria-label="Default select"
       />
     );
   },
 };
 
-export const TitlePositions: Story = {
+export const LabelPositions: Story = {
   render: (args) => {
     const [value, setValue] = useState("a");
     const positions = ["top", "bottom", "left", "right"] as const;
@@ -172,16 +86,16 @@ export const TitlePositions: Story = {
         {positions.map((pos) => (
           <div key={pos} style={{ display: "grid", gap: "0.5rem" }}>
             <div style={{ fontSize: "0.9rem", opacity: 0.8 }}>
-              Title Position: <strong>{pos}</strong>
+              Label Position: <strong>{pos}</strong>
             </div>
 
             <Select
               {...args}
               value={value}
               onChange={setValue}
-              title={`Program`}
-              titlePosition={pos}
-              ariaLabel={`Select with titlePosition ${pos}`}
+              label={`Program`}
+              labelPosition={pos}
+              aria-label={`Select with labelPosition ${pos}`}
             />
           </div>
         ))}
@@ -206,7 +120,7 @@ export const WithNumericOptions: Story = {
         {...args}
         value={value}
         onChange={setValue}
-        ariaLabel="Numeric select"
+        aria-label="Numeric select"
       />
     );
   },
@@ -238,7 +152,7 @@ export const ThemeVariants: Story = {
             value={value}
             onChange={setValue}
             options={options}
-            ariaLabel={`Select with ${theme} theme`}
+            aria-label={`Select with ${theme} theme`}
           />
         ))}
       </div>
@@ -265,7 +179,7 @@ export const StateVariants: Story = {
             value={value}
             onChange={setValue}
             options={options}
-            ariaLabel={`Select with ${state} state`}
+            aria-label={`Select with ${state} state`}
           />
         ))}
       </div>
@@ -293,19 +207,19 @@ export const OutlineVariants: Story = {
             value={value}
             onChange={setValue}
             options={options}
-            ariaLabel={`Outlined ${theme} select`}
+            aria-label={`Outlined ${theme} select`}
           />
         ))}
-        {stateOptions.map((theme) => (
+        {stateOptions.map((state) => (
           <Select
-            key={theme}
+            key={state}
             {...args}
-            theme={theme}
+            state={state}
             outline
             value={value}
             onChange={setValue}
             options={options}
-            ariaLabel={`Outlined ${theme} select`}
+            aria-label={`Outlined ${state} select`}
           />
         ))}
       </div>
@@ -346,7 +260,7 @@ export const WithPollingAsyncOptions: Story = {
         asyncOptions={asyncOptions}
         pollInterval={10000}
         placeholder="Polling from server..."
-        ariaLabel="Polling select"
+        aria-label="Polling select"
       />
     );
   },

@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 $positions: (
@@ -38,9 +38,9 @@ $positions: (
       margin-right: 8px,
     ),
     arrow: (
-      left: 98%,
+      left: 100%,
       top: 50%,
-      transform: translateY(-50%) rotate(-180deg),
+      transform: translateY(-50%),
     ),
   ),
   "right": (
@@ -51,9 +51,9 @@ $positions: (
       margin-left: 8px,
     ),
     arrow: (
-      right: 99%,
+      right: 100%,
       top: 50%,
-      transform: translateY(-50%) rotate(180deg),
+      transform: translateY(-50%),
     ),
   ),
 );
@@ -70,7 +70,7 @@ $positions: (
   &:focus-within {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
-    border-radius: theme.$border-radius-sm;
+    border-radius: var(--border-radius-sm);
   }
 }
 
@@ -78,8 +78,12 @@ $positions: (
   position: absolute;
   color: var(--text-color-primary);
   background-color: var(--primary-color);
-  padding: theme.$spacing-xs theme.$spacing-sm;
-  font-size: theme.$font-size-sm;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
@@ -89,8 +93,8 @@ $positions: (
     transform 0.2s ease-in-out;
 
   @include bp.down(xs) {
-    font-size: theme.$font-size-xs;
-    padding: theme.$spacing-xxs theme.$spacing-xs;
+    font-size: var(--font-size-caption);
+    padding: var(--spacing-xxs) var(--spacing-xs);
     white-space: normal;
   }
 
@@ -106,7 +110,7 @@ $positions: (
   &:focus-visible {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
-    border-radius: theme.$border-radius-sm;
+    border-radius: var(--border-radius-sm);
   }
 }
 
@@ -127,7 +131,30 @@ $positions: (
 @each $name, $vals in theme.$themes {
   .#{$name} {
     background-color: map.get($vals, bg);
-    color: map.get($vals, text, var(--text-color-primary));
+    color: map.get($vals, text);
+
+    &::after {
+      border-color: map.get($vals, bg) transparent transparent transparent;
+    }
+
+    &.bottom::after {
+      border-color: transparent transparent map.get($vals, bg) transparent;
+    }
+
+    &.left::after {
+      border-color: transparent transparent transparent map.get($vals, bg);
+    }
+
+    &.right::after {
+      border-color: transparent map.get($vals, bg) transparent transparent;
+    }
+  }
+}
+
+@each $name, $vals in theme.$states {
+  .#{$name} {
+    background-color: map.get($vals, bg);
+    color: map.get($vals, text);
 
     &::after {
       border-color: map.get($vals, bg) transparent transparent transparent;
@@ -144,48 +171,33 @@ $positions: (
     &.right::after {
       border-color: transparent transparent transparent map.get($vals, bg);
     }
-
-    &.secondary {
-      color: var(--text-color-secondary);
-    }
-  }
-}
-
-@each $name, $vals in theme.$states {
-  .#{$name} {
-    background-color: map.get($vals, bg);
-    color: map.get($vals, text, var(--text-color-primary));
-
-    &::after {
-      border-color: map.get($vals, border) transparent transparent transparent;
-    }
-
-    &.bottom::after {
-      border-color: transparent transparent map.get($vals, border) transparent;
-    }
-
-    &.left::after {
-      border-color: transparent map.get($vals, border) transparent transparent;
-    }
-
-    &.right::after {
-      border-color: transparent transparent transparent map.get($vals, border);
-    }
-
-    &.secondary {
-      color: var(--text-color-secondary);
-    }
   }
 }
 
 .clear {
   box-shadow: none;
   border: 2px solid var(--text-color-primary);
-  background-color: map.get(theme.$themes, clear, hover);
+  background-color: map.get(map.get(theme.$themes, "clear"), bg-light);
+  color: var(--text-color-primary);
 
   &::after {
-    border-color: map.get(theme.$themes, clear, hover) transparent transparent
-      transparent;
+    border-color: map.get(map.get(theme.$themes, "clear"), bg-light) transparent
+      transparent transparent;
+  }
+
+  &.bottom::after {
+    border-color: transparent transparent
+      map.get(map.get(theme.$themes, "clear"), bg-light) transparent;
+  }
+
+  &.left::after {
+    border-color: transparent map.get(map.get(theme.$themes, "clear"), bg-light)
+      transparent transparent;
+  }
+
+  &.right::after {
+    border-color: transparent transparent transparent
+      map.get(map.get(theme.$themes, "clear"), bg-light);
   }
 }
 
@@ -228,7 +240,7 @@ $positions: (
   }
 
   .bottom::after {
-    border-color: transparent transparent CanvasText !important;
+    border-color: transparent transparent CanvasText transparent !important;
   }
 
   .left::after {

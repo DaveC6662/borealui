@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .toolbar {
@@ -10,18 +10,18 @@
   flex-wrap: nowrap;
   width: 100%;
   min-width: 200px;
-  padding: theme.$spacing-sm theme.$spacing-md;
-  background-color: var(--background-light-color);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--background-color-light);
   color: var(--text-color-primary);
-  gap: theme.$spacing-sm;
+  gap: var(--spacing-sm);
 
   @include bp.down(xs) {
-    padding: theme.$spacing-xs theme.$spacing-sm;
-    gap: theme.$spacing-xs;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    gap: var(--spacing-xs);
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-md theme.$spacing-lg;
+    padding: var(--spacing-md) var(--spacing-lg);
   }
 
   @each $themeName, $vals in theme.$themes {
@@ -54,7 +54,7 @@
   @include bp.down(sm) {
     width: 100%;
     justify-content: space-between;
-    margin-bottom: theme.$spacing-xs;
+    margin-bottom: var(--spacing-xs);
 
     &:last-child {
       margin-bottom: 0;
@@ -69,22 +69,29 @@
 }
 
 .title {
-  font-size: theme.$font-size-base;
-  font-weight: theme.$font-weight-bold;
   margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-heading);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-md;
-    margin-bottom: theme.$spacing-xs;
+    font-size: var(--font-size-body);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  @include bp.up(lg) {
+    font-size: var(--font-size-h5);
   }
 }
 
 .avatarWrapper {
-  margin-left: theme.$spacing-sm;
+  margin-left: var(--spacing-sm);
 
   @include bp.down(sm) {
     margin-left: 0;
-    margin-top: theme.$spacing-xs;
+    margin-top: var(--spacing-xs);
   }
 }
 

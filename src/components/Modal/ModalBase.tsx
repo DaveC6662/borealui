@@ -19,10 +19,17 @@ import {
 const BaseModal: React.FC<BaseModalProps> = ({
   className = "",
   children,
+  title = "Modal Dialog",
+  header,
+  footer,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   open,
   onClose,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  closeButtonAriaLabel = "Close modal",
   "data-testid": testId = "modal",
   IconButton,
   classMap,
@@ -34,6 +41,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
 
   const isControlled = typeof open === "boolean";
   const shouldBeOpen = isControlled ? open : true;
+
   const overlayRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -41,7 +49,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
   const focusablesRef = useRef<HTMLElement[]>([]);
 
   const uid = useId();
-  const labelId = `${uid}-label`;
+  const fallbackLabelId = `${uid}-label`;
 
   const handleClose = useCallback(() => {
     setIsVisible(false);
@@ -64,6 +72,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
 
     const siblings = Array.from(document.body.children) as HTMLElement[];
     const hidden: HTMLElement[] = [];
+
     siblings.forEach((el) => {
       if (el !== portal && !el.hasAttribute("aria-hidden")) {
         el.setAttribute("aria-hidden", "true");
@@ -74,6 +83,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
     const handleEsc = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Escape") handleClose();
     };
+
     document.addEventListener("keydown", handleEsc);
 
     return () => {
@@ -121,6 +131,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== "Tab") return;
+
     const list = focusablesRef.current;
     if (!list.length) return;
 
@@ -145,6 +156,14 @@ const BaseModal: React.FC<BaseModalProps> = ({
     rounding && classMap[`round${capitalize(rounding)}`],
   );
 
+  const hasHeader = Boolean(header) || Boolean(title);
+  const hasFooter = Boolean(footer);
+
+  const resolvedAriaLabelledBy =
+    ariaLabelledBy ?? (!ariaLabel && hasHeader ? fallbackLabelId : undefined);
+
+  const shouldRenderFallbackLabel = resolvedAriaLabelledBy === fallbackLabelId;
+
   return ReactDOM.createPortal(
     <div
       ref={overlayRef}
@@ -162,32 +181,70 @@ const BaseModal: React.FC<BaseModalProps> = ({
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
-        aria-labelledby={labelId}
+        aria-label={ariaLabel}
+        aria-labelledby={resolvedAriaLabelledBy}
+        aria-describedby={ariaDescribedBy}
         tabIndex={-1}
         onKeyDown={handleKeyDown}
         data-testid={`${testId}-content`}
       >
-        <h2 id={labelId} className={classMap.srOnly ?? "sr_only"}>
-          Modal Dialog
-        </h2>
+        {shouldRenderFallbackLabel && (
+          <h2 id={fallbackLabelId} className={classMap.srOnly ?? "sr_only"}>
+            {typeof title === "string" ? title : "Modal Dialog"}
+          </h2>
+        )}
 
-        <IconButton
-          ref={closeBtnRef}
-          className={classMap.closeButton}
-          state="error"
-          size="small"
-          icon={CloseIcon}
-          ariaLabel="Close modal"
-          onClick={(e: React.MouseEvent) => {
-            e.stopPropagation();
-            handleClose();
-          }}
-          title="Close"
-          data-testid={`${testId}-close`}
-          type="button"
-        />
+        {hasHeader && (
+          <div className={classMap.header} data-testid={`${testId}-header`}>
+            <div className={classMap.headerContent}>
+              {header ?? <div className={classMap.title}>{title}</div>}
+            </div>
 
-        {children}
+            <IconButton
+              ref={closeBtnRef}
+              className={classMap.closeButton}
+              state="error"
+              size="small"
+              icon={CloseIcon}
+              aria-label={closeButtonAriaLabel}
+              onClick={(e: React.MouseEvent) => {
+                e.stopPropagation();
+                handleClose();
+              }}
+              title="Close"
+              data-testid={`${testId}-close`}
+              type="button"
+            />
+          </div>
+        )}
+
+        {!hasHeader && (
+          <IconButton
+            ref={closeBtnRef}
+            className={classMap.closeButtonFloating ?? classMap.closeButton}
+            state="error"
+            size="small"
+            icon={CloseIcon}
+            aria-label={closeButtonAriaLabel}
+            onClick={(e: React.MouseEvent) => {
+              e.stopPropagation();
+              handleClose();
+            }}
+            title="Close"
+            data-testid={`${testId}-close`}
+            type="button"
+          />
+        )}
+
+        <div className={classMap.body} data-testid={`${testId}-body`}>
+          {children}
+        </div>
+
+        {hasFooter && (
+          <div className={classMap.footer} data-testid={`${testId}-footer`}>
+            {footer}
+          </div>
+        )}
       </div>
     </div>,
     portalElement,

@@ -10,7 +10,7 @@ import {
 import { BaseProgressBarProps } from "./ProgressBar.types";
 
 const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
-  progress = 0,
+  value = 0,
   theme = getDefaultTheme(),
   state = "",
   size = getDefaultSize(),
@@ -19,26 +19,42 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   animated = true,
   indeterminate = false,
   className = "",
-  ariaLabel = "Progress",
-  title,
-  titlePosition = "top",
+  "aria-label": ariaLabel = "Progress",
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-valuetext": ariaValueText,
+  label,
+  labelPosition = "top",
+  labelId,
+  description,
+  descriptionId,
   "data-testid": testId = "progressbar",
   classMap,
 }) => {
-  const numeric = Number(progress);
+  const numeric = Number(value);
   const clamped = Number.isFinite(numeric)
     ? Math.min(100, Math.max(0, numeric))
     : 0;
-  const value = Math.round(clamped);
+  const progressValue = Math.round(clamped);
+
+  const resolvedLabelId = label ? labelId || `${testId}-label` : undefined;
+  const resolvedDescriptionId = description
+    ? descriptionId || `${testId}-description`
+    : undefined;
+
+  const computedAriaLabel =
+    !ariaLabelledBy && !resolvedLabelId ? ariaLabel : undefined;
+
+  const computedAriaLabelledBy = ariaLabelledBy || resolvedLabelId;
+  const computedAriaDescribedBy = ariaDescribedBy || resolvedDescriptionId;
+
+  const computedAriaValueText =
+    ariaValueText || (indeterminate ? "Loading" : `${progressValue}% complete`);
 
   const layoutClass = useMemo(() => {
-    const posClass =
-      titlePosition === "overlay"
-        ? undefined
-        : classMap[`title${capitalize(titlePosition)}`];
-
-    return combineClassNames(classMap.layout, Boolean(title) && posClass);
-  }, [classMap, title, titlePosition]);
+    const posClass = classMap[`label${capitalize(labelPosition)}`];
+    return combineClassNames(classMap.layout, Boolean(label) && posClass);
+  }, [classMap, label, labelPosition]);
 
   const wrapperClass = useMemo(
     () =>
@@ -65,43 +81,48 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     [classMap, theme, state, rounding, indeterminate, animated],
   );
 
-  const titleNode = title ? (
+  const labelNode = label ? (
     <div
-      className={combineClassNames(
-        classMap.title,
-        titlePosition === "overlay" && classMap.titleOverlay,
-      )}
-      data-testid={`${testId}-title`}
+      id={resolvedLabelId}
+      className={classMap.label}
+      data-testid={`${testId}-label`}
     >
-      {title}
+      {label}
+    </div>
+  ) : null;
+
+  const descriptionNode = description ? (
+    <div id={resolvedDescriptionId} data-testid={`${testId}-description`}>
+      {description}
     </div>
   ) : null;
 
   return (
     <div className={layoutClass}>
-      {(titlePosition === "top" || titlePosition === "left") && titleNode}
+      {(labelPosition === "top" || labelPosition === "left") && labelNode}
 
       <div
         className={wrapperClass}
         role="progressbar"
-        aria-label={ariaLabel}
+        aria-label={computedAriaLabel}
+        aria-labelledby={computedAriaLabelledBy}
+        aria-describedby={computedAriaDescribedBy}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-valuenow={indeterminate ? undefined : value}
-        aria-valuetext={indeterminate ? "Loading" : `${value}% complete`}
+        aria-valuenow={indeterminate ? undefined : progressValue}
+        aria-valuetext={computedAriaValueText}
         aria-busy={indeterminate || undefined}
         data-testid={testId}
       >
         <div
           className={barClass}
-          style={{ width: indeterminate ? undefined : `${value}%` }}
+          style={{ width: indeterminate ? undefined : `${progressValue}%` }}
           data-testid={`${testId}-bar`}
-        >
-          {titlePosition === "overlay" && titleNode}
-        </div>
+        />
       </div>
 
-      {(titlePosition === "bottom" || titlePosition === "right") && titleNode}
+      {(labelPosition === "bottom" || labelPosition === "right") && labelNode}
+      {descriptionNode}
     </div>
   );
 };

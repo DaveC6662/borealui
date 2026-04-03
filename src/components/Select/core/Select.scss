@@ -1,16 +1,17 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .select_wrapper {
   position: relative;
   display: inline-flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   width: fit-content;
-  margin: theme.$spacing-xs 0;
-  transition: theme.$transition-default;
+  margin: var(--spacing-xs) 0;
+  transition: var(--transition-default);
+  font-family: var(--font-family-ui);
 
   @include bp.down(sm) {
     width: 100%;
@@ -24,7 +25,7 @@
     opacity: 0.6;
     pointer-events: none;
     cursor: not-allowed;
-    background-color: theme.$disabled-color !important;
+    background-color: var(--disabled-color) !important;
   }
 
   &:focus-within {
@@ -36,7 +37,7 @@
   @each $themeName, $values in theme.$themes {
     &.select_#{$themeName} {
       background-color: map.get($values, bg);
-      color: map.get($values, color);
+      color: map.get($values, text);
 
       &:hover {
         background-color: map.get($values, hover);
@@ -45,7 +46,7 @@
 
     &.select_#{$themeName}.select_outline {
       background-color: transparent;
-      color: map.get($values, color);
+      color: map.get($values, text);
       border: 1px solid map.get($values, border);
 
       @include bp.down(sm) {
@@ -61,7 +62,7 @@
   @each $stateName, $values in theme.$states {
     &.select_#{$stateName} {
       background-color: map.get($values, bg);
-      color: map.get($values, color);
+      color: map.get($values, text);
 
       &:hover {
         background-color: map.get($values, hover);
@@ -70,7 +71,7 @@
 
     &.select_#{$stateName}.select_outline {
       background-color: transparent;
-      color: map.get($values, color);
+      color: map.get($values, text);
       border: 1px solid map.get($values, border);
 
       @include bp.down(sm) {
@@ -101,7 +102,7 @@
   color: var(--text-color-primary);
   transform-origin: center;
   background-color: transparent !important;
-  right: theme.$spacing-sm;
+  right: var(--spacing-sm);
 
   @include bp.down(xs) {
     font-size: 11px;
@@ -115,10 +116,13 @@
 .select {
   width: 100%;
   min-height: 40px;
-  padding: 5px 30px;
-  font-size: theme.$font-size-sm;
+  padding: 5px 10px;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   appearance: none;
-  font-weight: 800;
   border: none;
   color: var(--text-color-primary);
   background: transparent;
@@ -129,12 +133,12 @@
 
   @include bp.down(xs) {
     min-height: 38px;
-    padding: 4px 28px 4px theme.$spacing-sm;
-    font-size: theme.$font-size-xs;
+    padding: 4px 28px 4px var(--spacing-sm);
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-sm;
+    font-size: var(--font-size-label);
   }
 
   &:focus-visible {
@@ -145,6 +149,8 @@
     background-color: var(--background-color);
     border: none;
     color: var(--text-color-primary);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-label);
   }
 
   &_clear {
@@ -156,33 +162,36 @@
   &_layout {
     display: flex;
     gap: 0.5rem;
-    width: 100%;
+    width: fit-content;
   }
 
-  &_title {
-    font-size: 0.875em;
-    line-height: 1.2;
+  &_label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
     white-space: nowrap;
   }
 
-  &_title_top {
+  &_label_top {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  &_title_bottom {
+  &_label_bottom {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  &_title_left,
-  &_title_right {
+  &_label_left,
+  &_label_right {
     flex-direction: row;
     align-items: center;
   }
 
-  &_title_left .select_wrapper,
-  &_title_right .select_wrapper {
+  &_label_left .select_wrapper,
+  &_label_right .select_wrapper {
     flex: 1;
     min-width: 0;
   }

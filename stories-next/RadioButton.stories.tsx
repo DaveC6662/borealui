@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
-import { RadioButton } from "../src/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import {
+  RadioButton,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.next";
 import type { RadioButtonProps } from "../src/components/RadioButton/RadioButton.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -11,10 +17,16 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<RadioButtonProps> = {
   title: "Components/RadioButton",
@@ -25,78 +37,6 @@ const meta: Meta<RadioButtonProps> = {
     value: "a",
     checked: false,
     theme: "secondary",
-  },
-  argTypes: {
-    label: {
-      control: "text",
-      description: "Label displayed next to the radio button.",
-      table: { category: "Main", defaultValue: { summary: "Option A" } },
-      type: { name: "string", required: false },
-    },
-    value: {
-      control: "text",
-      description: "The value for the radio input.",
-      table: { category: "Main", defaultValue: { summary: "" } },
-      type: { name: "string", required: false },
-    },
-    checked: {
-      control: "boolean",
-      description: "Whether the radio button is selected.",
-      table: { category: "Main", defaultValue: { summary: "false" } },
-      type: { name: "boolean", required: false },
-    },
-    onChange: {
-      action: "changed",
-      description: "Callback fired when the checked state changes.",
-      table: { category: "Events" },
-      type: { name: "function" },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme variant for styling.",
-      table: { category: "Appearance", defaultValue: { summary: "secondary" } },
-      type: { name: "string", required: false },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Border radius for the radio button.",
-      table: { category: "Appearance" },
-      type: { name: "string", required: false },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Shadow depth of the radio button.",
-      table: { category: "Appearance" },
-      type: { name: "string", required: false },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "error", "warning"],
-      description: "Visual state style for success, error, or warning.",
-      table: { category: "Appearance" },
-      type: { name: "string", required: false },
-    },
-    disabled: {
-      control: "boolean",
-      description: "Disables the radio button.",
-      table: { category: "Main", defaultValue: { summary: "false" } },
-      type: { name: "boolean", required: false },
-    },
-    className: {
-      control: "text",
-      description: "Custom class name for the wrapper.",
-      table: { category: "Advanced" },
-      type: { name: "string", required: false },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for querying the component in tests.",
-      type: { name: "string" },
-      table: { category: "Testing" },
-    },
   },
 };
 
@@ -176,13 +116,13 @@ export const StateVariants: Story = {
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {stateOptions.map((theme) => (
+        {stateOptions.map((state) => (
           <RadioButton
-            key={theme}
-            label={theme.charAt(0).toUpperCase() + theme.slice(1)}
-            value={theme}
-            theme={theme}
-            checked={selected === theme}
+            key={state}
+            label={state.charAt(0).toUpperCase() + state.slice(1)}
+            value={state}
+            state={state}
+            checked={selected === state}
             onChange={setSelected}
           />
         ))}

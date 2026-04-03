@@ -1,8 +1,7 @@
 @use "../../../../styles/theme" as theme;
-@use "../../../../styles/globals";
+@use "../../../../styles/_animations";
 @use "sass:map";
 
-// Position mappings for chips
 $chip-positions: (
   "topLeft": (
     top: 20px,
@@ -79,7 +78,7 @@ $chip-positions: (
   flex-direction: column;
   list-style: none;
   margin: 0;
-  gap: theme.$spacing-xs;
+  gap: var(--spacing-medium, 16px);
   padding: 0;
 }
 

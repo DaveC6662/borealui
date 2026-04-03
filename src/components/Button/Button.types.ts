@@ -5,12 +5,30 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
-import React, { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
+import React, {
+  AnchorHTMLAttributes,
+  AriaAttributes,
+  ButtonHTMLAttributes,
+} from "react";
 
 /**
  * Props for the reusable Button component.
  */
-export interface ButtonProps {
+export interface ButtonProps extends Pick<
+  AriaAttributes,
+  | "aria-label"
+  | "aria-labelledby"
+  | "aria-describedby"
+  | "aria-controls"
+  | "aria-expanded"
+  | "aria-pressed"
+  | "aria-current"
+  | "aria-haspopup"
+  | "aria-live"
+  | "aria-atomic"
+  | "aria-busy"
+  | "aria-disabled"
+> {
   /**
    * Optional icon component to render inside the button.
    */
@@ -54,8 +72,72 @@ export interface ButtonProps {
 
   /**
    * Accessible label for screen readers.
+   * Required for icon-only buttons.
    */
-  ariaLabel?: string;
+  "aria-label"?: string;
+
+  /**
+   * References the element(s) that label this button.
+   * Useful when the visible label lives outside the button.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * References the element(s) that describe this button.
+   * Useful for extra instructions or status messaging.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Identifies the element controlled by this button,
+   * such as a menu, dialog, accordion panel, or disclosure region.
+   */
+  "aria-controls"?: string;
+
+  /**
+   * Indicates whether the controlled element is expanded or collapsed.
+   * Commonly used for disclosure buttons.
+   */
+  "aria-expanded"?: boolean;
+
+  /**
+   * Indicates the pressed state for toggle buttons.
+   */
+  "aria-pressed"?: boolean | "mixed";
+
+  /**
+   * Indicates that this button represents the current item within a set.
+   * Most useful when rendering as a link-like control.
+   */
+  "aria-current"?: boolean | "page" | "step" | "location" | "date" | "time";
+
+  /**
+   * Indicates that activating the button opens a popup such as a menu,
+   * dialog, listbox, tree, or grid.
+   */
+  "aria-haspopup"?: boolean | "menu" | "listbox" | "tree" | "grid" | "dialog";
+
+  /**
+   * Indicates whether the element is busy.
+   * Usually derived automatically from `loading`.
+   */
+  "aria-busy"?: boolean;
+
+  /**
+   * Indicates whether the control is perceivable as disabled to assistive tech.
+   * Usually derived automatically when rendered as a disabled link.
+   */
+  "aria-disabled"?: boolean;
+
+  /**
+   * Optional live-region politeness for loading or dynamic content updates.
+   */
+  "aria-live"?: "off" | "polite" | "assertive";
+
+  /**
+   * Whether assistive technologies should treat live updates as atomic.
+   */
+  "aria-atomic"?: boolean;
 
   /**
    * If provided, button will render as a link pointing to this href.
@@ -96,6 +178,12 @@ export interface ButtonProps {
   loading?: boolean;
 
   /**
+   * Optional accessible text announced while loading.
+   * Defaults to "Loading" in the component if not provided.
+   */
+  loadingLabel?: string;
+
+  /**
    * Whether the button should take up the full width of its container.
    */
   fullWidth?: boolean;
@@ -114,11 +202,18 @@ export interface ButtonProps {
 
 type AnchorExtras = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
-  "href" | "children" | "className" | "onClick" | "target" | "rel"
+  | "href"
+  | "children"
+  | "className"
+  | "onClick"
+  | "target"
+  | "rel"
+  | keyof ButtonProps
 >;
+
 type ButtonExtras = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
-  "children" | "className" | "onClick"
+  "children" | "className" | "onClick" | keyof ButtonProps
 >;
 
 export type ButtonBaseProps =

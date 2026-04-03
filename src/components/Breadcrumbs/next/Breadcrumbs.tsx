@@ -5,7 +5,7 @@ import Link from "next/link";
 import styles from "./Breadcrumbs.module.scss";
 import { BreadcrumbsBase } from "../BreadcrumbsBase";
 import { BreadcrumbsProps } from "../Breadcrumbs.types";
-import { Button } from "../../../index.next";
+import Button from "../../Button/next/Button";
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = (props) => {
   return (

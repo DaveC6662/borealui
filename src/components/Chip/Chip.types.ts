@@ -1,3 +1,4 @@
+import type { AriaAttributes, ElementType, HTMLAttributes } from "react";
 import {
   ThemeType,
   PositionType,
@@ -22,19 +23,31 @@ export interface ChipBaseProps extends ChipProps {
    * The icon button component to use for the close/remove action.
    * Accepts a React component type (e.g., your custom IconButton).
    */
-  IconButtonComponent: React.ElementType;
+  IconButtonComponent: ElementType;
 
   /**
    * Optional custom icon component for the close/remove button.
    * Accepts a React component type (e.g., from react-icons).
    */
-  closeIcon?: React.ElementType;
+  closeIcon?: ElementType;
 }
 
 /**
  * Props for the Chip component.
  */
-export interface ChipProps {
+export interface ChipProps
+  extends
+    Omit<HTMLAttributes<HTMLDivElement>, "children" | "role">,
+    Pick<
+      AriaAttributes,
+      | "aria-label"
+      | "aria-labelledby"
+      | "aria-describedby"
+      | "aria-live"
+      | "aria-atomic"
+      | "aria-relevant"
+      | "aria-hidden"
+    > {
   /** Optional unique ID for the chip. */
   id?: string;
 
@@ -45,7 +58,19 @@ export interface ChipProps {
   visible: boolean;
 
   /** Optional icon component to show on the left side. */
-  icon?: React.ElementType;
+  icon?: ElementType;
+
+  /**
+   * Whether the leading icon is decorative.
+   * When true, it will be hidden from assistive technology.
+   * Defaults to true.
+   */
+  iconDecorative?: boolean;
+
+  /**
+   * Accessible label for the leading icon when it is not decorative.
+   */
+  iconAriaLabel?: string;
 
   /**
    * Size of the chip
@@ -101,6 +126,26 @@ export interface ChipProps {
   /** Time in milliseconds before auto-closing (default: 3000). */
   duration?: number;
 
-  /** Optional test ID for testing frameworks. */
+  /**
+   * ARIA role for the chip container.
+   * Defaults to "alert".
+   */
+  role?: "alert" | "status" | "log" | "none" | "presentation";
+
+  /**
+   * Custom accessible label for the close button.
+   * Defaults to "Close notification".
+   */
+  closeButtonAriaLabel?: string;
+
+  /**
+   * Optional ID for the message element.
+   * If omitted, a stable fallback based on testId/id is used.
+   */
+  messageId?: string;
+
+  /**
+   * Optional test ID for testing frameworks.
+   */
   "data-testid"?: string;
 }

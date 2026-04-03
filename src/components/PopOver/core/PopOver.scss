@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .popover_container {
@@ -14,7 +14,8 @@
   outline: none;
   border: none;
   background-color: transparent;
-  padding: none;
+  padding: 0;
+  font-family: var(--font-family-ui);
 
   &:focus-visible {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
@@ -29,9 +30,14 @@
   max-width: 90vw;
   min-width: 100%;
   width: max-content;
-  background-color: var(--background-light-color);
+  background-color: var(--background-color-light);
   color: var(--text-color-secondary);
   border: 1px solid var(--text-color-secondary);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   animation: fade-in 0.25s ease-in-out forwards;
 
   @include bp.down(sm) {
@@ -65,11 +71,13 @@
     &_#{$name} {
       background-color: map.get($values, bg);
       color: map.get($values, text);
-      border: if(
-        map.has-key($values, border),
-        map.get($values, border),
-        1px solid var(--text-color-secondary)
-      );
+      border: 1px
+        solid
+        if(
+          map.has-key($values, border),
+          map.get($values, border),
+          var(--text-color-secondary)
+        );
     }
   }
 
@@ -82,11 +90,13 @@
         map.get($values, shadow),
         theme.$box-shadow-medium
       );
-      border: if(
-        map.has-key($values, border),
-        map.get($values, border),
-        1px solid var(--text-color-secondary)
-      );
+      border: 1px
+        solid
+        if(
+          map.has-key($values, border),
+          map.get($values, border),
+          var(--text-color-secondary)
+        );
     }
   }
 

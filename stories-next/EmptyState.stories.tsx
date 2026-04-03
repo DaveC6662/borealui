@@ -1,19 +1,32 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
-import { EmptyState } from "../src/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import {
+  EmptyState,
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../src/index.next";
 import type { EmptyStateProps } from "../src/components/EmptyState/EmptyState.types";
 import { FaInbox, FaBug, FaFolderOpen } from "react-icons/fa";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
   "quaternary",
   "clear",
 ];
-const sizeOptions = ["xs", "small", "medium", "large", "xl"];
-const stateOptions = ["success", "error", "warning"];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<EmptyStateProps> = {
   title: "Components/EmptyState",
@@ -24,79 +37,6 @@ const meta: Meta<EmptyStateProps> = {
     message: "This section doesn't have any content yet.",
     theme: "primary",
     size: "medium",
-  },
-  argTypes: {
-    icon: {
-      description: "Optional icon to display above the empty state message.",
-      control: false,
-      table: { category: "Visuals" },
-    },
-    title: {
-      description: "Main heading text for the empty state.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    message: {
-      description: "Secondary message describing the empty state.",
-      control: "text",
-      table: { category: "Content" },
-    },
-    actionLabel: {
-      description: "Label for the primary action button (optional).",
-      control: "text",
-      table: { category: "Actions" },
-    },
-    onActionClick: {
-      description: "Callback when the action button is clicked.",
-      action: "action",
-      table: { category: "Actions" },
-    },
-    theme: {
-      description: "Visual theme for the empty state card.",
-      control: { type: "select" },
-      options: themeOptions,
-      table: { category: "Appearance" },
-    },
-    state: {
-      description:
-        "State variant for feedback (e.g., success, error, warning).",
-      control: { type: "select" },
-      options: stateOptions,
-      table: { category: "Appearance" },
-    },
-    size: {
-      description: "Size of the card and text.",
-      control: { type: "select" },
-      options: sizeOptions,
-      table: { category: "Appearance" },
-    },
-    outline: {
-      description: "If true, renders with an outline.",
-      control: "boolean",
-      table: { category: "Appearance" },
-    },
-    rounding: {
-      description: "Border radius style.",
-      control: { type: "select" },
-      options: roundingOptions,
-      table: { category: "Appearance" },
-    },
-    shadow: {
-      description: "Shadow style for the card.",
-      control: { type: "select" },
-      options: shadowOptions,
-      table: { category: "Appearance" },
-    },
-    className: {
-      description: "Custom CSS class for the container.",
-      control: "text",
-      table: { category: "Appearance" },
-    },
-    "data-testid": {
-      description: "Custom test ID for end-to-end or unit testing.",
-      control: "text",
-      table: { category: "Advanced" },
-    },
   },
 };
 
@@ -172,13 +112,13 @@ export const OutlineVariants: Story = {
           message={`This is an outlined ${theme} variant.`}
         />
       ))}
-      {stateOptions.map((theme) => (
+      {stateOptions.map((state) => (
         <EmptyState
-          key={`outline-${theme}`}
-          theme={theme}
+          key={`outline-${state}`}
+          state={state}
           outline
-          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
-          message={`This is an outlined ${theme} variant.`}
+          title={`${state.charAt(0).toUpperCase() + state.slice(1)} Outline`}
+          message={`This is an outlined ${state} variant.`}
         />
       ))}
     </div>

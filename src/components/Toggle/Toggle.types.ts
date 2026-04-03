@@ -27,6 +27,51 @@ export interface ToggleProps {
   label?: string;
 
   /**
+   * Optional id for the toggle button.
+   * If not provided, one will be generated automatically.
+   */
+  id?: string;
+
+  /**
+   * Accessible label for screen readers.
+   * Best used when no visible label is rendered.
+   */
+  "aria-label"?: string;
+
+  /**
+   * References the id of an element that labels the toggle.
+   * Takes precedence over aria-label when provided.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * References the id of an element that describes the toggle,
+   * such as hint text or supporting content.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Indicates whether the current value is invalid.
+   */
+  "aria-invalid"?: boolean;
+
+  /**
+   * References the id of an element containing an error message.
+   */
+  "aria-errormessage"?: string;
+
+  /**
+   * Explicitly communicates disabled state to assistive technologies.
+   * Normally inferred from `disabled`, but exposed for flexibility.
+   */
+  "aria-disabled"?: boolean;
+
+  /**
+   * Optional tab index for focus management.
+   */
+  tabIndex?: number;
+
+  /**
    * Theme used for styling the toggle.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
    */

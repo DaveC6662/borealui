@@ -1,3 +1,4 @@
+import React from "react";
 import {
   OrientationType,
   RoundingType,
@@ -8,21 +9,29 @@ import {
 /**
  * Represents a single item within the timeline.
  */
-interface TimelineItem {
+export interface TimelineItem {
   /** Title of the timeline event. */
   title: string;
+
   /** Optional description of the event. */
   description?: string;
+
   /** Optional date string for the event. */
   date?: string;
+
   /** Optional icon component to visually represent the event. */
-  icon?: React.ComponentType;
+  icon?: React.ComponentType<
+    React.SVGProps<SVGSVGElement> | { "aria-hidden"?: boolean }
+  >;
 }
 
 /**
  * Props for the Timeline component.
  */
-export interface TimelineProps {
+export interface TimelineProps extends Omit<
+  React.HTMLAttributes<HTMLUListElement>,
+  "title"
+> {
   /**
    * Array of timeline items to display.
    */
@@ -32,7 +41,24 @@ export interface TimelineProps {
    * Accessible label for the timeline.
    * Defaults to "Timeline".
    */
-  ariaLabel?: string;
+  "aria-label"?: string;
+
+  /**
+   * Optional aria-labelledby for the timeline root.
+   * When provided, this should take precedence over "aria-label".
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * Optional aria-describedby for the timeline root.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Optional role override for the root element.
+   * Defaults to "list" when not provided.
+   */
+  role?: React.AriaRole;
 
   /**
    * Orientation of the timeline.

@@ -2,15 +2,19 @@ import "./styles/globals.scss";
 
 export * from "./types/index";
 
+export * from "./generated-docs/index";
+
 export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
 export { registerColorScheme } from "./styles/colorSchemeRegistry";
 export { colorSchemes } from "./styles/Themes";
 export { setBorealStyleConfig } from "./config/boreal-style-config";
 
+export { default as Typography } from "./components/Typography/core/Typography";
+
 // Buttons
 export { default as Button } from "./components/Button/core/Button";
 export { default as IconButton } from "./components/IconButton/core/IconButton";
-export { default as ScrollToTop } from "./components/ScrollToTop/core/STT";
+export { default as ScrollToTop } from "./components/ScrollToTop/core/ScrollToTop";
 
 // Inputs & Forms
 export { default as TextInput } from "./components/TextInput/core/TextInput";

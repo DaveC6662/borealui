@@ -1,23 +1,24 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
-@use "sass:color";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 $input-sizes: (
-  "xs": theme.$spacing-xs,
-  "small": theme.$spacing-sm,
-  "medium": theme.$spacing-md,
-  "large": theme.$spacing-lg,
-  "xl": theme.$spacing-xl,
+  "xs": var(--spacing-xs),
+  "small": var(--spacing-sm),
+  "medium": var(--spacing-md),
+  "large": var(--spacing-lg),
+  "xl": var(--spacing-xl),
 );
+
 $font-sizes: (
-  "xs": theme.$font-size-xs,
-  "small": theme.$font-size-sm,
-  "medium": theme.$font-size-md,
-  "large": theme.$font-size-base,
-  "xl": theme.$font-size-lg,
+  "xs": var(--font-size-caption),
+  "small": var(--font-size-label),
+  "medium": var(--font-size-body-sm),
+  "large": var(--font-size-body),
+  "xl": var(--font-size-h6),
 );
+
 $icon-sizes: (
   "xs": 2em,
   "small": 3em,
@@ -32,17 +33,18 @@ $icon-sizes: (
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: theme.$spacing-sm;
+  padding: var(--spacing-sm);
   background-color: var(--background-color-light);
-  gap: theme.$spacing-xs;
-  transition: theme.$transition-default;
+  gap: var(--spacing-xs);
+  transition: var(--transition-default);
   width: 400px;
   max-width: 100%;
   min-width: 100px;
+  font-family: var(--font-family-body);
 
   @include bp.down(md) {
     width: 100%;
-    padding: theme.$spacing-md;
+    padding: var(--spacing-md);
   }
 
   @include bp.up(lg) {
@@ -67,54 +69,61 @@ $icon-sizes: (
 
   &_title,
   &_message {
-    margin: theme.$spacing-sm;
+    margin: var(--spacing-sm);
   }
 
   &_title {
-    font-size: theme.$font-size-base;
-    font-weight: theme.$font-weight-bold;
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-h4);
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
 
     @include bp.down(md) {
-      font-size: theme.$font-size-md;
+      font-size: var(--font-size-body-sm);
     }
 
     @include bp.down(xs) {
-      font-size: theme.$font-size-sm;
+      font-size: var(--font-size-label);
     }
 
     @include bp.up(lg) {
-      font-size: calc(theme.$font-size-base * 1.05);
+      font-size: calc(var(--font-size-body) * 1.05);
     }
   }
 
   &_message {
-    font-size: theme.$font-size-md;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
     opacity: 0.8;
     width: 90%;
 
     @include bp.down(md) {
-      font-size: theme.$font-size-sm;
+      font-size: var(--font-size-label);
     }
 
     @include bp.down(xs) {
-      font-size: theme.$font-size-xs;
+      font-size: var(--font-size-caption);
     }
 
     @include bp.up(lg) {
-      font-size: calc(theme.$font-size-md * 1.05);
+      font-size: calc(var(--font-size-body-sm) * 1.05);
     }
   }
 
   @each $themeName, $values in theme.$themes {
     &_#{$themeName} {
       background-color: map.get($values, bg);
-      color: map.get($values, color);
+      color: map.get($values, text);
     }
 
     &_#{$themeName}.empty_state_outline {
       background-color: transparent;
       border: 2px solid map.get($values, border);
-      color: map.get($values, text-color);
+      color: map.get($values, text);
 
       @include bp.down(sm) {
         border-width: 1.5px;
@@ -125,13 +134,13 @@ $icon-sizes: (
   @each $stateName, $values in theme.$states {
     &_#{$stateName} {
       background-color: map.get($values, bg);
-      color: map.get($values, color);
+      color: map.get($values, text);
     }
 
     &_#{$stateName}.empty_state_outline {
       background-color: transparent;
       border: 2px solid map.get($values, bg);
-      color: map.get($values, text-color);
+      color: map.get($values, text);
 
       @include bp.down(sm) {
         border-width: 1.5px;
@@ -180,37 +189,21 @@ $icon-sizes: (
 
     @include bp.down(sm) {
       .empty_state_title {
-        font-size: clamp(
-          theme.$font-size-xs,
-          0.9rem + 0.2vw,
-          map.get($font-sizes, $size)
-        );
+        font-size: map.get($font-sizes, $size);
       }
 
       .empty_state_message {
-        font-size: clamp(
-          theme.$font-size-xxs,
-          0.85rem + 0.15vw,
-          map.get($font-sizes, $size)
-        );
+        font-size: map.get($font-sizes, $size);
       }
     }
 
     @include bp.up(lg) {
       .empty_state_title {
-        font-size: clamp(
-          map.get($font-sizes, $size),
-          1rem + 0.4vw,
-          theme.$font-size-xl
-        );
+        font-size: calc(#{map.get($font-sizes, $size)} * 1.05);
       }
 
       .empty_state_message {
-        font-size: clamp(
-          map.get($font-sizes, $size),
-          0.95rem + 0.25vw,
-          theme.$font-size-lg
-        );
+        font-size: calc(#{map.get($font-sizes, $size)} * 1.02);
       }
     }
   }

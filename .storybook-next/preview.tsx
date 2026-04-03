@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/nextjs";
+import type { Preview } from "@storybook/nextjs-vite";
 import ThemeProvider from "../src/context/ThemeContext";
 import "../src/styles/globals.scss";
 import { ThemeSelect } from "../src/index.next";

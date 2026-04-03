@@ -1,5 +1,5 @@
 import { RoundingType, ShadowType } from "@/types/types";
-import { JSX } from "react";
+import { AriaAttributes, HTMLAttributes, JSX } from "react";
 
 /**
  * Props for the SkeletonLoader component.
@@ -39,8 +39,46 @@ export interface SkeletonProps {
 
   /**
    * Accessibility label for screen readers.
+   * Used as fallback hidden descriptive text when announce is enabled.
    */
   label?: string;
+
+  /**
+   * Optional ARIA label for the skeleton.
+   * Preferred when you want to directly label the status region.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Optional ID reference to an external label element.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * Optional ID reference to additional descriptive content.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Overrides the default ARIA live politeness when announce is enabled.
+   */
+  "aria-live"?: "off" | "polite" | "assertive";
+
+  /**
+   * Overrides the default busy state.
+   */
+  "aria-busy"?: boolean;
+
+  /**
+   * Allows explicit control over whether the skeleton should be exposed to assistive technology.
+   */
+  "aria-hidden"?: boolean;
+
+  /**
+   * Optional semantic role override.
+   * Defaults to "status" when announce is enabled.
+   */
+  role?: HTMLAttributes<HTMLElement>["role"];
 }
 
 export interface SkeletonBaseProps extends SkeletonProps {
@@ -51,4 +89,4 @@ export type ExtraProps = {
   as?: keyof JSX.IntrinsicElements;
   announce?: boolean;
   animate?: boolean;
-};
+} & AriaAttributes;

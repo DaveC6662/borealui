@@ -8,6 +8,11 @@ const classes = {
   overlay: "modal_overlay",
   visible: "modal_visible",
   hidden: "modal_hidden",
+  header: "modal_header",
+  headerContent: "modal_header_content",
+  title: "modal_title",
+  body: "modal_body",
+  footer: "modal_footer",
   content: "modal_content",
   closeButton: "modal_close_button",
 

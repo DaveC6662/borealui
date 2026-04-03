@@ -4,24 +4,24 @@
 
 $sizes: (
   "xs": (
-    font: theme.$font-size-xs,
-    padding: theme.$spacing-xs,
+    font: var(--font-size-caption),
+    padding: var(--spacing-xs),
   ),
   "small": (
-    font: theme.$font-size-sm,
-    padding: theme.$spacing-sm,
+    font: var(--font-size-label),
+    padding: var(--spacing-sm),
   ),
   "medium": (
-    font: theme.$font-size-md,
-    padding: theme.$spacing-md,
+    font: var(--font-size-body-sm),
+    padding: var(--spacing-md),
   ),
   "large": (
-    font: theme.$font-size-base,
-    padding: theme.$spacing-lg,
+    font: var(--font-size-body),
+    padding: var(--spacing-lg),
   ),
   "xl": (
-    font: theme.$font-size-lg,
-    padding: theme.$spacing-lg,
+    font: var(--font-size-h6),
+    padding: var(--spacing-lg),
   ),
 );
 
@@ -39,9 +39,10 @@ $sizes: (
   justify-content: space-evenly;
   align-items: stretch;
   border-bottom: 2px solid var(--text-color-primary);
-  padding-bottom: theme.$spacing-sm;
-  gap: theme.$spacing-xxs;
+  padding-bottom: var(--spacing-sm);
+  gap: var(--spacing-xxs);
   background-color: transparent;
+  font-family: var(--font-family-ui);
 
   @include bp.down(xs) {
     flex-direction: column;
@@ -49,8 +50,19 @@ $sizes: (
 }
 
 .icon {
-  box-sizing: border-box;
-  margin-right: theme.$spacing-sm;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--spacing-sm);
+  line-height: 1;
+  flex-shrink: 0;
+  overflow: visible;
+  svg {
+    display: block;
+    width: 0.9em;
+    height: 0.9em;
+    overflow: visible;
+  }
 }
 
 .tab {
@@ -63,13 +75,16 @@ $sizes: (
   width: 100%;
   border: none;
   color: var(--text-color-primary);
-  font-weight: theme.$font-weight-bold;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
   cursor: pointer;
-  gap: theme.$spacing-xxs;
+  gap: var(--spacing-xxs);
   transition:
-    color theme.$transition-default,
+    color var(--transition-default),
     transform 0.2s ease-in-out;
-  line-height: 1;
   border-right: 0.5px solid var(--text-color-primary);
 
   &:hover {
@@ -83,13 +98,13 @@ $sizes: (
   }
 
   &:first-child {
-    border-top-left-radius: theme.$border-radius-md;
-    border-bottom-left-radius: theme.$border-radius-md;
+    border-top-left-radius: var(--border-radius-md);
+    border-bottom-left-radius: var(--border-radius-md);
   }
 
   &:last-child {
-    border-top-right-radius: theme.$border-radius-md;
-    border-bottom-right-radius: theme.$border-radius-md;
+    border-top-right-radius: var(--border-radius-md);
+    border-bottom-right-radius: var(--border-radius-md);
     border-right: none;
   }
 
@@ -99,14 +114,14 @@ $sizes: (
 
     &:first-child {
       border-radius: 0;
-      border-top-left-radius: theme.$border-radius-md;
-      border-top-right-radius: theme.$border-radius-md;
+      border-top-left-radius: var(--border-radius-md);
+      border-top-right-radius: var(--border-radius-md);
     }
 
     &:last-child {
       border-radius: 0;
-      border-bottom-left-radius: theme.$border-radius-md;
-      border-bottom-right-radius: theme.$border-radius-md;
+      border-bottom-left-radius: var(--border-radius-md);
+      border-bottom-right-radius: var(--border-radius-md);
       border-bottom: none;
     }
   }
@@ -122,9 +137,6 @@ $sizes: (
     }
   }
 }
-
-/* NOTE: Panel/content styles removed because Tabs no longer renders tabpanel content.
-   Put tabpanel styling in the parent/page instead. */
 
 @each $themeName, $vals in theme.$themes {
   .#{$themeName} {

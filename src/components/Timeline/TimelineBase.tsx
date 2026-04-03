@@ -13,13 +13,18 @@ const TimelineBase: React.FC<
 > = ({
   items,
   orientation = "vertical",
-  ariaLabel = "Timeline",
+  "aria-label": ariaLabel = "Timeline",
+  "aria-label": ariaLabelOverride,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  role = "list",
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   classMap,
   className,
   "data-testid": testId = "timeline",
+  ...rest
 }) => {
   const outerWrapper = useMemo(
     () =>
@@ -63,11 +68,23 @@ const TimelineBase: React.FC<
   const setSize = items.length;
 
   return (
-    <ul className={outerWrapper} data-testid={testId} aria-label={ariaLabel}>
+    <ul
+      className={outerWrapper}
+      data-testid={testId}
+      role={role}
+      aria-label={ariaLabelledBy ? undefined : (ariaLabelOverride ?? ariaLabel)}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
+      {...rest}
+    >
       {items.map((item, index) => {
         const IconComponent = item.icon;
         const itemTestId = `${testId}-item-${index}`;
         const labelId = `${itemTestId}-title`;
+        const descriptionId = item.description
+          ? `${itemTestId}-description`
+          : undefined;
+        const dateId = item.date ? `${itemTestId}-date` : undefined;
         const hasTitle = Boolean(item.title);
 
         let dateTimeAttr: string | undefined;
@@ -78,13 +95,18 @@ const TimelineBase: React.FC<
           }
         }
 
+        const describedBy =
+          [dateId, descriptionId].filter(Boolean).join(" ") || undefined;
+
         return (
           <li
             key={index}
+            role="listitem"
             className={itemClassName}
             data-testid={itemTestId}
             aria-labelledby={hasTitle ? labelId : undefined}
             aria-label={!hasTitle ? `Timeline item ${index + 1}` : undefined}
+            aria-describedby={describedBy}
             aria-posinset={index + 1}
             aria-setsize={setSize}
           >
@@ -99,13 +121,13 @@ const TimelineBase: React.FC<
                   data-testid={`${itemTestId}-icon`}
                   aria-hidden={true}
                 >
-                  <IconComponent aria-hidden="true" />
+                  <IconComponent aria-hidden={true} />
                 </div>
               ) : (
                 <div
                   className={classMap.dot}
                   data-testid={`${itemTestId}-dot`}
-                  aria-hidden="true"
+                  aria-hidden={true}
                 />
               )}
             </div>
@@ -115,19 +137,28 @@ const TimelineBase: React.FC<
               data-testid={`${itemTestId}-content`}
             >
               {hasTitle && (
-                <h3 id={labelId} className={classMap.title}>
+                <h3
+                  id={labelId}
+                  className={classMap.title}
+                  data-testid={`${itemTestId}-title`}
+                >
                   {item.title}
                 </h3>
               )}
 
               {item.date && (
-                <p className={classMap.date} data-testid={`${itemTestId}-date`}>
+                <p
+                  id={dateId}
+                  className={classMap.date}
+                  data-testid={`${itemTestId}-date`}
+                >
                   <time dateTime={dateTimeAttr}>{item.date}</time>
                 </p>
               )}
 
               {item.description && (
                 <p
+                  id={descriptionId}
                   className={classMap.description}
                   data-testid={`${itemTestId}-description`}
                 >

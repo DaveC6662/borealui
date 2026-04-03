@@ -17,9 +17,20 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
+const EMPTY_TAGS: string[] = [];
+
 const TagInputBase: React.FC<TagInputBaseProps> = ({
-  tags = [],
-  ariaLabel = "Tag Input",
+  tags = EMPTY_TAGS,
+  "aria-label": ariaLabel = "Tag Input",
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-description":
+    ariaDescription = "Type a tag and press Enter or comma to add. Use arrow keys to navigate suggestions; Enter to select; Escape to close. Backspace removes the last tag when the field is empty.",
+  inputAriaLabel = "Add new tag",
+  inputAriaLabelledBy,
+  inputAriaDescribedBy,
+  suggestionsAriaLabel = "Tag suggestions",
+  removeTagButtonLabel = "Remove tag",
   onChange,
   fetchSuggestions,
   debounceMs = 300,
@@ -29,35 +40,44 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
+  idBase,
   "data-testid": testId = "tag-input",
-  ariaDescription = "Type a tag and press Enter or comma to add. Use arrow keys to navigate suggestions; Enter to select; Escape to close. Backspace removes the last tag when the field is empty.",
   classMap,
   IconButton,
   TextInput,
 }) => {
   const uid = useId();
-  const inputId = `${testId}-input-${uid}`;
-  const descId = `${testId}-desc-${uid}`;
-  const labelId = `${testId}-label-${uid}`;
-  const listboxId = `${testId}-listbox-${uid}`;
-  const statusId = `${testId}-status-${uid}`;
+  const baseId = idBase || testId || `tag-input-${uid}`;
+
+  const inputId = `${baseId}-input`;
+  const descId = `${baseId}-desc`;
+  const labelId = `${baseId}-label`;
+  const listboxId = `${baseId}-listbox`;
+  const statusId = `${baseId}-status`;
 
   const [inputValue, setInputValue] = useState("");
-
   const [internalTags, setInternalTags] = useState<string[]>(tags);
-
-  useEffect(() => {
-    setInternalTags(tags);
-  }, [tags]);
-
-  const tagList = internalTags;
-
   const [lastAction, setLastAction] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setInternalTags((prev) => {
+      if (
+        prev.length === tags.length &&
+        prev.every((tag, index) => tag === tags[index])
+      ) {
+        return prev;
+      }
+
+      return tags;
+    });
+  }, [tags]);
+
+  const tagList = internalTags;
 
   const hasTag = (val: string) =>
     tagList.some((t) => t.toLowerCase() === val.toLowerCase());
@@ -66,8 +86,10 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
     if (!fetchSuggestions) {
       setSuggestions([]);
       setOpen(false);
+      setActiveIndex(-1);
       return;
     }
+
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
     const query = inputValue.trim();
@@ -104,6 +126,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   const addTag = (raw: string) => {
     const newTag = raw.trim();
     if (!newTag || hasTag(newTag)) return false;
+
     const updated = [...tagList, newTag];
     emitChange(updated);
     setLastAction(`Added tag ${newTag}.`);
@@ -131,6 +154,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
         setActiveIndex((i) => (i + 1) % suggestions.length);
         return;
       }
+
       if (key === "ArrowUp") {
         event.preventDefault();
         setActiveIndex(
@@ -138,22 +162,20 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
         );
         return;
       }
+
       if (key === "Enter") {
         event.preventDefault();
         const choice = suggestions[activeIndex];
         if (choice && addTag(choice)) {
           setInputValue("");
         }
-        setSuggestions([]);
-        setOpen(false);
-        setActiveIndex(-1);
+        clearSuggestions();
         return;
       }
+
       if (key === "Escape") {
         event.preventDefault();
-        setSuggestions([]);
-        setOpen(false);
-        setActiveIndex(-1);
+        clearSuggestions();
         return;
       }
     }
@@ -161,9 +183,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
     if (key === "Enter" || key === ",") {
       event.preventDefault();
       if (addTag(inputValue)) setInputValue("");
-      setSuggestions([]);
-      setOpen(false);
-      setActiveIndex(-1);
+      clearSuggestions();
       return;
     }
 
@@ -202,18 +222,29 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   const activeOptionId =
     open && activeIndex >= 0 ? `${listboxId}-opt-${activeIndex}` : undefined;
 
+  const groupDescribedBy = [descId, statusId, ariaDescribedBy]
+    .filter(Boolean)
+    .join(" ");
+
+  const inputDescribedBy = [descId, statusId, inputAriaDescribedBy]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div
       className={wrapperClass}
       role="group"
-      aria-labelledby={labelId}
-      aria-describedby={`${descId} ${statusId}`}
+      aria-label={ariaLabelledBy ? undefined : ariaLabel}
+      aria-labelledby={ariaLabelledBy || labelId}
+      aria-describedby={groupDescribedBy || undefined}
       data-testid={testId}
-      aria-label={ariaLabel}
     >
-      <label id={labelId} className="sr_only">
-        {ariaLabel}
-      </label>
+      {!ariaLabelledBy && (
+        <label id={labelId} className="sr_only">
+          {ariaLabel}
+        </label>
+      )}
+
       <div
         id={descId}
         className="sr_only"
@@ -233,12 +264,12 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
             <span className={classMap.tagLabel}>{tag}</span>
             <IconButton
               type="button"
-              ariaLabel={`Remove tag ${tag}`}
+              aria-label={`${removeTagButtonLabel} ${tag}`}
               className={classMap.removeButton}
               onClick={() => removeTag(tag)}
               data-testid={`${testId}-remove-${index}`}
               icon={CloseIcon}
-              size="small"
+              size="xs"
               theme="clear"
               shadow="none"
               iconClassName={classMap.removeButtonIcon}
@@ -267,8 +298,9 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
           aria-expanded={open}
           aria-controls={listboxId}
           aria-activedescendant={activeOptionId}
-          aria-label="Add new tag"
-          aria-describedby={`${descId} ${statusId}`}
+          aria-label={inputAriaLabelledBy ? undefined : inputAriaLabel}
+          aria-labelledby={inputAriaLabelledBy}
+          aria-describedby={inputDescribedBy || undefined}
           data-testid={`${testId}-input`}
         />
       </div>
@@ -278,7 +310,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
           className={classMap.suggestionList}
           role="listbox"
           id={listboxId}
-          aria-label="Tag suggestions"
+          aria-label={suggestionsAriaLabel}
           data-testid={`${testId}-suggestions`}
         >
           {suggestions.map((suggestion, index) => (

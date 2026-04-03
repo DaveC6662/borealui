@@ -19,6 +19,10 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   name,
   required = false,
   disabled = false,
+  readOnly = false,
+  placeholder,
+  autoComplete = "off",
+  title,
   size = getDefaultSize(),
   outline,
   theme = getDefaultTheme(),
@@ -31,13 +35,30 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   error,
   description,
   id,
+  labelId,
+  descriptionId,
+  errorId,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-errormessage": ariaErrorMessage,
+  "aria-invalid": ariaInvalid,
+  "aria-required": ariaRequired,
+  pickerButtonAriaLabel,
+  pickerButtonAriaLabelledBy,
+  pickerButtonAriaDescribedBy,
+  pickerButtonTitle,
+  inputProps,
+  buttonProps,
 }) => {
   const generatedId = useId();
   const inputId = id || generatedId;
-  const inputRef = useRef<HTMLInputElement>(null);
+  const computedLabelId = labelId || (label ? `${inputId}-label` : undefined);
+  const computedDescriptionId =
+    descriptionId || (description ? `${inputId}-description` : undefined);
+  const computedErrorId = errorId || (error ? `${inputId}-error` : undefined);
 
-  const descriptionId = description ? `${inputId}-description` : undefined;
-  const errorId = error ? `${inputId}-error` : undefined;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const invalidRange = min && max ? min > max : false;
   const outOfBounds = value
@@ -46,9 +67,13 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
 
   const openPicker = () => {
     const el = inputRef.current;
-    if (!el) return;
-    if (typeof el.showPicker === "function") el.showPicker();
-    else el.focus();
+    if (!el || disabled || readOnly) return;
+
+    if (typeof el.showPicker === "function") {
+      el.showPicker();
+    } else {
+      el.focus();
+    }
   };
 
   const pickerClass = useMemo(
@@ -62,7 +87,8 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
         rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
         disabled && classMap.disabled,
-        className
+        readOnly && classMap.readOnly,
+        className,
       ),
     [
       classMap,
@@ -73,24 +99,49 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
       rounding,
       outline,
       disabled,
+      readOnly,
       className,
-    ]
+    ],
   );
 
-  const describedBy =
-    [descriptionId, errorId].filter(Boolean).join(" ") || undefined;
+  const mergedDescribedBy =
+    [ariaDescribedBy, computedDescriptionId, computedErrorId]
+      .filter(Boolean)
+      .join(" ") || undefined;
+
+  const resolvedAriaInvalid =
+    (ariaInvalid ?? Boolean(error || invalidRange || outOfBounds)) || undefined;
+
+  const resolvedAriaRequired = (ariaRequired ?? required) || undefined;
+
+  const resolvedAriaLabel =
+    ariaLabel || (!label && !ariaLabelledBy ? "Date and time" : undefined);
+
+  const resolvedAriaLabelledBy =
+    ariaLabelledBy ||
+    (!ariaLabel && computedLabelId ? computedLabelId : undefined);
+
+  const resolvedAriaErrorMessage =
+    ariaErrorMessage || (error ? computedErrorId : undefined);
 
   return (
     <div className={pickerClass} data-testid={testId}>
       {label && (
-        <label htmlFor={inputId} className={classMap.label}>
-          {label} {required && <span aria-hidden="true">*</span>}
+        <label
+          id={computedLabelId}
+          htmlFor={inputId}
+          className={classMap.label}
+          data-testid={`${testId}-label`}
+        >
+          {label}
+          {required && <span aria-hidden="true"> *</span>}
         </label>
       )}
 
       <div className={classMap.inputWrapper}>
         <input
           id={inputId}
+          ref={inputRef}
           type="datetime-local"
           className={classMap.input}
           value={value}
@@ -98,44 +149,66 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
           min={min}
           max={max}
           name={name}
-          ref={inputRef}
           required={required}
           disabled={disabled}
-          aria-invalid={
-            Boolean(error) || invalidRange || outOfBounds || undefined
-          }
-          aria-describedby={describedBy}
-          aria-errormessage={error ? errorId : undefined}
-          aria-label={label || "Date and time"}
+          readOnly={readOnly}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
+          title={title}
+          aria-label={resolvedAriaLabel}
+          aria-labelledby={resolvedAriaLabelledBy}
+          aria-describedby={mergedDescribedBy}
+          aria-errormessage={resolvedAriaErrorMessage}
+          aria-invalid={resolvedAriaInvalid}
+          aria-required={resolvedAriaRequired}
           data-testid={`${testId}-input`}
-          autoComplete="off"
+          {...inputProps}
         />
 
         <button
           type="button"
           className={classMap.icon}
           onClick={openPicker}
-          disabled={disabled}
-          aria-label="Open date and time picker"
+          disabled={disabled || readOnly}
+          aria-label={pickerButtonAriaLabel || "Open date and time picker"}
+          aria-labelledby={pickerButtonAriaLabelledBy}
+          aria-describedby={pickerButtonAriaDescribedBy}
+          title={
+            pickerButtonTitle ||
+            pickerButtonAriaLabel ||
+            "Open date and time picker"
+          }
           data-testid={`${testId}-button`}
+          {...buttonProps}
         >
-          <CalendarIcon />
+          <CalendarIcon aria-hidden={true} focusable={false} />
         </button>
       </div>
 
       {description && !error && (
-        <p id={descriptionId} className={classMap.description}>
+        <p
+          id={computedDescriptionId}
+          className={classMap.description}
+          data-testid={`${testId}-description`}
+        >
           {description}
         </p>
       )}
 
       {error && (
-        <p id={errorId} className={classMap.error} role="alert">
+        <p
+          id={computedErrorId}
+          className={classMap.error}
+          role="alert"
+          data-testid={`${testId}-error`}
+        >
           {error}
         </p>
       )}
     </div>
   );
 };
+
 DateTimePickerBase.displayName = "DateTimePickerBase";
+
 export default DateTimePickerBase;

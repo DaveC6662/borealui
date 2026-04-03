@@ -1,6 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .nav {
@@ -12,8 +12,9 @@
   left: 10px;
   gap: 10px;
   background-color: transparent;
-  transition: theme.$transition-default;
+  transition: var(--transition-default);
   z-index: 1001;
+  font-family: var(--font-family-ui);
 
   a {
     text-decoration: none;
@@ -36,7 +37,7 @@
     transform: translateX(-50%);
     flex-direction: row;
     justify-content: center;
-    gap: theme.$spacing-sm;
+    gap: var(--spacing-sm);
   }
 
   &_list {
@@ -53,7 +54,8 @@
       transform: translateX(-50%);
       flex-direction: row;
       justify-content: center;
-      gap: theme.$spacing-sm;
+      padding: 0px;
+      gap: var(--spacing-sm);
       top: 0;
       left: 50%;
     }
@@ -70,7 +72,7 @@
     color: var(--text-color-primary);
     text-decoration: none;
     cursor: pointer;
-    transition: theme.$transition-default;
+    transition: var(--transition-default);
 
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
@@ -113,7 +115,11 @@
   }
 
   &_label {
-    font-size: theme.$font-size-sm;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
     margin-top: 5px;
     display: none;
     transition: opacity 0.5s ease-in-out;
@@ -127,7 +133,7 @@
 @each $name, $values in theme.$themes {
   .nav_#{$name} .nav_item {
     background-color: map.get($values, bg);
-    color: var(--text-color-primary);
+    color: map.get($values, text);
 
     &:hover {
       background-color: map.get($values, hover);
@@ -141,8 +147,8 @@
 
   .nav_#{$name} .nav_active {
     background-color: map.get($values, bg-light);
-    color: var(--secondary-color-darker);
-    font-weight: bold;
+    color: map.get($values, text);
+    font-weight: var(--font-weight-label);
   }
 }
 

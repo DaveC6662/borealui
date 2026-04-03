@@ -5,13 +5,13 @@ import { ProgressBarProps } from "../ProgressBar.types";
 
 const classes = {
   layout: "progress_layout",
-  title: "progress_title",
+  label: "progress_label",
 
-  titleTop: "progress_title_top",
-  titleBottom: "progress_title_bottom",
-  titleLeft: "progress_title_left",
-  titleRight: "progress_title_right",
-  titleOverlay: "progress_title_overlay",
+  labelTop: "progress_label_top",
+  labelBottom: "progress_label_bottom",
+  labelLeft: "progress_label_left",
+  labelRight: "progress_label_right",
+  labelOverlay: "progress_label_overlay",
   container: "progress_container",
   bar: "progress_bar",
 

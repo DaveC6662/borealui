@@ -1,6 +1,5 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
 @use "sass:map";
 
 $swatch-sizes: (
@@ -13,11 +12,16 @@ $swatch-sizes: (
 
 .color_picker {
   border: none;
-  padding: theme.$spacing-sm;
+  padding: var(--spacing-sm);
   display: flex;
   flex-direction: column;
-  gap: theme.$spacing-xs;
+  gap: var(--spacing-xs);
   width: fit-content;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
 
   &:disabled {
     opacity: 0.5;
@@ -25,41 +29,44 @@ $swatch-sizes: (
   }
 
   @include bp.down(sm) {
-    padding: theme.$spacing-xs;
-    gap: theme.$spacing-xxs;
+    padding: var(--spacing-xs);
+    gap: var(--spacing-xxs);
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-md;
-    gap: theme.$spacing-sm;
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
   }
 }
 
 .legend {
-  font-size: theme.$font-size-sm;
-  font-weight: theme.$font-weight-bold;
-  margin-bottom: theme.$spacing-xs;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  margin-bottom: var(--spacing-xs);
 
   @include bp.down(sm) {
-    font-size: theme.$font-size-xs;
+    font-size: var(--font-size-caption);
   }
 
   @include bp.up(lg) {
-    font-size: theme.$font-size-md;
+    font-size: var(--font-size-body-sm);
   }
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-  gap: theme.$spacing-xs;
+  gap: var(--spacing-xs);
 
   @include bp.down(sm) {
-    gap: theme.$spacing-xxs;
+    gap: var(--spacing-xxs);
   }
 
   @include bp.up(lg) {
-    gap: theme.$spacing-sm;
+    gap: var(--spacing-sm);
   }
 }
 
@@ -76,7 +83,7 @@ $swatch-sizes: (
   margin: 0 1px;
   cursor: pointer;
   outline: 2px solid transparent;
-  transition: outline-color 0.2s ease-in-out;
+  transition: outline-color var(--transition-default);
   box-sizing: border-box;
 
   &:hover {
@@ -132,15 +139,15 @@ $swatch-sizes: (
 }
 
 .custom_input {
-  margin-top: theme.$spacing-xs;
+  margin-top: var(--spacing-xs);
   width: 100%;
 
   @include bp.down(sm) {
-    margin-top: theme.$spacing-xxs;
+    margin-top: var(--spacing-xxs);
   }
 
   @include bp.up(lg) {
-    margin-top: theme.$spacing-sm;
+    margin-top: var(--spacing-sm);
   }
 }
 

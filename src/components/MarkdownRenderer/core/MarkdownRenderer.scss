@@ -1,23 +1,26 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/globals";
+@use "../../../styles/_animations";
 @use "sass:map";
 
 .markdown {
-  font-family: Inter, sans-serif;
-  line-height: 1.6;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   color: var(--text-color-primary);
   border: 1px solid var(--text-color-primary);
-  padding: theme.$spacing-md;
+  padding: var(--spacing-md);
   overflow-x: auto;
 
   @include bp.down(sm) {
-    padding: theme.$spacing-sm;
+    padding: var(--spacing-sm);
     border-width: 1.5px;
   }
 
   @include bp.up(lg) {
-    padding: theme.$spacing-lg;
+    padding: var(--spacing-lg);
   }
 
   @each $key, $value in theme.$rounding {
@@ -36,69 +39,88 @@
   h2,
   h3,
   h4 {
-    margin-top: theme.$spacing-lg;
-    margin-bottom: theme.$spacing-sm;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
     color: var(--text-color-primary);
-    line-height: 1.25;
+    font-family: var(--font-family-heading);
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
   }
 
   h1 {
-    font-size: clamp(theme.$font-size-xl, 1.1rem + 1.5vw, theme.$font-size-xxl);
+    font-size: clamp(var(--font-size-h2), 1.1rem + 1.5vw, var(--font-size-h1));
+    font-weight: var(--font-weight-h1);
   }
 
   h2 {
-    font-size: clamp(theme.$font-size-lg, 1.05rem + 1vw, theme.$font-size-xl);
+    font-size: clamp(var(--font-size-h3), 1.05rem + 1vw, var(--font-size-h2));
+    font-weight: var(--font-weight-h2);
   }
 
   h3 {
-    font-size: clamp(theme.$font-size-base, 1rem + 0.6vw, theme.$font-size-lg);
+    font-size: clamp(var(--font-size-h4), 1rem + 0.6vw, var(--font-size-h3));
+    font-weight: var(--font-weight-h3);
   }
 
   h4 {
-    font-size: clamp(
-      theme.$font-size-sm,
-      0.95rem + 0.3vw,
-      theme.$font-size-base
-    );
+    font-size: clamp(var(--font-size-h6), 0.95rem + 0.3vw, var(--font-size-h5));
+    font-weight: var(--font-weight-h4);
   }
 
   p {
-    margin: theme.$spacing-xs 0;
+    margin: var(--spacing-xs) 0;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
 
     @include bp.down(sm) {
-      font-size: theme.$font-size-sm;
+      font-size: var(--font-size-body-sm);
     }
 
     @include bp.up(lg) {
-      font-size: theme.$font-size-base;
+      font-size: var(--font-size-body);
     }
   }
 
-  em,
+  em {
+    font-style: italic;
+  }
+
   strong {
-    font-weight: bold;
+    font-weight: var(--font-weight-bold);
   }
 
   ul,
   ol {
-    margin: theme.$spacing-md 0;
-    padding-left: theme.$spacing-lg;
+    margin: var(--spacing-md) 0;
+    padding-left: var(--spacing-lg);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
 
     @include bp.down(sm) {
-      padding-left: theme.$spacing-md;
+      padding-left: var(--spacing-md);
+      font-size: var(--font-size-body-sm);
     }
 
     @include bp.up(lg) {
-      padding-left: calc(theme.$spacing-lg * 1.1);
+      padding-left: calc(var(--spacing-lg) * 1.1);
     }
+  }
+
+  li {
+    margin-bottom: var(--spacing-xxs);
   }
 
   code {
     background-color: var(--background-color-dark);
     color: var(--text-color-primary);
     padding: 0.2rem 0.4rem;
-    border-radius: theme.$border-radius-xs;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    border-radius: var(--border-radius-xs);
+    font-family: var(--font-family-mono);
     font-size: 0.95em;
     word-break: break-word;
   }
@@ -106,18 +128,18 @@
   pre {
     background: #1e1e1e;
     color: #f4f4f4;
-    padding: theme.$spacing-md;
+    padding: var(--spacing-md);
     overflow-x: auto;
-    border-radius: theme.$border-radius-sm;
-    margin: theme.$spacing-md 0;
+    border-radius: var(--border-radius-sm);
+    margin: var(--spacing-md) 0;
     line-height: 1.45;
 
     @include bp.down(sm) {
-      padding: theme.$spacing-sm;
+      padding: var(--spacing-sm);
     }
 
     @include bp.up(lg) {
-      padding: theme.$spacing-lg;
+      padding: var(--spacing-lg);
     }
 
     code {
@@ -125,19 +147,25 @@
       color: inherit;
       padding: 0;
       font-size: 0.95em;
+      font-family: var(--font-family-mono);
     }
   }
 
   blockquote {
-    margin: theme.$spacing-md 0;
-    padding-left: theme.$spacing-md;
+    margin: var(--spacing-md) 0;
+    padding-left: var(--spacing-md);
     border-left: 4px solid var(--primary-color);
-    color: var(--text-color-primary-light);
+    color: var(--text-color-light);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
     font-style: italic;
 
     @include bp.down(sm) {
       border-left-width: 3px;
-      padding-left: theme.$spacing-sm;
+      padding-left: var(--spacing-sm);
+      font-size: var(--font-size-body-sm);
     }
 
     @include bp.up(lg) {
@@ -174,18 +202,33 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: theme.$spacing-md 0;
+    margin: var(--spacing-md) 0;
     overflow: hidden;
 
     th,
     td {
-      padding: theme.$spacing-xs theme.$spacing-sm;
+      padding: var(--spacing-xs) var(--spacing-sm);
       border-bottom: 1px solid var(--text-color-primary);
       text-align: left;
     }
 
+    th {
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+    }
+
+    td {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+    }
+
     thead th {
-      font-weight: theme.$font-weight-bold;
       background: var(--background-color);
     }
 

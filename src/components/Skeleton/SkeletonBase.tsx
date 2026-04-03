@@ -19,9 +19,19 @@ const SkeletonBase: React.FC<SkeletonBaseProps & ExtraProps> = ({
   as: Tag = "div",
   "data-testid": testId = "skeleton-loader",
   classMap,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-live": ariaLive,
+  "aria-busy": ariaBusy,
+  "aria-hidden": ariaHidden,
+  role,
+
   ...rest
 }) => {
   const descriptionId = `${testId}-desc`;
+
+  const shouldAnnounce = announce && ariaHidden !== true;
 
   const skeletonClasses = useMemo(
     () =>
@@ -30,30 +40,53 @@ const SkeletonBase: React.FC<SkeletonBaseProps & ExtraProps> = ({
         animate && classMap.animated,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
-        className
+        className,
       ),
-    [classMap, animate, shadow, rounding, className, announce]
+    [classMap, animate, shadow, rounding, className],
   );
 
-  const ariaProps = announce
-    ? {
-        role: "status" as const,
-        "aria-busy": true,
-        "aria-live": "polite" as const,
-        "aria-relevant": "additions text" as const,
-        "aria-describedby": descriptionId,
-      }
-    : { "aria-hidden": true as const };
+  const computedAriaDescribedBy = shouldAnnounce
+    ? [
+        ariaDescribedBy,
+        !ariaLabel && !ariaLabelledBy ? descriptionId : undefined,
+      ]
+        .filter(Boolean)
+        .join(" ") || undefined
+    : undefined;
+
+  const accessibilityProps =
+    ariaHidden === true
+      ? {
+          "aria-hidden": true as const,
+        }
+      : shouldAnnounce
+        ? {
+            role: role ?? ("status" as const),
+            "aria-busy": ariaBusy ?? true,
+            "aria-live": ariaLive ?? ("polite" as const),
+            "aria-relevant": "additions text" as const,
+            "aria-label": ariaLabel,
+            "aria-labelledby": ariaLabelledBy,
+            "aria-describedby": computedAriaDescribedBy,
+          }
+        : {
+            "aria-hidden": false,
+            role,
+            "aria-label": ariaLabel,
+            "aria-labelledby": ariaLabelledBy,
+            "aria-describedby": ariaDescribedBy,
+            "aria-busy": ariaBusy,
+          };
 
   return (
     <Tag
       className={skeletonClasses}
       style={{ width, height }}
       data-testid={testId}
-      {...ariaProps}
+      {...accessibilityProps}
       {...rest}
     >
-      {announce && (
+      {shouldAnnounce && !ariaLabel && !ariaLabelledBy && (
         <span
           id={descriptionId}
           className="sr_only"

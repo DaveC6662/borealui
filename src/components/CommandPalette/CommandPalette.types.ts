@@ -1,22 +1,50 @@
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
-import { ReactNode } from "react";
+import type { AriaAttributes, HTMLAttributes, ReactNode } from "react";
 
 /**
  * Represents an individual command in the command palette.
  */
 export interface CommandItem {
+  /** Unique identifier for the command. Useful for accessibility and selection state. */
+  id?: string;
+
   /** Display label for the command. */
   label: string;
+
   /** Function to call when the command is selected. */
   action: () => void;
+
   /** Optional icon to display alongside the command label. */
   icon?: ReactNode;
+
+  /** Optional accessible label override for the command item. */
+  "aria-label"?: string;
+
+  /** Optional accessible description for the command item. */
+  "aria-description"?: string;
+
+  /** Whether the command is disabled. */
+  disabled?: boolean;
+
+  /** Optional keywords to improve search/filtering. */
+  keywords?: string[];
 }
 
 /**
  * Props for the CommandPalette component.
  */
-export interface CommandPaletteProps {
+export interface CommandPaletteProps
+  extends
+    Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "children">,
+    Pick<
+      AriaAttributes,
+      | "aria-label"
+      | "aria-labelledby"
+      | "aria-describedby"
+      | "aria-controls"
+      | "aria-expanded"
+      | "aria-activedescendant"
+    > {
   /** Array of available command options. */
   commands: CommandItem[];
 
@@ -61,6 +89,45 @@ export interface CommandPaletteProps {
 
   /** Optional debounce time (in ms) for the search input. */
   debounceMs?: number;
+
+  /** Accessible label for the search input. */
+  inputAriaLabel?: string;
+
+  /** Accessible label reference for the search input. */
+  inputAriaLabelledBy?: string;
+
+  /** Accessible description reference for the search input. */
+  inputAriaDescribedBy?: string;
+
+  /** Optional visible or screen-reader-only label for the input. */
+  inputLabel?: string;
+
+  /** Optional ID for the input element. */
+  inputId?: string;
+
+  /** Optional ID for the listbox element. */
+  listboxId?: string;
+
+  /** Optional ID for the palette container/dialog. */
+  paletteId?: string;
+
+  /** Accessible label for the command results list. */
+  listAriaLabel?: string;
+
+  /** Message announced when there are no matching commands. */
+  emptyMessage?: string;
+
+  /** Accessible live region message prefix for result count updates. */
+  resultsAnnouncement?: string;
+
+  /** Whether the palette should behave like a modal dialog for assistive tech. */
+  modal?: boolean;
+
+  /** Whether focus should be trapped while the palette is open. */
+  trapFocus?: boolean;
+
+  /** Whether focus should return to the trigger element on close. */
+  restoreFocusOnClose?: boolean;
 
   /** Optional test ID for testing frameworks. */
   "data-testid"?: string;

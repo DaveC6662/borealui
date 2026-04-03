@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs";
-import { Progressbar } from "../src/index.next";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import {
+  Progressbar,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.next";
 import type { ProgressBarProps } from "../src/components/ProgressBar/ProgressBar.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -11,10 +17,22 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large", "full"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = [
+  "none",
+  "small",
+  "medium",
+  "large",
+  "full",
+];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<ProgressBarProps> = {
   title: "Components/ProgressBar",
@@ -25,95 +43,6 @@ const meta: Meta<ProgressBarProps> = {
     size: "medium",
     animated: true,
   },
-  argTypes: {
-    progress: {
-      control: { type: "number", min: 0, max: 100, step: 1 },
-      description: "Current progress value as a percentage (0–100).",
-      table: { category: "Value", defaultValue: { summary: "0" } },
-      type: { name: "number" },
-    },
-    theme: {
-      control: { type: "select" },
-      options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
-      description: "Theme color variant.",
-      table: { category: "Appearance", defaultValue: { summary: "primary" } },
-      type: { name: "string" },
-    },
-    state: {
-      control: { type: "select" },
-      options: ["", "success", "error", "warning"],
-      description: "Optional state variant for emphasis.",
-      table: { category: "Appearance" },
-      type: { name: "string" },
-    },
-    size: {
-      control: { type: "select" },
-      options: ["xs", "small", "medium", "large", "xl"],
-      description: "Height and thickness of the progress bar.",
-      table: { category: "Appearance", defaultValue: { summary: "medium" } },
-      type: { name: "string" },
-    },
-    rounding: {
-      control: { type: "select" },
-      options: ["none", "small", "medium", "large"],
-      description: "Border radius for the progress bar.",
-      table: { category: "Appearance", defaultValue: { summary: "none" } },
-      type: { name: "string" },
-    },
-    shadow: {
-      control: { type: "select" },
-      options: ["none", "light", "medium", "strong", "intense"],
-      description: "Box shadow for the progress bar.",
-      table: { category: "Appearance", defaultValue: { summary: "none" } },
-      type: { name: "string" },
-    },
-    animated: {
-      control: "boolean",
-      description: "If true, progress changes are smoothly animated.",
-      table: { category: "Behavior", defaultValue: { summary: "true" } },
-      type: { name: "boolean" },
-    },
-    indeterminate: {
-      control: "boolean",
-      description: "If true, shows an indeterminate loading animation.",
-      table: { category: "Behavior", defaultValue: { summary: "false" } },
-      type: { name: "boolean" },
-    },
-    ariaLabel: {
-      control: "text",
-      description: "Accessible label for screen readers.",
-      table: {
-        category: "Accessibility",
-        defaultValue: { summary: "Progress" },
-      },
-      type: { name: "string" },
-    },
-    title: {
-      control: "text",
-      description: "Optional title describing what the progress represents.",
-      table: { category: "Content" },
-      type: { name: "string" },
-    },
-    titlePosition: {
-      control: { type: "select" },
-      options: ["top", "bottom", "left", "right", "overlay"],
-      description: "Position of the title relative to the progress bar.",
-      table: { category: "Content", defaultValue: { summary: "top" } },
-      type: { name: "string" },
-    },
-    className: {
-      control: "text",
-      description: "Custom class name for the progress bar container.",
-      table: { category: "Advanced" },
-      type: { name: "string" },
-    },
-    "data-testid": {
-      control: "text",
-      description: "Test id for querying the component in tests.",
-      type: { name: "string" },
-      table: { category: "Testing" },
-    },
-  },
 };
 
 export default meta;
@@ -122,7 +51,7 @@ type Story = StoryObj<ProgressBarProps>;
 
 export const Default: Story = {
   args: {
-    progress: 65,
+    value: 65,
   },
 };
 
@@ -134,27 +63,27 @@ export const Indeterminate: Story = {
 
 export const StaticBar: Story = {
   args: {
-    progress: 45,
+    value: 45,
     animated: false,
   },
 };
 
-export const TitlePositions: Story = {
+export const LabelPositions: Story = {
   render: (args) => {
-    const positions = ["top", "bottom", "left", "right", "overlay"] as const;
+    const positions = ["top", "bottom", "left", "right"] as const;
 
     return (
       <div style={{ display: "grid", gap: "1rem", maxWidth: "560px" }}>
         {positions.map((pos) => (
           <div key={pos} style={{ display: "grid", gap: "0.5rem" }}>
             <div style={{ fontSize: "0.9rem", opacity: 0.8 }}>
-              Title Position: <strong>{pos}</strong>
+              Label Position: <strong>{pos}</strong>
             </div>
             <Progressbar
               {...args}
-              progress={72}
-              title={`Build ${72}%`}
-              titlePosition={pos}
+              value={72}
+              label={`Build ${72}%`}
+              labelPosition={pos}
             />
           </div>
         ))}
@@ -173,9 +102,9 @@ export const SizeVariants: Story = {
           <div key={size}>
             <Progressbar
               {...args}
-              title={size.charAt(0).toUpperCase() + size.slice(1)}
-              progress={40 + sizes.indexOf(size) * 20}
+              value={40 + sizes.indexOf(size) * 20}
               size={size}
+              label={size.charAt(0).toUpperCase() + size.slice(1)}
             />
           </div>
         ))}
@@ -192,9 +121,9 @@ export const ThemedVariants: Story = {
           <div key={theme}>
             <Progressbar
               {...args}
-              progress={20 + themeOptions.indexOf(theme) * 15}
+              value={20 + themeOptions.indexOf(theme) * 15}
               theme={theme}
-              title={theme.charAt(0).toUpperCase() + theme.slice(1)}
+              label={theme.charAt(0).toUpperCase() + theme.slice(1)}
             />
           </div>
         ))}
@@ -207,13 +136,13 @@ export const StateVariants: Story = {
   render: (args) => {
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {stateOptions.map((theme) => (
-          <div key={theme}>
+        {stateOptions.map((state) => (
+          <div key={state}>
             <Progressbar
               {...args}
-              progress={20 + stateOptions.indexOf(theme) * 15}
-              theme={theme}
-              title={theme.charAt(0).toUpperCase() + theme.slice(1)}
+              value={20 + stateOptions.indexOf(state) * 15}
+              state={state}
+              label={state.charAt(0).toUpperCase() + state.slice(1)}
             />
           </div>
         ))}
@@ -237,8 +166,8 @@ export const LiveProgress: Story = {
       <div style={{ maxWidth: "500px" }}>
         <Progressbar
           {...args}
-          progress={progress}
-          title={`Live Updating Progress: ${progress}%`}
+          value={progress}
+          label={`Live Updating Progress: ${progress}%`}
         />
       </div>
     );
@@ -253,9 +182,9 @@ export const RoundingVariants: Story = {
           <div key={rounding}>
             <Progressbar
               {...args}
-              progress={20 + stateOptions.indexOf(rounding) * 15}
+              value={20 + roundingOptions.indexOf(rounding) * 15}
               rounding={rounding}
-              title={rounding.charAt(0).toUpperCase() + rounding.slice(1)}
+              label={rounding.charAt(0).toUpperCase() + rounding.slice(1)}
             />
           </div>
         ))}
@@ -272,9 +201,9 @@ export const ShadowVariants: Story = {
           <div key={shadow}>
             <Progressbar
               {...args}
-              progress={20 + stateOptions.indexOf(shadow) * 15}
+              value={20 + shadowOptions.indexOf(shadow) * 15}
               shadow={shadow}
-              title={shadow.charAt(0).toUpperCase() + shadow.slice(1)}
+              label={shadow.charAt(0).toUpperCase() + shadow.slice(1)}
             />
           </div>
         ))}

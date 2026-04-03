@@ -1,33 +1,42 @@
 import {
+  LabelPositionType,
   RoundingType,
   ShadowType,
   StateType,
   ThemeType,
-  TitlePositionType,
 } from "@/types/types";
-import { ComponentType, InputHTMLAttributes } from "react";
+import { ComponentType, InputHTMLAttributes, ReactNode } from "react";
 import { IconButtonProps } from "../IconButton/IconButton.types";
+
+/**
+ * Native input props that we want to inherit while still controlling
+ * certain custom behaviors in this component.
+ */
+type NativeInputProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "size"
+>;
 
 /**
  * Props for the TextInput component.
  */
-export interface TextInputProps extends Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  "onChange"
-> {
+export interface TextInputProps extends NativeInputProps {
   /**
    * Called when the input value changes.
-   * Receives the current string value.
+   * Returns both the current value and the original change event.
    */
-  onChange?: (value: string) => void;
+  onChange?: (
+    value: string,
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => void;
 
   /**
-   * Optional icon component to display on the left side of the input.
+   * Optional icon component displayed beside the input.
    */
-  icon?: ComponentType;
+  icon?: ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
 
   /**
-   * If true, the input is for password data and will include a password visibility toggle.
+   * If true, the input behaves as a password field and shows a visibility toggle.
    */
   password?: boolean;
 
@@ -42,14 +51,15 @@ export interface TextInputProps extends Omit<
   readOnly?: boolean;
 
   /**
-   * Accessible label for the input (overrides placeholder when provided).
+   * Optional visible label/title for the input.
    */
-  ariaLabel?: string;
+  label?: string;
 
   /**
-   * Description to be read by screen readers, rendered as a visually hidden text.
+   * Position of the label.
+   * "top" | "left" | "right" | "bottom"
    */
-  ariaDescription?: string;
+  labelPosition?: LabelPositionType;
 
   /**
    * Theme used for styling.
@@ -60,7 +70,6 @@ export interface TextInputProps extends Omit<
   /**
    * State of the input.
    * "success" | "error" | "warning" | "disabled" | ""
-   * "success" (valid input), "error" (invalid input), "warning" (check input).
    */
   state?: StateType;
 
@@ -83,27 +92,94 @@ export interface TextInputProps extends Omit<
 
   /**
    * Controls whether autocomplete is enabled.
-   * Pass `true` to enable ("on") or `false` to disable ("off")
+   * Pass true for "on" or false for "off".
    */
   autocomplete?: boolean;
-
-  /**
-   * Optional visible label/title for the input.
-   */
-  title?: string;
-
-  /**
-   * Position of the title/label.
-   * - "top": label above input
-   * - "inline": label inside container (left)
-   * - "floating": material-style floating label
-   */
-  titlePosition?: TitlePositionType;
 
   /**
    * Maximum length of the input.
    */
   maxLength?: number;
+
+  /**
+   * Explicit accessible label for the outer field region if needed.
+   */
+  "aria-label"?: string;
+
+  /**
+   * References one or more elements that label the input.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * References one or more elements that describe the input.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Indicates whether the input has an invalid value.
+   */
+  "aria-invalid"?: boolean | "true" | "false" | "grammar" | "spelling";
+
+  /**
+   * Indicates whether user input is required.
+   */
+  "aria-required"?: boolean;
+
+  /**
+   * Indicates whether the input is read-only to assistive technologies.
+   */
+  "aria-readonly"?: boolean;
+
+  /**
+   * Indicates whether the element is disabled to assistive technologies.
+   */
+  "aria-disabled"?: boolean;
+
+  /**
+   * Provides a short hint to assistive technologies.
+   */
+  "aria-description"?: string;
+
+  /**
+   * Identifies the current autocomplete suggestion in custom combobox patterns.
+   */
+  "aria-activedescendant"?: string;
+
+  /**
+   * Indicates whether a popup such as a listbox, grid, or dialog is available.
+   */
+  "aria-haspopup"?:
+    | boolean
+    | "false"
+    | "true"
+    | "menu"
+    | "listbox"
+    | "tree"
+    | "grid"
+    | "dialog";
+
+  /**
+   * Indicates whether the input controls an expandable popup.
+   */
+  "aria-expanded"?: boolean;
+
+  /**
+   * Identifies the element controlled by this input.
+   */
+  "aria-controls"?: string;
+
+  /**
+   * Declares the role when this input is used in advanced patterns
+   * such as searchbox, combobox, or spinbutton.
+   */
+  role?: React.AriaRole;
+
+  /**
+   * Optional content rendered for assistive technologies only.
+   * Useful for dynamic status or extra context.
+   */
+  srOnlyText?: ReactNode;
 
   /**
    * Optional test ID for testing frameworks.

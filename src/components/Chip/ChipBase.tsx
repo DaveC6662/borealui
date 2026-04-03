@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { ChipBaseProps } from "./Chip.types";
 import { combineClassNames } from "../../utils/classNames";
@@ -16,6 +16,8 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   visible,
   onClose,
   icon: Icon,
+  iconDecorative = true,
+  iconAriaLabel,
   size = getDefaultSize(),
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
@@ -30,9 +32,25 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   IconButtonComponent,
   classMap,
   stackIndex,
+  role = "alert",
+  closeButtonAriaLabel = "Close notification",
+  messageId,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-live": ariaLive,
+  "aria-atomic": ariaAtomic,
+  "aria-relevant": ariaRelevant,
+  "aria-hidden": ariaHidden,
   "data-testid": testId = "chip",
+  ...rest
 }) => {
   const [closing, setClosing] = useState(false);
+
+  const resolvedMessageId = useMemo(
+    () => messageId ?? `${id || testId}-message`,
+    [messageId, id, testId],
+  );
 
   const handleClose = useCallback(() => {
     setClosing(true);
@@ -52,9 +70,11 @@ const ChipBase: React.FC<ChipBaseProps> = ({
 
   useEffect(() => {
     if (!visible) return;
+
     const onKey = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Escape") handleClose();
     };
+
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [visible, handleClose]);
@@ -71,7 +91,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     rounding && classMap[`round${capitalize(rounding)}`],
     closing && classMap.fadeout,
     usePortal && classMap.fixed,
-    className
+    className,
   );
 
   const portalEl =
@@ -82,23 +102,36 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   const chipElement = (
     <div
       key={id}
+      id={id}
       className={chipClassName}
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
+      role={role}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
+      aria-live={ariaLive ?? (role === "alert" ? "assertive" : "polite")}
+      aria-atomic={ariaAtomic ?? true}
+      aria-relevant={ariaRelevant}
+      aria-hidden={ariaHidden}
       data-testid={testId}
       style={stackIndex != null ? { zIndex: stackIndex } : undefined}
+      {...rest}
     >
       {Icon && (
         <span
           className={classMap.icon}
-          aria-hidden="true"
+          aria-hidden={iconDecorative ? "true" : undefined}
+          aria-label={!iconDecorative ? iconAriaLabel : undefined}
           data-testid={`${testId}-icon`}
         >
           <Icon className={classMap.inner_icon} />
         </span>
       )}
-      <span className={classMap.message} id={`${testId}-message`}>
+
+      <span
+        className={classMap.message}
+        id={resolvedMessageId}
+        data-testid={`${testId}-message`}
+      >
         {message}
       </span>
 
@@ -106,8 +139,8 @@ const ChipBase: React.FC<ChipBaseProps> = ({
         icon={CloseIcon}
         size={size}
         theme="clear"
-        ariaLabel="Close notification"
-        aria-controls={`${testId}-message`}
+        aria-label={closeButtonAriaLabel}
+        aria-controls={resolvedMessageId}
         className={classMap.close}
         onClick={handleClose}
         shadow="none"

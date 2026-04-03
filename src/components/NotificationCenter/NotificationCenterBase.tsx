@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { CloseIcon } from "../../Icons";
-import {
-  BaseNotificationCenterProps,
-  themeIcons,
-} from "./NotificationCenter.types";
+import { BaseNotificationCenterProps } from "./NotificationCenter.types";
+import { themeIcons } from "./NotificationCenter.constants";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -25,6 +23,16 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   controlShadow = getDefaultShadow(),
   notificationRounding = getDefaultRounding(),
   notificationShadow = getDefaultShadow(),
+  "aria-label": ariaLabel = "Notification center",
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "list-aria-label": listAriaLabel,
+  liveRegionPoliteness = "polite",
+  liveRegionRelevant = "additions text",
+  liveRegionAtomic = false,
+  emptyMessage = "No notifications.",
+  dismissButtonLabelPrefix = "Dismiss notification",
+  clearAllAriaLabel = "Clear all notifications",
   Button,
   IconButton,
   classMap,
@@ -32,6 +40,8 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
 }) => {
   const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
   const prevIds = useRef<Set<string>>(new Set());
+  const internalTitleId = `${testId}-title`;
+  const resolvedLabelledBy = ariaLabelledBy || internalTitleId;
 
   useEffect(() => {
     if (
@@ -57,6 +67,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
 
     load();
     const id = setInterval(() => alive && load(), pollInterval);
+
     return () => {
       clearInterval(id);
       alive = false;
@@ -99,20 +110,22 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
         notificationShadow &&
           classMap[`shadow${capitalize(notificationShadow)}`],
         notificationRounding &&
-          classMap[`round${capitalize(notificationRounding)}`]
+          classMap[`round${capitalize(notificationRounding)}`],
       ),
-    [classMap, notificationShadow, notificationRounding]
+    [classMap, notificationShadow, notificationRounding],
   );
 
   return (
     <div
       className={classMap.wrapper}
       role="region"
-      aria-label="Notification center"
+      aria-label={ariaLabelledBy ? undefined : ariaLabel}
+      aria-labelledby={resolvedLabelledBy}
+      aria-describedby={ariaDescribedBy}
       data-testid={testId}
     >
       <div className={classMap.header} data-testid={`${testId}-header`}>
-        <h3 id={`${testId}-title`}>Notifications</h3>
+        {!ariaLabelledBy && <h3 id={internalTitleId}>Notifications</h3>}
 
         {showClearAll && notifications.length > 0 && onClearAll && (
           <Button
@@ -122,7 +135,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
             shadow={controlShadow}
             className={classMap.clearAll}
             onClick={onClearAll}
-            aria-label="Clear all notifications"
+            aria-label={clearAllAriaLabel}
             data-testid={`${testId}-clear-all`}
             type="button"
           >
@@ -133,65 +146,109 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
 
       <div
         role="status"
-        aria-live="polite"
-        aria-relevant="additions text"
+        aria-live={liveRegionPoliteness}
+        aria-relevant={liveRegionRelevant}
+        aria-atomic={liveRegionAtomic}
         className={classMap.body}
+        data-testid={`${testId}-live-region`}
       >
-        <ul className={classMap.list} aria-labelledby={`${testId}-title`}>
-          {notifications.map((note, index) => {
-            const Icon = themeIcons[note.type || "info"];
-            const noteTestId = `${testId}-item-${note.id}`;
-            const timestampStr = note.timestamp?.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            });
+        {notifications.length === 0 ? (
+          <p className={classMap.empty} data-testid={`${testId}-empty`}>
+            {emptyMessage}
+          </p>
+        ) : (
+          <ul
+            className={classMap.list}
+            aria-labelledby={listAriaLabel ? undefined : resolvedLabelledBy}
+            aria-label={listAriaLabel}
+          >
+            {notifications.map((note, index) => {
+              const Icon = themeIcons[note.type || "info"];
+              const noteTestId = `${testId}-item-${note.id}`;
+              const messageId = `${noteTestId}-message`;
+              const timestampId = `${noteTestId}-timestamp`;
+              const descriptionId = note.ariaDescription
+                ? `${noteTestId}-description`
+                : undefined;
 
-            return (
-              <li
-                key={note.id}
-                className={combineClassNames(
-                  notificationClass,
-                  classMap[note.type || "info"]
-                )}
-                data-testid={noteTestId}
-              >
-                <Icon
-                  className={classMap.icon}
-                  aria-hidden="true"
-                  focusable={false}
-                />
-                <div className={classMap.content}>
-                  <span
-                    className={classMap.message}
-                    data-testid={`${noteTestId}-message`}
-                  >
-                    {note.message}
-                  </span>
-                  {note.timestamp && (
-                    <span
-                      className={classMap.timestamp}
-                      data-testid={`${noteTestId}-timestamp`}
-                    >
-                      {timestampStr}
-                    </span>
+              const describedByIds = [
+                note.timestamp ? timestampId : undefined,
+                descriptionId,
+              ]
+                .filter(Boolean)
+                .join(" ");
+
+              const timestampStr = note.timestamp?.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+
+              return (
+                <li
+                  key={note.id}
+                  className={combineClassNames(
+                    notificationClass,
+                    classMap[note.type || "info"],
                   )}
-                </div>
-                <IconButton
-                  className={classMap.close}
-                  state="error"
-                  size="small"
-                  outline
-                  icon={CloseIcon}
-                  onClick={() => onRemove(note.id)}
-                  ariaLabel={`Dismiss notification ${index + 1}`}
-                  title="Dismiss"
-                  data-testid={`${noteTestId}-dismiss`}
-                  type="button"
-                />
-              </li>
-            );
-          })}
-        </ul>
+                  role="listitem"
+                  aria-label={note.ariaLabel}
+                  aria-labelledby={note.ariaLabel ? undefined : messageId}
+                  aria-describedby={describedByIds || undefined}
+                  data-testid={noteTestId}
+                >
+                  <Icon
+                    className={classMap.icon}
+                    aria-hidden="true"
+                    focusable={false}
+                  />
+
+                  <div className={classMap.content}>
+                    <span
+                      id={messageId}
+                      className={classMap.message}
+                      data-testid={`${noteTestId}-message`}
+                    >
+                      {note.message}
+                    </span>
+
+                    {note.timestamp && (
+                      <span
+                        id={timestampId}
+                        className={classMap.timestamp}
+                        data-testid={`${noteTestId}-timestamp`}
+                      >
+                        {timestampStr}
+                      </span>
+                    )}
+
+                    {note.ariaDescription && (
+                      <span
+                        id={descriptionId}
+                        className={classMap.srOnly}
+                        data-testid={`${noteTestId}-description`}
+                      >
+                        {note.ariaDescription}
+                      </span>
+                    )}
+                  </div>
+
+                  <IconButton
+                    className={classMap.close}
+                    state="error"
+                    size="small"
+                    outline
+                    icon={CloseIcon}
+                    onClick={() => onRemove(note.id)}
+                    aria-label={`${dismissButtonLabelPrefix} ${index + 1}`}
+                    title="Dismiss"
+                    data-testid={`${noteTestId}-dismiss`}
+                    type="button"
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
     </div>
   );

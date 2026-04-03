@@ -27,6 +27,39 @@ export interface MarkdownRendererProps {
   shadow?: ShadowType;
 
   /**
+   * Language of the rendered markdown content.
+   */
+  language?: string;
+
+  /**
+   * Accessible label for the markdown region.
+   * Use this when there is no visible heading associated with the content.
+   */
+  "aria-label"?: string;
+
+  /**
+   * ID of an element that labels the markdown region.
+   * Prefer this when a visible heading already exists.
+   */
+  "aria-labelledby"?: string;
+
+  /**
+   * ID of an element that describes the markdown region.
+   */
+  "aria-describedby"?: string;
+
+  /**
+   * Optional ARIA role for the wrapper element.
+   * Defaults to "region".
+   */
+  role?: React.AriaRole;
+
+  /**
+   * Optional tab index for keyboard focus management.
+   */
+  tabIndex?: number;
+
+  /**
    * Optional test ID for testing frameworks.
    */
   "data-testid"?: string;
@@ -34,6 +67,5 @@ export interface MarkdownRendererProps {
 
 export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
   classMap: Record<string, string>;
-  language?: string;
   sanitizeHtml?: (html: string) => string;
 }

@@ -22,6 +22,17 @@ const BasePager: React.FC<BasePagerProps> = ({
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",
+  "aria-label": ariaLabel = "Pagination",
+  "aria-describedby": ariaDescribedBy,
+  "aria-labelledby": ariaLabelledBy,
+  "page-list-aria-label": pageListAriaLabel = "Page list",
+  "previous-button-aria-label": previousButtonAriaLabel = "Go to previous page",
+  "next-button-aria-label": nextButtonAriaLabel = "Go to next page",
+  getPageAriaLabel = (pageNumber, isActive) =>
+    isActive ? `Current page, page ${pageNumber}` : `Go to page ${pageNumber}`,
+  getLiveRegionMessage = (activePage, totalPages) =>
+    `Page ${activePage} of ${totalPages}`,
+  liveRegionAriaLive = "polite",
   "data-testid": testId = "pager",
   Button,
   IconButton,
@@ -41,16 +52,31 @@ const BasePager: React.FC<BasePagerProps> = ({
   };
 
   const wrapperClass = combineClassNames(classMap.wrapper, className);
+
   const buttonBaseClass = combineClassNames(
     classMap.button,
     shadow && classMap[`shadow${capitalize(shadow)}`],
-    rounding && classMap[`round${capitalize(rounding)}`]
+    rounding && classMap[`round${capitalize(rounding)}`],
   );
 
+  const liveRegionId = `${testId}-status`;
+
   return (
-    <nav aria-label="Pagination" className={wrapperClass} data-testid={testId}>
-      <p className="sr_only" aria-live="polite">
-        Page {page} of {totalPages}
+    <nav
+      aria-label={ariaLabelledBy ? undefined : ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy ?? liveRegionId}
+      className={wrapperClass}
+      data-testid={testId}
+    >
+      <p
+        id={liveRegionId}
+        className="sr_only"
+        aria-live={liveRegionAriaLive}
+        aria-atomic="true"
+        data-testid={`${testId}-status`}
+      >
+        {getLiveRegionMessage(page, totalPages)}
       </p>
 
       <div className={classMap.controls}>
@@ -63,15 +89,21 @@ const BasePager: React.FC<BasePagerProps> = ({
           rounding={rounding}
           className={classMap.controlButton}
           disabled={page <= 1}
-          ariaLabel={`Go to page ${Math.max(1, page - 1)}`}
+          aria-label={previousButtonAriaLabel}
           title="Previous page"
           onClick={() => goTo(page - 1)}
+          aria-controls={pageListAriaLabel ? `${testId}-page-list` : undefined}
           data-testid={`${testId}-prev`}
           type="button"
         />
       </div>
 
-      <ul className={classMap.controls}>
+      <ul
+        id={`${testId}-page-list`}
+        className={classMap.controls}
+        aria-label={pageListAriaLabel}
+        data-testid={`${testId}-page-list`}
+      >
         {serverControlled ? (
           <li
             className={classMap.buttonWrapper}
@@ -84,8 +116,9 @@ const BasePager: React.FC<BasePagerProps> = ({
               rounding={rounding}
               shadow={shadow}
               onClick={() => goTo(page)}
-              aria-label={`Page ${page}`}
+              aria-label={getPageAriaLabel(page, true)}
               aria-current="page"
+              aria-describedby={liveRegionId}
               disabled
               className={combineClassNames(buttonBaseClass, classMap.active)}
               data-testid={`${testId}-button-${page}`}
@@ -97,6 +130,7 @@ const BasePager: React.FC<BasePagerProps> = ({
         ) : (
           pages.map((p) => {
             const isActive = p === page;
+
             return (
               <li
                 key={p}
@@ -110,12 +144,13 @@ const BasePager: React.FC<BasePagerProps> = ({
                   rounding={rounding}
                   shadow={shadow}
                   onClick={() => goTo(p)}
-                  aria-label={isActive ? `Page ${p}` : `Go to page ${p}`}
+                  aria-label={getPageAriaLabel(p, isActive)}
                   aria-current={isActive ? "page" : undefined}
+                  aria-describedby={isActive ? liveRegionId : undefined}
                   disabled={isActive}
                   className={combineClassNames(
                     buttonBaseClass,
-                    isActive && classMap.active
+                    isActive && classMap.active,
                   )}
                   data-testid={`${testId}-button-${p}`}
                   type="button"
@@ -138,9 +173,10 @@ const BasePager: React.FC<BasePagerProps> = ({
           size={size}
           className={classMap.controlButton}
           disabled={page >= totalPages}
-          ariaLabel={`Go to page ${Math.min(totalPages, page + 1)}`}
+          aria-label={nextButtonAriaLabel}
           title="Next page"
           onClick={() => goTo(page + 1)}
+          aria-controls={pageListAriaLabel ? `${testId}-page-list` : undefined}
           data-testid={`${testId}-next`}
           type="button"
         />
