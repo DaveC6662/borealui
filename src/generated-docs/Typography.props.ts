@@ -14,7 +14,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "align",
       "type": "TypographyAlign",
-      "description": "",
+      "description": "Horizontal text alignment.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -22,7 +22,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "aria-atomic",
       "type": "boolean",
-      "description": "",
+      "description": "Whether assistive technologies should present the entire updated region when part of a live region changes.",
       "required": false,
       "inherited": false,
       "category": "aria"
@@ -30,7 +30,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "aria-busy",
       "type": "boolean",
-      "description": "",
+      "description": "Indicates whether the element is currently being updated, such as during loading.",
       "required": false,
       "inherited": false,
       "category": "aria"
@@ -38,7 +38,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "aria-describedby",
       "type": "string",
-      "description": "",
+      "description": "References the id of another element that describes this element.",
       "required": false,
       "inherited": false,
       "category": "aria"
@@ -46,7 +46,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "aria-hidden",
       "type": "boolean",
-      "description": "",
+      "description": "Whether the element should be hidden from assistive technologies.",
       "required": false,
       "inherited": false,
       "category": "aria"
@@ -54,7 +54,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "aria-label",
       "type": "string",
-      "description": "",
+      "description": "Defines an accessible label for the element when a visible label is not sufficient.",
       "required": false,
       "inherited": false,
       "category": "aria"
@@ -62,7 +62,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "aria-labelledby",
       "type": "string",
-      "description": "",
+      "description": "References the id of another element that labels this element.",
       "required": false,
       "inherited": false,
       "category": "aria"
@@ -70,7 +70,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "aria-live",
       "type": "\"off\" | \"polite\" | \"assertive\"",
-      "description": "",
+      "description": "Indicates that the element will be updated and describes how updates should be announced.",
       "required": false,
       "inherited": false,
       "category": "aria"
@@ -78,7 +78,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "as",
       "type": "ElementType",
-      "description": "",
+      "description": "The HTML element or custom component to render as. For example: `\"p\"`, `\"span\"`, `\"h1\"`, or a custom React component.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -86,7 +86,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "children",
       "type": "ReactNode",
-      "description": "",
+      "description": "The content to render inside the typography component.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -94,7 +94,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "className",
       "type": "string",
-      "description": "",
+      "description": "Optional custom CSS class name for the root element.",
       "required": false,
       "inherited": false,
       "category": "styling"
@@ -102,7 +102,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "id",
       "type": "string",
-      "description": "",
+      "description": "Optional unique id for the root element.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -110,7 +110,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "italic",
       "type": "boolean",
-      "description": "",
+      "description": "Whether the text should be displayed in italic style.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -118,7 +118,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "noWrap",
       "type": "boolean",
-      "description": "",
+      "description": "Whether the text should remain on a single line without wrapping.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -126,7 +126,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "role",
       "type": "AriaRole",
-      "description": "",
+      "description": "Optional ARIA role for the rendered element.",
       "required": false,
       "inherited": false,
       "category": "aria"
@@ -134,7 +134,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "srOnly",
       "type": "boolean",
-      "description": "",
+      "description": "Whether the text should be visually hidden but still available to screen readers.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -142,7 +142,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "style",
       "type": "CSSProperties",
-      "description": "",
+      "description": "Optional inline styles applied to the root element.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -150,7 +150,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "testId",
       "type": "string",
-      "description": "",
+      "description": "Optional test id used for testing the component.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -158,7 +158,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "theme",
       "type": "TypographyTheme",
-      "description": "",
+      "description": "Visual theme style applied to the typography.",
       "required": false,
       "inherited": false,
       "category": "styling"
@@ -166,7 +166,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "title",
       "type": "string",
-      "description": "",
+      "description": "Advisory text for the element, typically shown as a tooltip on hover.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -174,7 +174,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "truncate",
       "type": "boolean",
-      "description": "",
+      "description": "Whether overflowing text should be truncated, typically with an ellipsis.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -182,7 +182,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "underline",
       "type": "boolean",
-      "description": "",
+      "description": "Whether the text should be underlined.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -190,7 +190,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "variant",
       "type": "TypographyVariant",
-      "description": "",
+      "description": "Predefined typography style variant. Examples may include headings, body text, captions, or labels.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -198,7 +198,7 @@ export const typographyPropDocs: GeneratedComponentDoc = {
     {
       "name": "weight",
       "type": "TypographyWeight",
-      "description": "",
+      "description": "Font weight of the text.",
       "required": false,
       "inherited": false,
       "category": "props"
