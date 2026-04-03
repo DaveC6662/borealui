@@ -36,7 +36,7 @@ export const colorSchemes: ColorScheme[] = [
   {
     name: "Autumn Leaves",
     primaryColor: "#d2691e",
-    secondaryColor: "#8b4513",
+    secondaryColor: "#c56c2c",
     tertiaryColor: "#a0522d",
     quaternaryColor: "#e9a569",
     backgroundColor: "#f5f5dc",
@@ -52,7 +52,7 @@ export const colorSchemes: ColorScheme[] = [
   {
     name: "Berry Patch",
     primaryColor: "#d31212",
-    secondaryColor: "#db4f4f",
+    secondaryColor: "#be4343",
     tertiaryColor: "#ff6347",
     quaternaryColor: "#ff8c00",
     backgroundColor: "#4d3e3e",
@@ -68,7 +68,7 @@ export const colorSchemes: ColorScheme[] = [
   {
     name: "Coral Reef",
     primaryColor: "#ff6f61",
-    secondaryColor: "#99623d",
+    secondaryColor: "#b8774c",
     tertiaryColor: "#d4a25d",
     quaternaryColor: "#aa8181",
     backgroundColor: "#f0f0f0",
@@ -92,7 +92,7 @@ export const colorSchemes: ColorScheme[] = [
   {
     name: "Electric Violet",
     primaryColor: "#9c3ef5",
-    secondaryColor: "#b44ae2",
+    secondaryColor: "#983fbe",
     tertiaryColor: "#b071dd",
     quaternaryColor: "#bb30bb",
     backgroundColor: "#464355",
@@ -100,9 +100,9 @@ export const colorSchemes: ColorScheme[] = [
   {
     name: "Forest Dusk",
     primaryColor: "#286d52",
-    secondaryColor: "#9c7344",
+    secondaryColor: "#725431",
     tertiaryColor: "#2c7160",
-    quaternaryColor: "#c5a572",
+    quaternaryColor: "#a0865c",
     backgroundColor: "#222e2e",
   },
   {
@@ -124,7 +124,7 @@ export const colorSchemes: ColorScheme[] = [
   {
     name: "Lime Plum",
     primaryColor: "#50801a",
-    secondaryColor: "#8a6ead",
+    secondaryColor: "#735992",
     tertiaryColor: "#96ac38",
     quaternaryColor: "#8E7CC3",
     backgroundColor: "#382650",
@@ -164,7 +164,7 @@ export const colorSchemes: ColorScheme[] = [
   {
     name: "Ocean Depths",
     primaryColor: "#0077be",
-    secondaryColor: "#0a8199",
+    secondaryColor: "#177081",
     tertiaryColor: "#0a9396",
     quaternaryColor: "#7bb19f",
     backgroundColor: "#2e3133",
