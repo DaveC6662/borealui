@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
 import getEntryMap from "./scripts/buildEntryMap.js";
 import path from "path";
 
@@ -16,7 +17,7 @@ const nextEntries = getEntryMap("./src/next");
 nextEntries["index"] = path.resolve(__dirname, "./src/index.next.ts");
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), libInjectCss()],
 
   resolve: {
     alias: {
