@@ -131,7 +131,7 @@ describe("BaseModal", () => {
 
   it("uses ariaLabel when provided and does not require fallback heading labelling", async () => {
     renderModal({
-      ariaLabel: "Custom Modal Label",
+      "aria-label": "Custom Modal Label",
     });
 
     const dialog = await screen.findByRole("dialog", {
@@ -148,9 +148,9 @@ describe("BaseModal", () => {
     expect(screen.getByText("Modal Dialog")).toBeInTheDocument();
   });
 
-  it("uses ariaLabelledBy when provided", async () => {
+  it("uses aria-labelledby when provided", async () => {
     renderModal({
-      ariaLabelledBy: "external-modal-title",
+      "aria-labelledby": "external-modal-title",
       header: <h2 id="external-modal-title">External Header Title</h2>,
       title: undefined,
     });
@@ -164,9 +164,9 @@ describe("BaseModal", () => {
     expect(screen.getByText("External Header Title")).toBeInTheDocument();
   });
 
-  it("applies ariaDescribedBy when provided", async () => {
+  it("applies aria-describedby when provided", async () => {
     renderModal({
-      ariaDescribedBy: "modal-description",
+      "aria-describedby": "modal-description",
       children: (
         <>
           <p id="modal-description">This action cannot be undone.</p>
@@ -426,9 +426,9 @@ describe("BaseModal", () => {
     expect(opener).not.toHaveAttribute("aria-hidden");
   });
 
-  it("renders the standard close button when ariaLabel is provided but the default title still creates a header", async () => {
+  it("renders the standard close button when aria-label is provided but the default title still creates a header", async () => {
     renderModal({
-      ariaLabel: "Floating Close Modal",
+      "aria-label": "Floating Close Modal",
     });
 
     const closeButton = await screen.findByTestId("modal-close");
@@ -452,7 +452,7 @@ describe("BaseModal", () => {
         onClose={onClose}
         IconButton={DummyIconButton}
         classMap={classMap}
-        ariaDescribedBy="a11y-description"
+        aria-describedby="a11y-description"
       >
         <div>
           <p id="a11y-description">Accessible modal content</p>

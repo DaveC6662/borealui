@@ -155,8 +155,11 @@ describe("BaseNotificationCenter", () => {
   it("renders themed icons for each notification type", () => {
     renderNotificationCenter();
 
-    expect(screen.getByTestId("icon-success")).toBeInTheDocument();
-    expect(screen.getByTestId("icon-error")).toBeInTheDocument();
+    const successItem = screen.getByTestId("notification-center-item-1");
+    const errorItem = screen.getByTestId("notification-center-item-2");
+
+    expect(successItem.querySelector("svg.icon")).toBeInTheDocument();
+    expect(errorItem.querySelector("svg.icon")).toBeInTheDocument();
   });
 
   it("applies notification styling classes including rounding, shadow, and state", () => {

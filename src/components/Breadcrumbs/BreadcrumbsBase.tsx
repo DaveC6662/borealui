@@ -10,7 +10,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-const ELLIPSIS_LABEL = "…";
+export const ELLIPSIS_LABEL = "…";
 
 export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   items,
