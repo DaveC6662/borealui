@@ -269,7 +269,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
               onClick={() => removeTag(tag)}
               data-testid={`${testId}-remove-${index}`}
               icon={CloseIcon}
-              size="small"
+              size="xs"
               theme="clear"
               shadow="none"
               iconClassName={classMap.removeButtonIcon}
