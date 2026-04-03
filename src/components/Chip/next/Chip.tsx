@@ -3,7 +3,7 @@
 import React from "react";
 import ChipBase from "../ChipBase";
 import { CloseIcon } from "@/Icons";
-import { IconButton } from "@/index.next";
+import IconButton from "../../IconButton/next/IconButton";
 import styles from "./Chip.module.scss";
 import { ChipProps } from "../Chip.types";
 

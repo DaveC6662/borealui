@@ -2,7 +2,8 @@
 
 import React from "react";
 import BaseNotificationCenter from "../NotificationCenterBase";
-import { Button, IconButton } from "@/index.next";
+import Button from "../../Button/next/Button";
+import IconButton from "../../IconButton/next/IconButton";
 import styles from "./NotificationCenter.module.scss";
 import { NotificationCenterProps } from "../NotificationCenter.types";
 

@@ -2,7 +2,8 @@
 
 import React from "react";
 import BasePager from "../PagerBase";
-import { Button, IconButton } from "@/index.next";
+import Button from "../../Button/next/Button";
+import IconButton from "../../IconButton/next/IconButton";
 import styles from "./Pager.module.scss";
 import { PagerProps } from "../Pager.types";
 

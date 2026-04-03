@@ -3,7 +3,7 @@
 import React from "react";
 import BaseModal from "../ModalBase";
 import styles from "./Modal.module.scss";
-import { IconButton } from "@/index.next";
+import IconButton from "../../IconButton/next/IconButton";
 import { ModalProps } from "../Modal.types";
 
 const Modal: React.FC<ModalProps> = (props) => {

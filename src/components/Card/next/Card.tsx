@@ -2,7 +2,9 @@
 
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import { Button, IconButton, Skeleton } from "../../../index.next";
+import Button from "../../Button/next/Button";
+import IconButton from "../../IconButton/next/IconButton";
+import Skeleton from "../../Skeleton/next/Skeleton";
 import styles from "./Card.module.scss";
 import CardBase from "../CardBase";
 import { CardImageComponentProps, CardProps } from "../Card.types";

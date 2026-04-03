@@ -1,7 +1,9 @@
 import React from "react";
 import CardBase from "../CardBase";
 import "./Card.scss";
-import { Button, IconButton, Skeleton } from "../../../index.core";
+import Button from "../../Button/core/Button";
+import IconButton from "../../IconButton/core/IconButton";
+import Skeleton from "../../Skeleton/core/Skeleton";
 import { CardProps } from "../Card.types";
 
 const classes = {

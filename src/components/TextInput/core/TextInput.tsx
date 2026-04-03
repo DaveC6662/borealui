@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import "./TextInput.scss";
 import { TextInputProps } from "../TextInput.types";
 import TextInputBase from "../TextInputBase";
-import { IconButton } from "@/index.core";
+import IconButton from "../../IconButton/core/IconButton";
 
 const classes = {
   container: "container",
