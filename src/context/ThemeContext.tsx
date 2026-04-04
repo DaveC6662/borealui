@@ -38,8 +38,8 @@ function getSchemeIndexByName(
 }
 
 const ThemeProvider: React.FC<
-  ThemeProviderProps & { initialScheme?: number }
-> = ({ children, customSchemes = [], initialScheme }) => {
+  ThemeProviderProps & { initialSchemeName?: string }
+> = ({ children, customSchemes = [], initialSchemeName }) => {
   const [schemes, setSchemes] = useState(() => getAllColorSchemes());
   const [selectedScheme, setSelectedScheme] = useState<number>(0);
   const [hasResolvedInitialScheme, setHasResolvedInitialScheme] =
@@ -67,40 +67,36 @@ const ThemeProvider: React.FC<
 
     let nextIndex = 0;
 
-    if (typeof initialScheme === "number") {
-      nextIndex =
-        initialScheme >= 0 && initialScheme < nextSchemes.length
-          ? initialScheme
-          : 0;
+    let savedName: string | null = null;
+
+    if (typeof window !== "undefined") {
+      try {
+        savedName = localStorage.getItem(STORAGE_KEY);
+      } catch {
+        console.error("Failed to load saved theme name");
+      }
+    }
+
+    const savedIndex = getSchemeIndexByName(nextSchemes, savedName);
+    const initialIndex = getSchemeIndexByName(nextSchemes, initialSchemeName);
+    const defaultIndex = getSchemeIndexByName(
+      nextSchemes,
+      getDefaultColorSchemeName(),
+    );
+
+    if (initialIndex !== -1) {
+      nextIndex = initialIndex;
+    } else if (savedIndex !== -1) {
+      nextIndex = savedIndex;
+    } else if (defaultIndex !== -1) {
+      nextIndex = defaultIndex;
     } else {
-      let savedName: string | null = null;
-
-      if (typeof window !== "undefined") {
-        try {
-          savedName = localStorage.getItem(STORAGE_KEY);
-        } catch {
-          console.error("Failed to load saved theme name");
-        }
-      }
-
-      const savedIndex = getSchemeIndexByName(nextSchemes, savedName);
-      const defaultIndex = getSchemeIndexByName(
-        nextSchemes,
-        getDefaultColorSchemeName(),
-      );
-
-      if (savedIndex !== -1) {
-        nextIndex = savedIndex;
-      } else if (defaultIndex !== -1) {
-        nextIndex = defaultIndex;
-      } else {
-        nextIndex = 0;
-      }
+      nextIndex = 0;
     }
 
     setSelectedScheme(nextIndex);
     setHasResolvedInitialScheme(true);
-  }, [customSchemesKey, initialScheme]);
+  }, [customSchemesKey, initialSchemeName]);
 
   useLayoutEffect(() => {
     if (!hasResolvedInitialScheme) return;

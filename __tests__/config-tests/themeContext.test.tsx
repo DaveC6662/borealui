@@ -127,7 +127,7 @@ describe("ThemeProvider", () => {
     localStorage.setItem(STORAGE_KEY, "Forest Dusk");
 
     render(
-      <ThemeProvider initialScheme={1}>
+      <ThemeProvider initialSchemeName={"Ocean Breeze"}>
         <Consumer />
       </ThemeProvider>,
     );
@@ -211,7 +211,7 @@ describe("ThemeProvider", () => {
 
   it("applies CSS variables to the root element", async () => {
     render(
-      <ThemeProvider initialScheme={0}>
+      <ThemeProvider initialSchemeName={"Forest Dusk"}>
         <Consumer />
       </ThemeProvider>,
     );
@@ -237,7 +237,7 @@ describe("ThemeProvider", () => {
 
   it("updates selectedScheme through context and saves the scheme name", async () => {
     render(
-      <ThemeProvider initialScheme={0}>
+      <ThemeProvider initialSchemeName={"forest dusk"}>
         <Consumer />
       </ThemeProvider>,
     );
