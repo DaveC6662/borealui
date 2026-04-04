@@ -18,43 +18,6 @@ const variantOptions = [
   "code",
 ];
 
-const alignOptions = ["left", "center", "right", "inherit"];
-const weightOptions = [
-  "light",
-  "normal",
-  "medium",
-  "bold",
-  "bolder",
-  "inherit",
-];
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-  "success",
-  "warning",
-  "error",
-  "inherit",
-];
-
-const asOptions = [
-  "span",
-  "p",
-  "div",
-  "label",
-  "strong",
-  "em",
-  "code",
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
-];
-
 const meta: Meta<typeof Typography> = {
   title: "Components/Typography",
   component: Typography,
@@ -70,7 +33,6 @@ const defaultArgs = {
   variant: "body",
   align: "inherit",
   weight: "inherit",
-  theme: "inherit",
   italic: false,
   underline: false,
   truncate: false,
@@ -129,6 +91,7 @@ export const CodeText: Story = {
 export const Themed: Story = {
   render: (args) => (
     <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      <Typography {...args}>Default text</Typography>
       <Typography {...args} theme="primary">
         Primary themed text
       </Typography>

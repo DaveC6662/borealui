@@ -79,7 +79,7 @@ function TypographyBase({
   as,
   align = "inherit",
   weight = "inherit",
-  theme = getDefaultTheme(),
+  theme,
   italic = false,
   underline = false,
   truncate = false,
