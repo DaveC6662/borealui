@@ -7,7 +7,8 @@ import "./styles/globals.scss";
 export * from "./generated-docs/index";
 
 ///Theme Context and utils
-export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
+export { default as ThemeProvider } from "./context/NextThemeProvider";
+export { ThemeContext } from "./context/ThemeContext";
 export { registerColorScheme } from "./styles/colorSchemeRegistry";
 export { colorSchemes } from "./styles/Themes";
 export { setBorealStyleConfig } from "./config/boreal-style-config";

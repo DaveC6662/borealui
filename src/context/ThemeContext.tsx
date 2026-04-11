@@ -37,9 +37,11 @@ function getSchemeIndexByName(
   return schemes.findIndex((scheme) => scheme.name === name);
 }
 
-const ThemeProvider: React.FC<
-  ThemeProviderProps & { initialSchemeName?: string }
-> = ({ children, customSchemes = [], initialSchemeName }) => {
+const ThemeProvider: React.FC<ThemeProviderProps> = ({
+  children,
+  customSchemes = [],
+  initialSchemeName,
+}) => {
   const [schemes, setSchemes] = useState(() => getAllColorSchemes());
   const [selectedScheme, setSelectedScheme] = useState<number>(0);
   const [hasResolvedInitialScheme, setHasResolvedInitialScheme] =
