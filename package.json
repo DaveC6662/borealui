@@ -157,7 +157,7 @@
       "default": "./dist/types/public.types.d.ts"
     },
     "./next/globals.css": {
-      "default": "./dist/next/globals.css"
+      "default": "./dist/next/src/styles/globals.css"
     },
     "./docs": {
       "types": "./dist/types/generated-docs/*.d.ts",
