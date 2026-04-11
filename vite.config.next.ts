@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { libInjectCss } from "vite-plugin-lib-inject-css";
-import preserveDirectives from "rollup-plugin-preserve-directives";
 import getEntryMap from "./scripts/buildEntryMap.js";
 import path from "path";
 
@@ -13,6 +12,9 @@ const externals = [
   "marked",
   "uuid",
 ];
+
+const isExternal = (id: string) =>
+  externals.includes(id) || id === "next" || id.startsWith("next/");
 
 const nextEntries = getEntryMap("./src/next");
 nextEntries["index"] = path.resolve(__dirname, "./src/index.next.ts");
@@ -40,11 +42,7 @@ export default defineConfig({
     },
 
     rollupOptions: {
-      external: externals,
-      plugins: [preserveDirectives()],
-      output: {
-        preserveModules: true,
-      },
+      external: isExternal,
     },
   },
 });

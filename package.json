@@ -24,7 +24,7 @@
     "build:types": "tsc -p tsconfig.build.json",
     "build:types:public": "tsc -p tsconfig.build.json && node scripts/generateTypesBarrel.cjs",
     "build:css-next": "sass --load-path=node_modules src/styles/globals.scss src/styles/style.css --no-source-map",
-    "build": "npm run clean && npm run build:core && npm run build:next && npm run build:docs && npm run build:types && npm run build:types:public",
+    "build": "npm run clean && npm run build:core && npm run build:next && npm run patch:useClient && npm run build:docs && npm run build:types && npm run build:types:public",
     "lint:styles": "stylelint '**/*.{css,scss}'",
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
     "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
@@ -32,6 +32,7 @@
     "generate:entrypoints": "node scripts/generateEntryPoints.cjs",
     "generate:exports": "node scripts/generateExports.cjs",
     "generate:docs": "ts-node scripts/generate-component-docs.cjs",
+    "patch:useClient": "node scripts/patchUseClient.cjs",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -157,7 +158,7 @@
       "default": "./dist/types/public.types.d.ts"
     },
     "./next/globals.css": {
-      "default": "./dist/next/src/styles/globals.css"
+      "default": "./dist/next/globals.css"
     },
     "./docs": {
       "types": "./dist/types/generated-docs/*.d.ts",
