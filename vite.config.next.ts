@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { libInjectCss } from "vite-plugin-lib-inject-css";
+import preserveDirectives from "rollup-plugin-preserve-directives";
 import getEntryMap from "./scripts/buildEntryMap.js";
 import path from "path";
 
@@ -34,13 +35,16 @@ export default defineConfig({
 
     lib: {
       entry: nextEntries,
-      formats: ["es", "cjs"],
-      fileName: (format, entryName) =>
-        `${entryName}${format === "es" ? ".js" : ".cjs.js"}`,
+      formats: ["es"],
+      fileName: (_format, entryName) => `${entryName}.js`,
     },
 
     rollupOptions: {
       external: externals,
+      plugins: [preserveDirectives()],
+      output: {
+        preserveModules: true,
+      },
     },
   },
 });
