@@ -40,6 +40,8 @@ const ButtonBase = forwardRef<
       "aria-disabled": ariaDisabled,
 
       href,
+      _target,
+      as,
       isExternal = false,
       outline = false,
       size = getDefaultSize(),
@@ -129,9 +131,11 @@ const ButtonBase = forwardRef<
           ) : (
             <>
               {children}
-              {href && (isExternal ?? /^https?:\/\//i.test(href)) && (
-                <span className="sr_only"> (opens in a new tab)</span>
-              )}
+              {href &&
+                (_target === "_blank" ||
+                  (isExternal ?? /^https?:\/\//i.test(href))) && (
+                  <span className="sr_only"> (opens in a new tab)</span>
+                )}
             </>
           )}
         </span>
@@ -139,8 +143,19 @@ const ButtonBase = forwardRef<
     );
 
     if (href) {
-      const Comp = (LinkComponent ?? "a") as React.ElementType;
-      const external = (isExternal ?? /^https?:\/\//i.test(href)) && !disabled;
+      const external =
+        (_target === "_blank" || isExternal || /^https?:\/\//i.test(href)) &&
+        !disabled;
+
+      const Comp = (
+        external ? "a" : (as ?? LinkComponent ?? "a")
+      ) as React.ElementType;
+
+      const target = disabled
+        ? undefined
+        : (_target ?? (external ? "_blank" : undefined));
+
+      const rel = target === "_blank" ? "noopener noreferrer" : undefined;
 
       const linkCommon = {
         ref: ref as React.Ref<HTMLAnchorElement>,
@@ -166,8 +181,8 @@ const ButtonBase = forwardRef<
           <a
             {...linkCommon}
             href={disabled ? undefined : href}
-            target={external ? "_blank" : undefined}
-            rel={external ? "noopener noreferrer" : undefined}
+            target={target}
+            rel={rel}
             {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
           >
             {content}
@@ -182,8 +197,8 @@ const ButtonBase = forwardRef<
             "children"
           >)}
           href={href as never}
-          target={external ? "_blank" : undefined}
-          rel={external ? "noopener noreferrer" : undefined}
+          target={target}
+          rel={rel}
           {...(rest as React.ComponentPropsWithoutRef<typeof Comp>)}
         >
           {content}
@@ -191,12 +206,40 @@ const ButtonBase = forwardRef<
       );
     }
 
+    const Comp = (as ?? "button") as React.ElementType;
+
+    if (Comp === "button") {
+      return (
+        <button
+          ref={ref as React.Ref<HTMLButtonElement>}
+          type={type}
+          className={combinedClassName}
+          disabled={disabled || loading}
+          aria-label={computedAriaLabel}
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={ariaDescribedBy}
+          aria-controls={ariaControls}
+          aria-expanded={ariaExpanded}
+          aria-pressed={ariaPressed}
+          aria-current={ariaCurrent}
+          aria-haspopup={ariaHasPopup}
+          aria-busy={loading ? (ariaBusy ?? true) : ariaBusy}
+          aria-disabled={ariaDisabled}
+          data-testid={testId}
+          onClick={disabled || loading ? undefined : onClick}
+          {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+        >
+          {content}
+        </button>
+      );
+    }
+
     return (
-      <button
-        ref={ref as React.Ref<HTMLButtonElement>}
-        type={type}
+      <Comp
+        ref={ref as React.Ref<HTMLElement>}
         className={combinedClassName}
-        disabled={disabled || loading}
+        role="button"
+        tabIndex={disabled || loading ? -1 : 0}
         aria-label={computedAriaLabel}
         aria-labelledby={ariaLabelledBy}
         aria-describedby={ariaDescribedBy}
@@ -206,13 +249,21 @@ const ButtonBase = forwardRef<
         aria-current={ariaCurrent}
         aria-haspopup={ariaHasPopup}
         aria-busy={loading ? (ariaBusy ?? true) : ariaBusy}
-        aria-disabled={ariaDisabled}
+        aria-disabled={disabled || loading ? true : ariaDisabled}
         data-testid={testId}
         onClick={disabled || loading ? undefined : onClick}
-        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+        onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
+          if (disabled || loading) return;
+
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onClick?.(e as unknown as React.MouseEvent<HTMLElement>);
+          }
+        }}
+        {...(rest as React.ComponentPropsWithoutRef<typeof Comp>)}
       >
         {content}
-      </button>
+      </Comp>
     );
   },
 );

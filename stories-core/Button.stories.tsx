@@ -166,8 +166,17 @@ export const WithExternalLink: Story = {
   args: {
     ...defaultArgs,
     href: "https://example.com",
+    _target: "_blank",
     isExternal: true,
     children: "External Link",
+  },
+};
+
+export const WithLongText: Story = {
+  args: {
+    ...defaultArgs,
+    href: "https://example.com",
+    children: "This is a very long link button text to test overflow handling",
   },
 };
 

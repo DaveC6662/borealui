@@ -30,6 +30,18 @@ export interface ButtonProps extends Pick<
   | "aria-disabled"
 > {
   /**
+   * Optional target for link rendering.
+   * Example: "_blank", "_self", "_parent", "_top"
+   */
+  _target?: React.HTMLAttributeAnchorTarget;
+
+  /**
+   * Optional element or component override.
+   * Example: "a", "button", Link
+   */
+  as?: React.ElementType;
+
+  /**
    * Optional icon component to render inside the button.
    */
   icon?: React.ComponentType<{

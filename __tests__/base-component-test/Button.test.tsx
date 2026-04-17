@@ -584,6 +584,149 @@ describe("ButtonBase", () => {
     expect(link).toHaveAttribute("aria-disabled", "true");
   });
 
+  it("applies a custom _target value to anchor links", () => {
+    renderButton(
+      {
+        href: "https://example.com",
+        _target: "_blank",
+      },
+      "Open Example",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveAttribute("href", "https://example.com");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("applies a non-blank _target value without rel", () => {
+    renderButton(
+      {
+        href: "/docs",
+        _target: "_self",
+      },
+      "Docs",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).toHaveAttribute("target", "_self");
+    expect(link).not.toHaveAttribute("rel");
+  });
+
+  it("shows new-tab text when _target is _blank", () => {
+    renderButton(
+      {
+        href: "/external-docs",
+        _target: "_blank",
+      },
+      "External Docs",
+    );
+
+    expect(screen.getByText("(opens in a new tab)")).toBeInTheDocument();
+  });
+
+  it("renders as a custom element when as is provided without href", () => {
+    renderButton(
+      {
+        as: "div",
+      },
+      "Div Button",
+    );
+
+    const element = screen.getByTestId("button-test");
+    expect(element.tagName).toBe("DIV");
+    expect(element).toHaveAttribute("role", "button");
+    expect(element).toHaveTextContent("Div Button");
+  });
+
+  it("renders as a custom anchor element when as='a' and href is provided", () => {
+    renderButton(
+      {
+        as: "a",
+        href: "/about",
+      },
+      "About",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveAttribute("href", "/about");
+  });
+
+  it("renders href links using the as prop instead of LinkComponent when as is provided", () => {
+    const CustomAnchor = React.forwardRef<
+      HTMLAnchorElement,
+      React.AnchorHTMLAttributes<HTMLAnchorElement>
+    >(function CustomAnchor(props, ref) {
+      return <a ref={ref} data-as-link="true" {...props} />;
+    });
+
+    render(
+      <ButtonBase
+        href="/custom-as"
+        as={CustomAnchor}
+        classMap={classMap}
+        data-testid="button-test"
+      >
+        Custom As Link
+      </ButtonBase>,
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveAttribute("href", "/custom-as");
+    expect(link).toHaveAttribute("data-as-link", "true");
+  });
+
+  it("renders non-button custom components with button semantics when as is provided", () => {
+    const CustomDiv = React.forwardRef<
+      HTMLDivElement,
+      React.HTMLAttributes<HTMLDivElement>
+    >(function CustomDiv(props, ref) {
+      return <div ref={ref} data-custom-div="true" {...props} />;
+    });
+
+    render(
+      <ButtonBase as={CustomDiv} classMap={classMap} data-testid="button-test">
+        Custom Div Button
+      </ButtonBase>,
+    );
+
+    const element = screen.getByTestId("button-test");
+    expect(element.tagName).toBe("DIV");
+    expect(element).toHaveAttribute("data-custom-div", "true");
+    expect(element).toHaveAttribute("role", "button");
+  });
+
+  it("prevents href navigation and removes target when disabled even if _target is provided", () => {
+    renderButton(
+      {
+        href: "https://example.com",
+        _target: "_blank",
+        disabled: true,
+      },
+      "Disabled External",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).not.toHaveAttribute("href");
+    expect(link).not.toHaveAttribute("target");
+    expect(link).not.toHaveAttribute("rel");
+    expect(link).toHaveAttribute("aria-disabled", "true");
+  });
+
+  it("has no accessibility violations for custom as rendering", async () => {
+    const { container } = render(
+      <ButtonBase as="div" classMap={classMap} data-testid="button-test">
+        Custom Div Button
+      </ButtonBase>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
   it("has no accessibility violations for standard button", async () => {
     const { container } = renderButton(
       {
