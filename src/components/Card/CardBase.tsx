@@ -65,8 +65,9 @@ const CardBase: React.FC<CardBaseProps> = ({
   const autoId = useId();
   const resolvedHeaderId = headerId || ariaLabelledBy || `${autoId}-header`;
   const resolvedDescriptionId = descriptionId || `${autoId}-description`;
-
   const hasTitle = Boolean(title);
+  const hasHeader = Boolean(renderHeader || hasTitle);
+
   const hasDescription = Boolean(description);
 
   const derivedAriaLabel = ariaLabel || title || description || "Content card";
@@ -223,27 +224,29 @@ const CardBase: React.FC<CardBaseProps> = ({
             ))}
 
           <div>
-            <div
-              className={combineClassNames(classMap.header, headerClassName)}
-              id={resolvedHeaderId}
-            >
-              {renderHeader ? (
-                renderHeader()
-              ) : hasTitle ? (
-                <h2 className={classMap.title}>
-                  {cardIcon && (
-                    <span
-                      className={classMap.icon}
-                      aria-hidden="true"
-                      data-testid={`${testId}-icon`}
-                    >
-                      {React.createElement(cardIcon)}
-                    </span>
-                  )}
-                  {title}
-                </h2>
-              ) : null}
-            </div>
+            {(renderHeader || hasTitle) && (
+              <div
+                className={combineClassNames(classMap.header, headerClassName)}
+                id={resolvedHeaderId}
+              >
+                {renderHeader ? (
+                  renderHeader()
+                ) : hasTitle ? (
+                  <h2 className={classMap.title}>
+                    {cardIcon && (
+                      <span
+                        className={classMap.icon}
+                        aria-hidden="true"
+                        data-testid={`${testId}-icon`}
+                      >
+                        {React.createElement(cardIcon)}
+                      </span>
+                    )}
+                    {title}
+                  </h2>
+                ) : null}
+              </div>
+            )}
 
             <div className={combineClassNames(classMap.body, bodyClassName)}>
               {renderContent ? (

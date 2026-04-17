@@ -62,6 +62,20 @@ export const WithImage: Story = {
   },
 };
 
+export const WithNoHeader: Story = {
+  args: {
+    ...defaultArgs,
+    title: undefined,
+    description: undefined,
+    children: (
+      <p>
+        This card has no header. The content is meant to show how the layout
+        adjusts when the title is not provided.
+      </p>
+    ),
+  },
+};
+
 export const WithIcon: Story = {
   args: {
     ...defaultArgs,
