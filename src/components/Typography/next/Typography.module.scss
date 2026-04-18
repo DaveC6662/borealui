@@ -189,9 +189,12 @@
   color: var(--error-color);
 }
 
-.clear,
-.themeInherit {
+.clear {
   color: inherit;
+}
+
+.themeInherit {
+  color: var(--text-color);
 }
 
 .italic {

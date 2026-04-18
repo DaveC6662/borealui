@@ -189,9 +189,12 @@
   color: var(--error-color);
 }
 
-.typography_clear,
-.typography_theme-inherit {
+.typography_clear {
   color: inherit;
+}
+
+.typography_theme-inherit {
+  color: var(--text-color);
 }
 
 .typography_italic {
