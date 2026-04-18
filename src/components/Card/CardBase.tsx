@@ -66,7 +66,6 @@ const CardBase: React.FC<CardBaseProps> = ({
   const resolvedHeaderId = headerId || ariaLabelledBy || `${autoId}-header`;
   const resolvedDescriptionId = descriptionId || `${autoId}-description`;
   const hasTitle = Boolean(title);
-  const hasHeader = Boolean(renderHeader || hasTitle);
 
   const hasDescription = Boolean(description);
 
@@ -307,7 +306,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                           href={button.href}
                           loading={button.loading}
                           size={button.size || size}
-                          ariaLabel={button["aria-label"] || button.label}
+                          aria-label={button["aria-label"] || button.label}
                           aria-describedby={button["aria-describedby"]}
                           aria-labelledby={button["aria-labelledby"]}
                           aria-pressed={button["aria-pressed"]}
