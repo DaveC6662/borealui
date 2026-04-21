@@ -1,18 +1,34 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { IconButton, Toolbar } from "../src/index.core";
+import {
+  AttachmentType,
+  IconButton,
+  RoundingType,
+  ShadowType,
+  ThemeType,
+  Toolbar,
+} from "../src/index.core";
 import { FaBell, FaArrowLeft } from "react-icons/fa";
 import type { ToolbarBaseProps } from "../src/components/Toolbar/Toolbar.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
   "quaternary",
   "clear",
 ];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
+
+const attachmentOptions: AttachmentType[] = ["static", "fixed", "sticky"];
 
 const meta: Meta<ToolbarBaseProps> = {
   title: "Components/Toolbar",
@@ -21,6 +37,7 @@ const meta: Meta<ToolbarBaseProps> = {
   args: {
     title: "Dashboard",
     theme: "primary",
+    attachment: "static",
   },
 };
 
@@ -75,6 +92,26 @@ export const ThemedVariants: Story = {
             left={leftIcon}
             right={rightIcon}
           />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const AttachmentVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem", minHeight: "200vh" }}>
+        {attachmentOptions.map((attachment) => (
+          <div key={attachment} style={{ minHeight: "200vh" }}>
+            <Toolbar
+              {...args}
+              attachment={attachment}
+              title={`Attachment: ${attachment}`}
+              left={leftIcon}
+              right={rightIcon}
+            />
+          </div>
         ))}
       </div>
     );

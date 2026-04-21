@@ -20,6 +20,10 @@ const mockStyles = {
   warning: "warning",
   clear: "clear",
 
+  static: "static",
+  fixed: "fixed",
+  sticky: "sticky",
+
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
   shadowLight: "shadowLight",
@@ -289,11 +293,12 @@ describe("ToolbarBase", () => {
     ).toHaveAttribute("id", "custom-toolbar-title");
   });
 
-  it("applies theme, rounding, shadow, and custom class names", () => {
+  it("applies theme, attachment, rounding, shadow, and custom class names", () => {
     render(
       <ToolbarBase
         title="Styled"
         theme="secondary"
+        attachment="sticky"
         rounding="large"
         shadow="strong"
         className="customToolbar"
@@ -305,9 +310,50 @@ describe("ToolbarBase", () => {
     const toolbar = screen.getByTestId("toolbar");
     expect(toolbar).toHaveClass("toolbar");
     expect(toolbar).toHaveClass("secondary");
+    expect(toolbar).toHaveClass("sticky");
     expect(toolbar).toHaveClass("roundLarge");
     expect(toolbar).toHaveClass("shadowStrong");
     expect(toolbar).toHaveClass("customToolbar");
+  });
+
+  it("applies static attachment class by default", () => {
+    render(
+      <ToolbarBase
+        title="Styled"
+        AvatarComponent={DummyAvatar}
+        classMap={mockStyles}
+      />,
+    );
+
+    const toolbar = screen.getByTestId("toolbar");
+    expect(toolbar).toHaveClass("static");
+  });
+
+  it("applies fixed attachment class when attachment is fixed", () => {
+    render(
+      <ToolbarBase
+        title="Fixed Toolbar"
+        attachment="fixed"
+        AvatarComponent={DummyAvatar}
+        classMap={mockStyles}
+      />,
+    );
+
+    expect(screen.getByTestId("toolbar")).toHaveClass("fixed");
+  });
+
+  it("applies default round and shadow classes when explicit values are not provided", () => {
+    render(
+      <ToolbarBase
+        title="Styled"
+        AvatarComponent={DummyAvatar}
+        classMap={mockStyles}
+      />,
+    );
+
+    const toolbar = screen.getByTestId("toolbar");
+    expect(toolbar.className).toContain("roundMedium");
+    expect(toolbar.className).toContain("shadowLight");
   });
 
   it("applies default round and shadow classes when explicit values are not provided", () => {

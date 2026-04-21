@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
+  AttachmentType,
   IconButton,
   RoundingType,
   ShadowType,
@@ -27,6 +28,8 @@ const shadowOptions: ShadowType[] = [
   "intense",
 ];
 
+const attachmentOptions: AttachmentType[] = ["static", "fixed", "sticky"];
+
 const meta: Meta<ToolbarBaseProps> = {
   title: "Components/Toolbar",
   component: Toolbar,
@@ -34,6 +37,7 @@ const meta: Meta<ToolbarBaseProps> = {
   args: {
     title: "Dashboard",
     theme: "primary",
+    attachment: "static",
   },
 };
 
@@ -88,6 +92,26 @@ export const ThemedVariants: Story = {
             left={leftIcon}
             right={rightIcon}
           />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const AttachmentVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem", minHeight: "200vh" }}>
+        {attachmentOptions.map((attachment) => (
+          <div key={attachment} style={{ minHeight: "200vh" }}>
+            <Toolbar
+              {...args}
+              attachment={attachment}
+              title={`Attachment: ${attachment}`}
+              left={leftIcon}
+              right={rightIcon}
+            />
+          </div>
         ))}
       </div>
     );

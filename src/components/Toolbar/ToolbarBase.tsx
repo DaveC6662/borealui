@@ -16,6 +16,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   right,
   avatar,
   theme = getDefaultTheme(),
+  attachment = "static",
   shadow = getDefaultShadow(),
   rounding = getDefaultRounding(),
   className = "",
@@ -39,11 +40,12 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
       combineClassNames(
         classMap.toolbar,
         classMap[theme],
+        classMap[attachment],
         className,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, theme, className, shadow, rounding],
+    [classMap, theme, attachment, className, shadow, rounding],
   );
 
   const resolvedAriaLabel = ariaLabelledBy

@@ -36,6 +36,24 @@
     }
   }
 
+  &_static {
+    position: static;
+  }
+
+  &_fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-index-fixed, 1000);
+  }
+
+  &_sticky {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-index-sticky, 999);
+  }
+
   &_section {
     flex: 1;
     display: flex;

@@ -1,4 +1,10 @@
-import { RoundingType, ShadowType, SizeType, ThemeType } from "@/types/types";
+import {
+  AttachmentType,
+  RoundingType,
+  ShadowType,
+  SizeType,
+  ThemeType,
+} from "@/types/types";
 import React, { MouseEvent } from "react";
 import { AvatarProps } from "../Avatar/Avatar.types";
 
@@ -114,6 +120,12 @@ export interface ToolbarProps {
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
    */
   theme?: ThemeType;
+
+  /**
+   * How the toolbar attaches to the viewport or page layout.
+   * "static" | "fixed" | "sticky"
+   */
+  attachment?: AttachmentType;
 
   /**
    * Shadow of the component.

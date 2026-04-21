@@ -25,8 +25,6 @@ const FooterBase: React.FC<BaseFooterProps> = ({
       {children}
     </a>
   ),
-
-  // New accessibility props
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
@@ -36,8 +34,6 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   logoAriaLabel = "Logo",
   logoDecorative = false,
   labelId,
-
-  // Pass-through HTML props
   ...rest
 }) => {
   const footerClass = useMemo(

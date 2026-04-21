@@ -6,6 +6,11 @@ import { ToolbarProps } from "../Toolbar.types";
 
 const classes = {
   toolbar: "toolbar",
+
+  fixed: "toolbar_fixed",
+  sticky: "toolbar_sticky",
+  static: "toolbar_static",
+
   section: "toolbar_section",
   title: "toolbar_title",
   avatarWrapper: "toolbar_avatarWrapper",
