@@ -20,6 +20,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   shadow = getDefaultShadow(),
   rounding = getDefaultRounding(),
   className = "",
+  titleClassName = "",
   "data-testid": testId = "toolbar",
   "aria-label": ariaLabelProp,
   "aria-labelledby": ariaLabelledBy,
@@ -87,7 +88,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
         {title && (
           <TitleTag
             id={resolvedTitleId}
-            className={classMap.title}
+            className={combineClassNames(classMap.title, titleClassName)}
             data-testid={`${testId}-title`}
           >
             {title}

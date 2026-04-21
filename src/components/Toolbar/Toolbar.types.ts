@@ -116,6 +116,12 @@ export interface ToolbarProps {
   };
 
   /**
+   * Optional additional class name for the toolbar title element.
+   * Useful when consumers need to style the title directly.
+   */
+  titleClassName?: string;
+
+  /**
    * The visual theme of the toolbar.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
    */
