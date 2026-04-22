@@ -36,6 +36,14 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "attachment",
+      "type": "AttachmentType",
+      "description": "How the toolbar attaches to the viewport or page layout. \"static\" | \"fixed\" | \"sticky\"",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "avatar",
       "type": "{ name?: string; src?: string; size?: SizeType; shape?: \"circle\" | \"square\" | \"rounded\"; theme?: ThemeType; outline?: boolean; onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void; \"aria-label\"?: string; }",
       "description": "Optional avatar settings displayed at the far right.",
@@ -135,6 +143,14 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "name": "title",
       "type": "string",
       "description": "Optional title displayed in the center section.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "titleClassName",
+      "type": "string",
+      "description": "Optional additional class name for the toolbar title element. Useful when consumers need to style the title directly.",
       "required": false,
       "inherited": false,
       "category": "props"

@@ -12,6 +12,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
   "sourcePath": "src\\components\\Button\\Button.types.ts",
   "props": [
     {
+      "name": "_target",
+      "type": "React.HTMLAttributeAnchorTarget",
+      "description": "Optional target for link rendering. Example: \"_blank\", \"_self\", \"_parent\", \"_top\"",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "aria-atomic",
       "type": "boolean",
       "description": "Whether assistive technologies should treat live updates as atomic.",
@@ -106,6 +114,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "aria"
+    },
+    {
+      "name": "as",
+      "type": "React.ElementType<any, keyof React.JSX.IntrinsicElements>",
+      "description": "Optional element or component override. Example: \"a\", \"button\", Link",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "children",

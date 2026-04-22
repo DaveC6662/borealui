@@ -44,6 +44,14 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "asChild",
+      "type": "boolean",
+      "description": "When true, the popover will clone the provided trigger element and attach popover behavior directly to it instead of wrapping it in an internal button.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "className",
       "type": "string",
       "description": "Optional additional class name(s) for custom styling.",
@@ -56,6 +64,14 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "type": "ReactNode",
       "description": "Content to be displayed inside the popover.",
       "required": true,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Optional additional class name(s) for the popover content element.",
+      "required": false,
       "inherited": false,
       "category": "props"
     },
@@ -125,8 +141,8 @@ export const popoverPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "trigger",
-      "type": "ReactNode",
-      "description": "Trigger element that toggles the popover's visibility.",
+      "type": "ReactNode | React.ReactElement<TriggerElementProps, string | JSXElementConstructor<any>>",
+      "description": "Trigger content for the popover. When `asChild` is false or omitted, this can be any renderable node and will be wrapped in an internal button element. When `asChild` is true, this should be a single interactive React element such as a button, link, or custom Button component so the popover can attach behavior directly to it without nesting buttons.",
       "required": true,
       "inherited": false,
       "category": "props"
@@ -134,7 +150,7 @@ export const popoverPropDocs: GeneratedComponentDoc = {
     {
       "name": "triggerAriaLabel",
       "type": "string",
-      "description": "Accessible label for the trigger button.",
+      "description": "Accessible label for the trigger button or trigger element.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -142,7 +158,7 @@ export const popoverPropDocs: GeneratedComponentDoc = {
     {
       "name": "triggerTitle",
       "type": "string",
-      "description": "Accessible label for the trigger button when expanded/collapsed state needs custom wording.",
+      "description": "Optional title attribute for the trigger element.",
       "required": false,
       "inherited": false,
       "category": "props"
