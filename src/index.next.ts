@@ -9,7 +9,7 @@ export * from "./generated-docs/index";
 ///Theme Context and utils
 export { default as ThemeProvider } from "./context/NextThemeProvider";
 export { registerColorScheme } from "./styles/colorSchemeRegistry";
-export { colorSchemes } from "./styles/Themes";
+export { defaultColorSchemes } from "./styles/Themes";
 export { setBorealStyleConfig } from "./config/boreal-style-config";
 
 export { default as Typography } from "./components/Typography/next/Typography";

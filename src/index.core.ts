@@ -6,7 +6,7 @@ export * from "./generated-docs/index";
 
 export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
 export { registerColorScheme } from "./styles/colorSchemeRegistry";
-export { colorSchemes } from "./styles/Themes";
+export { defaultColorSchemes } from "./styles/Themes";
 export { setBorealStyleConfig } from "./config/boreal-style-config";
 
 export { default as Typography } from "./components/Typography/core/Typography";

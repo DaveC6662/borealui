@@ -17,6 +17,7 @@ import { ReactNode } from "react";
  *                                             to be registered at runtime.
  * @property {string} [initialSchemeName] - Optional name of the color scheme to be selected on initial load. If not provided, the provider will
  *                                          attempt to use the saved scheme from localStorage or the default scheme.
+ * @property {boolean} [useOnlyCustomSchemes] - Optional flag to indicate if only custom schemes should be used, ignoring default schemes.
  *
  * @example
  * <ThemeProvider customSchemes={[customTheme]}>
@@ -27,6 +28,7 @@ export interface ThemeProviderProps {
   children: ReactNode;
   customSchemes?: ColorScheme[];
   initialSchemeName?: string;
+  useOnlyCustomSchemes?: boolean;
 }
 
 /**
