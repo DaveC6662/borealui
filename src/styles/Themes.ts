@@ -1,6 +1,6 @@
 /**
  * ---------------------------------------------------------------------
- * colorSchemes.ts
+ * Themes.ts
  * ---------------------------------------------------------------------
  * A curated list of predefined color schemes used for theming
  * in the Boreal UI system. Each scheme follows the `ColorScheme`

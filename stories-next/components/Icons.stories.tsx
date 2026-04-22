@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/react-vite";
+import { Meta } from "@storybook/nextjs-vite";
 
 import {
   FileIcon,
@@ -14,10 +14,10 @@ import {
   EyeSlashIcon,
   FolderIcon,
   PlusCircleIcon,
-} from "../src/Icons";
+} from "../../src/Icons";
 
 const meta: Meta = {
-  title: "Icons/All Custom Icons",
+  title: "Icons/All Icons",
 };
 
 export default meta;

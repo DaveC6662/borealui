@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react-vite";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
   AttachmentType,
   IconButton,
@@ -6,10 +6,10 @@ import {
   ShadowType,
   ThemeType,
   Toolbar,
-} from "../src/index.core";
+} from "../../src/index.next";
 import { FaBell, FaArrowLeft } from "react-icons/fa";
-import type { ToolbarBaseProps } from "../src/components/Toolbar/Toolbar.types";
-import { withVariants } from "../.storybook-core/helpers/withVariants";
+import type { ToolbarBaseProps } from "../../src/components/Toolbar/Toolbar.types";
+import { withVariants } from "../../.storybook-core/helpers/withVariants";
 
 const themeOptions: ThemeType[] = [
   "primary",
@@ -118,12 +118,12 @@ export const AttachmentVariants: Story = {
   },
 };
 
-export const RoundingVariants = (args: ToolbarBaseProps) =>
+export const RoundingVariants = (args: React.ComponentProps<typeof Toolbar>) =>
   withVariants(Toolbar, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args: ToolbarBaseProps) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof Toolbar>) =>
   withVariants(Toolbar, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

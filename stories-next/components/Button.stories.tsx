@@ -1,35 +1,35 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FaPlus } from "react-icons/fa";
-import { Button } from "../src/index.core";
-import { ButtonProps } from "../src/components/Button/Button.types";
-import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
+import { Button } from "../../src/index.next";
+import { ButtonProps } from "../../src/components/Button/Button.types";
+import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 import {
   RoundingType,
   ShadowType,
   SizeType,
   StateType,
   ThemeType,
-} from "../src/types/types";
+} from "../../src/types/types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
   "quaternary",
   "clear",
-] as ThemeType[];
-const stateOptions = ["success", "error", "warning"] as StateType[];
+];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
+const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
 
-const roundingOptions = ["none", "small", "medium", "large"] as RoundingType[];
-const shadowOptions = [
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
   "none",
   "light",
   "medium",
   "strong",
   "intense",
-] as ShadowType[];
+];
 
 const meta: Meta<ButtonProps> = {
   title: "Components/Button",
@@ -168,6 +168,14 @@ export const WithHref: Story = {
   },
 };
 
+export const WithLongText: Story = {
+  args: {
+    ...defaultArgs,
+    href: "https://example.com",
+    children: "This is a very long link button text to test overflow handling",
+  },
+};
+
 export const WithExternalLink: Story = {
   args: {
     ...defaultArgs,
@@ -175,14 +183,6 @@ export const WithExternalLink: Story = {
     _target: "_blank",
     isExternal: true,
     children: "External Link",
-  },
-};
-
-export const WithLongText: Story = {
-  args: {
-    ...defaultArgs,
-    href: "https://example.com",
-    children: "This is a very long link button text to test overflow handling",
   },
 };
 
