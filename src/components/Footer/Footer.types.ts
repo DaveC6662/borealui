@@ -8,6 +8,31 @@ import {
 import { IconButtonProps } from "../IconButton/IconButton.types";
 import { ThemeSelectProps } from "../Select/Select.types";
 
+export type FooterLayout = "inline" | "columns";
+
+export interface FooterSection {
+  /**
+   * Heading displayed above this footer group.
+   */
+  title: React.ReactNode;
+
+  /**
+   * Links displayed in this section.
+   */
+  links: FooterLink[];
+
+  /**
+   * Accessible label for the section nav.
+   * Defaults to `${title} links` when title is a string.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Optional test id suffix.
+   */
+  testId?: string;
+}
+
 /**
  * Represents a navigational link in the footer.
  */
@@ -156,6 +181,46 @@ export interface FooterProps extends Omit<
 
   /** Whether to show the theme selector dropdown. */
   showThemeSelect?: boolean;
+
+  /**
+   * Footer layout style.
+   * "inline" keeps the older compact layout.
+   * "columns" supports brand, grouped sections, social links, and bottom bar.
+   */
+  layout?: FooterLayout;
+
+  /**
+   * Optional brand title displayed beside or below the logo.
+   */
+  brandTitle?: React.ReactNode;
+
+  /**
+   * Optional brand description text displayed in the brand column.
+   */
+  brandDescription?: React.ReactNode;
+
+  /**
+   * Optional href for the brand/logo area.
+   */
+  brandHref?: string;
+
+  /**
+   * Grouped footer link sections.
+   * When omitted, the old `links` prop is still supported.
+   */
+  sections?: FooterSection[];
+
+  /**
+   * Content shown on the right side of the bottom bar.
+   * Example: "Secure Environment"
+   */
+  bottomEnd?: React.ReactNode;
+
+  /**
+   * Whether copyright should render in the bottom bar.
+   * Useful for column layouts.
+   */
+  copyrightInBottom?: boolean;
 
   /**
    * Accessible label for the overall footer landmark.
