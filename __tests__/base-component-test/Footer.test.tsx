@@ -134,6 +134,57 @@ const renderFooter = (
 
 describe("FooterBase", () => {
   describe("inline layout", () => {
+    it("applies custom class names to inline layout regions", () => {
+      renderFooter({
+        logo: <svg data-testid="inline-logo-svg" />,
+        contentClassName: "customContent",
+        leftClassName: "customLeft",
+        linksClassName: "customLinks",
+        linkClassName: "customInlineLink",
+        logoClassName: "customLogo",
+        socialClassName: "customSocial",
+        themeToggleClassName: "customThemeToggle",
+        copyrightClassName: "customCopyright",
+      });
+
+      const footer = screen.getByTestId("footer");
+      const content = footer.firstElementChild;
+
+      expect(content).toHaveClass("footerContent");
+      expect(content).toHaveClass("customContent");
+
+      expect(screen.getByTestId("footer-left")).toHaveClass("footerLeft");
+      expect(screen.getByTestId("footer-left")).toHaveClass("customLeft");
+
+      expect(screen.getByTestId("footer-nav")).toHaveClass("footerLinks");
+      expect(screen.getByTestId("footer-nav")).toHaveClass("customLinks");
+
+      expect(screen.getByTestId("footer-link-home")).toHaveClass("footerLink");
+      expect(screen.getByTestId("footer-link-home")).toHaveClass(
+        "customInlineLink",
+      );
+
+      expect(screen.getByTestId("footer-logo")).toHaveClass("footerLogo");
+      expect(screen.getByTestId("footer-logo")).toHaveClass("customLogo");
+
+      expect(screen.getByTestId("footer-social")).toHaveClass("footerSocial");
+      expect(screen.getByTestId("footer-social")).toHaveClass("customSocial");
+
+      expect(screen.getByTestId("footer-theme-select")).toHaveClass(
+        "footerThemeToggle",
+      );
+      expect(screen.getByTestId("footer-theme-select")).toHaveClass(
+        "customThemeToggle",
+      );
+
+      expect(screen.getByTestId("footer-copyright")).toHaveClass(
+        "footerCopyright",
+      );
+      expect(screen.getByTestId("footer-copyright")).toHaveClass(
+        "customCopyright",
+      );
+    });
+
     it("renders the footer landmark and core regions", () => {
       renderFooter();
 
@@ -447,6 +498,133 @@ describe("FooterBase", () => {
   });
 
   describe("columns layout", () => {
+    it("applies custom class names to column layout regions", () => {
+      renderFooter({
+        layout: "columns",
+        logo: <svg data-testid="columns-logo-svg" />,
+        brandTitle: "Boreal UI",
+        brandDescription: "Accessible components for modern interfaces.",
+        brandHref: "/",
+        sections: defaultSections,
+        socialLinks: defaultSocialLinks,
+        showThemeSelect: true,
+        bottomEnd: "Secure Environment",
+
+        contentClassName: "customColumnsContent",
+        logoClassName: "customColumnsLogo",
+        brandClassName: "customBrand",
+        brandLinkClassName: "customBrandLink",
+        brandTitleClassName: "customBrandTitle",
+        brandDescriptionClassName: "customBrandDescription",
+        sectionsClassName: "customSections",
+        actionsClassName: "customActions",
+        actionGroupClassName: "customActionGroup",
+        socialClassName: "customColumnsSocial",
+        themeToggleClassName: "customColumnsThemeToggle",
+        bottomClassName: "customBottom",
+        bottomCopyrightClassName: "customBottomCopyright",
+        bottomEndClassName: "customBottomEnd",
+      });
+
+      const footer = screen.getByTestId("footer");
+      const content = footer.firstElementChild;
+
+      expect(content).toHaveClass("footerContent");
+      expect(content).toHaveClass("customColumnsContent");
+
+      expect(screen.getByTestId("footer-logo")).toHaveClass("footerLogo");
+      expect(screen.getByTestId("footer-logo")).toHaveClass(
+        "customColumnsLogo",
+      );
+
+      expect(screen.getByTestId("footer-brand")).toHaveClass("footerBrand");
+      expect(screen.getByTestId("footer-brand")).toHaveClass("customBrand");
+
+      const brandLink = screen.getByRole("link", { name: "Boreal UI" });
+      expect(brandLink).toHaveClass("footerBrandLink");
+      expect(brandLink).toHaveClass("customBrandLink");
+
+      expect(screen.getByTestId("footer-brand-title")).toHaveClass(
+        "footerBrandTitle",
+      );
+      expect(screen.getByTestId("footer-brand-title")).toHaveClass(
+        "customBrandTitle",
+      );
+
+      expect(screen.getByTestId("footer-brand-description")).toHaveClass(
+        "footerBrandDescription",
+      );
+      expect(screen.getByTestId("footer-brand-description")).toHaveClass(
+        "customBrandDescription",
+      );
+
+      expect(screen.getByTestId("footer-sections")).toHaveClass(
+        "footerSections",
+      );
+      expect(screen.getByTestId("footer-sections")).toHaveClass(
+        "customSections",
+      );
+
+      expect(screen.getByTestId("footer-actions")).toHaveClass("footerActions");
+      expect(screen.getByTestId("footer-actions")).toHaveClass("customActions");
+
+      const actionGroup = screen.getByText("Connect").closest("div");
+      expect(actionGroup).toHaveClass("footerActionGroup");
+      expect(actionGroup).toHaveClass("customActionGroup");
+
+      expect(screen.getByTestId("footer-social")).toHaveClass("footerSocial");
+      expect(screen.getByTestId("footer-social")).toHaveClass(
+        "customColumnsSocial",
+      );
+
+      expect(screen.getByTestId("footer-theme-select")).toHaveClass(
+        "footerThemeToggle",
+      );
+      expect(screen.getByTestId("footer-theme-select")).toHaveClass(
+        "customColumnsThemeToggle",
+      );
+
+      expect(screen.getByTestId("footer-bottom")).toHaveClass("footerBottom");
+      expect(screen.getByTestId("footer-bottom")).toHaveClass("customBottom");
+
+      expect(screen.getByTestId("footer-copyright")).toHaveClass(
+        "footerBottomCopyright",
+      );
+      expect(screen.getByTestId("footer-copyright")).toHaveClass(
+        "customBottomCopyright",
+      );
+
+      expect(screen.getByTestId("footer-bottom-end")).toHaveClass(
+        "footerBottomEnd",
+      );
+      expect(screen.getByTestId("footer-bottom-end")).toHaveClass(
+        "customBottomEnd",
+      );
+    });
+
+    it("applies global sectionTitleClassName to section titles and action group title", () => {
+      renderFooter({
+        layout: "columns",
+        sections: defaultSections,
+        socialLinks: defaultSocialLinks,
+        showThemeSelect: false,
+        sectionTitleClassName: "customGlobalSectionTitle",
+      });
+
+      expect(screen.getByText("Resources")).toHaveClass("footerSectionTitle");
+      expect(screen.getByText("Resources")).toHaveClass(
+        "customGlobalSectionTitle",
+      );
+
+      expect(screen.getByText("Legal")).toHaveClass("footerSectionTitle");
+      expect(screen.getByText("Legal")).toHaveClass("customGlobalSectionTitle");
+
+      expect(screen.getByText("Connect")).toHaveClass("footerSectionTitle");
+      expect(screen.getByText("Connect")).toHaveClass(
+        "customGlobalSectionTitle",
+      );
+    });
+
     it("renders the column layout root, brand, sections, actions, and bottom bar", () => {
       renderFooter({
         layout: "columns",

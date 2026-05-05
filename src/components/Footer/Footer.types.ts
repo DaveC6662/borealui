@@ -28,6 +28,26 @@ export interface FooterSection {
   "aria-label"?: string;
 
   /**
+   * Optional custom class name for this section nav.
+   */
+  className?: string;
+
+  /**
+   * Optional custom class name for this section heading.
+   */
+  titleClassName?: string;
+
+  /**
+   * Optional custom class name for this section link list.
+   */
+  listClassName?: string;
+
+  /**
+   * Optional custom class name applied to links in this section.
+   */
+  linkClassName?: string;
+
+  /**
    * Optional test id suffix.
    */
   testId?: string;
@@ -145,6 +165,101 @@ export interface FooterProps extends Omit<
 
   /** Optional class name for custom styles. */
   className?: string;
+
+  /**
+   * Optional custom class name for the main footer content wrapper.
+   */
+  contentClassName?: string;
+
+  /**
+   * Optional custom class name for the inline layout left area.
+   */
+  leftClassName?: string;
+
+  /**
+   * Optional custom class name for the inline layout links nav.
+   */
+  linksClassName?: string;
+
+  /**
+   * Optional custom class name applied to inline footer links.
+   */
+  linkClassName?: string;
+
+  /**
+   * Optional custom class name for the logo wrapper/image.
+   */
+  logoClassName?: string;
+
+  /**
+   * Optional custom class name for the social links nav.
+   */
+  socialClassName?: string;
+
+  /**
+   * Optional custom class name for the theme selector wrapper.
+   */
+  themeToggleClassName?: string;
+
+  /**
+   * Optional custom class name for the columns layout brand area.
+   */
+  brandClassName?: string;
+
+  /**
+   * Optional custom class name for the brand link/wrapper.
+   */
+  brandLinkClassName?: string;
+
+  /**
+   * Optional custom class name for the brand title.
+   */
+  brandTitleClassName?: string;
+
+  /**
+   * Optional custom class name for the brand description.
+   */
+  brandDescriptionClassName?: string;
+
+  /**
+   * Optional custom class name for the grouped sections wrapper.
+   */
+  sectionsClassName?: string;
+
+  /**
+   * Optional custom class name for section titles in the columns layout.
+   */
+  sectionTitleClassName?: string;
+
+  /**
+   * Optional custom class name for the actions column.
+   */
+  actionsClassName?: string;
+
+  /**
+   * Optional custom class name for action groups, such as the Connect group.
+   */
+  actionGroupClassName?: string;
+
+  /**
+   * Optional custom class name for the bottom bar.
+   */
+  bottomClassName?: string;
+
+  /**
+   * Optional custom class name for the bottom copyright text.
+   */
+  bottomCopyrightClassName?: string;
+
+  /**
+   * Optional custom class name for the bottom-end content.
+   */
+  bottomEndClassName?: string;
+
+  /**
+   * Optional custom class name for copyright when rendered outside the bottom bar.
+   */
+  copyrightClassName?: string;
 
   /**
    * Attachment type for how the footer is positioned.

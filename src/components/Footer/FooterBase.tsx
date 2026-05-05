@@ -34,6 +34,29 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   showThemeSelect = false,
   bottomEnd,
 
+  contentClassName,
+  leftClassName,
+  linksClassName,
+  linkClassName,
+  logoClassName,
+  socialClassName,
+  themeToggleClassName,
+
+  brandClassName,
+  brandLinkClassName,
+  brandTitleClassName,
+  brandDescriptionClassName,
+
+  sectionsClassName,
+  sectionTitleClassName,
+  actionsClassName,
+  actionGroupClassName,
+
+  bottomClassName,
+  bottomCopyrightClassName,
+  bottomEndClassName,
+  copyrightClassName,
+
   IconButton,
   ImageComponent = "img",
   ThemeSelect,
@@ -110,7 +133,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
       if (typeof ImageComponent === "string") {
         return (
           <img
-            className={classMap.logo}
+            className={combineClassNames(classMap.logo, logoClassName)}
             data-testid={`${testId}-logo`}
             loading="lazy"
             src={logoSrc}
@@ -124,7 +147,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
       return (
         <ImageComponent
-          className={classMap.logo}
+          className={combineClassNames(classMap.logo, logoClassName)}
           data-testid={`${testId}-logo`}
           src={logoSrc}
           alt={logoDecorative ? "" : logoAriaLabel}
@@ -141,7 +164,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
     return (
       <span
-        className={classMap.logo}
+        className={combineClassNames(classMap.logo, logoClassName)}
         role={logoDecorative ? undefined : "img"}
         aria-label={logoDecorative ? undefined : logoAriaLabel}
         aria-hidden={logoDecorative ? true : undefined}
@@ -157,15 +180,23 @@ const FooterBase: React.FC<BaseFooterProps> = ({
     );
   };
 
-  const renderFooterLink = (link: FooterLink, index: number) => {
+  const renderFooterLink = (
+    link: FooterLink,
+    index: number,
+    customLinkClassName?: string,
+  ) => {
     const slug = slugify(link.label || link.href || `link-${index}`);
     const key = `${link.href ?? slug}-${index}`;
+    const resolvedLinkClassName = combineClassNames(
+      classMap.link,
+      customLinkClassName,
+    );
 
     if (link.disabled) {
       return (
         <li key={key}>
           <span
-            className={classMap.link}
+            className={resolvedLinkClassName}
             data-testid={`${testId}-link-${slug}`}
             aria-disabled="true"
             title={link.title}
@@ -180,7 +211,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
       <li key={key}>
         <LinkWrapper
           href={link.href}
-          className={classMap.link}
+          className={resolvedLinkClassName}
           data-testid={`${testId}-link-${slug}`}
           aria-label={link["aria-label"]}
           aria-current={link["aria-current"]}
@@ -201,7 +232,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
     return (
       <nav
-        className={classMap.social}
+        className={combineClassNames(classMap.social, socialClassName)}
         aria-label={socialNavAriaLabel}
         data-testid={`${testId}-social`}
       >
@@ -232,7 +263,10 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
     return (
       <div
-        className={classMap.themeToggle}
+        className={combineClassNames(
+          classMap.themeToggle,
+          themeToggleClassName,
+        )}
         data-testid={`${testId}-theme-select`}
         aria-label={themeSelectAriaLabel}
       >
@@ -253,7 +287,10 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
         {brandTitle && (
           <span
-            className={classMap.brandTitle}
+            className={combineClassNames(
+              classMap.brandTitle,
+              brandTitleClassName,
+            )}
             data-testid={`${testId}-brand-title`}
           >
             {brandTitle}
@@ -263,11 +300,17 @@ const FooterBase: React.FC<BaseFooterProps> = ({
     );
 
     return (
-      <div className={classMap.brand} data-testid={`${testId}-brand`}>
+      <div
+        className={combineClassNames(classMap.brand, brandClassName)}
+        data-testid={`${testId}-brand`}
+      >
         {brandHref ? (
           <LinkWrapper
             href={brandHref}
-            className={classMap.brandLink}
+            className={combineClassNames(
+              classMap.brandLink,
+              brandLinkClassName,
+            )}
             aria-label={
               typeof brandTitle === "string" ? brandTitle : logoAriaLabel
             }
@@ -275,12 +318,22 @@ const FooterBase: React.FC<BaseFooterProps> = ({
             {brandContent}
           </LinkWrapper>
         ) : (
-          <div className={classMap.brandLink}>{brandContent}</div>
+          <div
+            className={combineClassNames(
+              classMap.brandLink,
+              brandLinkClassName,
+            )}
+          >
+            {brandContent}
+          </div>
         )}
 
         {brandDescription && (
           <p
-            className={classMap.brandDescription}
+            className={combineClassNames(
+              classMap.brandDescription,
+              brandDescriptionClassName,
+            )}
             data-testid={`${testId}-brand-description`}
           >
             {brandDescription}
@@ -289,7 +342,10 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
         {copyright && !shouldRenderCopyrightInBottom && (
           <div
-            className={classMap.copyright}
+            className={combineClassNames(
+              classMap.copyright,
+              copyrightClassName,
+            )}
             data-testid={`${testId}-copyright`}
           >
             <p id={labelId}>{copyright}</p>
@@ -305,7 +361,10 @@ const FooterBase: React.FC<BaseFooterProps> = ({
     }
 
     return (
-      <div className={classMap.sections} data-testid={`${testId}-sections`}>
+      <div
+        className={combineClassNames(classMap.sections, sectionsClassName)}
+        data-testid={`${testId}-sections`}
+      >
         {normalizedSections.map((section, sectionIndex) => {
           const titleText =
             typeof section.title === "string"
@@ -317,14 +376,29 @@ const FooterBase: React.FC<BaseFooterProps> = ({
           return (
             <nav
               key={sectionSlug}
-              className={classMap.section}
+              className={combineClassNames(classMap.section, section.className)}
               aria-label={section["aria-label"] ?? `${titleText} links`}
               data-testid={`${testId}-section-${sectionSlug}`}
             >
-              <h2 className={classMap.sectionTitle}>{section.title}</h2>
+              <h2
+                className={combineClassNames(
+                  classMap.sectionTitle,
+                  sectionTitleClassName,
+                  section.titleClassName,
+                )}
+              >
+                {section.title}
+              </h2>
 
-              <ul className={classMap.sectionList}>
-                {section.links.map(renderFooterLink)}
+              <ul
+                className={combineClassNames(
+                  classMap.sectionList,
+                  section.listClassName,
+                )}
+              >
+                {section.links.map((link, index) =>
+                  renderFooterLink(link, index, section.linkClassName),
+                )}
               </ul>
             </nav>
           );
@@ -344,16 +418,31 @@ const FooterBase: React.FC<BaseFooterProps> = ({
         aria-describedby={ariaDescribedBy}
         {...rest}
       >
-        <div className={classMap.content}>
+        <div className={combineClassNames(classMap.content, contentClassName)}>
           {renderBrand()}
 
           {renderSections()}
 
           {(socialLinks.length > 0 || showThemeSelect) && (
-            <div className={classMap.actions} data-testid={`${testId}-actions`}>
+            <div
+              className={combineClassNames(classMap.actions, actionsClassName)}
+              data-testid={`${testId}-actions`}
+            >
               {socialLinks.length > 0 && (
-                <div className={classMap.actionGroup}>
-                  <h2 className={classMap.sectionTitle}>Connect</h2>
+                <div
+                  className={combineClassNames(
+                    classMap.actionGroup,
+                    actionGroupClassName,
+                  )}
+                >
+                  <h2
+                    className={combineClassNames(
+                      classMap.sectionTitle,
+                      sectionTitleClassName,
+                    )}
+                  >
+                    Connect
+                  </h2>
                   {renderSocialLinks()}
                 </div>
               )}
@@ -364,11 +453,17 @@ const FooterBase: React.FC<BaseFooterProps> = ({
         </div>
 
         {(copyright || bottomEnd) && (
-          <div className={classMap.bottom} data-testid={`${testId}-bottom`}>
+          <div
+            className={combineClassNames(classMap.bottom, bottomClassName)}
+            data-testid={`${testId}-bottom`}
+          >
             {copyright && shouldRenderCopyrightInBottom && (
               <p
                 id={labelId}
-                className={classMap.bottomCopyright}
+                className={combineClassNames(
+                  classMap.bottomCopyright,
+                  bottomCopyrightClassName,
+                )}
                 data-testid={`${testId}-copyright`}
               >
                 {copyright}
@@ -377,7 +472,10 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
             {bottomEnd && (
               <div
-                className={classMap.bottomEnd}
+                className={combineClassNames(
+                  classMap.bottomEnd,
+                  bottomEndClassName,
+                )}
                 data-testid={`${testId}-bottom-end`}
               >
                 {bottomEnd}
@@ -399,13 +497,19 @@ const FooterBase: React.FC<BaseFooterProps> = ({
       aria-describedby={ariaDescribedBy}
       {...rest}
     >
-      <div className={classMap.content}>
-        <div className={classMap.left} data-testid={`${testId}-left`}>
+      <div className={combineClassNames(classMap.content, contentClassName)}>
+        <div
+          className={combineClassNames(classMap.left, leftClassName)}
+          data-testid={`${testId}-left`}
+        >
           {renderLogo()}
 
           {copyright && (
             <div
-              className={classMap.copyright ?? classMap.left}
+              className={
+                combineClassNames(classMap.copyright, copyrightClassName) ??
+                combineClassNames(classMap.left, leftClassName)
+              }
               data-testid={`${testId}-copyright`}
             >
               <p id={labelId}>{copyright}</p>
@@ -415,11 +519,15 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
         {links.length > 0 && (
           <nav
-            className={classMap.links}
+            className={combineClassNames(classMap.links, linksClassName)}
             aria-label={navAriaLabel}
             data-testid={`${testId}-nav`}
           >
-            <ul>{links.map(renderFooterLink)}</ul>
+            <ul>
+              {links.map((link, index) =>
+                renderFooterLink(link, index, linkClassName),
+              )}
+            </ul>
           </nav>
         )}
 
