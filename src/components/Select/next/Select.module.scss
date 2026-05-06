@@ -30,7 +30,7 @@
   &:focus-within {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 3px;
-    border-radius: 8px;
+    border-radius: inherit;
   }
 
   @each $k, $v in theme.$rounding {

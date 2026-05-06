@@ -570,12 +570,6 @@
   }
 }
 
-.card :focus-visible {
-  outline: 2px solid var(--focus-outline-color, var(--primary-color));
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .card,
   .card * {

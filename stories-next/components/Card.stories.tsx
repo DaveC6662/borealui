@@ -3,9 +3,9 @@ import { Card } from "../../src/index.next";
 import { FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
-import testImageJpg from "./assets/test_pattern.jpg";
-import testImagePng from "./assets/test_pattern.png";
-import testImageSvg from "./assets/test_pattern.svg";
+import testImageJpg from "../assets/test_pattern.jpg";
+import testImagePng from "../assets/test_pattern.png";
+import testImageSvg from "../assets/test_pattern.svg";
 import type { CardProps } from "../../src/components/Card/Card.types";
 import { StateType, ThemeType } from "../../src/types/types";
 
