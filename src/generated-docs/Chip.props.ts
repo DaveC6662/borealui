@@ -117,7 +117,7 @@ export const chipPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "role",
-      "type": "\"none\" | \"alert\" | \"log\" | \"presentation\" | \"status\"",
+      "type": "\"alert\" | \"log\" | \"none\" | \"presentation\" | \"status\"",
       "description": "ARIA role for the chip container. Defaults to \"alert\".",
       "required": false,
       "inherited": false,

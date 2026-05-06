@@ -12,9 +12,25 @@ export const cardPropDocs: GeneratedComponentDoc = {
   "sourcePath": "src\\components\\Card\\Card.types.ts",
   "props": [
     {
+      "name": "actionButtonClassName",
+      "type": "string",
+      "description": "Custom class name for each action button.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "actionButtons",
       "type": "ActionButton[]",
       "description": "List of action buttons to render in the footer.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "actionsClassName",
+      "type": "string",
+      "description": "Custom class name for the actions wrapper.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -45,7 +61,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "aria-current",
-      "type": "boolean | \"time\" | \"page\" | \"step\" | \"location\" | \"date\"",
+      "type": "boolean | \"page\" | \"step\" | \"location\" | \"date\" | \"time\"",
       "description": "Indicates current item state when the card is used in navigation-like UIs.",
       "required": false,
       "inherited": false,
@@ -124,12 +140,28 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "childrenClassName",
+      "type": "string",
+      "description": "Custom class name for the children wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "className",
       "type": "string",
       "description": "Custom class name for the card container.",
       "required": false,
       "inherited": false,
       "category": "styling"
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Custom class name for the content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -143,6 +175,14 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "name": "description",
       "type": "string",
       "description": "Optional description displayed in the body.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "descriptionClassName",
+      "type": "string",
+      "description": "Custom class name for the description text.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -183,6 +223,14 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "name": "headerId",
       "type": "string",
       "description": "Optional override for the generated header id.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Custom class name for the icon wrapper.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -263,6 +311,14 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "name": "loading",
       "type": "boolean",
       "description": "Whether the card is in a loading state (shows skeleton).",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "mediaClassName",
+      "type": "string",
+      "description": "Custom class name for the media/image wrapper.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -375,6 +431,14 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "name": "title",
       "type": "string",
       "description": "Optional card title displayed in the header.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "titleClassName",
+      "type": "string",
+      "description": "Custom class name for the title element.",
       "required": false,
       "inherited": false,
       "category": "props"

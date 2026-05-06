@@ -12,6 +12,22 @@ export const footerPropDocs: GeneratedComponentDoc = {
   "sourcePath": "src\\components\\Footer\\Footer.types.ts",
   "props": [
     {
+      "name": "actionGroupClassName",
+      "type": "string",
+      "description": "Optional custom class name for action groups, such as the Connect group.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "actionsClassName",
+      "type": "string",
+      "description": "Optional custom class name for the actions column.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "aria-describedby",
       "type": "string",
       "description": "Describes the footer landmark via external element IDs.",
@@ -44,9 +60,41 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "bottomClassName",
+      "type": "string",
+      "description": "Optional custom class name for the bottom bar.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "bottomCopyrightClassName",
+      "type": "string",
+      "description": "Optional custom class name for the bottom copyright text.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "bottomEnd",
       "type": "ReactNode",
       "description": "Content shown on the right side of the bottom bar. Example: \"Secure Environment\"",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "bottomEndClassName",
+      "type": "string",
+      "description": "Optional custom class name for the bottom-end content.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "brandClassName",
+      "type": "string",
+      "description": "Optional custom class name for the columns layout brand area.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -60,9 +108,25 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "brandDescriptionClassName",
+      "type": "string",
+      "description": "Optional custom class name for the brand description.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "brandHref",
       "type": "string",
       "description": "Optional href for the brand/logo area.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "brandLinkClassName",
+      "type": "string",
+      "description": "Optional custom class name for the brand link/wrapper.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -76,6 +140,14 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "brandTitleClassName",
+      "type": "string",
+      "description": "Optional custom class name for the brand title.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "className",
       "type": "string",
       "description": "Optional class name for custom styles.",
@@ -84,9 +156,25 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Optional custom class name for the main footer content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "copyright",
       "type": "string",
       "description": "Optional copyright text.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "copyrightClassName",
+      "type": "string",
+      "description": "Optional custom class name for copyright when rendered outside the bottom bar.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -124,9 +212,33 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "leftClassName",
+      "type": "string",
+      "description": "Optional custom class name for the inline layout left area.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "linkClassName",
+      "type": "string",
+      "description": "Optional custom class name applied to inline footer links.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "links",
       "type": "FooterLink[]",
       "description": "Array of footer navigation links.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "linksClassName",
+      "type": "string",
+      "description": "Optional custom class name for the inline layout links nav.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -143,6 +255,14 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "name": "logoAriaLabel",
       "type": "string",
       "description": "Accessible name for the logo when it is rendered as an image or custom node.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "logoClassName",
+      "type": "string",
+      "description": "Optional custom class name for the logo wrapper/image.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -180,6 +300,22 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "sectionsClassName",
+      "type": "string",
+      "description": "Optional custom class name for the grouped sections wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "sectionTitleClassName",
+      "type": "string",
+      "description": "Optional custom class name for section titles in the columns layout.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "shadow",
       "type": "ShadowType",
       "description": "Shadow of the component. ('none' | 'light' | 'medium' | 'strong' | 'intense')",
@@ -191,6 +327,14 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "name": "showThemeSelect",
       "type": "boolean",
       "description": "Whether to show the theme selector dropdown.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "socialClassName",
+      "type": "string",
+      "description": "Optional custom class name for the social links nav.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -223,6 +367,14 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "name": "themeSelectAriaLabel",
       "type": "string",
       "description": "Accessible label for the theme selector region/container.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "themeToggleClassName",
+      "type": "string",
+      "description": "Optional custom class name for the theme selector wrapper.",
       "required": false,
       "inherited": false,
       "category": "props"
