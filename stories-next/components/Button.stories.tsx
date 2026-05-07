@@ -44,11 +44,14 @@ const meta: Meta<ButtonProps> = {
     shadow: "medium" as ShadowType,
   },
   argTypes: {
+    glass: {
+      control: "boolean",
+      description:
+        "Applies a translucent frosted-glass treatment using the active theme or state palette.",
+    },
     iconPosition: {
       control: "select",
       options: ["left", "right"],
-      description:
-        "Controls whether the button icon renders before or after the label.",
     },
   },
 };
@@ -137,6 +140,38 @@ export const StateVariants = () => (
     {stateOptions.map((state) => (
       <Button key={state} state={state}>
         {state}
+      </Button>
+    ))}
+  </StoryGrid>
+);
+
+export const GlassVariants = () => (
+  <StoryGrid title="Glass Buttons">
+    {themeOptions.map((theme) => (
+      <Button key={theme} theme={theme} glass>
+        {theme} Glass
+      </Button>
+    ))}
+
+    {stateOptions.map((state) => (
+      <Button key={state} state={state} glass>
+        {state} Glass
+      </Button>
+    ))}
+  </StoryGrid>
+);
+
+export const OutlineGlassVariants = () => (
+  <StoryGrid title="Glass Buttons">
+    {themeOptions.map((theme) => (
+      <Button key={theme} theme={theme} outline glass>
+        {theme} Glass Outline
+      </Button>
+    ))}
+
+    {stateOptions.map((state) => (
+      <Button key={state} state={state} outline glass>
+        {state} Glass Outline
       </Button>
     ))}
   </StoryGrid>

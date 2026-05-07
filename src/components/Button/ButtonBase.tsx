@@ -19,6 +19,8 @@ const ButtonBase = forwardRef<
       iconPosition = "left",
 
       theme = getDefaultTheme(),
+      glass = false,
+
       state = "",
       onClick,
       type = "button",
@@ -83,6 +85,7 @@ const ButtonBase = forwardRef<
           classMap[state],
           classMap[size],
           outline && classMap.outline,
+          glass && classMap.glass,
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
           fullWidth && classMap.fullWidth,
@@ -95,6 +98,7 @@ const ButtonBase = forwardRef<
         theme,
         state,
         outline,
+        glass,
         size,
         shadow,
         rounding,

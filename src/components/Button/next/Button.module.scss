@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 @use "sass:list";
 
@@ -147,7 +148,7 @@ $sizes: (
   line-height: 1em;
 }
 
-.button_icon_left {
+.button.iconLeft {
   flex-direction: row;
 
   .buttonIcon {
@@ -163,7 +164,7 @@ $sizes: (
   }
 }
 
-.button_icon_right {
+.button.iconRight {
   flex-direction: row;
 
   .buttonIcon {
@@ -183,6 +184,29 @@ $sizes: (
   font: inherit;
   line-height: inherit;
   letter-spacing: inherit;
+}
+
+.glass {
+  @include mixins.glass-surface(
+    var(--button-glass-bg, var(--glass-background)),
+    var(--button-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--button-glass-text, currentcolor);
+  isolation: isolate;
+
+  &:hover {
+    background: var(--button-glass-hover-bg, var(--glass-background-strong));
+  }
+
+  &.outline {
+    border-color: var(--button-glass-border, var(--glass-border-color));
+
+    &:hover {
+      background: var(--button-glass-hover-bg, var(--glass-background));
+    }
+  }
 }
 
 .clear {
@@ -210,12 +234,29 @@ $sizes: (
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
+    --button-glass-bg: #{map.get($values, glass-bg)};
+    --button-glass-hover-bg: #{map.get($values, glass-hover)};
+    --button-glass-border: #{map.get($values, glass-border)};
+    --button-glass-text: #{map.get($values, text)};
+
     &:hover {
       background-color: map.get($values, hover);
     }
 
     .loader {
       border-top-color: map.get($values, text);
+    }
+
+    &.glass {
+      background-color: transparent;
+      background: var(--button-glass-bg);
+      border: 1px solid var(--button-glass-border);
+      color: var(--button-glass-text);
+
+      &:hover {
+        background-color: transparent;
+        background: var(--button-glass-hover-bg);
+      }
     }
 
     &.outline {
@@ -237,12 +278,29 @@ $sizes: (
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
+    --button-glass-bg: #{map.get($values, glass-bg)};
+    --button-glass-hover-bg: #{map.get($values, glass-hover)};
+    --button-glass-border: #{map.get($values, glass-border)};
+    --button-glass-text: #{map.get($values, text)};
+
     &:hover {
       background-color: map.get($values, hover);
     }
 
     .loader {
       border-top-color: map.get($values, text);
+    }
+
+    &.glass {
+      background-color: transparent;
+      background: var(--button-glass-bg);
+      border: 1px solid var(--button-glass-border);
+      color: var(--button-glass-text);
+
+      &:hover {
+        background-color: transparent;
+        background: var(--button-glass-hover-bg);
+      }
     }
 
     &.outline {

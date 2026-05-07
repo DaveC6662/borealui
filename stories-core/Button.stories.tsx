@@ -142,6 +142,38 @@ export const StateVariants = () => (
   </StoryGrid>
 );
 
+export const GlassVariants = () => (
+  <StoryGrid title="Glass Buttons">
+    {themeOptions.map((theme) => (
+      <Button key={theme} theme={theme} glass>
+        {theme} Glass
+      </Button>
+    ))}
+
+    {stateOptions.map((state) => (
+      <Button key={state} state={state} glass>
+        {state} Glass
+      </Button>
+    ))}
+  </StoryGrid>
+);
+
+export const OutlineGlassVariants = () => (
+  <StoryGrid title="Glass Outline Buttons">
+    {themeOptions.map((theme) => (
+      <Button key={theme} theme={theme} outline glass>
+        {theme} Glass Outline
+      </Button>
+    ))}
+
+    {stateOptions.map((state) => (
+      <Button key={state} state={state} outline glass>
+        {state} Glass Outline
+      </Button>
+    ))}
+  </StoryGrid>
+);
+
 export const SizeVariants = () => (
   <StoryGrid title="Size Variants">
     {sizeOptions.map((size) => (

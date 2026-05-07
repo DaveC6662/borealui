@@ -56,6 +56,11 @@ export interface ButtonProps extends Pick<
   iconPosition?: "left" | "right";
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * Theme style of the button
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
    */

@@ -26,6 +26,7 @@ const classMap = {
   xl: "btn-xl",
 
   outline: "btn-outline",
+  glass: "btn-glass",
   disabled: "btn-disabled",
   fullWidth: "btn-full",
   link: "btn-link",
@@ -163,13 +164,104 @@ describe("ButtonBase", () => {
     );
   });
 
-  it("applies theme, state, size, outline, shadow, rounding, fullWidth, disabled, icon position, and custom className", () => {
+  it("does not apply the glass class by default", () => {
+    renderButton({}, "Default Button");
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).not.toHaveClass("btn-glass");
+  });
+
+  it("applies the glass class when glass is true", () => {
+    renderButton(
+      {
+        glass: true,
+      },
+      "Glass Button",
+    );
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-glass");
+  });
+
+  it("applies glass with a theme class", () => {
+    renderButton(
+      {
+        theme: "primary",
+        glass: true,
+      },
+      "Primary Glass",
+    );
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-primary");
+    expect(button).toHaveClass("btn-glass");
+  });
+
+  it("applies glass with a state class", () => {
+    renderButton(
+      {
+        state: "success",
+        glass: true,
+      },
+      "Success Glass",
+    );
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-success");
+    expect(button).toHaveClass("btn-glass");
+  });
+
+  it("applies glass with outline styling", () => {
+    renderButton(
+      {
+        theme: "secondary",
+        outline: true,
+        glass: true,
+      },
+      "Outlined Glass",
+    );
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-secondary");
+    expect(button).toHaveClass("btn-outline");
+    expect(button).toHaveClass("btn-glass");
+  });
+
+  it("applies glass to link buttons", () => {
+    renderButton(
+      {
+        href: "/docs",
+        glass: true,
+      },
+      "Glass Link",
+    );
+
+    const link = screen.getByTestId("button-test");
+
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveClass("btn");
+    expect(link).toHaveClass("btn-link");
+    expect(link).toHaveClass("btn-glass");
+  });
+
+  it("applies theme, state, size, outline, glass, shadow, rounding, fullWidth, disabled, icon position, and custom className", () => {
     renderButton(
       {
         theme: "primary",
         state: "success",
         size: "medium",
         outline: true,
+        glass: true,
         shadow: "light",
         rounding: "small",
         fullWidth: true,
@@ -181,11 +273,13 @@ describe("ButtonBase", () => {
     );
 
     const button = screen.getByTestId("button-test");
+
     expect(button).toHaveClass("btn");
     expect(button).toHaveClass("btn-primary");
     expect(button).toHaveClass("btn-success");
     expect(button).toHaveClass("btn-md");
     expect(button).toHaveClass("btn-outline");
+    expect(button).toHaveClass("btn-glass");
     expect(button).toHaveClass("btn-shadow-light");
     expect(button).toHaveClass("btn-round-small");
     expect(button).toHaveClass("btn-full");

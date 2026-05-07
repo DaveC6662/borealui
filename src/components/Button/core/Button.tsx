@@ -16,6 +16,7 @@ const classes = {
   fullWidth: "button_full_width",
   disabled: "button_disabled",
   outline: "button_outline",
+  glass: "button_glass",
 
   primary: "button_primary",
   secondary: "button_secondary",
