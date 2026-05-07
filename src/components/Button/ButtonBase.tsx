@@ -16,6 +16,8 @@ const ButtonBase = forwardRef<
   (
     {
       icon: Icon,
+      iconPosition = "left",
+
       theme = getDefaultTheme(),
       state = "",
       onClick,
@@ -85,6 +87,8 @@ const ButtonBase = forwardRef<
           rounding && classMap[`round${capitalize(rounding)}`],
           fullWidth && classMap.fullWidth,
           disabled && classMap.disabled,
+          iconPosition === "left" && classMap.iconLeft,
+          iconPosition === "right" && classMap.iconRight,
           className,
         ),
       [
@@ -96,49 +100,52 @@ const ButtonBase = forwardRef<
         rounding,
         fullWidth,
         disabled,
+        iconPosition,
         className,
         classMap,
       ],
     );
 
+    const iconElement = Icon ? (
+      <span
+        className={classMap.buttonIcon}
+        aria-hidden="true"
+        data-testid={testId ? `${testId}-icon` : undefined}
+      >
+        <Icon className={classMap.icon} aria-hidden={true} focusable={false} />
+      </span>
+    ) : null;
+
+    const labelElement = (
+      <span
+        className={classMap.buttonLabel}
+        aria-live={loading ? (ariaLive ?? "polite") : undefined}
+        aria-atomic={loading ? (ariaAtomic ?? true) : undefined}
+        data-testid={testId ? `${testId}-loading` : undefined}
+      >
+        {loading ? (
+          <>
+            <div className={classMap.loader} aria-hidden="true" />
+            <span className="sr_only">{loadingLabel}</span>
+          </>
+        ) : (
+          <>
+            {children}
+            {href &&
+              (_target === "_blank" ||
+                (isExternal ?? /^https?:\/\//i.test(href))) && (
+                <span className="sr_only"> (opens in a new tab)</span>
+              )}
+          </>
+        )}
+      </span>
+    );
+
     const content = (
       <>
-        {Icon && (
-          <span
-            className={classMap.buttonIcon}
-            aria-hidden="true"
-            data-testid={testId ? `${testId}-icon` : undefined}
-          >
-            <Icon
-              className={classMap.icon}
-              aria-hidden={true}
-              focusable={false}
-            />
-          </span>
-        )}
-
-        <span
-          className={classMap.buttonLabel}
-          aria-live={loading ? (ariaLive ?? "polite") : undefined}
-          aria-atomic={loading ? (ariaAtomic ?? true) : undefined}
-          data-testid={testId ? `${testId}-loading` : undefined}
-        >
-          {loading ? (
-            <>
-              <div className={classMap.loader} aria-hidden="true" />
-              <span className="sr_only">{loadingLabel}</span>
-            </>
-          ) : (
-            <>
-              {children}
-              {href &&
-                (_target === "_blank" ||
-                  (isExternal ?? /^https?:\/\//i.test(href))) && (
-                  <span className="sr_only"> (opens in a new tab)</span>
-                )}
-            </>
-          )}
-        </span>
+        {iconPosition === "left" && iconElement}
+        {labelElement}
+        {iconPosition === "right" && iconElement}
       </>
     );
 

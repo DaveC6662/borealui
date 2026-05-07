@@ -142,17 +142,40 @@ $sizes: (
 }
 
 .buttonIcon {
-  margin-right: var(--spacing-sm);
   display: flex;
   align-items: center;
-  margin-top: -0.1em;
+  line-height: 1em;
+}
 
-  @include bp.down(sm) {
-    margin-right: var(--spacing-xs);
-  }
+.button_icon_left {
+  flex-direction: row;
 
-  @include bp.up(lg) {
+  .buttonIcon {
     margin-right: var(--spacing-sm);
+
+    @include bp.down(sm) {
+      margin-right: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      margin-right: var(--spacing-sm);
+    }
+  }
+}
+
+.button_icon_right {
+  flex-direction: row;
+
+  .buttonIcon {
+    margin-left: var(--spacing-sm);
+
+    @include bp.down(sm) {
+      margin-left: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      margin-left: var(--spacing-sm);
+    }
   }
 }
 

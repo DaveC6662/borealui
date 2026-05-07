@@ -51,6 +51,11 @@ export interface ButtonProps extends Pick<
   }>;
 
   /**
+   * Position of the icon relative to the button label.
+   */
+  iconPosition?: "left" | "right";
+
+  /**
    * Theme style of the button
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
    */

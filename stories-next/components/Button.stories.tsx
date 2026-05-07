@@ -43,6 +43,14 @@ const meta: Meta<ButtonProps> = {
     rounding: "medium" as RoundingType,
     shadow: "medium" as ShadowType,
   },
+  argTypes: {
+    iconPosition: {
+      control: "select",
+      options: ["left", "right"],
+      description:
+        "Controls whether the button icon renders before or after the label.",
+    },
+  },
 };
 
 const defaultArgs: ButtonProps = {
@@ -65,6 +73,18 @@ export const WithIcon: Story = {
     children: "Add Item",
   },
 };
+
+export const IconPositions = () => (
+  <StoryGrid title="Icon Positions">
+    <Button icon={FaPlus} iconPosition="left">
+      Icon Left
+    </Button>
+
+    <Button icon={FaPlus} iconPosition="right">
+      Icon Right
+    </Button>
+  </StoryGrid>
+);
 
 export const Loading: Story = {
   args: {

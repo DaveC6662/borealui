@@ -35,6 +35,9 @@ const classMap = {
   loader: "btn-loader",
   icon: "icon-style",
 
+  iconLeft: "btn-icon-left",
+  iconRight: "btn-icon-right",
+
   shadowNone: "btn-shadow-none",
   shadowLight: "btn-shadow-light",
   shadowMedium: "btn-shadow-medium",
@@ -96,6 +99,99 @@ describe("ButtonBase", () => {
     expect(svg).toHaveClass("icon-style");
     expect(svg).toHaveAttribute("aria-hidden", "true");
     expect(svg).toHaveAttribute("focusable", "false");
+  });
+
+  it("defaults iconPosition to left when an icon is provided", () => {
+    renderButton(
+      {
+        icon: FaStar,
+      },
+      "Favorite",
+    );
+
+    const button = screen.getByTestId("button-test");
+    const icon = screen.getByTestId("button-test-icon");
+    const label = screen.getByTestId("button-test-loading");
+
+    expect(button).toHaveClass("btn-icon-left");
+    expect(button).not.toHaveClass("btn-icon-right");
+
+    expect(icon.compareDocumentPosition(label)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+
+  it("renders the icon before the label when iconPosition is left", () => {
+    renderButton(
+      {
+        icon: FaStar,
+        iconPosition: "left",
+      },
+      "Favorite",
+    );
+
+    const button = screen.getByTestId("button-test");
+    const icon = screen.getByTestId("button-test-icon");
+    const label = screen.getByTestId("button-test-loading");
+
+    expect(button).toHaveClass("btn-icon-left");
+    expect(button).not.toHaveClass("btn-icon-right");
+
+    expect(icon.compareDocumentPosition(label)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+
+  it("renders the icon after the label when iconPosition is right", () => {
+    renderButton(
+      {
+        icon: FaStar,
+        iconPosition: "right",
+      },
+      "Favorite",
+    );
+
+    const button = screen.getByTestId("button-test");
+    const icon = screen.getByTestId("button-test-icon");
+    const label = screen.getByTestId("button-test-loading");
+
+    expect(button).toHaveClass("btn-icon-right");
+    expect(button).not.toHaveClass("btn-icon-left");
+
+    expect(label.compareDocumentPosition(icon)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+
+  it("applies theme, state, size, outline, shadow, rounding, fullWidth, disabled, icon position, and custom className", () => {
+    renderButton(
+      {
+        theme: "primary",
+        state: "success",
+        size: "medium",
+        outline: true,
+        shadow: "light",
+        rounding: "small",
+        fullWidth: true,
+        disabled: true,
+        iconPosition: "right",
+        className: "custom-class",
+      },
+      "Styled",
+    );
+
+    const button = screen.getByTestId("button-test");
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-primary");
+    expect(button).toHaveClass("btn-success");
+    expect(button).toHaveClass("btn-md");
+    expect(button).toHaveClass("btn-outline");
+    expect(button).toHaveClass("btn-shadow-light");
+    expect(button).toHaveClass("btn-round-small");
+    expect(button).toHaveClass("btn-full");
+    expect(button).toHaveClass("btn-disabled");
+    expect(button).toHaveClass("btn-icon-right");
+    expect(button).toHaveClass("custom-class");
   });
 
   it("renders children inside the label container", () => {
