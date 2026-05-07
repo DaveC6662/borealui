@@ -1,3 +1,5 @@
+//TODO add glass styles
+
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import type { AriaAttributes, HTMLAttributes, ReactNode } from "react";
 
