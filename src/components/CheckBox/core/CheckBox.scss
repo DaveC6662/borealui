@@ -4,11 +4,19 @@
 @use "sass:map";
 
 $checkbox-sizes: (
-  xs: 0.75em,
-  small: 0.875em,
-  medium: 1em,
-  large: 1.25em,
-  xl: 1.5em,
+  xs: 1rem,
+  small: 1.125rem,
+  medium: 1.25rem,
+  large: 1.5rem,
+  xl: 1.75rem,
+);
+
+$checkbox-fill-sizes: (
+  xs: 0.45rem,
+  small: 0.55rem,
+  medium: 0.65rem,
+  large: 0.8rem,
+  xl: 0.95rem,
 );
 
 $checkmark-sizes: (
@@ -99,6 +107,8 @@ $label-font-sizes: (
   .checkbox_#{$size} .checkbox_box {
     width: $dimension;
     height: $dimension;
+    min-width: $dimension;
+    min-height: $dimension;
 
     @include bp.down(sm) {
       border-width: 1.5px;
@@ -110,30 +120,21 @@ $label-font-sizes: (
   }
 
   .checkbox_#{$size} .checkbox_box::after {
-    $checkmark: map.get($checkmark-sizes, $size);
-
-    width: map.get($checkmark, width);
-    height: map.get($checkmark, height);
-    border-left: map.get($checkmark, border-width) solid currentcolor;
-    border-bottom: map.get($checkmark, border-width) solid currentcolor;
+    width: map.get($checkbox-fill-sizes, $size);
+    height: map.get($checkbox-fill-sizes, $size);
 
     @include bp.up(lg) {
-      width: calc(#{map.get($checkmark, width)} * 1.05);
-      height: calc(#{map.get($checkmark, height)} * 1.05);
-      border-left-width: calc(#{map.get($checkmark, border-width)} * 1.05);
-      border-bottom-width: calc(#{map.get($checkmark, border-width)} * 1.05);
+      width: calc(#{map.get($checkbox-fill-sizes, $size)} * 1.05);
+      height: calc(#{map.get($checkbox-fill-sizes, $size)} * 1.05);
     }
   }
 
   .checkbox_#{$size} .checkbox_box.checkbox_indeterminate::after {
-    $checkmark: map.get($checkmark-sizes, $size);
-
-    width: map.get($checkmark, width);
-    height: map.get($checkmark, border-width);
+    width: calc(#{map.get($checkbox-fill-sizes, $size)} * 1.25);
+    height: 2px;
 
     @include bp.up(lg) {
-      width: calc(#{map.get($checkmark, width)} * 1.05);
-      height: calc(#{map.get($checkmark, border-width)} * 1.05);
+      height: 3px;
     }
   }
 
@@ -152,12 +153,19 @@ $label-font-sizes: (
 
 .checkbox_box {
   border: 2px solid currentcolor;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: transparent;
   position: relative;
-  transition: all var(--transition-default);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition:
+    background-color var(--transition-default),
+    border-color var(--transition-default),
+    box-shadow var(--transition-default),
+    transform var(--transition-default);
 
   &::before {
     content: "";
@@ -177,21 +185,32 @@ $label-font-sizes: (
 
 .checkbox_box::after {
   content: "";
-  transform: rotate(-45deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  box-sizing: border-box;
+  border-radius: inherit;
+  background-color: currentcolor;
   opacity: 0;
-  transition: all var(--transition-default);
+  transform: translate(-50%, -50%) scale(0.7);
+  transform-origin: center;
+  transition:
+    opacity var(--transition-default),
+    transform var(--transition-default);
 }
 
 .checkbox_input:checked + .checkbox_box::after {
   opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .checkbox_box.checkbox_indeterminate::after {
   opacity: 1;
-  content: "";
   background-color: currentcolor;
   border: none;
-  transform: none;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
 }
 
 .checkbox_label-wrapper {
