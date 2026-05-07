@@ -39,6 +39,7 @@ const classMap = {
   state_warning: "stateWarning",
   state_error: "stateError",
   state_disabled: "stateDisabled",
+  glass: "glass",
 };
 
 describe("CircularProgressBase", () => {
@@ -449,6 +450,7 @@ describe("CircularProgressBase", () => {
       <CircularProgressBase
         value={85}
         state="success"
+        glass
         label="State Progress Tracker"
         classMap={classMap}
         data-testid="circular-progress"
