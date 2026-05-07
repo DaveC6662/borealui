@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $checkbox-sizes: (
@@ -89,6 +90,22 @@ $label-font-sizes: (
   display: none;
   pointer-events: none;
   left: 0;
+}
+
+.glass .box {
+  @include mixins.glass-surface(
+    var(--checkbox-glass-bg, var(--glass-background)),
+    var(--checkbox-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  border-width: 2px;
+  border-color: var(--checkbox-glass-border, var(--glass-border-color));
+}
+
+.glass.disabled .box {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 @each $key, $value in theme.$rounding {
@@ -240,6 +257,10 @@ $label-font-sizes: (
 @each $name, $props in theme.$themes {
   .#{$name} {
     color: map.get($props, border);
+
+    --checkbox-glass-bg: #{map.get($props, glass-bg)};
+    --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
+    --checkbox-glass-border: #{map.get($props, glass-border)};
   }
 
   .box.#{$name} {
@@ -254,6 +275,10 @@ $label-font-sizes: (
 @each $state, $props in theme.$states {
   .#{$state} {
     color: map.get($props, bg);
+
+    --checkbox-glass-bg: #{map.get($props, glass-bg)};
+    --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
+    --checkbox-glass-border: #{map.get($props, glass-border)};
   }
 
   .box.#{$state} {
@@ -295,6 +320,14 @@ $label-font-sizes: (
 }
 
 @media (forced-colors: active) {
+  .glass .box {
+    background: Canvas;
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   .box {
     border-color: ButtonText;
     background: Canvas;
@@ -307,4 +340,21 @@ $label-font-sizes: (
     border-color: ButtonText;
     background: ButtonText;
   }
+}
+
+.description {
+  margin-top: var(--spacing-xxs);
+  color: var(--text-color-primary);
+  font-size: var(--font-size-label);
+}
+
+.errorMessage {
+  margin-top: var(--spacing-xxs);
+  color: var(--error-color);
+  font-size: var(--font-size-label);
+}
+
+.invalid .box {
+  border-color: var(--error-color);
+  color: var(--error-color);
 }
