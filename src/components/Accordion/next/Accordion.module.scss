@@ -86,7 +86,7 @@ $sizes: (
   .header,
   &.content {
     @include mixins.glass-surface(
-      var(--accordion-glass-bg, var(--glass-background)),
+      transparent,
       var(--accordion-glass-border, var(--glass-border-color)),
       var(--glass-blur)
     );
@@ -187,7 +187,7 @@ $sizes: (
 
     &.outline.glass {
       @include mixins.glass-surface(
-        var(--accordion-glass-bg),
+        transparent,
         var(--accordion-glass-border),
         var(--glass-blur)
       );
@@ -211,7 +211,7 @@ $sizes: (
       background-color: map.get($values, hover);
     }
 
-    &.glass {
+    &.glass.header {
       background: var(--accordion-glass-bg);
       color: var(--accordion-glass-text);
 
@@ -237,7 +237,7 @@ $sizes: (
 
     &.outline.glass {
       @include mixins.glass-surface(
-        var(--accordion-glass-bg),
+        transparent,
         var(--accordion-glass-border),
         var(--glass-blur)
       );

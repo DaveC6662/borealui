@@ -173,6 +173,7 @@ $sizes: (
 
   .accordion_outline.accordion_#{$name} {
     background-color: transparent;
+    border: 2px solid map.get($values, border);
     color: map.get($values, text);
 
     @include bp.down(sm) {
@@ -187,7 +188,7 @@ $sizes: (
 
   .accordion_outline.accordion_#{$name}.accordion_glass {
     @include mixins.glass-surface(
-      var(--accordion-glass-bg),
+      transparent,
       var(--accordion-glass-border),
       var(--glass-blur)
     );
@@ -237,7 +238,7 @@ $sizes: (
 
   .accordion_outline.accordion_#{$name}.accordion_glass {
     @include mixins.glass-surface(
-      var(--accordion-glass-bg),
+      transparent,
       var(--accordion-glass-border),
       var(--glass-blur)
     );

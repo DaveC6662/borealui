@@ -266,3 +266,14 @@ export const OutlineVariants = () =>
     },
     [{ propName: "theme", values: themeOptions }],
   );
+
+export const GlassOutlineVariants = () =>
+  withVariants(
+    Accordion,
+    {
+      ...defaultArgs,
+      outline: true,
+      glass: true,
+    },
+    [{ propName: "theme", values: themeOptions }],
+  );
